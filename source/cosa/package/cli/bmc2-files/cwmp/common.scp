@@ -1,0 +1,42 @@
+<#
+    tree = Services.Dslh.ParamTree   
+    base = "Device.ManagementServer."
+    subsysPrefix = ""
+	sessionID = 0
+	writeID = 2
+	commit = 1
+
+    name = "EnableCWMP"
+			    
+    tree.GetParamTypeAndValue(subsysPrefix, base $ name:type,value)
+
+    cmd  = Command.GetCommandName()
+
+    if _strcmpi(cmd, "enable") == 0
+
+        if value == "false" || value == "0" || value == "no"
+        
+		   tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, base $ name, 1)
+		   
+		   = "CWMP is enabled successfully.\r\n"
+				   
+		else
+		   
+		   = "CWMP is enabled already.\r\n"
+		   
+		endif   
+
+    elseif _strcmpi(cmd, "disable") == 0
+
+        if value == "true" || value == "1" || value == "yes"
+        
+		   tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, base $ name, 0)
+		   = "CWMP is disabled successfully.\r\n"
+		   
+		else
+		
+		   = "CWMP is disabled already.\r\n"   
+
+        endif
+   endif
+#>

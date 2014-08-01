@@ -1,0 +1,29 @@
+<#
+    include "function.scp"
+	subsysPrefix = ""
+
+    dn = Domain.GetDomainName()
+    cn  = Command.GetCount() 
+    cm  = Command.GetParamByIndex(0)
+
+    if _strcmpi(dn, "param") == 0 || _strcmpi(dn, "dm") == 0
+            
+        Server.Execute("tr069/show.scp")
+        
+    elseif _strcmpi(dn, "cwmp") == 0
+    
+        Server.Execute("cwmp/show.scp")
+             
+    elseif _strcmpi(dn, "object") == 0
+                
+        Server.Execute("tr069/object/show.scp")
+
+    else
+    
+        = "% Unknown command.\r\n"
+               
+    endif
+
+#>
+
+       

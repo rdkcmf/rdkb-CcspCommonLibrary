@@ -1,0 +1,13 @@
+<#
+
+    dn = Domain.GetDomainName()
+
+    /* 
+     * automatically commit changes when user exits voice domain 
+     * if there's any change.
+     */
+
+    Domain.Exit()
+
+#>
+

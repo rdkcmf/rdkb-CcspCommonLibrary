@@ -1,0 +1,66 @@
+<#
+    include "../../function.scp"
+    
+    subsysPrefix = ""
+    name = "Device."
+    nextLevelOnly = 0
+
+    tree = Services.Dslh.ParamTree
+    tree.GetObjectInfo(subsysPrefix:addArray, deleteArray)
+    tree.GetChildObjNames(subsysPrefix, name:parentsArray)
+    tree.GetParamNames(subsysPrefix, name, nextLevelOnly:allArray)
+
+    proc show_canadd(addArray)
+        = "  Objects can be added:\r\n"
+	 while i=0;i<addArray.length;i++		
+            ="  " $ addArray[i]$ "\r\n"
+	 endwhile
+    endproc
+
+    proc show_candel(deleteArray)
+        = "  Objects can be deleted:\r\n"
+	 while i=0;i<deleteArray.length;i++		
+            ="  " $ deleteArray[i]$ "\r\n"
+	 endwhile
+    endproc
+    
+    proc show_parents(parentsArray)
+        = "  List All Parent Notes:\r\n"
+	 while i=0;i<parentsArray.length;i++		
+            ="  " $ parentsArray[i]$ "\r\n"
+	 endwhile
+    endproc
+    
+    proc show_all(allArray)
+        = "  List All Notes Inluding Leaves:\r\n"
+	 while i=0;i<allArray.length;i++		
+            ="  " $ allArray[i]$ "\r\n"
+	 endwhile
+    endproc
+
+    //get parameter count
+    cn  = Command.GetCount()
+    dim parameters[cn]
+    while i=0; i<cn; i++
+        parameters[i] = Command.GetParamByIndex(i)
+    endwhile
+
+    pp  = parameters[0]
+           
+    if( pp == "addable")            
+        show_canadd(addArray)        
+        
+    elseif( pp == "deletable")      
+        show_candel(deleteArray)
+        
+    elseif( pp == "parents")      
+        show_parents(parentsArray)
+        
+    elseif( pp == "all")      
+        show_all(allArray)
+		        
+    endif
+
+#>
+
+       

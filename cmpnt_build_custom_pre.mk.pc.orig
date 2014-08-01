@@ -1,0 +1,97 @@
+#######################################################################
+#   Copyright [2014] [Cisco Systems, Inc.]
+# 
+#   Licensed under the Apache License, Version 2.0 (the \"License\");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+# 
+#       http://www.apache.org/licenses/LICENSE-2.0
+# 
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an \"AS IS\" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#######################################################################
+
+#
+#   for PC sim_GW_TR-181
+#   pre custom makefile, included by main makefile
+#
+
+#
+#   build options
+#
+CLI_LIB := Y
+
+SLAP_FRAMEWORK := Y
+
+SLAP_SERVICE := Y
+
+SYS_REGISTRY := Y
+
+BMC_SUPPORT := Y
+
+BSP_SUPPORT := Y
+
+OBJ_ARRAY := Y
+
+DEBUG_LOGGING := Y
+
+UTILITY := Y
+
+OBJ_CONTAINER := Y
+
+TCP_SERVER := Y
+
+TCP_CLIENT := Y
+
+UDP_SERVER := Y
+
+UDP_CLIENT := Y
+
+WRAPPER_ASN1 := Y
+
+WRAPPER_CERT := Y
+
+WRAPPER_OPENSSL := Y
+
+WRAPPER_HTTP := Y
+
+WRAPPER_BASE64 := Y
+
+WRAPPER_CHECKSUM := Y
+
+WRAPPER_HASH := Y
+
+WRAPPER_PACKET := Y
+
+WRAPPER_SOCKET := Y
+
+WRAPPER_STRING := Y
+
+WRAPPER_FILE := Y
+
+WRAPPER_OTHER := Y
+
+COMPRESS_WRAPPER := Y
+
+CRYPTO_WRAPPER := Y
+
+LPC := Y
+
+XML := Y
+
+MSG_BUS_WRAPPER := Y
+
+ASN1 := Y
+
+WEB_UTIL := Y
+
+TLS := Y
+
+STUN := Y
+
+COMM_COMP_LIB := Y
+
+NAME_SPACE_MGR := Y

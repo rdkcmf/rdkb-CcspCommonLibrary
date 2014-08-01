@@ -1,0 +1,226 @@
+<#
+    include "../../function.scp"
+    
+        /*empty string is treat as local system*/   
+    subsysPrefix = ""
+        
+	   /*sessionID stays 0 unless when in an active (none-zero) session */
+	   /*use AcqWriteAccess() slap call to enter an active session */
+	sessionID = 0
+	  
+	  
+	   /*writeID is 0 for ACS, 2 for CLI */
+	CLIwriteID = 2
+	ACSwriteID = 0
+	TESTwriteID = 9  /*none exist ID for testing purpose only*/
+	writeID = CLIwriteID
+		
+		/* ssumed value for test only...0= lowest, 10 = highet*/
+	CLIpriority = 5
+        multisetFlag = 0	
+
+        dn = Domain.GetDomainName()
+	if _strcmpi(dn, "dm-multiset") == 0
+            multisetFlag = 1
+            commit = 0
+        else
+            commit = 1
+        endif
+	readOnly = 0
+
+proc getParent(str)
+	ret_str = ""
+	last    = 0
+	while j = 0 ; j < _strlen(str);
+		c = _strgetchar(str,j)
+		if c == "."
+			last = j
+		endif
+		j++
+	endwhile
+	
+	if last == 0
+	
+	   return ""
+	   
+	else
+	
+	   while j = 0; j <= last;
+	     ret_str = ret_str $ _strgetchar(str,j)
+	     j++
+	   endwhile
+	endif         
+	
+	return ret_str
+endproc
+
+
+    name = Command.GetParamByIndex(local_count + 0)
+    key1 = Command.GetParamByIndex(local_count+1)
+    type = Command.GetParamByIndex(local_count +2)
+    key2 = Command.GetParamByIndex(local_count+3)
+    value = Command.GetParamByIndex(local_count +4)
+
+    if (key1 != "type")
+        print_error_param(key1)        
+        = text1
+        = text2
+        return
+    endif
+    
+    if (key2 != "value")
+        print_error_param(key2)        
+        = text1
+        = text2
+        return
+    endif 
+    
+    if (type == "int")
+        if (!is_integer(value))
+            print_error_param(value)        
+            return
+        endif
+    elseif (type == "uint")
+        if (_strgetchar(value,0) == "-" )
+            print_error_param(value)        
+            return
+        endif
+        if (!is_integer(value))
+            print_error_param(value)        
+            return
+        endif
+    elseif (type == "boolean")
+        if (value != "true" && value != "false")
+            print_error_param(value)
+            return
+        endif
+    elseif (type!= "string" && type!= "base64" && type!="datetime") 
+        print_error_param(type)
+        return
+    endif
+   
+    tree = Services.Dslh.ParamTree
+    
+    /*do slap calls*/   
+				
+				/*ACS has the right to write anything, no need to check if a parameter is writable*/
+      if writeID == TESTwriteID
+		/*readOnly = tree.IsParameterReadOnly(subsysPrefix, name)*/
+					/*CLI/WEB_GUI usaully lock parameter tree and do bulk commit*/
+		  if readOnly == 0
+			 sessionID  = tree.AcqWriteAccess(subsysPrefix, CLIpriority)
+		  endif	
+	  endif	
+				/* we have lock the parameter tree, let's do bulk commit*/
+      if sessionID != 0
+		 commit  = 0
+	  endif	
+
+
+/*Uncomment these 2 lines to force ACS acquire a session 	  
+ sessionID  = tree.AcqWriteAccess(subsysPrefix, CLIpriority)
+ commit = 0
+*/
+
+
+if readOnly == 0
+	if type == "boolean"
+		if value == "true"
+			ret = tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, name, 1)
+		else 
+			ret = tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, name, 0)
+		endif      
+	elseif type == "string" || type == "datetime" || type == "base64"
+		ret = tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, name, value)
+	elseif type == "int"
+		ret = tree.SetParamValueInt(subsysPrefix, sessionID, writeID, commit, name, value)
+	elseif type == "uint"   
+		if _strgetchar(value,0) == "-"
+			ret = 1
+		else				      
+			ret = tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, name, value) 
+		endif   
+	else
+		ret = 1
+	endif
+
+	if ret != 0
+		if commit == 0	
+				msg = "Failed to set value (without commit) to parameter:'" $ name $ "'\r\n\r\n"
+		else
+				msg = "Failed to set value (with commit) to parameter:'" $ name $ "'\r\n\r\n"
+		endif
+	else
+		if commit == 0	
+                    if multisetFlag == 1
+                        //cache the object name which need to commit
+                        size = 0                        
+                        cachedFlag = 0
+                        cachedName = ""
+                        pname = ""
+                        
+                        pname = getParent(name) 
+                        size  = Terminal.GetItem("multisetSize")
+
+                        while i = 0; i < size; i++
+                            cachedName = Terminal.GetItem("multisetName" $ i)
+                            if _strcmpi(pname, cachedName) == 0
+                                cachedFlag = 1
+                                break 
+                            endif
+                        endwhile
+
+                        if cachedFlag == 0
+                            Terminal.SetItem("multisetName" $ size, pname)
+                            size = size + 1
+                            Terminal.SetItem("multisetSize", size)
+                        endif
+
+                        msg = "The new value is set (without commit) successfully. -- " $ name $"\r\n"
+                    else 
+			if  sessionID == 0
+				msg = "Danger!!! Value set (but without commit) while not in an active session.\r\n"	
+			else   /* commit and unlock parameter tree*/
+				ret1 = tree.ApplyChanges(subsysPrefix, sessionID, writeID, name )
+				ret2 = tree.RelWriteAccess(subsysPrefix, sessionID )
+				if ret1 != 0 && ret2 != 0
+  					msg = "Failed on both ApplyChanges and RelWriteAccess.\r\n"
+				elseif ret1 != 0 && ret2 == 0
+  					msg = "Failed on ApplyChanges but suceeded on RelWriteAccess.\r\n"
+  				elseif ret1 == 0 && ret2 != 0
+  					msg = "Succeeded on ApplyChanges but Failed on RelWriteAccess.\r\n"
+  				else
+					msg = "ApplyChanges and RelWriteAccess both suceeded.\r\n"	
+  				endif
+			endif
+                    endif 
+		else
+				msg = "The new value is set (with commit) successfully.\r\n"	
+		endif
+	
+	endif
+else
+
+	msg = "The parameter is readonly or invalid, failed to set the value."
+
+endif
+		  
+		      
+/*     else
+    
+       tree.GetParamTypeAndValue(subsysPrefix, name:type,value)
+       
+       if type == "unknown"
+       
+         msg = "Unknown type with parameter <br>'" $ name 	
+    
+       endif 
+       
+     endif*/
+
+    =msg
+#>
+
+
+
+

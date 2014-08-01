@@ -1,0 +1,309 @@
+#######################################################################
+#   Copyright [2014] [Cisco Systems, Inc.]
+# 
+#   Licensed under the Apache License, Version 2.0 (the \"License\");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+# 
+#       http://www.apache.org/licenses/LICENSE-2.0
+# 
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an \"AS IS\" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#######################################################################
+
+#
+include $(CCSP_ROOT_DIR)/arch/ccsp_common.mk
+
+#
+#	set up source and object targets
+#
+ifneq ($(CLI_LIB),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/cli,'*.c')
+endif
+
+ifneq ($(BMC_SUPPORT),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/bmc2,'*.c')
+endif
+
+ifneq ($(SLAP_FRAMEWORK),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/slap,'*.c')
+endif
+
+ifneq ($(SLAP_SERVICE),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/slap,'*.c')
+endif
+
+ifneq ($(SYS_REGISTRY),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysInfoRepository,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRecycleBin,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRepositoryDriver,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRepositoryFolder,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRepositoryRecord,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroAstr,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroBool,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroBstr,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroEnum,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroHcxt,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroSint,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/system/components/SysRroUint,'*.c')
+endif
+
+ifneq ($(BSP_SUPPORT),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/package/bmw2,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,cosa/utilities/bsp_eng,'*.c')
+endif
+
+ifneq ($(OBJ_ARRAY),)
+source_files_libccsp_common += $(call add_files_from_src,cosa/utilities/AnscObjectArray,'*.c' )
+endif
+
+ifneq ($(DEBUG_LOGGING),)
+source_files_libccsp_common += $(call add_files_from_src,debug_api,'*.c' )
+endif
+
+ifneq ($(UTILITY),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscAtomTable,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscComponentObject,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCoVer3,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscLightComponent,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscString,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscStringUtil,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscTimerScheduler,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscSimpleSystemTime,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscQueryInterface,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscUtilBox,'*.c' )
+endif
+
+ifneq ($(OBJ_CONTAINER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscModuleContainer,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscObjectContainer,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscObjectMapper,'*.c' )
+endif
+
+ifneq ($(TCP_SERVER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscBrokerEngineTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscBrokerServerTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscBrokerSocketTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonEngineTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonServerTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonSocketTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscXsocket,'*.c' )
+endif
+
+ifneq ($(UDP_SERVER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonEngineUdp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonServerUdp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscDaemonSocketUdp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscXsocket,'*.c' )
+endif
+
+ifneq ($(UDP_CLIENT),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscSimpleClientUdp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscXsocket,'*.c' )
+endif
+
+ifneq ($(TCP_CLIENT),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscSimpleClientTcp,'*.c' )
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscXsocket,'*.c' )
+endif
+
+ifneq ($(WRAPPER_ASN1),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_asn1.c')
+endif
+
+ifneq ($(WRAPPER_CERT),)
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscPlatform,'ansc_x509_cert.c')
+endif
+
+ifneq ($(WRAPPER_OPENSSL),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_openssl.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscPlatform,'user_openssl_*.c')
+endif
+
+ifneq ($(WRAPPER_HTTP),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_http_parser.c')
+endif
+
+ifneq ($(WRAPPER_BASE64),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_base64.c')
+endif
+
+ifneq ($(WRAPPER_CHECKSUM),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_checksum.c')
+endif
+
+ifneq ($(WRAPPER_HASH),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_hash.c')
+endif
+
+ifneq ($(WRAPPER_PACKET),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_packet.c')
+endif
+
+ifneq ($(WRAPPER_SOCKET),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_socket_lib.c')
+endif
+
+ifneq ($(WRAPPER_STRING),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_string.c')
+endif
+
+ifneq ($(WRAPPER_FILE),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_file_io.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_file_io.c')
+endif
+
+ifneq ($(WRAPPER_OTHER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_debug.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_dlist.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_external.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_protection.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_queue.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_slist.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_spto_interface.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_swap.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_task.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_time.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_timer.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_token.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'ansc_memory.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscPlatform,'user_protection.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_runtime.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscPlatform,'user_runtime_*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_task.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_time.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscPlatform,'user_time_*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscPlatform,'user_socket.c')
+endif
+
+ifneq ($(COMPRESS_WRAPPER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCrypto/ansc_crypto_compression.c,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCrypto/ansc_crypto_decompression.c,'*.c')
+endif
+
+ifneq ($(CRYPTO_WRAPPER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCrypto,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCryptoPub,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscCryptoPubSSLeay,'*.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_sign_*.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_verify_*.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_key.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_key_gen.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_encrypt.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_dh.c')
+source_files_libccsp_common += $(call add_custom_files,util_api/ansc/AnscCryptoPubSSLeay,'ansc_crypto_pub_ssleay_util_*.c')
+endif
+
+ifneq ($(LPC),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscLpcConnector,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscLpccoTcp,'*.c')
+endif
+
+ifneq ($(XML),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ansc/AnscXmlDomParser,'*.c')
+endif
+
+ifneq ($(MSG_BUS_WRAPPER),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/ccsp_msg_bus,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/ccsp_dm_api,'*.c')
+endif
+
+ifneq ($(ASN1),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/asn.1,'*.c')
+endif
+
+ifneq ($(WEB_UTIL),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/http,'*.c')
+source_files_libccsp_common += $(call add_files_from_src,util_api/web,'*.c')
+endif
+
+ifneq ($(TLS),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/tls,'*.c')
+endif
+
+ifneq ($(STUN),)
+source_files_libccsp_common += $(call add_files_from_src,util_api/stun,'*.c')
+endif
+
+ifneq ($(COMM_COMP_LIB),)
+source_files_libccsp_common += $(call add_files_from_src,ccsp/components/common,'*.c')
+source_files_libccsp_common += $(call add_custom_files,ccsp/components/common,'*.c')
+endif
+
+ifneq ($(NAME_SPACE_MGR),)
+source_files_libccsp_common += $(call add_files_from_src,ccsp/components/CCSP_NamespaceMgr,'*.c')
+endif
+
+obj_files_libccsp_common := $(addprefix $(ComponentBuildDir)/,$(source_files_libccsp_common:%.c=%.o))
+
+#
+#	set up include paths
+#
+INCPATH += $(ComponentSrcDir)/util_api/ansc/AnscPlatform
+INCPATH += $(ComponentSrcDir)/util_api/ansc/AnscCryptoPubSSLeay
+INCFLAGS := $(patsubst %,-I%, $(INCPATH))
+
+first_rule: all install_rule
+
+target_libccsp_common := $(ComponentBuildDir)/libccsp_common.so
+
+all: $(target_libccsp_common)
+
+$(target_libccsp_common): $(obj_files_libccsp_common) 
+
+-include $(obj_files_libccsp_common:.o=.d)
+
+.PHONY: all clean
+
+clean:
+	rm -rf $(ComponentBuildDir)
+
+config_rule:
+	@echo "Nothing to do"
+
+install_rule:
+	cp -f $(target_libccsp_common) $(TARGET_HOME)/ti/lib/
+	cp -f $(target_libccsp_common) $(TI_filesystem_basefs_path)/lib/
+
+# config directories from both arch, arch-board, arch-board-customer
+install_targets := $(wildcard $(ComponentArchCfgDir)/*)
+install_targets += $(wildcard $(ComponentBoardCfgDir)/*)
+install_targets += $(wildcard $(ComponentBoardCustomCfgDir)/*)
+# scripts directories from arch, arch-board, arch-board-customer
+install_targets += $(wildcard $(ComponentArchScriptsDir)/*)
+install_targets += $(wildcard $(ComponentBoardScriptsDir)/*)
+install_targets += $(wildcard $(ComponentBoardCustomScriptsDir)/*)
+	
+install:
+	@-mkdir -p $(CCSP_OUT_DIR) $(CCSP_STAGING_ROOT)/include/cosa
+	cp -f $(target_libccsp_common) $(CCSP_OUT_DIR)
+	@[ -d $(CCSP_STAGING_ROOT)/lib ] || mkdir $(CCSP_STAGING_ROOT)/lib
+	@cp $(target_libccsp_common) $(CCSP_STAGING_ROOT)/lib
+	@cp source/cosa/include/linux/user_base.h $(CCSP_STAGING_ROOT)/include/cosa
+	@cp source/ccsp/custom/user_base_custom_linux.h $(CCSP_STAGING_ROOT)/include/cosa
+	@cp $(install_targets) $(CCSP_OUT_DIR)
+
+LDFLAGS    += -L$(CCSP_OPENSOURCE_DIR)/lib
+LDFLAGS    += $(CCSP_OPENSOURCE_DIR)/lib/libdbus-1.a
+
+# if build within XB3, we need libdbus-internal.a
+ifneq ($(CCSP_XB3),)
+LDFLAGS    += $(CCSP_OPENSOURCE_DIR)/lib/libdbus-internal.a
+endif
+
+clean_rule:
+	rm -rf $(ComponentBuildDir)
+
+uninstall_rule:
+	rm -f $(TARGET_HOME)/ti/lib/libccsp_common.so
+	rm -f $(TI_filesystem_basefs_path)/lib/libccsp_common.so
+
+#
+# include custom post makefile, if exists
+#
+ifneq ($(findstring $(CCSP_CMPNT_BUILD_CUSTOM_MK_POST), $(wildcard $(ComponentBoardDir)/*.mk)), )
+    include $(ComponentBoardDir)/$(CCSP_CMPNT_BUILD_CUSTOM_MK_POST)
+endif

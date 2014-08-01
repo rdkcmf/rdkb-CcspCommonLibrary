@@ -1,0 +1,15 @@
+<#
+	subsysPrefix = ""
+    dn = Domain.GetDomainName()
+
+    if ( dn == "dm" )
+    
+        Server.Execute("tr069/object/no.scp")        
+        
+    else
+        = "  Invalid command in domain <" $ dn $ ">\r\n"
+    
+    endif
+
+#>
+

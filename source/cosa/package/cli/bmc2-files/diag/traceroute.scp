@@ -1,0 +1,160 @@
+<#
+    //traceroute <target> [size <num in byte>] [times <1~5>] [ timeout <num in ms>] [maxhop <max hop count>]    
+    include "../function.scp"
+
+    subsysPrefix = ""
+    sessionID = 0
+    CLIwriteID = 2
+    ACSwriteID = 0
+    writeID = CLIwriteID
+    CLIpriority = 5
+    commit = 0
+ 
+    count = Command.GetCount()
+    tr_target = Command.GetParamByIndex(0)
+
+    size= 60
+    times= 3
+    timeout= 5000
+    maxhop  = 30
+
+    min_waittime = 30
+    max_waittime = 180
+    
+    while i=1; i<count; i+= 2
+        key = Command.GetParamByIndex(i)
+        val = Command.GetParamByIndex(i+1)
+        if _strcmpi(key, "times") == 0
+            times = _atoi(val)
+        elseif _strcmpi(key, "size") == 0
+            size = _atoi(val)
+        elseif _strcmpi(key, "timeout") == 0
+            timeout = _atoi(val)
+        elseif _strcmpi(key, "maxhop") == 0
+            maxhop = _atoi(val)
+        else
+            = "unknown key --- " $ key $ "\r\n"       
+            return
+        endif
+    endwhile
+    
+    if ( (times < 1) || (times > 3) )
+        = "traceroute times should be set in range 1~3 \r\n"
+        return
+    endif
+
+    tree = Services.Dslh.ParamTree
+    traceroute = "Device.IP.Diagnostics.TraceRoute."
+
+    tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, traceroute $ "Host", tr_target)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, traceroute $ "NumberOfTries", times)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, traceroute $ "Timeout", timeout)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, traceroute $ "DataBlockSize", size)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, traceroute $ "MaxHopCount", maxhop)
+    ret1 = tree.ApplyChanges(subsysPrefix, sessionID, writeID, traceroute)
+    if ret1 != 0
+        = " Failed to commit \r\n"
+    endif
+
+    ret = tree.SetParamValueString(subsysPrefix, sessionID, writeID, 1, traceroute $ "DiagnosticsState", "Requested")
+    if ret != 0
+       = " Failed to set diagnosticsstate for traceroute\r\n"   
+   endif 
+
+    sleep_iv = 500
+
+    total_to = maxhop * timeout
+
+    // give some extra time in case traceroute times out
+    total_to = total_to * 125 / 100
+
+    if total_to > max_waittime * 1000
+        total_to = max_waittime * 1000
+    elseif total_to < min_waittime * 1000
+        total_to = min_waittime * 1000
+    endif
+
+    if total_to > max_waittime * 1000
+        total_to = max_waittime * 1000
+    elseif total_to < min_waittime * 1000
+        total_to = min_waittime * 1000
+    endif
+
+    rep = total_to/sleep_iv
+
+    = "  "
+    while i = 0; i < rep; i ++
+        if i % 2 == 0
+            = "-"
+        else
+            = "|"
+        endif
+        if i != 0 && (i % 32) == 0
+            = "\r\n  "
+        endif
+        
+        _sleep(sleep_iv)
+        tr_state = tree.GetParamValue(subsysPrefix, traceroute $ "DiagnosticsState")
+        if (tr_state != "")
+            break
+        endif
+    endwhile
+
+    = "\r\n\r\n"
+
+    if tr_state == "Complete"
+
+        dim host[]
+        dim hostaddr[]
+        dim rttimes[]
+
+        max_host_len = 0
+
+        hops = tree.GetParamValue(subsysPrefix, traceroute $ "RouteHopsNumberOfEntries")
+
+        while i = 0; i < hops; i ++
+            hopi     = traceroute $ "RouteHops." $ (i+1) $ "."
+
+            host[i]     = tree.GetParamValue(subsysPrefix, hopi $ "Host")
+            hostaddr[i] = tree.GetParamValue(subsysPrefix, hopi $ "HostAddress")
+            rttimes[i]  = tree.GetParamValue(subsysPrefix, hopi $ "RTTimes")
+            host_len = _strlen(host[i])
+            if host_len > max_host_len
+                max_host_len = host_len
+            endif
+        endwhile
+
+        = "  hop  host"
+        _add_space(max_host_len - 2)
+        = "hostaddr        RoundTripTimes(ms)\r\n"
+        sep = "  "
+        total_len = 5 + max_host_len + 36
+        while i = 0; i < total_len; i ++
+            sep = sep $ "-"
+        endwhile
+        
+        = sep $ "\r\n"
+        
+        while i = 0; i < hops; i ++
+            = "  " $ (i+1)
+            _add_space(5 - integer_length(i+1))
+            = host[i]
+            _add_space(max_host_len + 2 - _strlen(host[i]))
+            = hostaddr[i]
+            _add_space(16 - _strlen(hostaddr[i]))
+            = rttimes[i] $ "\r\n"
+        endwhile
+    else
+        error = "unknown"
+        if tr_state == "Error_CannotResolveHostName"
+            error = "host name cannot be resolved"
+        elseif tr_state == "Error_MaxHopCountExceeded"
+            error = "max hop count was exceeded"
+        elseif tr_state == "Error_Internal"
+            error = "internal error"
+        endif
+
+        = "  traceroute failed - " $ error $ "\r\n"
+    endif
+
+#>

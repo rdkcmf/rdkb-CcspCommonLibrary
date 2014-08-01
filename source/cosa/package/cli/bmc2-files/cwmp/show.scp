@@ -1,0 +1,60 @@
+<#
+    include "../function.scp"
+    subsysPrefix = ""
+   
+proc show_config(name)
+
+    tree = Services.Dslh.ParamTree   
+    base = "Device.ManagementServer."
+    
+			    
+    tree.GetParamTypeAndValue(subsysPrefix, base $ name:type,value)
+    
+    = name
+    _add_space(28 - _strlen(name))
+    
+    if _strlen(value) <= 60   
+       = value $ "\r\n"
+    else
+       = _strleft(value, 60) $ "...\r\n"       
+    endif
+
+endproc
+    
+proc show_password(name)
+
+    = name
+    _add_space(28 - _strlen(name))
+			    
+    = "********\r\n"
+
+endproc
+
+    count   = Command.GetCount()
+
+    = "CWMP configuration \r\n========================================================================\r\n"
+    
+    /* get "EnableCWMP" */
+    show_config("EnableCWMP")
+
+    /* get "URL" */
+    show_config("URL")
+    
+    show_config("Username")
+    
+    show_password("Password")
+    
+    show_config("PeriodicInformEnable")
+    show_config("PeriodicInformInterval")
+    show_config("ConnectionRequestURL")
+    show_config("ConnectionRequestUsername")
+    show_password("ConnectionRequestPassword")
+
+    = "========================================================================\r\n"
+#>
+
+
+
+
+
+

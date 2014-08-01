@@ -1,0 +1,20 @@
+<#
+	subsysPrefix = ""
+    // r_domain.scp - the default SCP page
+
+    Terminal.EnterDomain("r_domain")
+
+    Domain.AddCommand("exit")
+    Domain.SetCommandSyntaxString("exit", "", "")
+
+    Domain.AddCommand("dm")
+    Domain.SetCommandSyntaxString("dm", "", "")
+
+    Domain.AddCommand("cwmp")
+    Domain.SetCommandSyntaxString("cwmp", "", "")
+
+    Domain.AddCommand("diag")
+    Domain.SetCommandSyntaxString("diag", "", "")
+
+#>
+

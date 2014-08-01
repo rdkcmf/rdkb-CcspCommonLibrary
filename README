@@ -1,0 +1,26 @@
+1. Configuration
+
+a> refer to each component release notes to find out which catagory needs to be enabled.
+   edit "Config" file under the root directory of this package. Mark "Y" at the end of line of each catagory to enable it.
+
+b> update source/ccsp/include/ccsp_custom.h to set value for CCSP_MSG_BUS_CFG.
+   This configuration file should contain Dbus session address which all CCSP component should connect to.
+
+2. Build
+
+a> Set up following environment variables before invoking make
+    CROSS_COMPILE    set to location of cross compiler
+    CCSP_COMMON_DIR  set to the location of ccsp common library package
+    CCSP_OPENSOURCE_DIR     set to the location of external dependency on opensource packages
+
+    The Makefile also take all standard variables:
+    CFLAGS, LDFLAGS, DEFS, OPTS which can be passed along the hierarchy of Makefiles
+
+    Under build/mk/bbhm_pc.mk provides example of these standard variable settings.
+
+b> Invoke the build
+    make all
+    make clean
+
+c> The output is under "build" directory.
+

@@ -1,0 +1,64 @@
+<#
+    include "../function.scp"
+    subsysPrefix = ""
+	sessionID = 0
+	writeID = 2
+	commit = 1
+ 
+    tree = Services.Dslh.ParamTree   
+    
+    count   = Command.GetCount()
+
+    if count == 0
+
+        = "No update is made.\r\n"
+            
+        return
+        
+    endif  
+    
+	base = "Device.ManagementServer."
+
+    while i=0; i<count; i+= 2
+        key = Command.GetParamByIndex(i)
+        val = Command.GetParamByIndex(i+1)
+    
+        if key == "url"
+        
+           tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, base $ "URL", val)
+        
+        elseif key == "username"
+        
+           tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, base $ "Username", val)
+           
+        elseif key == "password"
+        
+           tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, base $ "Password", val)
+        
+        else
+        
+           = "unknown key --- " $ key $ "\r\n"   
+
+        endif    
+        
+    endwhile
+
+    /* apply the change */
+	if tree.ApplyChanges(subsysPrefix, base) != 0 
+	
+	   = "Failed to commit the changes"
+	  
+	else 
+
+       = "The configuration is updated successfully.\r\n"	
+      	  
+	endif
+
+#>
+
+
+
+
+
+
+

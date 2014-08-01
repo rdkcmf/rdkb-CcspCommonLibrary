@@ -1,0 +1,157 @@
+<#
+    include "../function.scp"
+     
+	subsysPrefix = ""
+	nextLevelOnly = 1
+
+    tree = Services.Dslh.ParamTree   
+    
+    text1= "usage: show <ParamName or ObjectName>  \r\n"
+    text2= "example : show Device.ManagementServer. \r\n"
+    
+    count   = Command.GetCount()
+
+    local_count = Domain("counter") + 1
+
+    if Command.GetCommandName() == "show"
+    local_count = 0
+    endif
+
+    
+    if (count == 0 )
+        print_incomplete_cmd()
+       = text1
+       = text2
+        return
+    elseif (count>1 )
+        print_error_param(Command.GetParamByIndex(1))
+        ="too many command counts.\r\n"
+        return
+    endif
+
+    name = Command.GetParamByIndex(local_count)
+
+	/* if it's an object name */
+    if _strright(name, 1) == "."
+    
+          ret  = tree.GetParamInfoShort(subsysPrefix, name:nameArray, typeArray, valueArray)
+/*            ret  = tree.GetParamInfo(subsysPrefix, name, nextLevelOnly:nameArray, accessArray, typeArray, valueArray, attriArray)*/
+
+
+        if( ret == 0)
+
+
+ 
+			count= nameArray.length
+            = "ParamName                         "
+            = "Type        "
+            = "Value\r\n"
+            = "------------------------------------------------------------------\r\n"
+
+            while i= 0; i<count; i++
+
+                    if _strlen(nameArray[i]) >= 34
+
+                         = nameArray[i]
+                         = "\r\n"
+                         _add_space(34)
+                    else
+                         = nameArray[i]
+                    endif
+
+                    _add_space(34 - _strlen( nameArray[i]))
+                    =       typeArray[i]
+                    _add_space(12- _strlen(typeArray[i]  ))
+
+                    if _strlen(valueArray[i]) <= 60
+
+                       = valueArray[i] $ "\r\n"
+                    else
+                       = _strleft(valueArray[i], 60) $ "...\r\n"
+
+                    endif
+                endwhile
+
+
+/*
+
+		    count= nameArray.length
+		    = "ParamName                         "
+		    = "Type        "
+		    = "Value                              "
+		    = "access "
+		    = "notification\r\n"
+		    = "----------------------------------------------------------------------------------------------------\r\n"
+		    
+		    while i= 0; i<count; i++
+		
+			    if _strlen(nameArray[i]) >= 34
+			       
+			         = nameArray[i]
+			         = "\r\n"
+			         _add_space(34)
+			    else
+			         = nameArray[i]
+			    endif      
+			
+			    _add_space(34 - _strlen( nameArray[i]))
+			    =       typeArray[i]  
+			    _add_space(12 - _strlen(typeArray[i]  ))
+			    
+			    if _strlen(valueArray[i]) <= 30
+			       = valueArray[i] 
+			       	_add_space(35 - _strlen( valueArray[i]))
+
+			    else
+			       = _strleft(valueArray[i], 30) $ "..."
+			       	_add_space(2)
+			       
+			    endif
+			       =accessArray[i]
+				   _add_space(7- _strlen( accessArray[i]))
+				   =attriArray[i] $ "\r\n"  
+			    
+			endwhile    
+*/		
+			
+			
+			
+	    else
+	    
+	        = "Invalid object name -- "
+	        = name
+	        = "\r\n"
+	           
+	    endif
+	else
+	
+	    tree.GetParamTypeAndValue(subsysPrefix, name:type,value)
+	 
+	    if( type == "unknown")
+	       = "Invalid paramter name:\r\n" 
+	       = name
+	       = "\r\n"
+	    else
+		   = "Name: "
+		   = name
+		   = "\r\nType:  "
+		   = type
+		   = "\r\nValue: "
+		   
+		   if( type == "string" && value == "")
+		     = "<empty>"
+		   else
+		     = value
+		   endif    
+		   
+		   = "\r\n"
+	    endif   
+	endif            
+
+#>
+
+
+
+
+
+

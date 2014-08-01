@@ -1,0 +1,303 @@
+/**********************************************************************
+   Copyright [2014] [Cisco Systems, Inc.]
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+**********************************************************************/
+
+
+/**********************************************************************
+
+    module:	http_apo_operation.c
+
+        For HyperText Transfer Protocol Implementation (HTTP),
+        BroadWay Service Delivery System
+
+    ---------------------------------------------------------------
+
+    copyright:
+
+        Cisco Systems, Inc., 1997 ~ 2002
+        All Rights Reserved.
+
+    ---------------------------------------------------------------
+
+    description:
+
+        This module implements the advanced operation functions
+        of the Http Advanced Proxy Object.
+
+        *   HttpApoEngage
+        *   HttpApoCancel
+        *   HttpApoWorkerInit
+        *   HttpApoWorkerUnload
+
+    ---------------------------------------------------------------
+
+    environment:
+
+        platform independent
+
+    ---------------------------------------------------------------
+
+    author:
+
+        Xuechen Yang
+
+    ---------------------------------------------------------------
+
+    revision:
+
+        03/04/02    initial revision.
+
+**********************************************************************/
+
+
+#include "http_apo_global.h"
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        HttpApoEngage
+            (
+                ANSC_HANDLE                 hThisObject
+            );
+
+    description:
+
+        This function is called to control the proxy's behavior.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpApoEngage
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject     = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
+    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty     = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+    ULONG                           ulEngineCount = HTTP_MPROXY_ENGINE_NUMBER;
+    ULONG                           ulSocketCount = HTTP_MPROXY_SOCKET_NUMBER;
+    ULONG                           ulTcpSpoMode  = ANSC_SPTO_MODE_DAEMON_TIMEOUT | ANSC_SPTO_MODE_BROKER_TIMEOUT | ANSC_SPTO_MODE_FOREIGN_BUFFER;
+
+    if ( pMyObject->bActive )
+    {
+        return  ANSC_STATUS_SUCCESS;
+    }
+    else
+    {
+        pMyObject->bActive = TRUE;
+    }
+
+    pMyObject->ManufacturePsoPool   ((ANSC_HANDLE)pMyObject);
+    pMyObject->ManufactureTroPool   ((ANSC_HANDLE)pMyObject);
+    pMyObject->ManufactureBmoReqPool((ANSC_HANDLE)pMyObject);
+    pMyObject->ManufactureBmoRepPool((ANSC_HANDLE)pMyObject);
+
+    switch ( pProperty->ProxyType )
+    {
+        case    HTTP_PROXY_TYPE_SMALL :
+
+                ulEngineCount = HTTP_SPROXY_ENGINE_NUMBER;
+                ulSocketCount = HTTP_SPROXY_SOCKET_NUMBER;
+
+                break;
+
+        case    HTTP_PROXY_TYPE_MEDIUM :
+
+                ulEngineCount = HTTP_MPROXY_ENGINE_NUMBER;
+                ulSocketCount = HTTP_MPROXY_SOCKET_NUMBER;
+
+                break;
+
+        case    HTTP_PROXY_TYPE_BIG :
+
+                ulEngineCount = HTTP_BPROXY_ENGINE_NUMBER;
+                ulSocketCount = HTTP_BPROXY_SOCKET_NUMBER;
+
+                break;
+
+        case    HTTP_PROXY_TYPE_GIANT :
+
+                ulEngineCount = HTTP_GPROXY_ENGINE_NUMBER;
+                ulSocketCount = HTTP_GPROXY_SOCKET_NUMBER;
+
+                break;
+
+        default :
+
+                ulEngineCount = HTTP_MPROXY_ENGINE_NUMBER;
+                ulSocketCount = HTTP_MPROXY_SOCKET_NUMBER;
+
+                break;
+    }
+
+    pSimpleProxy->SetHostAddress   ((ANSC_HANDLE)pSimpleProxy, pProperty->HostAddress.Dot);
+    pSimpleProxy->SetHostPort      ((ANSC_HANDLE)pSimpleProxy, pProperty->HostPort       );
+    pSimpleProxy->SetMaxMessageSize((ANSC_HANDLE)pSimpleProxy, HTTP_APO_MAX_MESSAGE_SIZE );
+    pSimpleProxy->SetEngineCount   ((ANSC_HANDLE)pSimpleProxy, ulEngineCount             );
+    pSimpleProxy->SetMinSocketCount((ANSC_HANDLE)pSimpleProxy, 0                         );
+    pSimpleProxy->SetMaxSocketCount((ANSC_HANDLE)pSimpleProxy, ulSocketCount             );
+    pSimpleProxy->SetSocketTimeOut ((ANSC_HANDLE)pSimpleProxy, HTTP_APO_SOCKET_TIMEOUT   );
+    pSimpleProxy->SetMode          ((ANSC_HANDLE)pSimpleProxy, ulTcpSpoMode              );
+
+    returnStatus = pSimpleProxy->Engage((ANSC_HANDLE)pSimpleProxy);
+
+    return  returnStatus;
+}
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        HttpApoCancel
+            (
+                ANSC_HANDLE                 hThisObject
+            );
+
+    description:
+
+        This function is called to control the proxy's behavior.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpApoCancel
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject     = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
+    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty     = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+
+    if ( !pMyObject->bActive )
+    {
+        return  ANSC_STATUS_SUCCESS;
+    }
+    else
+    {
+        pMyObject->bActive = FALSE;
+    }
+
+    returnStatus = pSimpleProxy->Cancel((ANSC_HANDLE)pSimpleProxy);
+
+    pMyObject->DestroyPsoPool   ((ANSC_HANDLE)pMyObject);
+    pMyObject->DestroyTroPool   ((ANSC_HANDLE)pMyObject);
+    pMyObject->DestroyBmoReqPool((ANSC_HANDLE)pMyObject);
+    pMyObject->DestroyBmoRepPool((ANSC_HANDLE)pMyObject);
+
+    return  returnStatus;
+}
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        HttpApoWorkerInit
+            (
+                ANSC_HANDLE                 hThisObject
+            );
+
+    description:
+
+        This function is called to control the proxy's behavior.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpApoWorkerInit
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject     = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
+    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty     = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+
+    return  ANSC_STATUS_SUCCESS;
+}
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        HttpApoWorkerUnload
+            (
+                ANSC_HANDLE                 hThisObject
+            );
+
+    description:
+
+        This function is called to control the proxy's behavior.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpApoWorkerUnload
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject     = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
+    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty     = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+
+    return  ANSC_STATUS_SUCCESS;
+}

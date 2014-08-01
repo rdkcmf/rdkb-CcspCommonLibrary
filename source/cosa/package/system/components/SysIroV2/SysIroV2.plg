@@ -1,0 +1,31 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: SysIroV2 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\dh\LOCALS~1\Temp\RSP2D21.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /D "_ANSC_WINDOWSNT" /D "_ANSC_USER" /Fp"Debug/SysIroV2.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\work\bisga\package\system\components\SysIroV2\sys_irov2_iraif.c"
+"D:\work\bisga\package\system\components\SysIroV2\sys_irov2_management.c"
+]
+Creating command line "cl.exe @C:\DOCUME~1\dh\LOCALS~1\Temp\RSP2D21.tmp" 
+Creating command line "link.exe -lib /nologo /out:"Debug\SysIroV2.lib"  .\Debug\sys_irov2_base.obj .\Debug\sys_irov2_interface.obj .\Debug\sys_irov2_iraif.obj .\Debug\sys_irov2_operation.obj .\Debug\sys_irov2_states.obj .\Debug\sys_irov2_management.obj "
+<h3>Output Window</h3>
+Compiling...
+sys_irov2_iraif.c
+D:\work\bisga\package\system\components\SysIroV2\sys_irov2_iraif.c(1757) : warning C4013: '_ansc_memcpy' undefined; assuming extern returning int
+sys_irov2_management.c
+D:\work\bisga\package\system\components\SysIroV2\sys_irov2_management.c(995) : warning C4013: '_ansc_memcpy' undefined; assuming extern returning int
+Creating library...
+
+
+
+<h3>Results</h3>
+SysIroV2.lib - 0 error(s), 2 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<#
+
+    dn  = Domain.GetDomainName()
+    
+    = "  unkown domain: [" $ dn $ "]\r\n\r\n"
+       
+#>
+

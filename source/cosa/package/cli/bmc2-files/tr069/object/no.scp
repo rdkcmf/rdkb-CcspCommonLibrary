@@ -1,0 +1,26 @@
+<#
+    include "../../function.scp"
+    
+    subsysPrefix = ""
+    
+	   /*sessionID stays 0 unless when in an active session */
+	   /*use AcqWriteAccess() slap call to enter an active session */
+	sessionID = 0
+
+    count = Command.GetCount()
+
+    cmd   = Command.GetCommandName()
+    para  = Command.GetParamByIndex(0)
+
+    tree = Services.Dslh.ParamTree
+    stat = tree.DelObject(subsysPrefix, sessionID, para)
+    
+    if stat == 0xFFFFFFDF
+        = "\"" $ para $ "\" does NOT exist.\n"
+    elseif stat != 0
+        = "failed to delete object - \"" $ para $"\"\n"
+    else    
+        = "\"" $ para $ "\" is deleted successfully.\n"    
+    endif
+#>
+

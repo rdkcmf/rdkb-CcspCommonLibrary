@@ -1,0 +1,120 @@
+/**********************************************************************
+   Copyright [2014] [Cisco Systems, Inc.]
+ 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+ 
+       http://www.apache.org/licenses/LICENSE-2.0
+ 
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+**********************************************************************/
+
+
+/**********************************************************************
+
+    module:	ansc_deuo_send.c
+
+        For Advanced Networking Service Container (ANSC),
+        BroadWay Service Delivery System
+
+    ---------------------------------------------------------------
+
+    copyright:
+
+        Cisco Systems, Inc., 1997 ~ 2001
+        All Rights Reserved.
+
+    ---------------------------------------------------------------
+
+    description:
+
+        This module implements the advanced async-task functions
+        of the Ansc Daemon Engine Udp Object.
+
+        *   AnscDeuoSendTask
+
+    ---------------------------------------------------------------
+
+    environment:
+
+        platform independent
+
+    ---------------------------------------------------------------
+
+    author:
+
+        Xuechen Yang
+
+    ---------------------------------------------------------------
+
+    revision:
+
+        12/10/01    initial revision.
+
+**********************************************************************/
+
+
+#include "ansc_deuo_global.h"
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        AnscDeuoSendTask
+            (
+                ANSC_HANDLE                 hThisObject
+            );
+
+    description:
+
+        This function is a task thread created by the start() function
+        call to contain async packet-send processing.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+AnscDeuoSendTask
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
+    PANSC_DAEMON_SERVER_UDP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_UDP_OBJECT)pMyObject->hDaemonServer;
+    PANSC_DSUO_WORKER_OBJECT        pWorker      = (PANSC_DSUO_WORKER_OBJECT      )pServer->hWorker;
+    PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
+    PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
+
+    AnscTrace("AnscDeuoSendTask is activated ...!\n");
+
+    /*
+     * As a scalable server implemention, we shall accept as many incoming client connections as
+     * possible and can only be limited by the system resources. Once the listening socket becomes
+     * readable, which means an incoming connection attempt has arrived. We create a new socket
+     * object and associate it with the client. This is a repeated process until the socket owner
+     * closes the socket.
+     */
+    while ( pMyObject->bStarted )
+    {
+        AnscSleep(200);
+    }
+
+    AnscSetEvent(&pMyObject->SendEvent);
+
+    return  ANSC_STATUS_SUCCESS;
+}
