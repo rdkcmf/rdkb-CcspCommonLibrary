@@ -1,0 +1,3 @@
+
+#SUBDIRS = $(MACHINE)
+SUBDIRS = source

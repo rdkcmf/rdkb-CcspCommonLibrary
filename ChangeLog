@@ -1,0 +1,54 @@
+CcspCommonLibrary
+- move arch/source/util_api/ansc/AnscCryptoPubSSLeay/ansc_crypto_pub_ssleay_* to
+       source/util_api/ansc/AnscCryptoPubSSLeay/
+- move arch/source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/dslh_wmpdo_mprif_priv.c to
+       source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/
+- move arch/pc/include/ccsp_custom.h to
+       source/ccsp/include/ccsp_custom_pc.h
+- move arch/intel_usg/boards/rdkb_atom/include/ccsp_custom.h to
+       source/ccsp/include/ccsp_custom_atom.h 
+- mkdir config
+- mkdir scripts
+- move arch/pc/scripts/cosa_start.sh to
+       scripts/cosa_start_pc.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cosa_start.sh to
+       scripts/cosa_start_atom.sh
+- move arch/intel_usg/boards/arm_shared/scripts/cosa_start.sh to
+       scripts/cosa_start_arm.sh
+- move arch/pc/scripts/cli_start.sh to
+       scripts/cli_start_pc.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cli_start.sh to
+       scripts/cli_start_atom.sh
+- move arch/intel_usg/boards/arm_shared/scripts/cli_start.sh to
+       scripts/cli_start_arm.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cosa_stop.sh 
+       scripts/
+- move arch/pc/config/ccsp_msg.cfg to
+       config/ccsp_msg_pc.cfg
+- move arch/intel_usg/boards/rdkb_atom/config/ccsp_msg.cfg to
+       config/ccsp_msg_atom.cfg
+- move arch/intel_usg/boards/arm_shared/config/ccsp_msg.cfg to
+       config/ccsp_msg_arm.cfg
+- move arch/pc/config/basic.conf to
+       config/basic_pc.conf
+- move arch/intel_usg/boards/rdkb_atom/config/basic.conf to
+       config/basic_atom.conf
+- move arch/intel_usg/boards/arm_shared/config/basic.conf to
+       config/basic_arm.conf
+- move arch/pc/boards/rdkb/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.pc.orig
+- move arch/intel_usg/boards/rdkb_atom/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.atom.orig
+- move arch/intel_usg/boards/arm_shared/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.arm.orig
+- remove arch directory
+- move Makefile to Makefile.orig
+- remove empty LICENSE file
+- add autogen.sh
+- add configure.ac
+- add Makefile.am
+- touch AUTHORS
+- touch ChangeLog
+- touch NEWS
+- add source/Makefile.am
+
