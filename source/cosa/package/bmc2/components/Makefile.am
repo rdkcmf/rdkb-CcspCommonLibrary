@@ -1,0 +1,1 @@
+SUBDIRS = Bmc2ComDomain Bmc2ComExecutor Bmc2ComTerminal Bmc2EnvController Bmc2ReqController
