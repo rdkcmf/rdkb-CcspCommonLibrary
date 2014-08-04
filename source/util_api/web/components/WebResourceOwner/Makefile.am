@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_WebResourceOwner.la
+lib_utilapi_WebResourceOwner_ladir = $(top_builddir)/source/.libs
+lib_utilapi_WebResourceOwner_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/web/include $(CPPFLAGS)
+lib_utilapi_WebResourceOwner_la_SOURCES = web_roo_operation.c web_roo_rcp.c web_roo_base.c web_roo_states.c web_roo_process.c web_roo_interface.c web_roo_do_stuff.c web_roo_reply.c web_roo_do_stuff_upnp.c
+lib_utilapi_WebResourceOwner_la_LDFLAGS = 

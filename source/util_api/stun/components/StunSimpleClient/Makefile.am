@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_StunSimpleClient.la
+lib_utilapi_StunSimpleClient_ladir = $(top_builddir)/source/.libs
+lib_utilapi_StunSimpleClient_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/stun/include $(CPPFLAGS)
+lib_utilapi_StunSimpleClient_la_SOURCES = stun_sco_interface.c stun_sco_send.c stun_sco_scuowo1.c stun_sco_action.c stun_sco_operation.c stun_sco_scuowob.c stun_sco_scuowoa.c stun_sco_states.c stun_sco_base.c stun_sco_recv.c
+lib_utilapi_StunSimpleClient_la_LDFLAGS = 

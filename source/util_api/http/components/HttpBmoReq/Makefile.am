@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpBmoReq.la
+lib_utilapi_HttpBmoReq_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpBmoReq_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpBmoReq_la_SOURCES = http_bmoreq_states.c http_bmoreq_header.c http_bmoreq_rcp.c http_bmoreq_auth.c http_bmoreq_cgi.c http_bmoreq_base.c http_bmoreq_interface.c http_bmoreq_access.c
+lib_utilapi_HttpBmoReq_la_LDFLAGS = 

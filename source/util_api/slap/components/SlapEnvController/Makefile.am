@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapEnvController.la
+lib_utilapi_SlapEnvController_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapEnvController_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapEnvController_la_SOURCES = slap_eco_management.c slap_eco_operation.c slap_eco_interface.c slap_eco_bssif.c slap_eco_base.c slap_eco_uoaif.c slap_eco_states.c
+lib_utilapi_SlapEnvController_la_LDFLAGS = 

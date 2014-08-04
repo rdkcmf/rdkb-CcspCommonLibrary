@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_asn1_basic.la
+lib_utilapi_asn1_basic_ladir = $(top_builddir)/source/.libs
+lib_utilapi_asn1_basic_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+lib_utilapi_asn1_basic_la_SOURCES = ansc_asn1_enumerate.c ansc_asn1_bitstring.c ansc_asn1_any.c ansc_asn1_real.c ansc_asn1_export_utils.c ansc_asn1_bool.c ansc_asn1_base_interface.c ansc_asn1_string.c ansc_asn1_sequenceof.c ansc_asn1_taginfo_interface.c ansc_asn1_null.c ansc_asn1_time.c ansc_asn1_integer.c ansc_asn1_external_api.c ansc_asn1_sequence.c ansc_asn1_attr_interface.c ansc_asn1_choice.c ansc_asn1_utils.c ansc_asn1_setof.c ansc_asn1_oid.c ansc_asn1_set.c
+lib_utilapi_asn1_basic_la_LDFLAGS = 

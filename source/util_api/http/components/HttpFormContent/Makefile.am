@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpFormContent.la
+lib_utilapi_HttpFormContent_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpFormContent_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpFormContent_la_SOURCES = http_fco_management.c http_fco_operation.c http_fco_base.c http_fco_access.c http_fco_interface.c http_fco_states.c
+lib_utilapi_HttpFormContent_la_LDFLAGS = 

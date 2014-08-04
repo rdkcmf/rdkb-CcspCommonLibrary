@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpSimpleClient.la
+lib_utilapi_HttpSimpleClient_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpSimpleClient_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpSimpleClient_la_SOURCES = http_sco_states.c http_sco_management.c http_sco_operation.c http_sco_access.c http_sco_interface.c http_sco_request.c http_sco_casif.c http_sco_base.c http_sco_bspif.c
+lib_utilapi_HttpSimpleClient_la_LDFLAGS = 

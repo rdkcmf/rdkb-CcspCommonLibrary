@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_al_pki.la
+lib_utilapi_al_pki_ladir = $(top_builddir)/source/.libs
+lib_utilapi_al_pki_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+lib_utilapi_al_pki_la_SOURCES = smartcard_sample_entity.c adv_pki_entity_base.c alcert_base.c al_cert_api.c pki_entity_base.c ca_entity_base.c pki_utility_api.c
+lib_utilapi_al_pki_la_LDFLAGS = 

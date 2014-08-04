@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_TlsAlertHandler.la
+lib_utilapi_TlsAlertHandler_ladir = $(top_builddir)/source/.libs
+lib_utilapi_TlsAlertHandler_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/tls/include $(CPPFLAGS)
+lib_utilapi_TlsAlertHandler_la_SOURCES = tls_aho_base.c tls_aho_states.c tls_aho_process.c tls_aho_interface.c
+lib_utilapi_TlsAlertHandler_la_LDFLAGS = 

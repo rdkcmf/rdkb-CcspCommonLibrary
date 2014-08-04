@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapSrvProxy.la
+lib_utilapi_SlapSrvProxy_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapSrvProxy_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapSrvProxy_la_SOURCES = slap_spo_interface.c slap_spo_operation.c slap_spo_states.c slap_spo_utilities.c slap_spo_base.c
+lib_utilapi_SlapSrvProxy_la_LDFLAGS = 

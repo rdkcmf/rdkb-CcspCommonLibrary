@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_al_pkcs12.la
+lib_utilapi_al_pkcs12_ladir = $(top_builddir)/source/.libs
+lib_utilapi_al_pkcs12_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+lib_utilapi_al_pkcs12_la_SOURCES = pkcs12_utility_api.c asn1_pfx.c
+lib_utilapi_al_pkcs12_la_LDFLAGS = 

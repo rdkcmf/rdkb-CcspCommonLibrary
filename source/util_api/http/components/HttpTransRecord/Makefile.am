@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpTransRecord.la
+lib_utilapi_HttpTransRecord_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpTransRecord_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpTransRecord_la_SOURCES = http_tro_operation.c http_tro_tmh.c http_tro_states.c http_tro_client.c http_tro_interface.c http_tro_base.c http_tro_server.c
+lib_utilapi_HttpTransRecord_la_LDFLAGS = 

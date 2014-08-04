@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapScoGallery.la
+lib_utilapi_SlapScoGallery_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapScoGallery_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapScoGallery_la_SOURCES = slap_scogal_membership.c slap_scogal_base.c slap_scogal_interface.c slap_scogal_states.c slap_scogal_collection.c slap_scogal_management.c
+lib_utilapi_SlapScoGallery_la_LDFLAGS = 

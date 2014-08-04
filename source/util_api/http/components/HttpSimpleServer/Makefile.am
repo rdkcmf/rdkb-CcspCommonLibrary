@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpSimpleServer.la
+lib_utilapi_HttpSimpleServer_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpSimpleServer_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpSimpleServer_la_SOURCES = http_sso_dstowo.c http_sso_states.c http_sso_base.c http_sso_operation.c http_sso_wsp.c http_sso_management.c http_sso_interface.c
+lib_utilapi_HttpSimpleServer_la_LDFLAGS = 

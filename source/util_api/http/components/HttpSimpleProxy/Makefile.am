@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpSimpleProxy.la
+lib_utilapi_HttpSimpleProxy_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpSimpleProxy_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpSimpleProxy_la_SOURCES = http_spo_states.c http_spo_management.c http_spo_base.c http_spo_wam.c http_spo_sbc.c http_spo_pubwo.c http_spo_prvwo.c http_spo_operation.c http_spo_pbc.c http_spo_interface.c http_spo_cbc.c
+lib_utilapi_HttpSimpleProxy_la_LDFLAGS = 

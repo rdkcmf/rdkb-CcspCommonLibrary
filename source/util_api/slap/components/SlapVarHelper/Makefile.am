@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapVarHelper.la
+lib_utilapi_SlapVarHelper_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapVarHelper_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapVarHelper_la_SOURCES = slap_vho_plist.c slap_vho_variable.c slap_vho_conversion.c slap_vho_array.c slap_vho_interface.c slap_vho_base.c
+lib_utilapi_SlapVarHelper_la_LDFLAGS = 

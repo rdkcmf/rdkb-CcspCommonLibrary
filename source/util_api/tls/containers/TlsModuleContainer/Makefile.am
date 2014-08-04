@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_TlsModuleContainer.la
+lib_utilapi_TlsModuleContainer_ladir = $(top_builddir)/source/.libs
+lib_utilapi_TlsModuleContainer_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/tls/include $(CPPFLAGS)
+lib_utilapi_TlsModuleContainer_la_SOURCES = tls_mco_feature.c tls_mco_operation.c tls_mco_interface.c tls_mco_extension.c tls_mco_base.c tls_mco_states.c tls_mco_control.c
+lib_utilapi_TlsModuleContainer_la_LDFLAGS = 

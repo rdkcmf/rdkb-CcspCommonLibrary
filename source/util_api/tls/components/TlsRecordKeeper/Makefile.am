@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_TlsRecordKeeper.la
+lib_utilapi_TlsRecordKeeper_ladir = $(top_builddir)/source/.libs
+lib_utilapi_TlsRecordKeeper_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/tls/include $(CPPFLAGS)
+lib_utilapi_TlsRecordKeeper_la_SOURCES = tls_rko_interface.c tls_rko_states.c tls_rko_process.c tls_rko_management.c tls_rko_base.c tls_rko_operation.c
+lib_utilapi_TlsRecordKeeper_la_LDFLAGS = 

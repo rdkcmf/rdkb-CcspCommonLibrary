@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapObjEntity.la
+lib_utilapi_SlapObjEntity_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapObjEntity_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapObjEntity_la_SOURCES = slap_oeo_tables.c slap_oeo_states.c slap_oeo_olaif.c slap_oeo_base.c slap_oeo_management.c slap_oeo_utilities.c slap_oeo_interface.c
+lib_utilapi_SlapObjEntity_la_LDFLAGS = 

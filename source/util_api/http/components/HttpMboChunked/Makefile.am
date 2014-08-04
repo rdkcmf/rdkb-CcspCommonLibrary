@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpMboChunked.la
+lib_utilapi_HttpMboChunked_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpMboChunked_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpMboChunked_la_SOURCES = http_mbochk_base.c http_mbochk_access.c http_mbochk_states.c http_mbochk_interface.c http_mbochk_process.c http_mbochk_trailer.c http_mbochk_management.c
+lib_utilapi_HttpMboChunked_la_LDFLAGS = 

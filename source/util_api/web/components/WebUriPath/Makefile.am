@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_WebUriPath.la
+lib_utilapi_WebUriPath_ladir = $(top_builddir)/source/.libs
+lib_utilapi_WebUriPath_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/web/include $(CPPFLAGS)
+lib_utilapi_WebUriPath_la_SOURCES = web_upo_management.c web_upo_interface.c web_upo_base.c web_upo_states.c
+lib_utilapi_WebUriPath_la_LDFLAGS = 

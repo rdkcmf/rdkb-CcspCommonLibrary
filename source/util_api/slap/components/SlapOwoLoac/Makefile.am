@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_SlapOwoLoac.la
+lib_utilapi_SlapOwoLoac_ladir = $(top_builddir)/source/.libs
+lib_utilapi_SlapOwoLoac_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
+lib_utilapi_SlapOwoLoac_la_SOURCES = slap_owoloac_states.c slap_owoloac_interface.c slap_owoloac_base.c
+lib_utilapi_SlapOwoLoac_la_LDFLAGS = 

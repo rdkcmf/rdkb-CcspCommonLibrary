@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpMboFile.la
+lib_utilapi_HttpMboFile_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpMboFile_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpMboFile_la_SOURCES = http_mbofile_base.c http_mbofile_process.c http_mbofile_access.c http_mbofile_interface.c
+lib_utilapi_HttpMboFile_la_LDFLAGS = 

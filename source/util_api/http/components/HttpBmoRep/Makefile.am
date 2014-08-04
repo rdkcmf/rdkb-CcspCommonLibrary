@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpBmoRep.la
+lib_utilapi_HttpBmoRep_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpBmoRep_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpBmoRep_la_SOURCES = http_bmorep_header.c http_bmorep_states.c http_bmorep_access.c http_bmorep_base.c http_bmorep_interface.c
+lib_utilapi_HttpBmoRep_la_LDFLAGS = 

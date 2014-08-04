@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_WebVirtualHost.la
+lib_utilapi_WebVirtualHost_ladir = $(top_builddir)/source/.libs
+lib_utilapi_WebVirtualHost_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/web/include $(CPPFLAGS)
+lib_utilapi_WebVirtualHost_la_SOURCES = web_vho_lsm.c web_vho_operation.c web_vho_interface.c web_vho_base.c web_vho_management.c web_vho_states.c web_vho_process.c
+lib_utilapi_WebVirtualHost_la_LDFLAGS = 

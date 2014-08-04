@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = lib_utilapi_HttpMessageBody.la
+lib_utilapi_HttpMessageBody_ladir = $(top_builddir)/source/.libs
+lib_utilapi_HttpMessageBody_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+lib_utilapi_HttpMessageBody_la_SOURCES = http_mbo_access.c http_mbo_interface.c http_mbo_mp_util.c http_mbo_base.c http_mbo_states.c http_mbo_process.c
+lib_utilapi_HttpMessageBody_la_LDFLAGS = 
