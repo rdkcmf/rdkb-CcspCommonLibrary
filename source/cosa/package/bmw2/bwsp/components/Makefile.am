@@ -1,1 +1,1 @@
-SUBDIRS = BwspSiteCreator BwspPortalHost BwspWebServlet
+SUBDIRS = BwspPortalHost BwspWebServlet BwspSiteCreator

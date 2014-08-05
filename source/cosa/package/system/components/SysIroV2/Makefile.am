@@ -1,9 +1,9 @@
-AM_CFLAGS =
+AM_CFLAGS = -D_ANSC_LINUX
 AM_CPPFLAGS = -Wall -Werror
 ACLOCAL_AMFLAGS = -I m4
 hardware_platform = i686-linux-gnu
-noinst_LTLIBRARIES = libcosa_SysIroV2.la
-libcosa_SysIroV2_ladir = $(top_builddir)/source/cosa/.libs
-libcosa_SysIroV2_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
-libcosa_SysIroV2_la_SOURCES = sys_irov2_iraif.c sys_irov2_interface.c sys_irov2_management.c sys_irov2_base.c sys_irov2_operation.c sys_irov2_states.c
-libcosa_SysIroV2_la_LDFLAGS = 
+noinst_LTLIBRARIES = libCcspCommonLibrary_SysIroV2.la
+libCcspCommonLibrary_SysIroV2_ladir = $(top_builddir)/.libs
+libCcspCommonLibrary_SysIroV2_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+libCcspCommonLibrary_SysIroV2_la_SOURCES = sys_irov2_iraif.c sys_irov2_management.c sys_irov2_states.c sys_irov2_base.c sys_irov2_interface.c sys_irov2_operation.c
+libCcspCommonLibrary_SysIroV2_la_LDFLAGS = 

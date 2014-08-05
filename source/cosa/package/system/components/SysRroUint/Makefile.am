@@ -1,9 +1,9 @@
-AM_CFLAGS =
+AM_CFLAGS = -D_ANSC_LINUX
 AM_CPPFLAGS = -Wall -Werror
 ACLOCAL_AMFLAGS = -I m4
 hardware_platform = i686-linux-gnu
-noinst_LTLIBRARIES = libcosa_SysRroUint.la
-libcosa_SysRroUint_ladir = $(top_builddir)/source/cosa/.libs
-libcosa_SysRroUint_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
-libcosa_SysRroUint_la_SOURCES = sys_rrouint_access.c sys_rrouint_interface.c sys_rrouint_base.c
-libcosa_SysRroUint_la_LDFLAGS = 
+noinst_LTLIBRARIES = libCcspCommonLibrary_SysRroUint.la
+libCcspCommonLibrary_SysRroUint_ladir = $(top_builddir)/.libs
+libCcspCommonLibrary_SysRroUint_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+libCcspCommonLibrary_SysRroUint_la_SOURCES = sys_rrouint_base.c sys_rrouint_interface.c sys_rrouint_access.c
+libCcspCommonLibrary_SysRroUint_la_LDFLAGS = 

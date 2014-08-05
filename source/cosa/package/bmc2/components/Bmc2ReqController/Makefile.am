@@ -1,9 +1,9 @@
-AM_CFLAGS =
+AM_CFLAGS = -D_ANSC_LINUX
 AM_CPPFLAGS = -Wall -Werror
 ACLOCAL_AMFLAGS = -I m4
 hardware_platform = i686-linux-gnu
-noinst_LTLIBRARIES = libcosa_Bmc2ReqController.la
-libcosa_Bmc2ReqController_ladir = $(top_builddir)/source/cosa/.libs
-libcosa_Bmc2ReqController_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
-libcosa_Bmc2ReqController_la_SOURCES = bmc2_reqco_interface.c bmc2_reqco_pecif.c bmc2_reqco_management.c bmc2_reqco_base.c bmc2_reqco_control.c bmc2_reqco_states.c bmc2_reqco_operation.c
-libcosa_Bmc2ReqController_la_LDFLAGS = 
+noinst_LTLIBRARIES = libCcspCommonLibrary_Bmc2ReqController.la
+libCcspCommonLibrary_Bmc2ReqController_ladir = $(top_builddir)/.libs
+libCcspCommonLibrary_Bmc2ReqController_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+libCcspCommonLibrary_Bmc2ReqController_la_SOURCES = bmc2_reqco_pecif.c bmc2_reqco_management.c bmc2_reqco_operation.c bmc2_reqco_states.c bmc2_reqco_base.c bmc2_reqco_control.c bmc2_reqco_interface.c
+libCcspCommonLibrary_Bmc2ReqController_la_LDFLAGS = 

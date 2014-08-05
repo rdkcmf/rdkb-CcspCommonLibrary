@@ -1,9 +1,9 @@
-AM_CFLAGS =
+AM_CFLAGS = -D_ANSC_LINUX
 AM_CPPFLAGS = -Wall -Werror
 ACLOCAL_AMFLAGS = -I m4
 hardware_platform = i686-linux-gnu
-noinst_LTLIBRARIES = libutil_api_AnscBrokerEngineTcp.la
-libutil_api_AnscBrokerEngineTcp_ladir = $(top_builddir)/source/util_api/.libs
-libutil_api_AnscBrokerEngineTcp_la_CPPFLAGS = -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
-libutil_api_AnscBrokerEngineTcp_la_SOURCES = ansc_beto_states.c ansc_beto_process.c ansc_beto_management.c ansc_beto_base.c ansc_beto_recv.c ansc_beto_interface.c ansc_beto_operation.c ansc_beto_send.c
-libutil_api_AnscBrokerEngineTcp_la_LDFLAGS = 
+noinst_LTLIBRARIES = libCcspCommonLibrary_AnscBrokerEngineTcp.la
+libCcspCommonLibrary_AnscBrokerEngineTcp_ladir = $(top_builddir)/.libs
+libCcspCommonLibrary_AnscBrokerEngineTcp_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
+libCcspCommonLibrary_AnscBrokerEngineTcp_la_SOURCES = ansc_beto_states.c ansc_beto_recv.c ansc_beto_interface.c ansc_beto_base.c ansc_beto_operation.c ansc_beto_send.c ansc_beto_process.c ansc_beto_management.c
+libCcspCommonLibrary_AnscBrokerEngineTcp_la_LDFLAGS = 
