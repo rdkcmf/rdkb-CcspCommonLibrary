@@ -1,31 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = lib_utilapi_ansccryptopubssleay.la
-#bin_PROGRAMS =
-
-lib_utilapi_ansccryptopubssleay_ladir = $(top_builddir)/source/.libs
-
-lib_utilapi_ansccryptopubssleay_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
-
-lib_utilapi_ansccryptopubssleay_la_SOURCES = \
-    ansc_crypto_pub_ssleay_base.c \
-    ansc_crypto_pub_ssleay_dh.c \
-    ansc_crypto_pub_ssleay_encrypt.c \
-    ansc_crypto_pub_ssleay_interface.c \
-    ansc_crypto_pub_ssleay_key.c \
-    ansc_crypto_pub_ssleay_key_gen.c \
-    ansc_crypto_pub_ssleay_process.c \
-    ansc_crypto_pub_ssleay_sign.c \
-    ansc_crypto_pub_ssleay_sign_priv.c \
-    ansc_crypto_pub_ssleay_util.c \
-    ansc_crypto_pub_ssleay_util_priv.c \
-    ansc_crypto_pub_ssleay_verify.c \
-    ansc_crypto_pub_ssleay_verify_priv.c \
-
-lib_utilapi_ansccryptopubssleay_la_LDFLAGS =
+noinst_LTLIBRARIES = libutil_api_AnscCryptoPubSSLeay.la
+libutil_api_AnscCryptoPubSSLeay_ladir = $(top_builddir)/source/util_api/.libs
+libutil_api_AnscCryptoPubSSLeay_la_CPPFLAGS = -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+libutil_api_AnscCryptoPubSSLeay_la_SOURCES = ansc_crypto_pub_ssleay_interface.c ansc_crypto_pub_ssleay_encrypt.c ansc_crypto_pub_ssleay_key.c ansc_crypto_pub_ssleay_util.c ansc_crypto_pub_ssleay_base.c ansc_crypto_pub_ssleay_sign_priv.c ansc_crypto_pub_ssleay_verify.c ansc_crypto_pub_ssleay_dh.c ansc_crypto_pub_ssleay_sign.c ansc_crypto_pub_ssleay_key_gen.c ansc_crypto_pub_ssleay_verify_priv.c ansc_crypto_pub_ssleay_process.c ansc_crypto_pub_ssleay_util_priv.c
+libutil_api_AnscCryptoPubSSLeay_la_LDFLAGS = 

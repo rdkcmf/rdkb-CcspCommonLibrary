@@ -1,22 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libccsp_baseapi.la
-#bin_PROGRAMS =
-
-libccsp_baseapi_ladir = $(top_builddir)/source/.libs
-
-libccsp_baseapi_la_CPPFLAGS = -I$(top_builddir)/source/util_api/include $(CPPFLAGS)
-
-libccsp_baseapi_la_SOURCES = \
-    ccsp_base_api.c \
-    ccsp_base_api_shm.c \
-    ccsp_base_api_srv.c \
-    ccsp_message_bus.c \
-
-libccsp_baseapi_la_LDFLAGS =
+noinst_LTLIBRARIES = libutil_api_ccsp_msg_bus.la
+libutil_api_ccsp_msg_bus_ladir = $(top_builddir)/source/util_api/.libs
+libutil_api_ccsp_msg_bus_la_CPPFLAGS = -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include $(CPPFLAGS)
+libutil_api_ccsp_msg_bus_la_SOURCES = basic.conf ccsp_msg.cfg.android ccsp_base_api_srv.c ccsp_base_api_shm.c ccsp_msg.cfg ccsp_message_bus.c ccsp_base_api.c basic.conf.android
+libutil_api_ccsp_msg_bus_la_LDFLAGS = 

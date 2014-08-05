@@ -1,0 +1,1 @@
+SUBDIRS = SysRroBool SysSetupManager SysRroAstr SysRepositoryRecord SysRroHcxt SysIroV2 SysRroUint SysRroBstr SysCtlvProcessor SysInfoRepository SysRroSint SysRroEnum SysRepositoryDriver SysRecycleBin SysRepositoryFolder

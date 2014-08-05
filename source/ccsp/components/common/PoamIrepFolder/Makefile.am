@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = libccsp_PoamIrepFolder.la
+libccsp_PoamIrepFolder_ladir = $(top_builddir)/source/ccsp/.libs
+libccsp_PoamIrepFolder_la_CPPFLAGS = -I$(top_builddir)/source/ccsp/./include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
+libccsp_PoamIrepFolder_la_SOURCES = poam_irepfo_access.c poam_irepfo_base.c
+libccsp_PoamIrepFolder_la_LDFLAGS = 

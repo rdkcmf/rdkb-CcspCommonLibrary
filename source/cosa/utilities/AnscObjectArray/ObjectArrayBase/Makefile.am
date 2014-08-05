@@ -1,21 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_anscobjarray.la
-#bin_PROGRAMS =
-
-libcosa_anscobjarray_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_anscobjarray_la_CPPFLAGS = -I$(top_builddir)/source/cosa/utilities/include $(CPPFLAGS)
-
-libcosa_anscobjarray_la_SOURCES = \
-    ansc_obj_array_co_base.c \
-    ansc_obj_array_co_interface.c \
-    ansc_obj_array_co_process.c \
-
-libcosa_anscobjarray_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_ObjectArrayBase.la
+libcosa_ObjectArrayBase_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_ObjectArrayBase_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_ObjectArrayBase_la_SOURCES = ansc_obj_array_co_interface.c ansc_obj_array_co_base.c ansc_obj_array_co_process.c
+libcosa_ObjectArrayBase_la_LDFLAGS = 

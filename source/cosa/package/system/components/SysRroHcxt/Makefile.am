@@ -1,21 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_sysrrohcxt.la
-#bin_PROGRAMS =
-
-libcosa_sysrrohcxt_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_sysrrohcxt_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/include $(CPPFLAGS)
-
-libcosa_sysrrohcxt_la_SOURCES = \
-    sys_rrohcxt_acces \
-    sys_rrohcxt_base.c \
-    sys_rrohcxt_interface.c \
-
-libcosa_sysrrohcxt_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_SysRroHcxt.la
+libcosa_SysRroHcxt_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_SysRroHcxt_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_SysRroHcxt_la_SOURCES = sys_rrohcxt_base.c sys_rrohcxt_interface.c sys_rrohcxt_access.c
+libcosa_SysRroHcxt_la_LDFLAGS = 

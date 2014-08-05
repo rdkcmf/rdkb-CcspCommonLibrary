@@ -1,1 +1,1 @@
-SUBDIRS = components containers
+SUBDIRS = containers components

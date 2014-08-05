@@ -1,45 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_bspeng.la
-#bin_PROGRAMS =
-
-libcosa_bspeng_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_bspeng_la_CPPFLAGS = -I$(top_builddir)/source/cosa/utilities/bsp_eng/include $(CPPFLAGS)
-
-libcosa_bspeng_la_SOURCES = \
-    bspeng_access_co_base.c \
-    bspeng_access_co_process.c \
-    bspeng_archive_co_base.c \
-    bspeng_archive_co_process.c \
-    bspeng_branch_co_base.c \
-    bspeng_branch_co_process.c \
-    bspeng_co_base.c \
-    bspeng_co_execute.c \
-    bspeng_co_interface.c \
-    bspeng_co_process.c \
-    bspeng_list_co_base.c \
-    bspeng_list_co_process.c \
-    bspeng_outputset_co_base.c \
-    bspeng_outputset_co_process.c \
-    bspeng_reader_co_base.c \
-    bspeng_reader_co_process.c \
-    bspeng_runtime_co_base.c \
-    bspeng_runtime_co_process.c \
-    bspeng_stack_co_base.c \
-    bspeng_stack_co_process.c \
-    bspeng_temp_co_base.c \
-    bspeng_temp_co_process.c \
-    bspeng_var_co_base.c \
-    bspeng_var_co_process.c \
-    bspeng_var_slap_conv.c \
-    bspeng_writer_co_base.c \
-    bspeng_writer_co_process.c \
-
-libcosa_bspeng_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_bsp_eng.la
+libcosa_bsp_eng_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_bsp_eng_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_bsp_eng_la_SOURCES = bspeng_co_execute.c bspeng_access_co_process.c bspeng_var_slap_conv.c bspeng_list_co_base.c bspeng_var_co_process.c bspeng_co_interface.c bspeng_stack_co_base.c bspeng_co_process.c bspeng_writer_co_base.c bspeng_access_co_base.c bspeng_co_base.c bspeng_archive_co_base.c bspeng_branch_co_process.c bspeng_temp_co_process.c bspeng_writer_co_process.c bspeng_list_co_process.c bspeng_runtime_co_process.c bspeng_temp_co_base.c bspeng_branch_co_base.c bspeng_runtime_co_base.c bspeng_outputset_co_base.c bspeng_archive_co_process.c bspeng_reader_co_process.c bspeng_reader_co_base.c bspeng_var_co_base.c bspeng_outputset_co_process.c bspeng_stack_co_process.c
+libcosa_bsp_eng_la_LDFLAGS = 

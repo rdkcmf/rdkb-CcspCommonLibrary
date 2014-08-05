@@ -1,1 +1,1 @@
-SUBDIRS = bmc2 dslh
+SUBDIRS = dslh bmc2

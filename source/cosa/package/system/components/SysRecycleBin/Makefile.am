@@ -1,23 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_sysrecyclebin.la
-#bin_PROGRAMS =
-
-libcosa_sysrecyclebin_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_sysrecyclebin_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/include $(CPPFLAGS)
-
-libcosa_sysrecyclebin_la_SOURCES = \
-    sys_rbo_access.c \
-    sys_rbo_base.c \
-    sys_rbo_interface.c \
-    sys_rbo_management.c \
-    sys_rbo_states.c \
-
-libcosa_sysrecyclebin_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_SysRecycleBin.la
+libcosa_SysRecycleBin_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_SysRecycleBin_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_SysRecycleBin_la_SOURCES = sys_rbo_access.c sys_rbo_base.c sys_rbo_management.c sys_rbo_interface.c sys_rbo_states.c
+libcosa_SysRecycleBin_la_LDFLAGS = 

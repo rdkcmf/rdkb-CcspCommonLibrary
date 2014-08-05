@@ -1,23 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_bmw2bwspwebservlet.la
-#bin_PROGRAMS =
-
-libcosa_bmw2bwspwebservlet_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_bmw2bwspwebservlet_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/include $(CPPFLAGS)
-
-libcosa_bmw2bwspwebservlet_la_SOURCES = \
-    bwsp_wso_base.c \
-    bwsp_wso_do_stuff.c \
-    bwsp_wso_do_stuff_upnp.c \
-    bwsp_wso_interface.c \
-    bwsp_wso_states.c \
-
-libcosa_bmw2bwspwebservlet_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_BwspWebServlet.la
+libcosa_BwspWebServlet_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_BwspWebServlet_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_BwspWebServlet_la_SOURCES = bwsp_wso_base.c bwsp_wso_states.c bwsp_wso_do_stuff.c bwsp_wso_interface.c bwsp_wso_do_stuff_upnp.c
+libcosa_BwspWebServlet_la_LDFLAGS = 

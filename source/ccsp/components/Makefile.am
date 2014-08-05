@@ -1,1 +1,1 @@
-SUBDIRS = CCSP_NamespaceMgr common
+SUBDIRS = common CCSP_NamespaceMgr

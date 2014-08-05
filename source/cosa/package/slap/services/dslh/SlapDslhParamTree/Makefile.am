@@ -1,24 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_slapdslhparamtree.la
-#bin_PROGRAMS =
-
-libcosa_slapdslhparamtree_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_slapdslhparamtree_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/slap/include $(CPPFLAGS)
-
-libcosa_slapdslhparamtree_la_SOURCES = \
-    slap_dslh_paramto_access.c \
-    slap_dslh_paramto_base.c \
-    slap_dslh_paramto_interface.c \
-    slap_dslh_paramto_states.c \
-
-libcosa_slapdslhparamtree_la_LDFLAGS =
-
-
+noinst_LTLIBRARIES = libcosa_SlapDslhParamTree.la
+libcosa_SlapDslhParamTree_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_SlapDslhParamTree_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_SlapDslhParamTree_la_SOURCES = slap_dslh_paramto_states.c slap_dslh_paramto_interface.c slap_dslh_paramto_access.c slap_dslh_paramto_base.c
+libcosa_SlapDslhParamTree_la_LDFLAGS = 

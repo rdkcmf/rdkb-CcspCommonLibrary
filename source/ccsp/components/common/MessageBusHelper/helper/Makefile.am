@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = libccsp_helper.la
+libccsp_helper_ladir = $(top_builddir)/source/ccsp/.libs
+libccsp_helper_la_CPPFLAGS = -I$(top_builddir)/source/ccsp/./include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
+libccsp_helper_la_SOURCES = messagebus_interface_helper.c messagebus_interface_utility.c
+libccsp_helper_la_LDFLAGS = 

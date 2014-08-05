@@ -1,1 +1,1 @@
-SUBDIRS = ansc asn.1 ccsp_dm_api ccsp_msg_bus http Makefile.am slap stun tls web
+SUBDIRS = tls slap stun ansc ccsp_msg_bus ccsp_dm_api web asn.1 http

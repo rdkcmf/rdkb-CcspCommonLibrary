@@ -1,1 +1,1 @@
-SUBDIRS = DslhCpeController DslhDataModelAgent DslhObjController DslhObjEntity DslhObjRecord DslhObjcoTable DslhVarEntity DslhVarRecord DslhWmpDatabase
+SUBDIRS = DslhObjRecord DslhVarEntity DslhDataModelAgent DslhObjEntity DslhObjcoTable DslhVarRecord DslhWmpDatabase DslhObjController DslhCpeController

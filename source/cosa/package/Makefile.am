@@ -1,1 +1,1 @@
-SUBDIRS = bmc2  bmw2  cli  slap  system
+SUBDIRS = bmw2 slap cli system bmc2

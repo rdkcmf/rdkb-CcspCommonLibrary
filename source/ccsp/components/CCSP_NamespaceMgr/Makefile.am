@@ -1,0 +1,9 @@
+AM_CFLAGS =
+AM_CPPFLAGS = -Wall -Werror
+ACLOCAL_AMFLAGS = -I m4
+hardware_platform = i686-linux-gnu
+noinst_LTLIBRARIES = libccsp_CCSP_NamespaceMgr.la
+libccsp_CCSP_NamespaceMgr_ladir = $(top_builddir)/source/ccsp/.libs
+libccsp_CCSP_NamespaceMgr_la_CPPFLAGS = -I$(top_builddir)/source/ccsp/./include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
+libccsp_CCSP_NamespaceMgr_la_SOURCES = ccsp_ns_mgr_operation.c ccsp_ns_comp_operation.c ccsp_ns_mgr_base.c ccsp_ns_comp_base.c
+libccsp_CCSP_NamespaceMgr_la_LDFLAGS = 

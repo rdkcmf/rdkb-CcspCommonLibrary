@@ -1,1 +1,1 @@
-SUBDIRS = bree bwrm bwsp
+SUBDIRS = bwsp bree bwrm

@@ -1,27 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_bmc2comexecutor.la
-#bin_PROGRAMS =
-
-libcosa_bmc2comexecutor_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_bmc2comexecutor_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmc2/include $(CPPFLAGS)
-
-libcosa_bmc2comexecutor_la_SOURCES = \
-    bmc2_comeo_base.c \
-    bmc2_comeo_helper_base.c \
-    bmc2_comeo_helper.c \
-    bmc2_comeo_helper_ext.c \
-    bmc2_comeo_interface.c \
-    bmc2_comeo_operation.c \
-    bmc2_comeo_process.c \
-    bmc2_comeo_soaif.c \
-    bmc2_comeo_state.c \
-
-libcosa_bmc2comexecutor_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_Bmc2ComExecutor.la
+libcosa_Bmc2ComExecutor_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_Bmc2ComExecutor_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_Bmc2ComExecutor_la_SOURCES = bmc2_comeo_interface.c bmc2_comeo_base.c bmc2_comeo_helper_base.c bmc2_comeo_soaif.c bmc2_comeo_helper_ext.c bmc2_comeo_state.c bmc2_comeo_process.c bmc2_comeo_helper.c bmc2_comeo_operation.c
+libcosa_Bmc2ComExecutor_la_LDFLAGS = 

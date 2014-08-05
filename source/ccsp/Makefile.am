@@ -1,1 +1,1 @@
-SUBDIRS = components custom include
+SUBDIRS = components

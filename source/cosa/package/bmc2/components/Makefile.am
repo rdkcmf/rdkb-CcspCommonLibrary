@@ -1,1 +1,1 @@
-SUBDIRS = Bmc2ComDomain Bmc2ComExecutor Bmc2ComTerminal Bmc2EnvController Bmc2ReqController
+SUBDIRS = Bmc2ComTerminal Bmc2ComDomain Bmc2ReqController Bmc2EnvController Bmc2ComExecutor

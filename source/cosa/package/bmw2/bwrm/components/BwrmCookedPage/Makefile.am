@@ -1,22 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_bmw2bwrmcookedpage.la
-#bin_PROGRAMS =
-
-libcosa_bmw2bwrmcookedpage_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_bmw2bwrmcookedpage_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/include $(CPPFLAGS)
-
-libcosa_bmw2bwrmcookedpage_la_SOURCES = \
-    bwrm_cpo_base.c \
-    bwrm_cpo_interface.c \
-    bwrm_cpo_operation.c \
-    bwrm_cpo_states.c \
-
-libcosa_bmw2bwrmcookedpage_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_BwrmCookedPage.la
+libcosa_BwrmCookedPage_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_BwrmCookedPage_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_BwrmCookedPage_la_SOURCES = bwrm_cpo_interface.c bwrm_cpo_base.c bwrm_cpo_operation.c bwrm_cpo_states.c
+libcosa_BwrmCookedPage_la_LDFLAGS = 

@@ -1,23 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_sysinforepository.la
-#bin_PROGRAMS =
-
-libcosa_sysinforepository_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_sysinforepository_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/include $(CPPFLAGS)
-
-libcosa_sysinforepository_la_SOURCES = \
-    sys_iro_base.c \
-    sys_iro_interface.c \
-    sys_iro_iraif.c \
-    sys_iro_operation.c \
-    sys_iro_states.c \
-
-libcosa_sysinforepository_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_SysInfoRepository.la
+libcosa_SysInfoRepository_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_SysInfoRepository_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_SysInfoRepository_la_SOURCES = sys_iro_base.c sys_iro_iraif.c sys_iro_operation.c sys_iro_interface.c sys_iro_states.c
+libcosa_SysInfoRepository_la_LDFLAGS = 

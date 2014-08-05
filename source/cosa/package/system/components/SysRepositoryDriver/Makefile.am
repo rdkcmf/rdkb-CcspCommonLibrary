@@ -1,23 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_sysrepositorydriver.la
-#bin_PROGRAMS =
-
-libcosa_sysrepositorydriver_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_sysrepositorydriver_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/include $(CPPFLAGS)
-
-libcosa_sysrepositorydriver_la_SOURCES = \
-    sys_rdo_access.c \
-    sys_rdo_base.c \
-    sys_rdo_interface.c \
-    sys_rdo_operation.c \
-    sys_rdo_states.c \
-
-libcosa_sysrepositorydriver_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_SysRepositoryDriver.la
+libcosa_SysRepositoryDriver_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_SysRepositoryDriver_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_SysRepositoryDriver_la_SOURCES = sys_rdo_states.c sys_rdo_operation.c sys_rdo_base.c sys_rdo_access.c sys_rdo_interface.c
+libcosa_SysRepositoryDriver_la_LDFLAGS = 

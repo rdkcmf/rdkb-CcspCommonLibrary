@@ -1,24 +1,9 @@
-AM_CFLAGS = 
-
+AM_CFLAGS =
 AM_CPPFLAGS = -Wall -Werror
-
 ACLOCAL_AMFLAGS = -I m4
-
 hardware_platform = i686-linux-gnu
-
-lib_LTLIBRARIES = libcosa_bmc2envcontroller.la
-#bin_PROGRAMS =
-
-libcosa_bmc2envcontroller_ladir = $(top_builddir)/source/cosa/.libs
-
-libcosa_bmc2envcontroller_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmc2/include $(CPPFLAGS)
-
-libcosa_bmc2envcontroller_la_SOURCES = \
-    bmc2_envco_base.c \
-    bmc2_envco_interface.c \
-    bmc2_envco_management.c \
-    bmc2_envco_operation.c \
-    bmc2_envco_sccif.c \
-    bmc2_envco_states.c \
-
-libcosa_bmc2envcontroller_la_LDFLAGS =
+noinst_LTLIBRARIES = libcosa_Bmc2EnvController.la
+libcosa_Bmc2EnvController_ladir = $(top_builddir)/source/cosa/.libs
+libcosa_Bmc2EnvController_la_CPPFLAGS = -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/./include $(CPPFLAGS)
+libcosa_Bmc2EnvController_la_SOURCES = bmc2_envco_base.c bmc2_envco_operation.c bmc2_envco_states.c bmc2_envco_management.c bmc2_envco_interface.c bmc2_envco_sccif.c
+libcosa_Bmc2EnvController_la_LDFLAGS = 
