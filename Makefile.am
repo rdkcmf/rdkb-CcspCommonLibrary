@@ -177,4 +177,4 @@ libccsp_common_la_DEPENDENCIES= \
 	source/util_api/asn.1/components/asn1_basic/libCcspCommonLibrary_asn1_basic.la \
 	source/util_api/asn.1/components/al_pkcs12/libCcspCommonLibrary_al_pkcs12.la
 
-libccsp_common_la_LIBADD=$(libccsp_common)
+libccsp_common_la_LIBADD=$(libccsp_common_la_DEPENDENCIES)
