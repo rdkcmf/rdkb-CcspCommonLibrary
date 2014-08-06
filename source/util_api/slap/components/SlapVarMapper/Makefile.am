@@ -1,9 +1,23 @@
-AM_CFLAGS = -D_ANSC_LINUX
+AM_CFLAGS = $(DBUS_CFLAGS)
+AM_CFLAGS += -D_ANSC_LINUX
+AM_CFLAGS += -D_ANSC_USER
+AM_CFLAGS += -D_ANSC_LITTLE_ENDIAN_
+AM_CFLAGS += -D_NO_PKI_KB5_SUPPORT
+AM_CFLAGS += -D_ANSC_USE_OPENSSL_
+AM_CFLAGS += -D_ANSC_AES_USED_
+AM_CFLAGS += -D_CCSP_CWMP_TCP_CONNREQ_HANDLER
+AM_CFLAGS += -D_DSLH_STUN_
+AM_CFLAGS += -D_BBHM_SSE_FILE_IO
+AM_CFLAGS += -DENABLE_SA_KEY
+AM_CFLAGS += -D_ANSC_IPV6_COMPATIBLE_
+AM_CFLAGS += -DBUILD_WEB
+AM_CFLAGS += -D_COSA_SIM_
+
 AM_CPPFLAGS = -Wall -Werror
 ACLOCAL_AMFLAGS = -I m4
 hardware_platform = i686-linux-gnu
 noinst_LTLIBRARIES = libCcspCommonLibrary_SlapVarMapper.la
 libCcspCommonLibrary_SlapVarMapper_ladir = $(top_builddir)/.libs
-libCcspCommonLibrary_SlapVarMapper_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/asn.1/include $(CPPFLAGS)
-libCcspCommonLibrary_SlapVarMapper_la_SOURCES = slap_vmo_base.c slap_vmo_mapping.c slap_vmo_states.c slap_vmo_interface.c slap_vmo_operation.c
+libCcspCommonLibrary_SlapVarMapper_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/common/PoamIrepFolder -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
+libCcspCommonLibrary_SlapVarMapper_la_SOURCES = slap_vmo_states.c slap_vmo_mapping.c slap_vmo_base.c slap_vmo_interface.c slap_vmo_operation.c
 libCcspCommonLibrary_SlapVarMapper_la_LDFLAGS = 

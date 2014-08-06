@@ -1,1 +1,1 @@
-SUBDIRS = TlsRecordKeeper TlsCryptoProvider TlsEnvController TlsSessionManager TlsRecordClient TlsHsoClient TlsHsoServer TlsSessionEntry TlsAppConnector TlsHandShaker TlsCipherSwitch TlsAlertHandler TlsConnController
+SUBDIRS = TlsAlertHandler TlsHandShaker TlsRecordClient TlsSessionEntry TlsConnController TlsRecordKeeper TlsSessionManager TlsCipherSwitch TlsEnvController TlsHsoServer TlsHsoClient TlsCryptoProvider TlsAppConnector

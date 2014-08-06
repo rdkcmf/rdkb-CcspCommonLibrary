@@ -1,1 +1,1 @@
-SUBDIRS = utilities package
+SUBDIRS = package utilities
