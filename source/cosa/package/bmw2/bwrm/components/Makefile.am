@@ -1,1 +1,1 @@
-SUBDIRS = BwrmEnvController BwrmCookedPage BwrmPageManager BwrmFileManager
+SUBDIRS = BwrmPageManager BwrmFileManager BwrmCookedPage BwrmEnvController

@@ -1,1 +1,1 @@
-SUBDIRS = DataModel MessageBusHelper
+SUBDIRS = MessageBusHelper DataModel
