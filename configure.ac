@@ -34,7 +34,6 @@ AC_TYPE_UINT8_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-PKG_CHECK_MODULES([DBUS], [dbus-1 >= 1.0])
 
 AC_CONFIG_FILES(
 	source/cosa/utilities/AnscObjectArray/AnscByteArray/Makefile
