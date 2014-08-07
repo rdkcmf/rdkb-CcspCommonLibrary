@@ -176,6 +176,7 @@ libccsp_common_la_DEPENDENCIES= \
 	source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/libCcspCommonLibrary_DslhWmpDatabase.la \
 	source/ccsp/components/common/DataModel/dml/components/DslhObjController/libCcspCommonLibrary_DslhObjController.la \
 	source/ccsp/components/common/DataModel/dml/components/DslhCpeController/libCcspCommonLibrary_DslhCpeController.la \
+	source/ccsp/components/common/PoamIrepFolder/libCcspCommonLibrary_PoamIrepFolder.la \
 	source/ccsp/components/CCSP_NamespaceMgr/libCcspCommonLibrary_CCSP_NamespaceMgr.la
 
 libccsp_common_la_LIBADD=$(libccsp_common_la_DEPENDENCIES)

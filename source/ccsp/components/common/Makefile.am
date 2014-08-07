@@ -1,1 +1,1 @@
-SUBDIRS = MessageBusHelper DataModel
+SUBDIRS = MessageBusHelper DataModel PoamIrepFolder

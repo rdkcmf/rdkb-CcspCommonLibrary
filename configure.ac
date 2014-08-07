@@ -250,6 +250,7 @@ AC_CONFIG_FILES(
 	source/ccsp/components/common/DataModel/dml/components/Makefile
 	source/ccsp/components/common/DataModel/dml/Makefile
 	source/ccsp/components/common/DataModel/Makefile
+	source/ccsp/components/common/PoamIrepFolder/Makefile
 	source/ccsp/components/common/Makefile
 	source/ccsp/components/CCSP_NamespaceMgr/Makefile
 	source/ccsp/components/Makefile
