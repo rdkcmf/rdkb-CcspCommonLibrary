@@ -1,1 +1,1 @@
-SUBDIRS = SlapBmc2Application SlapBmc2Output SlapBmc2Command SlapBmc2Terminal SlapBmc2Input SlapBmc2Server SlapBmc2Domain
+SUBDIRS = SlapBmc2Server SlapBmc2Terminal SlapBmc2Output SlapBmc2Input SlapBmc2Command SlapBmc2Domain SlapBmc2Application

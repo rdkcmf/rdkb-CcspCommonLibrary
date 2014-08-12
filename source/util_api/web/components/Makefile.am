@@ -1,1 +1,1 @@
-SUBDIRS = WebVirtualHost WebUriPath WebRooFsm WebResourceLocator WebSimpleServer WebAuthServer WebStatusAtomTable WebResourceOwner WebGeneralSession
+SUBDIRS = WebResourceLocator WebVirtualHost WebStatusAtomTable WebSimpleServer WebAuthServer WebResourceOwner WebUriPath WebRooFsm WebGeneralSession

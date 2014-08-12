@@ -1,1 +1,1 @@
-SUBDIRS = AnscStringArray AnscPtrArray AnscUIntArray AnscByteArray ObjectArrayBase
+SUBDIRS = AnscByteArray AnscUIntArray AnscPtrArray AnscStringArray ObjectArrayBase

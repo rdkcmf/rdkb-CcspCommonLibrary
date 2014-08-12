@@ -1,1 +1,1 @@
-SUBDIRS = bsp_eng AnscObjectArray
+SUBDIRS = AnscObjectArray bsp_eng
