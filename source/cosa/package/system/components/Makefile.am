@@ -1,1 +1,1 @@
-SUBDIRS = SysRroUint SysRepositoryRecord SysRroBstr SysRepositoryDriver SysRroSint SysRroHcxt SysRroEnum SysInfoRepository SysRecycleBin SysRroAstr SysRroBool SysRepositoryFolder
+SUBDIRS = SysRroBool SysRroAstr SysRepositoryRecord SysRroHcxt SysRroUint SysRroBstr SysInfoRepository SysRroSint SysRroEnum SysRepositoryDriver SysRecycleBin SysRepositoryFolder

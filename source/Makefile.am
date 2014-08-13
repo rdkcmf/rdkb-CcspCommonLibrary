@@ -1,1 +1,1 @@
-SUBDIRS = cosa debug_api ccsp util_api
+SUBDIRS = cosa util_api debug_api ccsp
