@@ -1,1 +1,1 @@
-SUBDIRS = utilities containers components
+SUBDIRS = containers components utilities
