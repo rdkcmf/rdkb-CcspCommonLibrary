@@ -13,8 +13,8 @@ AM_CFLAGS += -DBUILD_WEB
 AM_CFLAGS += -D_COSA_SIM_
 AM_LDFLAGS = -lpthread
 AM_LDFLAGS += -lrt
-AM_LDFLAGS += -lssl
-AM_LDFLAGS += -lcrypto
+AM_LDFLAGS +=
+AM_LDFLAGS +=
 AM_LDFLAGS += -lz
 
 AM_CPPFLAGS = -Wall -Werror
@@ -24,4 +24,4 @@ hardware_platform = i686-linux-gnu
 noinst_LTLIBRARIES = libCcspCommonLibrary_DslhVarRecord.la
 libCcspCommonLibrary_DslhVarRecord_la_CPPFLAGS = -I$(top_srcdir)/source/cosa/include/linux -I$(top_srcdir)/source/debug_api/include -I$(top_srcdir)/source/ccsp/components/common/PoamIrepFolder -I$(top_srcdir)/source/cosa/include -I$(top_srcdir)/source/cosa/utilities/include -I$(top_srcdir)/source/cosa/custom -I$(top_srcdir)/source/cosa/package/bmw2/bwsp/include -I$(top_srcdir)/source/cosa/package/bmw2/include -I$(top_srcdir)/source/cosa/package/bmw2/bree/include -I$(top_srcdir)/source/cosa/package/bmw2/beep/include -I$(top_srcdir)/source/cosa/package/bmw2/bwrm/include -I$(top_srcdir)/source/cosa/package/system/include -I$(top_srcdir)/source/cosa/package/slap/include -I$(top_srcdir)/source/cosa/package/slap/services/dslh/include -I$(top_srcdir)/source/cosa/package/slap/services/bmc2/include -I$(top_srcdir)/source/cosa/package/cli/include -I$(top_srcdir)/source/cosa/package/bmc2/include -I$(top_srcdir)/source/debug_api/include -I$(top_srcdir)/source/ccsp/include -I$(top_srcdir)/source/ccsp/components/include -I$(top_srcdir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_srcdir)/source/ccsp/custom -I$(top_srcdir)/source/util_api/tls/include -I$(top_srcdir)/source/util_api/web/include -I$(top_srcdir)/source/util_api/ansc/include -I$(top_srcdir)/source/util_api/stun/include -I$(top_srcdir)/source/util_api/http/include -I$(top_srcdir)/source/util_api/http/utilities/include -I$(top_srcdir)/source/util_api/asn.1/include $(CPPFLAGS)
 libCcspCommonLibrary_DslhVarRecord_la_SOURCES = dslh_varro_config.c dslh_varro_interface.c dslh_varro_base.c dslh_varro_utility.c dslh_varro_states.c dslh_varro_access.c
-libCcspCommonLibrary_DslhVarRecord_la_LDFLAGS =  -lpthread -lrt -lssl -lcrypto -lz
+libCcspCommonLibrary_DslhVarRecord_la_LDFLAGS =  -lpthread -lrt -lz

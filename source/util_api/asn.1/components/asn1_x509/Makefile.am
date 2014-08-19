@@ -13,8 +13,8 @@ AM_CFLAGS += -DBUILD_WEB
 AM_CFLAGS += -D_COSA_SIM_
 AM_LDFLAGS = -lpthread
 AM_LDFLAGS += -lrt
-AM_LDFLAGS += -lssl
-AM_LDFLAGS += -lcrypto
+AM_LDFLAGS +=
+AM_LDFLAGS +=
 AM_LDFLAGS += -lz
 
 AM_CPPFLAGS = -Wall -Werror
@@ -24,4 +24,4 @@ hardware_platform = i686-linux-gnu
 noinst_LTLIBRARIES = libCcspCommonLibrary_asn1_x509.la
 libCcspCommonLibrary_asn1_x509_la_CPPFLAGS = -I$(top_srcdir)/source/cosa/include/linux -I$(top_srcdir)/source/debug_api/include -I$(top_srcdir)/source/ccsp/components/common/PoamIrepFolder -I$(top_srcdir)/source/cosa/include -I$(top_srcdir)/source/cosa/utilities/include -I$(top_srcdir)/source/cosa/custom -I$(top_srcdir)/source/cosa/package/bmw2/bwsp/include -I$(top_srcdir)/source/cosa/package/bmw2/include -I$(top_srcdir)/source/cosa/package/bmw2/bree/include -I$(top_srcdir)/source/cosa/package/bmw2/beep/include -I$(top_srcdir)/source/cosa/package/bmw2/bwrm/include -I$(top_srcdir)/source/cosa/package/system/include -I$(top_srcdir)/source/cosa/package/slap/include -I$(top_srcdir)/source/cosa/package/slap/services/dslh/include -I$(top_srcdir)/source/cosa/package/slap/services/bmc2/include -I$(top_srcdir)/source/cosa/package/cli/include -I$(top_srcdir)/source/cosa/package/bmc2/include -I$(top_srcdir)/source/debug_api/include -I$(top_srcdir)/source/ccsp/include -I$(top_srcdir)/source/ccsp/components/include -I$(top_srcdir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_srcdir)/source/ccsp/custom -I$(top_srcdir)/source/util_api/tls/include -I$(top_srcdir)/source/util_api/web/include -I$(top_srcdir)/source/util_api/ansc/include -I$(top_srcdir)/source/util_api/stun/include -I$(top_srcdir)/source/util_api/http/include -I$(top_srcdir)/source/util_api/http/utilities/include -I$(top_srcdir)/source/util_api/asn.1/include $(CPPFLAGS)
 libCcspCommonLibrary_asn1_x509_la_SOURCES = ansc_asn1_publickey.c ansc_asn1_certificate.c ansc_asn1_contentinfo.c ansc_asn1_keyagreement.c ansc_asn1_crl.c ansc_asn1_algorithmidentifier.c ansc_asn1_certificaterequest.c ansc_asn1_othername.c ansc_asn1_privatekeyinfo.c pki_export_utils.c pki_cert_attr.c ansc_asn1_extensions.c ansc_asn1_rsadigestinfo.c ansc_asn1_name.c
-libCcspCommonLibrary_asn1_x509_la_LDFLAGS =  -lpthread -lrt -lssl -lcrypto -lz
+libCcspCommonLibrary_asn1_x509_la_LDFLAGS =  -lpthread -lrt -lz
