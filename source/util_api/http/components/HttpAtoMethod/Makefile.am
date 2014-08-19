@@ -14,8 +14,8 @@ AM_CFLAGS += -D_COSA_SIM_
 AM_LDFLAGS = -L/var/tmp/pc-rdkb/lib
 AM_LDFLAGS += -lpthread
 AM_LDFLAGS += -lrt
-AM_LDFLAGS += -lssl
-AM_LDFLAGS += -lcrypto
+AM_LDFLAGS +=
+AM_LDFLAGS +=
 AM_LDFLAGS += -lz
 
 AM_CPPFLAGS = -Wall -Werror
@@ -25,4 +25,4 @@ hardware_platform = i686-linux-gnu
 noinst_LTLIBRARIES = libCcspCommonLibrary_HttpAtoMethod.la
 libCcspCommonLibrary_HttpAtoMethod_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I/var/tmp/pc-rdkb/include/dbus-1.0 -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/components/common/PoamIrepFolder -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
 libCcspCommonLibrary_HttpAtoMethod_la_SOURCES = http_atomethod_base.c http_atomethod_interface.c http_atomethod_operation.c
-libCcspCommonLibrary_HttpAtoMethod_la_LDFLAGS =  -L/var/tmp/pc-rdkb/lib -lpthread -lrt -lssl -lcrypto -lz
+libCcspCommonLibrary_HttpAtoMethod_la_LDFLAGS =  -L/var/tmp/pc-rdkb/lib -lpthread -lrt -lz

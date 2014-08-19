@@ -19,7 +19,6 @@
 #include <string.h>
 #include <pthread.h>
 #include <dbus/dbus.h>
-#include <dbus/dbus-mainloop.h>
 #include <ccsp_message_bus.h>
 #include "ccsp_base_api.h"
 #include "ccsp_trace.h"
@@ -37,8 +36,8 @@ const int NANOSEC_PER_MILLISEC = 1000000;
 #endif
 
 // EXTERNAL
-extern void _dbus_connection_lock (DBusConnection *connection);
-extern void _dbus_connection_unlock (DBusConnection *connection);
+extern void dbus_connection_lock (DBusConnection *connection);
+extern void dbus_connection_unlock (DBusConnection *connection);
 
 extern CCSP_DEADLOCK_DETECTION_INFO deadlock_detection_info;
 extern int   CcspBaseIf_timeout_protect_plus_seconds;
@@ -205,13 +204,16 @@ add_watch
 {
     CData *cd = data;
 
-    return _dbus_loop_add_watch 
+    return dbus_loop_add_watch 
                (
                    cd->loop,
+                   watch
+#if 0
                    watch,
                    connection_watch_callback,
                    cd, 
                    NULL
+#endif
                 );
 }
 
@@ -224,12 +226,15 @@ remove_watch
 {
     CData *cd = data;
 
-    _dbus_loop_remove_watch 
+    dbus_loop_remove_watch 
         (
              cd->loop,
+             watch 
+#if 0
              watch, 
              connection_watch_callback, 
              cd
+#endif
          );
 }
 
@@ -253,13 +258,16 @@ add_timeout
     {
     CData *cd = data;
 
-    return _dbus_loop_add_timeout 
+    return dbus_loop_add_timeout 
                (
                    cd->loop,
+                   timeout 
+#if 0
                    timeout, 
                    connection_timeout_callback, 
                    cd, 
                    NULL
+#endif
                 );
 }
 
@@ -272,12 +280,15 @@ remove_timeout
 {
     CData *cd = data;
 
-    _dbus_loop_remove_timeout 
+    dbus_loop_remove_timeout 
         (
             cd->loop,
+            timeout 
+#if 0
             timeout, 
             connection_timeout_callback, 
             cd
+#endif
          );
 }
 
@@ -297,7 +308,7 @@ cdata_new
     cd->connection = connection;
 
     dbus_connection_ref (cd->connection);
-    _dbus_loop_ref (cd->loop);
+    dbus_loop_ref (cd->loop);
 
     return cd;
 }
@@ -311,7 +322,7 @@ cdata_free
     CData *cd = data;
 
     dbus_connection_unref (cd->connection);
-    _dbus_loop_unref (cd->loop);
+    dbus_loop_unref (cd->loop);
 
     dbus_free (cd);
 }
@@ -350,8 +361,8 @@ dispatch_status_func
 
     if (new_status != DBUS_DISPATCH_COMPLETE)
     {
-        while ( ! _dbus_loop_queue_dispatch (loop, connection))
-            _dbus_wait_for_memory ();
+        while ( ! dbus_loop_queue_dispatch (loop, connection))
+            dbus_wait_for_memory ();
     }
 }
 
@@ -509,7 +520,7 @@ ccsp_connection_setup
     // check dispatch status
     if (dbus_connection_get_dispatch_status (connection) != DBUS_DISPATCH_COMPLETE)
     {
-        if ( ! _dbus_loop_queue_dispatch (loop, connection))
+        if ( ! dbus_loop_queue_dispatch (loop, connection))
             goto NO_MEM;
     }
 
@@ -565,7 +576,7 @@ CCSP_Message_Bus_Loop_Thread
 )
 {
     DBusLoop *loop = (DBusLoop *)ptr;
-    _dbus_loop_run (loop); // main loop, does _ref and _unref
+    dbus_loop_run (loop); // main loop, does _ref and _unref
     return NULL;
 }
 
@@ -930,7 +941,7 @@ CCSP_Message_Bus_Init
                     */
 
         // start the loop and connect threads, should be just one of each, even if count > 1
-        bus_info->connection[count].loop = _dbus_loop_new();
+        bus_info->connection[count].loop = dbus_loop_new();
         pthread_create
             (
                 &thread_dbus_loop, 
@@ -1062,7 +1073,7 @@ CCSP_Message_Bus_Exit
 
         if(bus_info->connection[i].loop )
         {
-            _dbus_loop_quit (bus_info->connection[i].loop);
+            dbus_loop_quit (bus_info->connection[i].loop);
         }
     }
 
@@ -1555,7 +1566,7 @@ CCSP_Message_Bus_Send_Str
     }
 
     // get reply
-    _dbus_connection_lock(conn);
+    dbus_connection_lock(conn);
     reply = dbus_pending_call_steal_reply(pcall);
 
     if(!reply)
@@ -1575,7 +1586,7 @@ CCSP_Message_Bus_Send_Str
         pthread_mutex_lock(&cb_data->count_mutex);
         dbus_pending_call_set_notify (pcall, ccsp_msg_check_resp_sync, (void *)cb_data, NULL);
 
-        _dbus_connection_unlock(conn);
+        dbus_connection_unlock(conn);
 
 #ifndef WIN32 
         gettimeofday(&now, NULL);
@@ -1614,7 +1625,7 @@ CCSP_Message_Bus_Send_Str
     }
     else
     {
-        _dbus_connection_unlock(conn);
+        dbus_connection_unlock(conn);
         ret = analyze_reply(message, reply, NULL);
     }
 
@@ -1691,7 +1702,7 @@ CCSP_Message_Bus_Send_Msg
         goto EXIT;
     }
 
-    _dbus_connection_lock(conn);
+    dbus_connection_lock(conn);
     reply = dbus_pending_call_steal_reply(pcall);
     if( ! reply)  
 {
@@ -1707,7 +1718,7 @@ CCSP_Message_Bus_Send_Msg
         if( ! cb_data)
     {
             CcspTraceError(("<%s>: cb_data malloc fail \n", __FUNCTION__));
-            _dbus_connection_unlock(conn);
+            dbus_connection_unlock(conn);
             ret = CCSP_Message_Bus_OOM;
             goto EXIT;
         }
@@ -1720,7 +1731,7 @@ CCSP_Message_Bus_Send_Msg
         pthread_mutex_lock(&cb_data->count_mutex);
         dbus_pending_call_set_notify (pcall, ccsp_msg_check_resp_sync, (void *)cb_data, NULL);
 
-        _dbus_connection_unlock(conn);
+        dbus_connection_unlock(conn);
 
 #ifndef WIN32 
         gettimeofday(&now, NULL);
@@ -1759,7 +1770,7 @@ CCSP_Message_Bus_Send_Msg
 }
     else
 {
-        _dbus_connection_unlock(conn);
+        dbus_connection_unlock(conn);
         ret = analyze_reply(message, reply, result);
 }
 

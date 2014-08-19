@@ -14,8 +14,8 @@ AM_CFLAGS += -D_COSA_SIM_
 AM_LDFLAGS = -L/var/tmp/pc-rdkb/lib
 AM_LDFLAGS += -lpthread
 AM_LDFLAGS += -lrt
-AM_LDFLAGS += -lssl
-AM_LDFLAGS += -lcrypto
+AM_LDFLAGS +=
+AM_LDFLAGS +=
 AM_LDFLAGS += -lz
 
 AM_CPPFLAGS = -Wall -Werror
@@ -25,4 +25,4 @@ hardware_platform = i686-linux-gnu
 noinst_LTLIBRARIES = libCcspCommonLibrary_AnscPlatform.la
 libCcspCommonLibrary_AnscPlatform_la_CPPFLAGS = -I$(top_builddir)/source/cosa/include/linux -I/var/tmp/pc-rdkb/include/dbus-1.0 -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/components/common/PoamIrepFolder -I$(top_builddir)/source/cosa/package/bmw2/beep/include -I$(top_builddir)/source/cosa/package/bmw2/bwsp/include -I$(top_builddir)/source/cosa/package/bmw2/include -I$(top_builddir)/source/cosa/package/bmw2/bree/include -I$(top_builddir)/source/cosa/package/bmw2/bwrm/include -I$(top_builddir)/source/cosa/package/slap/services/dslh/include -I$(top_builddir)/source/cosa/package/slap/services/bmc2/include -I$(top_builddir)/source/cosa/package/slap/include -I$(top_builddir)/source/cosa/package/cli/include -I$(top_builddir)/source/cosa/package/system/include -I$(top_builddir)/source/cosa/package/bmc2/include -I$(top_builddir)/source/cosa/utilities/include -I$(top_builddir)/source/cosa/custom -I$(top_builddir)/source/cosa/include -I$(top_builddir)/source/util_api/tls/include -I$(top_builddir)/source/util_api/stun/include -I$(top_builddir)/source/util_api/ansc/include -I$(top_builddir)/source/util_api/web/include -I$(top_builddir)/source/util_api/asn.1/include -I$(top_builddir)/source/util_api/http/utilities/include -I$(top_builddir)/source/util_api/http/include -I$(top_builddir)/source/debug_api/include -I$(top_builddir)/source/ccsp/custom -I$(top_builddir)/source/ccsp/include -I$(top_builddir)/source/ccsp/components/common/MessageBusHelper/include -I$(top_builddir)/source/ccsp/components/include $(CPPFLAGS)
 libCcspCommonLibrary_AnscPlatform_la_SOURCES = user_time.c ansc_slist.c ansc_protection.c user_openssl_priv.c ansc_swap.c user_protection.c user_memory.c ansc_x509_cert.c ansc_checksum.c ansc_debug.c user_task.c user_openssl.c ansc_token.c user_string.c ansc_queue.c user_socket.c ansc_spto_interface.c user_runtime_priv.c user_runtime.c ansc_external.c ansc_packet.c ansc_hash.c user_file_io.c ansc_base64.c ansc_time.c ansc_file_io.c user_time_priv.c ansc_http_parser.c ansc_task.c ansc_socket_lib.c ansc_asn1.c ansc_string.c ansc_dlist.c ansc_timer.c
-libCcspCommonLibrary_AnscPlatform_la_LDFLAGS =  -L/var/tmp/pc-rdkb/lib -lpthread -lrt -lssl -lcrypto -lz
+libCcspCommonLibrary_AnscPlatform_la_LDFLAGS =  -L/var/tmp/pc-rdkb/lib -lpthread -lrt -lz
