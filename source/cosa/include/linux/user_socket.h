@@ -212,6 +212,7 @@
     #define  ANSC_SOCKET_SO_REUSEADDR               SO_REUSEADDR
     #define  ANSC_SOCKET_SO_SNDTIMEO                SO_SNDTIMEO
     #define  ANSC_SOCKET_SO_RCVTIMEO                SO_RCVTIMEO
+    #define  ANSC_SOCKET_SO_BINDTODEVICE            SO_BINDTODEVICE
 
     #define  ANSC_SOCKET_SO_TCP_USETLS              0
     #define  ANSC_SOCKET_SO_TCP_TLSEXPORTONLY       0
@@ -480,6 +481,7 @@
     #define  XSKT_SOCKET_SOL_IPPROTO_IP             IPPROTO_IP
     #define  XSKT_SOCKET_SO_BROADCAST               SO_BROADCAST
     #define  XSKT_SOCKET_SO_REUSEADDR               SO_REUSEADDR
+    #define  XSKT_SOCKET_SO_BINDTODEVICE            SO_BINDTODEVICE
 
     #define  XSKT_SOCKET_SD_RECV                    SD_RECEIVE
     #define  XSKT_SOCKET_SD_SEND                    SD_SEND

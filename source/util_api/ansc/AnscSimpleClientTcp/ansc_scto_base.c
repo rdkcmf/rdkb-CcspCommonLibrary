@@ -338,6 +338,12 @@ AnscSctoInitialize
     pMyObject->bTlsEnabled       = FALSE;
     pMyObject->bTlsConnected     = FALSE;
 
+    pMyObject->bSocketBindToDevice   = FALSE;
+    pMyObject->GetSocketBindToDevice = AnscSctoGetSocketBindToDevice;
+    pMyObject->SetSocketBindToDevice = AnscSctoSetSocketBindToDevice;
+    pMyObject->GetSocketDeviceName   = AnscSctoGetSocketDeviceName;
+    pMyObject->SetSocketDeviceName   = AnscSctoSetSocketDeviceName;
+ 
     pMyObject->GetHostAddress    = AnscSctoGetHostAddress;
     pMyObject->SetHostAddress    = AnscSctoSetHostAddress;
     pMyObject->GetHostPort       = AnscSctoGetHostPort;

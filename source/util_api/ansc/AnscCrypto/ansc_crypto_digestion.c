@@ -514,7 +514,22 @@ AnscCryptoHmacSha256Digest
     UCHAR                           innerPadding[ANSC_SHA256_BLOCK_SIZE] = {0};
     UCHAR                           outerPadding[ANSC_SHA256_BLOCK_SIZE] = {0};
     UCHAR                           HMACKey[ANSC_SHA256_BLOCK_SIZE]      = {0};
-    SHA_CTX                         context;
+    UCHAR                           tempBuffer[ANSC_SHA256_OUTPUT_SIZE]  = {0};
+    SHA256_CTX                      context;
+
+    AnscTraceFlow
+        ((
+            "%s -- size = %d, buffer = %s, key = %02X.%02X.%02X.%02X.%02X.%02X..., hash length = %d, key length = %d, block size %d, output size %d\n", 
+            __FUNCTION__,
+            size,
+            (char*)buffer,
+            key->Value[0][0], key->Value[0][1], key->Value[0][2],
+            key->Value[0][3], key->Value[0][4], key->Value[0][5],
+            hash->Length,
+            key->Length,
+            ANSC_SHA256_BLOCK_SIZE,
+            ANSC_SHA256_OUTPUT_SIZE
+        ));
 
     /*
      * if the key is longer than the block size of hash function, we have to reset it to the output size;
@@ -552,14 +567,14 @@ AnscCryptoHmacSha256Digest
     SHA256_Init  (&context);
     SHA256_Update(&context,    innerPadding,   ANSC_SHA256_BLOCK_SIZE);
     SHA256_Update(&context,    (PUCHAR)buffer, size);
-    SHA256_Final (hash->Value, &context);
+    SHA256_Final (tempBuffer, &context);
 
     /*
      * perform outer SHA
      */
     SHA256_Init  (&context);
     SHA256_Update(&context,    outerPadding, ANSC_SHA256_BLOCK_SIZE);
-    SHA256_Update(&context,    hash->Value,  ANSC_SHA256_OUTPUT_SIZE);
+    SHA256_Update(&context,    tempBuffer,  ANSC_SHA256_OUTPUT_SIZE);
     SHA256_Final (hash->Value, &context);
 
     /*
@@ -897,7 +912,7 @@ AnscCryptoSha256Digest
         PANSC_CRYPTO_HASH           hash
     )
 {
-    SHA_CTX                         context;
+    SHA256_CTX                      context;
 
     SHA256_Init  (&context);
     SHA256_Update(&context,    (PUCHAR)buffer, size);

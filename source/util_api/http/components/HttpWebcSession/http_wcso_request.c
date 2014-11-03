@@ -854,6 +854,19 @@ TRY_NEXT:
     pTcpSimpleClient->SetMaxMessageSize((ANSC_HANDLE)pTcpSimpleClient, HTTP_WCSO_MAX_MESSAGE_SIZE);
     pTcpSimpleClient->SetMode          ((ANSC_HANDLE)pTcpSimpleClient, ulSctoMode                );
 
+    //    fprintf(stderr, "<RT> %s: HTTP Client DeviceName = '%s'\n", __FUNCTION__, pHttpSco ? pHttpSco->Property.BindToDevice.DeviceName : "NULL");
+    if( pHttpSco && pHttpSco->Property.BindToDevice.DeviceName[0] &&
+        AnscSizeOfString(pHttpSco->Property.BindToDevice.DeviceName) < ANSC_OBJ_IF_NAME_SIZE)
+    {
+        pTcpSimpleClient->SetSocketBindToDevice ((ANSC_HANDLE)pTcpSimpleClient, TRUE);
+        pTcpSimpleClient->SetSocketDeviceName   ((ANSC_HANDLE)pTcpSimpleClient, pHttpSco->Property.BindToDevice.DeviceName);
+    }
+    else 
+    {
+        pTcpSimpleClient->SetSocketBindToDevice ((ANSC_HANDLE)pTcpSimpleClient, FALSE);
+        pTcpSimpleClient->SetSocketDeviceName   ((ANSC_HANDLE)pTcpSimpleClient, "");
+    }
+
     returnStatus = pTcpSimpleClient->Engage((ANSC_HANDLE)pTcpSimpleClient);
 
 NO_MORE_TRY:

@@ -284,6 +284,7 @@ typedef ANSC_STATUS
 typedef ANSC_STATUS
 (*COSAGetParamValueByPathNameProc)
     (
+        void*                       bus_handle,
         parameterValStruct_t        *val,
         ULONG                       *parameterValueLength
     );

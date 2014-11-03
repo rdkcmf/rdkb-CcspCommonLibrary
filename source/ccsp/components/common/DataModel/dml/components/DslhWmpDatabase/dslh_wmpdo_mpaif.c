@@ -500,7 +500,7 @@ DslhWmpdoMpaSetParameterValues
     ULONG                           i                    = 0;
     BOOL                            bFromAcs             = FALSE;
     BOOL                            bFromSnmp            = FALSE;
-	ULONG                           dataType             = 0;
+    ULONG                           dataType             = 0;
 
     bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
@@ -792,7 +792,7 @@ DslhWmpdoMpaSetParameterValues
         pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )pMyObject->hObjRecordArray;
         pVarRecordArray      = (PDSLH_VAR_RECORD_OBJECT*   )pMyObject->hVarRecordArray;
         ulObjectCount        = pMyObject->ulObjRecordCount; 
-        ulParameterCount     = pMyObject->ulObjRecordCount; 
+        ulParameterCount     = pMyObject->ulVarRecordCount; 
 
         /* Currently we don't handle the returnStatus of SetCommit */
     
@@ -839,24 +839,24 @@ EXIT2:
     /* We just roll back when access origin is not from SNMP and invalid error */
     if ( !bFromSnmp )
     {
-    if ( pObjRecordArray )
-    {
-        /*
-         * Rollback any changes we may have made...
-         */
-        if ( returnStatus != ANSC_STATUS_SUCCESS )
+        if ( pObjRecordArray )
         {
-            for ( i = 0; i < ulObjectCount; i++ )
+            /*
+             * Rollback any changes we may have made...
+             */
+            if ( returnStatus != ANSC_STATUS_SUCCESS )
             {
-                pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pObjRecordArray[i];
-
-                if ( pObjRecord )
+                for ( i = 0; i < ulObjectCount; i++ )
                 {
-                    pObjRecord->CancelChanges((ANSC_HANDLE)pObjRecord);
+                    pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pObjRecordArray[i];
+
+                    if ( pObjRecord )
+                    {
+                        pObjRecord->CancelChanges((ANSC_HANDLE)pObjRecord);
+                    }
                 }
             }
         }
-    }
     }
 
 EXIT1:
@@ -1012,7 +1012,7 @@ DslhWmpdoMpaSetCommit
                 pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )pMyObject->hObjRecordArray;
                 pVarRecordArray      = (PDSLH_VAR_RECORD_OBJECT*   )pMyObject->hVarRecordArray;
                 ulObjectCount        = pMyObject->ulObjRecordCount; 
-                ulParameterCount     = pMyObject->ulObjRecordCount; 
+                ulParameterCount     = pMyObject->ulVarRecordCount; 
             }
         }
 
@@ -1027,7 +1027,7 @@ DslhWmpdoMpaSetCommit
 
             pVarEntity = (PDSLH_VAR_ENTITY_OBJECT)pVarRecord->hDslhVarEntity;
 
-                pVarRecord->CommitChange((ANSC_HANDLE)pVarRecord, bFromAcs);
+            pVarRecord->CommitChange((ANSC_HANDLE)pVarRecord, bFromAcs);
 
             if ( pVarEntity->ParamDescr->bNeedReboot )
             {
@@ -1037,7 +1037,7 @@ DslhWmpdoMpaSetCommit
             pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )pMyObject->hObjRecordArray;
             pVarRecordArray      = (PDSLH_VAR_RECORD_OBJECT*   )pMyObject->hVarRecordArray;
             ulObjectCount        = pMyObject->ulObjRecordCount; 
-            ulParameterCount     = pMyObject->ulObjRecordCount; 
+            ulParameterCount     = pMyObject->ulVarRecordCount; 
         }
 
         *piStatus    = bRebootNeeded? 1 : 0;
@@ -1196,7 +1196,7 @@ DslhWmpdoMpaGetParameterValues
         ANSC_HANDLE                 hThisObject,
         char*                       pAccessEntity,
         SLAP_STRING_ARRAY*          pParamNameArray,
-		ULONG						uMaxEntry,
+        ULONG                       uMaxEntry,
         void**                      ppParamValueArray,
         PULONG                      pulArraySize,
         unsigned int                writeID
