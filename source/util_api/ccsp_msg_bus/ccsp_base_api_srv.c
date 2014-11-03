@@ -523,6 +523,8 @@ void CcspBaseIf_SetCallback2
     }
 }
 
+#define CCSP_DBUS_LARGE_REPLY_SIZE_MIN 75000  // bytes
+#define MAX_DBUS_PARAM_SIZE 50000
 
 DBusHandlerResult
 CcspBaseIf_base_path_message_func (DBusConnection  *conn,
@@ -769,6 +771,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         parameterValStruct_t **val = 0;
         dbus_uint32_t writeID = 0;
         dbus_bool commit;
+        char bIsWifi = 0;
 
         dbus_message_iter_init (message, &iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_UINT32)
@@ -776,6 +779,12 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
             dbus_message_iter_get_basic (&iter, &writeID);
         }
         dbus_message_iter_next (&iter);
+
+        if ( (bus_info && strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.wifi") == 0) || 
+             writeID == DSLH_MPA_ACCESS_CONTROL_WIFI )
+        {
+            bIsWifi = 1;
+        }
         
         DBUS_MESSAGE_ITER_RECURSE_SRV(&iter, &array_iter , DBUS_TYPE_ARRAY, 0, bus_info->freefunc);
         param_size = 0;
@@ -823,46 +832,12 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                                                 DBUS_TYPE_ARRAY,
                                                 "(ssi)",
                                                 &array_iter);
-		
-        /*
-        if(bus_info) {
-            CcspTraceDebug(("CcspTraceDebug<%s.%d> bus info=%d, id='%s'\n", __FUNCTION__, getpid(), (int)bus_info, bus_info->component_id));
-        }
-        */
 
         if(result == CCSP_SUCCESS)
         {
 
             int i;
-            char bIsWifi = 0;
-
-            // bus_info is passed in as a parameter ...
-
-            //            void* bus_handle = NULL;
-            //            CCSP_MESSAGE_BUS_INFO *bus_info = NULL;
-
-            //            bus_handle = COSAGetMessageBusHandle();
-            //            bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-
 			
-            if (bus_info)
-            {
-                if (strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.wifi") == 0)
-                {
-                    bIsWifi = 1;
-                }
-                else if ( writeID == DSLH_MPA_ACCESS_CONTROL_WIFI )
-                {
-                    bIsWifi = 1;
-                }
-            }
-            else
-            {
-                CcspTraceError(("<%s.%d> bus_info is NULL!\n", __FUNCTION__, getpid()));
-            }
-			
-#define MAX_DBUS_PARAM_SIZE  50000
-
             if ((size < MAX_DBUS_PARAM_SIZE) || ( bIsWifi ))
             {
             for(i = 0; i < size; i++)
@@ -879,10 +854,9 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                 tmp = val[i]->type;
                 ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
 
-                dbus_message_iter_close_container (&array_iter,
-                                                   &struct_iter);
+                    dbus_message_iter_close_container (&array_iter, &struct_iter);
+                }
             }
-        }
             else
             {
                 char * buf = SHM_PARAM_NAME;
@@ -903,20 +877,27 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                 tmp = shmSize;
                 ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp); 
 
-                dbus_message_iter_close_container (&array_iter,
-                                                   &struct_iter);
+                dbus_message_iter_close_container (&array_iter, &struct_iter);
             }
         }
 
-        ret = dbus_message_iter_close_container (&iter,
-                &array_iter);
+        ret = dbus_message_iter_close_container (&iter, &array_iter);
 
 
         tmp = result;
         dbus_message_iter_append_basic (&iter, DBUS_TYPE_INT32, &tmp);
-        if (!dbus_connection_send (conn, reply, NULL))
+        if (!dbus_connection_send (conn, reply, &tmp))
             CcspTraceError(("<%s.%d> No memory\n", __FUNCTION__, getpid()));
 
+        if ( bIsWifi && 
+             dbus_connection_get_outgoing_size(conn) > CCSP_DBUS_LARGE_REPLY_SIZE_MIN && 
+             dbus_connection_has_messages_to_send(conn)) 
+        { 
+            // printf("SERVER Large Msg - %d: Outgoing queue size = %d bytes\n", 
+            //        tmp, dbus_connection_get_outgoing_size(conn));
+            dbus_connection_flush(conn); 
+        }
+        
         dbus_message_unref (reply);
         free_parameterValStruct_t(bus_info, size, val);
 

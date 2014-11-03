@@ -216,7 +216,6 @@ _HTTP_SIMPLE_SERVER_PROPERTY
 }
 HTTP_SIMPLE_SERVER_PROPERTY,  *PHTTP_SIMPLE_SERVER_PROPERTY;
 
-
 /***********************************************************
    HTTP SIMPLE CLIENT CONFIGURATION PARAMETERS DEFINITION
 ***********************************************************/
@@ -228,11 +227,22 @@ HTTP_SIMPLE_SERVER_PROPERTY,  *PHTTP_SIMPLE_SERVER_PROPERTY;
  * error codes and headers. A feature of HTTP is the typing and negotiation of data representation,
  * allowing systems to be built independently of the data being transferred.
  */
+
 #define  HTTP_MAX_PRODUCT_NAME_SIZE                 128
 #define  HTTP_SCO_PRODUCT_NAME                      "Ansc Http Client v2.0 - Cisco Systems, Inc."
 
 #define  HTTP_SCO_MHOST_MODE_SEQUENT                0
 #define  HTTP_SCO_MHOST_MODE_RANDOM                 1
+
+#define  HTTP_MAX_DEVICE_NAME_SIZE                  64
+
+typedef struct 
+_HTTP_BIND_TO_DEVICE_PROPERTY
+{
+    // BOOL                         bHostBindToDevice;
+    char                            DeviceName[HTTP_MAX_DEVICE_NAME_SIZE];
+}
+HTTP_BIND_TO_DEVICE_PROPERTY, *PHTTP_BIND_TO_DEVICE_PROPERTY;
 
 typedef  struct
 _HTTP_SIMPLE_CLIENT_PROPERTY
@@ -240,6 +250,8 @@ _HTTP_SIMPLE_CLIENT_PROPERTY
     BOOL                            bReuseConnections;
     char                            ProductName[HTTP_MAX_PRODUCT_NAME_SIZE];
     ULONG                           SPMode;         /* how to pick up server if multiple hosts resolved */
+
+    HTTP_BIND_TO_DEVICE_PROPERTY    BindToDevice;
 }
 HTTP_SIMPLE_CLIENT_PROPERTY,  *PHTTP_SIMPLE_CLIENT_PROPERTY;
 

@@ -36,6 +36,10 @@
         This module implements the advanced state-access functions
         of the Ansc Simple Client Tcp Object.
 
+        *   AnscSctoGetSocketBindToDevice
+        *   AnscSctoSetSocketBindToDevice
+        *   AnscSctoGetSocketDeviceName
+        *   AnscSctoSetSocketDeviceName
         *   AnscSctoGetHostAddress
         *   AnscSctoSetHostAddress
         *   AnscSctoGetHostPort
@@ -81,7 +85,59 @@
 
 #include "ansc_scto_global.h"
 
+BOOL
+AnscSctoGetSocketBindToDevice
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
+    return  pMyObject->bSocketBindToDevice;
+}
+
+ANSC_STATUS
+AnscSctoSetSocketBindToDevice
+    (
+        ANSC_HANDLE                 hThisObject,
+        BOOL                        bBind
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
+
+    pMyObject->bSocketBindToDevice = bBind;
+
+    return  ANSC_STATUS_SUCCESS;
+}
+
+PUCHAR
+AnscSctoGetSocketDeviceName
+    (
+        ANSC_HANDLE                 hThisObject
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
+
+    return  pMyObject->SocketDeviceName;
+}
+
+ANSC_STATUS
+AnscSctoSetSocketDeviceName
+    (
+        ANSC_HANDLE                 hThisObject,
+        PUCHAR                      pDeviceName
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
+
+    AnscCopyString(pMyObject->SocketDeviceName, pDeviceName);
+
+    return  ANSC_STATUS_SUCCESS;
+}
 /**********************************************************************
 
     caller:     owner of this object

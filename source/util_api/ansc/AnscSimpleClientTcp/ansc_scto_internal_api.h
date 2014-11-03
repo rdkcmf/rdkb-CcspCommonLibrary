@@ -66,6 +66,32 @@
          FUNCTIONS IMPLEMENTED IN ANSC_SCTO_STATES.C
 ***********************************************************/
 
+BOOL
+AnscSctoGetSocketBindToDevice
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
+ANSC_STATUS
+AnscSctoSetSocketBindToDevice
+    (
+        ANSC_HANDLE                 hThisObject,
+        BOOL                        bBind
+    );
+
+PUCHAR
+AnscSctoGetSocketDeviceName
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
+ANSC_STATUS
+AnscSctoSetSocketDeviceName
+    (
+        ANSC_HANDLE                 hThisObject,
+        PUCHAR                      pDeviceName
+    );
+
 PUCHAR
 AnscSctoGetHostAddress
     (

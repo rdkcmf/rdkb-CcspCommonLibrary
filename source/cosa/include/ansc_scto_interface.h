@@ -202,6 +202,32 @@ typedef  ANSC_STATUS
         PUCHAR                      address
     );
 
+typedef  BOOL
+(*PFN_SCTO_GET_BINDTODEVICE)
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
+typedef  ANSC_STATUS
+(*PFN_SCTO_SET_BINDTODEVICE)
+    (
+        ANSC_HANDLE                 hThisObject,
+        BOOL                        bValue
+    );
+
+typedef  char*
+(*PFN_SCTO_GET_DEVICENAME)
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
+typedef  ANSC_STATUS
+(*PFN_SCTO_SET_DEVICENAME)
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pDeviceName
+    );
+
 typedef  PUCHAR
 (*PFN_SCTO_GET_PEER_NAME)
     (
@@ -309,6 +335,9 @@ typedef  ANSC_STATUS
     ANSCCO_VER3_CLASS_CONTENT                                                               \
     /* start of object class content */                                                     \
     ANSC_SOCKET                     Socket;                                                 \
+    BOOL                            bSocketBindToDevice;                                    \
+    char                            SocketDeviceName[ANSC_OBJ_IF_NAME_SIZE];                \
+                                                                                            \
     /* used to check certificate validity */                                                \
     char                            HostName[WEB_MAX_HOST_NAME_SIZE];                       \
     ANSC_IPV4_ADDRESS               HostAddress;                                            \
@@ -345,6 +374,11 @@ typedef  ANSC_STATUS
     BOOL                            bTlsEnabled;                                            \
     BOOL                            bTlsConnected;                                          \
     ANSC_EVENT                      TlsConnEvent;                                           \
+                                                                                            \
+    PFN_SCTO_GET_BINDTODEVICE       GetSocketBindToDevice;                                  \
+    PFN_SCTO_SET_BINDTODEVICE       SetSocketBindToDevice;                                  \
+    PFN_SCTO_GET_DEVICENAME         GetSocketDeviceName;                                    \
+    PFN_SCTO_SET_DEVICENAME         SetSocketDeviceName;                                    \
                                                                                             \
     PFN_SCTO_GET_ADDRESS            GetHostAddress;                                         \
     PFN_SCTO_SET_ADDRESS            SetHostAddress;                                         \
@@ -392,6 +426,9 @@ typedef  ANSC_STATUS
     ANSCCO_VER3_CLASS_CONTENT                                                               \
     /* start of object class content */                                                     \
     ANSC_SOCKET                     Socket;                                                 \
+    BOOL                            bSocketBindToDevice;                                    \
+    char                            SocketDeviceName[ANSC_OBJ_IF_NAME_SIZE];                \
+                                                                                            \
     /* used to check certificate validity */                                                \
     char                            HostName[WEB_MAX_HOST_NAME_SIZE+1];                     \
     ANSC_IPV4_ADDRESS               HostAddress;                                            \
@@ -428,6 +465,11 @@ typedef  ANSC_STATUS
     BOOL                            bTlsEnabled;                                            \
     BOOL                            bTlsConnected;                                          \
     ANSC_EVENT                      TlsConnEvent;                                           \
+                                                                                            \
+    PFN_SCTO_GET_BINDTODEVICE       GetSocketBindToDevice;                                  \
+    PFN_SCTO_SET_BINDTODEVICE       SetSocketBindToDevice;                                  \
+    PFN_SCTO_GET_DEVICENAME         GetSocketDeviceName;                                    \
+    PFN_SCTO_SET_DEVICENAME         SetSocketDeviceName;                                    \
                                                                                             \
     PFN_SCTO_GET_ADDRESS            GetHostAddress;                                         \
     PFN_SCTO_SET_ADDRESS            SetHostAddress;                                         \

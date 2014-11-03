@@ -415,5 +415,12 @@ HttpWcsoInitialize
     AnscSListInitializeHeader(&pMyObject->WctoSList    );
     AnscInitializeLock       (&pMyObject->WctoSListLock);
 
+    /*
+     * We shall initialize the configuration properties to the default values, which may be changed
+     * later via the set_property() member function. Note that this call may not guarantee a valid
+     * and legtimate configuration.
+     */
+    pMyObject->ResetProperty((ANSC_HANDLE)pMyObject);
+
     return  ANSC_STATUS_SUCCESS;
 }

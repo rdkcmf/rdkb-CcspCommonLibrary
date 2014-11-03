@@ -342,6 +342,25 @@ AnscSctoEngage
         xskt_client_addr.sin_family = XSKT_SOCKET_AF_INET;
         xskt_client_addr.sin_port   = _xskt_htons(pMyObject->HostPort);
 
+        if (pMyObject->bSocketBindToDevice && *(pMyObject->SocketDeviceName)) 
+        {
+            if (_xskt_setsocketopt
+                    (
+                         pMyObject->Socket, 
+                         XSKT_SOCKET_SOL_SOCKET, 
+                         XSKT_SOCKET_SO_BINDTODEVICE, 
+                         pMyObject->SocketDeviceName, 
+                         _ansc_strlen(pMyObject->SocketDeviceName) + 1
+                    )
+                < 0)
+            {
+                perror("setsockopt-SOL_SOCKET-SO_BINDTODEVICE");
+                returnStatus = ANSC_STATUS_FAILURE;
+                goto EXIT2;
+            }
+        }
+        //        fprintf(stderr, "<RT XSKT> Binding socket to Device '%s'.\n", pMyObject->SocketDeviceName); 
+
         if ( pMyObject->HostAddress.Value == 0 )
         {
             ((pansc_socket_addr_in)&xskt_client_addr)->sin_addr.s_addr = XSKT_SOCKET_ANY_ADDRESS;
@@ -389,6 +408,26 @@ AnscSctoEngage
     {
         ansc_client_addr.sin_family = ANSC_SOCKET_AF_INET;
         ansc_client_addr.sin_port   = _ansc_htons(pMyObject->HostPort);
+
+        if (pMyObject->bSocketBindToDevice && *(pMyObject->SocketDeviceName)) 
+        {
+            if (_xskt_setsocketopt
+                    (
+                         pMyObject->Socket, 
+                         ANSC_SOCKET_SOL_SOCKET, 
+                         ANSC_SOCKET_SO_BINDTODEVICE, 
+                         pMyObject->SocketDeviceName, 
+                         _ansc_strlen(pMyObject->SocketDeviceName) + 1
+                    )
+                < 0)
+            {
+                perror("setsockopt-SOL_SOCKET-SO_BINDTODEVICE");
+                returnStatus = ANSC_STATUS_FAILURE;
+                goto EXIT2;
+            }
+        }
+        // fprintf(stderr, "<RT AnscSKT> Binding socket to Device '%s'.\n", pMyObject->SocketDeviceName); 
+
 
         if ( pMyObject->HostAddress.Value == 0 )
         {
