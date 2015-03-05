@@ -192,9 +192,13 @@ extern char * pComponentName;
 
 #endif
 
-
-#define  CcspTraceCheck(level)                  (level <= g_iTraceLevel)
-
+/*
+#define  AnscTraceExec(level, msg)              \
+            if ( level <= g_iTraceLevel)        \
+            {                                   \
+                CcspTraceBase msg;              \
+            }
+*/
 /**********************************************************************************************
   When use the following macros, msg should be wrapped by parenthesis.
   For example, CcspTraceEmergency(pComponentName, ("print info:%s\n", pPrintInfo))

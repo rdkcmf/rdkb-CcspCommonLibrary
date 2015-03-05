@@ -471,7 +471,6 @@ SupportedDataModel_GetParamStringValue
     *  CcspComp_GetParamUlongValue 
     *  CcspComp_GetParamStringValue 
     *  CcspComp_GetBulkParamValues
-    *  CcspComp_SetParamBoolValue
     *  CcspLog_GetParamBoolValue
     *  CcspLog_GetParamUlongValue
     *  CcspLog_SetParamBoolValue
@@ -491,14 +490,6 @@ CcspComp_GetBulkParamValues
         char**                      pParamArray,
         PSLAP_VARIABLE*             ppVarArray,
         ULONG                       ulArraySize
-    );
-
-BOOL
-CcspComp_SetParamBoolValue
-    (
-        ANSC_HANDLE                 hInsContext,
-        char*                       ParamName,
-        BOOL                        bValue
     );
 
 BOOL

@@ -184,7 +184,7 @@ static DmParamVal_t *CloneParamVal(const DmParamVal_t *orig)
     return new;
 }
 
-static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, int raw)
+static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to)
 {
     DmParamVal_t *val;
 
@@ -195,57 +195,6 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
     val = to->value = (void *)AnscAllocateMemory(sizeof(DmParamVal_t));
     if (val == NULL)
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
-
-    if (raw) {
-        switch (from->type) {
-        case ccsp_string:
-            val->type = DM_PT_STR;
-            break;
-        case ccsp_int:
-            val->type = DM_PT_INT;
-            break;
-        case ccsp_unsignedInt:
-            val->type = DM_PT_UINT;
-            break;
-        case ccsp_boolean:
-            val->type = DM_PT_BOOL;
-            break;
-        case ccsp_long:
-            val->type = DM_PT_LONG;
-            break;
-        case ccsp_unsignedLong:
-            val->type = DM_PT_ULONG;
-            break;
-        case ccsp_dateTime:
-            val->type = DM_PT_DATETIME;
-            break;
-        case ccsp_base64:
-            val->type = DM_PT_BASE64;
-            break;
-        case ccsp_float:
-            val->type = DM_PT_FLOAT;
-            break;
-        case ccsp_double:
-            val->type = DM_PT_FLOAT;
-            break;
-        case ccsp_byte:
-            // XXX: swith from HEX string to binary ?
-            AnscFreeMemory(to->value);
-            return CCSP_ERR_NOT_SUPPORT;
-        case ccsp_none:
-        default:
-            return CCSP_ERR_INVALID_PARAMETER_TYPE;
-        }
-
-        val->v_raw = (void *)AnscDupString(from->parameterValue);
-        if (val->v_raw == NULL) {
-            AnscFreeMemory(to->value);
-            return CCSP_ERR_MEMORY_ALLOC_FAIL;
-        }
-        val->len = strlen(val->v_raw);
-
-        return CCSP_SUCCESS;
-    }
 
     switch (from->type) {
     case ccsp_string:
@@ -327,7 +276,7 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
     return CCSP_SUCCESS;
 }
 
-static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to, int raw)
+static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to)
 {
     char buf[64];
     DmErr_t err = CCSP_ERR_MEMORY_ALLOC_FAIL;
@@ -341,53 +290,6 @@ static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to, int r
     to->parameterName = (void *)AnscDupString(from->name);
     if (to->parameterName == NULL)
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
-
-    if (raw) {
-        switch (fVal->type) {
-        case DM_PT_STR: 
-            to->type = ccsp_string;
-            break;
-        case DM_PT_INT: 
-            to->type = ccsp_int;
-            break;
-        case DM_PT_UINT: 
-            to->type = ccsp_unsignedInt;
-            break;
-        case DM_PT_BOOL: 
-            to->type = ccsp_boolean;
-            break;
-        case DM_PT_DATETIME:
-            to->type = ccsp_dateTime;
-            break;
-        case DM_PT_BASE64:
-            to->type = ccsp_base64;
-            break;
-        case DM_PT_LONG: 
-            to->type = ccsp_long;
-            break;
-        case DM_PT_ULONG: 
-            to->type = ccsp_unsignedLong;
-            break;
-        case DM_PT_FLOAT: 
-            to->type = ccsp_float;
-            break;
-        case DM_PT_DOUBLE:
-            to->type = ccsp_double;
-            break;
-        case DM_PT_BIN:
-            err =  CCSP_ERR_NOT_SUPPORT;
-            goto errout;
-        default:
-            err =  CCSP_ERR_INVALID_PARAMETER_TYPE;
-            goto errout;
-        }
-
-        to->parameterValue = (void *)AnscDupString(fVal->v_raw);
-        if (to->parameterValue == NULL)
-            goto errout;
-
-        return CCSP_SUCCESS;
-    }
 
     switch (fVal->type) {
     case DM_PT_STR: 
@@ -534,7 +436,7 @@ static DmErr_t LoadCompPathList(const char *paths[], int cnt,
 
                 /* adding new path to existing CdmComp{} */
                 if (strcmp(comp->compId, compStru[j]->componentName) == 0) {
-                    ptr = (void *)AnscReallocMemory(comp->paths, sizeof(const char *) * (comp->paramCnt),
+                    ptr = (void *)AnscReAllocateMemory(comp->paths, 
                             sizeof(const char *) * (comp->paramCnt + 1));
                     if (ptr == NULL)
                         goto nomem;
@@ -557,7 +459,7 @@ static DmErr_t LoadCompPathList(const char *paths[], int cnt,
                 if (offset == compListSize) {
                     /* expend the complist first */
                     compListSize += 10;
-                    ptr = (void *)AnscReallocMemory(compList, sizeof(struct CdmComp) * offset, 
+                    ptr = (void *)AnscReAllocateMemory(compList, 
                             sizeof(struct CdmComp) * compListSize);
                     if (ptr == NULL)
                         goto nomem;
@@ -605,7 +507,7 @@ nomem:
  * also transfer the format form DmParam_t{} to parameterValStruct_t{}
  */
 static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
-        struct CdmComp **comps, int *compCnt, int raw)
+        struct CdmComp **comps, int *compCnt)
 {
     struct CdmComp      *compList = NULL;
     struct CdmComp      *comp;
@@ -649,7 +551,7 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
 
             /* adding new param to existing component */
             if (strcmp(comp->compId, compStru[0]->componentName) == 0) {
-                ptr = (void *)AnscReallocMemory(comp->paramVals, sizeof(parameterValStruct_t) * (comp->paramCnt), 
+                ptr = (void *)AnscReAllocateMemory(comp->paramVals, 
                         sizeof(parameterValStruct_t) * (comp->paramCnt + 1));
                 if (ptr == NULL) {
                     goto nomem;
@@ -661,7 +563,7 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
 
                 /* need clear the buffer for AnscFreeMemory in case ->value is not empty */
                 memset(paramVal, 0, sizeof(parameterValStruct_t));
-                err = TransParam(&params[i], paramVal, raw);
+                err = TransParam(&params[i], paramVal);
                 if (err != CCSP_SUCCESS)
                     goto nomem;
 
@@ -690,7 +592,7 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
             paramVal = &comp->paramVals[0];
             comp->paramCnt = 1;
 
-            err = TransParam(&params[i], paramVal, raw);
+            err = TransParam(&params[i], paramVal);
             if (err != CCSP_SUCCESS)
                 goto nomem;
         }
@@ -1056,42 +958,33 @@ DmErr_t Cdm_SetParam(const char *param, const DmParamVal_t *val, int commit)
     return err;
 }
 
-static void FreeParam(DmParamVal_t *val, int raw)
+void Cdm_FreeParam(DmParamVal_t *val)
 {
     void *ptr = NULL;
 
     if (val)
         return;
 
-    if (raw)
-        ptr = val->v_raw;
-    else {
-        switch (val->type) {
-        case DM_PT_STR:
-            ptr = val->v_str;
-            break;
-        case DM_PT_BASE64:
-            ptr = val->v_base64;
-            break;
-        case DM_PT_DATETIME:
-            ptr = val->v_datetime;
-            break;
-        case DM_PT_BIN:
-            ptr = val->v_bin;
-            break;
-        default:
-            break;
-        }
+    switch (val->type) {
+    case DM_PT_STR:
+        ptr = val->v_str;
+        break;
+    case DM_PT_BASE64:
+        ptr = val->v_base64;
+        break;
+    case DM_PT_DATETIME:
+        ptr = val->v_datetime;
+        break;
+    case DM_PT_BIN:
+        ptr = val->v_bin;
+        break;
+    default:
+        break;
     }
 
     if (ptr)
         AnscFreeMemory(ptr);
     AnscFreeMemory(val);
-}
-
-void Cdm_FreeParam(DmParamVal_t *val)
-{
-    FreeParam(val, 0);
 }
 
 DmErr_t Cdm_AddObj(const char *obj, int *ins)
@@ -1206,7 +1099,7 @@ DmErr_t Cdm_GetNames(const char *path, int recursive,
         }
 
         *cnt += infoNum;
-        ptr = AnscReallocMemory(list, ((*cnt)-infoNum) * CDM_PATH_SZ, (*cnt) * CDM_PATH_SZ);
+        ptr = AnscReAllocateMemory(list, (*cnt) * CDM_PATH_SZ);
         if (ptr == NULL) {
             err = CCSP_ERR_MEMORY_ALLOC_FAIL;
             free_parameterInfoStruct_t(cdm.busHdl, infoNum, infoStru);
@@ -1244,7 +1137,7 @@ void Cdm_FreeNames(char (*names)[CDM_PATH_SZ])
         AnscFreeMemory(names);
 }
 
-static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], int *cnt, int raw)
+DmErr_t Cdm_GetParamGrp(const char *paths[], int npath, DmParam_t *params[], int *cnt)
 {
     DmErr_t         err;
     int             compCnt, i, j;
@@ -1285,7 +1178,7 @@ static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], 
             goto errout;
         }
 
-        ptr = AnscReallocMemory(paramBuf, sizeof(DmParam_t) * paramCnt, sizeof(DmParam_t) * (paramCnt + valNum));
+        ptr = AnscReAllocateMemory(paramBuf, sizeof(DmParam_t) * (paramCnt + valNum));
         if (ptr == NULL) {
             err = CCSP_ERR_MEMORY_ALLOC_FAIL;
             goto errout;
@@ -1293,7 +1186,7 @@ static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], 
         paramBuf = ptr;
 
         for (j = 0; j < valNum; j++) {
-            err = TransParamStru(valStru[j], &paramBuf[paramCnt], raw);
+            err = TransParamStru(valStru[j], &paramBuf[paramCnt]);
             if (err != CCSP_SUCCESS)
                 goto errout;
 
@@ -1318,16 +1211,6 @@ errout:
     return err;
 }
 
-DmErr_t Cdm_GetParamGrp(const char *paths[], int npath, DmParam_t *params[], int *cnt)
-{
-    return GetParamGrp(paths, npath, params, cnt, 0);
-}
-
-DmErr_t Cdm_GetParamGrpRaw(const char *paths[], int npath, DmParam_t *params[], int *cnt)
-{
-    return GetParamGrp(paths, npath, params, cnt, 1);
-}
-
 void Cdm_FreeParamGrp(DmParam_t params[], int cnt)
 {
     int i;
@@ -1337,18 +1220,6 @@ void Cdm_FreeParamGrp(DmParam_t params[], int cnt)
 
     for (i = 0; i < cnt; i++)
         Cdm_FreeParam(params[i].value);
-    AnscFreeMemory(params);
-}
-
-void Cdm_FreeParamGrpRaw(DmParam_t params[], int cnt)
-{
-    int i;
-
-    if (!params || cnt <= 0)
-        return;
-
-    for (i = 0; i < cnt; i++)
-        FreeParam(params[i].value, 1);
     AnscFreeMemory(params);
 }
 
@@ -1372,7 +1243,7 @@ void Cdm_FreeParamGrpRaw(DmParam_t params[], int cnt)
  * 3. remote-comp-B's Params
  * 4. ...
  */
-static DmErr_t SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit, int raw)
+DmErr_t Cdm_SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit)
 {
     struct CdmComp *compList = NULL;
     int compCnt, i;
@@ -1387,7 +1258,7 @@ static DmErr_t SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit,
      * and also marking if it's local.
      * the wrost case is each param holded by different comp.
      */
-    err = LoadCompParamList(params, cnt, &compList, &compCnt, raw);
+    err = LoadCompParamList(params, cnt, &compList, &compCnt);
     if (err != CCSP_SUCCESS)
         return err;
 
@@ -1465,16 +1336,6 @@ rollback:
 errout:
     FreeCompList(compList, compCnt);
     return err;
-}
-
-DmErr_t Cdm_SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit)
-{
-    return SetParamGrp(params, cnt, commit, 0);
-}
-
-DmErr_t Cdm_SetParamGrpRaw(DmParam_t params[] /* in-out */, int cnt, int commit)
-{
-    return SetParamGrp(params, cnt, commit, 1);
 }
 
 const char *Cdm_StrError(DmErr_t err)
