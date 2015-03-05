@@ -70,7 +70,6 @@ int openssl_validate_certificate (int fd, char * data, SSL *ssl, int who_calls);
 
 /* Platform/Board Specific Calls */
 void openssl_priv_verify(SSL_CTX *ssl_ctx);
-int openssl_priv_load_ca_certificates(int who_calls);
 void openssl_priv_validate_hostname(char *common_name);
 
 #ifdef __cplusplus

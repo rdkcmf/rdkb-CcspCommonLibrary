@@ -506,7 +506,7 @@ AnscSctoEngage
 
         if ( bNoConn )
 #else
-        if ( _xskt_connect((XSKT_SOCKET)pMyObject->Socket, (xskt_socket_addr*)&xskt_server_addr, sizeof(xskt_server_addr)) != 0 )
+            if ( _xskt_connect((XSKT_SOCKET)pMyObject->Socket, (xskt_socket_addr*)&xskt_server_addr, sizeof(xskt_server_addr)) != 0 )
 #endif
         {
             AnscTrace("!!!!!!!!!! _xskt_connect error: socket=%d, error=%d !!!!!!!!!!\n", (XSKT_SOCKET)pMyObject->Socket, errno);

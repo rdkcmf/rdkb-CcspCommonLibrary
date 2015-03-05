@@ -59,6 +59,8 @@ typedef struct DmParamVal {
         char            *v_datetime; /* UTC */
         char            *v_base64;
         unsigned char   *v_bin;
+
+        char            *v_raw;
     };
 } DmParamVal_t;
 
@@ -150,5 +152,24 @@ void Cdm_FreeParamGrp(DmParam_t params[], int cnt);
  * param will be saved in @param[0], except @cnt <= zero.
  */
 DmErr_t Cdm_SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit);
+
+/** 
+ * for those user handles all param as raw format (ascii string)
+ */
+
+/*
+ * same with Cdm_GetParamGrp() except that 
+ * 1. the format of param[] got will be Raw Ascii String. 
+ *    Pls check the DmParam_t->Value->v_raw for value
+ * 2. If return success, param[] should be free by Cdm_FreeParamGrpRaw();
+ */
+DmErr_t Cdm_GetParamGrpRaw(const char *paths[], int npath, DmParam_t *params[], int *cnt);
+void Cdm_FreeParamGrpRaw(DmParam_t params[], int cnt);
+
+/*
+ * same with Cdm_SetParamGrp() except that the format of param[] to set
+ * are Raw Ascii String (DmParam_t->Value->v_raw).
+ */
+DmErr_t Cdm_SetParamGrpRaw(DmParam_t params[] /* in-out */, int cnt, int commit);
 
 #endif /* _CDM_API_H */

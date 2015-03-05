@@ -1068,5 +1068,16 @@ int CcspBaseIf_base_path_message_write_shm (
     parameterValStruct_t **val,
     int * shmSize
     );              
-              
+
+int PsmGroupGet(void *bus_handle, 
+        const char *subsys, 
+        const char *names[], 
+        int nname, 
+        parameterValStruct_t ***records, 
+        int *nrec);
+
+void PsmFreeRecords(void *bus_handle, 
+        parameterValStruct_t **records, 
+        int nrec);
+                  
 #endif /* CCSP_BASE_API_H */

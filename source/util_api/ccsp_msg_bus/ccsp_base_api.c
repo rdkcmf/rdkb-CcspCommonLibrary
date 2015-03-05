@@ -3301,6 +3301,24 @@ int PSM_Del_Record
     }
 }
 
+int PsmGroupGet(void *bus_handle, const char *subsys, 
+        const char *names[], int nname, parameterValStruct_t ***records, int *nrec)
+{
+    char psmName[256];
+
+    if (!bus_handle || !names || !records || !nrec)
+        return CCSP_FAILURE;
+
+    snprintf(psmName, sizeof(psmName), "%s%s", (subsys ? subsys : ""), CCSP_DBUS_PSM);
+
+    return CcspBaseIf_getParameterValues(bus_handle, psmName, CCSP_DBUS_PATH_PSM, 
+            (char **)names, nname, nrec, records);
+}
+
+void PsmFreeRecords(void *bus_handle, parameterValStruct_t **records, int nrec)
+{
+    free_parameterValStruct_t(bus_handle, nrec, records);
+}
 
 int PsmGetNextLevelInstances
 (

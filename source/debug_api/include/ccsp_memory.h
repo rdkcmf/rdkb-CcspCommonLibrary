@@ -71,8 +71,25 @@ extern ULONG           g_ulAllocatedSizePeak;
 extern    char *                  pComponentName;
 
 /*#define  ANSC_MEMORY_USE_COUNTSIZE*/
+#define ANSC_MEMORY_USE_NATIVE
+#if defined ANSC_MEMORY_USE_NATIVE
 
-#if defined ANSC_MEMORY_USE_COUNTSIZE
+#define AnscAllocateMemory(size) \
+    calloc(1,(size))
+
+#define AnscReAllocateMemory(pMemory, size)   \
+    realloc((pMemory), (size))
+
+#define AnscFreeMemory(pMemory) \
+    free((pMemory))
+
+#define AnscGetMemorySize(pMemory) \
+    AnscGetMemorySizeNative((pComponentName), (pMemory))
+
+#define AnscResizeMemory(pMemory, size) \
+    realloc((pMemory), (size))
+
+#elif defined ANSC_MEMORY_USE_COUNTSIZE
 
 #define AnscAllocateMemory(size) \
             AnscAllocateMemoryCountSize(pComponentName, size)
@@ -123,6 +140,13 @@ AnscCopyMemory
     ULONG  ulMemorySize
 );
 
+PVOID
+AnscReallocMemory
+    (
+        PVOID pMemory,
+        ULONG ulOldMemorySize,
+        ULONG ulNewMemorySize
+    );
 /**********************************************************************
     Only count size, no detail recording.
 **********************************************************************/
