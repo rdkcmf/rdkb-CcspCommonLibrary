@@ -19,6 +19,15 @@
 #include "openssl/crypto.h"
 #include "ansc_platform.h"
 
+#define  USER_OPENSSL_Redirect_AnscTrace            0
+#if USER_OPENSSL_Redirect_AnscTrace
+    #undef  AnscTraceWarning
+    #undef  AnscTrace
+
+    #define  AnscTraceWarning(msg)                  printf msg
+    #define  AnscTrace                              printf
+#endif
+
 /* static SSL context, once initialized will stay!  */
 static SSL_CTX *g_ssl_ctx[SSL_CTX_NUM];
 
@@ -33,7 +42,7 @@ void initialize_openssl_lib()
     RAND_load_file("/dev/urandom", 1024);
 
     if (RAND_status () != 1)
-        AnscTrace ("openssl_init - could not seed PRNG.\n");
+        AnscTraceWarning(("openssl_init - could not seed PRNG.\n"));
 
     SSL_library_init ();
     SSL_load_error_strings ();
@@ -91,8 +100,54 @@ openssl_print_errors (void)
 {
   unsigned long curerr = 0;
   while ((curerr = ERR_get_error ()) != 0)
-    AnscTrace ("OpenSSL: %s\n", ERR_error_string (curerr, NULL));
+    AnscTraceWarning(("OpenSSL: %s\n", ERR_error_string(curerr, NULL)));
 }
+
+/* 
+ * product specific CA certificate file(s) is specified
+ * through global variable openssl_client_ca_certificate_files/openssl_server_ca_certificate_files
+ * and will be loaded during openssl_init(). When multiple
+ * CA certificates are used, the file names must be comma-separated.
+ */
+char* openssl_client_ca_certificate_files = NULL;
+char* openssl_server_ca_certificate_files = NULL;
+
+int openssl_load_ca_certificates(int who_calls)
+{
+    char* pCACertFiles = (who_calls==SSL_CLIENT_CALLS)?openssl_client_ca_certificate_files:openssl_server_ca_certificate_files;
+    char* pCACertFile;
+    char* pSep;
+    int   res;
+    SSL_CTX *ssl_ctx = NULL;
+  
+    if (who_calls != SSL_SERVER_CALLS && who_calls != SSL_CLIENT_CALLS)
+        return 0;
+
+    ssl_ctx = g_ssl_ctx[who_calls];
+
+    pCACertFiles = AnscCloneString(pCACertFiles);
+    pCACertFile = pCACertFiles;
+
+    while ( pCACertFile && *pCACertFile != 0 )
+    {
+        pSep = _ansc_strchr(pCACertFile, ',');
+        if ( pSep ) *pSep = 0;
+        
+        res = SSL_CTX_load_verify_locations(ssl_ctx, pCACertFile, NULL);
+
+        if ( !res )
+        {
+            printf("openssl_load_ca_certificates -- failed to load certificate, error code = %d!", res);
+        }
+
+        pCACertFile = pSep ? pSep + 1 : NULL;
+    }
+
+    if ( pCACertFiles ) AnscFreeMemory(pCACertFiles);
+
+    return 0;
+}
+
 
 int openssl_init (int who_calls)
 {
@@ -144,7 +199,7 @@ int openssl_init (int who_calls)
   SSL_CTX_set_mode (ssl_ctx, SSL_MODE_AUTO_RETRY);
   SSL_CTX_set_quiet_shutdown(ssl_ctx, 1);
 
-  openssl_priv_load_ca_certificates(who_calls);
+  openssl_load_ca_certificates(who_calls);
 
   return 1;
 
@@ -250,12 +305,13 @@ SSL * openssl_connect (int fd)
   if (SSL_connect (ssl) <= 0 || ssl->state != SSL_ST_OK)
     goto error;
 
-  AnscTrace ("openssl_connect - connected socket %d to SSL handle %p\n", fd, ssl);
+  AnscTraceWarning(("openssl_connect - connected socket %d to SSL handle %p\n", fd, ssl));
 
   return ssl;
 
- error:
-  AnscTrace ("openssl_connect - SSL handshake failed.\n");
+error:
+
+  AnscTraceWarning(("openssl_connect - SSL handshake failed -- ssl state = %d.\n", ssl->state));
 
   openssl_print_errors ();
 
@@ -285,12 +341,12 @@ SSL * openssl_accept (int conn_fd)
     if ( SSL_accept( ssl ) <=0 )
         goto error;
 
-    AnscTrace ("openssl_accept - connected socket %d to SSL handle %p\n", conn_fd, ssl);
+    AnscTraceWarning(("openssl_accept - connected socket %d to SSL handle %p\n", conn_fd, ssl));
 
     return ssl;
 
 error:
-    AnscTrace ("openssl_accept - SSL handshake failed.\n");
+    AnscTraceWarning(("openssl_accept - SSL handshake failed.\n"));
 
     openssl_print_errors ();
 
@@ -309,23 +365,23 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
 
     if (!ssl)
     {
-        AnscTraceWarning (("_client_openssl_validate_certificate -%s - ssl handle is null!\n", __FUNCTION__));
+        AnscTraceWarning(("%s - ssl handle is null!\n", __FUNCTION__));
         return 0;
     }
 
     cert = SSL_get_peer_certificate (ssl);
     if (!cert)
     {
-        AnscTraceWarning (("_client_openssl_validate_certificate - %s - no certificate returned %s.\n", __FUNCTION__ , host));
+        AnscTraceWarning(("%s - no certificate returned %s.\n", __FUNCTION__ , host));
         success = 0;
         goto no_cert;
     }
 
-    if (1)
+    if (0)
     {
         char *subject = X509_NAME_oneline (X509_get_subject_name (cert), 0, 0);
         char *issuer = X509_NAME_oneline (X509_get_issuer_name (cert), 0, 0);
-        AnscTraceWarning (("_client_openssl_validate_certificate - %s - certificate:\n  subject: %s\n  issuer:  %s\n",
+        AnscTraceWarning(("%s - certificate:\n  subject: %s\n  issuer:  %s\n",
                    __FUNCTION__,
                    subject, issuer));
         OPENSSL_free (subject);
@@ -353,14 +409,14 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         common_name[0] = '\0';
         X509_NAME_get_text_by_NID (X509_get_subject_name (cert),
                                    NID_commonName, common_name, sizeof (common_name));
-        AnscTrace("_client_openssl_validate_certificate - %s - certificate common name [%s]\n", __FUNCTION__, common_name);
+        AnscTraceWarning(("_client_openssl_validate_certificate - %s - certificate common name [%s]\n", __FUNCTION__, common_name));
 
 		openssl_priv_validate_hostname(common_name);
     }
 
     if (success)
-        AnscTrace ("%s - X509 certificate successfully verified on host %s\n", __FUNCTION__,
-                   host);
+        AnscTraceWarning(("%s - X509 certificate successfully verified on host %s\n", __FUNCTION__,
+                   host));
 
     X509_free (cert);
 

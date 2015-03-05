@@ -125,7 +125,7 @@ CcspMsgQueueInit
     { 
         CcspTraceError(("%d <%s> Queue is NULL\n", getpid(), __FUNCTION__));
         return -1; 
-}
+    }
 
     (Queue)->First = (Queue)->Last = NULL;      
     return 0;
@@ -169,11 +169,11 @@ CcspMsgQueuePopEntry
     {  
         CcspTraceError(("%d <%s> Queue is NULL\n", getpid(), __FUNCTION__));
         return NULL;
-}
+    }
 
     PCCSP_MSG_SINGLE_LINK_ENTRY  head = (Queue)->First;
     if ( head != NULL )
-{
+    {
         (Queue)->First = head->Next;
 
         if ((Queue)->First == NULL)
@@ -196,7 +196,7 @@ connection_watch_callback
     return dbus_watch_handle (watch, condition);
 }
 
-static dbus_bool_t
+static dbus_bool_t 
 add_watch 
 (
     DBusWatch *watch,
@@ -204,7 +204,7 @@ add_watch
 )
 {
     CData *cd = data;
-
+    
     return _dbus_loop_add_watch 
                (
                    cd->loop,
@@ -215,7 +215,7 @@ add_watch
                 );
 }
 
-static void
+static void 
 remove_watch 
 (
     DBusWatch *watch,
@@ -223,7 +223,7 @@ remove_watch
 )
 {
     CData *cd = data;
-
+    
     _dbus_loop_remove_watch 
         (
              cd->loop,
@@ -233,7 +233,7 @@ remove_watch
          );
 }
 
-static void
+static void 
 connection_timeout_callback 
 (
     DBusTimeout   *timeout,
@@ -250,7 +250,7 @@ add_timeout
     DBusTimeout *timeout,
     void        *data
 )
-    {
+{
     CData *cd = data;
 
     return _dbus_loop_add_timeout 
@@ -263,7 +263,7 @@ add_timeout
                 );
 }
 
-static void
+static void 
 remove_timeout 
 (
     DBusTimeout *timeout,
@@ -281,7 +281,7 @@ remove_timeout
          );
 }
 
-static CData*
+static CData* 
 cdata_new 
 (
     DBusLoop       *loop,
@@ -295,7 +295,7 @@ cdata_new
 
     cd->loop = loop;
     cd->connection = connection;
-
+    
     dbus_connection_ref (cd->connection);
     _dbus_loop_ref (cd->loop);
 
@@ -307,7 +307,7 @@ cdata_free
 (
     void *data
 )
-    {
+{
     CData *cd = data;
 
     dbus_connection_unref (cd->connection);
@@ -364,7 +364,7 @@ thread_path_message_func
 )
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)user_data;
-
+    
     //push to a queue, signal the processing thread, then return immediately
     CCSP_REQ_DESCRIPTOR *req_rec = (CCSP_REQ_DESCRIPTOR *)bus_info->mallocfunc(sizeof(CCSP_REQ_DESCRIPTOR));  
     if(req_rec)
@@ -383,7 +383,7 @@ thread_path_message_func
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
-static void
+static void 
 ccsp_msg_bus_reconnect
 (
     CCSP_MESSAGE_BUS_CONNECTION *conn
@@ -393,7 +393,7 @@ ccsp_msg_bus_reconnect
 
     if(thread_dbus_connect && (ret = pthread_join(thread_dbus_connect, (void **)&msg)) != 0) {
         CcspTraceError(("<%s>: thread connect join returned %d with error %s\n", __FUNCTION__, ret, msg));
-}
+    }
 
     CcspTraceWarning(("<%s>: Re-establishing connection...", __FUNCTION__));
     pthread_create(&thread_dbus_connect, NULL, CCSP_Message_Bus_Connect_Thread, (void *)conn); 
@@ -402,21 +402,21 @@ ccsp_msg_bus_reconnect
     return;
 }
 
-static DBusHandlerResult
+static DBusHandlerResult 
 filter_func 
 (
     DBusConnection     *conn,
-             DBusMessage        *message,
+    DBusMessage        *message,
     void               *user_data
 )
 {
     CCSP_MESSAGE_BUS_CONNECTION *connection = (CCSP_MESSAGE_BUS_CONNECTION *)user_data;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) connection->bus_info_ptr;
 
-    switch (dbus_message_get_type (message))
+    switch (dbus_message_get_type (message)) 
     {
     case DBUS_MESSAGE_TYPE_SIGNAL:
-
+        
         if (dbus_message_is_signal (message,
                                     DBUS_INTERFACE_LOCAL,
                                     "Disconnected"))
@@ -426,11 +426,11 @@ filter_func
             // CcspTraceDebug(("<%s>: Signal received: Bus disconnected!\n", __FUNCTION__));
             
             if (bus_info) {
-
-            pthread_mutex_lock(&bus_info->info_mutex);
-            connection->connected = 0;
-            pthread_mutex_unlock(&bus_info->info_mutex);
-
+                
+                pthread_mutex_lock(&bus_info->info_mutex);
+                connection->connected = 0;
+                pthread_mutex_unlock(&bus_info->info_mutex);
+                
                 if(bus_info->run)
                 {
                     // This is not normal
@@ -440,8 +440,8 @@ filter_func
         }
         else
         {
-	        if(bus_info->sig_callback)
-	           thread_path_message_func(conn,message, bus_info);
+            if(bus_info->sig_callback)
+                thread_path_message_func(conn, message, bus_info);
         }
 
         return DBUS_HANDLER_RESULT_HANDLED;
@@ -561,7 +561,7 @@ CCSP_Message_Bus_Strip
 static void *
 CCSP_Message_Bus_Loop_Thread
 (
-    void * ptr
+    void *ptr
 )
 {
     DBusLoop *loop = (DBusLoop *)ptr;
@@ -593,34 +593,34 @@ CCSP_Message_Bus_Connect_Thread
         dbus_error_init (&error);
         conn_new = dbus_connection_open_private (connection->address, &error);
         if(conn_new == NULL)
-    {
+        {
 	    ct ++;
             if(ct > 20) ct = 0;
             dbus_error_free (&error);
             //            CCSP_Msg_SleepInMilliSeconds(3000);
             CCSP_Msg_SleepInMilliSeconds(200);
             continue;
-    }
-
+        }
+        
         if ( ! ccsp_connection_setup (connection->loop, conn_new))
-    {
+        {
             CcspTraceError(("<%s> Couldn't ccsp_connection_setup loop!\n", __FUNCTION__));
             dbus_error_free (&error);
             dbus_connection_close(conn_new);
             dbus_connection_unref (conn_new);
             continue;
-    }
+        }
 
         if ( ! dbus_bus_register (conn_new, &error))
-    {
+        {
             CcspTraceError(("<%s> Failed to register connection to bus at %s: %s\n",
                             __FUNCTION__, connection->address, error.message));
             dbus_error_free (&error);
             dbus_connection_close(conn_new);
             dbus_connection_unref (conn_new);
             continue;
-    }
-        
+        }
+
         if(strlen(bus_info->component_id))
         {
             ret = dbus_bus_request_name 
@@ -648,13 +648,13 @@ CCSP_Message_Bus_Connect_Thread
                 dbus_connection_close(conn_new);
                 dbus_connection_unref (conn_new);
                 continue;
-}
+            }
 
             if (ret != DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER && 
                 ret != DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER)
 	    {
                 CcspTraceError(
-(
+                    (
                         "<%s>"
                         "Request name returned %d:"
                         "someone already owns the name %s \n", 
@@ -672,7 +672,7 @@ CCSP_Message_Bus_Connect_Thread
         }
 
         for(i = 0; i < CCSP_MESSAGE_BUS_MAX_PATH; i++)
-{
+        {
             if(bus_info->path_array[i].path != NULL)
             {
                 dbus_connection_try_register_object_path
@@ -684,11 +684,11 @@ CCSP_Message_Bus_Connect_Thread
                         NULL
                      );
             }
-}
+        }
 
 
         for(i = 0; i < CCSP_MESSAGE_BUS_MAX_FILTER; i++)
-{
+        {
             if(bus_info->filters[i].event != NULL)
             {
                 CCSP_Message_Bus_Register_Event_Priv
@@ -701,10 +701,10 @@ CCSP_Message_Bus_Connect_Thread
                         1
                      );
             }
-}
+        }
 
         if ( ! dbus_connection_add_filter (conn_new, filter_func, connection, NULL))
-{
+        {
             CcspTraceError(("<%s> Couldn't add filter!\n", __FUNCTION__));
             dbus_error_free (&error);
             dbus_connection_close(conn_new);
@@ -715,7 +715,7 @@ CCSP_Message_Bus_Connect_Thread
         // Everything is ok
         dbus_error_free (&error);
         break;
-}
+    }
 
     // save new connection
     conn_old = connection->conn;
@@ -738,26 +738,26 @@ CCSP_Message_Bus_Connect_Thread
     }
 
     return NULL;
-    }
+}
 
 static void *
 CCSP_Message_Bus_Process_Thread
 (
     void * user_data
 )
-    {
+{
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)user_data;
     PCCSP_MSG_SINGLE_LINK_ENTRY entry = NULL;
     CCSP_REQ_DESCRIPTOR *req_rec = NULL;
 
 #ifndef WIN32 
-        struct timeval now;
-        struct timespec timeout;
+    struct timeval now;
+    struct timespec timeout;
 #else
-  struct timespec timeout = { 0, 0 };
-  struct _timeb currSysTime;
+    struct timespec timeout = { 0, 0 };
+    struct _timeb currSysTime;
 #endif
-
+    
     unsigned long                                 curTime        = 0;
     unsigned long                                 preTime        = 0;
 
@@ -781,9 +781,9 @@ CCSP_Message_Bus_Process_Thread
         // now the processing, after either received a signal or timed out
         entry = CcspMsgQueuePopEntry(bus_info->msg_queue);
         while(entry)
-            {
+        {
             pthread_mutex_unlock(&bus_info->msg_mutex);
-
+	    
             req_rec = CCSP_MSG_ACCESS_CONTAINER(entry,CCSP_REQ_DESCRIPTOR,Linkage);
             if(dbus_message_get_type(req_rec->message) == DBUS_MESSAGE_TYPE_SIGNAL)
                 bus_info->sig_callback(req_rec->conn, req_rec->message, req_rec->user_data); 
@@ -794,7 +794,7 @@ CCSP_Message_Bus_Process_Thread
 
             pthread_mutex_lock(&bus_info->msg_mutex);
             entry = CcspMsgQueuePopEntry(bus_info->msg_queue);
-                }
+        }
         pthread_mutex_unlock(&bus_info->msg_mutex);
 
         /* We leverage this pthread to check dbus connection. */
@@ -802,12 +802,12 @@ CCSP_Message_Bus_Process_Thread
         if ( ( curTime-preTime ) > CCSP_MESSAGE_BUS_TIMEOUT_MAX_SECOND  ){
             CcspTraceWarning(("<%s> !!!!PSM mode switching happened. Send singal to check dbus connection\n", __FUNCTION__));
             CcspBaseIf_SendsystemKeepaliveSignal(bus_info);
-    }
-        preTime = curTime; 
         }
+        preTime = curTime; 
+    }   
 
     return NULL;
-    }
+}
 
 void 
 CCSP_Msg_SleepInMilliSeconds
@@ -840,7 +840,7 @@ CCSP_Message_Bus_Init
     CCSP_MESSAGE_BUS_INFO *bus_info        = NULL;
     char                  address[256]     = {0};
     int                   count            = 0;
-
+    
 #ifndef WIN32 
     struct timeval now;
     struct timespec timeout;
@@ -849,15 +849,19 @@ CCSP_Message_Bus_Init
     struct _timeb currSysTime;
 #endif
 
-    // configuration file has Unix domain socket address to Dbus
-    if( ! config_file) config_file = "ccsp_msg.cfg";
-    fp = fopen(config_file, "r");
-    if (! fp)
-    {
-        CcspTraceError(("<%s>: cannot open %s\n", __FUNCTION__, config_file));
-        return -1;
-    }
+    if(!config_file)
+        config_file = "ccsp_msg.cfg";
 
+    if ((fp = fopen(config_file, "r")) == NULL) {
+        CcspTraceError(("<%s>: cannot open %s, try again after a while\n", __FUNCTION__, config_file));
+        sleep(2);
+
+        if ((fp = fopen(config_file, "r")) == NULL) {
+            CcspTraceError(("<%s>: cannot open %s\n", __FUNCTION__, config_file));
+            return -1;
+        }
+    }
+        
     // alloc memory, assign return value
     if(mallocfc) bus_info =(CCSP_MESSAGE_BUS_INFO*) mallocfc(sizeof(CCSP_MESSAGE_BUS_INFO));
     else bus_info =(CCSP_MESSAGE_BUS_INFO*) malloc(sizeof(CCSP_MESSAGE_BUS_INFO));
@@ -891,11 +895,11 @@ CCSP_Message_Bus_Init
     {
         CcspTraceError(("<%s>: No memory\n", __FUNCTION__));
         return -1;
-}
+    }
     CcspMsgQueueInit(bus_info->msg_queue);
     pthread_mutex_init(&bus_info->msg_mutex, NULL);
     pthread_cond_init (&bus_info->msg_threshold_cv, NULL);
-
+ 
     pthread_mutex_lock(&bus_info->info_mutex);
     bus_info->run = 1;
     pthread_mutex_unlock(&bus_info->info_mutex);
@@ -907,7 +911,7 @@ CCSP_Message_Bus_Init
     // Start loop and connect threads to the socket address(es)
     while (fgets(address, sizeof(address), fp) && 
            count < CCSP_MESSAGE_BUS_MAX_CONNECTION)
-        {
+    {
         /*assume the first address is our primary connection*/
         CCSP_Message_Bus_Strip(address);  // strip out \cr and \lf
         if(*address == 0) break;
@@ -927,7 +931,7 @@ CCSP_Message_Bus_Init
                 __FUNCTION__, 
                 bus_info->connection[count].address
             ));
-                    */
+        */
 
         // start the loop and connect threads, should be just one of each, even if count > 1
         bus_info->connection[count].loop = _dbus_loop_new();
@@ -948,10 +952,10 @@ CCSP_Message_Bus_Init
                 (void *)(&(bus_info->connection[count]))
              );
         count++;
-        }
+    }
 
     //    CcspTraceDebug(("<%s>: count = %d\n", __FUNCTION__, count));
-			
+
     fclose(fp);
 
     /*
@@ -978,7 +982,7 @@ CCSP_Message_Bus_Init
 
     //create a thread to monitor deadlock. Currently Only PandM enabled
     if ( strstr(bus_info->component_id, "com.cisco.spvtg.ccsp.pam" ) != 0 )
-            {
+    {
         if (mallocfc) deadlock_detection_log =(DEADLOCK_ARRAY*) mallocfc(sizeof(DEADLOCK_ARRAY));
         else deadlock_detection_log =(DEADLOCK_ARRAY*) malloc(sizeof(DEADLOCK_ARRAY));
         if ( ! deadlock_detection_log ) 
@@ -1007,7 +1011,7 @@ CCSP_Message_Bus_Init
     return 0;
 }
 
-    
+
 void 
 CCSP_Message_Bus_Exit
 (
@@ -1016,7 +1020,7 @@ CCSP_Message_Bus_Exit
 {
     int i;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    
+
     /* Set run to 0, and Trigger to CCSP_Message_Bus_Process_Thread to exit */
     pthread_mutex_lock(&bus_info->info_mutex);
     bus_info->run = 0;
@@ -1031,8 +1035,8 @@ CCSP_Message_Bus_Exit
 
         if(thread_dbus_connect && (ret = pthread_join(thread_dbus_connect, (void **)&msg)) != 0) {
             CcspTraceError(("<%s>: thread connect join returned %d with error %s\n", __FUNCTION__, ret, msg));
-}
-
+        }
+        
         if(thread_dbus_process && (ret = pthread_join(thread_dbus_process, (void **)&msg)) != 0) {
             CcspTraceError(("<%s>: thread process join returned %d with error %s\n", __FUNCTION__, ret, msg));
         }
@@ -1058,11 +1062,11 @@ CCSP_Message_Bus_Exit
             dbus_connection_unref(bus_info->connection[i].conn) ;
         }
 
-//       CCSP_Msg_SleepInMilliSeconds(1000);
+        // CCSP_Msg_SleepInMilliSeconds(1000);
 
         if(bus_info->connection[i].loop )
         {
-            _dbus_loop_quit (bus_info->connection[i].loop);
+            _dbus_loop_quit(bus_info->connection[i].loop);
         }
     }
 
@@ -1086,7 +1090,7 @@ CCSP_Message_Bus_Exit
     if(bus_info->CcspBaseIf_func) bus_info->freefunc(bus_info->CcspBaseIf_func);
 
     if(bus_info->msg_queue)
-   {
+    {
         PCCSP_MSG_SINGLE_LINK_ENTRY entry = NULL;
         CCSP_REQ_DESCRIPTOR *req_rec = NULL;       
         while((entry = CcspMsgQueuePopEntry(bus_info->msg_queue)) != NULL) {
@@ -1102,7 +1106,7 @@ CCSP_Message_Bus_Exit
     }
     pthread_mutex_unlock(&bus_info->info_mutex);
     pthread_mutex_destroy(&bus_info->info_mutex);
-        
+
     bus_info->freefunc(bus_info);
     bus_info = NULL;
     ccsp_bus_ref_count--;
@@ -1269,13 +1273,13 @@ CCSP_Message_Bus_Register_Event
     pthread_mutex_lock(&bus_info->info_mutex);
     for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i++)
     {
-        if(bus_info->connection[i].connected && bus_info->connection[i].conn )
+        if(bus_info->connection[i].connected && bus_info->connection[i].conn)
         {
             conn = bus_info->connection[i].conn;
             dbus_connection_ref (conn);
             pthread_mutex_unlock(&bus_info->info_mutex);
 
-            ret = CCSP_Message_Bus_Register_Event_Priv(conn , sender, path, interface, event_name ,1);
+            ret = CCSP_Message_Bus_Register_Event_Priv(conn, sender, path, interface, event_name, 1);
             dbus_connection_unref (conn);
             if(ret != CCSP_Message_Bus_OK) return ret;
 
@@ -1284,7 +1288,7 @@ CCSP_Message_Bus_Register_Event
     }
     pthread_mutex_unlock(&bus_info->info_mutex);
 
-    return CCSP_Message_Save_Register_Event(bus_handle,sender, path, interface,event_name  );
+    return CCSP_Message_Save_Register_Event(bus_handle, sender, path, interface, event_name);
 }
 
 
@@ -1312,7 +1316,7 @@ CCSP_Message_Bus_UnRegister_Event
             dbus_connection_ref (conn);
             pthread_mutex_unlock(&bus_info->info_mutex);
 
-            CCSP_Message_Bus_Register_Event_Priv(conn , sender, path, interface, event_name ,0);
+            CCSP_Message_Bus_Register_Event_Priv(conn, sender, path, interface, event_name, 0);
             dbus_connection_unref (conn);
 
             pthread_mutex_lock(&bus_info->info_mutex);
@@ -1353,7 +1357,7 @@ CCSP_Message_Bus_UnRegister_Event
                 bus_info->filters[i].interface     = NULL;
                 bus_info->filters[i].event         = NULL;
 
-                bus_info->filters[i].used  = 0;
+                bus_info->filters[i].used       = 0;
                 
                 break;
             }
@@ -1413,25 +1417,25 @@ CCSP_Message_Bus_Register_Path_Priv
     }
     if(i != CCSP_MESSAGE_BUS_MAX_PATH) 
     {
-    for(j = 0; j < CCSP_MESSAGE_BUS_MAX_CONNECTION; j++)
-    {
-        if(bus_info->connection[j].connected && bus_info->connection[j].conn )
+        for(j = 0; j < CCSP_MESSAGE_BUS_MAX_CONNECTION; j++)
         {
+            if(bus_info->connection[j].connected && bus_info->connection[j].conn )
+            {
                 if(dbus_connection_try_register_object_path
                       (
                           bus_info->connection[j].conn,
-                    path,
-                    &bus_info->path_array[i].echo_vtable,
-                    (void*)user_data,
+                          path,
+                          &bus_info->path_array[i].echo_vtable,
+                          (void*)user_data,
                           &error
                        ))
-                ret = CCSP_Message_Bus_OK;
-        }
+                    ret = CCSP_Message_Bus_OK;
+            }
         }
     }
 
     pthread_mutex_unlock(&bus_info->info_mutex);
-         dbus_error_free (&error);
+    dbus_error_free(&error);
 
     return ret;
 }
@@ -1481,7 +1485,7 @@ analyze_reply
         ret = CCSP_Message_Bus_OK;
     }
     else
-        {
+    {
         const char *err = dbus_message_get_error_name (reply);
 
         CcspTraceWarning(("<%s>: DbusSend error='%s', msg='%s'\n", 
@@ -1493,10 +1497,10 @@ analyze_reply
             ret = CCSP_MESSAGE_BUS_NOT_EXIST;
         else 
             ret = CCSP_MESSAGE_BUS_NOT_SUPPORT;
-        }
-
-    return ret;
     }
+    
+    return ret;
+}
 
 /*send a string _WITHOUT_ return param on specified connection*/
 int  
@@ -1528,7 +1532,7 @@ CCSP_Message_Bus_Send_Str
                       method
                    );
     if ( ! message )
-        {
+    {
         CcspTraceError(("<%s>: No memory\n", __FUNCTION__));
         ret = CCSP_Message_Bus_OOM;
         goto EXIT;
@@ -1540,7 +1544,7 @@ CCSP_Message_Bus_Send_Str
         CcspTraceError(("<%s>: No memory\n", __FUNCTION__));
         ret = CCSP_Message_Bus_OOM;
         goto EXIT;
-        }
+    }
     cb_data->message = message;
     cb_data->succeed = 0;
 
@@ -1558,7 +1562,7 @@ CCSP_Message_Bus_Send_Str
     _dbus_connection_lock(conn);
     reply = dbus_pending_call_steal_reply(pcall);
 
-    if(!reply)
+    if( ! reply) 
     {
         // wait for it once again with timeout
 
@@ -1566,8 +1570,8 @@ CCSP_Message_Bus_Send_Str
         struct timeval now;
         struct timespec timeout;
 #else
-  struct timespec timeout = { 0, 0 };
-  struct _timeb currSysTime;
+        struct timespec timeout = { 0, 0 };
+        struct _timeb currSysTime;
 #endif
         pthread_mutex_init(&cb_data->count_mutex, NULL);
         pthread_cond_init (&cb_data->count_threshold_cv, NULL);
@@ -1605,8 +1609,8 @@ CCSP_Message_Bus_Send_Str
             if(reply)
             {
                 ret = analyze_reply(message, reply, NULL);
-                }
             }
+        }
         pthread_mutex_unlock(&cb_data->count_mutex);
 
         pthread_mutex_destroy(&cb_data->count_mutex);
@@ -1626,7 +1630,7 @@ EXIT:
     if(message) dbus_message_unref(message);
     if(cb_data) free(cb_data);
     return ret;
-        }
+}
 
 
 /*This is complicated.
@@ -1639,7 +1643,7 @@ CCSP_Message_Bus_Send_Msg
     int timeout_seconds,
     DBusMessage **result
 )
-        {
+{
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusConnection *conn = NULL;
     DBusMessage *reply = NULL;
@@ -1661,31 +1665,31 @@ CCSP_Message_Bus_Send_Msg
             //  dbus_connection_ref (conn);
             break;
         }
-
-}
+        
+    }
     pthread_mutex_unlock(&bus_info->info_mutex);
-
+    
     if(i ==  CCSP_MESSAGE_BUS_MAX_CONNECTION)
         return CCSP_MESSAGE_BUS_CANNOT_CONNECT;
-
+      
     if ( ! dbus_connection_send_with_reply(conn, message, &pcall, 0x7fffffff) || ! pcall)
     {
         CcspTraceError(("<%s>: dbus_connection_send_with_reply fail\n", __FUNCTION__));
 
         if ( ! dbus_connection_get_is_connected(conn))
-{
+        {
             CcspTraceError(("<%s> not dbus_connection_get_is_connected \n", __FUNCTION__));
-    
+
             pthread_mutex_lock(&bus_info->info_mutex);
             bus_info->connection[i].connected = 0;
             pthread_mutex_unlock(&bus_info->info_mutex);
 
             if(bus_info->run)
-    {
+            {
                 // this is not normal
                 ccsp_msg_bus_reconnect(&((bus_info->connection[i])));
-    }  
-}
+            }
+        }
 
         ret = CCSP_Message_Bus_OOM;
         goto EXIT;
@@ -1694,18 +1698,18 @@ CCSP_Message_Bus_Send_Msg
     _dbus_connection_lock(conn);
     reply = dbus_pending_call_steal_reply(pcall);
     if( ! reply)  
-{
+    {
         // try again with a timed wait for reply
 #ifndef WIN32 
         struct timeval now;
         struct timespec timeout;
 #else
-  struct timespec timeout = { 0, 0 };
-  struct _timeb currSysTime;
+        struct timespec timeout = { 0, 0 };
+        struct _timeb currSysTime;
 #endif
         cb_data = (CCSP_MESSAGE_BUS_CB_DATA *)bus_info->mallocfunc(sizeof(CCSP_MESSAGE_BUS_CB_DATA));
         if( ! cb_data)
-    {
+        {
             CcspTraceError(("<%s>: cb_data malloc fail \n", __FUNCTION__));
             _dbus_connection_unlock(conn);
             ret = CCSP_Message_Bus_OOM;
@@ -1736,39 +1740,39 @@ CCSP_Message_Bus_Send_Msg
         {
             dbus_pending_call_cancel(pcall);
             //            CcspTraceWarning(("<%s>: pthread_cond_timedwait timeout\n", __FUNCTION__));
-	        
+
             // in case ccsp_msg_check_resp_sync is called between dbus_pending_call_cancel and pthread_cond_timedwait
             // CCSP_Msg_SleepInMilliSeconds(1000); 
 
             ret = CCSP_MESSAGE_BUS_TIMEOUT;
-	    }
+        }
         else
         {
             reply = dbus_pending_call_steal_reply(pcall);
             if (reply)
             {
                 ret = analyze_reply(message, reply, result);
-    }   
+            }
             else {} // do nothing
-}
+        }
         pthread_mutex_unlock(&cb_data->count_mutex);
 
         pthread_mutex_destroy(&cb_data->count_mutex);
         pthread_cond_destroy(&cb_data->count_threshold_cv);
         bus_info->freefunc(cb_data);
-}
+    }
     else
-{
+    {
         _dbus_connection_unlock(conn);
         ret = analyze_reply(message, reply, result);
-}
+    }
 
     if(pcall) dbus_pending_call_unref(pcall);
-	
+
 EXIT:
     //    dbus_connection_unref (conn);
     return ret;
-    }
+}
 
 
 
@@ -1811,12 +1815,12 @@ CCSP_Message_Bus_Send_Msg_Block
     if (dbus_error_is_set(&dbus_err))
     {
         CcspTraceError(("<%s> error: %s\n", __FUNCTION__, dbus_err.message));
-        }
+    }
     else if (reply)
-        {
+    {
         ret = analyze_reply(message, reply, result);
     }
-        dbus_error_free(&dbus_err);
+    dbus_error_free(&dbus_err);
 
     return ret;
 }

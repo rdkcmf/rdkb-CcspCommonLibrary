@@ -167,6 +167,7 @@ DslhDmagntEngage
         pMyObject->RegisterInternalApi(pMyObject, "CcspComp_GetParamStringValue",     CcspComp_GetParamStringValue);
 #endif
         pMyObject->RegisterInternalApi(pMyObject, "CcspComp_GetBulkParamValues",      CcspComp_GetBulkParamValues);
+        pMyObject->RegisterInternalApi(pMyObject, "CcspComp_SetParamBoolValue",       CcspComp_SetParamBoolValue);
 
         pMyObject->RegisterInternalApi(pMyObject, "CcspLog_GetParamBoolValue",        CcspLog_GetParamBoolValue);
         pMyObject->RegisterInternalApi(pMyObject, "CcspLog_GetParamUlongValue",       CcspLog_GetParamUlongValue);

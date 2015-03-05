@@ -74,6 +74,7 @@
         *   CcspComp_GetParamUlongValue 
         *   CcspComp_GetParamStringValue 
         *   CcspComp_GetBulkParamValues
+        *   CcspComp_SetParamBoolValue
         *   CcspLog_GetParamBoolValue
         *   CcspLog_GetParamUlongValue
         *   CcspLog_SetParamBoolValue
@@ -2824,6 +2825,7 @@ SupportedDataModel_GetParamStringValue
     *  CcspComp_GetParamUlongValue 
     *  CcspComp_GetParamStringValue 
     *  CcspComp_GetBulkParamValues
+    *  CcspComp_SetParamBoolValue
     *  CcspLog_GetParamBoolValue
     *  CcspLog_GetParamUlongValue
     *  CcspLog_SetParamBoolValue
@@ -2987,6 +2989,10 @@ CcspComp_GetBulkParamValues
         }
         else if ( AnscEqualString(pName, "DTXml", TRUE) )
         {
+            if( NULL == pDslhDataModelAgent->pDTXml)
+            {
+                 pDslhDataModelAgent->GenerateDTXmlString(pDslhDataModelAgent);
+            }    
             if( pDslhDataModelAgent->pDTXml)
             {
                 ppVarArray[i]->Variant.varString = AnscCloneString(pDslhDataModelAgent->pDTXml);
@@ -3001,6 +3007,84 @@ CcspComp_GetBulkParamValues
     }
 
     return TRUE;
+}
+
+BOOL
+CcspComp_SetParamBoolValue
+    (
+        ANSC_HANDLE                 hInsContext,
+        char*                       ParamName,
+        BOOL                        bValue
+    )
+{
+    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)hInsContext;
+    PDSLH_DATAMODEL_AGENT_OBJECT    agent   = pDslhDataModelAgent;
+    PCCSP_CCD_INTERFACE             ccdif   = (PCCSP_CCD_INTERFACE)pDslhDataModelAgent->hDslhCcdIf;
+    PDSLH_CPE_CONTROLLER_OBJECT     cpectl  = (PDSLH_CPE_CONTROLLER_OBJECT)pDslhDataModelAgent->hDslhCpeController;
+    char                            crName[128], compName[128], compPath[128], *cp;
+    char                            *comp;
+    ULONG                           nsCnt;
+    name_spaceType_t                *nsArr = (name_spaceType_t *)cpectl->hParameterArray;
+    int                             err;
+
+    if (AnscEqualString(ParamName, "Register", TRUE) && bValue == TRUE)
+    {
+        comp = ccdif->GetComponentName(NULL);
+        fprintf(stderr, "ccdif->GetComponentName %s\n", comp);
+
+        if (agent->RegBaseDataModel(agent, comp) != ANSC_STATUS_SUCCESS)
+        {
+            AnscTraceError(("%s: RegBaseDataModel error for %s!!\n", __FUNCTION__, comp));
+            fprintf(stderr, "%s: RegBaseDataModel error for %s!!\n", __FUNCTION__, comp);
+            return FALSE;
+        }
+
+        snprintf(crName, sizeof(crName), "%s%s", agent->pPrefix ? agent->pPrefix : "", "com.cisco.spvtg.ccsp.CR");
+        snprintf(compName, sizeof(compName), "%s%s", agent->pPrefix ? agent->pPrefix : "", comp);
+
+        fprintf(stderr, "agent->Prefix %s\n", agent->pPrefix);
+        fprintf(stderr, "crName %s\n", crName);
+        fprintf(stderr, "compName %s\n", compName);
+
+        if (cpectl->hParameterArray && cpectl->uParameterCount) {
+            nsCnt = 0;
+            nsArr = (name_spaceType_t *)cpectl->hParameterArray;
+            while (nsCnt < cpectl->uParameterCount && nsArr[nsCnt].name_space)
+            {
+                fprintf(stderr, " [%d] %s\n", nsCnt, nsArr[nsCnt].name_space);
+                nsCnt++;
+            }
+
+            snprintf(compPath, sizeof(compPath), "/%s", comp);
+            for (cp = &compPath[1]; cp < &compPath[sizeof(compPath)] && *cp != '\0'; cp++)
+                if (*cp == '.')
+                    *cp = '/';
+
+            fprintf(stderr, "cpectl->hParameterArray %p\n", cpectl->hParameterArray);
+            fprintf(stderr, "cpectl->uParameterCount %u\n", cpectl->uParameterCount);
+            fprintf(stderr, "compPath %s\n", compPath);
+
+            if ((err = CcspBaseIf_registerCapabilities(
+                        cpectl->hDbusHandle, 
+                        crName, 
+                        compName, 
+                        ccdif->GetComponentVersion(NULL),
+                        compPath,
+                        agent->pPrefix,
+                        cpectl->hParameterArray,
+                        nsCnt)) != CCSP_SUCCESS) {
+                AnscTraceError(("%s: fail to register DM for %s: %d!!\n", __FUNCTION__, compName, err));
+                fprintf(stderr, "%s: fail to register DM for %s: %d!!\n", __FUNCTION__, compName, err);
+                return FALSE;
+            }
+        }
+
+        fprintf(stderr, "%s: DM for %s OK !\n", __FUNCTION__, compName);
+        return TRUE;
+    }
+
+    fprintf(stderr, "%s: Unknow ParamName %s\n", __FUNCTION__, ParamName);
+    return FALSE;
 }
 
 BOOL
