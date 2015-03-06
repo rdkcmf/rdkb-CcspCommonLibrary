@@ -15,6 +15,7 @@ if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
     killall CcspMtaAgentSsp
     killall CcspCMAgentSsp
     killall CcspLMLite
+    killall CcspWecbController   
 fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/lib:/lib:/usr/lib:$LD_LIBRARY_PATH
@@ -60,7 +61,7 @@ else
     ./CcspCrSsp -subsys $Subsys
 fi
 
-sleep 3
+#sleep 3
 if [ "x"$Subsys = "x" ];then
     ./PsmSsp
 else
@@ -68,32 +69,8 @@ else
     ./PsmSsp -subsys $Subsys
 fi
 
-if [ -e ./mta ]; then
-    sleep 30
-    cd mta
-    if [ "x"$Subsys = "x" ];then
-        ./CcspMtaAgentSsp 
-    else
-        echo "./CcspMtaAgentSsp -subsys $Subsys"
-        ./CcspMtaAgentSsp -subsys $Subsys 
-    fi
-    cd ..
-fi
-
-if [ -e ./cm ]; then
-    sleep 5
-    cd cm
-    if [ "x"$Subsys = "x" ];then
-        ./CcspCMAgentSsp 
-    else
-        echo "./CcspCMAgentSsp -subsys $Subsys"
-        ./CcspCMAgentSsp -subsys $Subsys 
-    fi
-    cd ..
-fi
-
 if [ -e ./pam ]; then
-    sleep 5
+    sleep 1
 	cd pam
 	
     if [ "x"$Subsys = "x" ];then
@@ -134,7 +111,17 @@ fi
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
-# if [ -f "/nvram/ccsp_tr069pa" ]; then
+if [ -e ./wecb ]; then
+    sleep 5
+    cd wecb
+    if [ "x"$Subsys = "x" ];then
+        ./CcspWecbController 
+    else
+        echo "./CcspWecbController -subsys $Subsys"
+        ./CcspWecbController -subsys $Subsys 
+    fi
+    cd ..
+fi
 
 if [ -e ./tr069pa ]; then
     sleep 30
@@ -144,6 +131,35 @@ if [ -e ./tr069pa ]; then
     else
         echo "./CcspTr069PaSsp -subsys $Subsys"
         ./CcspTr069PaSsp -subsys $Subsys
+    fi
+    cd ..
+fi
+
+if [ -e ./tr069pa ]; then
+    # add firewall rule to allow incoming packet for port 7547
+    sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
+fi
+
+if [ -e ./cm ]; then
+    sleep 5
+    cd cm
+    if [ "x"$Subsys = "x" ];then
+        ./CcspCMAgentSsp 
+    else
+        echo "./CcspCMAgentSsp -subsys $Subsys"
+        ./CcspCMAgentSsp -subsys $Subsys 
+    fi
+    cd ..
+fi
+
+if [ -e ./mta ]; then
+    sleep 30
+    cd mta
+    if [ "x"$Subsys = "x" ];then
+        ./CcspMtaAgentSsp 
+    else
+        echo "./CcspMtaAgentSsp -subsys $Subsys"
+        ./CcspMtaAgentSsp -subsys $Subsys 
     fi
     cd ..
 fi
@@ -171,13 +187,6 @@ if [ -e ./fu ]; then
     fi
     cd ..
 fi
-
-if [ -e ./tr069pa ]; then
-    # add firewall rule to allow incoming packet for port 7547
-    sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
-fi
-
-#fi
 
 if [ -e ./tad ]; then
 	cd tad
@@ -219,6 +228,6 @@ fi
 
 if [ -e ./lm ]; then
     cd lm
-    sleep 60
+    sleep 5
     ./CcspLMLite &
 fi
