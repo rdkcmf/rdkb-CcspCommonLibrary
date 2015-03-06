@@ -18,12 +18,6 @@
 #include "ansc_platform.h"
 #include "openssl/ssl.h"
 
-int openssl_priv_load_ca_certificates(int who_calls)
-{
-    return 0;
-}
-
-
 void openssl_priv_verify(SSL_CTX *ssl_ctx)
 {
       /* see openssl_validate_certificate() for certificate validation  */

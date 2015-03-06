@@ -79,4 +79,6 @@
 #define  CCSP_MSG_BUS_CFG_LOCAL                "/usr/ccsp/ccsp_msg.cfg"
 #define  DM_ROOTNAME                           "Device."
 
+#define  CONFIG_CCSP_WAN_MGMT_ACCESS
+#define  CONFIG_KERNEL_NF_TRIGGER_SUPPORT
 #endif
