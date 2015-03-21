@@ -889,8 +889,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         if (!dbus_connection_send (conn, reply, &tmp))
             CcspTraceError(("<%s.%d> No memory\n", __FUNCTION__, getpid()));
 
-        if ( bIsWifi && 
-             dbus_connection_get_outgoing_size(conn) > CCSP_DBUS_LARGE_REPLY_SIZE_MIN && 
+        if ( dbus_connection_get_outgoing_size(conn) > CCSP_DBUS_LARGE_REPLY_SIZE_MIN && 
              dbus_connection_has_messages_to_send(conn)) 
         { 
             // printf("SERVER Large Msg - %d: Outgoing queue size = %d bytes\n", 
@@ -900,7 +899,6 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         
         dbus_message_unref (reply);
         free_parameterValStruct_t(bus_info, size, val);
-
         return DBUS_HANDLER_RESULT_HANDLED;
     }
 

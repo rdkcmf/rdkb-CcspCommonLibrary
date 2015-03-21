@@ -39,7 +39,7 @@ int PSM_Get_Record_Value
     void*                       bus_handle,
     char const * const          pSubSystemPrefix,
     char const * const          pRecordName,
-    unsigned int*                ulRecordType,
+    unsigned int*               ulRecordType,
     PSLAP_VARIABLE              pValue
 );
 
@@ -55,23 +55,23 @@ int PSM_Del_Record
 //caller need free ppInstanceArray
 int PsmGetNextLevelInstances
 (
-   void* bus_handle,
+   void*                        bus_handle,
    char const * const           pSubSystemPrefix,
    char const * const           pParentPath, 
-   unsigned int* pulNumInstance, 
-   unsigned int**  ppInstanceArray
+   unsigned int*                pulNumInstance, 
+   unsigned int**               ppInstanceArray
 );
 
 
 //caller need free ppRecArray
 int PsmEnumRecords
 (
-    void* bus_handle,
+    void*                       bus_handle,
     char const * const          pSubSystemPrefix,
     char const * const          pParentPath,
-    dbus_bool nextLevel,
-    unsigned int * pulNumRec,
-    PCCSP_BASE_RECORD*  ppRecArray
+    dbus_bool                   nextLevel,
+    unsigned int *              pulNumRec,
+    PCCSP_BASE_RECORD*          ppRecArray
 );
 
 

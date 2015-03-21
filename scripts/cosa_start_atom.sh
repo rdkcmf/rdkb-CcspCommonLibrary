@@ -10,6 +10,10 @@
 
 killall CcspWifiSsp
 
+# have IP address for dbus config generated
+vconfig add eth0 500
+ifconfig eth0.500 192.168.101.3
+
 export LD_LIBRARY_PATH=$PWD:.:$PWD/lib:/lib:/usr/lib:$LD_LIBRARY_PATH
 
 #mkdir -p /nvram/ccsp

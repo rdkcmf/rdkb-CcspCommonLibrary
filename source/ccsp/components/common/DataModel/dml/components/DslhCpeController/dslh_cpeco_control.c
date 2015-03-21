@@ -636,14 +636,14 @@ DslhCpecoLoadExternalDMLibFile
 
     pXMLContent = (char*)AnscAllocateMemory( uFileLength + 8);
 
-    if (pXMLContent == NULL)
+    if( pXMLContent == NULL)
     {
         return ANSC_STATUS_RESOURCES;
     }
 
     uBufferSize = uFileLength + 8;
 
-    if (AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
+    if( AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
     {
         AnscFreeMemory(pXMLContent);
 
@@ -1115,8 +1115,8 @@ DslhCpecoRegisterDataModel
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT)hThisObject;
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
-    name_spaceType_t                pParameterArray[CCSP_PARAMETER_MAX_COUNT]        = {{0}};
-    char                            pParameterHolder[CCSP_PARAMETER_MAX_COUNT * 90 ] = {0};
+    name_spaceType_t              * pParameterArray   = NULL;
+    char                          * pParameterHolder  = NULL;
     ULONG                           uCount            = 0;
     char                            pTmpCRName[128]   = { 0 };
     char                            pTmpCompName[128] = { 0 };
@@ -1126,6 +1126,11 @@ DslhCpecoRegisterDataModel
     {
         return ANSC_STATUS_FAILURE;
     }
+
+    pParameterArray  = (name_spaceType_t *)AnscAllocateMemory(CCSP_PARAMETER_MAX_COUNT * sizeof(name_spaceType_t) );
+    pParameterHolder = (char *)AnscAllocateMemory(CCSP_PARAMETER_MAX_COUNT * 90 * sizeof(char) );
+    if ( !pParameterArray || !pParameterHolder )
+        goto EXIT;
 
     /* Set return paramter into Cpe to collect full name of all parameters . */
     pMyObject->SetParameterArray((ANSC_HANDLE)pMyObject, pParameterArray, pParameterHolder,  CCSP_PARAMETER_MAX_COUNT );
@@ -1141,7 +1146,7 @@ DslhCpecoRegisterDataModel
 
         pMyObject->SetParameterArray((ANSC_HANDLE)pMyObject, NULL, NULL, 0 );
 
-        return returnStatus;
+        goto EXIT;
     }
 
     /* will be registered together with stardard data model */
@@ -1165,7 +1170,7 @@ DslhCpecoRegisterDataModel
     }
     */
     AnscSListInitializeHeader(&pMyObject->DmlCallbackList);    
-
+    
     
     if( pXMLFile != NULL && AnscSizeOfString(pXMLFile) > 4)
     {
@@ -1246,7 +1251,7 @@ DslhCpecoRegisterDataModel
 
     AnscTrace("!!! Ready to register capabilities of '%s' to '%s'...!!!\n", pTmpCompName, pTmpCRName);
 
-#if(0)
+#if 0
 
     for (uIndex = 0; uIndex < uCount; uIndex += CCSP_MAX_PARAMETER_PER_REGISTRATION)
     {
@@ -1326,11 +1331,24 @@ DslhCpecoRegisterDataModel
             }
         } while ( TRUE );
 
+
     /* unset the return paramter */
-    pMyObject->SetParameterArray((ANSC_HANDLE)pMyObject, NULL, NULL, 0 );
+    if (uCount == 0)
+        pMyObject->SetParameterArray((ANSC_HANDLE)pMyObject, NULL, NULL, 0 );
 
     /* generate the DT data model XML string */
-    pDslhDataModelAgent->GenerateDTXmlString(pDslhDataModelAgent);
+    /*@jihe2 GenerateDTXmlString when get the Datamodel to save the startup time*/
+    /*pDslhDataModelAgent->GenerateDTXmlString(pDslhDataModelAgent);*/
 
-        return returnStatus;
+EXIT:
+    if (uCount == 0)
+    {
+        pMyObject->SetParameterArray((ANSC_HANDLE)pMyObject, NULL, NULL, 0 );
+        if ( pParameterArray )
+            AnscFreeMemory(pParameterArray);
+        if ( pParameterHolder )
+            AnscFreeMemory(pParameterHolder);
+    }
+
+    return returnStatus;
 }

@@ -1,1 +1,1 @@
-SUBDIRS = tls slap stun ansc ccsp_msg_bus ccsp_dm_api web asn.1 http
+SUBDIRS = tls ccsp_msg_bus slap ccsp_dm_api web ansc stun http asn.1

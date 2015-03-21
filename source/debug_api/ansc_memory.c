@@ -172,6 +172,26 @@ AnscCopyMemory
     return;
 }
 
+PVOID
+AnscReallocMemory
+    (
+        PVOID pMemory,
+        ULONG ulOldMemorySize,
+        ULONG ulNewMemorySize
+    )
+{
+    PVOID p = AnscReAllocateMemory(pMemory, ulNewMemorySize);
+
+    if (p != NULL)
+    {
+        /*clear the new allocated mem*/
+        ULONG minLen = AnscGetMin2(ulOldMemorySize, ulNewMemorySize);
+        AnscZeroMemory(p + minLen, ulNewMemorySize - minLen);
+    }
+
+    return p;
+}
+
 ULONG 
 AnscGetProcessMaxMemorySize                                                                 
     (               

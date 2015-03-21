@@ -560,7 +560,7 @@ COSASetParamValueBool
 
     printf("Call in COSASetParamValueBool.\n");
 
-    return pDslhMprIf->SetParamValueBool(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_ACS, pParamName, bParamValue);
+    return pDslhMprIf->SetParamValueBool(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, bParamValue);
 }
 
 
@@ -600,7 +600,7 @@ COSASetParamValueInt
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
 
-    return pDslhMprIf->SetParamValueInt(pDslhMprIf->hOwnerContext,  DSLH_MPA_ENTITY_ACS, pParamName, iParamValue);
+    return pDslhMprIf->SetParamValueInt(pDslhMprIf->hOwnerContext,  DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, iParamValue);
 }
 
 
@@ -640,7 +640,7 @@ COSASetParamValueUlong
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
 
-    return pDslhMprIf->SetParamValueUint(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_ACS, pParamName, ulParamValue);
+    return pDslhMprIf->SetParamValueUint(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, ulParamValue);
 }
 
 
@@ -680,7 +680,7 @@ COSASetParamValueString
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase    = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf          = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
 
-    return pDslhMprIf->SetParamValueString(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_ACS, pParamName, pParamValue);
+    return pDslhMprIf->SetParamValueString(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, pParamValue);
 }
 
 
@@ -720,7 +720,7 @@ COSASetParamValue
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
 
-    return (void*)pDslhMprIf->SetParamValue(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_ACS, pParamName, pParamValue);
+    return (void*)pDslhMprIf->SetParamValue(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, pParamValue);
 }
 
 
