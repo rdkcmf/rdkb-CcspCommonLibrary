@@ -1,8 +1,3 @@
-if [ -e /mnt/sysdata0/switch ]; then
-   cd /mnt/appdata0/cc
-   ./cosa_start.sh
-   exit 0
-fi
 
 ln -s /usr/lib/libupnp.so.3 /usr/lib/libupnp.so
 ln -s /usr/lib/libixml.so.2 /usr/lib/libixml.so
@@ -99,22 +94,22 @@ else
 fi
 
 if [ -e ./pam ]; then
-cd pam
+    cd pam
     sleep 1
-if [ "x"$Subsys = "x" ];then
-    ./CcspPandMSsp &
-else
-    echo "./CcspPandMSsp -subsys $Subsys &"
-    ./CcspPandMSsp -subsys $Subsys &
-fi
+    if [ "x"$Subsys = "x" ];then
+        ./CcspPandMSsp &
+    else
+        echo "./CcspPandMSsp -subsys $Subsys &"
+        ./CcspPandMSsp -subsys $Subsys &
+    fi
     cd ..
 fi
 
 if [ -e ./cherokee ]; then
-cp ./cherokee/icons/yes.gif /usr/share/cherokee/icons
-cp ./cherokee/icons/add.gif /usr/share/cherokee/icons
-cp ./cherokee/icons/delete.gif /usr/share/cherokee/icons
-cherokee-worker -C ./cherokee/conf/cherokee.conf &
+    cp ./cherokee/icons/yes.gif /usr/share/cherokee/icons
+    cp ./cherokee/icons/add.gif /usr/share/cherokee/icons
+    cp ./cherokee/icons/delete.gif /usr/share/cherokee/icons
+    cherokee-worker -C ./cherokee/conf/cherokee.conf &
 fi
 
 
@@ -134,7 +129,7 @@ fi
 
 if [ -e ./avahi ]; then
     cd avahi
-$PWD/avahi-daemon --file=$PWD/avahi-daemon.conf -D
+    $PWD/avahi-daemon --file=$PWD/avahi-daemon.conf -D
     cd ..
 fi
 
@@ -151,45 +146,45 @@ fi
 
 if [ -e ./ssd ]; then
     cd ssd
-if [ "x"$Subsys = "x" ];then
-    ./CcspSsdSsp &
-else
-    echo "./CcspSsdSsp -subsys $Subsys &"
-    ./CcspSsdSsp -subsys $Subsys &
-fi
+    if [ "x"$Subsys = "x" ];then
+        ./CcspSsdSsp &
+    else
+        echo "./CcspSsdSsp -subsys $Subsys &"
+        ./CcspSsdSsp -subsys $Subsys &
+    fi
     cd ..
 fi
 
 if [ -e ./fu ]; then
-sleep 1
+    sleep 1
     cd fu
-if [ "x"$Subsys = "x" ];then
-        echo "./CcspFuSsp &"
-    ./CcspFuSsp &
-else
-    echo "./CcspFuSsp -subsys $Subsys &"
-    ./CcspFuSsp -subsys $Subsys &
-fi
+    if [ "x"$Subsys = "x" ];then
+            echo "./CcspFuSsp &"
+        ./CcspFuSsp &
+    else
+        echo "./CcspFuSsp -subsys $Subsys &"
+        ./CcspFuSsp -subsys $Subsys &
+    fi
     cd ..
 fi
 
 if [ -f ./CcspLmSsp ]; then
-sleep 1
-if [ "x"$Subsys = "x" ];then
-    ./CcspLmSsp &
-else
-    echo "./CcspLmSsp -subsys $Subsys &"
-    ./CcspLmSsp -subsys $Subsys &
-fi
+    sleep 1
+    if [ "x"$Subsys = "x" ];then
+        ./CcspLmSsp &
+    else
+        echo "./CcspLmSsp -subsys $Subsys &"
+        ./CcspLmSsp -subsys $Subsys &
+    fi
 fi
 
 if [ -e ./tad ]; then
-cd tad
-if [ "x"$Subsys = "x" ];then
-    ./CcspTandDSsp &
-else
-    ./CcspTandDSsp -subsys $Subsys &
-fi
+    cd tad
+    if [ "x"$Subsys = "x" ];then
+        ./CcspTandDSsp &
+    else
+        ./CcspTandDSsp -subsys $Subsys &
+    fi
     cd ..
 fi
 
@@ -205,6 +200,7 @@ fi
 
 if [ -e ./mta ]; then
     cd mta
+    sleep 1
     if [ "x"$Subsys = "x" ];then
         ./CcspMtaAgentSsp &
     else
@@ -215,19 +211,19 @@ if [ -e ./mta ]; then
 fi
 
 if [ -e ./cm ]; then
-cd cm
+    cd cm
     sleep 1
-if [ "x"$Subsys = "x" ];then
-    ./CcspCMAgentSsp &
-else
-    echo "./CcspCMAgentSsp -subsys $Subsys &"
-    ./CcspCM -subsys $Subsys &
-fi
+    if [ "x"$Subsys = "x" ];then
+        ./CcspCMAgentSsp &
+    else
+        echo "./CcspCMAgentSsp -subsys $Subsys &"
+        ./CcspCM -subsys $Subsys &
+    fi
     cd ..
 fi
 
 if [ -e ./lm ]; then
     cd lm
-    sleep 60
+    sleep 1
     ./CcspLMLite &
 fi

@@ -284,6 +284,7 @@ install:
 	@cp $(target_libccsp_common) $(CCSP_STAGING_ROOT)/lib
 	@cp source/cosa/include/linux/user_base.h $(CCSP_STAGING_ROOT)/include/cosa
 	@cp source/ccsp/custom/user_base_custom_linux.h $(CCSP_STAGING_ROOT)/include/cosa
+	@cp $(ComponentBoardDir)/include/ccsp_custom.h $(CCSP_STAGING_ROOT)/include
 	@cp $(install_targets) $(CCSP_OUT_DIR)
 
 LDFLAGS    += -L$(CCSP_OPENSOURCE_DIR)/lib
