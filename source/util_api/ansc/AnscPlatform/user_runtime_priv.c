@@ -67,6 +67,7 @@
 
 #include <signal.h>
 #include <dirent.h>
+#include <stdlib.h>
 
 #define  KILL_BUF_SIZE               128
 
@@ -132,73 +133,5 @@ static int kill_by_ppid(int ppid)
 
 int _ansc_system(char *command)
 {
-    int wait_val, pid;
-    __sighandler_t save_quit, save_int, save_chld;
-    int ret = 0, counter = 0;
-
-    if (command == 0)
-        return 1;
-
-    save_quit = signal(SIGQUIT, SIG_IGN);
-    save_int = signal(SIGINT, SIG_IGN);
-    save_chld = signal(SIGCHLD, SIG_DFL);
-
-    if ((pid = fork()) < 0) {
-        signal(SIGQUIT, save_quit);
-        signal(SIGINT, save_int);
-        signal(SIGCHLD, save_chld);
-        return -1;
-    }
-    if (pid == 0) {
-        signal(SIGQUIT, SIG_DFL);
-        signal(SIGINT, SIG_DFL);
-        signal(SIGCHLD, SIG_DFL);
-
-        execl("/bin/sh", "sh", "-c", command, (char *) 0);
-        _exit(127);
-    }
-#if 0    
-    /* Signals are not absolutly guarenteed with vfork */
-    signal(SIGQUIT, SIG_IGN);
-    signal(SIGINT, SIG_IGN);
-#endif
-
-#if 1
-    printf("_ansc_system: %s\n", command);
-#endif
-
-    /* check the child is exited or not without hang */
-    do {
-        ret = waitpid(pid, &wait_val, WNOHANG | WUNTRACED);
-        switch ( ret ) {
-        case -1:
-            return -1;
-        case 0:
-            sleep(1);
-            if ( (++counter > 30) && (kill_by_ppid(pid) == 0) ) { /* time out */
-                if (wait4(pid, &wait_val, 0, 0) == -1)
-                    wait_val = -1;
-#if 1
-                printf("system time out - killed %d:%s\n", pid, command);
-#endif
-                return -1;
-            }else if ( (++counter > 30) && (kill_by_ppid(pid) != 0) ){
-                /* WILL NOT HAPPEN! Return even the sh process will become zombie */
-#if 1
-                printf("system time out - killed %d:%s failure.\n", pid, command);
-#endif
-                return -1;
-            }
-            break;
-        default:
-            return wait_val;
-        }
-    } while ( 1 );
-
-    signal(SIGQUIT, save_quit);
-    signal(SIGINT, save_int);
-    signal(SIGCHLD, save_chld);
-    return wait_val;
+    return system(command);
 }
-
-
