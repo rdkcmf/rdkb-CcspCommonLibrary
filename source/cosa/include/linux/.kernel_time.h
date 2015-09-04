@@ -256,60 +256,6 @@ KernelGetSystemTimeInSeconds()
         }
 #endif
 
-#ifdef  BCM_63XX
-        /*
-         *  BCM_6358
-         */
-        #define  KernelProfilingPccFactor            1
-
-        #define  PERF_COUNTER_BASE 0xFF420000
-
-        typedef struct BCM4350_register_config 
-        {
-            unsigned long global_control;		// 0x00
-            #define PCE_enable (1<<31)
-            #define PCSD_disable (1<<8)
-            #define ModID(module) (module<<2)
-            #define mod_BIU 1
-            #define mod_Core 2
-            #define mod_Data_Cache 4
-            #define mod_Instruction_Cache 6
-            #define mod_Readahead_Cache 0xb
-            #define SetID(id) (id)
-            #define mod_set_mask 0x3f
-            unsigned long control[2];			// 0x04, 0x08
-            #define BCM4350_COUNTER_EVENT(c,event)		(event  <<  (c%2 ? 18:2))
-            #define BCM4350_COUNTER_ENABLE(c)			(1      <<  (c%2 ? 31:15))
-            #define BCM4350_COUNTER_TPID(c,pid)			(pid    <<  (c%2 ? 29:13))
-            #define BCM4350_COUNTER_AMID(c,amid)		(amid   <<  (c%2 ? 25:9))
-            #define BCM4350_COUNTER_OVERFLOW(c)			(1    	<<	(c%2 ? 16:0))
-            unsigned long unused;		// 0x0c
-            long counter[4];			// 0x10, 0x14, 0x18, 0x1c
-        } Perf_Control;
-        #define PERFC ((volatile Perf_Control * const) PERF_COUNTER_BASE)
-
-         __static_inline  void
-         KernelProfilingStartPcc()
-         {
-            PERFC->global_control = PCE_enable;
-	        PERFC->control[0] = PERFC->control[1] = 0x0;
-            PERFC->counter[0] = -1;
-
-            PERFC->control[0] |= BCM4350_COUNTER_EVENT(0, 0x12) | BCM4350_COUNTER_ENABLE(0);
-         }
-
-         __static_inline  void
-         KernelProfilingStopPcc()
-         {
-            PERFC->global_control = 0;
-         }
-
-         __static_inline  ULONG
-         KernelProfilingReadPcc()
-         {
-            return  (0xFFFFFFFF - PERFC->counter[0] + 1);
-         }
-#endif
 
 
 #endif
