@@ -168,7 +168,10 @@ int openssl_init (int who_calls)
   /* VZ only allows TLS */
   g_ssl_ctx[who_calls] = ssl_ctx = SSL_CTX_new (SSLv23_method ());
   if (!ssl_ctx)
-    goto error;
+  {
+    openssl_print_errors ();
+    return 0;
+  }
 
   SSL_CTX_set_options(ssl_ctx,SSL_OP_NO_SSLv2);
 
@@ -184,8 +187,11 @@ int openssl_init (int who_calls)
       /* if not using openssl_validate_certificate(), make sure to use SSL_VERIFY_PEER  */
       if ( (SSL_CTX_use_certificate_file (ssl_ctx, BBHM_CERT_FILE, SSL_FILETYPE_PEM) != 1) || 
            (SSL_CTX_use_PrivateKey_file (ssl_ctx, BBHM_PRIVATE_KEY, SSL_FILETYPE_PEM) != 1) )
-          goto error;
-
+      {
+        SSL_CTX_free (ssl_ctx);
+        openssl_print_errors ();
+        return 0;
+      }
       SSL_CTX_set_verify (ssl_ctx, SSL_VERIFY_NONE, NULL);
   }
 
@@ -196,18 +202,6 @@ int openssl_init (int who_calls)
   openssl_load_ca_certificates(who_calls);
 
   return 1;
-
- error:
-  if (ssl_ctx)
-    SSL_CTX_free (ssl_ctx);
-  openssl_print_errors ();
-  return 0;
-}
-
-int openssl_shutdown()
-{
-	/* not much to do here */
-	openssl_thread_cleanup();
 }
 
 int openssl_read (int fd, char *buf, int bufsize, void *ctx)
