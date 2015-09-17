@@ -182,17 +182,11 @@ int openssl_init (int who_calls)
 
       /* see openssl_validate_certificate() for certificate validation  */
       /* if not using openssl_validate_certificate(), make sure to use SSL_VERIFY_PEER  */
-      if (SSL_CTX_use_certificate_file (ssl_ctx, BBHM_CERT_FILE,
-                                        SSL_FILETYPE_PEM)
-          != 1)
-          goto error;
-      if (SSL_CTX_use_PrivateKey_file (ssl_ctx, BBHM_PRIVATE_KEY,
-                                       SSL_FILETYPE_PEM)
-          != 1)
+      if ( (SSL_CTX_use_certificate_file (ssl_ctx, BBHM_CERT_FILE, SSL_FILETYPE_PEM) != 1) || 
+           (SSL_CTX_use_PrivateKey_file (ssl_ctx, BBHM_PRIVATE_KEY, SSL_FILETYPE_PEM) != 1) )
           goto error;
 
       SSL_CTX_set_verify (ssl_ctx, SSL_VERIFY_NONE, NULL);
-
   }
 
   SSL_CTX_set_mode (ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE);
@@ -206,12 +200,8 @@ int openssl_init (int who_calls)
  error:
   if (ssl_ctx)
     SSL_CTX_free (ssl_ctx);
-
   openssl_print_errors ();
-
   return 0;
-
-
 }
 
 int openssl_shutdown()
@@ -222,26 +212,34 @@ int openssl_shutdown()
 
 int openssl_read (int fd, char *buf, int bufsize, void *ctx)
 {
-  int ret;
+  int retval;
   SSL *ssl = (SSL *) ctx;
+
   do
-    ret = SSL_read (ssl, buf, bufsize);
-  while (ret == -1
-	 && SSL_get_error (ssl, ret) == SSL_ERROR_SYSCALL
-	 && errno == EINTR);
-  return ret;
+  {
+    retval = SSL_read (ssl, buf, bufsize);
+  }
+  while (retval == -1
+	       && SSL_get_error (ssl, retval) == SSL_ERROR_SYSCALL
+      	 && errno == EINTR);
+
+  return retval;
 }
 
 int openssl_write (int fd, char *buf, int bufsize, void *ctx)
 {
-  int ret = 0;
+  int retval = 0;
   SSL *ssl = (SSL *) ctx;
+  
   do
-    ret = SSL_write (ssl, buf, bufsize);
-  while (ret == -1
-	 && SSL_get_error (ssl, ret) == SSL_ERROR_SYSCALL
-	 && errno == EINTR);
-  return ret;
+  {
+    retval = SSL_write (ssl, buf, bufsize);
+  }
+  while (retval == -1
+	       && SSL_get_error (ssl, retval) == SSL_ERROR_SYSCALL
+	       && errno == EINTR);
+
+  return retval;
 }
 
 
