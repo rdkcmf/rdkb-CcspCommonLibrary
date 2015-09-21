@@ -1,0 +1,32 @@
+#!/bin/sh
+
+start_function() {
+   if [ ! -f /etc/os-release ]; then
+      cd /ccsp/usr/ccsp
+      ./cosa_start.sh
+      cd -
+
+   else
+      sh /usr/ccsp/cosa_start.sh
+   fi
+}
+
+stop_function() {
+    killall CcspWifiSsp
+    vconfig rem eth0.500
+}
+
+case $1 in
+    "start")
+    start_function
+    ;;
+    "stop")
+    stop_function
+    ;;
+    "restart")
+    stop_function
+    start_function
+    ;;
+    *)
+    echo "Usage: $0 {start|stop|restart}"
+esac

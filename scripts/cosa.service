@@ -1,0 +1,10 @@
+[Unit]
+Description=Cosa service
+
+[Service]
+ExecStart=/etc/ccsp/cosa start
+ExecStop=/etc/ccsp/cosa stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
