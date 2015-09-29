@@ -841,9 +841,9 @@ typedef int (*CCSPPAIF_RESTARTBOOTSTRAP)(
 );
 
 typedef void(*CCSPCDLIF_DLCOMPLETESIGNAL)(
-    unsigned int  startTime;
-    unsigned int  completeTime;
-    void          *user_data;                                
+    unsigned int  startTime,
+    unsigned int  completeTime,
+    void          *user_data
 );
 
 typedef struct _CCSP_Base_Func_CB
