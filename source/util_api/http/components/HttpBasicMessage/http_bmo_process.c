@@ -1024,6 +1024,6 @@ HttpBmoSendComplete
                 );
     }
 
-    return  ANSC_STATUS_SUCCESS;
+/*    return  ANSC_STATUS_SUCCESS;*/
 }
 
