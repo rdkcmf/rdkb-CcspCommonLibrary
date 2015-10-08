@@ -75,7 +75,6 @@
 #ifndef CCSP_MESSAGE_BUS_H
 #define CCSP_MESSAGE_BUS_H
 #include <dbus/dbus.h>
-#include <dbus/dbus-mainloop.h>
 
 /*
 notes: see readme.txt
