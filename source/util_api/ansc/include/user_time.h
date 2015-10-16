@@ -132,7 +132,7 @@ UserGetTickInMilliSeconds2();
 
 #define UserGetTickInMilliSecondsAbs UserGetTickInMilliSeconds2
 
-__inline void UserSetDelta();
+extern inline void UserSetDelta();
 
 ULONG
 UserGetTickInMicroSeconds();
