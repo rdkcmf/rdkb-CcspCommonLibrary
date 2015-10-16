@@ -168,34 +168,34 @@ USER_FILE_PROPERTY,  *PUSER_FILE_PROPERTY;
 #define  user_write_gzip_file                            gzwrite
 #define  user_seek_gzip_file                             gzseek
 
-inline int
+extern inline int
 user_rename_file(char* old_file_name, char* new_file_name);
 
-inline int
+extern inline int
 user_create_directory(char* dir_name);
 
-inline  int
+extern inline  int
 user_get_file_stat(char* file_name, void* h_file_property);
 
-inline int
+extern inline int
 user_move_file(char* srcFile, char* dstFile);
 
-inline int
+extern inline int
 user_copy_directory(char* srcDir, char* dstDir);
 
-inline int
+extern inline int
 user_delete_directory(char* dir);
 
-inline int
+extern inline int
 user_delete_file(char *filename);
 
-inline int
+extern inline int
 user_get_file_size(PVOID h);
 
 int
 user_copy_file(char *src, char *dst, int fail_if_exists);
 
-inline  int
+extern inline  int
 user_find_first_file
     (
         char*                       dir_name,
@@ -205,7 +205,7 @@ user_find_first_file
         char*                       first_file_name
     );
 
-inline  int
+extern inline  int
 user_find_next_file
     (
         void*                       h_find_context,
@@ -213,7 +213,7 @@ user_find_next_file
         char*                       next_file_name
     );
 
-inline  void
+extern inline  void
 user_find_close
     (
         void*                      h_find_context
