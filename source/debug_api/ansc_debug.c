@@ -82,7 +82,22 @@
 #include "ansc_time.h"
 #include "ansc_debug.h"
 #include <stdarg.h>
-
+volatile BOOL RDKLogEnable = TRUE;
+volatile unsigned int RDKLogLevel = 4;
+volatile BOOL TR69_RDKLogEnable = TRUE;
+volatile unsigned int TR69_RDKLogLevel = 4;
+volatile BOOL PAM_RDKLogEnable = TRUE;
+volatile unsigned int PAM_RDKLogLevel = 4;
+volatile BOOL PSM_RDKLogEnable = TRUE;
+volatile unsigned int PSM_RDKLogLevel = 4;
+volatile BOOL MTA_RDKLogEnable = TRUE;
+volatile unsigned int MTA_RDKLogLevel = 4;
+volatile BOOL CM_RDKLogEnable = TRUE;
+volatile unsigned int CM_RDKLogLevel = 4;
+volatile BOOL WiFi_RDKLogEnable = TRUE;
+volatile unsigned int WiFi_RDKLogLevel = 4;
+volatile BOOL CR_RDKLogEnable = TRUE;
+volatile unsigned int CR_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -114,10 +129,12 @@ AnscSetTraceLevel_ansc
     switch(traceLevel)
     {
     case CCSP_TRACE_LEVEL_EMERGENCY:
+#ifndef FEATURE_SUPPORT_RDKLOG
         ansc_level = ANSC_TRACE_LEVEL_DEATH;
         break;
     case CCSP_TRACE_LEVEL_ALERT:
     case CCSP_TRACE_LEVEL_CRITICAL:
+#endif
         ansc_level = ANSC_TRACE_LEVEL_CRITICAL;
         break;
     case CCSP_TRACE_LEVEL_ERROR:
