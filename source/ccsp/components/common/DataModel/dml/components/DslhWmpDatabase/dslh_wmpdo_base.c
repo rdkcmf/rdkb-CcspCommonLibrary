@@ -86,6 +86,9 @@
 
 
 #include "dslh_wmpdo_global.h"
+#ifdef FEATURE_SUPPORT_RDKLOG
+#include "rdk_debug.h"
+#endif
 
 
 /**********************************************************************
@@ -479,6 +482,9 @@ DslhWmpdoEnrollObjects
     }
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
+#ifdef FEATURE_SUPPORT_RDKLOG
+rdk_logger_init("/fss/gw/lib/debug.ini");
+#endif
 
     return  ANSC_STATUS_SUCCESS;
 }
