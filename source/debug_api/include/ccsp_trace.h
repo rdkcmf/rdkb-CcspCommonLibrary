@@ -99,6 +99,8 @@ extern char *g_TraceLevelStr[8];
 extern char * pComponentName;
 extern volatile unsigned int RDKLogLevel;
 extern volatile BOOL RDKLogEnable;
+extern volatile unsigned int LM_RDKLogLevel;
+extern volatile unsigned int SNMP_RDKLogLevel;
 extern volatile unsigned int TR69_RDKLogLevel;
 extern volatile unsigned int PAM_RDKLogLevel;
 extern volatile unsigned int PSM_RDKLogLevel;
@@ -107,6 +109,8 @@ extern volatile unsigned int CM_RDKLogLevel;
 extern volatile unsigned int WiFi_RDKLogLevel;
 extern volatile unsigned int CR_RDKLogLevel;
 
+extern volatile BOOL LM_RDKLogEnable;
+extern volatile BOOL SNMP_RDKLogEnable;
 extern volatile BOOL TR69_RDKLogEnable;
 extern volatile BOOL PAM_RDKLogEnable;
 extern volatile BOOL PSM_RDKLogEnable;
@@ -272,6 +276,18 @@ else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.logagent"))					\
 	ComponentName="LOG.RDK.WIFI";							\
 	LogLevel = WiFi_RDKLogLevel;\
 	LogEnable = WiFi_RDKLogEnable;\
+}\
+else if(!strcmp(pComponentName,"LOG.RDK.LM"))					\
+{												\
+	ComponentName="LOG.RDK.LM";							\
+	LogLevel = LM_RDKLogLevel;\
+	LogEnable = LM_RDKLogEnable;\
+}\
+else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))					\
+{												\
+	ComponentName="LOG.RDK.SNMP";							\
+	LogLevel = SNMP_RDKLogLevel;\
+	LogEnable = SNMP_RDKLogEnable;\
 }\
 else\
 {\

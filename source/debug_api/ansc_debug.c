@@ -84,6 +84,10 @@
 #include <stdarg.h>
 volatile BOOL RDKLogEnable = TRUE;
 volatile unsigned int RDKLogLevel = 4;
+volatile BOOL LM_RDKLogEnable = TRUE;
+volatile unsigned int LM_RDKLogLevel = 4;
+volatile BOOL SNMP_RDKLogEnable = TRUE;
+volatile unsigned int SNMP_RDKLogLevel = 4;
 volatile BOOL TR69_RDKLogEnable = TRUE;
 volatile unsigned int TR69_RDKLogLevel = 4;
 volatile BOOL PAM_RDKLogEnable = TRUE;
