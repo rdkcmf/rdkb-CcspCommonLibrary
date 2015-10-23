@@ -249,13 +249,14 @@ mbiIf_SendParameterValueChangeSignal
             pParamSignal->newValue = SlapVcoIntToString(NULL, pNewValue->Variant.varInt);
             pParamSignal->type      = ccsp_int;
         }
+			pParamSignal->writeID          = pNewValue->ReqSenderID;
     }
     else
     {
         pParamSignal->newValue = NULL;
     }
 
-    pParamSignal->writeID          = AccessListToAccessControlBitMask(pAccessList);
+    //pParamSignal->writeID          = AccessListToAccessControlBitMask(pAccessList);
     pParamSignal->subsystem_prefix = AnscCloneString(g_SubPrefix);
 
     returnStatus = 

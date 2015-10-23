@@ -553,6 +553,7 @@ _SLAP_VARIABLE
     ULONG                           ContentType;            /* the content type of the variable     */
     ULONG                           UsageType;              /* indicate usage occasion, rarely used */
     ULONG                           Syntax;                 /* one of the above syntax values       */
+	ULONG                           ReqSenderID;  
     union
     {
         SLAP_BOOL                   varBool;

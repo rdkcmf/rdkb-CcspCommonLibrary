@@ -907,7 +907,10 @@ DslhVarroNotifyValueChanged
         /* New value has to be present all the time. Get current value */
         pNewValue = pMyObject->GetValue((ANSC_HANDLE)pMyObject);
     }
-
+	if(pNewValue != NULL)
+	{
+		pNewValue->ReqSenderID = pMyObject->ReqSenderID;
+	}
     pAccessList = AnscCloneString(pMyObject->AccessList);
 
     returnStatus =

@@ -702,6 +702,7 @@ DslhWmpdoMpaSetParameterValues
             }
         }
 
+		pVarRecord->ReqSenderID = writeID;
         /* User Changed Flag Check */
         if (pVarEntity && pVarEntity->ParamDescr->bMonitor)
         {
