@@ -32,6 +32,8 @@
 #   limitations under the License.
 #######################################################################
 
+BINPATH="/fss/gw/usr/bin"
+DBUSPATH="/usr/bin"
 
 if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall ccspRecoveryManager
@@ -110,16 +112,18 @@ if [ -f "$PWD/core_compr" ]; then
 fi
 
 # Start Config Recover
-echo "Starting Config Recover Daemon ..."
-conf_rec &
+
+#conf_rec &
 
 cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
 #./DbusCfg
-../../dbus-daemon --config-file=./basic.conf --fork
+$DBUSPATH/dbus-daemon --config-file=./basic.conf --fork
 
-mkdir /var/tmp/logs/
+mkdir -p /var/tmp/logs/
+
+
 if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
 then
 	/fss/gw/rdklogger/rdkbLogMonitor.sh &
@@ -142,52 +146,46 @@ fi
 echo "Elected subsystem is $Subsys"
 
 if [ "x"$Subsys = "x" ];then
-	./CcspCrSsp
+	$BINPATH/CcspCrSsp
 else
-	echo "./CcspCrSsp -subsys $Subsys"
-	./CcspCrSsp -subsys $Subsys
+	echo "$BINPATH/CcspCrSsp -subsys $Subsys"
+	$BINPATH/CcspCrSsp -subsys $Subsys
 fi
-
 if [ -e ./logagent ]; then
-	cd logagent
 
 	if [ "x"$Subsys = "x" ];then
-		./log_agent
+		$BINPATH/log_agent
 	else
-		echo "./log_agent -subsys $Subsys"
-		./log_agent -subsys $Subsys
+		echo "$BINPATH/log_agent -subsys $Subsys"
+		$BINPATH/log_agent -subsys $Subsys
 	fi
-	cd ..
 fi
 
 if [ "x"$Subsys = "x" ];then
-	./PsmSsp
+	$BINPATH/PsmSsp
 else
-    echo "./PsmSsp -subsys $Subsys"
-	./PsmSsp -subsys $Subsys
+    echo "$BINPATH/PsmSsp -subsys $Subsys"
+	$BINPATH/PsmSsp -subsys $Subsys
 fi
 
 if [ -e ./pam ]; then
-	cd pam
 
 	if [ "x"$Subsys = "x" ];then
-		./CcspPandMSsp
+		$BINPATH/CcspPandMSsp
 	else
-		echo "./CcspPandMSsp -subsys $Subsys"
-		./CcspPandMSsp -subsys $Subsys
+		echo "$BINPATH/CcspPandMSsp -subsys $Subsys"
+		$BINPATH/CcspPandMSsp -subsys $Subsys
 	fi
-	cd ..
 fi
 
+
 if [ -e ./wecb ]; then                                                                                                                                                                                                                    
-    cd wecb                                                                                                                
     if [ "x"$Subsys = "x" ];then                                                                                           
-        ./CcspWecbController                                                                                               
+        $BINPATH/CcspWecbController                                                                                               
     else                                                                                                                   
-        echo "./CcspWecbController -subsys $Subsys"                                                                        
-       ./CcspWecbController -subsys $Subsys                                                                               
+        echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
+       $BINPATH/CcspWecbController -subsys $Subsys                                                                               
     fi                                                                                                                     
-    cd ..                                                                                                                  
 fi  
 
 
