@@ -2,7 +2,10 @@
 
 source /etc/utopia/service.d/log_capture_path.sh
 
+BINPATH="/fss/gw/usr/bin"
+
 cd /fss/gw/usr/ccsp/
+
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
@@ -26,42 +29,34 @@ fi
 echo "Elected subsystem is $Subsys"
 
 if [ -e ./pam ]; then
-    cd pam
         #double background to detach the script from the tty
-        ((sh ./email_notification_monitor.sh 12 &) &)
-        cd ..
+        ((sh /etc/email_notification_monitor.sh 12 &) &)
 fi
  
 echo "PWD is `pwd`"
 
 if [ -e ./mta ]; then
-    cd mta
     if [ "x"$Subsys = "x" ];then
-        ./CcspMtaAgentSsp
+        $BINPATH/CcspMtaAgentSsp
     else
-        echo "./CcspMtaAgentSsp -subsys $Subsys"
-        ./CcspMtaAgentSsp -subsys $Subsys
+        echo "$BINPATH/CcspMtaAgentSsp -subsys $Subsys"
+        $BINPATH/CcspMtaAgentSsp -subsys $Subsys
     fi
-    cd ..
 fi
 
 if [ -e ./cm ]; then
-        cd cm
         if [ "x"$Subsys = "x" ];then
-        ./CcspCMAgentSsp
+        $BINPATH/CcspCMAgentSsp
         else
-        echo "./CcspCMAgentSsp -subsys $Subsys"
-                ./CcspCMAgentSsp -subsys $Subsys
+        echo "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
+                $BINPATH/CcspCMAgentSsp -subsys $Subsys
         fi
-        cd ..
 fi
 
 if [ -f ./cp_subsys_ert ]; then
         if [ -e ./rm ]; then
-                cd rm
-        echo "./CcspRmSsp -subsys $Subsys"
-                ./CcspRmSsp -subsys $Subsys
-        cd ..
+        echo "$BINPATH/CcspRmSsp -subsys $Subsys"
+                $BINPATH/CcspRmSsp -subsys $Subsys
         fi
 fi
 
@@ -76,36 +71,30 @@ fi
 
 
 if [ -e ./tr069pa ]; then
-        cd tr069pa
         if [ "x"$Subsys = "x" ]; then
-                ./CcspTr069PaSsp
+                $BINPATH/CcspTr069PaSsp
         else
-        echo "./CcspTr069PaSsp -subsys $Subsys"
-                ./CcspTr069PaSsp -subsys $Subsys
+        echo "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
+                $BINPATH/CcspTr069PaSsp -subsys $Subsys
         fi
-        cd ..
 fi
 
 if [ -e ./ssd ]; then
-        cd ssd
         if [ "x"$Subsys = "x" ];then
-                ./CcspSsdSsp
+                $BINPATH/CcspSsdSsp
         else
-                echo "./CcspSsdSsp -subsys $Subsys"
-                ./CcspSsdSsp -subsys $Subsys
+                echo "$BINPATH/CcspSsdSsp -subsys $Subsys"
+                $BINPATH/CcspSsdSsp -subsys $Subsys
         fi
-        cd ..
 fi
 
 if [ -e ./fu ]; then
-        cd fu
         if [ "x"$Subsys = "x" ];then
-                ./CcspFuSsp
+                $BINPATH/CcspFuSsp
         else
-                echo "./CcspFuSsp -subsys $Subsys"
-                ./CcspFuSsp -subsys $Subsys
+                echo "$BINPATH/CcspFuSsp -subsys $Subsys"
+                $BINPATH/CcspFuSsp -subsys $Subsys
         fi
-        cd ..
 fi
        
 if [ -e ./tr069pa ]; then
@@ -116,15 +105,13 @@ fi
 #fi
 
 if [ -e ./tad ]; then
-        cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
         if [ "x"$Subsys = "x" ];then
-                ./CcspTandDSsp
+                $BINPATH/CcspTandDSsp
         else
-        echo "./CcspTandDSsp -subsys $Subsys"
-                ./CcspTandDSsp -subsys $Subsys
+        echo "$BINPATH/CcspTandDSsp -subsys $Subsys"
+                $BINPATH/CcspTandDSsp -subsys $Subsys
         fi
-        cd ..
 fi
 
 #if [ -e ./webpa ]; then
@@ -147,14 +134,12 @@ if [ -e ./webpa ]; then
 		`sed -i '2i \        "EnablePa": "false",' /nvram/webpa_cfg.json`
 	elif [ "$ENABLEWEBPA" = "true" ];then
 		echo "ENABLEWEBPA is true..Intializing WebPA.."
-		cd webpa
 		if [ "x"$Subsys = "x" ];then
-			./webpa
+			$BINPATH/webpa
 		else
 			echo "./webpa -subsys $Subsys"
-			./webpa -subsys $Subsys
+			$BINPATH/webpa -subsys $Subsys
 		fi
-		cd ..
 	else
 		echo "EnablePa parameter is set to false. Hence not initializng WebPA.."
 	fi
@@ -162,10 +147,10 @@ fi
 
 if [ -e ./ccspRecoveryManager ]; then
         if [ "x"$Subsys = "x" ];then
-                ./ccspRecoveryManager &
+                $BINPATH/ccspRecoveryManager &
         else
-                echo "./ccspRecoveryManager -subsys $Subsys &"
-                ./ccspRecoveryManager -subsys $Subsys &
+                echo "$BINPATH/ccspRecoveryManager -subsys $Subsys &"
+                $BINPATH/ccspRecoveryManager -subsys $Subsys &
         fi
 fi
 
@@ -184,12 +169,11 @@ fi
 #fi
 
 if [ -e ./lm ]; then
-    cd lm
-    ./CcspLMLite &
+    $BINPATH/CcspLMLite &
 fi
 
 echo "XCONF SCRIPT : Calling XCONF Client"
-cd /fss/etc
+cd /fss/gw/etc
 ./xb3_firmwareDwnld.sh &
 
 echo "Running process monitoring script"
