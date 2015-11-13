@@ -32,8 +32,7 @@
 #   limitations under the License.
 #######################################################################
 
-BINPATH="/fss/gw/usr/bin"
-DBUSPATH="/usr/bin"
+BINPATH="/usr/bin"
 
 if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall ccspRecoveryManager
@@ -119,7 +118,7 @@ cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
 #./DbusCfg
-$DBUSPATH/dbus-daemon --config-file=./basic.conf --fork
+$BINPATH/dbus-daemon --config-file=./basic.conf --fork
 
 mkdir -p /var/tmp/logs/
 

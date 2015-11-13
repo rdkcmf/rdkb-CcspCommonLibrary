@@ -2,7 +2,7 @@
 
 source /etc/utopia/service.d/log_capture_path.sh
 
-BINPATH="/fss/gw/usr/bin"
+BINPATH="/usr/bin"
 
 cd /fss/gw/usr/ccsp/
 
