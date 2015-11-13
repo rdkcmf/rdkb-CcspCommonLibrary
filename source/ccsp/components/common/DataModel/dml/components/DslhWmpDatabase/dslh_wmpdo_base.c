@@ -90,6 +90,7 @@
 #include "rdk_debug.h"
 #endif
 
+#define DEBUG_INI_NAME "/etc/debug.ini"
 
 /**********************************************************************
 
@@ -483,7 +484,7 @@ DslhWmpdoEnrollObjects
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
 #ifdef FEATURE_SUPPORT_RDKLOG
-rdk_logger_init("/fss/gw/lib/debug.ini");
+rdk_logger_init( DEBUG_INI_NAME);
 #endif
 
     return  ANSC_STATUS_SUCCESS;
