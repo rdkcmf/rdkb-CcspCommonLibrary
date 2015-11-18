@@ -132,7 +132,7 @@ if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
 then
 	/fss/gw/rdklogger/fileUploadRandom.sh &
 fi
-#touch cp_subsys_ert
+touch cp_subsys_ert
 
 if [ -f ./cp_subsys_ert ]; then
 	Subsys="eRT."
