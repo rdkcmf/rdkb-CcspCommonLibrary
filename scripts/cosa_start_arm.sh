@@ -151,7 +151,9 @@ else
 	echo "$BINPATH/CcspCrSsp -subsys $Subsys"
 	$BINPATH/CcspCrSsp -subsys $Subsys
 fi
+
 if [ -e ./logagent ]; then
+	cd logagent
 
 	if [ "x"$Subsys = "x" ];then
 		$BINPATH/log_agent
@@ -159,6 +161,7 @@ if [ -e ./logagent ]; then
 		echo "$BINPATH/log_agent -subsys $Subsys"
 		$BINPATH/log_agent -subsys $Subsys
 	fi
+	cd ..
 fi
 
 if [ "x"$Subsys = "x" ];then
@@ -169,6 +172,7 @@ else
 fi
 
 if [ -e ./pam ]; then
+	cd pam
 
 	if [ "x"$Subsys = "x" ];then
 		$BINPATH/CcspPandMSsp
@@ -176,16 +180,18 @@ if [ -e ./pam ]; then
 		echo "$BINPATH/CcspPandMSsp -subsys $Subsys"
 		$BINPATH/CcspPandMSsp -subsys $Subsys
 	fi
+	cd ..
 fi
 
-
 if [ -e ./wecb ]; then                                                                                                                                                                                                                    
+    cd wecb                                                                                                                
     if [ "x"$Subsys = "x" ];then                                                                                           
         $BINPATH/CcspWecbController                                                                                               
     else                                                                                                                   
         echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
        $BINPATH/CcspWecbController -subsys $Subsys                                                                               
     fi                                                                                                                     
+    cd ..                                                                                                                  
 fi  
 
 
