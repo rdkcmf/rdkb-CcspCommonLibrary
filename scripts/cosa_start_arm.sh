@@ -35,7 +35,7 @@
 BINPATH="/usr/bin"
 
 ulimit -c unlimited
-echo “/tmp/%t_core.prog_%e.signal_%s” > /proc/sys/kernel/core_pattern
+echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
 
 if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall ccspRecoveryManager
