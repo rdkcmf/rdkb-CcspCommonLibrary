@@ -32,6 +32,7 @@
 #   limitations under the License.
 #######################################################################
 
+BINPATH="/usr/bin"
 
 killall CcspWifiSsp
 
@@ -60,10 +61,10 @@ sleep 1
 if [ -e ./wifi ]; then
 	cd wifi 
 	if [ "x"$Subsys = "x" ];then
-    	./CcspWifiSsp &
+    	$BINPATH/CcspWifiSsp &
 	else
-    	echo "./CcspWifiSsp -subsys $Subsys &"
-    	./CcspWifiSsp -subsys $Subsys &
+    	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
+    	$BINPATH/CcspWifiSsp -subsys $Subsys &
 	fi
 fi
 
