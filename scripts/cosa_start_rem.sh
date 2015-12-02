@@ -78,16 +78,16 @@ fi
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
 
-if [ -e ./tr069pa ]; then
-        cd tr069pa
-        if [ "x"$Subsys = "x" ]; then
-                $BINPATH/CcspTr069PaSsp
-        else
-        echo "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
-                $BINPATH/CcspTr069PaSsp -subsys $Subsys
-        fi
-        cd ..
-fi
+#if [ -e ./tr069pa ]; then
+#        cd tr069pa
+#        if [ "x"$Subsys = "x" ]; then
+#                $BINPATH/CcspTr069PaSsp
+#        else
+#        echo "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
+#                $BINPATH/CcspTr069PaSsp -subsys $Subsys
+#        fi
+#        cd ..
+#fi
 
 if [ -e ./ssd ]; then
         cd ssd
