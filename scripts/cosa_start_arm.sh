@@ -127,15 +127,15 @@ $BINPATH/dbus-daemon --config-file=./basic.conf --fork
 mkdir -p /var/tmp/logs/
 
 
-if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
-then
-	/fss/gw/rdklogger/rdkbLogMonitor.sh &
-fi
-
-if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
-then
-	/fss/gw/rdklogger/fileUploadRandom.sh &
-fi
+#if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
+#then
+#	/fss/gw/rdklogger/rdkbLogMonitor.sh &
+#fi
+#
+#if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
+#then
+#	/fss/gw/rdklogger/fileUploadRandom.sh &
+#fi
 touch /tmp/cp_subsys_ert
 
 if [ -f /tmp/cp_subsys_ert ]; then
