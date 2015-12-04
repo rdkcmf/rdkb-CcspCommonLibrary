@@ -40,7 +40,7 @@ killall CcspWifiSsp
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
 
-export LD_LIBRARY_PATH=$PWD:.:/ccsp/lib:/ccsp/usr/ccsp:/ccsp/usr/ccsp/wifi:/lib:/usr/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 
 # enable core files on atom
 ulimit -c unlimited
@@ -69,5 +69,5 @@ if [ -e ./wifi ]; then
 fi
 
 echo "starting process monitor script"
-sh /ccsp/usr/ccsp/wifi/process_monitor_atom.sh &
+sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
