@@ -1,14 +1,7 @@
 #!/bin/sh
 
 start_function() {
-   if [ ! -f /etc/os-release ]; then
-      cd /ccsp/usr/ccsp
-      ./cosa_start.sh
-      cd -
-
-   else
       sh /usr/ccsp/cosa_start.sh
-   fi
 }
 
 stop_function() {
