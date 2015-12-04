@@ -1,10 +1,13 @@
 [Unit]
 Description=Cosa service
+After=arris-wlan-rpc.service
 
 [Service]
+Type=oneshot
 ExecStart=/etc/ccsp/cosa start
 ExecStop=/etc/ccsp/cosa stop
 RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
+
