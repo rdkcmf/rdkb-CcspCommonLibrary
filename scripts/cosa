@@ -1,7 +1,8 @@
 #!/bin/sh
 
 start_function() {
-      sh /usr/ccsp/cosa_start.sh
+      cd /usr/ccsp
+      sh cosa_start.sh
 }
 
 stop_function() {

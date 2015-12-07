@@ -66,6 +66,7 @@ if [ -e ./wifi ]; then
     	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
     	$BINPATH/CcspWifiSsp -subsys $Subsys &
 	fi
+       cd ..
 fi
 
 echo "starting process monitor script"
