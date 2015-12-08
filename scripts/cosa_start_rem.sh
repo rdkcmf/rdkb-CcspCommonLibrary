@@ -18,9 +18,9 @@ then
 	syscfg commit
 fi
 
-if [ -f ./cp_subsys_ert ]; then
+if [ -f /tmp/cp_subsys_ert ]; then
         Subsys="eRT."
-elif [ -e ./cp_subsys_emg ]; then
+elif [ -e /tmp/cp_subsys_emg ]; then
         Subsys="eMG."
 else
         Subsys=""
