@@ -61,12 +61,13 @@ sleep 1
 if [ -e ./wifi ]; then
 	cd wifi 
 	if [ "x"$Subsys = "x" ];then
+        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
     	$BINPATH/CcspWifiSsp &
 	else
+        echo "****STARTING CCSPWIFI WITH SUBSYS***"
     	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
     	$BINPATH/CcspWifiSsp -subsys $Subsys &
 	fi
-       cd ..
 fi
 
 echo "starting process monitor script"
