@@ -58,18 +58,19 @@ echo "Elected subsystem is $Subsys"
 
 sleep 1
 
-if [ -e ./wifi ]; then
-	cd wifi 
-	if [ "x"$Subsys = "x" ];then
-        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
-    	$BINPATH/CcspWifiSsp &
-	else
-        echo "****STARTING CCSPWIFI WITH SUBSYS***"
-    	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
-    	$BINPATH/CcspWifiSsp -subsys $Subsys &
-	fi
-fi
+echo "Temporary change for ARRISXB3-3854: NOT STARTING CcspWifiSsp (a.k.a Wifi-Agent) to test Wifi Manually and see if ARRISXB3-3853 would go away"
+#if [ -e ./wifi ]; then
+#	cd wifi 
+#	if [ "x"$Subsys = "x" ];then
+#        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
+#    	$BINPATH/CcspWifiSsp &
+#	else
+#        echo "****STARTING CCSPWIFI WITH SUBSYS***"
+#    	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
+#    	$BINPATH/CcspWifiSsp -subsys $Subsys &
+#	fi
+#fi
 
-echo "starting process monitor script"
-sh /usr/ccsp/wifi/process_monitor_atom.sh &
+#echo "starting process monitor script"
+#sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
