@@ -87,6 +87,7 @@ if [ -e ./tr069pa ]; then
         echo "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
                 $BINPATH/CcspTr069PaSsp -subsys $Subsys
         fi
+        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
         cd ..
 fi
 
@@ -112,10 +113,10 @@ if [ -e ./fu ]; then
         cd ..
 fi
        
-if [ -e ./tr069pa ]; then
+#if [ -e ./tr069pa ]; then
 # add firewall rule to allow incoming packet for port 7547
-sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
-fi
+#sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
+#fi
 
 #fi
 
