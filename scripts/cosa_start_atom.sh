@@ -40,7 +40,8 @@ killall CcspWifiSsp
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
 
-export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/ccsp:.:/usr/ccsp/../../lib:/usr/ccsp/../../.:/lib:/usr/lib:
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # enable core files on atom
 ulimit -c unlimited
@@ -58,19 +59,18 @@ echo "Elected subsystem is $Subsys"
 
 sleep 1
 
-echo "Temporary change for ARRISXB3-3854: NOT STARTING CcspWifiSsp (a.k.a Wifi-Agent) to test Wifi Manually and see if ARRISXB3-3853 would go away"
-#if [ -e ./wifi ]; then
-#	cd wifi 
-#	if [ "x"$Subsys = "x" ];then
-#        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
-#    	$BINPATH/CcspWifiSsp &
-#	else
-#        echo "****STARTING CCSPWIFI WITH SUBSYS***"
-#    	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
-#    	$BINPATH/CcspWifiSsp -subsys $Subsys &
-#	fi
-#fi
+if [ -e ./wifi ]; then
+	cd wifi 
+	if [ "x"$Subsys = "x" ];then
+        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
+    	$BINPATH/CcspWifiSsp &
+	else
+        echo "****STARTING CCSPWIFI WITH SUBSYS***"
+    	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
+    	$BINPATH/CcspWifiSsp -subsys $Subsys &
+	fi
+fi
 
-#echo "starting process monitor script"
-#sh /usr/ccsp/wifi/process_monitor_atom.sh &
+echo "starting process monitor script"
+sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
