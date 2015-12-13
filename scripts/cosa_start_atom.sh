@@ -40,8 +40,11 @@ killall CcspWifiSsp
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
 
-export LD_LIBRARY_PATH=/usr/ccsp:.:/usr/ccsp/../../lib:/usr/ccsp/../../.:/lib:/usr/lib:
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
+#####BEGIN: Changes for ARRISXB3-3853
+export PATH=$PATH:/etc/ath
+echo "PATH="$PATH
+#####END: Changes for ARRISXB3-3853
 
 # enable core files on atom
 ulimit -c unlimited
@@ -58,6 +61,11 @@ Subsys="eRT."
 echo "Elected subsystem is $Subsys"
 
 sleep 1
+
+#####BEGIN: Changes for ARRISXB3-3853
+/etc/ath/fast_down.sh 
+sleep 5
+#####END: Changes for ARRISXB3-3853
 
 if [ -e ./wifi ]; then
 	cd wifi 
