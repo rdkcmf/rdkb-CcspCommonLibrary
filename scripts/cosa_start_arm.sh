@@ -147,15 +147,18 @@ else
 fi
 
 echo "Elected subsystem is $Subsys"
-
-if [ "x"$Subsys = "x" ];then
+if [ -e /nvram/disableCr ]; then
+	echo "***disabling CcspCr****"
+elif [ "x"$Subsys = "x" ];then
 	$BINPATH/CcspCrSsp
 else
 	echo "$BINPATH/CcspCrSsp -subsys $Subsys"
 	$BINPATH/CcspCrSsp -subsys $Subsys
 fi
 
-if [ -e ./logagent ]; then
+if [ -e /nvram/disablelogagent ]; then
+	echo "***disabling Loagent****"
+elif [ -e ./logagent ]; then
 	cd logagent
 
 	if [ "x"$Subsys = "x" ];then
@@ -167,14 +170,19 @@ if [ -e ./logagent ]; then
 	cd ..
 fi
 
-if [ "x"$Subsys = "x" ];then
+if [ -e /nvram/disablePsmSSP ]; then
+	echo "***disabling PsmSSP****"
+elif [ "x"$Subsys = "x" ];then
 	$BINPATH/PsmSsp
 else
     echo "$BINPATH/PsmSsp -subsys $Subsys"
 	$BINPATH/PsmSsp -subsys $Subsys
 fi
 
-if [ -e ./pam ]; then
+
+if [ -e /nvram/disableCcspPandMSsp ]; then
+	echo "***disabling PAM****"
+elif [ -e ./pam ]; then
 	cd pam
 
 	if [ "x"$Subsys = "x" ];then
@@ -186,15 +194,17 @@ if [ -e ./pam ]; then
 	cd ..
 fi
 
-#if [ -e ./wecb ]; #then                                                                                                                                                                                                                    
-#    cd wecb                                                                                                                
-#    if [ "x"$Subsys = "x" ];then                                                                                           
-#        $BINPATH/CcspWecbController                                                                                               
-#    else                                                                                                                   
-#        echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
-#       $BINPATH/CcspWecbController -subsys $Subsys                                                                               
-#    fi                                                                                                                     
-#    cd ..                                                                                                                  
-#fi  
+if [ -e /nvram/disablewecb ]; then
+	echo "***disabling WECB*****"
+elif [ -e ./wecb ]; then                                                                                                                                                                                                                    
+    cd wecb                                                                                                                
+    if [ "x"$Subsys = "x" ];then                                                                                           
+        $BINPATH/CcspWecbController                                                                                               
+    else                                                                                                                   
+        echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
+       $BINPATH/CcspWecbController -subsys $Subsys                                                                               
+    fi                                                                                                                     
+    cd ..                                                                                                                  
+fi  
 
 
