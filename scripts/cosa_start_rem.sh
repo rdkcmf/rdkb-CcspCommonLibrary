@@ -38,7 +38,9 @@ fi
  
 echo "PWD is `pwd`"
 
-if [ -e ./mta ]; then
+if [ -e /nvram/disableCcspMtaAgentSsp ]; then
+   echo "****DISABLE MTAAGENTSSP*****"
+elif [ -e ./mta ]; then
     cd mta
     if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspMtaAgentSsp
@@ -49,7 +51,9 @@ if [ -e ./mta ]; then
     cd ..
 fi
 
-if [ -e ./cm ]; then
+if [ -e /nvram/disableCcspCMAgentSsp ]; then
+   echo "****DISABLE CcspCMAgentSsp*****"
+elif [ -e ./cm ]; then
         cd cm
         if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspCMAgentSsp
@@ -60,7 +64,9 @@ if [ -e ./cm ]; then
         cd ..
 fi
 
-if [ -f ./cp_subsys_ert ]; then
+if [ -e /nvram/disableCcspRmSsp ]; then
+   echo "****DISABLE CcspRmSsp*****"
+elif [ -f ./cp_subsys_ert ]; then
         if [ -e ./rm ]; then
                 cd rm
         echo "$BINPATH/CcspRmSsp -subsys $Subsys"
@@ -78,8 +84,9 @@ fi
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
-
-if [ -e ./tr069pa ]; then
+if [ -e /nvram/disableCcspTr069PaSsp ]; then
+   echo "****DISABLE CcspTr069PaSsp*****"
+elif [ -e ./tr069pa ]; then
         cd tr069pa
         if [ "x"$Subsys = "x" ]; then
                 $BINPATH/CcspTr069PaSsp
@@ -91,7 +98,9 @@ if [ -e ./tr069pa ]; then
         cd ..
 fi
 
-if [ -e ./ssd ]; then
+if [ -e /nvram/disableCcspSsdSsp ]; then
+   echo "****DISABLE CcspSsdSsp*****"
+elif [ -e ./ssd ]; then
         cd ssd
         if [ "x"$Subsys = "x" ];then
                 $BINPATH/CcspSsdSsp
@@ -102,7 +111,9 @@ if [ -e ./ssd ]; then
         cd ..
 fi
 
-if [ -e ./fu ]; then
+if [ -e /nvram/disableCcspFuSsp ]; then
+   echo "****DISABLE CcspFuSsp*****"
+elif [ -e ./fu ]; then
         cd fu
         if [ "x"$Subsys = "x" ];then
                 $BINPATH/CcspFuSsp
@@ -120,7 +131,9 @@ fi
 
 #fi
 
-if [ -e ./tad ]; then
+if [ -e /nvram/disableCcspTandDSsp]; then
+   echo "****DISABLE CcspTandDSsp*****"
+elif [ -e ./tad ]; then
         cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
         if [ "x"$Subsys = "x" ];then
@@ -151,7 +164,9 @@ fi
 ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
 echo "ENABLEWEBPA is $ENABLEWEBPA"
 
-if [ "$ENABLEWEBPA" = "true" ];then
+if [ -e /nvram/disablewebpa ]; then
+	echo "***Disabling webpa*****"
+elif [ "$ENABLEWEBPA" = "true" ];then
 	echo "ENABLEWEBPA is true..Intializing WebPA.."
 	if [ "x"$Subsys = "x" ];then
 		$BINPATH/webpa
@@ -186,7 +201,9 @@ fi
 #cd ..
 #fi
 
-if [ -e ./lm ]; then
+if [ -e /nvram/disableCcspLMLite ]; then
+	echo "***Disabling CcspLMLite*****"
+elif [ -e ./lm ]; then
     cd lm
     $BINPATH/CcspLMLite &
 fi
