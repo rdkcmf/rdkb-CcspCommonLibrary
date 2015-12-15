@@ -194,6 +194,9 @@ elif [ -e ./pam ]; then
 	cd ..
 fi
 
+#####TEMPORARILY DISABLING WecbController#####
+touch /nvram/disablewecb
+
 if [ -e /nvram/disablewecb ]; then
 	echo "***disabling WECB*****"
 elif [ -e ./wecb ]; then                                                                                                                                                                                                                    
