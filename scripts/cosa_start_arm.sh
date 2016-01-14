@@ -33,6 +33,7 @@
 #######################################################################
 
 BINPATH="/usr/bin"
+source /fss/gw/etc/utopia/service.d/log_env_var.sh
 
 ulimit -c unlimited
 echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
@@ -124,18 +125,18 @@ cp ccsp_msg.cfg /tmp
 #./DbusCfg
 $BINPATH/dbus-daemon --config-file=./basic.conf --fork
 
-mkdir -p /var/tmp/logs/
+mkdir -p $LOG_PATH
 
 
-#if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
-#then
-#	/fss/gw/rdklogger/rdkbLogMonitor.sh &
-#fi
-#
-#if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
-#then
-#	/fss/gw/rdklogger/fileUploadRandom.sh &
-#fi
+if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
+then
+	/fss/gw/rdklogger/rdkbLogMonitor.sh &
+fi
+
+if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
+then
+	/fss/gw/rdklogger/fileUploadRandom.sh &
+fi
 touch /tmp/cp_subsys_ert
 
 if [ -f /tmp/cp_subsys_ert ]; then
