@@ -658,7 +658,7 @@ ANSC_UINT64,  *PANSC_UINT64;
  */
 #ifdef  _ANSC_BYTE_ACCESS_
 
-    #ifdef _ANSC_NO_HALFWORD_ACCESS_
+    #ifdef _ANSC_NO_HALFWORD_ACCESS_
         #error "Need half-word access support!"
     #endif /* _ANSC_NO_HALFWORD_SUPPORT_ */
 
