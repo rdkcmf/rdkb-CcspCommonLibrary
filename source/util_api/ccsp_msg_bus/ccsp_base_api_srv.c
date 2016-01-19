@@ -1789,7 +1789,19 @@ CcspBaseIf_Deadlock_Detection_Thread
             currentTime = time(NULL);
             if ( (currentTime - info->enterTime) >= info->detectionDuration )
             {
-                deadLockHappen = 1;
+               // (2*(info->detectionDuration)) This check is just for checking invalid time difference  
+                if (( currentTime - info->enterTime ) > (2*(info->detectionDuration))) 
+                {
+                    //This is invalid time difference. Just neglect
+                    info->enterTime = currentTime - info->timepassed ;
+                    CcspTraceWarning((" **** info->timepassed %d ******\n",info->timepassed));
+                    CcspTraceWarning((" **** info->enterTime %d ******\n",info->enterTime));
+                    CcspTraceWarning((" **** currentTime %d ******\n",currentTime));
+                }
+                else
+                {
+                    deadLockHappen = 1;
+                }  
             }
             
             pthread_mutex_unlock(&(info->info_mutex));

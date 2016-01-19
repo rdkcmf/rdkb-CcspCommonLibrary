@@ -76,6 +76,7 @@
 #define CCSP_MESSAGE_BUS_H
 #include <dbus/dbus.h>
 
+
 /*
 notes: see readme.txt
 */
@@ -192,6 +193,7 @@ typedef struct _CCSP_DEADLOCK_DETECTION_INFO
     unsigned long   size;
     unsigned long   enterTime;
     unsigned long   detectionDuration;
+    unsigned long   timepassed;
 
 } CCSP_DEADLOCK_DETECTION_INFO;
 

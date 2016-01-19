@@ -3164,6 +3164,78 @@ int PSM_Set_Record_Value2
 }
 
 
+
+int PSM_Get_Record_Value2_Bulk
+(
+    void*                       bus_handle,
+    char const * const          pSubSystemPrefix,
+    char const ** const         pRecordNames, //array of names(char* before)
+    unsigned int *              ulRecordTypes, //ask question about ulRecord (array 2 stars)
+    char**                      pValues, //array of array of pvals (char**)
+    int                         numRecords //Added to have a size
+)
+{
+    char * parameterNames[numRecords]; //changed from 1 to numRecords
+    char psmName[256] = {0};
+    int size = 0;
+    parameterValStruct_t **val = 0;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+	int ret = 0; 
+    if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
+    {
+        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+    }
+    else
+    {
+        strcpy(psmName, CCSP_DBUS_PSM);
+    }
+    int index;
+    /*
+    CcspTraceDebug(("<pid%d>[%s]: psmName='%s', path='%s', para='%s'\n",
+                    getpid(), __FUNCTION__,
+                    psmName, CCSP_DBUS_PATH_PSM, parameterNames[0]));
+    */
+    for(index=0;index<numRecords;index++){
+        parameterNames[index]=pRecordNames[index];
+    }
+    ret = CcspBaseIf_getParameterValues(
+                  bus_handle,
+                  psmName,
+                  CCSP_DBUS_PATH_PSM,
+                  parameterNames,
+                  numRecords, //changed from 1 to numRecords
+                  &size,
+                  &val
+              );
+    
+    /*
+    CcspTraceDebug(("<pid%d>[%s]: ret='%d', size='%d'\n", 
+                    getpid(), __FUNCTION__, ret, size));
+
+    if(val && val[0] && size) {
+        CcspTraceDebug(("<pid%d>[%s]: name='%s', value='%s'\n", 
+                        getpid(), __FUNCTION__, 
+                        val[0]->parameterName ? val[0]->parameterName : "NULL",
+                        val[0]->parameterValue ? val[0]->parameterValue : "NULL"));
+    }
+    */
+    if(ret == CCSP_SUCCESS) { //DO FOR EVERY VALUE 
+       	//EXTEND TO FOR LOOP
+        for(index=0;index<numRecords;index++){
+	    if(val && (*(val+index)) && size) {    //Change all val[0] to index instead MOVE OUTSIDE LOOP
+                if(ulRecordTypes) ulRecordTypes[index]=(*(val+index))->type;
+                pValues[index] = bus_info->mallocfunc(strlen(val[index]->parameterValue)+1);
+                strcpy( pValues[index],  val[index]->parameterValue);
+            }
+            else ret = CCSP_CR_ERR_INVALID_PARAM;  //HOW ITS HANDLED WITH ONLY ONE (EXTEND TO MULTIPLE BY STORING VALUE IN PARAMETERVALUE OR SPEC STRING?)
+       }
+    }
+    free_parameterValStruct_t(bus_handle , size, val);
+    return ret;
+}
+
+
+
 int PSM_Get_Record_Value2
 (
     void*                       bus_handle,
