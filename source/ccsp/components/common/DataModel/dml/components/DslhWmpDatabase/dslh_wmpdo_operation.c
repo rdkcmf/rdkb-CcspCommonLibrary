@@ -667,7 +667,8 @@ DslhWmpdoMonitorTimerInvoke
                     pDslhVarRecord->NotifyValueChanged(pDslhVarRecord);
 
                     AnscTraceWarning(("DslhWmpdoMonitorTimerInvoke - value change detected on parameter <%s>.\n", pParamFullName));
-
+					pDslhVarRecord->ReqSenderID = 0;
+					pMonitorParam->PreviousValue->ReqSenderID = 0;
                     AnscFreeMemory(pParamFullName);
                 }
             }
