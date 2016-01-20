@@ -103,16 +103,6 @@ int PSM_Set_Record_Value2
     char const * const          pVal
 );
 
-int PSM_Get_Record_Value2_Bulk
-(
-    void*                        bus_handle,
-    char const * const           pSubSystemPrefix,
-    char const ** const          pRecordNames,
-    unsigned int*                ulRecordTypes,
-    char**                       pValues,
-    int                          numRecords
-);
-
 
 
 int PSM_Get_Record_Value2
