@@ -40,6 +40,11 @@ killall CcspWifiSsp
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
 
+# have IP address for Radius config
+vconfig add eth0 4090
+ifconfig eth0.4090 192.168.251.254 netmask 255.255.255.0 up
+ip route add default via 192.168.251.1
+
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
 export PATH=$PATH:/etc/ath
