@@ -1,0 +1,15 @@
+[Unit]
+Description=Gwprovapp service
+
+Requires=ncpu-exec.service
+After=ncpu-exec.service
+
+[Service]
+Environment="IP=192.168.254.253"
+ExecStart=/usr/bin/gw_prov_utopia $IP
+Restart=yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
+

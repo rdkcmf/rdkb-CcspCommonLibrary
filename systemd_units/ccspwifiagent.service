@@ -1,0 +1,15 @@
+[Unit]
+Description=Cosa service
+After=cosastart.service
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/ccsp
+ExecStart=/bin/sh -c '/usr/ccsp/wifi/cosa_start_wifiagent.sh &' 
+RemainAfterExit=yes
+Restart=yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
+

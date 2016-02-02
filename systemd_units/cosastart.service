@@ -1,0 +1,14 @@
+[Unit]
+Description=Cosa-start service
+After=gwprovapp.service
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/ccsp
+ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStart=/bin/sh -c '/usr/ccsp/cosa_start.sh &'
+RemainAfterExit=yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
