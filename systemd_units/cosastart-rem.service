@@ -1,0 +1,14 @@
+[Unit]
+Description=Cosa-start-rem service
+After=cosastart.service
+Requires=cosastart.service
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/ccsp
+ExecStart=/bin/sh -c '/usr/ccsp/cosa_start_rem.sh &'
+RemainAfterExit=yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
