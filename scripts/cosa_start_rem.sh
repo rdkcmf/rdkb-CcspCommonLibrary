@@ -212,5 +212,9 @@ echo "XCONF SCRIPT : Calling XCONF Client"
 cd /fss/gw/etc
 ./xb3_firmwareDwnld.sh &
 
-echo "Running process monitoring script"
-/etc/process_monitor.sh &
+SELFHEAL_ENABLE=`syscfg get selfheal_enable`
+if [ "$SELFHEAL_ENABLE" == "false" ]
+then
+	echo "Running process monitoring script"
+	/etc/process_monitor.sh &
+fi
