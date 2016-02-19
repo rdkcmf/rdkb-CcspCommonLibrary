@@ -35,6 +35,7 @@
 BINPATH="/usr/bin"
 
 killall CcspWifiSsp
+killall harvester
 
 # have IP address for dbus config generated
 vconfig add eth0 500
@@ -71,6 +72,13 @@ sleep 1
 /etc/ath/fast_down.sh 
 sleep 5
 #####END: Changes for ARRISXB3-3853
+
+if [ -e ./harvester ]; then
+	echo "****STARTING HARVESTER***"
+        cd harvester
+        $BINPATH/harvester &
+	cd ..
+fi
 
 if [ -e ./wifi ]; then
 	cd wifi 
