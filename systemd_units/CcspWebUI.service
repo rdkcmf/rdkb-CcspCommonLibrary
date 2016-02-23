@@ -1,0 +1,14 @@
+[Unit]
+Description=CcspWebUI service
+After=gwprovapp.service cosastart.service cosastart-rem.service
+Requires=gwprovapp.service cosastart.service cosastart-rem.service
+
+[Service]
+Type=forking
+ExecStart=/bin/sh -c '/etc/webgui.sh &'
+RemainAfterExit=yes
+
+StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target
