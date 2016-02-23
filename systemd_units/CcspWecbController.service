@@ -1,0 +1,17 @@
+[Unit]
+Description=CcspWecbController service
+After=gwprovapp.service CcspCrSsp.service PsmSsp.service
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+Environment="Subsys=eRT."
+WorkingDirectory=/usr/ccsp/wecb
+ExecStart=/usr/bin/CcspWecbController -subsys $Subsys
+ExecStop=/bin/kill -15 $MAINPID
+Restart=always
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
