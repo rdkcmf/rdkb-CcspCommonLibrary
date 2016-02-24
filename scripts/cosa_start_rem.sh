@@ -35,9 +35,7 @@ if [ -e ./pam ]; then
         ((sh /etc/email_notification_monitor.sh 12 &) &)
         cd ..
 fi
-echo "Enabling ssh by default"
-syscfg set mgmt_wan_sshaccess 1
-syscfg commit 
+ 
 echo "PWD is `pwd`"
 
 if [ -e /nvram/disableCcspMtaAgentSsp ]; then
@@ -220,6 +218,3 @@ then
 	echo "Running process monitoring script"
 	/etc/process_monitor.sh &
 fi
-
-
-/etc/utopia/service.d/service_sshd.sh sshd-start &
