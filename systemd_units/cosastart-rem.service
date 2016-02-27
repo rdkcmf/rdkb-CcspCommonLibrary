@@ -1,8 +1,8 @@
 [Unit]
 Description=Cosa-start-rem service
 
-Requires=cosastart.service gwprovapp.service
-After=cosastart.service gwprovapp.service
+Requires=cosastart.service
+After=cosastart.service
 
 [Service]
 Type=forking

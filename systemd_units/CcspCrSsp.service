@@ -1,6 +1,5 @@
 [Unit]
 Description=CcspCrSsp service
-After=gwprovapp.service
 
 [Service]
 Type=forking

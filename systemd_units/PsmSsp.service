@@ -1,6 +1,6 @@
 [Unit]
 Description=PsmSsp service
-After=gwprovapp.service CcspCrSsp.service
+After=CcspCrSsp.service
 
 [Service]
 Type=forking
