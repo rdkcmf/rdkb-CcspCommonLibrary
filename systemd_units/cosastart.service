@@ -1,6 +1,5 @@
 [Unit]
 Description=Cosa-start service
-After=gwprovapp.service
 
 [Service]
 Type=forking
