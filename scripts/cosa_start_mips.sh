@@ -62,7 +62,7 @@ fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
-export LOG4C_RCPATH=/fss/gw/rdklogger
+export LOG4C_RCPATH=/rdklogger
 
 # Check if bbhm has Notify flag present
 NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
@@ -119,21 +119,24 @@ cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
 #./DbusCfg
-$BINPATH/dbus-daemon --config-file=./basic.conf --fork
+#commenting it as it is part of systemd services.
+#$BINPATH/dbus-daemon --config-file=./basic.conf --fork
 
-mkdir -p /var/tmp/logs/
+mkdir  -p /rdklogs/logs/
 
+#Commenting this for now as these will be individual services of systemd.
+#if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
+#then
+#	/rdklogger/rdkbLogMonitor.sh &
+#fi
 
-if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
-then
-	/fss/gw/rdklogger/rdkbLogMonitor.sh &
-fi
+#if [ -f "/rdklogger/fileUploadRandom.sh" ]
+#then
+#	/rdklogger/fileUploadRandom.sh &
+#fi
 
-if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
-then
-	/fss/gw/rdklogger/fileUploadRandom.sh &
-fi
 touch /tmp/cp_subsys_ert
+ 
 
 if [ -f /tmp/cp_subsys_ert ]; then
 	Subsys="eRT."
