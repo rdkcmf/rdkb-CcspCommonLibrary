@@ -1,0 +1,18 @@
+[Unit]
+Description=CcspTr069PaSsp service
+After=CcspCMAgentSsp.service
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+Environment="Subsys=eRT."
+WorkingDirectory=/usr/ccsp/tr069pa
+ExecStart=/usr/bin/CcspTr069PaSsp -subsys $Subsys
+ExecStartPost=/bin/sh -c 'sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "'
+ExecStop=/bin/kill -15 $MAINPID
+Restart=always
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target

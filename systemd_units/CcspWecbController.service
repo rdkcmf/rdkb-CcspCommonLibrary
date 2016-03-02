@@ -6,7 +6,7 @@ After=CcspCrSsp.service PsmSsp.service
 Type=forking
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 Environment="Subsys=eRT."
-WorkingDirectory=/usr/ccsp/wecb
+WorkingDirectory=/usr/ccsp
 ExecStart=/usr/bin/CcspWecbController -subsys $Subsys
 ExecStop=/bin/kill -15 $MAINPID
 Restart=always

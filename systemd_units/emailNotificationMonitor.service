@@ -1,0 +1,15 @@
+[Unit]
+Description=emailNotificationMonitor service
+After=cosastart.service
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/ccsp
+ExecStart=/bin/sh -c '/usr/ccsp/pam/email_notification_monitor.sh 12 &'
+RemainAfterExit=yes
+Restart=always
+
+StandardOutput=syslog
+
+[Install]
+WantedBy=multi-user.target
