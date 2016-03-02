@@ -64,16 +64,16 @@ elif [ -e ./cm ]; then
         cd ..
 fi
 
-if [ -e /nvram/disableCcspRmSsp ]; then
-   echo "****DISABLE CcspRmSsp*****"
-elif [ -f ./cp_subsys_ert ]; then
-        if [ -e ./rm ]; then
-                cd rm
-        echo "$BINPATH/CcspRmSsp -subsys $Subsys"
-                $BINPATH/CcspRmSsp -subsys $Subsys
-        cd ..
-        fi
-fi
+#if [ -e /nvram/disableCcspRmSsp ]; then
+#   echo "****DISABLE CcspRmSsp*****"
+#elif [ -f ./cp_subsys_ert ]; then
+#        if [ -e ./rm ]; then
+#                cd rm
+#        echo "$BINPATH/CcspRmSsp -subsys $Subsys"
+#                $BINPATH/CcspRmSsp -subsys $Subsys
+#        cd ..
+#        fi
+#fi
 
 if [ "x"$1 = "xpam" ] || [ "x"$2 = "xpam" ]; then
 	exit 0
@@ -98,31 +98,31 @@ elif [ -e ./tr069pa ]; then
         cd ..
 fi
 
-if [ -e /nvram/disableCcspSsdSsp ]; then
-   echo "****DISABLE CcspSsdSsp*****"
-elif [ -e ./ssd ]; then
-        cd ssd
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/CcspSsdSsp
-        else
-                echo "$BINPATH/CcspSsdSsp -subsys $Subsys"
-                $BINPATH/CcspSsdSsp -subsys $Subsys
-        fi
-        cd ..
-fi
+#if [ -e /nvram/disableCcspSsdSsp ]; then
+#   echo "****DISABLE CcspSsdSsp*****"
+#elif [ -e ./ssd ]; then
+#        cd ssd
+#        if [ "x"$Subsys = "x" ];then
+#                $BINPATH/CcspSsdSsp
+#        else
+#                echo "$BINPATH/CcspSsdSsp -subsys $Subsys"
+#                $BINPATH/CcspSsdSsp -subsys $Subsys
+#        fi
+#        cd ..
+#fi
 
-if [ -e /nvram/disableCcspFuSsp ]; then
-   echo "****DISABLE CcspFuSsp*****"
-elif [ -e ./fu ]; then
-        cd fu
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/CcspFuSsp
-        else
-                echo "$BINPATH/CcspFuSsp -subsys $Subsys"
-                $BINPATH/CcspFuSsp -subsys $Subsys
-        fi
-        cd ..
-fi
+#if [ -e /nvram/disableCcspFuSsp ]; then
+#   echo "****DISABLE CcspFuSsp*****"
+#elif [ -e ./fu ]; then
+#        cd fu
+#        if [ "x"$Subsys = "x" ];then
+#                $BINPATH/CcspFuSsp
+#        else
+#                echo "$BINPATH/CcspFuSsp -subsys $Subsys"
+#                $BINPATH/CcspFuSsp -subsys $Subsys
+#        fi
+#        cd ..
+#fi
        
 #if [ -e ./tr069pa ]; then
 # add firewall rule to allow incoming packet for port 7547
@@ -178,14 +178,14 @@ else
 	echo "EnablePa parameter is set to false. Hence not initializng WebPA.."
 fi
 
-if [ -e ./ccspRecoveryManager ]; then
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/ccspRecoveryManager &
-        else
-                echo "$BINPATH/ccspRecoveryManager -subsys $Subsys &"
-                $BINPATH/ccspRecoveryManager -subsys $Subsys &
-        fi
-fi
+#if [ -e ./ccspRecoveryManager ]; then
+#        if [ "x"$Subsys = "x" ];then
+#                $BINPATH/ccspRecoveryManager &
+#        else
+#                echo "$BINPATH/ccspRecoveryManager -subsys $Subsys &"
+#                $BINPATH/ccspRecoveryManager -subsys $Subsys &
+#        fi
+#fi
 
 #Lm need initialization after others running
 #Sleep 120 is a temporary method
