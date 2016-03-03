@@ -133,7 +133,7 @@ fi
 
 #fi
 
-if [ -e /nvram/disableCcspTandDSsp]; then
+if [ -e /nvram/disableCcspTandDSsp ]; then
    echo "****DISABLE CcspTandDSsp*****"
 elif [ -e ./tad ]; then
         cd tad
