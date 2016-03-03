@@ -1,11 +1,11 @@
 [Unit]
 Description=CcspWebUI service
-After=cosastart.service cosastart-rem.service
-Requires=cosastart.service cosastart-rem.service
+After=cosastart-rem.service
 
 [Service]
 Type=forking
-ExecStart=/bin/sh -c '/etc/webgui.sh &'
+WorkingDirectory=/usr/www
+ExecStart=/bin/sh -c '/etc/webgui.sh'
 RemainAfterExit=yes
 
 StandardOutput=syslog
