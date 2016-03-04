@@ -46,12 +46,12 @@ if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	sleep 3
 	killall CcspTandDSsp
 	killall CcspDnsSsp
-	killall CcspFuSsp
-	killall CcspSsdSsp
+#	killall CcspFuSsp
+#	killall CcspSsdSsp
 	killall CcspPandMSsp
 	killall CcspTr069PaSsp
 	killall PsmSsp
-	killall CcspRmSsp
+#	killall CcspRmSsp
 	killall CcspCrSsp
 #    killall CcspLmSsp
 	killall CcspMtaAgentSsp
