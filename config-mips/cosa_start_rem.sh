@@ -200,12 +200,12 @@ fi
 #cd ..
 #fi
 
-if [ -e /nvram/disableCcspLMLite ]; then
-	echo "***Disabling CcspLMLite*****"
-elif [ -e ./lm ]; then
-    cd lm
-    $BINPATH/CcspLMLite &
-fi
+#if [ -e /nvram/disableCcspLMLite ]; then
+#	echo "***Disabling CcspLMLite*****"
+#elif [ -e ./lm ]; then
+#    cd lm
+#    $BINPATH/CcspLMLite &
+#fi
 
 echo "XCONF SCRIPT : Calling XCONF Client"
 cd /etc
