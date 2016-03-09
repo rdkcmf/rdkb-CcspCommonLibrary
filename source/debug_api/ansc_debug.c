@@ -102,6 +102,9 @@ volatile BOOL WiFi_RDKLogEnable = TRUE;
 volatile unsigned int WiFi_RDKLogLevel = 4;
 volatile BOOL CR_RDKLogEnable = TRUE;
 volatile unsigned int CR_RDKLogLevel = 4;
+/*Added for RDKB-4343*/
+volatile BOOL Harvester_RDKLogEnable = TRUE;
+volatile unsigned int Harvester_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
