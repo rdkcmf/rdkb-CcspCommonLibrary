@@ -1,0 +1,7 @@
+[Unit]
+Description=Pam Initialized service
+
+
+[Service]
+Type=simple
+ExecStart=/bin/echo "Pam is initialized"

@@ -5,7 +5,6 @@ After=cosastart.service
 [Service]
 Type=forking
 WorkingDirectory=/usr/ccsp
-ExecStartPre=/bin/sh -c 'sleep 10'
 ExecStart=/bin/sh -c '/usr/ccsp/wifi/cosa_start_wifiagent.sh &' 
 RemainAfterExit=yes
 Restart=yes

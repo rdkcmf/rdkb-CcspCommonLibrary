@@ -1,0 +1,7 @@
+[Unit]
+Description=Wifi Initialized Service
+
+
+[Service]
+Type=simple
+ExecStart=/bin/echo "Wifi is initialized"
