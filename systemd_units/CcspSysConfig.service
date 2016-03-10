@@ -1,0 +1,16 @@
+[Unit]
+Description=CcspSysConfig service
+After=dbusOverride.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/usr/ccsp
+EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+Environment="Subsys=eRT."
+ExecStart=/bin/sh -c '/usr/ccsp/ccspSysConfig.sh &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
