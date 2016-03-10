@@ -1,0 +1,16 @@
+[Unit]
+Description=CcspXconf service
+
+After=dbusOverride.service CcspCrSsp.service
+Requires=dbusOverride.service CcspCrSsp.service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sh -c 'sleep 300'
+ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
