@@ -1,0 +1,9 @@
+[Unit]
+Description=Pam Initialized Path
+
+[Path]
+PathExists=/tmp/pam_initialized
+
+[Install]
+WantedBy=multi-user.target
+

@@ -5,7 +5,6 @@ After=cosastart-rem.service
 [Service]
 Type=forking
 WorkingDirectory=/usr/ccsp
-ExecStartPre=/bin/sh -c 'sleep 30'
 ExecStart=/bin/sh -c '/usr/bin/CcspLMLite &' 
 RemainAfterExit=yes
 Restart=yes
