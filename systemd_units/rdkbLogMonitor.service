@@ -1,0 +1,15 @@
+[Unit]
+Description=rdkbLogMonitor service
+
+After=ncpu-exec.service dbusOverride.service CcspSysConfig.service
+
+[Service]
+Type=oneshot
+ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
+ExecStart=/bin/sh -c '/rdklogger/rdkbLogMonitor.sh &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target

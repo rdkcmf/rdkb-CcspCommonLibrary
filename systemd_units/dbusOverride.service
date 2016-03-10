@@ -1,0 +1,13 @@
+[Unit]
+Description=Dbus Override service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/usr/ccsp
+ExecStart=/bin/sh -c '/usr/ccsp/dbusConf.sh &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target

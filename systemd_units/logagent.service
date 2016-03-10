@@ -1,0 +1,17 @@
+[Unit]
+Description=CcspLogent service
+
+After=dbusOverride.service CcspCrSsp.service
+Requires=CcspCrSsp.service
+
+[Service]
+Type=forking
+WorkingDirectory=/usr/ccsp/logagent
+Environment="Subsys=eRT."
+ExecStart=/usr/bin/log_agent -subsys $Subsys
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
