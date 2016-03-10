@@ -1,14 +1,14 @@
 [Unit]
 Description=PsmSsp service
-After=CcspCrSsp.service
+
+After=dbusOverride.service CcspCrSsp.service logagent.service
+Requires=CcspCrSsp.service
 
 [Service]
 Type=forking
-EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
-Environment="Subsys=eRT."
 WorkingDirectory=/usr/ccsp
+Environment="Subsys=eRT."
 ExecStart=/usr/bin/PsmSsp -subsys $Subsys
-ExecStop=/bin/kill -15 $MAINPID
 Restart=always
 
 StandardOutput=syslog+console
