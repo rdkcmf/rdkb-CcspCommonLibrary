@@ -62,7 +62,7 @@ fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
-export LOG4C_RCPATH=/rdklogger
+export LOG4C_RCPATH=/etc
 
 # Check if bbhm has Notify flag present
 NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
