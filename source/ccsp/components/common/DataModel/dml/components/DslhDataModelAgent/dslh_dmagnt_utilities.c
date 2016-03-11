@@ -19,13 +19,13 @@
 
 /**********************************************************************
    Copyright [2014] [Cisco Systems, Inc.]
- 
+
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -90,8 +90,8 @@
         *   SupportedDataModel_GetEntryCount
         *   SupportedDataModel_GetEntry
         *   SupportedDataModel_GetParamStringValue
-        *   CcspComp_GetParamUlongValue 
-        *   CcspComp_GetParamStringValue 
+        *   CcspComp_GetParamUlongValue
+        *   CcspComp_GetParamStringValue
         *   CcspComp_GetBulkParamValues
         *   CcspComp_SetParamBoolValue
         *   CcspLog_GetParamBoolValue
@@ -101,7 +101,7 @@
         *   CcspLog_Validate
         *   CcspLog_Commit
         *   CcspLog_Rollback
-        *   CcspMem_GetParamUlongValue 
+        *   CcspMem_GetParamUlongValue
         *   CcspLog_GetBulkParamValues
         *   CcspLog_SetBulkParamValues
 
@@ -342,7 +342,7 @@ DslhDmagntParseSourceInfo
          pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength);
 
          pPluginInfo->ModuleName = AnscCloneString(buffer);
-         
+
          AnscTraceWarning(("DM Library module name = %s\n", pPluginInfo->ModuleName));
      }
 
@@ -390,13 +390,13 @@ DslhDmagntParseSourceInfo
              {
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
-                #ifdef _ANSC_WINDOWSNT            
+                #ifdef _ANSC_WINDOWSNT
                     _ansc_strcpy(buffer+_ansc_strlen(buffer), ".dll");
                 #elif defined(_ANSC_LINUX)
                     _ansc_strcpy(buffer+_ansc_strlen(buffer), ".so");
                 #endif
                  }
-                 else 
+                 else
                  {
                     AnscTraceWarning(("library name too long\n"));
                     return COSA_STATUS_ERROR_LOAD_LIBRARY;
@@ -424,175 +424,172 @@ DslhDmagntParseSourceInfo
 
                     return COSA_STATUS_ERROR_LOAD_LIBRARY;
                  }
-                printf("PLUGIN %s LOADED SUCCESSFULLY\n",pPluginInfo->SourceName);
-             }
-         }
+                 printf("PLUGIN %s LOADED SUCCESSFULLY\n",pPluginInfo->SourceName);
 
-         /* retrieve "init", "isObjSupported" and "unload" api */
-         if( pPluginInfo->SourceName != NULL)
-         {
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                 /* retrieve "init", "isObjSupported" and "unload" api */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
                  pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_init);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->InitProc = (COSAInitProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->InitProc = (COSAInitProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
 
-                if( pPluginInfo->InitProc == NULL)
-                {
-                    AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
+                     if( pPluginInfo->InitProc == NULL)
+                     {
+                         AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                    return pPluginInfo->uLoadStatus;
-                }
-             }
-             else
-             {
-                AnscTraceWarning(("No Init Proc defined.\n"));
+                         return pPluginInfo->uLoadStatus;
+                     }
+                 }
+                 else
+                 {
+                     AnscTraceWarning(("No Init Proc defined.\n"));
 
-                pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                     pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                return pPluginInfo->uLoadStatus;
-             }
+                     return pPluginInfo->uLoadStatus;
+                 }
 
-             /* unsupported */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_support);
+                 /* unsupported */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_support);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->SupportProc = (COSASupportProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
-             }
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->SupportProc = (COSASupportProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
+                 }
 
-             /* async_init */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_async_init);
+                 /* async_init */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_async_init);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->AsyncInitProc = (COSAInitProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
-             }
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->AsyncInitProc = (COSAInitProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
+                 }
 
-             /* unload */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_unload);
+                 /* unload */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_unload);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->UnloadProc = (COSAUnloadProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->UnloadProc = (COSAUnloadProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
 
-                if( pPluginInfo->UnloadProc == NULL)
-                {
-                    AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
+                     if( pPluginInfo->UnloadProc == NULL)
+                     {
+                         AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                    return pPluginInfo->uLoadStatus;
-                }
-             }
+                         return pPluginInfo->uLoadStatus;
+                     }
+                 }
 
-             /* memorycheck */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memorycheck);
+                 /* memorycheck */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memorycheck);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->MemoryCheckProc = (COSAMemoryCheckProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->MemoryCheckProc = (COSAMemoryCheckProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
 
-                if( pPluginInfo->MemoryCheckProc == NULL)
-                {
-                    AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
+                     if( pPluginInfo->MemoryCheckProc == NULL)
+                     {
+                         AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                    return pPluginInfo->uLoadStatus;
-                }
-             }
+                         return pPluginInfo->uLoadStatus;
+                     }
+                 }
 
-             /* memoryusage */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memoryusage);
+                 /* memoryusage */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memoryusage);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->MemoryUsageProc = (COSAMemoryUsageProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->MemoryUsageProc = (COSAMemoryUsageProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
 
-                if( pPluginInfo->MemoryUsageProc == NULL)
-                {
-                    AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
+                     if( pPluginInfo->MemoryUsageProc == NULL)
+                     {
+                         AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                    return pPluginInfo->uLoadStatus;
-                }
-             }
+                         return pPluginInfo->uLoadStatus;
+                     }
+                 }
 
-             /* memorytable */
-             uLength = 1023;
-             AnscZeroMemory(buffer, 1024);
-             pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
-                 pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memorytable);
+                 /* memorytable */
+                 uLength = 1023;
+                 AnscZeroMemory(buffer, 1024);
+                 pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+                     pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_lib_memorytable);
 
-             if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
-             {
-                pPluginInfo->MemoryTableProc = (COSAMemoryTableProc)
-                    AnscGetProcAddress
-                    (
-                        pPluginInfo->hInstance, 
-                        buffer
-                    );
+                 if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS)
+                 {
+                     pPluginInfo->MemoryTableProc = (COSAMemoryTableProc)
+                         AnscGetProcAddress
+                         (
+                             pPluginInfo->hInstance,
+                             buffer
+                         );
 
-                if( pPluginInfo->MemoryTableProc == NULL)
-                {
-                    AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
+                     if( pPluginInfo->MemoryTableProc == NULL)
+                     {
+                         AnscTraceWarning(("Unable to Get ProcAddress of  '%s'\n", buffer));
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
+                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_GET_PROC;
 
-                    return pPluginInfo->uLoadStatus;
-                }
+                         return pPluginInfo->uLoadStatus;
+                     }
+                 }
              }
          }
 
@@ -683,18 +680,18 @@ DslhDmagntParseSourceName
              {
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
-#ifdef _ANSC_WINDOWSNT            
+#ifdef _ANSC_WINDOWSNT
                     _ansc_strcpy(buffer+_ansc_strlen(buffer), ".dll");
 #elif defined(_ANSC_LINUX)
                     _ansc_strcpy(buffer+_ansc_strlen(buffer), ".so");
 #endif
                  }
-                 else 
+                 else
                  {
                     AnscTraceWarning(("library name too long\n"));
                     return COSA_STATUS_ERROR_LOAD_LIBRARY;
                  }
-                 
+
                  AnscCopyString(pName, buffer);
 
                  return ANSC_STATUS_SUCCESS;
@@ -789,17 +786,17 @@ DslhDmagntRegisterDataModelObject
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     char                            buffer[1024]      = { 0 };
     ULONG                           uLength           = 1023;
-    
+
     pObjDesp = (PDSLH_CWMP_OBJECT_DESCR)AnscAllocateMemory(sizeof(DSLH_CWMP_OBJECT_DESCR));
 
     if( pObjDesp == NULL)
     {
         return ANSC_STATUS_RESOURCES;
     }
-     
+
     AnscZeroMemory(pObjDesp, sizeof(DSLH_CWMP_OBJECT_DESCR));
 
-    returnStatus = 
+    returnStatus =
         DslhDmagntParseObjectInfo(hThisObject, hObjectNode, pParentObjName, pPluginInfo, pObjDesp);
 
     /* check whether the object is supported or not */
@@ -862,7 +859,7 @@ DslhDmagntRegisterDataModelObject
 
         while( pChildNode != NULL)
         {
-            returnStatus = 
+            returnStatus =
                 DslhDmagntRegisterDataModelObject(hThisObject, pChildNode, pObjDesp->Name, hPluginInfo, FALSE /* no populate */);
 
             if( returnStatus != ANSC_STATUS_SUCCESS)
@@ -880,7 +877,7 @@ DslhDmagntRegisterDataModelObject
     {
         if( pTableDesp != NULL)
         {
-            pObjDesp = pTableDesp;              
+            pObjDesp = pTableDesp;
         }
 
         pObjEntity = pDslhMprIf->GetObjEntity(pDslhMprIf->hOwnerContext, pObjDesp->Name);
@@ -1047,7 +1044,7 @@ lookforUnresolvedApiInObject
         }
 
         /* next one */
-        pFuncNode = pListNode->GetNextChild(pListNode, pFuncNode);       
+        pFuncNode = pListNode->GetNextChild(pListNode, pFuncNode);
     }
 
     /* check parameterlist  */
@@ -1430,11 +1427,11 @@ DslhDmagntParseObjFuncInfo
                 AnscTraceWarning(("Unknown function type: %s\n", pName));
             }
         }
-        
+
         /* goto next */
         pChildNode = pXmlNode->GetNextChild(pXmlNode, pChildNode);
     }
-    
+
     return pDslhTr69If;
 }
 
@@ -1615,11 +1612,11 @@ DslhDmagntParseRootFuncInfo
                 AnscTraceWarning(("Unknown function type: %s\n", pName));
             }
         }
-        
+
         /* goto next */
         pChildNode = pXmlNode->GetNextChild(pXmlNode, pChildNode);
     }
-    
+
     return pDslhTr69If;
 }
 
@@ -1703,7 +1700,7 @@ DslhDmagntParseObjectInfo
 
     if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer2, &uLength) == ANSC_STATUS_SUCCESS && uLength > 0)
     {
-        if( _ansc_strstr(buffer2, "com.") == buffer2    || _ansc_strstr(buffer2, "CCSP.") == buffer2 || 
+        if( _ansc_strstr(buffer2, "com.") == buffer2    || _ansc_strstr(buffer2, "CCSP.") == buffer2 ||
             _ansc_strstr(buffer2, "Device.") == buffer2 || _ansc_strstr(buffer2, "InternetGatewayDevice.") == buffer2)
         {
             _ansc_sprintf(pName, "%s%s.", buffer2, buffer);
@@ -1718,7 +1715,7 @@ DslhDmagntParseObjectInfo
         }
 
         pObjectDesp->Name = AnscCloneString(pName);
-        
+
         /*for cisco.spvtg.ccsp.XXX. base object, we pass DataModelAgent to ObjController->hInsContext*/
         if (AnscEqualString(buffer2, "com.cisco.spvtg.ccsp.", TRUE))
         {
@@ -1736,7 +1733,7 @@ DslhDmagntParseObjectInfo
         }
 
         pObjectDesp->Name       = AnscCloneString(pName);
-        
+
         /*for cisco.spvtg.ccsp.XXX.Logging. & cisco.spvtg.ccsp.XXX.Memory., we pass DataModelAgent to ObjController->hInsContext*/
         if (AnscEqualString(buffer, "Logging", TRUE) ||
             AnscEqualString(buffer, "Memory", TRUE))
@@ -1749,7 +1746,7 @@ DslhDmagntParseObjectInfo
                 {
                     AnscTrace(" %s config context\n", pName);
                     pObjectDesp->hContextToController = pMyObject;
-                }           
+                }
             }
         }
     }
@@ -1887,14 +1884,14 @@ DslhDmagntParseParamArray
 
     while(pChildNode)
     {
-        pParamDesp = (PDSLH_CWMP_PARAM_DESCR)AnscAllocateMemory(sizeof(DSLH_CWMP_PARAM_DESCR));            
+        pParamDesp = (PDSLH_CWMP_PARAM_DESCR)AnscAllocateMemory(sizeof(DSLH_CWMP_PARAM_DESCR));
 
         if( pParamDesp == NULL)
         {
             break;
         }
 
-        returnStatus = 
+        returnStatus =
             DslhDmagntParseParamInfo(hThisObject, pChildNode, (ANSC_HANDLE)pPluginInfo, pParamDesp);
 
         if( returnStatus == ANSC_STATUS_SUCCESS)
@@ -1904,7 +1901,7 @@ DslhDmagntParseParamArray
         }
         else
         {
-            DslhCwmpFreeParamDescr(pParamDesp);            
+            DslhCwmpFreeParamDescr(pParamDesp);
         }
 
         /* goto next one */
@@ -2096,7 +2093,7 @@ DslhDmagntParseParamInfo
     {
         pParamDesp->NotifyStatus = DSLH_CWMP_NOTIFY_STATUS_configActive;
     }
-    
+
     /* get notification threshold */
     pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
         pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_notifyThrdEnabled);
@@ -2108,10 +2105,10 @@ DslhDmagntParseParamInfo
     {
         pParamDesp->bThresholdEnabled = FALSE;
     }
-    
+
     AnscZeroMemory(buffer, 1024);
     uLength = 1023;
-    
+
     if ( pParamDesp->bThresholdEnabled == TRUE )
     {
         pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
@@ -2123,7 +2120,7 @@ DslhDmagntParseParamInfo
 
         AnscZeroMemory(buffer, 1024);
         uLength = 1023;
-        
+
         pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
             pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_notifyThresholdMax);
         if( pChildNode != NULL && ANSC_STATUS_SUCCESS == pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength))
@@ -2134,7 +2131,7 @@ DslhDmagntParseParamInfo
         AnscZeroMemory(buffer, 1024);
         uLength = 1023;
     }
-    
+
     /* get func_GetValue */
     pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
         pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_func_GetValue);
@@ -2400,9 +2397,9 @@ GetEntry_COSADataModel
     )
 {
     PSINGLE_LINK_ENTRY              pSListEntry = NULL;
-    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)hInsContext;	
+    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)hInsContext;
 
-    pSListEntry = 
+    pSListEntry =
         AnscQueueGetEntryByIndex
             (
                 &pDslhDataModelAgent->sPluginInfoList,
@@ -2658,11 +2655,11 @@ GetParamStringValue_COSADataModel
     *  SupportedDataModel_GetParamStringValue
 
 ***********************************************************************/
-/**********************************************************************  
+/**********************************************************************
 
-    caller:     owner of this object 
+    caller:     owner of this object
 
-    prototype: 
+    prototype:
 
         ULONG
         SupportedDataModel_GetEntryCount
@@ -2689,11 +2686,11 @@ SupportedDataModel_GetEntryCount
     return 1;
 }
 
-/**********************************************************************  
+/**********************************************************************
 
-    caller:     owner of this object 
+    caller:     owner of this object
 
-    prototype: 
+    prototype:
 
         ANSC_HANDLE
         SupportedDataModel_GetEntry
@@ -2727,15 +2724,15 @@ SupportedDataModel_GetEntry
         ULONG*                      pInsNumber
     )
 {
-    *pInsNumber  = nIndex + 1; 
+    *pInsNumber  = nIndex + 1;
     return (ANSC_HANDLE)1; /* return the handle */
 }
 
-/**********************************************************************  
+/**********************************************************************
 
-    caller:     owner of this object 
+    caller:     owner of this object
 
-    prototype: 
+    prototype:
 
         ULONG
         SupportedDataModel_GetParamStringValue
@@ -2748,7 +2745,7 @@ SupportedDataModel_GetEntry
 
     description:
 
-        This function is called to retrieve string parameter value; 
+        This function is called to retrieve string parameter value;
 
     argument:   ANSC_HANDLE                 hInsContext,
                 The instance handle;
@@ -2847,8 +2844,8 @@ SupportedDataModel_GetParamStringValue
 
     com.cisco.spvtg.ccsp.XXX.
 
-    *  CcspComp_GetParamUlongValue 
-    *  CcspComp_GetParamStringValue 
+    *  CcspComp_GetParamUlongValue
+    *  CcspComp_GetParamStringValue
     *  CcspComp_GetBulkParamValues
     *  CcspComp_SetParamBoolValue
     *  CcspLog_GetParamBoolValue
@@ -2858,7 +2855,7 @@ SupportedDataModel_GetParamStringValue
     *  CcspLog_Validate
     *  CcspLog_Commit
     *  CcspLog_Rollback
-    *  CcspMem_GetParamUlongValue 
+    *  CcspMem_GetParamUlongValue
     *  CcspLog_GetBulkParamValues
     *  CcspLog_SetBulkParamValues
 
@@ -3017,7 +3014,7 @@ CcspComp_GetBulkParamValues
             if( NULL == pDslhDataModelAgent->pDTXml)
             {
                  pDslhDataModelAgent->GenerateDTXmlString(pDslhDataModelAgent);
-            }    
+            }
             if( pDslhDataModelAgent->pDTXml)
             {
                 ppVarArray[i]->Variant.varString = AnscCloneString(pDslhDataModelAgent->pDTXml);
@@ -3090,9 +3087,9 @@ CcspComp_SetParamBoolValue
             fprintf(stderr, "compPath %s\n", compPath);
 
             if ((err = CcspBaseIf_registerCapabilities(
-                        cpectl->hDbusHandle, 
-                        crName, 
-                        compName, 
+                        cpectl->hDbusHandle,
+                        crName,
+                        compName,
                         ccdif->GetComponentVersion(NULL),
                         compPath,
                         agent->pPrefix,
@@ -3187,10 +3184,10 @@ CcspLog_SetParamBoolValue
     /* check the parameter name and set the corresponding value */
     if( AnscEqualString(ParamName, "Enable", TRUE))
     {
-        returnStatus = 
+        returnStatus =
             pCcspCcdIf->SetLoggingEnabled
                 (
-                    NULL, 
+                    NULL,
                     bValue
                 );
 
@@ -3222,10 +3219,10 @@ CcspLog_SetParamUlongValue
     /* check the parameter name and set the corresponding value */
     if ( AnscEqualString(ParamName, "LogLevel", TRUE) )
     {
-        returnStatus = 
+        returnStatus =
             pCcspCcdIf->SetLoggingLevel
                 (
-                    NULL, 
+                    NULL,
                     uValue
                 );
 
@@ -3391,7 +3388,7 @@ CcspLog_SetBulkParamValues
         {
             pCcspCcdIf->SetLoggingEnabled
                 (
-                    NULL, 
+                    NULL,
                     ppVarArray[i]->Variant.varBool
                 );
         }
@@ -3399,7 +3396,7 @@ CcspLog_SetBulkParamValues
         {
             pCcspCcdIf->SetLoggingLevel
                 (
-                    NULL, 
+                    NULL,
                     ppVarArray[i]->Variant.varUint32
                 );
         }
