@@ -311,6 +311,7 @@ DslhDmagntParseSourceInfo
     PPLUGIN_INFORMATION             pPluginInfo     = (PPLUGIN_INFORMATION)hPluginInfo;
     char                            buffer[1024]    = { 0 };
     ULONG                           uLength         = 1023;
+    char*                           errstr          = NULL;
 
     if( hXMLNode == NULL)
     {
@@ -414,10 +415,11 @@ DslhDmagntParseSourceInfo
                  {
                     AnscTraceWarning(("Unable to load library -- %s\n", pPluginInfo->SourceName));
                     printf("****ERROR LOADING DM LIB %s\n",pPluginInfo->SourceName);
-                    printf("CAUSE =%s\n",dlerror());
+                    errstr = dlerror();
+                    printf("CAUSE =%s\n",errstr);
                 #ifdef _ANSC_LINUX
-                    AnscTraceWarning(("cause:%s\n",  dlerror() ));
-                    printf("CAUSE =%s\n",dlerror());
+                    AnscTraceWarning(("cause:%s\n",  errstr ));
+                    printf("CAUSE =%s\n",errstr);
                 #endif
 
                     pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_LOAD_LIBRARY;
