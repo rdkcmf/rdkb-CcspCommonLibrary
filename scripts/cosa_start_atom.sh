@@ -46,6 +46,11 @@ vconfig add eth0 4090
 ifconfig eth0.4090 192.168.251.254 netmask 255.255.255.0 up
 ip route add default via 192.168.251.1
 
+# Creating ATOM side vlan for IOT and assigning IP address
+vconfig add eth0 106
+ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
+ip route add default via 192.168.106.1
+
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
 export PATH=$PATH:/etc/ath
