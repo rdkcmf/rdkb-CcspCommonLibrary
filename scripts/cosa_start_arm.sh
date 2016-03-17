@@ -71,6 +71,9 @@ export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBR
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 export LOG4C_RCPATH=/fss/gw/rdklogger
 
+#zqiu: update the bbhm for 2.1s11
+/fss/gw/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+
 # Check if bbhm has Notify flag present
 NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
 REDIRCTEXISTS=""
