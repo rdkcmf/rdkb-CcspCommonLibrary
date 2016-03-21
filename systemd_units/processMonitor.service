@@ -1,14 +1,14 @@
 [Unit]
-Description=emailNotificationMonitor service
+Description=processMonitor service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service
+CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspCMAgentSsp.service CcspTr069PaSsp.service \
+CcspTandDSsp.service webpa.service CcspLMLite.service xconf.service
 
 [Service]
 Type=oneshot
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 Environment="Subsys=eRT."
-WorkingDirectory=/usr/ccsp/pam
-ExecStart=/bin/sh -c '(/usr/ccsp/pam/email_notification_monitor.sh 12 &)&'
+ExecStart=/bin/sh -c '/etc/process_monitor.sh &'
 RemainAfterExit=yes
 
 StandardOutput=syslog

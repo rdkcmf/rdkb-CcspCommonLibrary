@@ -10,7 +10,7 @@ Environment="Subsys=eRT."
 ExecStart=/bin/sh -c '/usr/ccsp/ccspSysConfig.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog+console
+StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target

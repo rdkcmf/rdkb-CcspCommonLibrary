@@ -1,17 +1,17 @@
 [Unit]
 Description=CcspCrSsp service
 
-After=docsis.conf dbusOverride.service CcspSysConfig.service
+After=dbusOverride.service CcspSysConfig.service
 
 [Service]
 Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
-ExecStartPre=/bin/sh -c 'sleep 15'
+ExecStartPre=/bin/sh -c 'sleep 30'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog+console
+StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target

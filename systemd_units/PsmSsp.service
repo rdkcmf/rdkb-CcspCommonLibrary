@@ -11,7 +11,7 @@ Environment="Subsys=eRT."
 ExecStart=/usr/bin/PsmSsp -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog+console
+StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target
