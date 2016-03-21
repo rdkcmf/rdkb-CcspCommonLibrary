@@ -1,15 +1,14 @@
 [Unit]
-Description=CcspXconf service
-
+Description=utopiaSshd service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
 CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspCMAgentSsp.service CcspTr069PaSsp.service \
-CcspTandDSsp.service webpa.service CcspLMLite.service
-
-Requires=CcspCrSsp.service
+CcspTandDSsp.service webpa.service CcspLMLite.service xconf.service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh &'
+EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+Environment="Subsys=eRT."
+ExecStart=/bin/sh -c '/etc/utopia/service.d/service_sshd.sh sshd-start &'
 RemainAfterExit=yes
 
 StandardOutput=syslog

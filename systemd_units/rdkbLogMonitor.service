@@ -2,14 +2,14 @@
 Description=rdkbLogMonitor service
 
 After=ncpu-exec.service dbusOverride.service CcspSysConfig.service
+ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
 Type=oneshot
-ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 ExecStart=/bin/sh -c '/rdklogger/rdkbLogMonitor.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog+console
+StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target

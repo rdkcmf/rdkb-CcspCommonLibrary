@@ -2,14 +2,14 @@
 Description=Random file upload service
 
 After=ncpu-exec.service dbusOverride.service CcspSysConfig.service rdkbLogMonitor.service
+ConditionPathExists=/rdklogger/fileUploadRandom.sh
 
 [Service]
 Type=oneshot
-ConditionPathExists=/rdklogger/fileUploadRandom.sh
 ExecStart=/bin/sh -c '/rdklogger/fileUploadRandom.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog+console
+StandardOutput=syslog
 
 [Install]
 WantedBy=multi-user.target
