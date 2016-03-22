@@ -8,6 +8,7 @@ Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 ExecStartPre=/bin/sh -c 'sleep 30'
+ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
 
