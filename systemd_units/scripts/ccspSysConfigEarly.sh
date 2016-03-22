@@ -1,4 +1,5 @@
 #!/bin/sh
+#These were commands from cosa_start.sh that were run early during initialization
 
 source /etc/device.properties
 
@@ -67,15 +68,3 @@ fi
 cp ccsp_msg.cfg /tmp
 
 touch /tmp/cp_subsys_ert
-
-isCloudCapable=1
-isCloudCapable=`syscfg get cloud_capable_flag`
-if [ $isCloudCapable -eq 0 ]
-then
-	syscfg set cloud_capable_flag 1
-	syscfg commit
-fi
-
-echo "Enabling ssh by default"
-syscfg set mgmt_wan_sshaccess 1
-syscfg commit

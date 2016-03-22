@@ -8,6 +8,7 @@ Type=oneshot
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 Environment="Subsys=eRT."
 WorkingDirectory=/usr/ccsp/pam
+ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigLate.sh &'
 ExecStart=/bin/sh -c '(/usr/ccsp/pam/email_notification_monitor.sh 12 &)&'
 RemainAfterExit=yes
 
