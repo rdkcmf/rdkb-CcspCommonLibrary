@@ -1,7 +1,7 @@
 [Unit]
 Description=rdkbLogMonitor service
 
-After=ncpu-exec.service dbusOverride.service CcspSysConfig.service
+After=ncpu-exec.service dbusOverride.service
 ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
