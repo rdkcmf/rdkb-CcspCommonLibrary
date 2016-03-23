@@ -1,7 +1,7 @@
 [Unit]
 Description=Random file upload service
 
-After=ncpu-exec.service dbusOverride.service CcspSysConfig.service rdkbLogMonitor.service
+After=ncpu-exec.service dbusOverride.service rdkbLogMonitor.service
 ConditionPathExists=/rdklogger/fileUploadRandom.sh
 
 [Service]

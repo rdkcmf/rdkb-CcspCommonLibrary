@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspCrSsp service
 
-After=dbusOverride.service CcspSysConfig.service
+After=dbusOverride.service
 
 [Service]
 Type=forking
