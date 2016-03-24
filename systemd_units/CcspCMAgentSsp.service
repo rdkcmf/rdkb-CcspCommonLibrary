@@ -11,7 +11,7 @@ WorkingDirectory=/usr/ccsp/cm
 ExecStart=/usr/bin/CcspCMAgentSsp -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

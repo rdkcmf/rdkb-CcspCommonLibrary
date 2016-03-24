@@ -11,7 +11,7 @@ WorkingDirectory=/usr/www
 ExecStart=/bin/sh -c '/etc/webgui.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

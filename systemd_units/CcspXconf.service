@@ -12,7 +12,7 @@ Type=oneshot
 ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

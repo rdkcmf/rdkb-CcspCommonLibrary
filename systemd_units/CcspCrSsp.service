@@ -12,7 +12,7 @@ ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

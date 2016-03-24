@@ -13,7 +13,7 @@ ExecStart=/usr/bin/CcspTr069PaSsp -subsys $Subsys
 ExecStartPost=/bin/sh -c 'sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "'
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

@@ -12,7 +12,7 @@ ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigLate.sh &'
 ExecStart=/bin/sh -c '(/usr/ccsp/pam/email_notification_monitor.sh 12 &)&'
 RemainAfterExit=yes
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

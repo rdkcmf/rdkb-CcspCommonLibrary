@@ -11,7 +11,7 @@ WorkingDirectory=/usr/ccsp/tad
 ExecStart=/usr/bin/CcspTandDSsp -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

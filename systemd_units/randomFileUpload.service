@@ -9,7 +9,7 @@ Type=oneshot
 ExecStart=/bin/sh -c '/rdklogger/fileUploadRandom.sh &'
 RemainAfterExit=yes
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target
