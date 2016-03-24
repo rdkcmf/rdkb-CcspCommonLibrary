@@ -8,7 +8,7 @@ After=ncpu-exec.service
 Environment="IP=192.168.254.253"
 ExecStart=/usr/bin/gw_prov_utopia $IP
 Restart=always
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

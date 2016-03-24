@@ -11,7 +11,7 @@ Environment="Subsys=eRT."
 ExecStart=/usr/bin/CcspWecbController -subsys $Subsys
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

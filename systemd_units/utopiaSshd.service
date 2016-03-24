@@ -11,7 +11,7 @@ Environment="Subsys=eRT."
 ExecStart=/bin/sh -c '/etc/utopia/service.d/service_sshd.sh sshd-start &'
 RemainAfterExit=yes
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target
