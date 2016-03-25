@@ -1,14 +1,9 @@
 [Unit]
 Description=CcspXconf service
 
-After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspCMAgentSsp.service CcspTr069PaSsp.service \
-CcspTandDSsp.service webpa.service CcspLMLite.service
-
-Requires=CcspCrSsp.service
-
 [Service]
 Type=oneshot
+ExecStartPre=/bin/sh -c 'sleep 300'
 ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh &'
 RemainAfterExit=yes
 
