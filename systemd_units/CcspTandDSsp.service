@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspTandDSsp service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspCMAgentSsp.service CcspTr069PaSsp.service
+CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service
 Requires=CcspCrSsp.service
 
 [Service]

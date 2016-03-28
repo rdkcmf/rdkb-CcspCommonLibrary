@@ -2,7 +2,7 @@
 Description=CcspWebUI service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
 CcspWecbController.service ccspwifiagent.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
-CcspCMAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service webpa.service
+CcspTr069PaSsp.service CcspTandDSsp.service webpa.service
 Requires=CcspCrSsp.service
 
 [Service]
