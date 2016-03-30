@@ -3,5 +3,8 @@ Description=Wifi Initialized Service
 
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/bin/echo "Wifi is initialized"
+RemainAfterExit=yes
+
+StandardOutput=syslog

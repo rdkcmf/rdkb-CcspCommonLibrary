@@ -3,5 +3,8 @@ Description=Pam Initialized service
 
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/bin/echo "Pam is initialized"
+RemainAfterExit=yes
+
+StandardOutput=syslog

@@ -1,8 +1,10 @@
 [Unit]
 Description=webpa service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service \
-CcspTandDSsp.service
+paminitialized.service CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
+CcspTr069PaSsp.service CcspTandDSsp.service
+
+Wants=paminitialized.service
 
 [Service]
 Type=oneshot
