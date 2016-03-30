@@ -1,9 +1,10 @@
 [Unit]
 Description=Cosa service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service
-Before=CcspLMLite.service
+paminitialized.service CcspWecbController.service
+
 Requires=CcspCrSsp.service
+Wants=paminitialized.service
 
 [Service]
 Type=oneshot

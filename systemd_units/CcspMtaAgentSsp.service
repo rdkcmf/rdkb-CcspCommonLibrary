@@ -1,8 +1,10 @@
 [Unit]
 Description=CcspMtaAgentSsp service
 After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-CcspWecbController.service emailNotificationMonitor.service
+paminitialized.service CcspWecbController.service emailNotificationMonitor.service
+
 Requires=CcspCrSsp.service
+Wants=paminitialized.service
 
 [Service]
 Type=forking
