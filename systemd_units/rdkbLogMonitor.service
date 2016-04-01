@@ -1,11 +1,12 @@
 [Unit]
 Description=rdkbLogMonitor service
 
-After=ncpu-exec.service dbusOverride.service
+After=dbus.service
+Wants=dbus.service
 ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/bin/sh -c '/rdklogger/rdkbLogMonitor.sh &'
 RemainAfterExit=yes
 

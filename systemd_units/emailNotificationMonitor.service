@@ -1,12 +1,13 @@
 [Unit]
 Description=emailNotificationMonitor service
-After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
+After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
 paminitialized.service CcspWecbController.service
 
-Wants=paminitialized.service
+Wants=bus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
+paminitialized.service CcspWecbController.service
 
 [Service]
-Type=oneshot
+Type=simple
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 Environment="Subsys=eRT."
 WorkingDirectory=/usr/ccsp/pam

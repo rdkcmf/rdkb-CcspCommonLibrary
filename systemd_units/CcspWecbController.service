@@ -1,8 +1,10 @@
 [Unit]
 Description=CcspWecbController service
 
-After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service
+After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service
+
 Requires=CcspCrSsp.service
+Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service
 
 [Service]
 Type=forking

@@ -1,13 +1,14 @@
 [Unit]
 Description=Cosa service
-After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
+After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
 paminitialized.service CcspWecbController.service
 
 Requires=CcspCrSsp.service
-Wants=paminitialized.service
+Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
+paminitialized.service CcspWecbController.service
 
 [Service]
-Type=oneshot
+Type=simple
 WorkingDirectory=/usr/ccsp
 ExecStart=/bin/sh -c '/usr/ccsp/wifi/cosa_start_wifiagent.sh &' 
 RemainAfterExit=yes

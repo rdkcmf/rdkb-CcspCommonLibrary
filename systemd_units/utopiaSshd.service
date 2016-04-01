@@ -1,13 +1,15 @@
 [Unit]
 Description=utopiaSshd service
-After=dbusOverride.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
+After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
 paminitialized.service CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
-CcspTr069PaSsp.service CcspTandDSsp.service webpa.service CcspLMLite.service xconf.service
+CcspTr069PaSsp.service CcspTandDSsp.service webpa.service CcspLMLite.service
 
-Wants=paminitialized.service
+Wants=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
+paminitialized.service CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
+CcspTr069PaSsp.service CcspTandDSsp.service webpa.service CcspLMLite.service
 
 [Service]
-Type=oneshot
+Type=simple
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 Environment="Subsys=eRT."
 ExecStart=/bin/sh -c '/etc/utopia/service.d/service_sshd.sh sshd-start &'

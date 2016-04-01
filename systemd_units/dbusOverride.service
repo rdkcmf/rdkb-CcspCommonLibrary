@@ -2,7 +2,7 @@
 Description=Dbus Override service
 
 [Service]
-Type=oneshot
+Type=simple
 WorkingDirectory=/usr/ccsp
 ExecStart=/bin/sh -c '/usr/ccsp/dbusConf.sh &'
 RemainAfterExit=yes
