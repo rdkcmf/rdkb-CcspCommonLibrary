@@ -3,7 +3,7 @@ Description=Pam Initialized service
 
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/bin/echo "Pam is initialized"
 RemainAfterExit=yes
 

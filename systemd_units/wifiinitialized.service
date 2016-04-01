@@ -3,7 +3,7 @@ Description=Wifi Initialized Service
 
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/bin/echo "Wifi is initialized"
 RemainAfterExit=yes
 

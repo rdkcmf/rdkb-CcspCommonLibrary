@@ -1,8 +1,10 @@
 [Unit]
 Description=PsmSsp service
 
-After=dbusOverride.service CcspCrSsp.service logagent.service
+After=dbus.service CcspCrSsp.service logagent.service
+
 Requires=CcspCrSsp.service
+Wants=dbus.service logagent.service
 
 [Service]
 Type=forking

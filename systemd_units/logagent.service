@@ -1,8 +1,10 @@
 [Unit]
 Description=CcspLogent service
 
-After=dbusOverride.service CcspCrSsp.service
+After=dbus.service CcspCrSsp.service
+
 Requires=CcspCrSsp.service
+Wants=dbus.service
 
 [Service]
 Type=forking

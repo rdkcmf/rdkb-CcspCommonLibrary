@@ -2,7 +2,8 @@
 Description=Gwprovapp service
 
 Requires=ncpu-exec.service
-After=ncpu-exec.service
+Wants=rpcbind.service systemd-rpc_up_and_running-puma7.service
+After=ncpu-exec.service rpcbind.service systemd-rpc_up_and_running-puma7.service
 
 [Service]
 Environment="IP=192.168.254.253"
