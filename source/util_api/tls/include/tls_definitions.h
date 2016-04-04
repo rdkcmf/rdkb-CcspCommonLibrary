@@ -102,11 +102,7 @@
  */
 #define  TLS_NULL_WITH_NULL_NULL                    0x0000
 
-/*
- * The following CipherSuite definitions require that the server provide an RSA certificate that
- * can be used for key exchange. The server may request either an RSA or a DSS signature-capable
- * certificate in the certificate request message.
- */
+
 #define  TLS_RSA_WITH_NULL_MD5                      0x0001
 #define  TLS_RSA_WITH_NULL_SHA                      0x0002
 #define  TLS_RSA_EXPORT_WITH_RC4_40_MD5             0x0003
@@ -118,17 +114,7 @@
 #define  TLS_RSA_WITH_DES_CBC_SHA                   0x0009
 #define  TLS_RSA_WITH_3DES_EDE_CBC_SHA              0x000A
 
-/*
- * The following CipherSuite definitions are used for server-authenticated (and optionally client-
- * authenticated) Diffie-Hellman. DH denotes cipher suites in which the server's certificate
- * contains the Diffie-Hellman parameters signed by the certificate authority (CA). DHE denotes
- * ephemeral Diffie-Hellman, where the Diffie-Hellman parameters are signed by a DSS or RSA certi-
- * ficate, which has been signed by the CA. The signing algorithm used is specified after the DH or
- * DHE parameter. The server can request an RSA or DSS signature-capable certificate from the
- * client for client authentication or it may request a Diffie-Hellman certificate. Any Diffie-
- * Hellman certificate provided by the client must use the parameters (group and generator)
- * described by the server.
- */
+
 #define  TLS_DH_DSS_EXPORT_WITH_DES40_CBC_SHA       0x000B
 #define  TLS_DH_DSS_WITH_DES_CBC_SHA                0x000C
 #define  TLS_DH_DSS_WITH_3DES_EDE_CBC_SHA           0x000D
@@ -142,11 +128,7 @@
 #define  TLS_DHE_RSA_WITH_DES_CBC_SHA               0x0015
 #define  TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA          0x0016
 
-/*
- * The following cipher suites are used for completely anonymous Diffie-Hellman communications in
- * which neither party is authenticated. Note that this mode is vulnerable to man-in-the-middle
- * attacks and is therefore deprecated.
- */
+
 #define  TLS_DH_anon_EXPORT_WITH_RC4_40_MD5         0x0017
 #define  TLS_DH_anon_WITH_RC4_128_MD5               0x0018
 #define  TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA      0x0019
@@ -155,12 +137,7 @@
 
 /* since the algorithm is not continuous, we defined a gap here */
 #define  TLS_ALGORITHM_GAP                          0x0013
-/*
- * All the ciphersuites described here use the AES in cipher block chaining (CBC) mode. Furthermore,
- * they use SHA-1 [SHA-1] in an HMAC construction as described in section 5 of [TLS]. (Although the
- * TLS ciphersuite names include the text "SHA", this actually refers to the modified SHA-1 version
- * of the algorithm.)
- */
+
 #define  TLS_RSA_WITH_AES_128_CBC_SHA               0x002F
 #define  TLS_DH_DSS_WITH_AES_128_CBC_SHA            0x0030
 #define  TLS_DH_RSA_WITH_AES_128_CBC_SHA            0x0031
@@ -177,13 +154,7 @@
 /* The max algorithm number */
 #define  TLS_MAX_ALGORITHM_NUMBER                   0x003A
 
-/*
- * This is a list of the compression methods supported by the client, sorted by client preference.
- * If the session_id field is not empty (implying a session resumption request) it must include the
- * compression_method from that session. This vector must contain, and all implementations must
- * support, CompressionMethod.null. Thus, a client and server will always be able to agree on a
- * compression method.
- */
+
 #define  TLS_COMPRESSION_METHOD_NULL                0
 
 /*

@@ -116,26 +116,11 @@
           DATA STRUCTURES USED BY STUN MESSAGE HEADER
 ***********************************************************/
 
-/*
- * STUN messages are TLV (type-length-value) encoded using big endian (network ordered) binary. All
- * STUN messages start with a STUN header, followed by a STUN payload. The payload is a series of
- * STUN attributes, the set of which depends on the message type. The STUN header contains a STUN
- * message type, transaction ID, and length. The message type can be Binding Request, Binding
- * Response, Binding Error Response, Shared Secret Request, Shared Secret Response, or Shared
- * Secret Error Response. The transaction ID is used to correlate requests and responses. The
- * length indicates the total length of the STUN payload, not including the header. This allows
- * STUN to run over TCP. Shared Secret Requests are always sent over TCP (indeed, using TLS over
- * TCP).
- */
+
 #define  STUN_MAX_MSG_SIZE                          256
 #define  STUN_MIN_MSG_SIZE                          sizeof(STUN_HEADER)
 
-/*
- * STUN is a request-response protocol. Clients send a request, and the server sends a response.
- * There are two requests, Binding Request, and Shared Secret Request. The response to a Binding
- * Request can either be the Binding Response or Binding Error Response. The response to a Shared
- * Secret Request can either be a Shared Secret Response or a Shared Secret Error Response.
- */
+
 #define  STUN_MSG_TYPE_BindingRequest               0x0001
 #define  STUN_MSG_TYPE_BindingResponse              0x0101
 #define  STUN_MSG_TYPE_BindingErrorResponse         0x0111
@@ -143,43 +128,7 @@
 #define  STUN_MSG_TYPE_SharedSecretResponse         0x0102
 #define  STUN_MSG_TYPE_SharedSecretErrorResponse    0x0112
 
-/*
- * The following response codes, along with their recommended reason phrases (in brackets) are
- * defined at this time:
- * 
- *    400 (Bad Request): The request was malformed.  The client should not
- *         retry the request without modification from the previous
- *         attempt.
- * 
- *    401 (Unauthorized): The Binding Request did not contain a MESSAGE-
- *         INTEGRITY attribute.
- * 
- *    420 (Unknown Attribute): The server did not understand a mandatory
- *         attribute in the request.
- * 
- *    430 (Stale Credentials): The Binding Request did contain a MESSAGE-
- *         INTEGRITY attribute, but it used a shared secret that has
- *         expired.  The client should obtain a new shared secret and try
- *         again.
- * 
- *    431 (Integrity Check Failure): The Binding Request contained a
- *         MESSAGE-INTEGRITY attribute, but the HMAC failed verification.
- *         This could be a sign of a potential attack, or client
- *         implementation error.
- * 
- *    432 (Missing Username): The Binding Request contained a MESSAGE-
- *         INTEGRITY attribute, but not a USERNAME attribute.  Both must be
- *         present for integrity checks.
- * 
- *    433 (Use TLS): The Shared Secret request has to be sent over TLS, but
- *         was not received over TLS.
- * 
- *    500 (Server Error): The server has suffered a temporary error. The
- *         client should try again.
- * 
- *    600 (Global Failure:) The server is refusing to fulfill the request.
- *         The client should not retry.
- */
+
 #define  STUN_ERROR_CODE_BadRequest                 400
 #define  STUN_ERROR_CODE_Unauthorized               401
 #define  STUN_ERROR_CODE_UnknownAttribute           420
@@ -577,26 +526,7 @@ _STUN_ATTRIBUTE  STUN_ATTRIB_MSG_INTEGRITY,  *PSTUN_ATTRIB_MSG_INTEGRITY;
 #define  AnscStunAttribMiSetLength(p, l)            AnscStunAttribSetLength(p, l)
 #define  AnscStunAttribMiSetValue(p, v)             AnscStunAttribSetValue(p, v)
 
-/*
- * The ERROR-CODE attribute is present in the Binding Error Response and Shared Secret Error
- * Response. It is a numeric value in the range of 100 to 699 plus a textual reason phrase encoded
- * in UTF-8, and is consistent in its code assignments and semantics with SIP [10] and HTTP [15].
- * The reason phrase is meant for user consumption, and can be anything appropriate for the
- * response code. The lengths of the reason phrases MUST be a multiple of 4 (measured in bytes).
- * This can be accomplished by added spaces to the end of the text, if necessary. Recommended
- * reason phrases for the defined response codes are presented below.
- * 
- * To facilitate processing, the class of the error code (the hundreds digit) is encoded separately
- * from the rest of the code.
- * 
- *      0                   1                   2                   3
- *      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
- *     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *     |                   0                     |Class|     Number    |
- *     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *     |      Reason Phrase (variable)                                ..
- *     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- */
+
 typedef  struct
 _STUN_ATTRIB_ERROR_CODE
 {
