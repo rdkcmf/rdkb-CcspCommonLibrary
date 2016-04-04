@@ -296,45 +296,9 @@ TlsHsoServerSendServerHello
      */
     TlsHsServerHelloSetCipherSuite(pTlsHsServerHello, pConnParams->CipherSuiteArray[0]);
 
-    /*
-     * The single compression algorithm selected by the server from the list in
-     * ClientHello.compression_methods. For resumed sessions this field is the value from the
-     * resumed session state.
-     */
     TlsHsServerHelloSetCompression(pTlsHsServerHello, pConnParams->CompressionArray[0]);
 
-    /*
-     * The TLS Handshake Protocol is one of the defined higher level clients of the TLS Record
-     * Protocol. This protocol is used to negotiate the secure attributes of a session. Handshake
-     * messages are supplied to the TLS Record Layer, where they are encapsulated within one or
-     * more TLSPlaintext structures, which are processed and transmitted as specified by the
-     * current active session state.
-     *
-     *      enum {
-     *          hello_request(0), client_hello(1), server_hello(2),
-     *          certificate(11), server_key_exchange (12),
-     *          certificate_request(13), server_hello_done(14),
-     *          certificate_verify(15), client_key_exchange(16),
-     *          finished(20), (255)
-     *      } HandshakeType;
-     *
-     *      struct {
-     *          HandshakeType   msg_type;
-     *          uint24          length;
-     *          select (HandshakeType) {
-     *              case hello_request:         HelloRequest;
-     *              case client_hello:          ClientHello;
-     *              case server_hello:          ServerHello;
-     *              case certificate:           Certificate;
-     *              case server_key_exchange:   ServerKeyExchange;
-     *              case certificate_request:   CertificateRequest;
-     *              case server_hello_done:     ServerHelloDone;
-     *              case certificate_verify:    CertificateVerify;
-     *              case client_key_exchange:   ClientKeyExchange;
-     *              case finished:              Finished;
-     *          } body;
-     *      } Handshake;
-     */
+ 
     if ( TRUE )
     {
         ulTlsHsBodySize = TlsHsServerHelloGetBodySize(pTlsHsServerHello);
@@ -593,38 +557,6 @@ TlsHsoServerSendCertificate
             );
     }
 
-    /*
-     * The TLS Handshake Protocol is one of the defined higher level clients of the TLS Record
-     * Protocol. This protocol is used to negotiate the secure attributes of a session. Handshake
-     * messages are supplied to the TLS Record Layer, where they are encapsulated within one or
-     * more TLSPlaintext structures, which are processed and transmitted as specified by the
-     * current active session state.
-     *
-     *      enum {
-     *          hello_request(0), client_hello(1), server_hello(2),
-     *          certificate(11), server_key_exchange (12),
-     *          certificate_request(13), server_hello_done(14),
-     *          certificate_verify(15), client_key_exchange(16),
-     *          finished(20), (255)
-     *      } HandshakeType;
-     *
-     *      struct {
-     *          HandshakeType   msg_type;
-     *          uint24          length;
-     *          select (HandshakeType) {
-     *              case hello_request:         HelloRequest;
-     *              case client_hello:          ClientHello;
-     *              case server_hello:          ServerHello;
-     *              case certificate:           Certificate;
-     *              case server_key_exchange:   ServerKeyExchange;
-     *              case certificate_request:   CertificateRequest;
-     *              case server_hello_done:     ServerHelloDone;
-     *              case certificate_verify:    CertificateVerify;
-     *              case client_key_exchange:   ClientKeyExchange;
-     *              case finished:              Finished;
-     *          } body;
-     *      } Handshake;
-     */
     if ( TRUE )
     {
         ulTlsHsBodySize = TlsHsCertGetBodySize(pTlsHsCertificate);
@@ -1201,38 +1133,7 @@ TlsHsoServerSendServerKeyExchange
         AnscFreeMemory(pTlsHsSignature);
     }
 
-    /*
-     * The TLS Handshake Protocol is one of the defined higher level clients of the TLS Record
-     * Protocol. This protocol is used to negotiate the secure attributes of a session. Handshake
-     * messages are supplied to the TLS Record Layer, where they are encapsulated within one or
-     * more TLSPlaintext structures, which are processed and transmitted as specified by the
-     * current active session state.
-     *
-     *      enum {
-     *          hello_request(0), client_hello(1), server_hello(2),
-     *          certificate(11), server_key_exchange (12),
-     *          certificate_request(13), server_hello_done(14),
-     *          certificate_verify(15), client_key_exchange(16),
-     *          finished(20), (255)
-     *      } HandshakeType;
-     *
-     *      struct {
-     *          HandshakeType   msg_type;
-     *          uint24          length;
-     *          select (HandshakeType) {
-     *              case hello_request:         HelloRequest;
-     *              case client_hello:          ClientHello;
-     *              case server_hello:          ServerHello;
-     *              case certificate:           Certificate;
-     *              case server_key_exchange:   ServerKeyExchange;
-     *              case certificate_request:   CertificateRequest;
-     *              case server_hello_done:     ServerHelloDone;
-     *              case certificate_verify:    CertificateVerify;
-     *              case client_key_exchange:   ClientKeyExchange;
-     *              case finished:              Finished;
-     *          } body;
-     *      } Handshake;
-     */
+    
     if ( TRUE )
     {
         if ( pSessionState->KeAlgorithm == TLS_KE_ALGORITHM_RSA_EXPORT )
@@ -1464,38 +1365,7 @@ TlsHsoServerSendCertRequest
         AnscFreeX501Name(pX501CAName);
     }
 
-    /*
-     * The TLS Handshake Protocol is one of the defined higher level clients of the TLS Record
-     * Protocol. This protocol is used to negotiate the secure attributes of a session. Handshake
-     * messages are supplied to the TLS Record Layer, where they are encapsulated within one or
-     * more TLSPlaintext structures, which are processed and transmitted as specified by the
-     * current active session state.
-     *
-     *      enum {
-     *          hello_request(0), client_hello(1), server_hello(2),
-     *          certificate(11), server_key_exchange (12),
-     *          certificate_request(13), server_hello_done(14),
-     *          certificate_verify(15), client_key_exchange(16),
-     *          finished(20), (255)
-     *      } HandshakeType;
-     *
-     *      struct {
-     *          HandshakeType   msg_type;
-     *          uint24          length;
-     *          select (HandshakeType) {
-     *              case hello_request:         HelloRequest;
-     *              case client_hello:          ClientHello;
-     *              case server_hello:          ServerHello;
-     *              case certificate:           Certificate;
-     *              case server_key_exchange:   ServerKeyExchange;
-     *              case certificate_request:   CertificateRequest;
-     *              case server_hello_done:     ServerHelloDone;
-     *              case certificate_verify:    CertificateVerify;
-     *              case client_key_exchange:   ClientKeyExchange;
-     *              case finished:              Finished;
-     *          } body;
-     *      } Handshake;
-     */
+ 
     if ( TRUE )
     {
         ulTlsHsBodySize = TlsHsCertReqGetBodySize(pTlsHsCertRequest);
@@ -2022,38 +1892,7 @@ TlsHsoServerSendFinished
         TlsHsFinishedSetVerifyData(pTlsHsFinished, pScratchPad, 12);
     }
 
-    /*
-     * The TLS Handshake Protocol is one of the defined higher level clients of the TLS Record
-     * Protocol. This protocol is used to negotiate the secure attributes of a session. Handshake
-     * messages are supplied to the TLS Record Layer, where they are encapsulated within one or
-     * more TLSPlaintext structures, which are processed and transmitted as specified by the
-     * current active session state.
-     *
-     *      enum {
-     *          hello_request(0), client_hello(1), server_hello(2),
-     *          certificate(11), server_key_exchange (12),
-     *          certificate_request(13), server_hello_done(14),
-     *          certificate_verify(15), client_key_exchange(16),
-     *          finished(20), (255)
-     *      } HandshakeType;
-     *
-     *      struct {
-     *          HandshakeType   msg_type;
-     *          uint24          length;
-     *          select (HandshakeType) {
-     *              case hello_request:         HelloRequest;
-     *              case client_hello:          ClientHello;
-     *              case server_hello:          ServerHello;
-     *              case certificate:           Certificate;
-     *              case server_key_exchange:   ClientKeyExchange;
-     *              case certificate_request:   CertificateRequest;
-     *              case server_hello_done:     ServerHelloDone;
-     *              case certificate_verify:    CertificateVerify;
-     *              case client_key_exchange:   ClientKeyExchange;
-     *              case finished:              Finished;
-     *          } body;
-     *      } Handshake;
-     */
+
     if ( TRUE )
     {
         TlsHandshakeSetMsgType(pTlsHsHeader, TLS_HANDSHAKE_TYPE_finished);
