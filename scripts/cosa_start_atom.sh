@@ -74,8 +74,8 @@ echo "Elected subsystem is $Subsys"
 sleep 1
 
 #####BEGIN: Changes for ARRISXB3-3853
-/etc/ath/fast_down.sh 
-sleep 5
+#/etc/ath/fast_down.sh 
+#sleep 5
 #####END: Changes for ARRISXB3-3853
 
 if [ -e ./harvester ]; then
