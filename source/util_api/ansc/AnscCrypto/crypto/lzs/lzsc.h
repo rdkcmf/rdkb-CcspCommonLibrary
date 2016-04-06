@@ -35,28 +35,7 @@
 
 /*
 * 
-*  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*  !!!                                                                     !!!
-*  !!!  NOTE:                                                              !!!
-*  !!!                                                                     !!!
-*  !!!  The contents of this document constitute CONFIDENTIAL INFORMATION  !!!
-*  !!!  which is the property of Hi/fn, Inc.                           !!!
-*  !!!                                                                     !!!
-*  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*
-*/
-/*  TITLE   LZSC.H  -  Function prototypes and constants for DCS221C
-*
-*$Header: /Product/BroadWay/Bisga/wrapper/AnscCrypto/crypto/lzs/lzsc.h 2     8/05/05 3:34p Zhubin $
-*
-******************************************************************************
-*
-* Copyright 1988-92 Hi/fn, Inc., San Jose, California.
-* All rights reserved.  This code is Stac confidential property, and the
-* algorithms and methods used herein may not be disclosed to any party without
-* express written consent from Hi/fn, Inc.
-*
-******************************************************************************
+
 *
 *
 * Filename:          LZSC.H
