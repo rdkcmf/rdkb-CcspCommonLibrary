@@ -18,6 +18,9 @@ if [ -f "$PWD/cosa_start_custom_1.sh" ]; then
 	./cosa_start_custom_1.sh
 fi
 
+#update the bbhm for 2.1s11
+/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+
 # Check if bbhm has Notify flag present
 NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
 REDIRCTEXISTS=""
