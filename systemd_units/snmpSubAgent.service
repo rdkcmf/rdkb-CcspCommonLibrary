@@ -1,0 +1,13 @@
+[Unit]
+Description=SNMP Subagent service
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/ccsp/snmp
+ExecStart=/bin/sh -c '/usr/ccsp/snmp/run_subagent.sh /var/tmp/cm_snmp_ma &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
