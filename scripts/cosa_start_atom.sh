@@ -51,16 +51,15 @@ vconfig add eth0 106
 ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
 ip route add default via 192.168.106.1
 
-# upgrade the wifi config to suppot vlan 106
-# This script is only for ARRISXB3 and Ciscoxb3. All other product do not need this step.
-rdk_wifi_upgrade_vlan106
-
-
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
 export PATH=$PATH:/etc/ath
 echo "PATH="$PATH
 #####END: Changes for ARRISXB3-3853
+
+# upgrade the wifi config to suppot vlan 106
+# This script is only for ARRISXB3 and Ciscoxb3. All other product do not need this step.
+rdk_wifi_upgrade_vlan106
 
 # enable core files on atom
 ulimit -c unlimited
