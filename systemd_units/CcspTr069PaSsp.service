@@ -1,13 +1,13 @@
 [Unit]
 Description=CcspTr069PaSsp service
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service wifiinitialized.service ccspwifiagent.service emailNotificationMonitor.service \
-CcspMtaAgentSsp.service
+paminitialized.service CcspWecbController.service ccspwifiagent.service wifiinitialized.service \
+emailNotificationMonitor.service CcspMtaAgentSsp.service
 
 Requires=CcspCrSsp.service
 Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service wifiinitialized.service ccspwifiagent.service emailNotificationMonitor.service \
-CcspMtaAgentSsp.service
+paminitialized.service CcspWecbController.service ccspwifiagent.service wifiinitialized.service \
+emailNotificationMonitor.service CcspMtaAgentSsp.service
 
 [Service]
 Type=forking

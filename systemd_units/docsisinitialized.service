@@ -1,0 +1,10 @@
+[Unit]
+Description=Docsis Initialized Service
+
+
+[Service]
+Type=simple
+ExecStart=/bin/echo "Docsis is initialized"
+RemainAfterExit=yes
+
+StandardOutput=syslog

@@ -1,13 +1,15 @@
 [Unit]
 Description=CcspWebUI service
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service ccspwifiagent.service emailNotificationMonitor.service \
-CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service webpa.service
+paminitialized.service CcspWecbController.service ccspwifiagent.service wifiinitialized.service \
+emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service \
+webpa.service
 
 Requires=CcspCrSsp.service
 Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service ccspwifiagent.service emailNotificationMonitor.service \
-CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service webpa.service
+paminitialized.service CcspWecbController.service ccspwifiagent.service wifiinitialized.service \
+emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service \
+webpa.service
 
 [Service]
 Type=simple
