@@ -1,18 +1,17 @@
 [Unit]
-Description=CcspWecbController service
+Description=harvester service
 
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service
+paminitialized.service CcspWecbController.service
 
 Requires=CcspCrSsp.service
 Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service
+paminitialized.service CcspWecbController.service
 
 [Service]
 Type=forking
-WorkingDirectory=/usr/ccsp/wecb
-Environment="Subsys=eRT."
-ExecStart=/usr/bin/CcspWecbController -subsys $Subsys
+WorkingDirectory=/usr/ccsp/harvester
+ExecStart=/usr/bin/harvester
 Restart=always
 
 StandardOutput=syslog+console
