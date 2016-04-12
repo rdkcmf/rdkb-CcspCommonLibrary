@@ -153,19 +153,26 @@ else
 	Subsys=""
 fi
 
+# Remove all disable flags
+if [ -e /nvram/disablewecb ]; then
+	echo "***Removing all disable flags*****"
+        rm -rf /nvram/disable*
+fi
+
 echo "Elected subsystem is $Subsys"
-if [ -e /nvram/disableCr ]; then
-	echo "***disabling CcspCr****"
-elif [ "x"$Subsys = "x" ];then
+
+#if [ -e /nvram/disableCr ]; then
+#	echo "***disabling CcspCr****"
+if [ "x"$Subsys = "x" ];then
 	$BINPATH/CcspCrSsp
 else
 	echo "$BINPATH/CcspCrSsp -subsys $Subsys"
 	$BINPATH/CcspCrSsp -subsys $Subsys
 fi
 
-if [ -e /nvram/disablelogagent ]; then
-	echo "***disabling Loagent****"
-elif [ -e ./logagent ]; then
+#if [ -e /nvram/disablelogagent ]; then
+#	echo "***disabling Loagent****"
+if [ -e ./logagent ]; then
 	cd logagent
 
 	if [ "x"$Subsys = "x" ];then
@@ -177,9 +184,9 @@ elif [ -e ./logagent ]; then
 	cd ..
 fi
 
-if [ -e /nvram/disablePsmSSP ]; then
-	echo "***disabling PsmSSP****"
-elif [ "x"$Subsys = "x" ];then
+#if [ -e /nvram/disablePsmSSP ]; then
+#	echo "***disabling PsmSSP****"
+if [ "x"$Subsys = "x" ];then
 	$BINPATH/PsmSsp
 else
     echo "$BINPATH/PsmSsp -subsys $Subsys"
@@ -187,9 +194,9 @@ else
 fi
 
 
-if [ -e /nvram/disableCcspPandMSsp ]; then
-	echo "***disabling PAM****"
-elif [ -e ./pam ]; then
+#if [ -e /nvram/disableCcspPandMSsp ]; then
+#	echo "***disabling PAM****"
+if [ -e ./pam ]; then
 	cd pam
 
 	if [ "x"$Subsys = "x" ];then
@@ -202,9 +209,8 @@ elif [ -e ./pam ]; then
 fi
 
 
-if [ -e /nvram/disablewecb ]; then
-	echo "***disabling WECB*****"
-elif [ -e ./wecb ]; then                                                                                                                                                                                                                    
+if [ -e ./wecb ];
+then                                                                                                                                                                                                                   
     cd wecb                                                                                                                
     if [ "x"$Subsys = "x" ];then                                                                                           
         $BINPATH/CcspWecbController                                                                                               
