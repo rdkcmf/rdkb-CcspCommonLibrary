@@ -275,48 +275,7 @@ TLS_CCS_HEADER,  *PTLS_CCS_HEADER;
          DATA STRUCTURES USED BY TLS ALERT PROTOCOL
 ***********************************************************/
 
-/*
- * One of the content types supported by the TLS Record layer is the alert type. Alert messages
- * convey the severity of the message and a description of the alert. Alert messages with a level
- * of fatal result in the immediate termination of the connection. In this case, other connections
- * corresponding to the session may continue, but the session identifier must be invalidated,
- * preventing the failed session from being used to establish new connections. Like other messages,
- * alert messages are encrypted and compressed, as specified by the current connection state.
- *
- *      enum { warning(1), fatal(2), (255) } AlertLevel;
- *
- *      enum {
- *          close_notify(0),
- *          unexpected_message(10),
- *          bad_record_mac(20),
- *          decryption_failed(21),
- *          record_overflow(22),
- *          decompression_failure(30),
- *          handshake_failure(40),
- *          bad_certificate(42),
- *          unsupported_certificate(43),
- *          certificate_revoked(44),
- *          certificate_expired(45),
- *          certificate_unknown(46),
- *          illegal_parameter(47),
- *          unknown_ca(48),
- *          access_denied(49),
- *          decode_error(50),
- *          decrypt_error(51),
- *          export_restriction(60),
- *          protocol_version(70),
- *          insufficient_security(71),
- *          internal_error(80),
- *          user_canceled(90),
- *          no_renegotiation(100),
- *          (255)
- *      } AlertDescription;
- *
- *      struct {
- *          AlertLevel          level;
- *          AlertDescription    description;
- *      } Alert;
- */
+
 #define  TLS_ALERT_LEVEL_warning                    1
 #define  TLS_ALERT_LEVEL_fatal                      2
 
@@ -2103,42 +2062,6 @@ TLS_HS_CERT_REQUEST,  *PTLS_HS_CERT_REQUEST;
   DATA STRUCTURES USED BY TLS HANDSHAKE CLIENT KEY EXCHANGE
 ***********************************************************/
 
-/*
- * This message is always sent by the client. It will immediately follow the client certificate
- * message, if it is sent. Otherwise it will be the first message sent by the client after it
- * receives the server hello done message. With this message, the premaster secret is set, either
- * though direct transmission of the RSA-encrypted secret, or by the transmission of Diffie-
- * Hellman parameters which will allow each side to agree upon the same premaster secret. When the
- * key exchange method is DH_RSA or DH_DSS, client certification has been requested, and the client
- * was able to respond with a certificate which contained a Diffie-Hellman public key whose
- * parameters (group and generator) matched those specified by the server in its certificate, this
- * message will not contain any data.
- *
- *      struct {
- *          select (KeyExchangeAlgorithm) {
- *              case rsa:               EncryptedPreMasterSecret;
- *              case diffie_hellman:    ClientDiffieHellmanPublic;
- *          } exchange_keys;
- *      } ClientKeyExchange;
- *
- *      struct {
- *          ProtocolVersion client_version;
- *          opaque          random[46];
- *      } PreMasterSecret;
- *
- *      struct {
- *          public-key-encrypted PreMasterSecret pre_master_secret;
- *      } EncryptedPreMasterSecret;
- *
- *      enum { implicit, explicit } PublicValueEncoding;
- *
- *      struct {
- *          select (PublicValueEncoding) {
- *              case implicit: struct { };
- *              case explicit: opaque dh_Yc<1..2^16-1>;
- *          } dh_public;
- *      } ClientDiffieHellmanPublic;
- */
 typedef  struct
 _TLS_HS_CLIENT_KEY_EXCHANGE
 {
