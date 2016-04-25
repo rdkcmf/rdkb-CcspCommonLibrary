@@ -10,6 +10,7 @@ Wants=dbus.service logagent.service PsmSsp.service
 Type=forking
 WorkingDirectory=/usr/ccsp/pam
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 ExecStart=/usr/bin/CcspPandMSsp -subsys $Subsys
 Restart=always
 
