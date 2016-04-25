@@ -233,13 +233,7 @@ typedef  struct  _EAP_REQUEST_HEADER  EAP_RESPONSE_HEADER,  *PEAP_RESPONSE_HEADE
 #define  AnscEapRepSetType                          AnscEapReqSetType
 #define  AnscEapRepSetTypeData                      AnscEapReqSetTypeData
 
-/*
- * The Expanded Nak Type is valid only in Response messages. It MUST be sent only in reply to a
- * Request of Type 254 (Expanded Type) where the authentication Type is unacceptable. The Expanded
- * Nak Type uses the Expanded Type format itself, and the Response contains one or more authenti-
- * cation Types desired by the peer, all in Expanded Type format. Type zero (0) is used to indicate
- * that the sender has no viable alternatives.
- */
+
 typedef  struct
 _EAP_EXPANDED_TYPE
 {
@@ -264,18 +258,7 @@ EAP_EXPANDED_TYPE,  *PEAP_EXPANDED_TYPE;
      DATA STRUCTURES USED BY EAP MD5 CHALLENGE OPERATION
 ***********************************************************/
 
-/*
- * The MD5-Challenge Type is analogous to the PPP CHAP protocol [RFC1994] (with MD5 as the speci-
- * fied algorithm). The Request contains a "challenge" message to the peer. A Response MUST be sent
- * in reply to the Request. The Response MAY be either of Type 4 (MD5-Challenge), Nak (Type 3), or
- * Expanded Nak (Type 254). The Nak reply indicates the peer's desired authentication Type(s). EAP
- * peer and EAP server implementations MUST support the MD5-Challenge mechanism. An authenticator
- * that supports only pass-through MUST allow communication with a backend authentication server
- * that is capable of supporting MD5-Challenge, although the EAP authenticator implementation need
- * not support MD5-Challenge itself. However, if the EAP authenticator can be configured to authen-
- * ticate peers locally (e.g., not operate in pass-through), then the requirement for support of
- * the MD5-Challenge mechanism applies.
- */
+
 typedef  struct
 _EAP_MD5_CHALLENGE
 {
