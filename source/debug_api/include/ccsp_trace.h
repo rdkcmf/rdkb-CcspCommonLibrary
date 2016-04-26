@@ -299,6 +299,18 @@ else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))					\
 	LogLevel = SNMP_RDKLogLevel;\
 	LogEnable = SNMP_RDKLogEnable;\
 }\
+else if(!strcmp(pComponentName,"hotspotfd"))        \
+{                                                   \
+    ComponentName = "LOG.RDK.HOTSPOT";              \
+    LogLevel = RDKLogLevel;                         \
+    LogEnable = RDKLogEnable;                       \
+}                                                   \
+else if(!strcmp(pComponentName,"dhcp_snooperd"))    \
+{                                                   \
+    ComponentName = "LOG.RDK.DHCPSNOOP";            \
+    LogLevel = RDKLogLevel;                         \
+    LogEnable = RDKLogEnable;                       \
+}                                                   \
 else\
 {\
 		ComponentName = "LOG.RDK.Misc";							\
