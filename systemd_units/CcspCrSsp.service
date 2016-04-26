@@ -8,6 +8,7 @@ Wants=dbus.service
 Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 ExecStartPre=/bin/sh -c 'sleep 50'
 ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys

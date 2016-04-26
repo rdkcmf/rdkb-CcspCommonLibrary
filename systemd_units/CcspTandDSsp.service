@@ -12,6 +12,7 @@ emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service
 [Service]
 Type=forking
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 WorkingDirectory=/usr/ccsp/tad
 ExecStart=/usr/bin/CcspTandDSsp -subsys $Subsys
 Restart=always

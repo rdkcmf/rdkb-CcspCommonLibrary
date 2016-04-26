@@ -12,6 +12,7 @@ paminitialized.service
 Type=forking
 WorkingDirectory=/usr/ccsp/wecb
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 ExecStart=/usr/bin/CcspWecbController -subsys $Subsys
 Restart=always
 

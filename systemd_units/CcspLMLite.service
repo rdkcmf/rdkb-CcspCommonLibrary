@@ -14,6 +14,7 @@ CcspTandDSsp.service webpa.service
 [Service]
 Type=simple
 WorkingDirectory=/usr/ccsp
+Environment="LOG4C_RCPATH=/etc"
 ExecStart=/bin/sh -c '/usr/bin/CcspLMLite &'
 RemainAfterExit=yes
 

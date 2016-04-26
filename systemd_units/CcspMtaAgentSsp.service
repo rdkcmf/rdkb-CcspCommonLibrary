@@ -10,6 +10,7 @@ paminitialized.service CcspWecbController.service emailNotificationMonitor.servi
 [Service]
 Type=forking
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 WorkingDirectory=/usr/ccsp/mta
 ExecStart=/usr/bin/CcspMtaAgentSsp -subsys $Subsys
 Restart=always
