@@ -4,7 +4,8 @@ Description=CcspXconf service
 [Service]
 Type=oneshot
 ExecStartPre=/bin/sh -c 'sleep 300'
-ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh > /rdklogs/logs/xconf.txt.0 2>&1 &'
+#Note: Don't Uncomment Below Line: Each Device needs a conf file to launch its own script
+#ExecStart=/bin/sh -c '/etc/xb6_firmwareDwnld.sh > /rdklogs/logs/xconf.txt.0 2>&1 &'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
