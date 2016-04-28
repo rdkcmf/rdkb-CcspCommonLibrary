@@ -431,7 +431,56 @@ static ANSC_STATUS CheckUserChangedFlag
 
     return CCSP_SUCCESS;
 }
+#ifdef USE_NOTIFY_COMPONENT
+void parseOldVal(SLAP_VARIABLE * pOldValue, parameterSigStruct_t*  pParamSignal)
+{
 
+    if ( pOldValue )
+    {
+        if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_uint32 )
+        {
+            if ( pOldValue->ContentType == SLAP_CONTENT_TYPE_IP4_ADDR )
+            {
+                pParamSignal->oldValue = SlapVcoIp4AddrToString(NULL, pOldValue->Variant.varUint32);
+                pParamSignal->type = ccsp_string;
+            }
+            else
+            {
+                pParamSignal->oldValue = SlapVcoUint32ToString(NULL, pOldValue->Variant.varUint32);
+                pParamSignal->type     = ccsp_unsignedInt;
+            }
+        }
+        else if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_string )
+        {
+            if ( pOldValue->ContentType == SLAP_CONTENT_TYPE_CALENDAR_TIME )
+            {
+                pParamSignal->type = ccsp_dateTime;
+            }
+            else
+            {
+                pParamSignal->type = ccsp_string;
+            }
+
+            pParamSignal->oldValue = AnscCloneString(pOldValue->Variant.varString);
+        }
+        else if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_bool )
+        {
+            pParamSignal->oldValue = SlapVcoBoolToString(NULL, pOldValue->Variant.varBool); /* This function will be adjust to be consistent with CCSP */
+            pParamSignal->type     = ccsp_boolean;
+        }
+        else if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_int )
+        {
+            pParamSignal->oldValue = SlapVcoIntToString(NULL, pOldValue->Variant.varInt);
+            pParamSignal->type     = ccsp_int;
+        }
+    }
+    else
+    {
+        pParamSignal->oldValue = NULL;
+    }
+}
+
+#endif
 /**********************************************************************
 
     caller:     owner of this object
@@ -483,7 +532,7 @@ static ANSC_STATUS CheckUserChangedFlag
     return:     status of operation.
 
 **********************************************************************/
-
+void *bus_handle = NULL;
 ANSC_STATUS
 DslhWmpdoMpaSetParameterValues
     (
@@ -722,7 +771,51 @@ DslhWmpdoMpaSetParameterValues
         pVarRecord->SaveOldValue((ANSC_HANDLE)pVarRecord);
 
         pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pVarRecord->hDslhObjRecord;
-
+#ifdef USE_NOTIFY_COMPONENT
+            parameterSigStruct_t *val;
+            int size = 1;
+            int ret1 = 0;
+            parameterSigStruct_t            vcSig              = {0};
+            char  str[500] = {0};
+            parameterValStruct_t notif_val[20];
+            char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
+            char* faultParam = NULL;
+            char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
+            char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+            BOOL notify_changed = FALSE;
+            UINT notification_count = 0;
+            if(pVarEntity->ParamDescr->NotifyStatus != 3)
+            {
+                CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+                if(pVarRecord->Notification)
+                {
+                    vcSig.parameterName = pParameterValueArray[i].Name;
+                    parseOldVal(pParameterValueArray[i].Value, &vcSig);
+                    vcSig.newValue = vcSig.oldValue;
+                    parseOldVal(pVarRecord->OldParamValue, &vcSig);
+                    vcSig.writeID = pVarRecord->ReqSenderID;
+                    vcSig.type = dataType;
+                    sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
+                        notif_val[notification_count].parameterName =  param_name ;
+                        notif_val[notification_count].parameterValue = str;
+                        notif_val[notification_count].type = ccsp_string;
+                        notification_count++;
+			if(strcmp(vcSig.newValue,vcSig.oldValue)){
+                              ret1 =       CcspBaseIf_setParameterValues(
+									  bus_handle,
+									  compo,
+									  bus,
+									  0,
+									  0,
+									  notif_val,
+									  notification_count,
+									  TRUE,
+									  &faultParam
+									  );
+			}
+                }
+            }
+#endif
         if ( (pMyObject->hVarRecordArray == NULL) || (pMyObject->hObjRecordArray == NULL) )
         {
             /* init the variable and object record arrays; */ 

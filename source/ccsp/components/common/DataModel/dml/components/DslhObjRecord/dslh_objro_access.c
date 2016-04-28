@@ -89,6 +89,8 @@
 
 
 #include "dslh_objro_global.h"
+#include "ccsp_base_api.h"
+
 
 /**********************************************************************
 
@@ -1318,6 +1320,7 @@ DslhObjroAddChildObject
     char*                           pChildLastName      = (char*                      )NULL;
     ULONG                           ulObjInsNumber      = (ULONG                      )0;
     char                            child_name[16];
+	ULONG							old_value = 0;
 
     /* the object has to be a table in order to add a child object */
     if( pObjEntity->ObjDescr == NULL || pObjEntity->ObjDescr->Type != DSLH_CWMP_OBJECT_TYPE_table)
@@ -1336,7 +1339,10 @@ DslhObjroAddChildObject
     }
     else
     {
-        pChildObjController->hDslhCpeController = pMyObject->hDslhCpeController;
+#ifdef USE_NOTIFY_COMPONENT
+		old_value = AnscQueueQueryDepth(&pMyObject->ObjroQueue);
+#endif		
+		pChildObjController->hDslhCpeController = pMyObject->hDslhCpeController;
         pChildObjController->hParentInsContext  = pObjController->GetInsContext(pObjController);
 
         returnStatus =
@@ -1444,8 +1450,9 @@ DslhObjroAddChildObject
     }
 
     *pulInstanceNumber = ulObjInsNumber;
-
-
+#ifdef USE_NOTIFY_COMPONENT
+	Notify_Table_Entry(pMyObject, old_value);
+#endif
     return  returnStatus;
 
 
@@ -1517,13 +1524,16 @@ DslhObjroDelChildObject
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY         )NULL;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     BOOL                            bChildObjFound      = FALSE;
+	ULONG							old_value = 0; 
 
     /* the object has to be a table in order to delete child object */
     if( pObjEntity->ObjDescr == NULL || pObjEntity->ObjDescr->Type != DSLH_CWMP_OBJECT_TYPE_table)
     {
         return ANSC_STATUS_FAILURE;
     }
-
+#ifdef USE_NOTIFY_COMPONENT
+	old_value = AnscQueueQueryDepth(&pMyObject->ObjroQueue);
+#endif
     pSLinkEntry = AnscQueueGetFirstEntry(&pMyObject->ObjroQueue);
 
     while ( pSLinkEntry )
@@ -1578,6 +1588,49 @@ DslhObjroDelChildObject
 
     pChildObjRecord->Reset  ((ANSC_HANDLE)pChildObjRecord);
     pChildObjRecord->Remove ((ANSC_HANDLE)pChildObjRecord);
-
+#ifdef USE_NOTIFY_COMPONENT	
+	Notify_Table_Entry(pMyObject, old_value);
+#endif
     return  ANSC_STATUS_SUCCESS;
 }
+
+#ifdef USE_NOTIFY_COMPONENT
+extern ANSC_HANDLE bus_handle;
+
+Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
+{
+
+	char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
+	char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
+	char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+	parameterValStruct_t notif_val[1];
+	char* faultParam = NULL;
+	char  str[512] = {0};
+	char Param_NumberOfEntry[512] = {0};
+	UINT len = 0;
+
+	_ansc_strcpy(Param_NumberOfEntry,pMyObject->FullName);
+	len = _ansc_strlen(Param_NumberOfEntry);
+	Param_NumberOfEntry[len-1]= '\0';
+	sprintf(Param_NumberOfEntry,"%sNumberOfEntries",Param_NumberOfEntry);
+
+	sprintf(str,"%s,%lu,%lu,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
+		notif_val[0].parameterName =  param_name ;
+		notif_val[0].parameterValue = str;
+		notif_val[0].type = ccsp_string;
+		
+
+		CcspBaseIf_setParameterValues(
+		  bus_handle,
+		  compo,
+		  bus,
+		  0,
+		  0,
+		  notif_val,
+		  1,
+		  TRUE,
+		  &faultParam
+		  );
+
+}
+#endif
