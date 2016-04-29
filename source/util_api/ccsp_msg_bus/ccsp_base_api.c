@@ -602,7 +602,20 @@ int CcspBaseIf_setParameterAttributes(
     DBusMessageIter array_iter;
     DBusMessageIter struct_iter;
     int i;
-
+#ifdef USE_NOTIFY_COMPONENT
+	parameterValStruct_t notif_val[20];
+	char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent"; 
+	char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+	char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
+	char* faultParam = NULL;
+	BOOL notify_changed = FALSE;
+	UINT notification_count = 0;
+	char PA_name[256];
+	char true_false[10];
+	char notification_parameter[256];
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+	_ansc_strcpy(PA_name, bus_info->component_id);
+#endif
     message = dbus_message_new_method_call (dst_component_id,
                                             dbus_path,
                                             CCSP_DBUS_INTERFACE_BASE,
@@ -632,7 +645,26 @@ int CcspBaseIf_setParameterAttributes(
                                           &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING( &struct_iter, val[i].parameterName);
+#ifdef USE_NOTIFY_COMPONENT
+		if(val[i].notificationChanged)
+		{
+			notify_changed = TRUE;
 
+			if(val[i].notification)
+				_ansc_strcpy(true_false, "true");
+			else
+				_ansc_strcpy(true_false, "false");
+
+			sprintf(notification_parameter,"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+		
+
+			notif_val[notification_count].parameterName =  param_name ;
+			notif_val[notification_count].parameterValue = notification_parameter;
+			notif_val[notification_count].type = ccsp_string;
+			notification_count++;
+			
+		}
+#endif
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &val[i].notificationChanged);
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &val[i].notification);
         tmp = val[i].access;
@@ -664,6 +696,23 @@ int CcspBaseIf_setParameterAttributes(
         dbus_message_unref (reply);
     }
     dbus_message_unref (message);
+#ifdef USE_NOTIFY_COMPONENT
+	if(notify_changed)
+	{
+		
+		CcspBaseIf_setParameterValues(
+		  bus_handle,
+		  compo,
+		  bus,
+		  sessionId,
+		  0,
+		  notif_val,
+		  notification_count,
+		  TRUE,
+		  &faultParam
+		  );
+	}
+#endif	
     return ret;
 }
 
