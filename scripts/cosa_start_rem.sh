@@ -207,7 +207,8 @@ if [ -e /nvram/disableCcspLMLite ]; then
 	echo "***Disabling CcspLMLite*****"
 elif [ -e ./lm ]; then
     cd lm
-    $BINPATH/CcspLMLite &
+    echo "$BINPATH/CcspLMLite -subsys $Subsys &"
+    $BINPATH/CcspLMLite -subsys $Subsys &
 fi
 
 echo "XCONF SCRIPT : Calling XCONF Client"
