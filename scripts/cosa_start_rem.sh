@@ -224,3 +224,8 @@ fi
 
 
 /etc/utopia/service.d/service_sshd.sh sshd-start &
+
+# Enable XCONF Conf config fetch
+if [ -f  /lib/rdk/dcm.service ]; then
+   /bin/sh /lib/rdk/dcm.service &
+fi
