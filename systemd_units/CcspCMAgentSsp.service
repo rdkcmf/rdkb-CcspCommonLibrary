@@ -1,11 +1,13 @@
 [Unit]
 Description=CcspCMAgentSsp service
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service
+paminitialized.service CcspWecbController.service notifyComp.service emailNotificationMonitor.service \
+CcspMtaAgentSsp.service
 
 Requires=CcspCrSsp.service
 Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service emailNotificationMonitor.service CcspMtaAgentSsp.service
+paminitialized.service CcspWecbController.service notifyComp.service emailNotificationMonitor.service \
+CcspMtaAgentSsp.service
 
 [Service]
 Type=forking

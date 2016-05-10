@@ -1,18 +1,19 @@
 [Unit]
-Description=CcspMtaAgentSsp service
+Description=Notify Comp service
+
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service emailNotificationMonitor.service
+paminitialized.service CcspWecbController.service
 
 Requires=CcspCrSsp.service
 Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service emailNotificationMonitor.service
+paminitialized.service CcspWecbController.service
 
 [Service]
 Type=forking
+WorkingDirectory=/usr/ccsp/notify-comp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-WorkingDirectory=/usr/ccsp/mta
-ExecStart=/usr/bin/CcspMtaAgentSsp -subsys $Subsys
+ExecStart=/usr/bin/notify_comp -subsys $Subsys
 Restart=always
 
 StandardOutput=syslog+console
