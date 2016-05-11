@@ -1,12 +1,14 @@
 [Unit]
 Description=webpa service
 After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service  ccspwifiagent.service wifiinitialized.service \
-emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service
+paminitialized.service CcspWecbController.service notifyComp.service ccspwifiagent.service \
+wifiinitialized.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
+CcspTr069PaSsp.service CcspTandDSsp.service
 
 Wants=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service  ccspwifiagent.service wifiinitialized.service \
-emailNotificationMonitor.service CcspMtaAgentSsp.service CcspTr069PaSsp.service CcspTandDSsp.service
+paminitialized.service CcspWecbController.service notifyComp.service ccspwifiagent.service \
+wifiinitialized.service emailNotificationMonitor.service CcspMtaAgentSsp.service \
+CcspTr069PaSsp.service CcspTandDSsp.service
 
 [Service]
 Type=simple
