@@ -222,6 +222,10 @@ then
 	/etc/process_monitor.sh &
 fi
 
+# starting the minidump watcher & uploader
+if [ -f /usr/bin/inotify-minidump-watcher ];then
+      /usr/bin/inotify-minidump-watcher /minidumps "*.dmp" &
+fi
 
 /etc/utopia/service.d/service_sshd.sh sshd-start &
 
