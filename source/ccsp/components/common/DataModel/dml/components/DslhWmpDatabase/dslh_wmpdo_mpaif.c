@@ -480,6 +480,31 @@ void parseOldVal(SLAP_VARIABLE * pOldValue, parameterSigStruct_t*  pParamSignal)
     }
 }
 
+void *bus_handle = NULL;
+parameterValStruct_t notif_val[1];
+char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
+char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
+char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+char  str[500] = {0};
+void Send_Notification_Thread_Func()
+{
+	char* faultParam = NULL;
+	notif_val[0].parameterName =  param_name ;
+	notif_val[0].parameterValue = str;
+	notif_val[0].type = ccsp_string;
+
+	CcspBaseIf_setParameterValues(
+		bus_handle,
+		compo,
+		bus,
+		0,
+		0,
+		notif_val,
+		1,
+		TRUE,
+		&faultParam
+		);
+}
 #endif
 /**********************************************************************
 
@@ -532,7 +557,6 @@ void parseOldVal(SLAP_VARIABLE * pOldValue, parameterSigStruct_t*  pParamSignal)
     return:     status of operation.
 
 **********************************************************************/
-void *bus_handle = NULL;
 ANSC_STATUS
 DslhWmpdoMpaSetParameterValues
     (
@@ -772,21 +796,11 @@ DslhWmpdoMpaSetParameterValues
 
         pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pVarRecord->hDslhObjRecord;
 #ifdef USE_NOTIFY_COMPONENT
-            parameterSigStruct_t *val;
-            int size = 1;
-            int ret1 = 0;
             parameterSigStruct_t            vcSig              = {0};
-            char  str[500] = {0};
-            parameterValStruct_t notif_val[20];
-            char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
-            char* faultParam = NULL;
-            char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
-            char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
-            BOOL notify_changed = FALSE;
-            UINT notification_count = 0;
+            pthread_t Send_Notification_Thread;
+    		int res;
             if(pVarEntity->ParamDescr->NotifyStatus != 3)
             {
-                CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
                 if(pVarRecord->Notification)
                 {
                     vcSig.parameterName = pParameterValueArray[i].Name;
@@ -796,23 +810,11 @@ DslhWmpdoMpaSetParameterValues
                     vcSig.writeID = pVarRecord->ReqSenderID;
                     vcSig.type = dataType;
                     sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
-                        notif_val[notification_count].parameterName =  param_name ;
-                        notif_val[notification_count].parameterValue = str;
-                        notif_val[notification_count].type = ccsp_string;
-                        notification_count++;
-			if(strcmp(vcSig.newValue,vcSig.oldValue)){
-                              ret1 =       CcspBaseIf_setParameterValues(
-									  bus_handle,
-									  compo,
-									  bus,
-									  0,
-									  0,
-									  notif_val,
-									  notification_count,
-									  TRUE,
-									  &faultParam
-									  );
-			}
+					if(strcmp(vcSig.newValue,vcSig.oldValue)){				
+						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
+						if(res != 0)
+							AnscTraceError(("Create Send_Notification_Thread error %d ", res));
+					}
                 }
             }
 #endif
