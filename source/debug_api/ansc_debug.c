@@ -105,6 +105,8 @@ volatile unsigned int CR_RDKLogLevel = 4;
 /*Added for RDKB-4343*/
 volatile BOOL Harvester_RDKLogEnable = TRUE;
 volatile unsigned int Harvester_RDKLogLevel = 4;
+volatile unsigned int NOTIFY_RDKLogLevel = 4;
+volatile BOOL NOTIFY_RDKLogEnable = TRUE;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/

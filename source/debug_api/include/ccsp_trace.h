@@ -109,6 +109,7 @@ extern volatile unsigned int CM_RDKLogLevel;
 extern volatile unsigned int WiFi_RDKLogLevel;
 extern volatile unsigned int CR_RDKLogLevel;
 extern volatile unsigned int Harvester_RDKLogLevel; /*Added for RDKB-4343*/
+extern volatile unsigned int NOTIFY_RDKLogLevel; 
 
 extern volatile BOOL LM_RDKLogEnable;
 extern volatile BOOL SNMP_RDKLogEnable;
@@ -120,6 +121,7 @@ extern volatile BOOL CM_RDKLogEnable;
 extern volatile BOOL WiFi_RDKLogEnable;
 extern volatile BOOL CR_RDKLogEnable;
 extern volatile BOOL Harvester_RDKLogEnable; /*Added for RDKB-4343*/
+extern volatile BOOL NOTIFY_RDKLogEnable;
 /*
  *  Whether a debug trace is output depends on the following factors:
  *      1) the trace level passed in the trace statement is higher (smaller value)
@@ -287,6 +289,12 @@ else if(!strcmp(pComponentName,"harvester")) 					\
 	LogEnable = Harvester_RDKLogEnable;\
 }\
 /*Changes end here*/\
+else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))					\
+{												\
+	ComponentName= "LOG.RDK.NOTIFY";							\
+	LogLevel = NOTIFY_RDKLogLevel;\
+	LogEnable = NOTIFY_RDKLogEnable;\
+}\
 else if(!strcmp(pComponentName,"LOG.RDK.LM"))					\
 {												\
 	ComponentName="LOG.RDK.LM";							\
