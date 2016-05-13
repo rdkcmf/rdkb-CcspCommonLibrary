@@ -493,6 +493,8 @@ void Send_Notification_Thread_Func()
 	notif_val[0].parameterValue = str;
 	notif_val[0].type = ccsp_string;
 
+	pthread_detach(pthread_self());
+
 	CcspBaseIf_setParameterValues(
 		bus_handle,
 		compo,
