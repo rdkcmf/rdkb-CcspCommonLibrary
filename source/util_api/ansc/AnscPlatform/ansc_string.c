@@ -511,10 +511,19 @@ AnscNumberOfTokens
         char*                       separator
     )
 {
-    ULONG                           ulSizeOfStr = AnscSizeOfString(string);
+    ULONG                           ulSizeOfStr = 0;
     ULONG                           count       = 0;
     ULONG                           ulTokenSize = 0;
-    char*                           pTempChar   = string;
+    char*                           pTempChar   = NULL;
+
+    /*RDKB-5652, CID-24063, 11-May-2016, Null validation before assignement*/
+    if( !string || !separator )
+    {
+        return  0;
+    }
+
+    ulSizeOfStr = AnscSizeOfString(string);
+    pTempChar   = string;
 
     string      = AnscMoveToNextToken(string, separator);
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
@@ -607,11 +616,19 @@ AnscExtractToken
         char*                       output
     )
 {
-    ULONG                           ulSizeOfStr = AnscSizeOfString(string);
-    ULONG                           ulSizeOfSep = AnscSizeOfString(separator);
+    ULONG                           ulSizeOfStr = 0;
+    ULONG                           ulSizeOfSep = 0;
     ULONG                           count       = 0;
     ULONG                           ulTokenSize = 0;
 
+    /*RDKB-5652, CID-24096, 11-May-2016, Null validation before assignement*/
+    if ( !string || !separator )
+    {
+        return  ANSC_STATUS_UNAPPLICABLE;
+    }
+
+    ulSizeOfStr = AnscSizeOfString(string);
+    ulSizeOfSep = AnscSizeOfString(separator);
     string      = AnscMoveToNextToken(string, separator);
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
@@ -653,11 +670,20 @@ AnscExtractToken2
         char*                       output
     )
 {
-    ULONG                           ulSizeOfStr = AnscSizeOfString(string);
-    ULONG                           ulSizeOfSep = AnscSizeOfString(alphabet);
+    ULONG                           ulSizeOfStr = 0;
+    ULONG                           ulSizeOfSep = 0;
     ULONG                           count       = 0;
     ULONG                           ulTokenSize = 0;
 
+
+    /*RDKB-5652, CID-24165, 11-May-2016, Null validation before assignement*/
+    if ( !string || !alphabet )
+    {
+        return  ANSC_STATUS_UNAPPLICABLE;
+    }
+
+    ulSizeOfStr = AnscSizeOfString(string);
+    ulSizeOfSep = AnscSizeOfString(alphabet);
     string      = AnscMoveToNextToken2(string, alphabet);
     ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
 
@@ -697,11 +723,20 @@ AnscConsumeToken
         char*                       separator
     )
 {
-    ULONG                           ulSizeOfStr = AnscSizeOfString(string);
-    ULONG                           ulSizeOfSep = AnscSizeOfString(separator);
+    ULONG                           ulSizeOfStr = 0;
+    ULONG                           ulSizeOfSep = 0;
     ULONG                           ulTokenSize = 0;
     char*                           pTemp       = string;
     char                            tempChar[128];
+
+    /*RDKB-5652, CID-24301, 11-May-2016, Null validation before assignement*/
+    if ( !string || !separator )
+    {
+        return;
+    }
+
+    ulSizeOfStr = AnscSizeOfString(string);
+    ulSizeOfSep = AnscSizeOfString(separator);
 
     AnscZeroMemory(tempChar, 128);
 
