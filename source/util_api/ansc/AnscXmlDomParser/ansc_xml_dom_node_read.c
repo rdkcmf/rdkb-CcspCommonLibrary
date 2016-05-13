@@ -521,6 +521,12 @@ AnscXmlDomNodeGetAttrString
         return  ANSC_STATUS_XML_ATTRIBUTE_NOT_EXIST;
     }
 
+    /*RDKB-5653, CID-24133, 11 May 2016 Null check before use*/
+    if(!pulSize)
+    {
+        return  ANSC_STATUS_XML_INVALID_LENGTH;
+    }
+
     /*
      * read out the data
      */
@@ -537,10 +543,8 @@ AnscXmlDomNodeGetAttrString
         AnscCopyMemory(sTarget, pAttribute->StringData, pAttribute->DataSize);
     }
 
-    if( pulSize )
-    {
-        *pulSize = pAttribute->DataSize;
-    }
+    *pulSize = pAttribute->DataSize;
+
 
     if (*pulSize != 0)
     {
@@ -996,16 +1000,18 @@ AnscXmlDomNodeGetDataString
         return  ANSC_STATUS_XML_INVALID_HANDLE;
     }
 
+    /*RDKB-5653, CID-24065, 11 May 2016 Null check before use*/
+    if ( !pulSize )
+    {
+        return  ANSC_STATUS_XML_INVALID_LENGTH;
+    }
+
     /*
      * check text size;
      */
     if( pXmlNode->DataSize <= 0)
     {
-        if ( pulSize )
-        {
-            *pulSize = 0;
-        }
-
+        *pulSize = 0;
         return ANSC_STATUS_SUCCESS;
     }
 
@@ -1030,10 +1036,7 @@ AnscXmlDomNodeGetDataString
         AnscCopyMemory(sTarget, pXmlNode->StringData, pXmlNode->DataSize);
     }
 
-    if( pulSize )
-    {
-        *pulSize = pXmlNode->DataSize;
-    }
+    *pulSize = pXmlNode->DataSize;
 
     if (*pulSize != 0)
     {
