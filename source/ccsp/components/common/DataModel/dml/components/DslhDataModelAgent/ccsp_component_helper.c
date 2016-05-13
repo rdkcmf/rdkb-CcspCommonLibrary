@@ -150,6 +150,8 @@ CcspComponentLoadCfg
 
         if (pXMLContent == NULL)
         {
+            /*RDKB-5654, CID-24069, Resource leak*/
+            AnscCloseFile(pFileHandle);
             return ANSC_STATUS_RESOURCES;
         }
 
@@ -165,14 +167,12 @@ CcspComponentLoadCfg
                 "CcspComponentLoadCfg -- failed to read file %s\n",
                 pCfgFileName
             ));
-
+        /*RDKB-5654, CID-24069, Resource leak*/
+        AnscCloseFile(pFileHandle);
         return ANSC_STATUS_FAILURE;
     }
 
-    if (pFileHandle != NULL)
-    {
-        AnscCloseFile(pFileHandle);
-    }
+    AnscCloseFile(pFileHandle);
 
     /*
      *  Parse the XML content
@@ -392,6 +392,8 @@ CcspComponentLoadDmXmlList
 
         if (pXMLContent == NULL)
         {
+            /*RDKB-5654, CID-24376, Resource leak*/
+            AnscCloseFile(pFileHandle);
             return ANSC_STATUS_RESOURCES;
         }
 
@@ -408,13 +410,12 @@ CcspComponentLoadDmXmlList
                 pDmXmlCfgFileName
             ));
 
+        /*RDKB-5654, CID-24376, Resource leak*/
+        AnscCloseFile(pFileHandle);
         return ANSC_STATUS_FAILURE;
     }
 
-    if (pFileHandle != NULL)
-    {
-        AnscCloseFile(pFileHandle);
-    }
+    AnscCloseFile(pFileHandle);
 
     /*
      *  Parse the XML content
