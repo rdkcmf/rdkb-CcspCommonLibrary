@@ -197,4 +197,15 @@ if [ -e ./wecb ]; then
     cd ..                                                                                                                  
 fi  
 
-
+if [ -e /nvram/disablenotifycomp ]; then
+        echo "***disabling notify component***"
+elif [ -e ./notify-comp ]; then
+        cd notify-comp
+        if [ "x"$Subsys = "x" ];then
+                $BINPATH/notify_comp
+        else
+                echo "$BINPATH/notify_comp -subsys $Subsys"
+                $BINPATH/notify_comp -subsys $Subsys
+        fi
+        cd ..
+fi
