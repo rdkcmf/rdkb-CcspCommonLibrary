@@ -234,3 +234,19 @@ elif [ -e ./notify-comp ]; then
         fi
         cd ..
 fi
+
+if [ -f "/usr/ccsp/tdk_start.sh" ]
+then
+    if [ -f /version.txt ]
+    then
+        echo "version.txt exists"
+        imgname=`cat /version.txt | grep -i 'imagename'`
+        echo $imgname
+        flag=`echo $imgname|awk '{print match($0,"TDK")}'`;
+        if [ $flag -gt 0 ];then
+            echo "Found TDK Image"
+            echo "Invoking TDK start up script"
+            sh /usr/ccsp/tdk_start.sh &
+        fi
+    fi
+fi
