@@ -89,6 +89,18 @@ if [ -e ./harvester ]; then
 	cd ..
 fi
 
+if [ -e ./ccsp-servicemanager-broadband ]; then
+        echo "****STARTING SERVICEMANAGER***"
+        cd ccsp-servicemanager-broadband
+        if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspServiceManager &
+        else
+        echo "$BINPATH/CcspServiceManager -subsys $Subsys &"
+        $BINPATH/CcspServiceManager -subsys $Subsys &
+        fi
+        cd ..
+fi
+
 if [ -e ./wifi ]; then
 	cd wifi 
 	if [ "x"$Subsys = "x" ];then
