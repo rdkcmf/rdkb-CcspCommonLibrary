@@ -1369,5 +1369,9 @@ EXIT:
             AnscFreeMemory(pParameterHolder);
     }
 
-    return returnStatus;
+    if(ANSC_STATUS_SUCCESS == returnStatus || CCSP_SUCCESS == returnStatus)
+        return ANSC_STATUS_SUCCESS;
+    else
+        return returnStatus;
+
 }
