@@ -4,7 +4,6 @@ Description=Gwprovapp service
 #Note: Requires, Wants, and After are device specific. see gwprovapp.conf
 
 [Service]
-Environment="IP=192.168.254.253"
 ExecStart=/usr/bin/gw_prov_utopia $IP
 Restart=always
 StandardOutput=syslog+console
