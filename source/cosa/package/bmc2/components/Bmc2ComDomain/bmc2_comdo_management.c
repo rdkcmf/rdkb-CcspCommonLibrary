@@ -110,21 +110,24 @@ Bmc2ComdoRemoveEscapedVB
 
     pCur = pPtr = _ansc_strchr(pValue, '\\');
 
-    while ( *pPtr )
+    if(pCur && pPtr) /*RDKB-5886 , CID-24213, CID-33385, NULL check*/
     {
-        if ( *pPtr == '\\' && *(pPtr+1) == '|' )
+        while ( *pPtr )
         {
-            pPtr ++;
-            continue;
+            if ( *pPtr == '\\' && *(pPtr+1) == '|' )
+            {
+                pPtr ++;
+                continue;
+            }
+
+            *pCur = *pPtr;
+
+            pCur++;
+            pPtr++;
         }
 
-        *pCur = *pPtr;
-
-        pCur++;
-        pPtr++;
+        *pCur = 0;
     }
-
-    *pCur = 0;
 }
 
 /**********************************************************************
@@ -1822,8 +1825,12 @@ Bmc2ComdoParseSimpleArg
 
         if ( ulLen != 0 )
         {
+            if ( !pCmdSimpleArg ) /*RDKB-5886 , CID-24104, null check*/
+            {
+                goto EXIT;
+            }
             pCmdSimpleArg->DisplayName = (char*)AnscAllocateMemory(ulLen + 1);
-            if ( !pCmdSimpleArg )
+            if(! pCmdSimpleArg->DisplayName)
             {
                 goto EXIT;
             }
