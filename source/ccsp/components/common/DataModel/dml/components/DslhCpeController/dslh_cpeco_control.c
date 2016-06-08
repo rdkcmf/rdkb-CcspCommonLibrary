@@ -657,6 +657,7 @@ DslhCpecoLoadExternalDMLibFile
 
     if( pXMLContent == NULL)
     {
+        AnscCloseFile( pFileHandle ); /*RDKB-5787 , CID-33331; free resource allocated*/
         return ANSC_STATUS_RESOURCES;
     }
 
@@ -664,6 +665,7 @@ DslhCpecoLoadExternalDMLibFile
 
     if( AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
     {
+        AnscCloseFile( pFileHandle ); /*RDKB-5787 , CID-33331; free resource allocated*/
         AnscFreeMemory(pXMLContent);
 
         AnscTraceWarning
@@ -758,6 +760,7 @@ DslhCpecoLoadInternalDMLibFile
 
     if( pXMLContent == NULL)
     {
+        AnscCloseFile(pFileHandle); /*RDKB-5787 , CID-33066; free the resource allocated*/
         return ANSC_STATUS_RESOURCES;
     }
 
@@ -765,15 +768,13 @@ DslhCpecoLoadInternalDMLibFile
 
     if( AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
     {
+        AnscCloseFile(pFileHandle); /*RDKB-5787 , CID-33066; free the resource allocated*/
         AnscFreeMemory(pXMLContent);
 
         return ANSC_STATUS_FAILURE;
     }
 
-    if( pFileHandle != NULL)
-    {
-        AnscCloseFile(pFileHandle);
-    }
+    AnscCloseFile(pFileHandle);
 
     returnStatus = pDslhDataModelAgent->LoadDataModelXML(pDslhDataModelAgent, pXMLContent, uBufferSize,FALSE /* internal */, FALSE /* don't populate */ );
 
@@ -853,6 +854,7 @@ DslhCpecoUnloadDMLibFile
 
     if( pXMLContent == NULL)
     {
+        AnscCloseFile(pFileHandle); /*RDKB-5787 , CID-32896; Free allocated resources*/
         return ANSC_STATUS_RESOURCES;
     }
 
@@ -860,15 +862,14 @@ DslhCpecoUnloadDMLibFile
 
     if( AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
     {
-        AnscFreeMemory(pXMLContent);
+        AnscFreeMemory(pXMLContent);  /*RDKB-5787 , CID-32896; Free allocated resources*/
+        AnscCloseFile(pFileHandle);
 
         return ANSC_STATUS_FAILURE;
     }
 
-    if( pFileHandle != NULL)
-    {
-        AnscCloseFile(pFileHandle);
-    }
+    AnscCloseFile(pFileHandle);
+
 
     returnStatus = pDslhDataModelAgent->UnloadDataModelXML(pDslhDataModelAgent, pXMLContent, uBufferSize);
 
