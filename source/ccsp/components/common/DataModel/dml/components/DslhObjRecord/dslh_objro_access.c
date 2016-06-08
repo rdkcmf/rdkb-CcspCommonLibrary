@@ -269,10 +269,14 @@ DslhObjroGetAllParamValues
     {
         /* create the array */
         ppNameArray     = (char**)AnscAllocateMemory(sizeof(char*) * uChildCount);
-        ppValueArray    = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * uChildCount);
-
-        if( !ppNameArray || !ppValueArray)
+        if( !ppNameArray ) /*RDKB-5791 , CID-33396, NULL check after mem allocation*/
         {
+            return ANSC_STATUS_FAILURE;
+        }
+        ppValueArray    = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * uChildCount);
+        if( !ppValueArray )
+        {
+            AnscFreeMemory(ppNameArray);/*RDKB-5791 , CID-33236, NULL check after mem allocation*/
             return ANSC_STATUS_FAILURE;
         }
 
