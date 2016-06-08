@@ -990,10 +990,9 @@ DslhVarroTstValue
                             pMyObject->TempParamValueTrans->Syntax                 = SLAP_VAR_SYNTAX_string;
                             pMyObject->TempParamValueTrans->Variant.varString      = AnscCloneString(pNewValue->Variant.varString);
                         }
-                        else
-                        {
-                            SlapFreeVarArray(pUcharArrayIp6Addr);
-                        }
+                        /*RDKB-5793 , CID-24193; free resources allocated*/
+                        SlapFreeVarArray(pUcharArrayIp6Addr);
+
                     }
                     else
                     {
@@ -1030,10 +1029,9 @@ DslhVarroTstValue
                             pMyObject->TempParamValueTrans->Syntax                 = SLAP_VAR_SYNTAX_string;
                             pMyObject->TempParamValueTrans->Variant.varString      = AnscCloneString(pNewValue->Variant.varString);
                         }
-                        else
-                        {
-                            SlapFreeVarArray(pUcharArrayIp6AddrList);
-                        }
+                        /*RDKB-5793 , CID-24320; Free resources allocated*/
+                        SlapFreeVarArray(pUcharArrayIp6AddrList);
+
                     }
                     else
                     {
