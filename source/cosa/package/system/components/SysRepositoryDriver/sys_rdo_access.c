@@ -246,7 +246,7 @@ SysRdoAddFolder2
                 SYS_RDO_PATH_SEPARATORS
             );
 
-    if ( !pTokenChain )
+    if ( !pTokenChain || !pThisFolder) /*RDKB-5893 , CID-24357, added null check*/
     {
         pThisFolder = (PSYS_REPOSITORY_FOLDER_OBJECT)NULL;
 
@@ -807,7 +807,7 @@ SysRdoAddRecord
                 SYS_RDO_PATH_SEPARATORS
             );
 
-    if ( !pTokenChain )
+    if ( !pTokenChain || !pThisFolder) /*RDKB-5893 , CID-24143, CID-24332, added null check*/
     {
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
@@ -965,7 +965,7 @@ SysRdoDelRecord
                 SYS_RDO_PATH_SEPARATORS
             );
 
-    if ( !pTokenChain )
+    if ( !pTokenChain || !pThisFolder) /*RDKB-5893 , CID-24410, CID-24446, added null check*/
     {
         returnStatus = ANSC_STATUS_BAD_NAME;
 
