@@ -1174,7 +1174,7 @@ ScliShoGetOptArgOptions
     if ( 0 != ulArgHelpCount || bNoMoreOptions )
     {
         ULONG                       ulHelpListCount     = 0;
-        ANSC_STATUS                 returnStatus;
+        ANSC_STATUS                 returnStatus = ANSC_STATUS_FAILURE; /*RDKB-5890 ; CID-24626, initializing variable*/
         ULONG                       ulMatchedHelpCount  = 0;
         BOOL                        bHasOptionCR        = 0;
 
