@@ -1597,12 +1597,18 @@ DslhWmpdoMpaGetParameterValues
     {
         /* create the array */
         ppNameArray     = (char**)AnscAllocateMemory(sizeof(char*) * ulParamCount);
-        ppValueArray    = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * ulParamCount);
-
-        if( !ppNameArray || !ppValueArray)
+        if( !ppNameArray )  /*RDKB-5801 , CID-33415 , added Null check*/
         {
             returnStatus = ANSC_STATUS_RESOURCES;
+            goto  EXIT2;
+        }
 
+        ppValueArray    = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * ulParamCount);
+        if( !ppValueArray )/*RDKB-5801 , CID-32955 , added null check*/
+        {
+            AnscFreeMemory(ppNameArray);
+            ppNameArray = NULL;
+            returnStatus = ANSC_STATUS_RESOURCES;
             goto  EXIT2;
         }
 
@@ -1735,21 +1741,6 @@ EXIT3:
         ppValueArray = NULL;
     }
 
-    if ( pVarRecordArray )
-    {
-        AnscFreeMemory(pVarRecordArray);
-    }
-
-    if ( pObjRecordArray )
-    {
-        AnscFreeMemory(pObjRecordArray);
-    }
-
-    if ( phAnyRecordArray )
-    {
-        AnscFreeMemory(phAnyRecordArray);
-    }
-
     if ( returnStatus == ANSC_STATUS_SUCCESS )
     {
         goto  EXIT1;
@@ -1760,6 +1751,20 @@ EXIT3:
     }
 
 EXIT2:
+    if ( pObjRecordArray ) /*RDKB-5801 , CID-33303, Free resource*/
+    {
+        AnscFreeMemory(pObjRecordArray);
+    }
+
+    if ( pVarRecordArray ) /*RDKB-5801 , CID-33334, Free resource*/
+    {
+        AnscFreeMemory(pVarRecordArray);
+    }
+
+    if ( phAnyRecordArray ) /*RDKB-5801 , CID-33455, Free resource*/
+    {
+        AnscFreeMemory(phAnyRecordArray);
+    }
 
     AnscReleaseTsLock(&pMyObject->AccessTsLock);
 
@@ -2909,6 +2914,13 @@ DslhWmpdoMpaAddObject
     {
         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pObjRecord->hDslhObjEntity;
         pObjEntityChild = (PDSLH_OBJ_ENTITY_OBJECT)pObjEntity->GetObjEntity3((ANSC_HANDLE)pObjEntity);
+    }
+
+    if(!pObjEntity || !pObjEntity->ObjDescr )/*RDKB-5801 , CID-33336; , Free resource*/
+    {
+        returnStatus = CCSP_ERR_INVALID_PARAMETER_NAME;
+
+        goto  EXIT;
     }
 
     if ( !pObjEntity->ObjDescr->bWritable || (pObjEntity->ObjDescr->Type != DSLH_CWMP_OBJECT_TYPE_table) )
