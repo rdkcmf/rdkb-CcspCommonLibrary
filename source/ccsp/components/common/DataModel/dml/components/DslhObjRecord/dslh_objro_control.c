@@ -216,14 +216,18 @@ DslhObjroPopulateObjRecords
                 pChildObjEntity = (PDSLH_OBJ_ENTITY_OBJECT)pObjEntity->GetObjEntity3((ANSC_HANDLE)pObjEntity);
 
                 pChildLastName  = child_name;
-                ulFullNameSize  = (pMyObject->FullName? AnscSizeOfString(pMyObject->FullName) : 0) + AnscSizeOfString(pChildLastName) + 4;
-                pChildFullName  = (char*)AnscAllocateMemory(ulFullNameSize);
-
-                if ( !pChildLastName || !pChildFullName )
+                if ( !pChildLastName ) /*RDKB-5792, CID-24199, adding NULL check*/
                 {
                     returnStatus = ANSC_STATUS_RESOURCES;
+                    goto  EXIT3;
+                }
+                ulFullNameSize  = (pMyObject->FullName? AnscSizeOfString(pMyObject->FullName) : 0) + AnscSizeOfString(pChildLastName) + 4;
 
-                    goto  EXIT4;
+                pChildFullName  = (char*)AnscAllocateMemory(ulFullNameSize);
+                if ( !pChildFullName ) /*RDKB-5792, CID-24199, adding NULL check*/
+                {
+                    returnStatus = ANSC_STATUS_RESOURCES;
+                    goto  EXIT3;
                 }
                 else if ( !pMyObject->FullName || (AnscSizeOfString(pMyObject->FullName) == 0) )
                 {
