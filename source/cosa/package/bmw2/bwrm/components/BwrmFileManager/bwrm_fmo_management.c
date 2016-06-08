@@ -225,6 +225,7 @@ BwrmFmoGetFile
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
+        AnscFreeMemory(pFileData); /*RDKB-5888 , CID-24282, free resources*/
         goto  EXIT2;
     }
     else
