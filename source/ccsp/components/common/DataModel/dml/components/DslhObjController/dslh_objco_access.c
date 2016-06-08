@@ -220,10 +220,15 @@ DslhObjcoValidate
         /* pre-allocate arrays */
         uTotal = AnscQueueQueryDepth(&pObjEntity->VareoTable);
         ppNameArray  = (char**)AnscAllocateMemory( uTotal * sizeof(char**));
-        ppValueArray = (PSLAP_VARIABLE*)AnscAllocateMemory(uTotal * sizeof(PSLAP_VARIABLE));
-
-        if( !ppNameArray || !ppValueArray)
+        if( !ppNameArray ) /*RDKB-5790 ; CID-33099, CID- 33417; NULL check after allocation*/
         {
+            return FALSE;
+        }
+
+        ppValueArray = (PSLAP_VARIABLE*)AnscAllocateMemory(uTotal * sizeof(PSLAP_VARIABLE));
+        if( !ppValueArray )
+        {
+            AnscFreeMemory(ppNameArray);
             return FALSE;
         }
 
@@ -1200,10 +1205,15 @@ DslhObjcoGetBulkParamValue
     {
         /* make a copy of the array */
         pParamCopy = (char**)AnscAllocateMemory(sizeof(char*) * ulArraySize);
-        ppVarCopy  = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * ulArraySize);
-
-        if( !pParamCopy || !ppVarCopy)
+        if( !pParamCopy )/*RDKB-5790 ; CID-32895 & 33287, NULL check after allocation*/
         {
+            return ANSC_STATUS_FAILURE;
+        }
+
+        ppVarCopy  = (PSLAP_VARIABLE*)AnscAllocateMemory(sizeof(PSLAP_VARIABLE) * ulArraySize);
+        if( !ppVarCopy )
+        {
+            AnscFreeMemory(pParamCopy);
             return ANSC_STATUS_FAILURE;
         }
 
