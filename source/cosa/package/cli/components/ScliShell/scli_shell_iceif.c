@@ -397,6 +397,13 @@ ScliShoIceReadInput2
     {
         *pTextInput = pCmd;
     }
+    else
+    {
+        if(pCmd)
+        {
+            AnscFreeMemory(pCmd);/*RDKB-5891, CID-24444, freeing allocated mem*/
+        }
+    }
 
     pSession->hActiveTextBox    = (ANSC_HANDLE)NULL;
     pSession->InputMode         = SCLI_SHELL_INPUT_MODE_linemode;
