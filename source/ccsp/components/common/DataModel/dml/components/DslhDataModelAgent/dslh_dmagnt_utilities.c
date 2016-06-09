@@ -810,7 +810,8 @@ DslhDmagntRegisterDataModelObject
         if( !pPluginInfo->SupportProc(pObjDesp->Name))
         {
             AnscTraceWarning(("The object '%s' is not supported yet in the library. Ignore it!\n", pObjDesp->Name));
-
+            AnscFreeMemory(pObjDesp->Name); /*RDKB-5789, CID-33000; free allocated resources*/
+            AnscFreeMemory(pObjDesp); 
             return ANSC_STATUS_SUCCESS;
         }
     }
