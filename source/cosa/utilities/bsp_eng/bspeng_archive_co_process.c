@@ -815,7 +815,7 @@ BspTemplateArchiveReadString
     PBSP_TEMPLATE_ARCHIVE_OBJECT    pArchive    = (PBSP_TEMPLATE_ARCHIVE_OBJECT)hThisObject;
     int                             nStrLen;
     BOOL                            bSucc;
-    PUCHAR                          pString;
+    PUCHAR                          pString = (PUCHAR)NULL; /*RDKB-5933 , CID-24748, Initializing pointer*/
 
     bSucc = pArchive->ReadWord(hThisObject, &nStrLen);
 
