@@ -119,7 +119,7 @@ DslhCpecoEngage
     PDSLH_CPE_CONTROLLER_PROPERTY   pProperty         = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent= (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
-    PDSLH_MPA_INTERFACE             pDslhMpaIf        = (PDSLH_MPA_INTERFACE          )pDslhWmpDatabase->hDslhMpaIf;
+    /*PDSLH_MPA_INTERFACE             pDslhMpaIf        = (PDSLH_MPA_INTERFACE          )pDslhWmpDatabase->hDslhMpaIf; *** RDKB-5788 , CID-33407, removing as this triggers coverity warning, not used*/
 
     if ( pMyObject->bActive )
     {
