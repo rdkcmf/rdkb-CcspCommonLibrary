@@ -316,7 +316,7 @@ else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))					\
 	LogLevel = SNMP_RDKLogLevel;\
 	LogEnable = SNMP_RDKLogEnable;\
 }\
-else if(!strcmp(pComponentName,"hotspotfd"))        \
+else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.hotspot"))        \
 {                                                   \
     ComponentName = "LOG.RDK.HOTSPOT";              \
     LogLevel = RDKLogLevel;                         \
