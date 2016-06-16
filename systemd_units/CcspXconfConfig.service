@@ -1,0 +1,16 @@
+[Unit]
+Description=CcspXconfConfig service
+
+After=CcspXconf.service
+
+Wants=CcspXconf.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/lib/rdk/dcm.service &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
