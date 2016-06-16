@@ -5,6 +5,10 @@ source /etc/device.properties
 
 export LOG4C_RCPATH=/etc
 
+# have IP address for Radius config
+vconfig add eth0 4090
+ifconfig eth0.4090 192.168.251.254 netmask 255.255.255.0 up
+ip route add default via 192.168.251.1
 
 ulimit -c unlimited
 if [ "$BUILD_TYPE" != "prod" ]; then
