@@ -1068,7 +1068,11 @@ if ( 1 )
 
         for (i = 0; i < ulCmdLen; i ++)
         {
-            if ( pSession->CommandLen >= SCLI_SHELL_MAX_COMMAND_LEN )
+             /* RDKB-5892, CID-24153, 
+             ** break if command line length reaches 511 to avoid overflow
+             ** for the case TELNET_CHAR_CR.
+             */
+            if ( pSession->CommandLen >= (SCLI_SHELL_MAX_COMMAND_LEN -1) )
             {
                 uc  = TELNET_CHAR_BELL;
 
@@ -1572,7 +1576,7 @@ ScliShoProcessCmdChar
     ulInputMode = pSession->InputMode;
     pActiveTBox = (PBMC2_ICE_TEXTBOX_INFO)pSession->hActiveTextBox;
 
-    if ( pSession->CommandLen >= SCLI_SHELL_MAX_COMMAND_LEN ||
+    if ( pSession->CommandLen >= (SCLI_SHELL_MAX_COMMAND_LEN-1) ||      /*RDKB-5892 , CID-24188; limiting the length to 511 to avoid overflow*/
          ( SCLI_SHELL_INPUT_IN_TEXTBOX && pActiveTBox->bSizeFixed ) 
        )
     {
@@ -1616,7 +1620,7 @@ INSERT_CHAR:
 
         if ( bCursorAtEnd )
         {
-            ULONG                       ulWidth         = pActiveTBox->Width;
+            /*ULONG                       ulWidth         = pActiveTBox->Width; RDKB-5892, CID-24321, variable not used*/
             ULONG                       ulCurTBoxPos    = pSession->CursorPos - pSession->ulFirstVisiblePos;
 
             returnStatus =
@@ -2105,11 +2109,12 @@ ScliShoRunCmd
                                 );
                         }
                     }
-
+/* RDKB-5892, CID-32770; 23-May-2016; pSession->Command is an array.
                     if ( pCmd )
                     {
                         AnscFreeMemory(pCmd);
                     }
+*/
                 }
 
                 break;
