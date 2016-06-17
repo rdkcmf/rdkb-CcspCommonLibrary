@@ -1810,7 +1810,7 @@ BspTemplateObjPrintBranch
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pBr;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pBr = NULL; /*RDKB-6004, CID-24596, Initializing the variable*/
 
     if (bStart)
     {
@@ -2590,6 +2590,16 @@ BspTemplateObjStatementList
     for (pPrev = NULL; pSt = pMyObject->Statement(hThisObject); pPrev = pNext)
     {
         pNext   = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
+        if(!pNext) /*RDKB-6004, CID-24418, NULL check before other operation*/
+        {
+            return pMyObject->ParseError
+                                    (
+                                        hThisObject,
+                                        pMyObject->hToken,
+                                        "oo resource object creation failed",
+                                        (ANSC_HANDLE)pTemp
+                                    );
+        }
         BspTemplateBranchSetOp((ANSC_HANDLE)pNext, BspOp_End);
 
         if (!pMain)
@@ -3061,7 +3071,7 @@ BspTemplateObjIfElse
     {
     case BspOp_ElseIf:
         {
-            PBSP_TEMPLATE_BRANCH_OBJECT pList, pIf, pElseIf, pElse, pExp;
+            PBSP_TEMPLATE_BRANCH_OBJECT pList, pIf, pElseIf = NULL, pElse, pExp; /*RDKB-6004, CID-24767, initializing pElseIf*/
 
             pTemp   = (PBSP_TEMPLATE_TEMP_OBJECT)CreateBspEngTempComponent(NULL, NULL, NULL);
             if ( !pTemp )
@@ -3140,10 +3150,12 @@ BspTemplateObjIfElse
                     else
                     {
                         pElse = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
-                        BspTemplateBranchSetOp((ANSC_HANDLE)pElse, BspOp_Else);
-
-                        BspTemplateBranchSetRight((ANSC_HANDLE)pElse, (ANSC_HANDLE)pIf);
-                        BspTemplateBranchSetLeft((ANSC_HANDLE)pElseIf, (ANSC_HANDLE)pElse);
+                        if(pElse)/*RDKB-6004, CID-33486, Null check for further action*/
+                        {
+                            BspTemplateBranchSetOp((ANSC_HANDLE)pElse, BspOp_Else);
+                            BspTemplateBranchSetRight((ANSC_HANDLE)pElse, (ANSC_HANDLE)pIf);
+                            BspTemplateBranchSetLeft((ANSC_HANDLE)pElseIf, (ANSC_HANDLE)pElse);
+                        }
                     }
                 }
             }
@@ -3366,18 +3378,21 @@ BspTemplateObjWhileStatement
         BspTemplateBranchSetOp((ANSC_HANDLE)pWhile, BspOp_While);
 
         pBody   = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
-        BspTemplateBranchSetOp((ANSC_HANDLE)pBody, BspOp_Iter);
-        BspTemplateBranchSetRight((ANSC_HANDLE)pBody, pExp);
-        BspTemplateBranchSetLeft((ANSC_HANDLE)pBody, pList);
-
-        BspTemplateBranchSetRight((ANSC_HANDLE)pWhile, pInit);
-        BspTemplateBranchSetLeft((ANSC_HANDLE)pWhile, pBody);
-
-        if (pExp2)
+        if(pBody) /*RDKB-6004, CID-33179, NULL check before working on the object container object*/
         {
-            for (pBr = pBody; pBr->left.Value.b; pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)pBr->left.Value.b);
+            BspTemplateBranchSetOp((ANSC_HANDLE)pBody, BspOp_Iter);
+            BspTemplateBranchSetRight((ANSC_HANDLE)pBody, pExp);
+            BspTemplateBranchSetLeft((ANSC_HANDLE)pBody, pList);
 
-            BspTemplateBranchSetLeft((ANSC_HANDLE)pBr, (ANSC_HANDLE)pExp2);
+            BspTemplateBranchSetRight((ANSC_HANDLE)pWhile, pInit);
+            BspTemplateBranchSetLeft((ANSC_HANDLE)pWhile, pBody);
+
+            if (pExp2)
+            {
+                for (pBr = pBody; pBr->left.Value.b; pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)pBr->left.Value.b);
+
+                BspTemplateBranchSetLeft((ANSC_HANDLE)pBr, (ANSC_HANDLE)pExp2);
+            }
         }
     }
 
@@ -3459,6 +3474,13 @@ BspTemplateObjSwitchStatement
 
     if (!pCases || !pMyObject->IsOp(hThisObject, BspOp_End))
     {
+        /*RDKB-6004, CID-24396, free memory*/
+        if(pCases)
+        {
+            AnscFreeMemory(pCases);
+            pCases =NULL;
+        }
+
         return pMyObject->ParseError
                                 (
                                     hThisObject,
@@ -3597,6 +3619,10 @@ BspTemplateObjSwitchStatement
                 if (pCases)
                 {
                     AnscFreeMemory(pCases);
+                }
+                if(pElses) /*RDKB-6004, CID-33398, freeing the memory*/
+                {
+                    AnscFreeMemory(pElses);
                 }
 
                 return pMyObject->ParseError
@@ -4016,7 +4042,7 @@ BspTemplateObjArrayDeclaration
     PBSP_TEMPLATE_BRANCH_OBJECT     pName, dimBranch[BSP_TEMPLATE_ARRAY_DIMENSION_LIMIT];
     ULONG                           ulDim       = 0;
     BOOL                            bFirst;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pDim, pRight, *pBranches, pBr;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pDim, pRight=NULL, *pBranches =NULL, pBr; /*RDK- , CID-24763, Initializing pBranches to NULL */
     PBSP_TEMPLATE_TOKEN             pEnd;
     ULONG                           i;
 
@@ -4128,25 +4154,28 @@ BspTemplateObjArrayDeclaration
 
         pRight  = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
 
-        pBranches   = (PBSP_TEMPLATE_BRANCH_OBJECT *)AnscAllocateMemory(sizeof(PBSP_TEMPLATE_BRANCH_OBJECT) * ulDim);
-        if (pBranches)
+        if(pRight) /*RDKB-6004, CID-33262, Null check before proceed futher*/
         {
-            for (i = 0; i < ulDim; i ++)
+            pBranches   = (PBSP_TEMPLATE_BRANCH_OBJECT *)AnscAllocateMemory(sizeof(PBSP_TEMPLATE_BRANCH_OBJECT) * ulDim);
+            if (pBranches)
             {
-                pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
-                if (pBr)
+                for (i = 0; i < ulDim; i ++)
                 {
-                    BspTemplateBranchSetRight((ANSC_HANDLE)pBr, dimBranch[i]);
+                    pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
+                    if (pBr)
+                    {
+                        BspTemplateBranchSetRight((ANSC_HANDLE)pBr, dimBranch[i]);
+                    }
+                    pBranches[i] = pBr;
                 }
-                pBranches[i] = pBr;
             }
+
+            pRight->right.type              = BspBranch_eArrayDim;
+            pRight->right.Value.a.Count     = ulDim;
+            pRight->right.Value.a.pBranch   = pBranches;
+
+            BspTemplateBranchSetRight((ANSC_HANDLE)pDim, (ANSC_HANDLE)pRight);
         }
-
-        pRight->right.type              = BspBranch_eArrayDim;
-        pRight->right.Value.a.Count     = ulDim;
-        pRight->right.Value.a.pBranch   = pBranches;
-
-        BspTemplateBranchSetRight((ANSC_HANDLE)pDim, (ANSC_HANDLE)pRight);
     }
 
     if (!pBranches)
@@ -4290,6 +4319,25 @@ BspTemplateObjApiCall
             pRight->right.type              = BspBranch_eApiParams;
             pRight->right.Value.a.Count     = ulParams;
             pRight->right.Value.a.pBranch   = pBranches;
+        }
+        else /*RDKB-6004, CID-24226, free memory if not used */
+        {
+            if(pBranches)
+            {
+                for (i = 0; i < ulParams; i ++)
+                {
+                    if(!pBranches[i])
+                    {
+                        BspTemplateBranchCORemove((ANSC_HANDLE)pBranches[i]);
+                        pBranches[i] = NULL;
+                    }
+                }
+                AnscFreeMemory(pBranches);
+                /* pBranches = NULL;  
+                ** [QNS] Do we need to set NULL here? this will remove "pApi" object.
+                ** Keeping current implementation as is, freeing memory allocated in case not used.
+                */
+            }
         }
 
         BspTemplateBranchSetLeft((ANSC_HANDLE)pApi, (ANSC_HANDLE)pVar);
@@ -5404,34 +5452,46 @@ BspTemplateObjArrayExpCondition
         BspTemplateBranchSetOp((ANSC_HANDLE)pArrayItem, BspOp_ArrayItem);
         BspTemplateBranchSetLeft((ANSC_HANDLE)pArrayItem, (ANSC_HANDLE)pNameExp);
         pRight      = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
-
-        pBranches   = 
-            (PBSP_TEMPLATE_BRANCH_OBJECT *)
-                AnscAllocateMemory(sizeof(PBSP_TEMPLATE_BRANCH_OBJECT) * ulDimCount);
-
-        if (pBranches)
+        if(pRight) /*RDKB-6004, CID-33022  Null check before proceed*/
         {
-            for (i = 0; i < ulDimCount; i ++)
+            pBranches   = 
+                (PBSP_TEMPLATE_BRANCH_OBJECT *)
+                    AnscAllocateMemory(sizeof(PBSP_TEMPLATE_BRANCH_OBJECT) * ulDimCount);
+
+            if (pBranches)
             {
-                pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
-                if (pBr)
+                for (i = 0; i < ulDimCount; i ++)
                 {
-                    BspTemplateBranchSetRight((ANSC_HANDLE)pBr, dimBranch[i]);
+                    pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
+                    if (pBr)
+                    {
+                        BspTemplateBranchSetRight((ANSC_HANDLE)pBr, dimBranch[i]);
+                    }
+                    pBranches[i] = pBr;
                 }
-                pBranches[i] = pBr;
+            }
+
+            pRight->right.Value.a.pBranch   = pBranches;
+            pRight->right.Value.a.Count     = ulDimCount;
+            pRight->right.type              = BspBranch_eArrayDim;
+
+            BspTemplateBranchSetRight((ANSC_HANDLE)pArrayItem, (ANSC_HANDLE)pRight);
+
+            if (!pBranches)
+            {
+                BspTemplateBranchCORemove((ANSC_HANDLE)pArrayItem);
+                pArrayItem  = NULL;
             }
         }
-
-        pRight->right.Value.a.pBranch   = pBranches;
-        pRight->right.Value.a.Count     = ulDimCount;
-        pRight->right.type              = BspBranch_eArrayDim;
-
-        BspTemplateBranchSetRight((ANSC_HANDLE)pArrayItem, (ANSC_HANDLE)pRight);
-
-        if (!pBranches)
+        else
         {
-            BspTemplateBranchCORemove((ANSC_HANDLE)pArrayItem);
-            pArrayItem  = NULL;
+            return pMyObject->ParseError
+                    (
+                        hThisObject,
+                        (ANSC_HANDLE)pOrigToken,
+                        "out of resource while building array",
+                        (ANSC_HANDLE)pTemp
+                    );
         }
     }
 
@@ -5615,7 +5675,7 @@ BspTemplateObjObjectExp
     PBSPENG_SOA_INTERFACE           pBspSoaIf   = pList->GetBspSoaIf((ANSC_HANDLE)pList);
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pName, pNext, pPrev, pMain  = NULL, pObj, pObjName;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pName, pNext, pPrev, pMain  = NULL, pObj=NULL, pObjName; /*RDKB-6004, CID-24633, pObj is used without initializing in conditional code flow*/
     PBSP_TEMPLATE_TOKEN             pToken;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
     PBSP_TEMPLATE_BRANCH_OBJECT     pObjArray   = NULL;
@@ -5792,7 +5852,7 @@ PARSE_PROP:
         {
             pTemp->Release((ANSC_HANDLE)pTemp);
             pTemp->Remove((ANSC_HANDLE)pTemp);
-
+            BspTemplateBranchCORemove((ANSC_HANDLE)pNextProp); /*RDKB-6004, CID-33372; releasing handle as not used*/
             return pMyObject->NoMatch(hThisObject, (ANSC_HANDLE)pOrigToken);
         }
 
@@ -6049,6 +6109,12 @@ EXIT:
         }
 
         pTemp = (PBSP_TEMPLATE_TEMP_OBJECT)CreateBspEngTempComponent(NULL, NULL, NULL);
+        /*RDKB-6004, CID-24408, return if Creation of new object container object*/
+        if ( !pTemp )
+        {
+            return NULL;
+        }
+
         pExp  = 
             (PBSP_TEMPLATE_BRANCH_OBJECT)pTemp->Set
                 (
@@ -6341,7 +6407,7 @@ BspTemplateObjNameExp
     PBSP_TEMPLATE_TOKEN             pIdent;
     PBSP_TEMPLATE_BRANCH_OBJECT     pMain, pExp, pNext, pPrev, pParamList, pNextList, pPrevList;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp           = NULL;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pNameExp;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pNameExp = NULL; /*RDKB-6004, CID-24638, initlizing the variable*/
     PANSC_BYTE_ARRAY_OBJECT         pByteArray      = (PANSC_BYTE_ARRAY_OBJECT)pMyObject->hText;
     char                            *pBuf;
     BOOL                            bSucc           = FALSE;
@@ -8474,7 +8540,7 @@ BspTemplateObjDoApi
     case BspApi_strsetchar:
         {
             int                         numParams   = pBr->right.Value.a.Count;
-            PBSP_TEMPLATE_VAR_OBJECT    s1, s2, num;
+            PBSP_TEMPLATE_VAR_OBJECT    s1 = NULL, s2 = NULL, num = NULL; /*RDKB-6004, CID-24615 , Initializing */
             BOOL                        bDeleteNum  = TRUE;
             BOOL                        bDeleteS2   = TRUE;
             char                        *pStr;
@@ -9305,7 +9371,7 @@ BspTemplateObjEvalName2
     PBSP_TEMPLATE_BRANCH_OBJECT     pTopBr      = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr, bBr;
-    PBSP_TEMPLATE_VAR_OBJECT        pVar, pEvalVar;
+    PBSP_TEMPLATE_VAR_OBJECT        pVar, pEvalVar=NULL; /*RDKB-6004, CID-24772, initializing pEvalVar*/
     PBSP_TEMPLATE_STACK_OBJECT      pStack;
     PBSP_TEMPLATE_LIST_OBJECT       pList;
     ULONG                           i, j, ulCount  = 0;
@@ -10281,7 +10347,25 @@ BspTemplateObjLoad
         /* read symbol name */
         bSucc   = pArchive->ReadString(hArchive, (PUCHAR *)&pSymPro->pName);
         if (!bSucc)
+        {
+            /*RDKB-6004, CID-24224; freeing Allocated memory in case of error*/
+            AnscFreeMemory(pSymPro);
+            if(i)
+            {
+                i--;
+                for (; i >= 0; i--)
+                {
+                     pSymPro = (PBSP_TEMPLATE_SYMBOL_PRO)pPtrArray->GetAt((ANSC_HANDLE)pPtrArray, i);
+                     pPtrArray->RemoveAt((ANSC_HANDLE)pPtrArray, i, 1);
+                     if(pSymPro)
+                     {
+                         AnscFreeMemory(pSymPro);
+                     }
+                }
+            }
+            pSymPro = NULL;
             return FALSE;
+        }
 
         pPtrArray->Add((ANSC_HANDLE)pPtrArray, pSymPro);
     }
