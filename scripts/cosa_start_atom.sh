@@ -77,6 +77,10 @@ echo "Elected subsystem is $Subsys"
 
 sleep 1
 
+
+echo "Starting telnet"
+/usr/sbin/telnetd -b 192.168.101.3
+
 #####BEGIN: Changes for ARRISXB3-3853
 #/etc/ath/fast_down.sh 
 #sleep 5
