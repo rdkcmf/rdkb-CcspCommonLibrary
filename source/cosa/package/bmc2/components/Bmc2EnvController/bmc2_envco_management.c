@@ -446,39 +446,42 @@ Bmc2EnvcoGetCommandProperty
                                 "*"
                             );
 
-                    while ( pStringToken = AnscTcUnlinkToken(pTokenChain) )
+                    if(pTokenChain) /*RDKB-5887 , CID-24415, null check before use*/
                     {
-                        pSubStr = Bmc2EnvcoFindSubStrNoCase(pCurDomain, pStringToken->Name);
 
-                        if ( !pSubStr )
+                        while ( pStringToken = AnscTcUnlinkToken(pTokenChain) )
                         {
-                            bDomainMatched = FALSE;
-                        }
-                        else if ( pCurDomain == pDomainName && *pBmc2CommandProperty->DomainNamePattern != '*' )
-                        {
-                            if ( pSubStr != pCurDomain )
+                            pSubStr = Bmc2EnvcoFindSubStrNoCase(pCurDomain, pStringToken->Name);
+
+                            if ( !pSubStr )
                             {
                                 bDomainMatched = FALSE;
                             }
+                            else if ( pCurDomain == pDomainName && *pBmc2CommandProperty->DomainNamePattern != '*' )
+                            {
+                                if ( pSubStr != pCurDomain )
+                                {
+                                    bDomainMatched = FALSE;
+                                }
+                            }
+
+                            if ( pSubStr )
+                            {
+                                pCurDomain = pSubStr + AnscSizeOfString(pStringToken->Name);    /* move to next part */
+                            }
+
+                            AnscFreeMemory(pStringToken);
+
+                            if ( !bDomainMatched )
+                            {
+                                break;
+                            }
                         }
 
-                        if ( pSubStr )
-                        {
-                            pCurDomain = pSubStr + AnscSizeOfString(pStringToken->Name);    /* move to next part */
-                        }
-
-                        AnscFreeMemory(pStringToken);
-
-                        if ( !bDomainMatched )
-                        {
-                            break;
-                        }
-                    }
-
-                    if ( pTokenChain )
-                    {
                         AnscTcFree((ANSC_HANDLE)pTokenChain);
+
                     }
+
                 }
             }
 
@@ -921,19 +924,24 @@ Bmc2CleanCmdArgValueRange
         PBMC2_CMD_ARG_VRANGE        pCmdArgVrange
     )
 {
-    if ( (pCmdArgVrange)->pStringArray )                              
-    {                                                                 
-        ULONG                       i;                                
-                                                                      
-        for (i = 0; i < (pCmdArgVrange)->ulStringCount; i ++)           
-        {                                                             
-            AnscFreeMemory((pCmdArgVrange)->pStringArray[i]);         
-        }                                                             
-        if ( (pCmdArgVrange)->pStringArray )                          
-        {                                                             
-            AnscFreeMemory((pCmdArgVrange)->pStringArray);            
-        }                                                             
-    }                                                                 
+    if(pCmdArgVrange) /*RDKB-5887 , CID-24393, null check before use*/
+    {
+        if ( (pCmdArgVrange)->pStringArray )
+        {
+            ULONG i;
+
+            for (i = 0; i < (pCmdArgVrange)->ulStringCount; i ++)
+            {
+                AnscFreeMemory((pCmdArgVrange)->pStringArray[i]);
+            }
+            if ( (pCmdArgVrange)->pStringArray )
+            {
+                AnscFreeMemory((pCmdArgVrange)->pStringArray);
+            }
+        }
+
+        AnscFreeMemory(pCmdArgVrange);
+    }
 }
 
 
