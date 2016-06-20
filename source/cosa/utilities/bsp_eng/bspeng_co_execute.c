@@ -1482,7 +1482,7 @@ BspTemplateObjDoSubtract
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    BOOL                            bDeleteL, bDeleteR;
+    BOOL                            bDeleteL = TRUE, bDeleteR=TRUE; /*RDKB-5934 , CID-24539, CID-24719, initializing before use */
     ANSC_HANDLE                     hVal;
     PBSP_TEMPLATE_VAR_OBJECT        pValL, pValR;
     BOOL                            bTerminated = FALSE;
@@ -3571,7 +3571,7 @@ BspTemplateObjDoObj
     ANSC_HANDLE                     hSlapReturnVal  = (ANSC_HANDLE)NULL;
     BOOL                            bSimpleVar      = FALSE;
     BOOL                            bFreeBeepObj    = FALSE;
-    ULONG                           ulIndex;
+    ULONG                           ulIndex = (ULONG)0; /*RDKB-5934 , CID-24800, initializing before use*/
     PBSP_TEMPLATE_BRANCH_OBJECT     pLeft;
     PBSP_TEMPLATE_VAR_OBJECT        pVal;
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr;
@@ -4808,28 +4808,37 @@ BspTemplateObjDoWhile
 			pRt->Stop = 0;
 
             pIter = (PBSP_TEMPLATE_BRANCH_OBJECT)pBr->left.Value.b;
-            for (; pIter->op != BspOp_Iter && pIter->left.Value.b; )
-            {
-                pIter = (PBSP_TEMPLATE_BRANCH_OBJECT)pIter->left.Value.b;
-            }
 
-            if (pIter)
+            if(pIter) /*RDKB-5934 , CID-24262, Null check before use*/
             {
-                pMyObject->DoStatementList
-                    (
-                        hThisObject, 
-                        pIter, 
-                        hRuntime, 
-                        BspOpt_Iter,
-                        &bTerminated
-                    );
 
-                if (bTerminated)
+                for (; pIter->op != BspOp_Iter && pIter->left.Value.b; )
                 {
-                    return;
+                    pIter = (PBSP_TEMPLATE_BRANCH_OBJECT)pIter->left.Value.b;
                 }
+
+                if (pIter)
+                {
+
+                    pMyObject->DoStatementList
+                        (
+                            hThisObject, 
+                            pIter, 
+                            hRuntime, 
+                            BspOpt_Iter,
+                            &bTerminated
+                        );
+
+                    if (bTerminated)
+                    {
+                        return;
+                    }
+
+                }
+
             }
-		}
+
+        }
 
         --i;
     }
@@ -5543,7 +5552,7 @@ BspTemplateEngDoObjectAccess
     SLAP_PARAMETER_LIST             *outList    = NULL;
     PSLAP_VARIABLE                  pSlapReturnVal;
     SLAP_VARIABLE                   SlapReturnVal;
-    char                            *pMethodName;
+    char                            *pMethodName = NULL; /*RDKB-5934, CID-24729, Initialize before use*/
     PBSP_TEMPLATE_NAME_PARAM        pParam;
     ULONG                           i           = 0;
     PBSP_TEMPLATE_VAR_OBJECT        pVar;
@@ -6731,62 +6740,65 @@ BspTemplateEngAccessVarContentType
         BOOL                        bTypeName   = FALSE;
         BOOL                        bTypeId     = FALSE;
 
-        bTypeName   = (pResult->Type == BspVar_String && pResult->Value.str != NULL);
-        bTypeId     = (pResult->Type == BspVar_Number || pResult->Type == BspVar_UNumber);
-
-        if (pResult && (bTypeName || bTypeId))
+        if (pResult) /*RDKB-5934, CID-24385; null check before use*/
         {
-            pVar->SetContentType((ANSC_HANDLE)pVar, pResult->Value.str);
+            bTypeName   = (pResult->Type == BspVar_String && pResult->Value.str != NULL);
+            bTypeId     = (pResult->Type == BspVar_Number || pResult->Type == BspVar_UNumber);
 
-            if (pVar->Type == BspVar_Object && hBeepObj)
+            if (bTypeName || bTypeId)
             {
-                /* also set content type of SLAP variable */
-                SlapParamList.ParamCount    = 3;
+                pVar->SetContentType((ANSC_HANDLE)pVar, pResult->Value.str);
 
-                pParam  = &SlapParamList.ParamArray[0];
-                pParam->Syntax  = SLAP_VAR_SYNTAX_TYPE_string;
-                pParam->Variant.varString   = AnscCloneString(BSP_VAR_CONTENT_TYPE);
-
-                pParam  = &SlapParamList.ParamArray[1];
-                SlapCloneVariable(pParam, ((PSLAP_VARIABLE)pVar->Value.obj));
-
-                pParam  = &SlapParamList.ParamArray[2];
-
-                if (bTypeName)
+                if (pVar->Type == BspVar_Object && hBeepObj)
                 {
-                    pParam->Syntax              = SLAP_VAR_SYNTAX_TYPE_string;
-                    pParam->Variant.varString   = AnscCloneString(pResult->Value.str);
-                }
-                else
-                {
-                    pParam->Syntax              = SLAP_VAR_SYNTAX_TYPE_uint32;
-                    pParam->Variant.varUint32   = (ULONG)pVar->Value.num;
-                }
+                    /* also set content type of SLAP variable */
+                    SlapParamList.ParamCount    = 3;
 
-                status  = 
-                    pBspSoaIf->InvokeObject
-                        (
-                            pBspSoaIf->hOwnerContext,
-                            hBeepObj,
-                            BSP_METHOD_GET_PROPERTY,
-                            &SlapParamList,
-                            &outList,
-                            &pRetVal,
-                            &ulBspSoaStatus
-                        );
+                    pParam  = &SlapParamList.ParamArray[0];
+                    pParam->Syntax  = SLAP_VAR_SYNTAX_TYPE_string;
+                    pParam->Variant.varString   = AnscCloneString(BSP_VAR_CONTENT_TYPE);
 
-                SlapCleanParamList((&SlapParamList));
-                SlapInitParamList((&SlapParamList));
+                    pParam  = &SlapParamList.ParamArray[1];
+                    SlapCloneVariable(pParam, ((PSLAP_VARIABLE)pVar->Value.obj));
 
-                if (outList)
-                {
-                    SlapFreeParamList(outList);
-                }
+                    pParam  = &SlapParamList.ParamArray[2];
 
-                if (pRetVal)
-                {
-                    SlapFreeVariable(pRetVal);
-                    pRetVal = NULL;
+                    if (bTypeName)
+                    {
+                        pParam->Syntax              = SLAP_VAR_SYNTAX_TYPE_string;
+                        pParam->Variant.varString   = AnscCloneString(pResult->Value.str);
+                    }
+                    else
+                    {
+                        pParam->Syntax              = SLAP_VAR_SYNTAX_TYPE_uint32;
+                        pParam->Variant.varUint32   = (ULONG)pVar->Value.num;
+                    }
+
+                    status  = 
+                        pBspSoaIf->InvokeObject
+                            (
+                                pBspSoaIf->hOwnerContext,
+                                hBeepObj,
+                                BSP_METHOD_GET_PROPERTY,
+                                &SlapParamList,
+                                &outList,
+                                &pRetVal,
+                                &ulBspSoaStatus
+                            );
+
+                    SlapCleanParamList((&SlapParamList));
+                    SlapInitParamList((&SlapParamList));
+
+                    if (outList)
+                    {
+                        SlapFreeParamList(outList);
+                    }
+
+                    if (pRetVal)
+                    {
+                        SlapFreeVariable(pRetVal);
+                        pRetVal = NULL;
+                    }
                 }
             }
         }
