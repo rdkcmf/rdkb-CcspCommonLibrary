@@ -272,6 +272,35 @@ CcspCcMbi_GetParameterValues
                 AnscTraceError(("CcspCcMbi_GetParameterValues -- No Resource\n"));
             
                 returnStatus = ANSC_STATUS_RESOURCES;
+                /*
+                ** RDKB-6139, CID-33505; free unused mem.
+                */
+                if(i>0)
+                {
+                    for(--i; i>=0; --i)
+                    {
+                        if(ppReturnVal[i]->parameterName)
+                        {
+                            AnscFreeMemory(ppReturnVal[i]->parameterName);
+                            ppReturnVal[i]->parameterName = NULL;
+                        }
+                        if(ppReturnVal[i]->parameterValue)
+                        {
+                            AnscFreeMemory(ppReturnVal[i]->parameterValue);
+                            ppReturnVal[i]->parameterValue = NULL;
+                        }
+                        if(ppReturnVal[i])
+                        {
+                            AnscFreeMemory(ppReturnVal[i]);
+                            ppReturnVal[i] = NULL;
+                        }
+                    }
+                }
+                if(ppReturnVal)
+                {
+                    AnscFreeMemory(ppReturnVal);
+                    ppReturnVal = NULL;
+                }
 
                 goto EXIT2;
             }
@@ -829,9 +858,31 @@ CcspCcMbi_GetParameterAttributes
             if ( !ppReturnVal[i] )
             {
                 AnscTraceError(("ssp_SsdMbi_GetParameterAttributes -- No Resource\n"));
-            
                 returnStatus = ANSC_STATUS_RESOURCES;
-
+                /*
+                ** RDKB-6139, CID-32946; free unused mem.
+                */
+                if(i>0)
+                {
+                    for(--i; i>=0; --i)
+                    {
+                        if(ppReturnVal[i]->parameterName)
+                        {
+                            AnscFreeMemory(ppReturnVal[i]->parameterName);
+                            ppReturnVal[i]->parameterName = NULL;
+                        }
+                        if(ppReturnVal[i])
+                        {
+                            AnscFreeMemory(ppReturnVal[i]);
+                            ppReturnVal[i] = NULL;
+                        }
+                    }
+                }
+                if(ppReturnVal)
+                {
+                    AnscFreeMemory(ppReturnVal);
+                    ppReturnVal = NULL;
+                }
                 goto EXIT2;
             }
 
