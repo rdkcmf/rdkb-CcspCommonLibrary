@@ -491,6 +491,7 @@ AnscCryptoPubSSLeayRSASignAPI
 
     if (ulHashSize == 0)
     {
+        AnscCryptoRemove((ANSC_HANDLE)pCrypto);/*RDKB-6149, CID-33079, free unused mem on failure*/
         return ANSC_STATUS_FAILURE;
     }
 
@@ -541,6 +542,7 @@ AnscCryptoPubSSLeayRSAVerifyAPI
 
     if (ulHashSize == 0)
     {
+        AnscCryptoRemove((ANSC_HANDLE)pCrypto);/*RDKB-6149, CID-33363, free unused mem on failure*/
         return ANSC_STATUS_FAILURE;
     }
 
@@ -583,6 +585,7 @@ AnscCryptoPubSSLeayDSASignAPI
 
     if (ulHashSize == 0)
     {
+        AnscCryptoRemove((ANSC_HANDLE)pCrypto);/*RDKB-6149, CID-32948, free unused mem on failure*/
         return ANSC_STATUS_FAILURE;
     }
 
@@ -626,6 +629,7 @@ AnscCryptoPubSSLeayDSAVerifyAPI
 
     if (ulHashSize == 0)
     {
+        AnscCryptoRemove((ANSC_HANDLE)pCrypto);/*RDKB-6149, CID-33070, free unused mem on failure*/
         return ANSC_STATUS_FAILURE;
     }
 
