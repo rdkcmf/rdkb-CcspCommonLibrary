@@ -175,10 +175,11 @@ AnscBktoOpen
     int                             s_result     = 0;
     int                             s_error      = 0;
     int                             addrlen      = 0;
-    ansc_socket_addr_in             host_addr1;
-    ansc_socket_addr_in             peer_addr1;
-    xskt_socket_addr_in             host_addr2;
-    xskt_socket_addr_in             peer_addr2;
+    /*RDKB-6144, CID-24563, 24511, 24697, 24716; init before use*/
+    ansc_socket_addr_in             host_addr1 = {0};
+    ansc_socket_addr_in             peer_addr1 = {0};
+    xskt_socket_addr_in             host_addr2 = {0};
+    xskt_socket_addr_in             peer_addr2 = {0};
 
     if ( !pMyObject->bClosed )
     {
