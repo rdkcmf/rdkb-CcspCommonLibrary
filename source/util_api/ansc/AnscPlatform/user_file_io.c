@@ -625,34 +625,39 @@ user_find_first_file
     }
 	/* change to readdir_r later */
 	d = readdir (p_find_context->pDir);
-	while (d != NULL){
-		/* do not need to check match here. Di's caller function finishes this operation */
-		/*if(match_wildcard_file_name(tar_file_name, d->d_name, strlen(d->d_name)))*/
-		if(1)
-		{
-			bResult          = TRUE;
-			strcpy(first_file_name, d->d_name);
-			if( user_make_path_name(dir_name, first_file_name, &pFirstFileName, NULL) == 0)
-			{
-				goto EXIT1; /* failure */
-			}
-			bResult = stat (pFirstFileName, &fst);
-			/* 0 is successful */
-			if(bResult == 0){
-				if ( fst.st_mode & S_IFDIR ) *pb_directory = 1;
-				else *pb_directory = 0;
-			}
-			else{
-				continue;
-			}
-			*ph_find_context = (void *) p_find_context;
-			bResult = TRUE;
-			break;
-		}
-		d = readdir (p_find_context->pDir);  /* this one is actually not necessary */
-	}
+	/*RDKB-6186, CID-24120; null check before use, if NULL perform clean exit*/
+	if(d != NULL)
+	{
 
-	goto EXIT2;
+		while (d != NULL){
+			/* do not need to check match here. Di's caller function finishes this operation */
+			/*if(match_wildcard_file_name(tar_file_name, d->d_name, strlen(d->d_name)))*/
+			if(1)
+			{
+				bResult          = TRUE;
+				strcpy(first_file_name, d->d_name);
+				if( user_make_path_name(dir_name, first_file_name, &pFirstFileName, NULL) == 0)
+				{
+					goto EXIT1; /* failure */
+				}
+				bResult = stat (pFirstFileName, &fst);
+				/* 0 is successful */
+				if(bResult == 0){
+					if ( fst.st_mode & S_IFDIR ) *pb_directory = 1;
+					else *pb_directory = 0;
+				}
+				else{
+					continue;
+				}
+				*ph_find_context = (void *) p_find_context;
+				bResult = TRUE;
+				break;
+			}
+			d = readdir (p_find_context->pDir);  /* this one is actually not necessary */
+		}
+
+		goto EXIT2;
+	}
 
 EXIT1:
 	if (p_find_context)
