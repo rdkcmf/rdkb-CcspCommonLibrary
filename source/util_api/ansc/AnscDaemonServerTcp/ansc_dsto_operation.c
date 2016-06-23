@@ -126,8 +126,9 @@ AnscDstoEngage
     USHORT                          usPort               = 0;
     char                            port[6]              = {0};
 #else
-    ansc_socket_addr_in             local_addr1;
-    xskt_socket_addr_in             local_addr2;
+    /*RDKB-6151, CID-24487,24794; initializing variable before use*/
+    ansc_socket_addr_in             local_addr1 = {0};
+    xskt_socket_addr_in             local_addr2 = {0};
 #endif
 
     if ( pMyObject->bActive )
