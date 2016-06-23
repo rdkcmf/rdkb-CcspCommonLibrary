@@ -117,9 +117,14 @@ AnscTcAllocate
     }
 
     string      = AnscMoveToNextToken(string, separator);
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
+    /*RDKB-6185, CID-24092, null check before use*/
+    if ( !string || (*string == 0) )
+    {
+        return  (ANSC_HANDLE)pTokenChain;
+    }
 
-    if ( !string || (*string == 0) || !ulTokenSize )
+    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
+    if ( !ulTokenSize )
     {
         return  (ANSC_HANDLE)pTokenChain;
     }
@@ -189,9 +194,14 @@ AnscTcAllocate2
     }
 
     string      = AnscMoveToNextToken(string, separator);
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
+    /*RDKB-6185, CID-24126, null check before use*/
+    if ( !string || (*string == 0) )
+    {
+        return  (ANSC_HANDLE)pTokenChain;
+    }
 
-    if ( !string || (*string == 0) || !ulTokenSize )
+    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
+    if ( !ulTokenSize )
     {
         return  (ANSC_HANDLE)pTokenChain;
     }
@@ -274,9 +284,15 @@ AnscTcAllocate3
     }
 
     string      = AnscMoveToNextToken(string, separator);
+    /*RDKB-6185, CID-24426, null check before use*/
+    if ( !string || (*string == 0) )
+    {
+        return  (ANSC_HANDLE)pTokenChain;
+    }
+
     ulTokenSize = AnscSizeOfToken3(string, separator, AnscSizeOfString(string));
 
-    if ( !string || (*string == 0) || !ulTokenSize )
+    if ( !ulTokenSize )
     {
         return  (ANSC_HANDLE)pTokenChain;
     }
@@ -536,13 +552,16 @@ AnscSetTokenChain
     PANSC_TOKEN_CHAIN               pTokenChain = (PANSC_TOKEN_CHAIN)hTokenChain;
     PANSC_STRING_TOKEN              pToken      = NULL;
     ULONG                           ulTokenSize = 0;
-    ULONG                           ulSizeOfStr = AnscSizeOfString(string);
-    char*                           pTemp       = string;
+    ULONG                           ulSizeOfStr = 0; /*RDKB-6185, CID-24307, use after null check*/
+    char*                           pTemp       = NULL;
 
     if ( !string )
     {
         return  ANSC_STATUS_UNAPPLICABLE;
     }
+
+    pTemp       = string;
+    ulSizeOfStr = AnscSizeOfString(string);
 
     if ( !pTokenChain )
     {
