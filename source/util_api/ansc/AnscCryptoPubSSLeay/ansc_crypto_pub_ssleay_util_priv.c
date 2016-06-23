@@ -99,8 +99,8 @@ AnscCryptoPubBigNum2Prime
         PANSC_CRYPTO_PRIME          pPrime
     )
 {
-    ANSC_CRYPTO_PRIME               aPrime;   
-    
+    ANSC_CRYPTO_PRIME               aPrime = {0}; /*RDKB-6150, CID-24529, initializing variable*/
+
     if (!pBigNum || !pPrime)
         return;
     aPrime.Length = 4;
