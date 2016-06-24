@@ -486,9 +486,11 @@ char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
 char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
 char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
 char  str[500] = {0};
-void Send_Notification_Thread_Func()
+char *str1[50] = {0};
+void* Send_Notification_Thread_Func(void* arg)
 {
 	char* faultParam = NULL;
+	char* str = (char*) arg;
 	notif_val[0].parameterName =  param_name ;
 	notif_val[0].parameterValue = str;
 	notif_val[0].type = ccsp_string;
@@ -506,6 +508,12 @@ void Send_Notification_Thread_Func()
 		TRUE,
 		&faultParam
 		);
+	
+	if(str)
+	{
+		AnscFreeMemory(str);
+		str = NULL;
+	}
 }
 #endif
 /**********************************************************************
@@ -812,8 +820,10 @@ DslhWmpdoMpaSetParameterValues
                     vcSig.writeID = pVarRecord->ReqSenderID;
                     vcSig.type = dataType;
                     sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
+                    str1[i] = (char *) AnscAllocateMemory(strlen(str) + 1);
+                    strcpy(str1[i], str);
 					if(strcmp(vcSig.newValue,vcSig.oldValue)){				
-						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
+						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, str1[i]);		
 						if(res != 0)
 							AnscTraceError(("Create Send_Notification_Thread error %d ", res));
 					}
