@@ -1130,7 +1130,7 @@ CCSP_Message_Bus_Exit
     bus_info->freefunc(bus_info);
     bus_info = NULL;
     ccsp_bus_ref_count--;
-    if(ccsp_bus_ref_count == 0) dbus_shutdown();
+   // if(ccsp_bus_ref_count == 0) dbus_shutdown();
 
     //    CcspTraceDebug(("<%s>: component_id = '%s'\n", __FUNCTION__, bus_info->component_id));
     
