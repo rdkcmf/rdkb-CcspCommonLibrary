@@ -650,8 +650,8 @@ AnscCryptoMsChap2GetAuthResponse
         PANSC_CRYPTO_HASH           hash
     )
 {
-    SHA_CTX                         context;
-    ANSC_CRYPTO_HASH                pw_hash_hash;
+    SHA_CTX                         context = {0};
+    ANSC_CRYPTO_HASH                pw_hash_hash = {0}; /*RDKB-6147, CID-24680, initializing the variable*/
 
     AnscZeroMemory(pw_hash_hash.Value, ANSC_MAX_HASH_RESULT);
 
