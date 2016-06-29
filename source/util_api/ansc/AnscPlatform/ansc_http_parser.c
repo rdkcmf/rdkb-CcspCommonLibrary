@@ -9872,6 +9872,13 @@ AnscHttpParseRequestLine
     }
 
     pMethod = &pBuf[i];
+
+    /*RDKB-6184, CID-24384, added to avoid Coverity warning*/
+    if (!pMethod)
+    {
+        return (ANSC_HANDLE)NULL;
+    }
+
     pMsg    = _ansc_strchr(pMethod, ' ');
 
     if (!pMsg)
@@ -9888,6 +9895,11 @@ AnscHttpParseRequestLine
     }
 
     pUri    = pMsg;
+
+    /*RDKB-6184, CID-24139, added to avoid Coverity warning*/
+    if (!pUri)
+        return (ANSC_HANDLE)NULL;
+
     pMsg    = _ansc_strchr(pUri, ' ');
 
     if (!pMsg)
@@ -10243,6 +10255,7 @@ AnscHttpParseChunkedLine
 
         if (!pCRLF || pCRLF == pLast)
         {
+            AnscFreeMemory( pChunkInfo ); /*RDKB-6184, CID-24303, free unused memory */
             return (ANSC_HANDLE)NULL;
         }
 
