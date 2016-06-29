@@ -823,6 +823,35 @@ CcspNsMgrDiscoverNamespace
 
             if( pCompStruct == NULL)
             {
+                /* RDKB-6138, CID-33187, free unused memory */ 
+                if(i>0)
+                {
+
+                    for(--i; i>=0;--i)
+                    {
+                        pCompStruct = (componentStruct_t*)pCompArray[i];
+
+                        if(pCompStruct)
+                        {
+
+                            if(pCompStruct->componentName)
+                            {
+                                CcspNsMgrFreeMemory(pMyObject->pContainerName, pCompStruct->componentName);
+                            }
+
+                            if(pCompStruct->dbusPath)
+                            {
+                                CcspNsMgrFreeMemory(pMyObject->pContainerName, pCompStruct->dbusPath);
+                            }
+
+                            CcspNsMgrFreeMemory(pMyObject->pContainerName, pCompStruct);
+                        }
+
+                    }
+
+                }
+
+                CcspNsMgrFreeMemory(pMyObject->pContainerName,pCompArray);
                 return CCSP_ERR_MEMORY_ALLOC_FAIL;
             }
 
