@@ -117,8 +117,9 @@ AnscDsuoEngage
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_WORKER_OBJECT        pWorker      = (PANSC_DSUO_WORKER_OBJECT      )pMyObject->hWorker;
-    ansc_socket_addr_in             local_addr;
-    xskt_socket_addr_in             local_addr2;
+    /*RDKB-6181, CID-24758,24775; initilizing before use*/
+    ansc_socket_addr_in             local_addr = {0};
+    xskt_socket_addr_in             local_addr2 = {0};
     int                             s_result     = 0;
 
     if ( pMyObject->bActive )
