@@ -176,7 +176,7 @@ UserSetDelta()
     unsigned char buf[64] = {0};
     unsigned long ulSecond, ulHundredth;
     char * pbuf = buf;
-    char * pbuf1;
+    char * pbuf1 = NULL; /*RDKB-6288, CID-24502, initilize before use*/
 
 	if ( shmid == -1 )
     {
