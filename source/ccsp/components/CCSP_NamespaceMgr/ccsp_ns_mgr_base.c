@@ -423,11 +423,20 @@ CcspNsMgrChangeToRegNamespaceName
     AnscZeroMemory(pBackName, 256);
 
     pString     = AnscMoveToNextToken(pString, TR69_PARAM_NAME_SEPARATOR);
-    ulTokenSize = AnscSizeOfToken(pString, TR69_PARAM_NAME_SEPARATOR, AnscSizeOfString(pString));
-
-    if( pString == NULL || *pString == 0 || ulTokenSize == 0)
+    /*RDKB-6137, CID-33200, null check before use*/
+    if(pString == NULL)
     {
         return NULL;
+    }
+    else
+    {
+        ulTokenSize = AnscSizeOfToken(pString, TR69_PARAM_NAME_SEPARATOR, AnscSizeOfString(pString));
+
+        if(*pString == 0 || ulTokenSize == 0)
+        {
+            return NULL;
+        }
+
     }
 
     while ( pString && (*pString != 0) && ulTokenSize && ((ULONG)(pString - pTemp) < ulSizeOfStr) )
