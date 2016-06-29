@@ -231,7 +231,7 @@ AnscCryptoHashMd4
 {
     ULONG                           ulTemp1 = 0;
     ULONG                           ulTemp2 = 0;
-    ANSC_CRYPTO_HASH                hashResult;
+    ANSC_CRYPTO_HASH                hashResult = {0}; /*RDKB-6145, CID-24798, initialize the variable*/
 
     AnscCryptoMd4Digest(buffer, size, &hashResult);
 
