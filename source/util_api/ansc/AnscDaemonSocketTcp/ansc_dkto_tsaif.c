@@ -128,7 +128,7 @@ AnscDktoTsaRecvAppMessage
     void*                           pRecvBuffer  = (void*                         )NULL;
     ANSC_HANDLE                     hRecvHandle  = (ANSC_HANDLE                   )NULL;
     ULONG                           ulRecvSize   = (ULONG                         )0;
-    ULONG                           ulLeftSize   = (ULONG                         )AnscBdoGetBlockSize(pPayloadBdo);
+    ULONG                           ulLeftSize   = (ULONG                         )0;
     ULONG                           ulCopySize   = (ULONG                         )0;
     ULONG                           ulServingT1  = 0;
     ULONG                           ulServingT2  = 0;
@@ -157,6 +157,18 @@ AnscDktoTsaRecvAppMessage
             goto  EXIT1;
         }
     }
+
+    /*RDKB-6182, CID-24214, null check before use*/
+    if(pPayloadBdo)
+    {
+        ulLeftSize   = (ULONG                         )AnscBdoGetBlockSize(pPayloadBdo);
+    }
+    else
+    {
+        returnStatus = ANSC_STATUS_BAD_PAYLOAD; /*advice appropriate error*/
+        goto  EXIT1;
+    }
+
 
     while ( ulLeftSize > 0 )
     {
