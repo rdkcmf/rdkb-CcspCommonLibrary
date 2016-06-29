@@ -1873,8 +1873,8 @@ BspTemplateVarStrCat
 {
     PBSP_TEMPLATE_VAR_OBJECT        pMyObject = (PBSP_TEMPLATE_VAR_OBJECT)hThisObject;
     PBSP_TEMPLATE_VAR_OBJECT        pVar      = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    ULONG                           ulLen;
-    char                            *pBuf;
+    ULONG                           ulLen = 0; /*RDKB-6142, CID-24705; initializing the variables*/
+    char                            *pBuf = NULL;
 
     switch (pMyObject->Type)
     {
@@ -3005,7 +3005,8 @@ BspTemplateVarGetBulkDataAt
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
 
-    if (ulIndex >= pArrayItems->ulLen || !pArrayItems)
+    /*RDKB-6142, CID-24350; null check before use*/
+    if (!pArrayItems || ulIndex >= pArrayItems->ulLen)
     {
         return ANSC_STATUS_BAD_PARAMETER;
     }
