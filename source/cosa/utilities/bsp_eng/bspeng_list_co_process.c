@@ -269,14 +269,18 @@ BspTemplateListFindItem
     for (i = 0; i < ulSize; i ++)
     {
         pTemplate   = (PBSP_TEMPLATE_OBJECT)pPtrArray->GetAt((ANSC_HANDLE)pPtrArray, i);
-        pTmplName   = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
 
-        if (
-                pTemplate   && 
-                AnscEqualString(pTmplName, (char *)pName, BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE)
-           )
+        if ( pTemplate ) /*RDKB-6140, CID-24471; null check before use*/
         {
-            return pTemplate;
+            pTmplName   = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
+
+            if (
+                    AnscEqualString(pTmplName, (char *)pName, BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE)
+               )
+            {
+                return pTemplate;
+            }
+
         }
     }
 
@@ -339,7 +343,7 @@ BspTemplateListAddGroup
     ULONG                           ulBlockSize = BSP_TEMPLATE_TEXT_INIT_SIZE;
     ULONG                           ulBufSize = ulBlockSize;
     ULONG                           ulRead, ulLeft = ulBlockSize;
-    PUCHAR                          pBuf, pCur;
+    PUCHAR                          pBuf = NULL, pCur = NULL;
     PBSP_TEMPLATE_READER_OBJECT     pReader;
     ULONG                           ulLineNo    = 1;
     ULONG                           ulErrLineNo;
@@ -448,6 +452,12 @@ BspTemplateListAddGroup
                         ulBufSize, 
                         ulBufSize + ulBlockSize
                     );
+            /* RDKB-6140, CID-24219; return if reallocation failure to avoid mem curruption.
+            */
+            if(!pBuf)
+            {
+                return FALSE;
+            }
             ulBufSize += ulBlockSize;
 
             pCur    = pBuf + ulRead;
