@@ -856,8 +856,10 @@ void AnscPrintFileLineMemoryTable
     PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = NULL;
     ULONG                           i                = 0;
-    char                            owner_desp[128];
+    char                            owner_desp[128] = {0}; /*RDKB-6143, CID-24780 ; initialize before use*/
     char*                           pFileNameChar  = pFileName;
+
+    AnscZeroMemory(owner_desp, 128);
 
     if ( pFileName )
     {
@@ -880,8 +882,7 @@ void AnscPrintFileLineMemoryTable
             pFileNameChar++;
         }
 
-        AnscZeroMemory(owner_desp, 128);
-
+ 
         if ( TRUE )
         {
             if ( AnscSizeOfString(pFileNameChar) < 110 )
