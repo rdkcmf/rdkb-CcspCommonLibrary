@@ -206,7 +206,7 @@ BspTemplateStackCOInitialize
     )
 {
     PBSP_TEMPLATE_STACK_OBJECT      pMyObject    = (PBSP_TEMPLATE_STACK_OBJECT)hThisObject;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt          = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;
+    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt          = NULL; /*RDKB-6141, CID-24279, require null check beofore use*/
     PBSP_TEMPLATE_VAR_OBJECT        *pVars       = NULL;
     PBSP_TEMPLATE_VAR_OBJECT        pVar         = NULL;
     ULONG                           i;
@@ -215,6 +215,7 @@ BspTemplateStackCOInitialize
     {
         return ANSC_STATUS_FAILURE;
     }
+    pRt          = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;
 
     pMyObject->Add                          = BspTemplateStackAdd;
     pMyObject->GetAt                        = BspTemplateStackGetAt;
