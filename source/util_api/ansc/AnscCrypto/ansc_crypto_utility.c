@@ -649,7 +649,13 @@ AnscCryptoMitDesStrToKey
     UCHAR                           tempKey[64];
     ANSC_CRYPTO_IV                  iv;
 
-
+    /*
+    ** RDKB-6148, CID-24328, must pass a valid handle, else will lead to crash.
+    */
+    if(!pNewKey)
+    {
+        return ANSC_STATUS_FAILURE;
+    }
 
     AnscZeroMemory(temp,    64);
     AnscZeroMemory(tempKey, 64);
