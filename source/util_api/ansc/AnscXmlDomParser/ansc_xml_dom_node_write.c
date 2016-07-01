@@ -581,7 +581,7 @@ AnscXmlDomNodeSetAttrBinary
      * pointer to the new Attribute or an existing Attribute
      */
     PANSC_XML_ATTRIBUTE             pAttribute = NULL;
-    ULONG                           length;
+    ULONG                           length = 0; /*RDKB-6190, CID-24598, initialize before use*/
 
 
     /***********************************************************
