@@ -903,7 +903,7 @@ AnscXmlDomNodeDecode
     if( pEndOfNodeName == pEndOfNode - 1 &&  pEndOfNodeName[0] == XML_NODE_END[0])
     {
         *pulSize    -= (pEndOfNode + 1 - *ppContent);
-
+		AnscFreeMemory(pNewNodeName);/*RDKB-6189, CID-24309, free unused mem before return*/
         return ANSC_STATUS_SUCCESS;
     }
 
