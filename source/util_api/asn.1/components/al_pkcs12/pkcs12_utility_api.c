@@ -814,6 +814,8 @@ PKCS12UtilityGetDerivedKey
         if( pS == NULL)
         {
             AnscFreeMemory(pDiver);
+            /*RDKB-6192 , CID-24189, free resources on return*/
+            AnscFreeMemory(pPass);
 
             return ANSC_STATUS_FAILURE;
         }
