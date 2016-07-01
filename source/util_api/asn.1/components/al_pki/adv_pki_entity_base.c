@@ -105,8 +105,8 @@ initProc
 {
     PPKI_CLIENT_ENTITY              pThisObject  = (PPKI_CLIENT_ENTITY)hContext;
     PALCERT_CONTEXT                 pCertContext = NULL;
-    PANSC_ASN1_CERTIFICATE          pNewCert;
-    PUCHAR                          pEncoding;
+    PANSC_ASN1_CERTIFICATE          pNewCert = NULL;
+    PUCHAR                          pEncoding = NULL;
 
     if( pCertEncoding == NULL || ulCertSize == 0)
     {
@@ -123,10 +123,11 @@ initProc
             pNewCert = (PANSC_ASN1_CERTIFICATE)AnscAsn1CreateCertificate(NULL);
 
             pEncoding= pCertEncoding;
-
-            pNewCert->DecodingData(pNewCert,(PVOID*)&pEncoding);
-
-            AnscSListPushEntryAtBack(&pThisObject->sCAList, &pNewCert->Linkage);
+            if(pNewCert) /*RDKB-6193, CID-24363, null check before use*/
+            {
+                pNewCert->DecodingData(pNewCert,(PVOID*)&pEncoding);
+                AnscSListPushEntryAtBack(&pThisObject->sCAList, &pNewCert->Linkage);
+            }
         }
         else
         {
@@ -307,8 +308,9 @@ AdvPKIEntityExportPKCS12Handle
                             pEncoding,
                             length
                         );
-
+#if 0                     /*RDKB-6193, CID-33132; Do not free the pPKCS12; leads to memory violation*/
                     AnscFreeMemory(pPKCS12);
+#endif
                 }
             }              
         }
