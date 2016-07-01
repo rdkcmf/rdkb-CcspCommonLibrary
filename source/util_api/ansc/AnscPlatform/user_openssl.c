@@ -417,7 +417,7 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
 
 //The DAC 15 ACS server certificate is self signed SSL_get_verify_result api can't verify the host certificate.
 //tmp handling the X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN until we move to PROD.
-#ifdef _XB6_PRODUCT_REQ_
+#if defined (_XB6_PRODUCT_REQ_) || defined(_XF3_PRODUCT_REQ_)
         if ( vresult == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN )
 	{
             success = 1;
