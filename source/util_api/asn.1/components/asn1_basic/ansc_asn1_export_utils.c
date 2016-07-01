@@ -485,7 +485,7 @@ AttrListEncodingData
     /*
      * shortcut pointer to a char array
      */
-    PUCHAR                          pCharData    = (PUCHAR)*ppEncoding;
+    PUCHAR                          pCharData    = NULL;
 
     
     if( pListHeader  == NULL || ppEncoding == NULL || 
@@ -493,6 +493,9 @@ AttrListEncodingData
     {
         return ANSC_ASN1_NULL_PARAMETER;
     }
+
+    /*RDKB-6197, CID-24466, assign after null check*/
+    pCharData = (PUCHAR)*ppEncoding;
 
     /*
      *  encode all the attributes one by one;
@@ -632,7 +635,7 @@ AttrListDecodingData
     /*
      * shortcut pointer to a char array
      */
-    PUCHAR                          pEncodingUnit= (PUCHAR)*ppEncoding;
+    PUCHAR                          pEncodingUnit= NULL;
 
     if( ppEncoding   == NULL || pListHeader == NULL ||
         pTagIncluded == NULL || pLeftSize   == NULL ||
@@ -640,6 +643,9 @@ AttrListDecodingData
     {
         return ANSC_ASN1_NULL_PARAMETER;
     }
+
+    /*RDKB-6197, CID-24117, assign after NULL check*/
+    pEncodingUnit= (PUCHAR)*ppEncoding;
 
     pTagInfo   = (PANSC_TAGINFO_OBJECT)AnscTagInfoCreate();
 
