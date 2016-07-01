@@ -137,14 +137,21 @@ AnscAsn1SetCreate
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
+     * RDKB-6199, CID-24280, do mem reset only for allocated memory.
      */
     if( hContainerContext > 0)
     {
-        pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext);
+        if(pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext))
+        {
+            AnscZeroMemory( pMyObject, (ULONG)hContainerContext);
+        }
     }
     else
     {
-        pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET));
+        if(pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET)))
+        {
+            AnscZeroMemory( pMyObject, sizeof(ANSC_ASN1_SET));
+        }
     }
 
     if ( !pMyObject )
@@ -152,7 +159,6 @@ AnscAsn1SetCreate
         return  (ANSC_HANDLE)NULL;
     }
 
-    AnscZeroMemory( pMyObject, sizeof(ANSC_ASN1_SEQUENCE));
 
     /*
      *  reset the SAttrList;
@@ -700,10 +706,10 @@ findComingChildEncoding
      */
     pComingAttr = (PANSC_ATTR_OBJECT)AnscAsn1AttrParsingData(pEncoding);
 
-    if( pComingAttr != NULL)
+    /*RDKB-6199, CID-24299; null check and return*/
+    if( pComingAttr == NULL)
     {
         AnscTrace("Failed to parse the binary data to a PANSC_ATTR_OBJECT object.\n");
-
         return -1;
     }
     /*
@@ -1737,17 +1743,20 @@ AnscAsn1SetSetChildByIndex
         BOOLEAN                     bFreeOldOne
     )
 {
-    PANSC_ASN1_SET                  pMyObject    = (PANSC_ASN1_SET)hThisObject;
-    PANSC_ASN1_OBJECT               pNewOne      = (PANSC_ASN1_OBJECT)hChild;
+    PANSC_ASN1_SET                  pMyObject    = NULL;
+    PANSC_ASN1_OBJECT               pNewOne      = NULL;
     PSINGLE_LINK_ENTRY              pPrevEntry   = NULL;
     PSINGLE_LINK_ENTRY              pSListEntry  = NULL;
-    PANSC_ASN1_OBJECT               pOldOne;
-    PSLIST_HEADER                   pListHeader;
+    PANSC_ASN1_OBJECT               pOldOne = NULL;
+    PSLIST_HEADER                   pListHeader = NULL;
 
     if( hChild == NULL || hThisObject == NULL)
     {
         return ANSC_ASN1_NULL_PARAMETER;
     }
+
+    pMyObject    = (PANSC_ASN1_SET)hThisObject;
+    pNewOne = (PANSC_ASN1_OBJECT)hChild;
 
     pListHeader = &pMyObject->sChildList;
     pSListEntry = 
@@ -1782,7 +1791,11 @@ AnscAsn1SetSetChildByIndex
     /*
      *  set the new one;
      */
-    pNewOne->bCanBeOptional = pOldOne->bCanBeOptional;
+    /*RDKB-6199, CID-24270, null check before use*/
+    if(pOldOne)
+    {
+        pNewOne->bCanBeOptional = pOldOne->bCanBeOptional;
+    }
     pNewOne->hOwnerContext = (ANSC_HANDLE)pMyObject;
     pNewOne->SetName( pNewOne, pMyObject->GetChildName(pMyObject, index));
     pNewOne->AddAttribute
