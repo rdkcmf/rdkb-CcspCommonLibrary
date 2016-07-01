@@ -919,6 +919,7 @@ signedDataGenerateSignerInfo
 
      /* free the encoding data */
      AnscFreeMemory(pEncoding);
+     pEncoding = NULL; /*RDKB-6201, CID-32894; avoiding double free*/
 
     /* copy the signature to the string object */
     pStrObj = (PANSC_ASN1_STRING)
@@ -1410,18 +1411,18 @@ verifyMessageDigest
     )
 {
     PANSC_ASN1_SEQUENCE                 pSignerInfo = (PANSC_ASN1_SEQUENCE)hSignerInfo;
-    PANSC_ASN1_SETOF                    pAuthAttr;
-    PANSC_ASN1_ATTRIBUTE                pAttribute;
-    PANSC_ASN1_OIDEN                    pOIDObj;
-    PANSC_ASN1_SETOF                    pAttrValues;
-    PANSC_ASN1_CHOICE                   pAttrValue;
-    PANSC_ASN1_OBJECT                   pTmpObj;
-    PANSC_ASN1_STRING                   pStrObj;
+    PANSC_ASN1_SETOF                    pAuthAttr = NULL;
+    PANSC_ASN1_ATTRIBUTE                pAttribute = NULL;
+    PANSC_ASN1_OIDEN                    pOIDObj = NULL;
+    PANSC_ASN1_SETOF                    pAttrValues = NULL;
+    PANSC_ASN1_CHOICE                   pAttrValue = NULL;
+    PANSC_ASN1_OBJECT                   pTmpObj = NULL;
+    PANSC_ASN1_STRING                   pStrObj = NULL; /*RDKB-6201, CID-24783, initialize before use*/
     CHAR                                pOIDString[128] = { 0 };
-    ULONG                               i;
-    ANSC_CRYPTO_HASH                    hashResult;
+    ULONG                               i = 0;
+    ANSC_CRYPTO_HASH                    hashResult = {0};
     PANSC_CRYPTO_OBJECT                 pCrypto     = NULL;
-    ULONG                               ulHashSize;
+    ULONG                               ulHashSize = 0;
 
     if( hSignerInfo == NULL)
     {
