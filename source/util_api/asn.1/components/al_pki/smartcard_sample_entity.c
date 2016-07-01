@@ -237,7 +237,7 @@ SmartCardDecryptData
 {
     PSAMPLE_SMARTCARD_ENTITY        pThisObject = (PSAMPLE_SMARTCARD_ENTITY)hThisObject;
     PANSC_CRYPTO_PUB_SSLEAY_OBJECT  pSSLCrypto   = NULL;
-    ANSC_CRYPTO_PUB_KEY_PARAMS      params;
+    ANSC_CRYPTO_PUB_KEY_PARAMS      params = {0};
     ANSC_STATUS                     retStatus;
     ANSC_CRYPTO_PUB_ALGORITHM       Alg;
     ANSC_CRYPTO_PUB_OPERATION       Op;
@@ -268,7 +268,15 @@ SmartCardDecryptData
     params.InputSize  = lengthOfData;
     params.pInput     = (PVOID)pDataWillBeDecrypted;
 
-    params.OutputSize = *pLength;
+    if(pLength) /*RDKB-6194, CID-24164, null check before use*/
+    {
+        params.OutputSize = *pLength;
+    }
+    else
+    {
+        params.OutputSize = 0;
+    }
+
     params.pOutput    = (PVOID)pDataDecrypted;
 
     retStatus = 
