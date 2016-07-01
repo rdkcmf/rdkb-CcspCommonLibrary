@@ -905,13 +905,13 @@ createPKCS12ExtraAuthenSafe
     PANSC_ASN1_CONTENTINFO          pContentInfo = NULL;
     PANSC_ASN1_ENCRYPTEDDATA        pEncryptData = NULL;
     PANSC_ASN1_ENCRYPTEDCONTENTINFO pEncContInfo = NULL;
-    PANSC_ASN1_OIDEN                pOIDObj;
-    PANSC_ASN1_ALGORITHMIDENTIFIER  pAlgorObj;
-    PANSC_ASN1_STRING               pSaltObj;
-    PANSC_ASN1_SEQUENCE             pPKCS12Param;
-    PANSC_ASN1_CHOICE               pParams;
-    PANSC_ASN1_INTEGER              pIteration;
-    UCHAR                           pSalt[12];
+    PANSC_ASN1_OIDEN                pOIDObj = NULL;
+    PANSC_ASN1_ALGORITHMIDENTIFIER  pAlgorObj = NULL;
+    PANSC_ASN1_STRING               pSaltObj = NULL;
+    PANSC_ASN1_SEQUENCE             pPKCS12Param = NULL;
+    PANSC_ASN1_CHOICE               pParams = NULL;
+    PANSC_ASN1_INTEGER              pIteration = NULL;
+    UCHAR                           pSalt[12] = {0};
 
     pAuthSafeObj = (PANSC_ASN1_AUTHENTICATEDSAFE)
         AnscAsn1CreateAuthenticatedSafe(NULL);
@@ -924,19 +924,21 @@ createPKCS12ExtraAuthenSafe
     /* create and add a content info */
     pContentInfo = (PANSC_ASN1_CONTENTINFO)AnscAsn1CreateContentInfo(NULL);
 
-    pAuthSafeObj->AddChild(pAuthSafeObj, pContentInfo);
-
     /* set the content info as encryptedData */
     pEncryptData = 
         (PANSC_ASN1_ENCRYPTEDDATA)AnscAsn1CreateEncryptedData(NULL);
 
-    pContentInfo->SetTypeAndData
-        (
-            pContentInfo,
-            CONTENTDATA_MASK_ENCRYPTEDDATA,
-            pEncryptData
-        );
-
+    /*RDKB-6191, CID-24242, null check before use*/
+    if( pContentInfo != NULL)
+    {
+        pAuthSafeObj->AddChild(pAuthSafeObj, pContentInfo);
+        pContentInfo->SetTypeAndData
+            (
+                pContentInfo,
+                CONTENTDATA_MASK_ENCRYPTEDDATA,
+                pEncryptData
+            );
+    }
     /* init the encrypted content info */
     pEncContInfo = 
         (PANSC_ASN1_ENCRYPTEDCONTENTINFO)pEncryptData->GetChildByIndex(pEncryptData,1);
