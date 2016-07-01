@@ -478,7 +478,10 @@ ASN1WriteUlong
      */
     AnscWriteUlong(pTmp, AnscUlongFromHToN(length));
 
-    while( pTmp[ i ] == 0x00 || i >= sizeof(ULONG))
+    /* RDKB-6200, CID-24417, out of bount access.
+    ** Maximum value pTmp can access is p[0...sizeof(ULONG)].
+    */
+    while( (pTmp[ i ] == 0x00) && i < sizeof(ULONG)) 
     {
         i ++;
     }
@@ -1243,6 +1246,7 @@ ASN1WriteBinaryToFile
 
     if( ANSC_STATUS_SUCCESS != AnscWriteFile( pFileHandle, pEncoding, &length))
     {
+        AnscCloseFile(pFileHandle);/*RDKB-6200, CID-24383, free resource before return*/
         return FALSE;
     }
 
@@ -1314,6 +1318,7 @@ ASN1LoadBinaryFromFile
 
     if( pEncoding == NULL)
     {
+        AnscCloseFile(pFileHandle);/*RDKB-6200, CID-24411, free resources after use */
         return NULL;
     }
 
@@ -1322,7 +1327,7 @@ ASN1LoadBinaryFromFile
     if( AnscReadFile( pFileHandle, pEncoding, &uBufferSize) != ANSC_STATUS_SUCCESS)
     {
         AnscFreeMemory(pEncoding);
-
+        AnscCloseFile(pFileHandle);/*RDKB-6200, CID-24411, free resources after use*/
         return NULL;
     }
 
