@@ -1804,7 +1804,7 @@ AnscAsn1IntegerGetStringValue
     )
 {
     PANSC_ASN1_INTEGER              pMyObject  = (PANSC_ASN1_INTEGER)hThisObject;
-    PUCHAR                          pData      = (PUCHAR)*ppData;
+    PUCHAR                          pData      = NULL;
 
     /*
      * hold the computation value
@@ -1820,6 +1820,9 @@ AnscAsn1IntegerGetStringValue
     {
         return ANSC_ASN1_BAD_PARAMETER;
     }
+
+    /*RDKB-6198, CID-24222, assign aftre null check*/
+    pData = (PUCHAR)*ppData;
 
     /* check the memeory */
     if( pData == NULL)
