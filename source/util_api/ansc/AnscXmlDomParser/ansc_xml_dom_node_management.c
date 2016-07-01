@@ -944,7 +944,7 @@ AnscXmlDomNodeGetAttr
      * pointer to the current parent node
      */
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
-    PANSC_XML_CONTEXT               pXMLContext   = (PANSC_XML_CONTEXT)pXmlNode->hXMLContext;
+    PANSC_XML_CONTEXT               pXMLContext   = NULL; /*RDKB-6188, CID-24302, initilize*/
 
 
     /***********************************************************
@@ -958,6 +958,7 @@ AnscXmlDomNodeGetAttr
     {
         return  (ANSC_HANDLE)NULL;
     }
+	pXMLContext = (PANSC_XML_CONTEXT)pXmlNode->hXMLContext; /*RDKB-6188, CID-24302, assign after null check*/
 
     AnscAcquireXmlLock(&pXmlNode->AttributesListLock);
     pSLinkEntry = AnscQueueGetFirstEntry(&pXmlNode->AttributesList);
