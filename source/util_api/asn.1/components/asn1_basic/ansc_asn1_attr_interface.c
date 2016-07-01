@@ -754,7 +754,7 @@ AnscAsn1AttrDump
 #ifndef _PKI_KERNEL
 
     PANSC_ATTR_OBJECT               pMyObject    = (PANSC_ATTR_OBJECT)hThisObject;
-    ULONG                           length;
+    ULONG                           length = 0; /*RDKB-6196, CID-24573, initialize before use*/
 
     if( pBuffer == NULL || pLength == NULL || *pLength < 10)
     {
