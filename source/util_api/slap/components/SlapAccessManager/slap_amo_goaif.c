@@ -720,16 +720,16 @@ SlapAmoGoaCreateObject
     {
         return  (ANSC_HANDLE)NULL;
     }
-    else if ( pSlapObjWrapperC->ObjType != SLAP_OWO_OBJ_TYPE_uoaContainer )
-    {
-        return  (ANSC_HANDLE)NULL;
-    }
     else
     {
         pSlapUoaIf = (PSLAP_UOA_INTERFACE)pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     }
 
     if ( !pSlapObjWrapperC )
+    {
+        return  (ANSC_HANDLE)NULL;
+    }
+    else if ( pSlapObjWrapperC->ObjType != SLAP_OWO_OBJ_TYPE_uoaContainer ) /*RDKB-6242, CID-24346, NULL check before use*/
     {
         return  (ANSC_HANDLE)NULL;
     }
