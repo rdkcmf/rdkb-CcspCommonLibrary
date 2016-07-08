@@ -496,8 +496,20 @@ TlsRkoRecv
             {
                 ulHashDataSize = (ULONG)pTlsRecordHeader2 - (ULONG)pSslMacReadSecret + TlsRecordGetSize(pTlsRecordHeader2) - 2;
 
-                AnscCopyMemory(pRecordChunk,          pSslMacReadSecret, ulSslMacShiftSize    );
-                AnscCopyMemory(pSslMacReadSecret + 2, pRecordChunk,      ulSslMacShiftSize - 2);
+                /* RDKB-6311, CID-24223, defining upper and lower boundary 
+                ** If pSslMacWriteSecret larger than Chunk size or less than 2(result in wrap around of the variable value, on subtracting 2)
+                ** leads to out of bound memory access.
+                */
+                if((ulChunkBufSize > ulSslMacShiftSize) && (ulSslMacShiftSize > 2))
+                {
+                    AnscCopyMemory(pRecordChunk,          pSslMacReadSecret, ulSslMacShiftSize    );
+                    AnscCopyMemory(pSslMacReadSecret + 2, pRecordChunk,      ulSslMacShiftSize - 2);
+                }
+                else
+                {
+                    returnStatus = ANSC_STATUS_FAILURE;
+                    goto  EXIT1;
+                }
 
                 pHashResult   = temp_buffer + pRecordStateR->MacSecret.Length + ulSslPadSize;
                 ulMacHashSize = pRecordStateR->MacHashSize;
@@ -1074,8 +1086,20 @@ TlsRkoSend
                 {
                     ulHashDataSize = (ULONG)pTlsRecordHeader - (ULONG)pSslMacWriteSecret + TlsRecordGetSize(pTlsRecordHeader) - 2;
 
-                    AnscCopyMemory(pRecordChunk,           pSslMacWriteSecret, ulSslMacShiftSize    );
-                    AnscCopyMemory(pSslMacWriteSecret + 2, pRecordChunk,       ulSslMacShiftSize - 2);
+                    /* RDKB-6311, CID-24097, defining upper and lower boundary 
+                    ** If pSslMacWriteSecret larger than Chunk size or less than 2(result in wrap around of the variable value, on subtracting 2)
+                    ** may leads to out of bound memory access.
+                    */
+                    if((ulChunkBufSize > pSslMacWriteSecret) && (pSslMacWriteSecret > 2))
+                    {
+                        AnscCopyMemory(pRecordChunk,           pSslMacWriteSecret, ulSslMacShiftSize    );
+                        AnscCopyMemory(pSslMacWriteSecret + 2, pRecordChunk,       ulSslMacShiftSize - 2);
+                    }
+                    else
+                    {
+                        returnStatus = ANSC_STATUS_FAILURE;
+                        goto  EXIT1;
+                    }
 
                     pHashResult   = temp_buffer + pRecordStateW->MacSecret.Length + ulSslPadSize;
                     ulMacHashSize = pRecordStateW->MacHashSize;
