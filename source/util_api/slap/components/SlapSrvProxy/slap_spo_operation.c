@@ -211,8 +211,15 @@ SlapSpoInvokeDispatch
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf   = (PSLAP_GOA_INTERFACE   )pMyObject->hSlapGoaIf;
 
-    *params_out = NULL;
-    *return_var = NULL;
+    /*RDKB-6306, CID-24234 & CID-24105, Null check before assignement*/
+    if(params_out != NULL)
+    {
+        *params_out = NULL;
+    }
+    if(return_var != NULL)
+    {
+        *return_var = NULL;
+    }
 
     if ( params_in )
     {
