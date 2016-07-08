@@ -4241,7 +4241,13 @@ HttpSmpoParseWarning
 
             /* agent */
             pToken  = _ansc_memchr(pToken, HTTP_SMPO_CHAR_SPACE, ulTokenSize);
-            pToken ++;
+            if(pToken)/*RDKB-6238, CID-24268, if NULL break, else break*/
+            {
+                pToken ++;
+            } else
+            {
+                break;
+            }
 
             if (pNext)
             {
