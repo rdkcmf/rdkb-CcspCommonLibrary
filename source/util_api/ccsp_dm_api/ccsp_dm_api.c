@@ -129,7 +129,7 @@ static int IsPathObj(const char *path)
 
 static DmParamVal_t *CloneParamVal(const DmParamVal_t *orig)
 {
-    DmParamVal_t *new;
+    DmParamVal_t *new = NULL;
 
     if (!orig)
         return NULL;
@@ -137,6 +137,8 @@ static DmParamVal_t *CloneParamVal(const DmParamVal_t *orig)
     new = (void *)AnscAllocateMemory(sizeof(DmParamVal_t));
     if (new == NULL)
         return NULL;
+
+    AnscZeroMemory(new, sizeof(DmParamVal_t)); /*RDKB-6129, initializing */
 
     new->type = orig->type;
     new->len = orig->len;
@@ -627,13 +629,13 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
         struct CdmComp **comps, int *compCnt, int raw)
 {
     struct CdmComp      *compList = NULL;
-    struct CdmComp      *comp;
-    int                 i, j, offset;
-    componentStruct_t   **compStru;
-    int                 compStruNum;
-    DmErr_t             err;
-    parameterValStruct_t *paramVal;
-    void                *ptr;
+    struct CdmComp      *comp = NULL;
+    int                 i=0, j=0, offset=0;
+    componentStruct_t   **compStru = NULL;
+    int                 compStruNum =0;
+    DmErr_t             err = 0;
+    parameterValStruct_t *paramVal = NULL;
+    void                *ptr = NULL;
 
     if (!params || !comps || !compCnt)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -655,7 +657,7 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
 
         err = CcspBaseIf_discComponentSupportingNamespace(cdm.busHdl, cdm.crId,
                 params[i].name, cdm.subSys, &compStru, &compStruNum);
-        if (err != CCSP_SUCCESS)
+        if ((err != CCSP_SUCCESS) || (compStru == NULL)) /* RDKB-6129, CID-33395, null check before use*/
             continue;
         if (compStruNum != 1) {
             free_componentStruct_t(cdm.busHdl, compStruNum, compStru);
@@ -833,8 +835,8 @@ DmErr_t Cdm_Term(void)
 
 DmErr_t Cdm_GetParamBool(const char *param, bool *val)
 {
-    DmErr_t err;
-    DmParamVal_t *dmVal;
+    DmErr_t err = 0;
+    DmParamVal_t *dmVal = NULL;
 
     if (!param || !val)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -855,8 +857,8 @@ DmErr_t Cdm_GetParamBool(const char *param, bool *val)
 
 DmErr_t Cdm_GetParamInt(const char *param, int *val)
 {
-    DmErr_t err;
-    DmParamVal_t *dmVal;
+    DmErr_t err = 0;
+    DmParamVal_t *dmVal = NULL; 
 
     if (!param || !val)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -877,8 +879,8 @@ DmErr_t Cdm_GetParamInt(const char *param, int *val)
 
 DmErr_t Cdm_GetParamString(const char *param, char *val, size_t size)
 {
-    DmErr_t err;
-    DmParamVal_t *dmVal;
+    DmErr_t err = 0;
+    DmParamVal_t *dmVal = NULL;
 
     if (!param || !val)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -909,8 +911,8 @@ DmErr_t Cdm_GetParamString(const char *param, char *val, size_t size)
 
 DmErr_t Cdm_GetParamUlong(const char *param, unsigned long *val)
 {
-    DmErr_t err;
-    DmParamVal_t *dmVal;
+    DmErr_t err = 0;
+    DmParamVal_t *dmVal = NULL;
 
     if (!param || !val)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -931,14 +933,14 @@ DmErr_t Cdm_GetParamUlong(const char *param, unsigned long *val)
 
 DmErr_t Cdm_GetParamUint(const char *param, unsigned int *val)
 {
-    DmErr_t err;
-    DmParamVal_t *dmVal;
+    DmErr_t err = 0;
+    DmParamVal_t *dmVal = NULL;
 
     if (!param || !val)
         return CCSP_ERR_INVALID_ARGUMENTS;
 
     err = Cdm_GetParam(param, &dmVal);
-    if (err != CCSP_SUCCESS)
+    if (err != CCSP_SUCCESS || (dmVal == NULL))
         return err;
 
     if (dmVal->type != DM_PT_UINT) {
@@ -1026,10 +1028,10 @@ DmErr_t Cdm_SetParamUint(const char *param, unsigned int val, int commit)
 
 DmErr_t Cdm_GetParam(const char *param, DmParamVal_t **val)
 {
-    const char *paths[1];
-    DmParam_t *params;
-    int cnt;
-    DmErr_t err;
+    const char *paths[1] = {NULL};
+    DmParam_t *params = NULL;
+    int cnt =0;
+    DmErr_t err = {0};
 
     if (!param || !val || !IsPathParam(param))
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -1185,13 +1187,13 @@ DmErr_t Cdm_GetNames(const char *path, int recursive,
 {
     componentStruct_t       **compStru = NULL;
     int                     compNum = 0;
-    int                     compIdx, infoIdx;
+    int                     compIdx = 0, infoIdx = 0;
     parameterInfoStruct_t   **infoStru = NULL;
     int                     infoNum = 0;
-    int                     offset;
+    int                     offset = 0;
     char                    (*list)[CDM_PATH_SZ];
-    void                    *ptr;
-    DmErr_t                 err;
+    void                    *ptr = NULL;
+    DmErr_t                 err = 0;
 
     if (!path || !names || !cnt)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -1221,6 +1223,8 @@ DmErr_t Cdm_GetNames(const char *path, int recursive,
 #endif
         if (err != CCSP_SUCCESS) {
             free_componentStruct_t(cdm.busHdl, compNum, compStru);
+            if (list)/*RDKB-6129, CID-33493  Free list(ptr) incase of error*/
+                AnscFreeMemory(list);
             return err;
         }
 
@@ -1265,14 +1269,14 @@ void Cdm_FreeNames(char (*names)[CDM_PATH_SZ])
 
 static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], int *cnt, int raw)
 {
-    DmErr_t         err;
+    DmErr_t         err = {0};
     int             compCnt, i, j;
-    struct CdmComp  *compList;
+    struct CdmComp  *compList = NULL;
     int             valNum = 0;
     parameterValStruct_t **valStru = NULL;
     int             paramCnt = 0;
     DmParam_t       *paramBuf = NULL;
-    void            *ptr;
+    void            *ptr = NULL;
 
     if (!paths || !params || !cnt)
         return CCSP_ERR_INVALID_ARGUMENTS;
@@ -1394,9 +1398,9 @@ void Cdm_FreeParamGrpRaw(DmParam_t params[], int cnt)
 static DmErr_t SetParamGrp(DmParam_t params[] /* in-out */, int cnt, int commit, int raw)
 {
     struct CdmComp *compList = NULL;
-    int compCnt, i;
-    DmErr_t err;
-    char *faultParam;
+    int compCnt=0, i=0;
+    DmErr_t err = 0;
+    char *faultParam = NULL; /*RDKB-6129, CID-33194; initializing the variable*/
 
     if (!params || cnt <= 0)
         return CCSP_ERR_INVALID_ARGUMENTS;
