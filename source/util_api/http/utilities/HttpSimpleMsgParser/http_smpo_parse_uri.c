@@ -597,10 +597,13 @@ HttpSmpoUtilParseRelPath
             pPath   = NULL;
         }
 
-		if (pUri->PathLevel >= HTTP_MAX_PATH_LEVEL_NUMBER)
-		{
-			break;	/* too many paths */
-		}
+        /* RDKB-6239, CID-24419; Out of bound memory
+        ** Max value "->PathLevel" can achieve is 15 to avoid memory curruption
+        */
+        if (pUri->PathLevel >= (HTTP_MAX_PATH_LEVEL_NUMBER-1)) 
+        {
+            break; /* too many paths */
+        }
     }
 
     /* parse query parameters */
