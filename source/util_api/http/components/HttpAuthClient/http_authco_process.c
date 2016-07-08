@@ -462,7 +462,7 @@ HttpAuthcoGenerateDigestResponse
     }
 
     status = pMyObject->GetRequestHostUri((ANSC_HANDLE)pMyObject, hRequest, &pHostName, &HostPort, &pUriPath);
-    if ( status != ANSC_STATUS_SUCCESS )
+    if ( (status != ANSC_STATUS_SUCCESS) || (pUriPath == NULL) ) /*RDKB-6236, CID-24438, null check before use (ignoring host as not used)*/
     {
         return NULL;
     }
