@@ -627,20 +627,20 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
     //    fprintf(stderr, "dbus_message_is_method_call %d\n", UserGetTickInMilliSeconds2());
     else if (!strcmp(CCSP_DBUS_INTERFACE_BASE, interface) && !strcmp("setParameterValues", method) && func->setParameterValues)
     {
-        DBusMessageIter iter;
-        DBusMessageIter array_iter;
-        DBusMessageIter struct_iter;
-        dbus_int32_t tmp, count = 0;
-        dbus_int32_t result ;
-        dbus_int32_t sessionId ;
-        dbus_uint32_t writeID ;
-        int param_size;
+        DBusMessageIter iter = { 0 };
+        DBusMessageIter array_iter = { 0 };
+        DBusMessageIter struct_iter= { 0 };
+        dbus_int32_t tmp = 0, count = 0;
+        dbus_int32_t result = 0;
+        dbus_int32_t sessionId = 0;
+        dbus_uint32_t writeID = 0;
+        int param_size = 0;
         parameterValStruct_t * parameterVal = 0;
-        dbus_bool commit;
-        int i;
+        dbus_bool commit = 0; /*RDKB-6233, CID-32915, init before use*/
+        int i = 0;
         char *invalidParameterName = 0;
-	char ** names;
-	/* get param array count first */
+        char ** names = NULL;
+        /* get param array count first */
         dbus_message_get_args (message,
                                   NULL,
                                   DBUS_TYPE_ARRAY, DBUS_TYPE_STRING, &names, &i,
@@ -732,12 +732,12 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
     else if (!strcmp(CCSP_DBUS_INTERFACE_BASE, interface) && !strcmp("setCommit", method) && func->setCommit)
     {
-        DBusMessageIter iter;
-        dbus_int32_t tmp ;
-        dbus_int32_t result ;
-        dbus_int32_t sessionId ;
-        dbus_uint32_t writeID ;
-        dbus_bool commit;
+        DBusMessageIter iter = {0};
+        dbus_int32_t tmp = 0;
+        dbus_int32_t result = 0;
+        dbus_int32_t sessionId = 0; /*RDKB-6233, CID-32928, init before use*/
+        dbus_uint32_t writeID = 0; /*RDKB-6233, CID-32967, init before use*/
+        dbus_bool commit = 0;
 
         dbus_message_iter_init (message, &iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_INT32)
@@ -1515,10 +1515,10 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
 	}	   
 	if(!strcmp(method,STBSERVICE_CDL_DLC_SIGNAL) && !strcmp(interface, STBSERVICE_CDL_INTERFACE) && func->dlCompleteSignal)
     {
-        DBusMessageIter iter;
+        DBusMessageIter iter = {0};
         dbus_message_iter_init (message, &iter);
-        dbus_uint32_t startTime;
-        dbus_uint32_t completeTime;
+        dbus_uint32_t startTime = 0;    /*RDKB-6233, CID-32992, init before use*/
+        dbus_uint32_t completeTime = 0; /*RDKB-6233, CID-33215, init before use*/
         
         dbus_message_iter_next (&iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_UINT32)
@@ -1690,12 +1690,15 @@ CcspBaseIf_deadlock_detection_log_print
     pthread_mutex_lock(&(info->info_mutex));
 
     fd = fopen( deadlock_detection_log_file, "a+" );
-    fseek(fd,0L,SEEK_END);
-
-    if ( ftell(fd) > 10000)
+    if(fd) /*RDKB-6233, CID-32959 , null check before use*/
     {
-        fclose(fd);
-        fd = fopen( deadlock_detection_log_file, "w+" );
+        fseek(fd,0L,SEEK_END);
+
+        if ( ftell(fd) > 10000)
+        {
+            fclose(fd);
+            fd = fopen( deadlock_detection_log_file, "w+" );
+        }
     }
 
     CCSP_DEADLOCK_PRINT(("\n%s CCSP Dbus Call stack trace printing  --  ************************************\n", timestr))
@@ -1827,10 +1830,14 @@ CcspBaseIf_Deadlock_Detection_Thread
         pthread_mutex_lock(&(info->info_mutex));
         
         fd = fopen( deadlock_detection_log_file, "a+" );
-        if ( ftell(fd) > 10000) rewind(fd);
+
+        if(fd) /*RDKB-6233, CID-33441, null check before use*/
+        {
+            if ( ftell(fd) > 10000) rewind(fd);
+        }
 
         CCSP_DEADLOCK_PRINT(("%s **CCSP Deadlock happened. Exiting after(5 sec)!!!!!!!!     The last fail accessing call is last one.\n", timestr));
-       
+
         time1.tv_sec = 5;
         nanosleep(&time1, NULL);
 
