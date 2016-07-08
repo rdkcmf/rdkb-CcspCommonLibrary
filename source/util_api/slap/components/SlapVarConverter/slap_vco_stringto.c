@@ -1039,6 +1039,7 @@ SlapVcoStringToOidList
 
     if ( !var_uint32Array )
     {
+        AnscFreeMemory(pAsn1Oid); /*RDKB-6307, CID-24072, free resource before exit*/
         return  NULL;
     }
     else
@@ -1055,6 +1056,7 @@ SlapVcoStringToOidList
             pAsn1Oid->ArraySize
         );
 
+    AnscFreeMemory(pAsn1Oid); /*RDKB-6307, CID-24072, free resource before exit*/
     return  var_uint32Array;
 }
 
@@ -1251,7 +1253,7 @@ SlapVcoHexStringToUint32
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-    ULONG                           ulUcharCount = AnscGetMin2(AnscSizeOfString(hex_string) / 2, sizeof(ULONG));
+    ULONG                           ulUcharCount = 0;
     ULONG                           ulTmpValue   = 0;
     ULONG                           i            = 0;
     UCHAR                           tempValue[4];
@@ -1263,6 +1265,7 @@ SlapVcoHexStringToUint32
     }
     else
     {
+        ulUcharCount = AnscGetMin2(AnscSizeOfString(hex_string) / 2, sizeof(ULONG)); /*RDKB-6307, CID-24443, Use after null check*/
         *(PULONG)tempValue = 0;
     }
 
