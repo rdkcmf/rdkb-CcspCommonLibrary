@@ -410,10 +410,15 @@ SlapOmoGetObjEntity2
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
-    PSLAP_OBJ_ENTITY_OBJECT         pObjEntity      = (PSLAP_OBJ_ENTITY_OBJECT  )pThisObjBroker->hSlapObjEntity;
+    PSLAP_OBJ_ENTITY_OBJECT         pObjEntity      = (PSLAP_OBJ_ENTITY_OBJECT  )NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN        )hTokenChain;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
+
+    if(pThisObjBroker) /*RDKB-6244, CID-24460, null check before use*/
+    {
+        pObjEntity      = (PSLAP_OBJ_ENTITY_OBJECT  )pThisObjBroker->hSlapObjEntity;
+    }
 
     if ( AnscQueueQueryDepth(&pPathTokenChain->TokensQueue) == 0 )
     {
@@ -738,12 +743,16 @@ SlapOmoDelObjEntity
     {
         pNextObjBroker = pThisObjBroker;
         pThisObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pNextObjBroker->hOwnerContext;
-        returnStatus   =
-            pThisObjBroker->DelObjBroker
-                (
-                    (ANSC_HANDLE)pThisObjBroker,
-                    pNextObjBroker->PathName
-                );
+
+        if(pThisObjBroker) /*RDKB-6244, CID-24348, null check before use*/
+        {
+            returnStatus   =
+                pThisObjBroker->DelObjBroker
+                    (
+                        (ANSC_HANDLE)pThisObjBroker,
+                        pNextObjBroker->PathName
+                    );
+        }
     }
 
     return  ANSC_STATUS_SUCCESS;
@@ -874,10 +883,15 @@ SlapOmoGetObjProxy2
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
-    PSLAP_OBJ_PROXY_OBJECT          pObjProxy       = (PSLAP_OBJ_PROXY_OBJECT   )pThisObjBroker->hSlapObjProxy;
+    PSLAP_OBJ_PROXY_OBJECT          pObjProxy       = (PSLAP_OBJ_PROXY_OBJECT   )NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN        )hTokenChain;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
+
+    if(pThisObjBroker) /*RDKB-6244, CID-24128, null check before use*/
+    {
+        pObjProxy = (PSLAP_OBJ_PROXY_OBJECT	)pThisObjBroker->hSlapObjProxy;
+    }
 
     if ( AnscQueueQueryDepth(&pPathTokenChain->TokensQueue) == 0 )
     {
@@ -1202,12 +1216,16 @@ SlapOmoDelObjProxy
     {
         pNextObjBroker = pThisObjBroker;
         pThisObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pNextObjBroker->hOwnerContext;
-        returnStatus   =
-            pThisObjBroker->DelObjBroker
-                (
-                    (ANSC_HANDLE)pThisObjBroker,
-                    pNextObjBroker->PathName
-                );
+
+        if(pThisObjBroker) /*RDKB-6244, CID-24290, null check before use*/
+        {
+            returnStatus   =
+                pThisObjBroker->DelObjBroker
+                    (
+                        (ANSC_HANDLE)pThisObjBroker,
+                        pNextObjBroker->PathName
+                    );
+        }
     }
 
     return  ANSC_STATUS_SUCCESS;
