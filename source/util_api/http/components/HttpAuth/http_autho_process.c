@@ -533,7 +533,7 @@ HttpAuthoCalcDigestHA2
     PUCHAR                          pHostName    = NULL;
     PUCHAR                          pUriPath     = NULL;
     USHORT                          HostPort     = 0;
-    ANSC_CRYPTO_HASH                MD5Hash;
+    ANSC_CRYPTO_HASH                MD5Hash = {0}; /*RDKB-6235, CID-24777, initialize before use*/
 
     if ( !pMethodName || *pMethodName == '\0' )
     {
@@ -1002,7 +1002,7 @@ HttpAuthoGetDigestAuthInfo
 
     while ( pChal )
     {
-        while ( *pChal == ' ' )
+        while ( pChal && (*pChal == ' ') ) /*RDKB-6235, CID-24093, nul check before use*/
         {
             pChal ++;
         }
