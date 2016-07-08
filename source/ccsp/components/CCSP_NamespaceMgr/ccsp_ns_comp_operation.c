@@ -476,6 +476,10 @@ CcspNsCompBuildFromNamespaceStructArray
 
                 AnscQueuePushEntry(&pMyObject->ParamspaceQueue, &pCcspName->Linkage);
             }
+            else  /*RDKB-6136, CID-33095, pluging resource leak if ppSpaceType[i] == NULL */
+            {
+                CcspNsMgrFreeMemory(pMyObject->pContainerName,(PVOID )pCcspName);
+            }
         }
     }
 
