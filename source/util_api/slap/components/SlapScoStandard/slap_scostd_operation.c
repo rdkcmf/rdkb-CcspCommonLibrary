@@ -1039,7 +1039,7 @@ SlapScoStdInvokeDispatch
 
                             returnStatus = ANSC_STATUS_INTERNAL_ERROR;
 
-                            goto  EXIT1;
+                            goto  EXIT2; /*RDKB-6305, CID-32916, Free unused memory in case of Error*/
 
                             break;
                 }
