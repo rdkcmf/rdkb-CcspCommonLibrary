@@ -600,19 +600,23 @@ AnscAsn1AnyDecodingData
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_ASN1_ANY                  pMyObject    = (PANSC_ASN1_ANY)hThisObject;
-    PANSC_TAGINFO_OBJECT            pTagInfo     = pMyObject->pTagInfo;
+    PANSC_ASN1_ANY                  pMyObject    = NULL;
+    PANSC_TAGINFO_OBJECT            pTagInfo     = NULL;
 
     /*
      * pointer to the start of unexamined raw encoding data
      */
-    PUCHAR                          pEncodingUnit;
+    PUCHAR                          pEncodingUnit = NULL;
 
     /* check the parameters */
     if( hThisObject == NULL  || ppEncoding == NULL)
     {
         return ANSC_ASN1_BAD_PARAMETER;
     }
+
+    /*RDKB-6195, CID-24365, assign after null check*/
+    pMyObject    = (PANSC_ASN1_ANY)hThisObject;
+    pTagInfo     = pMyObject->pTagInfo;
 
     /*
      *  check before decoding;
