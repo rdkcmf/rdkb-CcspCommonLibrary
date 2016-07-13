@@ -137,8 +137,8 @@ AnscBase64DecodeLine
     )
 {
     ULONG                           ulSize  = 0;
-    int                             length  = *pulSize;
-   
+    int                             length  = ((pulSize == NULL) ? 0 : (*pulSize)); /*RDKB-6183, CID-24152, null check before use*/
+
     if (pString)
     {      
         /* do a format verification first */
@@ -209,7 +209,7 @@ NEXT:
                 int                 i, qw = 0, tw = 0;
 
                 tmp     = pString;
-                length  = *pulSize;
+                length  = ((pulSize == NULL) ? 0 : (*pulSize)); /*RDKB-6183, CID-24152, null check before use*/
 
                 for (i = 0; i < length; i++)
                 {
