@@ -427,10 +427,13 @@ TlsCcoCancel
 
     if ( TRUE )
     {
-        pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_handshake       );
-        pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_alert           );
-        pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_changeCipherSpec);
-        pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_applicationData );
+        if(pTlsRecordKeeper) /*RDKB-6308, CID-24258, NULL check before use*/
+        {
+            pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_handshake);
+            pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_alert);
+            pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_changeCipherSpec);
+            pTlsRecordKeeper->PopRecordClient((ANSC_HANDLE)pTlsRecordKeeper, TLS_RECORD_TYPE_applicationData);
+        }
     }
 
     if ( pTlsHandShaker )
