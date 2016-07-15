@@ -328,6 +328,12 @@ else if(!strcmp(pComponentName,"dhcp_snooperd"))    \
     LogLevel = RDKLogLevel;                         \
     LogEnable = RDKLogEnable;                       \
 }                                                   \
+else if(!strcmp(pComponentName,"LOG.RDK.WECBMASTER"))                            \
+{                                                                                               \
+        ComponentName= "LOG.RDK.WECBMASTER";                                                  \
+        LogLevel = WECB_RDKLogLevel;\
+        LogEnable = WECB_RDKLogEnable;\
+}\
 else\
 {\
 		ComponentName = "LOG.RDK.Misc";							\
