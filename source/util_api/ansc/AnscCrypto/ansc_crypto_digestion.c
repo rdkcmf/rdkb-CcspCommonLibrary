@@ -596,15 +596,16 @@ AnscCryptoHmacSha256Digest
     SHA256_Update(&context,    tempBuffer,  ANSC_SHA256_OUTPUT_SIZE);
     SHA256_Final (hash->Value, &context);
 
+#if 0 /*RDKB-6145, CID-24478, outof bound access may currupt memset beyond "array boundary"*/
     /*
      * let's make sure our output size is bigger than the requirement; otherwise, we should pad zeros to the end
      * of the hash result data
      */
     if ( ANSC_SHA256_OUTPUT_SIZE < hash->Length )
     {
-        AnscZeroMemory(&hash->Value[ANSC_SHA256_OUTPUT_SIZE], hash->Length - ANSC_SHA256_OUTPUT_SIZE);
+        AnscZeroMemory(&hash->Value[ANSC_SHA256_OUTPUT_SIZE-1], hash->Length - ANSC_SHA256_OUTPUT_SIZE);
     }
-
+#endif
     /*
      * return control to caller
      */
