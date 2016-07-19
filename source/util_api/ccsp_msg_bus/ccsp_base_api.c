@@ -60,12 +60,12 @@ int CcspBaseIf_freeResources(
     int priority
 )
 {
-    DBusMessage *message;
-    DBusMessage *reply;
+    DBusMessage *message = NULL;
+    DBusMessage *reply = NULL; /*RDKB-6231, CID-33211, init before use */
     int ret = CCSP_FAILURE;
-    dbus_int32_t tmp1 ;
+    dbus_int32_t tmp1 = 0;
     DBusMessageIter iter;
-	dbus_int32_t tmp;
+    dbus_int32_t tmp;
 
     message = dbus_message_new_method_call (dst_component_id,
                                             dbus_path,
