@@ -358,11 +358,17 @@ TlsCpoGenerateRSAKeys
     }
 
     /* create the keys */
+    /*RDKB-6310, CID-24239, CID-24345; re-arranging logic to avoid memory leaks*/
     pRsaPubKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-    pRsaPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-
-    if( pRsaPubKey == NULL || pRsaPrvKey == NULL)
+    if(pRsaPubKey == NULL)
     {
+        return ANSC_STATUS_FAILURE;
+    }
+
+    pRsaPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
+    if(pRsaPrvKey == NULL)
+    {
+        AnscFreeMemory(pRsaPubKey);
         return ANSC_STATUS_FAILURE;
     }
 
