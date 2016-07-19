@@ -123,21 +123,29 @@ HttpSmpoUtilParseRequestLine
         ULONG                       ulSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject;
-    ANSC_HANDLE                     hResult;
+    PHTTP_SIMPLE_MSG_PARSER         pMyObject = NULL;
+    ANSC_HANDLE                     hResult = NULL;
     ULONG                           i;
     PHTTP_REQUEST_INFO              pRequestInfo = NULL;
     PUCHAR                          pMethod, pUri, pVersion;
     ULONG                           ulMethod, ulUri, ulVersion;
-    PUCHAR                          pBuf;
-    PUCHAR                          pMsg;
+    PUCHAR                          pBuf = NULL;
+    PUCHAR                          pMsg = NULL;
 
     pMyObject           = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
     hResult             = (ANSC_HANDLE)NULL;
     pMethod             = NULL;
     pUri                = NULL;
     pVersion            = NULL;
-    pBuf                = (PUCHAR)buffer;
+
+    if(buffer)
+    {
+        pBuf                = (PUCHAR)buffer;
+    }
+    else
+    {
+        return (ANSC_HANDLE)NULL;
+    }
 
     /* skip possible leading spaces and tab */
     for (i = 0; i < ulSize; i ++)
@@ -147,6 +155,11 @@ HttpSmpoUtilParseRequestLine
     }
 
     pMethod = &pBuf[i];
+    if (!pMethod) /*RDKB-6241, CID-24122, If method is null return*/
+    {
+        return (ANSC_HANDLE)NULL;
+    }
+
     pMsg    = _ansc_strchr(pMethod, ' ');
 
     if (!pMsg)
@@ -163,6 +176,11 @@ HttpSmpoUtilParseRequestLine
     }
 
     pUri    = pMsg;
+    if (!pMethod) /*RDKB-6241, CID-24394, If method is null return*/
+    {
+        return (ANSC_HANDLE)NULL;
+    }
+
     pMsg    = _ansc_strchr(pUri, ' ');
 
     if (!pMsg)
@@ -496,7 +514,7 @@ HttpSmpoUtilParseChunkedLine
     PUCHAR                          pBuf        = (PUCHAR)buffer;
     PUCHAR                          pLast       = pBuf + ulSize - 1;
     PUCHAR                          pExt        = NULL;
-    PUCHAR                          pNext, pCRLF;
+    PUCHAR                          pNext = NULL, pCRLF = NULL;
     ULONG                           ulChunkSize = 0;
     ULONG                           i;
     UCHAR                           uc;
@@ -523,6 +541,7 @@ HttpSmpoUtilParseChunkedLine
 
         if (!pCRLF || pCRLF == pLast)
         {
+            AnscFreeMemory(pChunkInfo);/*RDKB-6241, CID-24413, free resource befor return*/
             return (ANSC_HANDLE)NULL;
         }
 
