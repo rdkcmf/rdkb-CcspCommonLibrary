@@ -702,6 +702,16 @@ HttpMboProcessMPData
                     }
                     else if ( status != ANSC_STATUS_SUCCESS )
                     {
+                        if(pFieldName) /*RDKB-6237, CID-24315, free resource before return*/
+                        {
+                            AnscFreeMemory(pFieldName);
+                        }
+
+                        if(pFileName) /*RDKB-6237, CID-24272, free resource before return*/
+                        {
+                            AnscFreeMemory(pFileName);
+                        }
+
                         AnscFreeBdo(hBdo);
 
                         return status;
