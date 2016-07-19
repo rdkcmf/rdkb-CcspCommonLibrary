@@ -405,7 +405,7 @@ WebRloGetResourceOwner2
     PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = (PWEB_URI_PATH_OBJECT          )pRootUriPath;
     PWEB_URI_PATH_OBJECT            pNextUriPath    = (PWEB_URI_PATH_OBJECT          )NULL;
-    PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = (PWEB_RESOURCE_OWNER_OBJECT    )pThisUriPath->GetResourceOwner((ANSC_HANDLE)pThisUriPath);
+    PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = (PWEB_RESOURCE_OWNER_OBJECT    )NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN             )hTokenChain;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -416,6 +416,12 @@ WebRloGetResourceOwner2
     }
     else
     {
+        /*RDKB-6312, CID-24369, "pThisUriPath"/"pRootUriPath" may null, vallidate before use */
+        if(pThisUriPath)
+        {
+            pResourceOwner  = (PWEB_RESOURCE_OWNER_OBJECT    )pThisUriPath->GetResourceOwner((ANSC_HANDLE)pThisUriPath);
+        }
+
         pSLinkEntry = AnscQueuePopEntry(&pPathTokenChain->TokensQueue);
 
         while ( pSLinkEntry && pThisUriPath )
@@ -738,12 +744,16 @@ WebRloDelResourceOwner
     {
         pNextUriPath = pThisUriPath;
         pThisUriPath = (PWEB_URI_PATH_OBJECT)pNextUriPath->hOwnerContext;
-        returnStatus =
-            pThisUriPath->DelUriPath
-                (
-                    (ANSC_HANDLE)pThisUriPath,
-                    pNextUriPath->GetPathName((ANSC_HANDLE)pNextUriPath)
-                );
+        /*RDKB-6312, CID-24197, Null check to avoid crash updated "pThisUriPath" before use*/
+        if(pThisUriPath)
+        {
+            returnStatus =
+                pThisUriPath->DelUriPath
+                    (
+                        (ANSC_HANDLE)pThisUriPath,
+                        pNextUriPath->GetPathName((ANSC_HANDLE)pNextUriPath)
+                    );
+        }
     }
 
     return  ANSC_STATUS_SUCCESS;
