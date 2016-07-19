@@ -240,16 +240,20 @@ SlapVcoUcharArrayToString
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-    char*                           var_string   = (char*                     )AnscAllocateMemory(var_uchar_array->VarCount * 2 + 1);
+    char*                           var_string   = NULL;
     ULONG                           i            = 0;
+
+    /*RDKB-6307, CID-24090, null check before use*/
+    if(!var_uchar_array || (var_uchar_array->VarCount == 0))
+    {
+        return  NULL;
+    }
+
+    var_string = (char*  )AnscAllocateMemory(var_uchar_array->VarCount * 2 + 1);
 
     if ( !var_string )
     {
         return  NULL;
-    }
-    else if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
-    {
-        return  var_string;
     }
     else
     {
@@ -305,22 +309,23 @@ SlapVcoUcharArrayToBase64String
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-    ULONG                           i            = var_uchar_array->VarCount;
+    ULONG                           i            = 0;
 
-    
     if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
     {
         return  NULL;
     }
     else
-	{
+    {
+        i = var_uchar_array->VarCount; /*RDKB-6307, CID-24317, use after NULL check*/
+
         return 
         AnscBase64Encode
             (
                 (const PUCHAR)var_uchar_array->Array.arrayUchar,
                 i
             );
-	}
+    }
 
 }
 
@@ -361,16 +366,20 @@ SlapVcoUcharArrayToString2
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-    char*                           var_string   = (char*                     )AnscAllocateMemory(var_uchar_array->VarCount + 1);
+    char*                           var_string   = NULL;
     ULONG                           i            = 0;
+
+    /*RDKB-6307, CID-24230, Null check before use*/
+    if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
+    {
+        return NULL;
+    }
+
+    var_string = (char*  )AnscAllocateMemory(var_uchar_array->VarCount + 1);
 
     if ( !var_string )
     {
         return  NULL;
-    }
-    else if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
-    {
-        return  var_string;
     }
     else
     {
