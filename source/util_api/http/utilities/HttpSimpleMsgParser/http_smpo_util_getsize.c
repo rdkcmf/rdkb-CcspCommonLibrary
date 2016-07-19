@@ -1264,8 +1264,8 @@ HttpSmpoUtilGetSizeBasicCredential
     )
 {
     ULONG                           ulSize  = 0;
-    ULONG                           ulUser, ulPass, ulBufLen;
-    PUCHAR                          pBuf, pEncBuf;
+    ULONG                           ulUser = 0, ulPass = 0, ulBufLen = 0;
+    PUCHAR                          pBuf = NULL, pEncBuf = NULL;
 
     ulUser      =  AnscSizeOfString(pBasic->UserName);
     ulPass      =  AnscSizeOfString(pBasic->Password);
@@ -1293,7 +1293,7 @@ HttpSmpoUtilGetSizeBasicCredential
             AnscCopyMemory(pBuf + ulUser + 1, pBasic->Password, ulPass);
         }
 
-        pBuf[ulBufLen]      = 0;
+        pBuf[ulBufLen-1]      = 0; /*RDKB-6240, CID-24102, array size is ulBufLen*/
 
         /* Encode the USER:PASS */
         pEncBuf = AnscBase64Encode(pBuf, ulBufLen - 1);   
