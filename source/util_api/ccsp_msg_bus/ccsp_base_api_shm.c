@@ -221,7 +221,7 @@ static int ParseShm(char * shmPtr, parameterValStruct_t *** pValStructs, int * p
 #if 1
     *pCount = size;
     *pValStructs = bus_info->mallocfunc(size * sizeof(parameterValStruct_t *));
-    if (!pValStructs)
+    if (!(*pValStructs)) /*RDKB-6232, CID-33345, validate malloc*/
     {
         CcspTraceError(("can't malloc\n"));
         return -1;
