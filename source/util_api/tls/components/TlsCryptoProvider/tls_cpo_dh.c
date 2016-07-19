@@ -402,11 +402,17 @@ TlsCpoGenerateDHKeys1
     }
 
     /* create the keys */
+    /*RDKB-6309, CID-24144, CID-24373; re-arranging logic to avoid memory leaks*/
     pDhPubKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-    pDhPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-
-    if( pDhPubKey == NULL || pDhPrvKey == NULL)
+    if(pDhPubKey == NULL)
     {
+        return ANSC_STATUS_FAILURE;
+    }
+
+    pDhPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
+    if(pDhPrvKey == NULL)
+    {
+        AnscFreeMemory(pDhPubKey);
         return ANSC_STATUS_FAILURE;
     }
 
@@ -571,11 +577,17 @@ TlsCpoGenerateDHKeys2
     }
 
     /* create the keys */
+    /*RDKB-6309, CID-24132, CID-24240; re-arranging logic to avoid memory leaks*/
     pDhPubKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-    pDhPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
-
-    if( pDhPubKey == NULL || pDhPrvKey == NULL)
+    if(pDhPubKey == NULL)
     {
+        return ANSC_STATUS_FAILURE;
+    }
+
+    pDhPrvKey = (ANSC_X509_KEY*)AnscAllocateMemory(sizeof(ANSC_X509_KEY));
+    if(pDhPrvKey == NULL)
+    {
+        AnscFreeMemory(pDhPubKey);
         return ANSC_STATUS_FAILURE;
     }
 
