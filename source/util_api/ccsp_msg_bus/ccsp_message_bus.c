@@ -888,6 +888,7 @@ CCSP_Message_Bus_Init
     if( ! bus_info)
     {
         CcspTraceError(("<%s>: No memory\n", __FUNCTION__));
+        fclose(fp);/*RDKB-6234, CID-33427, free the resource before return*/
         return -1;
     }
     memset(bus_info, 0, sizeof(CCSP_MESSAGE_BUS_INFO));
@@ -914,6 +915,8 @@ CCSP_Message_Bus_Init
     if( ! bus_info->msg_queue)
     {
         CcspTraceError(("<%s>: No memory\n", __FUNCTION__));
+        fclose(fp);/*RDKB-6234, CID-33427, free the resource before return*/
+        bus_info->freefunc(bus_info);
         return -1;
     }
     CcspMsgQueueInit(bus_info->msg_queue);
