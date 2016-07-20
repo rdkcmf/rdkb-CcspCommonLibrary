@@ -122,9 +122,9 @@ SlapLboAsyncCallTaskLoco
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LBO_ASYNC_CALL_INFO       pAsyncCallInfo      = (PSLAP_LBO_ASYNC_CALL_INFO )hCallInfo;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject           = (PSLAP_LOAM_BROKER_OBJECT  )pAsyncCallInfo->hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
-    PANSC_LPC_PARTY_ADDR            pPartyAddr          = (PANSC_LPC_PARTY_ADDR      )pAsyncCallInfo->hPartyAddr;
+    PSLAP_LOAM_BROKER_OBJECT        pMyObject           = NULL;
+    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = NULL;
+    PANSC_LPC_PARTY_ADDR            pPartyAddr          = NULL;
     void*                           pMessageBuffer      = (void*                     )NULL;
     ULONG                           ulBufferSize        = (ULONG                     )0;
     PIMCP_SLAP_CALL                 pImcpSlapCall       = (PIMCP_SLAP_CALL           )NULL;
@@ -138,6 +138,31 @@ SlapLboAsyncCallTaskLoco
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
     PIMCP_PARTY_INFO                pRepliedPartyInfo   = (PIMCP_PARTY_INFO          )NULL;
     ULONG                           ulPartyInfoSize     = (ULONG                     )0;
+
+    /* RDKB-6243, CID-24481; null checking on before use 
+    ** NULL check of "pAsyncCallInfo" done on "EXIT0" before releasing semaphone
+    ** the variable indicates that the variable may be NULL.
+    */
+    if(pAsyncCallInfo)
+    {
+        pMyObject           = (PSLAP_LOAM_BROKER_OBJECT  )pAsyncCallInfo->hThisObject;
+        pPartyAddr          = (PANSC_LPC_PARTY_ADDR      )pAsyncCallInfo->hPartyAddr;
+
+        if(!pMyObject || !pPartyAddr)
+        {
+            goto EXIT0;
+        }
+
+        pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+        if(!pAnscLpcConnector)
+        {
+            goto EXIT0;
+        }
+    }
+    else
+    {
+        goto  EXIT0;
+    }
 
     if ( TRUE )
     {
