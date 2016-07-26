@@ -147,7 +147,19 @@ elif [ -e ./tad ]; then
         cd ..
 fi
 
-        
+echo "*** Start CcspSafeNAT ***"
+if [ -e ./ccsp-safenat-broadband ]; then
+        cd ccsp-safenat-broadband
+
+        if [ "x"$Subsys = "x" ];then
+                $BINPATH/CcspSafeNAT
+        else
+                echo "$BINPATH/CcspSafeNAT -subsys $Subsys"
+                $BINPATH/CcspSafeNAT -subsys $Subsys
+        fi
+        cd ..
+fi
+
 if [ -e /nvram/webpa_cfg.json ]; then
 	echo "webpa_cfg.json exists in nvram"
  else
