@@ -485,35 +485,63 @@ parameterValStruct_t notif_val[1];
 char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
 char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
 char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
-char  str[500] = {0};
 char *str1[50] = {0};
-void* Send_Notification_Thread_Func(void* arg)
+int paramCount=0;
+
+void* Send_Notification_Thread_Func()
 {
 	char* faultParam = NULL;
-	char* str = (char*) arg;
+	int ret = 0;
+	int i = 0;
+        
 	notif_val[0].parameterName =  param_name ;
-	notif_val[0].parameterValue = str;
 	notif_val[0].type = ccsp_string;
-
+    CcspTraceWarning((" Send_Notification_Thread_Func paramCount %d \n",paramCount));
+    printf(" Send_Notification_Thread_Func paramCount %d \n",paramCount);
 	pthread_detach(pthread_self());
 
-	CcspBaseIf_setParameterValues(
-		bus_handle,
-		compo,
-		bus,
-		0,
-		0,
-		notif_val,
-		1,
-		TRUE,
-		&faultParam
-		);
+       for(i=0; i < paramCount ; i++)
+       {
+          CcspTraceWarning(("<< Send_Notification_Thread_Func i %d >>\n",i));
+          printf("<< Send_Notification_Thread_Func i %d >>\n",i);
+          if ( NULL == str1[i])
+          {
+             printf(" Send_Notification_Thread_Func Got NULL %d\n",i);
+             CcspTraceWarning((" Send_Notification_Thread_Func Got NULL %d\n",i));
+          }
+          else
+          {
+             printf("<< str[i] %s >>\n",str1[i]);
+             CcspTraceWarning(("<< str[i] %s >>\n",str1[i]));
+             notif_val[0].parameterValue = str1[i];
+	         ret =    CcspBaseIf_setParameterValues(
+		               bus_handle,
+		               compo,
+		               bus,
+		               0,
+		               0,
+		               notif_val,
+		               1,
+		               TRUE,
+		               &faultParam
+		               );
+	         if(ret != CCSP_SUCCESS) //|| (ret != ANSC_SUCCESS))
+	         {
+	            CcspTraceWarning(("<< Failed to Send Notification %s %d >>\n",__FUNCTION__, ret));
+	         }
+          }
+       }
 	
-	if(str)
-	{
-		AnscFreeMemory(str);
-		str = NULL;
-	}
+       for(i=0; i < paramCount ; i++)
+       {
+	      if(str1[i])
+	      {
+		    AnscFreeMemory(str1[i]);
+		    str1[i] = NULL;
+                
+	      }
+       }
+paramCount=0;
 }
 #endif
 /**********************************************************************
@@ -600,10 +628,11 @@ DslhWmpdoMpaSetParameterValues
     BOOL                            bFaultEncountered    = (BOOL                       )FALSE;
     BOOL                            bRebootNeeded        = (BOOL                       )FALSE;
     ULONG                           i                    = 0;
+    ULONG                           j                    = 0;
     BOOL                            bFromAcs             = FALSE;
     BOOL                            bFromSnmp            = FALSE;
     ULONG                           dataType             = 0;
-
+    char  str[500] = {0};
     bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
     *piStatus    = 0;
@@ -819,13 +848,31 @@ DslhWmpdoMpaSetParameterValues
                     parseOldVal(pVarRecord->OldParamValue, &vcSig);
                     vcSig.writeID = pVarRecord->ReqSenderID;
                     vcSig.type = dataType;
-                    sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
-                    str1[i] = (char *) AnscAllocateMemory(strlen(str) + 1);
-                    strcpy(str1[i], str);
-					if(strcmp(vcSig.newValue,vcSig.oldValue)){				
-						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, str1[i]);		
+                    if(strcmp(vcSig.newValue,vcSig.oldValue))
+                    {
+		               memset(str, 0, (sizeof(str)));
+                       sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
+		               if(str != NULL)
+		               {
+		                 CcspTraceWarning(("<< %s sending Notification str %s >>\n",__FUNCTION__,str));
+		               }
+		               str1[j] = (char *) AnscAllocateMemory(strlen(str) + 1);
+		               memset(str1[j], 0, (strlen(str) + 1));
+		               strcpy(str1[j], str);
+		    
+		               CcspTraceWarning(("<< %s sending Notification %s >>\n",__FUNCTION__,str1[j]));
+		               CcspTraceWarning(("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize));
+		               j++;
+                    }
+
+                    printf("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize);
+                    if(ulArraySize == i+1)
+                    {
+                        paramCount = j;
+                        j = 0;
+						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
 						if(res != 0)
-							AnscTraceError(("Create Send_Notification_Thread error %d ", res));
+							CcspTraceWarning(("Create Send_Notification_Thread error %d ", res));
 					}
                 }
             }
