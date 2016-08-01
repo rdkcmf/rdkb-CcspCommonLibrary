@@ -161,15 +161,6 @@ fi
 
 echo "Elected subsystem is $Subsys"
 
-#if [ -e /nvram/disableCr ]; then
-#	echo "***disabling CcspCr****"
-if [ "x"$Subsys = "x" ];then
-	$BINPATH/CcspCrSsp
-else
-	echo "$BINPATH/CcspCrSsp -subsys $Subsys"
-	$BINPATH/CcspCrSsp -subsys $Subsys
-fi
-
 #if [ -e /nvram/disablelogagent ]; then
 #	echo "***disabling Loagent****"
 if [ -e ./logagent ]; then

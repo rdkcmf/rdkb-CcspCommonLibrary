@@ -36,7 +36,7 @@ BINPATH="/usr/bin"
 
 killall CcspWifiSsp
 killall harvester
-
+killall CcspCrSsp
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
@@ -58,6 +58,15 @@ export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBR
 #####BEGIN: Changes for ARRISXB3-3853
 export PATH=$PATH:/etc/ath
 echo "PATH="$PATH
+export LOG4C_RCPATH=/rdklogger
+
+LOG_FOLDER="/rdklogs/logs/"
+
+mkdir -p $LOG_FOLDER
+
+ATOMCONSOLELOGFILE="$LOG_FOLDER/AtomConsolelog.txt.0"
+exec 3>&1 4>&2 >>$ATOMCONSOLELOGFILE 2>&1
+
 #####END: Changes for ARRISXB3-3853
 
 # upgrade the wifi config to suppot vlan 106
@@ -88,6 +97,13 @@ echo "Starting telnet"
 #/etc/ath/fast_down.sh 
 #sleep 5
 #####END: Changes for ARRISXB3-3853
+
+if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspCrSsp
+else
+        echo "$BINPATH/CcspCrSsp -subsys $Subsys"
+        $BINPATH/CcspCrSsp -subsys $Subsys
+fi
 
 if [ -e ./harvester ]; then
 	echo "****STARTING HARVESTER***"
@@ -122,6 +138,10 @@ fi
 
 echo "starting process monitor script"
 sh /usr/ccsp/wifi/process_monitor_atom.sh &
+
+echo "Monitor ATOM log folder size"
+sh /rdklogger/atom_log_monitor.sh &
+
 
 if [ -f "/usr/ccsp/tdk_start.sh" ]
 then
