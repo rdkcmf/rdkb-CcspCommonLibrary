@@ -96,6 +96,9 @@ sleep 1
 echo "Starting telnet"
 /usr/sbin/telnetd -b 192.168.101.3
 
+echo "Starting inotify watcher for telemetry"
+/usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
+
 #####BEGIN: Changes for ARRISXB3-3853
 #/etc/ath/fast_down.sh 
 #sleep 5
