@@ -9,7 +9,8 @@ Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-ExecStartPre=/bin/sh -c 'while sleep 1; do if ! [ -f /tmp/.qtn_ready ]; then echo "Waiting for QTN ready..."; else break; fi done'
+ExecStartPre=/bin/sh -c 'while sleep 1; do if ! [ -f /tmp/.qtn_ready ]; then echo "Waiting for QTN ready..."; \
+loopcounter=$((loopcounter+1)); if [ $loopcounter -eq 600 ]; then break; fi else break; fi done'
 ExecStartPre=-/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
