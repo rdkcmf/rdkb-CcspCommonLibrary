@@ -1,5 +1,8 @@
 #!/bin/sh
 
+. /etc/device.properties
+. /etc/include.properties
+
 source /etc/utopia/service.d/log_capture_path.sh
 
 BINPATH="/usr/bin"
@@ -236,10 +239,16 @@ fi
 
 # starting the minidump watcher & uploader
 if [ -f /usr/bin/inotify-minidump-watcher ];then
-      /usr/bin/inotify-minidump-watcher /minidumps "*.dmp" &
+      /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  0 "*.dmp" &
 fi
 
 /etc/utopia/service.d/service_sshd.sh sshd-start &
+
+# Enable SSH between processors for devices having multiple processors alone
+if [ "x$MULTI_CORE" == "xyes" ]; then
+    dropbear -E -B -p $ARM_INTERFACE_IP:22 &
+    /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
+fi
 
 # Enable XCONF Conf config fetch
 if [ -f  /lib/rdk/dcm.service ]; then
