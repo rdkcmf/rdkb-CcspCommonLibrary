@@ -74,7 +74,7 @@ exec 3>&1 4>&2 >>$ATOMCONSOLELOGFILE 2>&1
 rdk_wifi_upgrade_vlan106
 
 # Config vlan 106 Secure ssid (phrase 2): RDKB-6974
-rdk_wifi_configure_lnf_ap.sh
+/usr/ccsp/wifi/rdk_wifi_configure_lnf_ap.sh
 
 # enable core files on atom
 ulimit -c unlimited
