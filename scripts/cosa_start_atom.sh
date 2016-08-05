@@ -37,6 +37,7 @@ BINPATH="/usr/bin"
 killall CcspWifiSsp
 killall harvester
 killall CcspCrSsp
+killall rpcserver
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 192.168.101.3
@@ -163,4 +164,10 @@ then
             sh /usr/ccsp/tdk_start.sh &
         fi
     fi
+fi
+
+# starting the rpcserver
+echo "starting rpcserver atom"
+if [ -f /usr/bin/rpcserver ];then
+      /usr/bin/rpcserver &
 fi
