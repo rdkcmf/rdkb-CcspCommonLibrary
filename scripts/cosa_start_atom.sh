@@ -34,6 +34,8 @@
 
 BINPATH="/usr/bin"
 
+. /etc/device.properties
+
 killall CcspWifiSsp
 killall harvester
 killall CcspCrSsp
@@ -65,8 +67,11 @@ LOG_FOLDER="/rdklogs/logs/"
 
 mkdir -p $LOG_FOLDER
 
-ATOMCONSOLELOGFILE="$LOG_FOLDER/AtomConsolelog.txt.0"
-exec 3>&1 4>&2 >>$ATOMCONSOLELOGFILE 2>&1
+if [ "$CR_IN_PEER" = "yes" ]
+then
+	ATOMCONSOLELOGFILE="$LOG_FOLDER/AtomConsolelog.txt.0"
+	exec 3>&1 4>&2 >>$ATOMCONSOLELOGFILE 2>&1
+fi
 
 #####END: Changes for ARRISXB3-3853
 
@@ -104,12 +109,14 @@ echo "Starting inotify watcher for telemetry"
 #/etc/ath/fast_down.sh 
 #sleep 5
 #####END: Changes for ARRISXB3-3853
-
-if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspCrSsp
-else
-        echo "$BINPATH/CcspCrSsp -subsys $Subsys"
-        $BINPATH/CcspCrSsp -subsys $Subsys
+if [ "$CR_IN_PEER" = "yes" ]
+then
+	if [ "x"$Subsys = "x" ];then
+		$BINPATH/CcspCrSsp
+	else
+		echo "$BINPATH/CcspCrSsp -subsys $Subsys"
+		$BINPATH/CcspCrSsp -subsys $Subsys
+	fi
 fi
 
 if [ -e ./harvester ]; then
