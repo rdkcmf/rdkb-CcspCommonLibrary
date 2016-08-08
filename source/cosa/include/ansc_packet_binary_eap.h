@@ -157,33 +157,7 @@ EAP_HEADER,  *PEAP_HEADER;
 #define  AnscEapSetLength(p, l)                     AnscWriteUshort(&p->Length, AnscUshortFromHToN(l))
 #define  AnscEapSetData(p, d, l)                    AnscCopyMemory(p->Data, d, l)
 
-/*
- * The Request packet (Code field set to 1) is sent by the authenticator to the peer. Each Request
- * has a Type field which serves to indicate what is being requested. Additional Request packets
- * MUST be sent until a valid Response packet is received, an optional retry counter expires, or a
- * lower layer failure indication is received.
- *
- * Retransmitted Requests MUST be sent with the same Identifier value in order to distinguish them
- * from new Requests. The content of the data field is dependent on the Request Type. The peer MUST
- * send a Response packet in reply to a valid Request packet. Responses MUST only be sent in reply
- * to a valid Request and never be retransmitted on a timer.
- *
- * If a peer receives a valid duplicate Request for which it has already sent a Response, it MUST
- * resend its original Response without reprocessing the Request. Requests MUST be processed in the
- * order that they are received, and MUST be processed to their completion before inspecting the
- * next Request.
- *
- * A summary of the Request and Response packet format follows. The fields are transmitted from
- * left to right.
- *
- *       0                   1                   2                   3
- *       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
- *      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *      |     Code      |  Identifier   |            Length             |
- *      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *      |     Type      |  Type-Data ...
- *      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
- */
+
 #define  EAP_REQ_TYPE_Identity                      1
 #define  EAP_REQ_TYPE_Notification                  2
 #define  EAP_REQ_TYPE_Nak                           3
