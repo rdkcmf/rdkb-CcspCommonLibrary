@@ -242,6 +242,12 @@ if [ -f /usr/bin/inotify-minidump-watcher ];then
       /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  0 "*.dmp" &
 fi
 
+echo "starting rpcserver from arm"
+# starting the rpcserver
+if [ -f /usr/bin/rpcserver ];then
+      /usr/bin/rpcserver &
+fi
+
 /etc/utopia/service.d/service_sshd.sh sshd-start &
 
 # Enable SSH between processors for devices having multiple processors alone
