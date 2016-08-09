@@ -9,8 +9,7 @@ Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-ExecStartPre=/bin/sh -c 'loopcounter=0; until [ $loopcounter -eq 300 ]; do sleep 1; loopcounter=$((loopcounter+1)); \
-echo "Waiting for QTN ready..."; if [ -f /tmp/.qtn_ready ] && [ $loopcounter -gt 50 ]; then break; fi; done'
+ExecStartPre=/bin/sh -c '/usr/ccsp/qtnWifiInitialized.sh'
 ExecStartPre=/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
