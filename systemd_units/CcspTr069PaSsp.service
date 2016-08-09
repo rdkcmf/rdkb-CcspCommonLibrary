@@ -1,13 +1,5 @@
 [Unit]
 Description=CcspTr069PaSsp service
-After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service ccspwifiagent.service \
-wifiinitialized.service emailNotificationMonitor.service CcspMtaAgentSsp.service
-
-Requires=CcspCrSsp.service
-Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service ccspwifiagent.service \
-wifiinitialized.service emailNotificationMonitor.service CcspMtaAgentSsp.service
 
 [Service]
 Type=forking
@@ -22,4 +14,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=wifi-initialized.target

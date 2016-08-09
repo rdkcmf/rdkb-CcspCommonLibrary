@@ -1,9 +1,7 @@
 [Unit]
 Description=CcspXconfConfig service
 
-After=CcspXconf.service
-
-Wants=CcspXconf.service
+After=utopiaSshd.service
 
 [Service]
 Type=oneshot
@@ -13,4 +11,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=pam-initialized.target

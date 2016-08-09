@@ -3,7 +3,7 @@ Description=Pam Initialized Path
 
 [Path]
 PathExists=/tmp/pam_initialized
+Unit=pam-initialized.target
 
 [Install]
 WantedBy=multi-user.target
-

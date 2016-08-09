@@ -1,13 +1,6 @@
 [Unit]
 Description=CcspWecbController service
 
-After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service
-
-Requires=CcspCrSsp.service
-Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service
-
 [Service]
 Type=forking
 WorkingDirectory=/usr/ccsp/wecb
@@ -19,4 +12,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=pam-initialized.target

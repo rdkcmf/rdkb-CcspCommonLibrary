@@ -1,12 +1,7 @@
 [Unit]
 Description=harvester service
 
-After=dbus.service CcspCrSsp.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service
-
-Requires=CcspCrSsp.service
-Wants=dbus.service logagent.service PsmSsp.service CcspPandMSsp.service \
-paminitialized.service CcspWecbController.service notifyComp.service
+After=notifyComp.service
 
 [Service]
 Type=forking
@@ -17,4 +12,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=pam-initialized.target

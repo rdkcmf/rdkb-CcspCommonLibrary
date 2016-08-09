@@ -2,7 +2,6 @@
 Description=rdkbLogMonitor service
 
 After=dbus.service
-Wants=dbus.service
 ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
@@ -13,4 +12,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=ccspCr-started.target

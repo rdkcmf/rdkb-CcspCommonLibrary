@@ -1,0 +1,9 @@
+[Unit]
+Description=CCSP CR Binary Started Path
+
+[Path]
+PathExists=/tmp/cr_initialized
+Unit=ccspCr-started.target
+
+[Install]
+WantedBy=multi-user.target
