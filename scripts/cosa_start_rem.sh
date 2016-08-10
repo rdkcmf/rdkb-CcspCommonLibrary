@@ -239,7 +239,7 @@ fi
 
 # starting the minidump watcher & uploader
 if [ -f /usr/bin/inotify-minidump-watcher ];then
-      /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  0 "*.dmp" &
+      /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
 fi
 
 echo "starting rpcserver from arm"
