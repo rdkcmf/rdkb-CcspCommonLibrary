@@ -33,7 +33,7 @@
 #######################################################################
 
 BINPATH="/usr/bin"
-source /fss/gw/etc/utopia/service.d/log_env_var.sh
+source /etc/utopia/service.d/log_env_var.sh
 source /etc/device.properties
 
 ulimit -c unlimited
@@ -69,10 +69,10 @@ fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
-export LOG4C_RCPATH=/fss/gw/rdklogger
+export LOG4C_RCPATH=/rdklogger
 
 #zqiu: update the bbhm for 2.1s11
-/fss/gw/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
 
 # Check if bbhm has Notify flag present
 NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
@@ -134,14 +134,14 @@ $BINPATH/dbus-daemon --config-file=./basic.conf --fork
 mkdir -p $LOG_PATH
 
 
-if [ -f "/fss/gw/rdklogger/rdkbLogMonitor.sh" ]
+if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
 then
-	/fss/gw/rdklogger/rdkbLogMonitor.sh &
+	/rdklogger/rdkbLogMonitor.sh &
 fi
 
-if [ -f "/fss/gw/rdklogger/fileUploadRandom.sh" ]
+if [ -f "/rdklogger/fileUploadRandom.sh" ]
 then
-	/fss/gw/rdklogger/fileUploadRandom.sh &
+	/rdklogger/fileUploadRandom.sh &
 fi
 touch /tmp/cp_subsys_ert
 
@@ -160,6 +160,18 @@ if [ -e /nvram/disablewecb ]; then
 fi
 
 echo "Elected subsystem is $Subsys"
+
+if [ "$CR_IN_PEER" != "yes" ]
+then
+	#if [ -e /nvram/disableCr ]; then
+	#	echo "***disabling CcspCr****"
+	if [ "x"$Subsys = "x" ];then
+		$BINPATH/CcspCrSsp
+	else
+		echo "$BINPATH/CcspCrSsp -subsys $Subsys"
+		$BINPATH/CcspCrSsp -subsys $Subsys
+	fi
+fi
 
 #if [ -e /nvram/disablelogagent ]; then
 #	echo "***disabling Loagent****"
