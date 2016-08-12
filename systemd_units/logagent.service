@@ -1,10 +1,7 @@
 [Unit]
 Description=CcspLogent service
 
-After=dbus.service CcspCrSsp.service
-
-Requires=CcspCrSsp.service
-Wants=dbus.service
+After=CcspCrSsp.service
 
 [Service]
 Type=forking
@@ -16,4 +13,4 @@ Restart=always
 StandardOutput=syslog
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=ccspCr-started.target

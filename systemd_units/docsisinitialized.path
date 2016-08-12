@@ -1,9 +1,0 @@
-[Unit]
-Description=Docsis Initialized Path
-
-[Path]
-PathExists=/var/tmp/eSafeCfgFile
-
-[Install]
-WantedBy=multi-user.target
-
