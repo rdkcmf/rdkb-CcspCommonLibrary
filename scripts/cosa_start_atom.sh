@@ -178,3 +178,10 @@ echo "starting rpcserver atom"
 if [ -f /usr/bin/rpcserver ];then
       /usr/bin/rpcserver &
 fi
+
+if [ "$BOX_TYPE" = "XB3" ]
+then
+   echo "Starting web gui"
+   sh /etc/webgui_atom.sh &
+fi
+
