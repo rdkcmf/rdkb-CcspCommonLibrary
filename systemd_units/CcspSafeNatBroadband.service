@@ -1,14 +1,14 @@
 [Unit]
-Description=CcspLMLite service
+Description=CcspSafeNatBroadband service
 
-After=CcspSafeNatBroadband.service
+After=CcspTr069PaSsp.service
 
 [Service]
 Type=forking
-WorkingDirectory=/usr/ccsp/lm
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-ExecStart=/usr/bin/CcspLMLite -subsys $Subsys
+WorkingDirectory=/usr/ccsp/ccsp-safenat-broadband
+ExecStart=/usr/bin/CcspSafeNAT -subsys $Subsys
 Restart=always
 
 StandardOutput=syslog+console
