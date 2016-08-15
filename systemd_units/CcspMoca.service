@@ -1,0 +1,17 @@
+[Unit]
+Description=CcspMoca service
+
+After=webpa.service
+
+[Service]
+Type=forking
+Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
+WorkingDirectory=/usr/ccsp/moca
+ExecStart=/usr/bin/CcspMoCA -subsys $Subsys
+Restart=always
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=pam-initialized.target
