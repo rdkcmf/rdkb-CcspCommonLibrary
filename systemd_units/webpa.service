@@ -1,8 +1,6 @@
 [Unit]
 Description=webpa service
 
-After=notifyComp.service
-
 [Service]
 Type=simple
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
