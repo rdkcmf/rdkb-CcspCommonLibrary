@@ -43,6 +43,19 @@ syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
 echo "PWD is `pwd`"
 
+if [ -e /nvram/disableCcspCMAgentSsp ]; then
+   echo "****DISABLE CcspCMAgentSsp*****"
+elif [ -e ./cm ]; then
+        cd cm
+        if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspCMAgentSsp
+        else
+        echo "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
+                $BINPATH/CcspCMAgentSsp -subsys $Subsys
+        fi
+        cd ..
+fi
+
 if [ -e /nvram/webpa_cfg.json ]; then
     echo "webpa_cfg.json exists in nvram"
  else
@@ -86,19 +99,6 @@ elif [ -e ./mta ]; then
         $BINPATH/CcspMtaAgentSsp -subsys $Subsys
     fi
     cd ..
-fi
-
-if [ -e /nvram/disableCcspCMAgentSsp ]; then
-   echo "****DISABLE CcspCMAgentSsp*****"
-elif [ -e ./cm ]; then
-        cd cm
-        if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspCMAgentSsp
-        else
-        echo "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
-                $BINPATH/CcspCMAgentSsp -subsys $Subsys
-        fi
-        cd ..
 fi
 
 #if [ -e /nvram/disableCcspRmSsp ]; then
