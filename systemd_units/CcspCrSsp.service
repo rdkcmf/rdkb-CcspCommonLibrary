@@ -6,12 +6,13 @@ Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-ExecStartPre=/bin/sh -c '/usr/ccsp/ccspSysConfigEarly.sh &'
+TimeoutStartSec=120
+#RDK-7248: Temp Workaround 
+ExecStartPre=/bin/sh -c '(sleep 60 && /usr/ccsp/ccspSysConfigEarly.sh)'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
 
 StandardOutput=syslog+console
 
 [Install]
-#CCSP Has a dependency on erouter0 being configured.
-WantedBy=wan-initialized.target
+WantedBy=multi-user.target
