@@ -11,4 +11,3 @@ StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target
-
