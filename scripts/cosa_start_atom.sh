@@ -42,7 +42,7 @@ killall CcspCrSsp
 killall rpcserver
 # have IP address for dbus config generated
 vconfig add eth0 500
-ifconfig eth0.500 192.168.101.3
+ifconfig eth0.500 $ATOM_INTERFACE_IP
 
 # have IP address for Radius config
 vconfig add eth0 4090
@@ -55,7 +55,7 @@ ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
 ip route add default via 192.168.106.1
 
 #start dropbear
-dropbear -E -B -p 192.168.101.3:22 -b /etc/sshbanner.txt&
+dropbear -E -B -p $ATOM_INTERFACE_IP:22 -b /etc/sshbanner.txt&
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
@@ -100,7 +100,7 @@ sleep 1
 
 
 echo "Starting telnet"
-/usr/sbin/telnetd -b 192.168.101.3
+/usr/sbin/telnetd -b $ATOM_INTERFACE_IP
 
 echo "Starting inotify watcher for telemetry"
 /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
