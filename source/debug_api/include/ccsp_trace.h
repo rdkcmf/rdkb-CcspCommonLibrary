@@ -278,7 +278,7 @@ else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fu"))					\
 			LogLevel = RDKLogLevel;\
 		LogEnable = RDKLogEnable;\
 }\
-else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.logagent"))					\
+else if(!strcmp(pComponentName,COMPNAME))					\
 {												\
 	ComponentName="LOG.RDK.WIFI";							\
 	LogLevel = WiFi_RDKLogLevel;\
@@ -495,6 +495,12 @@ if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))\
 #define  CcspTraceDebug(msg)                             \
     CcspTraceDebug2(pComponentName, msg)
 #endif
+
+#ifdef RDKLOGGER_SUPPORT_WIFI
+#define COMPNAME "com.cisco.spvtg.ccsp.wifi"
+#else		
+#define COMPNAME "com.cisco.spvtg.ccsp.logagent"
+#endif	
 void
 AnscSetTraceLevel
     (
