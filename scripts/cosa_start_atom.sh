@@ -185,3 +185,8 @@ then
    sh /etc/webgui_atom.sh &
 fi
 
+if [ "$CR_IN_PEER" = "yes" ]
+then
+	echo "Start monitoring system statistics on the atom side"
+	sh /rdklogger/log_mem_cpu_info_atom.sh &
+fi
