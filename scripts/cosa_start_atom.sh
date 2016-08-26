@@ -64,6 +64,9 @@ echo "PATH="$PATH
 export LOG4C_RCPATH=/rdklogger
 
 LOG_FOLDER="/rdklogs/logs/"
+CRONPATH="/tmp/cron/"
+CRONFILE=$CRONPATH"root"
+CRONFILE_BK="/tmp/cron_tab.txt"
 
 mkdir -p $LOG_FOLDER
 
@@ -188,5 +191,27 @@ fi
 if [ "$CR_IN_PEER" = "yes" ]
 then
 	echo "Start monitoring system statistics on the atom side"
-	sh /rdklogger/log_mem_cpu_info_atom.sh &
+	CRON_PID=`pidof crond`
+	if [ "$CRON_PID" = "" ]
+	then
+		if [ -f $CRONFILE ]
+		then
+			sed -i '/log_mem_cpu_info_atom.sh/d' $CRONFILE
+			echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE
+		else
+			if [ ! -d $CRONPATH ]
+			then
+				mkdir $CRONPATH
+			fi
+			touch $CRONFILE
+			echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" > $CRONFILE
+		fi
+		crond -c $CRONPATH -l 9
+	else
+		crontab -l -c $CRONPATH > $CRONFILE_BK
+		sed -i '/log_mem_cpu_info_atom.sh/d' $CRONFILE_BK
+		echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE_BK
+		crontab $CRONFILE_BK -c $CRONPATH
+		rm -rf $CRONFILE_BK
+	fi
 fi
