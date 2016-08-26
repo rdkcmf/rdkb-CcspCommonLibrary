@@ -1,14 +1,13 @@
 [Unit]
-Description=CcspXconfConfig service
-
-After=utopiaSshd.service
+Description=CcspTelemetry service
 
 [Service]
 Type=oneshot
+ExecStartPre=/bin/sh -c 'sleep 300'
 ExecStart=/bin/sh -c '/lib/rdk/dcm.service &'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=wan-initialized.target
