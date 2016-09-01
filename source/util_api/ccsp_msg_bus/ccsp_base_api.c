@@ -595,6 +595,7 @@ int CcspBaseIf_setParameterAttributes(
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
+    int ret1 = CCSP_FAILURE;
     dbus_int32_t res ;
     dbus_int32_t  tmp ;
     dbus_uint32_t utmp ;
@@ -700,7 +701,7 @@ int CcspBaseIf_setParameterAttributes(
 	if(notify_changed)
 	{
 		
-		CcspBaseIf_setParameterValues(
+		ret1 = CcspBaseIf_setParameterValues(
 		  bus_handle,
 		  compo,
 		  bus,
@@ -711,6 +712,15 @@ int CcspBaseIf_setParameterAttributes(
 		  TRUE,
 		  &faultParam
 		  );
+
+		if(ret1 != CCSP_SUCCESS)
+		{
+			CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret1));
+			for(i = 0; i < notification_count ; i++)
+			{
+				CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[i].parameterValue));
+			}
+		}
 	}
 #endif	
     return ret;
