@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspSafeNatBroadband service
 
-After=CcspTr069PaSsp.service
+After=webpa.service
 
 [Service]
 Type=forking

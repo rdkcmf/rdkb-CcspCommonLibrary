@@ -1,6 +1,8 @@
 [Unit]
 Description=webpa service
 
+After=CcspTr069PaSsp.service
+
 [Service]
 Type=simple
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
@@ -11,4 +13,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=wifi-initialized.target

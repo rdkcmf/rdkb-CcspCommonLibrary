@@ -1,8 +1,6 @@
 [Unit]
 Description=CcspMoca service
 
-After=webpa.service
-
 [Service]
 Type=forking
 Environment="Subsys=eRT."
