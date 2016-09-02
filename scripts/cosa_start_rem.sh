@@ -30,7 +30,7 @@ else
         Subsys=""
 fi
 
-echo "Elected subsystem is $Subsys"
+echo_t "Elected subsystem is $Subsys"
 
 if [ -e ./pam ]; then
     cd pam
@@ -38,64 +38,64 @@ if [ -e ./pam ]; then
         ((sh /etc/email_notification_monitor.sh 12 &) &)
         cd ..
 fi
-echo "Enabling ssh by default"
+echo_t "Enabling ssh by default"
 syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
-echo "PWD is `pwd`"
+echo_t "PWD is `pwd`"
 
 if [ -e /nvram/disableCcspCMAgentSsp ]; then
-   echo "****DISABLE CcspCMAgentSsp*****"
+   echo_t "****DISABLE CcspCMAgentSsp*****"
 elif [ -e ./cm ]; then
         cd cm
         if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspCMAgentSsp
         else
-        echo "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
+        echo_t "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
                 $BINPATH/CcspCMAgentSsp -subsys $Subsys
         fi
         cd ..
 fi
 
 if [ -e /nvram/webpa_cfg.json ]; then
-    echo "webpa_cfg.json exists in nvram"
+    echo_t "webpa_cfg.json exists in nvram"
  else
-    echo "webpa_cfg.json not found in nvram"
+    echo_t "webpa_cfg.json not found in nvram"
     cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-    echo "webpa_cfg.json file does not exist. Hence copying the factory default file.."
+    echo_t "webpa_cfg.json file does not exist. Hence copying the factory default file.."
 fi
     
 WEBPAVER=`cat /nvram/webpa_cfg.json | grep "file-version" | awk '{print $2}' | sed 's|[\"\",]||g'`
-echo "WEBPAVER is $WEBPAVER"
+echo_t "WEBPAVER is $WEBPAVER"
 if [ "$WEBPAVER" = "" ];then
     cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-    echo "Copying factory default file as webpa file-version does not exist in current cfg file.."
+    echo_t "Copying factory default file as webpa file-version does not exist in current cfg file.."
 fi
     
 ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
-echo "ENABLEWEBPA is $ENABLEWEBPA"
+echo_t "ENABLEWEBPA is $ENABLEWEBPA"
 
 if [ -e /nvram/disablewebpa ]; then
-    echo "***Disabling webpa*****"
+    echo_t "***Disabling webpa*****"
 elif [ "$ENABLEWEBPA" = "true" ];then
-    echo "ENABLEWEBPA is true..Intializing WebPA.."
+    echo_t "ENABLEWEBPA is true..Intializing WebPA.."
     if [ "x"$Subsys = "x" ];then
         $BINPATH/webpa
     else
-        echo "./webpa -subsys $Subsys"
+        echo_t "./webpa -subsys $Subsys"
         $BINPATH/webpa -subsys $Subsys
     fi
 else
-    echo "EnablePa parameter is set to false. Hence not initializng WebPA.."
+    echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
 fi
 
 if [ -e /nvram/disableCcspMtaAgentSsp ]; then
-   echo "****DISABLE MTAAGENTSSP*****"
+   echo_t "****DISABLE MTAAGENTSSP*****"
 elif [ -e ./mta ]; then
     cd mta
     if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspMtaAgentSsp
     else
-        echo "$BINPATH/CcspMtaAgentSsp -subsys $Subsys"
+        echo_t "$BINPATH/CcspMtaAgentSsp -subsys $Subsys"
         $BINPATH/CcspMtaAgentSsp -subsys $Subsys
     fi
     cd ..
@@ -122,13 +122,13 @@ fi
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
 if [ -e /nvram/disableCcspTr069PaSsp ]; then
-   echo "****DISABLE CcspTr069PaSsp*****"
+   echo_t "****DISABLE CcspTr069PaSsp*****"
 elif [ -e ./tr069pa ]; then
         cd tr069pa
         if [ "x"$Subsys = "x" ]; then
                 $BINPATH/CcspTr069PaSsp
         else
-        echo "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
+        echo_t "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
                 $BINPATH/CcspTr069PaSsp -subsys $Subsys
         fi
         sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
@@ -169,27 +169,27 @@ fi
 #fi
 
 if [ -e /nvram/disableCcspTandDSsp ]; then
-   echo "****DISABLE CcspTandDSsp*****"
+   echo_t "****DISABLE CcspTandDSsp*****"
 elif [ -e ./tad ]; then
         cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
         if [ "x"$Subsys = "x" ];then
                 $BINPATH/CcspTandDSsp
         else
-        echo "$BINPATH/CcspTandDSsp -subsys $Subsys"
+        echo_t "$BINPATH/CcspTandDSsp -subsys $Subsys"
                 $BINPATH/CcspTandDSsp -subsys $Subsys
         fi
         cd ..
 fi
 
-echo "*** Start CcspSafeNAT ***"
+echo_t "*** Start CcspSafeNAT ***"
 if [ -e ./ccsp-safenat-broadband ]; then
         cd ccsp-safenat-broadband
 
         if [ "x"$Subsys = "x" ];then
                 $BINPATH/CcspSafeNAT
         else
-                echo "$BINPATH/CcspSafeNAT -subsys $Subsys"
+                echo_t "$BINPATH/CcspSafeNAT -subsys $Subsys"
                 $BINPATH/CcspSafeNAT -subsys $Subsys
         fi
         cd ..
@@ -219,21 +219,21 @@ fi
 #fi
 
 if [ -e /nvram/disableCcspLMLite ]; then
-	echo "***Disabling CcspLMLite*****"
+	echo_t "***Disabling CcspLMLite*****"
 elif [ -e ./lm ]; then
     cd lm
-    echo "$BINPATH/CcspLMLite -subsys $Subsys &"
+    echo_t "$BINPATH/CcspLMLite -subsys $Subsys &"
     $BINPATH/CcspLMLite -subsys $Subsys &
 fi
 
-echo "XCONF SCRIPT : Calling XCONF Client"
+echo_t "XCONF SCRIPT : Calling XCONF Client"
 cd /fss/gw/etc
 ./xb3_firmwareDwnld.sh &
 
 SELFHEAL_ENABLE=`syscfg get selfheal_enable`
 if [ "$SELFHEAL_ENABLE" == "false" ]
 then
-	echo "Running process monitoring script"
+	echo_t "Running process monitoring script"
 	/etc/process_monitor.sh &
 fi
 
@@ -242,7 +242,7 @@ if [ -f /usr/bin/inotify-minidump-watcher ];then
       /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
 fi
 
-echo "starting rpcserver from arm"
+echo_t "starting rpcserver from arm"
 # starting the rpcserver
 if [ -f /usr/bin/rpcserver ];then
       /usr/bin/rpcserver &
