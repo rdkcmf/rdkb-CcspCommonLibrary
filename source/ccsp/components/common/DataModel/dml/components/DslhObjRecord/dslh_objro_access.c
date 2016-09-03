@@ -1612,6 +1612,7 @@ Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 	char  str[512] = {0};
 	char Param_NumberOfEntry[512] = {0};
 	UINT len = 0;
+	int ret = CCSP_FAILURE;
 
 	_ansc_strcpy(Param_NumberOfEntry,pMyObject->FullName);
 	len = _ansc_strlen(Param_NumberOfEntry);
@@ -1624,7 +1625,7 @@ Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 		notif_val[0].type = ccsp_string;
 		
 
-		CcspBaseIf_setParameterValues(
+		ret = CcspBaseIf_setParameterValues(
 		  bus_handle,
 		  compo,
 		  bus,
@@ -1635,6 +1636,13 @@ Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 		  TRUE,
 		  &faultParam
 		  );
+
+		if(ret != CCSP_SUCCESS)
+		{
+			CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret));
+			CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[0].parameterValue));
+
+		}
 
 }
 #endif
