@@ -133,16 +133,6 @@ $BINPATH/dbus-daemon --config-file=./basic.conf --fork
 
 mkdir -p $LOG_PATH
 
-
-if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
-then
-	/rdklogger/rdkbLogMonitor.sh &
-fi
-
-if [ -f "/rdklogger/fileUploadRandom.sh" ]
-then
-	/rdklogger/fileUploadRandom.sh &
-fi
 touch /tmp/cp_subsys_ert
 
 if [ -f /tmp/cp_subsys_ert ]; then
