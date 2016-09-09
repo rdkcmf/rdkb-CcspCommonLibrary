@@ -33,6 +33,13 @@
 #######################################################################
 
 BINPATH="/usr/bin"
+source /etc/utopia/service.d/log_env_var.sh
+source /etc/device.properties
+
+ulimit -c unlimited
+if [ "$BUILD_TYPE" != "prod" ]; then
+      echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
+fi
 
 if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall ccspRecoveryManager
