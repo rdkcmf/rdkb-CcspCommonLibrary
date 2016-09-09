@@ -290,18 +290,23 @@ int CcspBaseIf_setParameterValues(
         DBUS_MESSAGE_APPEND_STRING(&struct_iter, val[i].parameterValue);
         tmp = val[i].type;
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
+	    CcspTraceError(("dbus_message_iter_append_basic ret = %d \n", ret));
 
+	    CcspTraceError(("%d : Name = %s , value = %s \n", i, val[i].parameterName, val[i].parameterValue));
+	
         dbus_message_iter_close_container (&array_iter,
                                            &struct_iter);
     }
 
     ret = dbus_message_iter_close_container (&iter,
             &array_iter);
-
+	CcspTraceError(("dbus_message_iter_close_container ret = %d \n", ret));
     tmp = size;
     dbus_message_iter_append_basic (&iter, DBUS_TYPE_INT32, &tmp);
     dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &commit);
     ret = CCSP_Message_Bus_Send_Msg(bus_handle, message, CcspBaseIf_timeout_seconds , &reply);
+    CcspTraceError(("CCSP_Message_Bus_Send_Msg ret = %d \n", ret));
+    
     if(reply )
     {
 	    char *str = 0;

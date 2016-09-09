@@ -423,7 +423,8 @@ CcspCcMbi_SetParameterValues
         pDslhMprIf         = (PDSLH_MPR_INTERFACE        )pCpeco->GetDslhMprIf((ANSC_HANDLE)pCpeco); 
     }
 
-    if ( (g_currentSessionID != 0) && (sessionId != g_currentSessionID) )
+
+    if ( (sessionId != 0) && (sessionId != g_currentSessionID) )
     {
         AnscTraceWarning(("!!! SetParameterValues discarded, session id is NOT match !!!\n"));
 
@@ -945,7 +946,7 @@ CcspCcMbi_AddTblRow
         pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )pCpeco->GetDslhMpaIf((ANSC_HANDLE)pCpeco);
     }
 
-    if ( (g_currentSessionID != 0) && (sessionId != g_currentSessionID) )
+    if ( (sessionId != 0) && (sessionId != g_currentSessionID) )
     {
         AnscTraceWarning(("!!! AddTblRow discarded, session id is NOT match !!!\n"));
 
@@ -1006,7 +1007,7 @@ CcspCcMbi_DeleteTblRow
         pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )pCpeco->GetDslhMpaIf((ANSC_HANDLE)pCpeco);
     }
 
-    if ( (g_currentSessionID != 0) && (sessionId != g_currentSessionID) )
+    if ( (sessionId != 0) && (sessionId != g_currentSessionID) )
     {
         AnscTraceWarning(("!!! DeleteTblRow discarded, session id is not match !!!\n"));
 
