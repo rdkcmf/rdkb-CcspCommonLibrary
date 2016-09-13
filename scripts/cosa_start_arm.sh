@@ -196,6 +196,7 @@ else
 	$BINPATH/PsmSsp -subsys $Subsys
 fi
 
+sleep 5
 
 #if [ -e /nvram/disableCcspPandMSsp ]; then
 #	echo "***disabling PAM****"
