@@ -70,10 +70,14 @@ CRONFILE_BK="/tmp/cron_tab.txt"
 
 mkdir -p $LOG_FOLDER
 
-if [ "$CR_IN_PEER" = "yes" ]
+if [ -e /rdklogger/log_capture_path_atom.sh ]
 then
-	ATOMCONSOLELOGFILE="$LOG_FOLDER/AtomConsolelog.txt.0"
-	exec 3>&1 4>&2 >>$ATOMCONSOLELOGFILE 2>&1
+	source /rdklogger/log_capture_path_atom.sh 
+else
+	echo_t()
+	{
+        	echo $1
+	}
 fi
 
 #####END: Changes for ARRISXB3-3853
@@ -97,15 +101,15 @@ fi
 
 Subsys="eRT."
 
-echo "Elected subsystem is $Subsys"
+echo_t "Elected subsystem is $Subsys"
 
 sleep 1
 
 
-echo "Starting telnet"
+echo_t "Starting telnet"
 /usr/sbin/telnetd -b $ATOM_INTERFACE_IP
 
-echo "Starting inotify watcher for telemetry"
+echo_t "Starting inotify watcher for telemetry"
 /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 
 #####BEGIN: Changes for ARRISXB3-3853
@@ -123,7 +127,7 @@ then
 fi
 
 if [ -e ./harvester ]; then
-	echo "****STARTING HARVESTER***"
+	echo_t "****STARTING HARVESTER***"
         cd harvester
         $BINPATH/harvester &
 	cd ..
@@ -144,19 +148,19 @@ fi
 if [ -e ./wifi ]; then
 	cd wifi 
 	if [ "x"$Subsys = "x" ];then
-        echo "****STARTING CCSPWIFI WITHOUT SUBSYS***"
+        echo_t "****STARTING CCSPWIFI WITHOUT SUBSYS***"
     	$BINPATH/CcspWifiSsp &
 	else
-        echo "****STARTING CCSPWIFI WITH SUBSYS***"
+        echo_t "****STARTING CCSPWIFI WITH SUBSYS***"
     	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
     	$BINPATH/CcspWifiSsp -subsys $Subsys &
 	fi
 fi
 
-echo "starting process monitor script"
+echo_t "starting process monitor script"
 sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
-echo "Monitor ATOM log folder size"
+echo_t "Monitor ATOM log folder size"
 sh /rdklogger/atom_log_monitor.sh &
 
 
@@ -177,20 +181,20 @@ then
 fi
 
 # starting the rpcserver
-echo "starting rpcserver atom"
+echo_t "starting rpcserver atom"
 if [ -f /usr/bin/rpcserver ];then
       /usr/bin/rpcserver &
 fi
 
 if [ "$BOX_TYPE" = "XB3" ] && [ -f "/etc/webgui_atom.sh" ]
 then
-   echo "Starting web gui"
+   echo_t "Starting web gui"
    sh /etc/webgui_atom.sh &
 fi
 
 if [ "$CR_IN_PEER" = "yes" ]
 then
-	echo "Start monitoring system statistics on the atom side"
+	echo_t "Start monitoring system statistics on the atom side"
 	CRON_PID=`pidof crond`
 	if [ "$CRON_PID" = "" ]
 	then
