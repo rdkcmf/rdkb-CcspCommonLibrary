@@ -260,3 +260,15 @@ fi
 if [ -f  /lib/rdk/dcm.service ]; then
    /bin/sh /lib/rdk/dcm.service &
 fi
+
+#RDKB-7535
+
+if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
+then
+	/rdklogger/rdkbLogMonitor.sh &
+fi
+
+if [ -f "/rdklogger/fileUploadRandom.sh" ]
+then
+	/rdklogger/fileUploadRandom.sh &
+fi
