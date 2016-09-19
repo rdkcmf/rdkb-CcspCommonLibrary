@@ -125,7 +125,7 @@ then
 		$BINPATH/CcspCrSsp -subsys $Subsys
 	fi
 fi
-
+sleep 3
 if [ -e ./harvester ]; then
 	echo_t "****STARTING HARVESTER***"
         cd harvester
