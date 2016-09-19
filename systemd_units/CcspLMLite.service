@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspLMLite service
 
-After=CcspSafeNatBroadband.service
+After=webpa.service
 
 [Service]
 Type=forking
