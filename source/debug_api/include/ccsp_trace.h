@@ -104,6 +104,7 @@ extern volatile unsigned int SNMP_RDKLogLevel;
 extern volatile unsigned int TR69_RDKLogLevel;
 extern volatile unsigned int PAM_RDKLogLevel;
 extern volatile unsigned int PSM_RDKLogLevel;
+extern volatile unsigned int MOCA_RDKLogLevel;
 extern volatile unsigned int MTA_RDKLogLevel;
 extern volatile unsigned int CM_RDKLogLevel;
 extern volatile unsigned int WiFi_RDKLogLevel;
@@ -117,6 +118,7 @@ extern volatile BOOL SNMP_RDKLogEnable;
 extern volatile BOOL TR69_RDKLogEnable;
 extern volatile BOOL PAM_RDKLogEnable;
 extern volatile BOOL PSM_RDKLogEnable;
+extern volatile BOOL MOCA_RDKLogEnable;
 extern volatile BOOL MTA_RDKLogEnable;
 extern volatile BOOL CM_RDKLogEnable;
 extern volatile BOOL WiFi_RDKLogEnable;
@@ -241,6 +243,13 @@ else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.psm"))					\
 	ComponentName= "LOG.RDK.PSM";							\
 	LogLevel = PSM_RDKLogLevel;\
 	LogEnable = PSM_RDKLogEnable;\
+}												\
+else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.moca"))					\
+{												\
+	ComponentName= "LOG.RDK.MOCA";							\
+	LogLevel = MOCA_RDKLogLevel;\
+	LogEnable = MOCA_RDKLogEnable;\
+	/*printf("-- MOCA LogLevel = %d\n LogEnable = %d\n",LogLevel,LogEnable);*/\
 }												\
 else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.CR"))					\
 {												\
