@@ -101,6 +101,19 @@ elif [ -e ./mta ]; then
     cd ..
 fi
 
+if [ -e /nvram/disableCcspMoCA ]; then
+   echo "****DISABLE MoCA*****"
+elif [ -e ./moca ]; then
+    cd moca
+    if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspMoCA
+    else
+        echo "$BINPATH/CcspMoCA -subsys $Subsys"
+        $BINPATH/CcspMoCA -subsys $Subsys
+    fi
+    cd ..
+fi
+
 #if [ -e /nvram/disableCcspRmSsp ]; then
 #   echo "****DISABLE CcspRmSsp*****"
 #elif [ -f ./cp_subsys_ert ]; then
