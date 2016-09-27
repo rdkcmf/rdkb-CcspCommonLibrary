@@ -145,6 +145,13 @@ if [ -e ./ccsp-servicemanager-broadband ]; then
         cd ..
 fi
 
+
+if [ -f "/usr/ccsp/uptime_compare.sh" ]
+then
+sh /usr/ccsp/uptime_compare.sh &
+sleep 3
+fi
+
 if [ -e ./wifi ]; then
 	cd wifi 
 	if [ "x"$Subsys = "x" ];then
