@@ -4,8 +4,8 @@ Description=Gwprovapp service
 #Note: Requires, Wants, and After are device specific. see gwprovapp.conf
 
 [Service]
-#Note: Don't Uncomment Below Line: Each Device needs a conf file to launch the binary
-#ExecStart=/usr/bin/gw_prov_utopia $IP
+EnvironmentFile=-/etc/device.properties
+ExecStart=/usr/bin/gw_prov_utopia $PEER_COM_IP
 Restart=always
 StandardOutput=syslog+console
 
