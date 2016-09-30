@@ -3,10 +3,10 @@ Description=SNMP Subagent service
 
 [Service]
 Type=simple
+EnvironmentFile=-/etc/device.properties
 EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
 WorkingDirectory=/usr/ccsp/snmp
-#Note: Don't Uncomment Below Line: Each Device needs a conf file to attach to SNMP Master
-#ExecStart=/bin/sh -c '/usr/ccsp/snmp/run_subagent.sh /var/tmp/cm_snmp_ma &'
+ExecStart=/bin/sh -c '/usr/ccsp/snmp/run_subagent.sh $CCSP_SNMP_AGENT_COM &'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
