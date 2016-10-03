@@ -163,6 +163,13 @@ then
 	fi
 fi
 
+echo_t "starting rpcserver from arm"
+# starting the rpcserver
+if [ -f /usr/bin/rpcserver ];then
+      /usr/bin/rpcserver &
+fi
+
+
 #if [ -e /nvram/disablelogagent ]; then
 #	echo "***disabling Loagent****"
 if [ -e ./logagent ]; then

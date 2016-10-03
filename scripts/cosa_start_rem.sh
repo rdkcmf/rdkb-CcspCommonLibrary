@@ -255,11 +255,6 @@ if [ -f /usr/bin/inotify-minidump-watcher ];then
       /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
 fi
 
-echo_t "starting rpcserver from arm"
-# starting the rpcserver
-if [ -f /usr/bin/rpcserver ];then
-      /usr/bin/rpcserver &
-fi
 
 /etc/utopia/service.d/service_sshd.sh sshd-start &
 
