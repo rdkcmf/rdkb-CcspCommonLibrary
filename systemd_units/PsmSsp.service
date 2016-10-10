@@ -5,6 +5,7 @@ After=logagent.service
 
 [Service]
 Type=forking
+PIDFile=/var/tmp/PsmSsp.pid
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"

@@ -1,7 +1,7 @@
 [Unit]
 Description=utopiaSshd service
 
-After=CcspMtaAgentSsp.service
+After=CcspPandMSsp.service CcspMtaAgentSsp.service
 
 [Service]
 Type=simple
@@ -13,4 +13,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target

@@ -1,7 +1,7 @@
 [Unit]
 Description=Notify Comp service
 
-After=CcspWecbController.service
+After=CcspPandMSsp.service CcspWecbController.service
 
 [Service]
 Type=forking
@@ -14,4 +14,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target

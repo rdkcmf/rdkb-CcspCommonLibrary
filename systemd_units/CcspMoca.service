@@ -1,6 +1,8 @@
 [Unit]
 Description=CcspMoca service
 
+After=CcspPandMSsp.service
+
 [Service]
 Type=forking
 Environment="Subsys=eRT."
@@ -12,4 +14,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target
