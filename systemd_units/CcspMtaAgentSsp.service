@@ -1,10 +1,11 @@
 [Unit]
 Description=CcspMtaAgentSsp service
 
-After=notifyComp.service
+After=CcspPandMSsp.service notifyComp.service
 
 [Service]
 Type=forking
+PIDFile=/var/tmp/CcspMtaAgent.pid
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 WorkingDirectory=/usr/ccsp/mta
@@ -14,4 +15,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target

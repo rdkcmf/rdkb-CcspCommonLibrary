@@ -1,7 +1,7 @@
 [Unit]
 Description=emailNotificationMonitor service
 
-After=notifyComp.service
+After=CcspPandMSsp.service notifyComp.service
 
 [Service]
 Type=simple
@@ -15,4 +15,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target

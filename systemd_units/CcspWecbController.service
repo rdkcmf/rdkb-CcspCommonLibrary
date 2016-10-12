@@ -1,8 +1,11 @@
 [Unit]
 Description=CcspWecbController service
 
+After=CcspPandMSsp.service
+
 [Service]
 Type=forking
+PIDFile=/var/tmp/CcspWecbController.pid
 WorkingDirectory=/usr/ccsp/wecb
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
@@ -12,4 +15,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=pam-initialized.target
+WantedBy=ccspCr-started.target
