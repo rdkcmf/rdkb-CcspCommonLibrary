@@ -4,7 +4,9 @@ Description=CcspLogent service
 After=CcspCrSsp.service
 
 [Service]
-Type=forking
+type=notify
+NotifyAccess=main
+PIDFile=/var/tmp/log_agent.pid
 WorkingDirectory=/usr/ccsp/logagent
 Environment="Subsys=eRT."
 ExecStart=/usr/bin/log_agent -subsys $Subsys
@@ -13,4 +15,4 @@ Restart=always
 StandardOutput=syslog
 
 [Install]
-WantedBy=ccspCr-started.target
+WantedBy=multi-user.target

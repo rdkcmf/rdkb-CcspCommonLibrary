@@ -13,4 +13,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=ccspCr-started.target
+WantedBy=multi-user.target
