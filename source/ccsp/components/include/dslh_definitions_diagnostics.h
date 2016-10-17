@@ -489,9 +489,13 @@ DSLH_WDAF5D_INFO,  *PDSLH_WDAF5D_INFO;
 /*
  *  Diagnostic states - Names are only defined for the standard requested types in TR-69
  */
-#define DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopHost         256
-#define DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopHostAddress  256
-#define DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopRTTimes      64
+#ifndef   NI_MAXHOST
+#define   NI_MAXHOST 1025
+#endif
+
+#define   DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopHost         NI_MAXHOST /*RDKB-7451, CID-33296, Buffer size must same as NI_MAXHOST */
+#define   DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopHostAddress  NI_MAXHOST /*RDKB-7451, CID-33286, Buffer size must same as NI_MAXHOST */
+#define   DSLH_ROUTEHOPS_MAX_STRING_LENGTH_HopRTTimes      64
 
 /* Range limits imposed by TR-69 on various parameters */
 #define DSLH_ROUTEHOPS_MIN_HopErrorCode                  1
