@@ -1,0 +1,5 @@
+[Unit]
+Description= Nvram disk Space Monitor Service
+
+[Service]
+ExecStart=/bin/sh -c '/lib/rdk/monitor_nvram.sh 70'
