@@ -1,11 +1,10 @@
 [Unit]
 Description=PsmSsp service
 
-After=CcspCrSsp.service logagent.service
+After=logagent.service
 
 [Service]
-Type=notify
-NotifyAccess=main
+Type=forking
 PIDFile=/var/tmp/PsmSsp.pid
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
@@ -16,4 +15,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=ccspCr-started.target
