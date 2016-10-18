@@ -5,11 +5,6 @@ source /etc/device.properties
 
 export LOG4C_RCPATH=/etc
 
-# have IP address for Radius config
-vconfig add eth0 4090
-ifconfig eth0.4090 192.168.251.254 netmask 255.255.255.0 up
-ip route add default via 192.168.251.1
-
 ulimit -c unlimited
 if [ "$BUILD_TYPE" != "prod" ]; then
       echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
@@ -75,3 +70,9 @@ fi
 cp ccsp_msg.cfg /tmp
 
 touch /tmp/cp_subsys_ert
+
+if [ "$BOX_TYPE" == "XB6" ]; then
+	#RDK-7248: Temp Workaround
+	#Service Files are generic for all devices
+	sleep 60
+fi

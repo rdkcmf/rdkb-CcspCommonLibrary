@@ -1,7 +1,7 @@
 [Unit]
 Description=Random file upload service
 
-After=rdkbLogMonitor.service
+After=logagent.service rdkbLogMonitor.service
 ConditionPathExists=/rdklogger/fileUploadRandom.sh
 
 [Service]
@@ -12,4 +12,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=ccspCr-started.target
+WantedBy=multi-user.target
