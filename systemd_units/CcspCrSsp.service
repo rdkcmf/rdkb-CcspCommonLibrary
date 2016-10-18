@@ -2,13 +2,13 @@
 Description=CcspCrSsp service
 
 [Service]
-Type=notify
-NotifyAccess=main
-PIDFile=/var/tmp/CcspCrSsp.pid
+Type=forking
 WorkingDirectory=/usr/ccsp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-ExecStartPre=/bin/sh -c '(/usr/ccsp/ccspSysConfigEarly.sh)'
+TimeoutStartSec=120
+#RDK-7248: Temp Workaround 
+ExecStartPre=/bin/sh -c '(/usr/ccsp/ccspSysConfigEarly.sh && sleep 60)'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
 Restart=always
 
