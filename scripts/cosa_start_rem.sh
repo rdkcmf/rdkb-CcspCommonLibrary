@@ -329,3 +329,10 @@ if [ -f "/rdklogger/fileUploadRandom.sh" ]
 then
 	/rdklogger/fileUploadRandom.sh &
 fi
+
+
+#waiting for DCM service to complete
+sleep 5
+echo "XCONF SCRIPT : Calling XCONF Client"
+cd /etc/
+./xb3_firmwareSched.sh &
