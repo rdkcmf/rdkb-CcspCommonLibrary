@@ -209,6 +209,7 @@ then
 		then
 			sed -i '/log_mem_cpu_info_atom.sh/d' $CRONFILE
 			echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE
+                        echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE
 			echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE
 		else
@@ -218,6 +219,7 @@ then
 			fi
 			touch $CRONFILE
 			echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" > $CRONFILE
+                        echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE
                         echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
                         echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE
 		fi
@@ -226,6 +228,7 @@ then
 		crontab -l -c $CRONPATH > $CRONFILE_BK
 		sed -i '/log_mem_cpu_info_atom.sh/d' $CRONFILE_BK
 		echo "54 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE_BK
+                echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE_BK
 		echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
 		echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
