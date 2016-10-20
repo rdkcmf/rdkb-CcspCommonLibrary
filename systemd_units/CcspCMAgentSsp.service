@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspCMAgentSsp service
 
-After=CcspPandMSsp.service utopiaSshd.service
+After=CcspPandMSsp.service CcspMtaAgentSsp.service
 
 [Service]
 Type=forking
