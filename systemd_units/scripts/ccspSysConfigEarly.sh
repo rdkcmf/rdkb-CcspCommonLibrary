@@ -75,3 +75,9 @@ fi
 cp ccsp_msg.cfg /tmp
 
 touch /tmp/cp_subsys_ert
+
+if [ "$BOX_TYPE" == "XB6" ]; then
+	#RDK-7248: Temp Workaround
+	#Service Files are generic for all devices
+	sleep 60
+fi
