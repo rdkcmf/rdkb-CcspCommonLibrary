@@ -6,7 +6,6 @@ Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 WorkingDirectory=/usr/ccsp/tr069pa
-ExecStartPre=/bin/sh -c 'sleep 40'
 ExecStart=/usr/bin/CcspTr069PaSsp -subsys $Subsys
 ExecStartPost=/bin/sh -c 'sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "'
 Restart=always

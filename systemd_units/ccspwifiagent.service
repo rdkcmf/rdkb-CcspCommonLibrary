@@ -9,3 +9,6 @@ ExecStart=/bin/sh -c '/usr/ccsp/wifi/cosa_start_wifiagent.sh &'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
