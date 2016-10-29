@@ -126,25 +126,6 @@ then
 	fi
 fi
 sleep 3
-if [ -e ./harvester ]; then
-	echo_t "****STARTING HARVESTER***"
-        cd harvester
-        $BINPATH/harvester &
-	cd ..
-fi
-
-if [ -e ./ccsp-servicemanager-broadband ]; then
-        echo "****STARTING SERVICEMANAGER***"
-        cd ccsp-servicemanager-broadband
-        if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspServiceManager &
-        else
-        echo "$BINPATH/CcspServiceManager -subsys $Subsys &"
-        $BINPATH/CcspServiceManager -subsys $Subsys &
-        fi
-        cd ..
-fi
-
 
 if [ -f "/usr/ccsp/uptime_compare.sh" ]
 then
@@ -162,6 +143,7 @@ if [ -e ./wifi ]; then
     	echo "$BINPATH/CcspWifiSsp -subsys $Subsys &"
     	$BINPATH/CcspWifiSsp -subsys $Subsys &
 	fi
+	cd ..
 fi
 
 echo_t "starting process monitor script"
@@ -198,6 +180,38 @@ then
    echo_t "Starting web gui"
    sh /etc/webgui_atom.sh &
 fi
+
+sleep 60 
+while :
+do
+
+if [ -f "/tmp/wifi_initialized" ]
+then
+	if [ -e ./harvester ]; then
+        	echo_t "****STARTING HARVESTER***"
+	        cd harvester
+        	$BINPATH/harvester &
+	        cd ..
+	fi
+
+	if [ -e ./ccsp-servicemanager-broadband ]; then
+        	echo "****STARTING SERVICEMANAGER***"
+        	cd ccsp-servicemanager-broadband
+	        if [ "x"$Subsys = "x" ];then
+        		$BINPATH/CcspServiceManager &
+	        else	
+        		echo "$BINPATH/CcspServiceManager -subsys $Subsys &"
+		        $BINPATH/CcspServiceManager -subsys $Subsys &
+        	fi
+        cd ..
+	fi
+	break
+else
+	echo "Waiting for Wifi init completion to start Harvester"
+	sleep 10
+fi
+
+done
 
 if [ "$CR_IN_PEER" = "yes" ]
 then
