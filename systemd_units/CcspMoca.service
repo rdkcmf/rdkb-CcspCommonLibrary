@@ -8,6 +8,7 @@ Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 WorkingDirectory=/usr/ccsp/moca
+ExecStartPre=/bin/sh -c 'sleep 5'
 ExecStart=/usr/bin/CcspMoCA -subsys $Subsys
 Restart=always
 
