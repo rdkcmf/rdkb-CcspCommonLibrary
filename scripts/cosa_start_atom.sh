@@ -226,6 +226,7 @@ then
                         echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE
 			echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE
+			echo "5,35 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 		else
 			if [ ! -d $CRONPATH ]
 			then
@@ -236,6 +237,7 @@ then
                         echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE
                         echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
                         echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE
+			echo "5,35 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 		fi
 		crond -c $CRONPATH -l 9
 	else
@@ -245,6 +247,7 @@ then
                 echo "3 * * * *  /usr/ccsp/wifi/radiohealth_log.sh" >> $CRONFILE_BK
 		echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
 		echo "2 * * * *  /usr/ccsp/wifi/stahealth_log.sh" >> $CRONFILE_BK
+		echo "5,35 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
 	fi
