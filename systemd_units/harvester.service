@@ -1,8 +1,6 @@
 [Unit]
 Description=harvester service
 
-After=CcspPandMSsp.service notifyComp.service
-
 [Service]
 Type=forking
 WorkingDirectory=/usr/ccsp/harvester
@@ -12,4 +10,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=wifi-initialized.target
