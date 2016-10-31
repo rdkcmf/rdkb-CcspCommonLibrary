@@ -1,6 +1,8 @@
 [Unit]
 Description=CcspTr069PaSsp service
 
+After=harvester.service
+
 [Service]
 Type=forking
 Environment="Subsys=eRT."
