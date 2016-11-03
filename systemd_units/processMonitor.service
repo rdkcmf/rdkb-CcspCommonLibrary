@@ -1,7 +1,7 @@
 [Unit]
 Description=processMonitor service
 
-After=CcspTandDSsp.service
+After=CcspPandMSsp.service CcspTandDSsp.service
 
 [Service]
 Type=simple
@@ -13,4 +13,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=multi-user.target
