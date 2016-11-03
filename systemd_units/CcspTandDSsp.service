@@ -1,7 +1,7 @@
 [Unit]
 Description=CcspTandDSsp service
 
-After=CcspLMLite.service
+After=CcspPandMSsp.service CcspMoca.service
 
 [Service]
 Type=forking
@@ -14,4 +14,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=multi-user.target
