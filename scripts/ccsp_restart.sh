@@ -21,6 +21,7 @@ exec 3>&1 4>&2 >>$SELFHEALFILE 2>&1
         killall webpa
         killall CcspSafeNAT
         killall CcspLMLite
+        killall CcspXdnsSsp
         killall CcspMtaAgentSsp
         killall CcspHotspot
 
@@ -158,6 +159,10 @@ ulimit -c unlimited
 	cd /usr/ccsp/lm
 	$BINPATH/CcspLMLite -subsys $Subsys
 
+     #CcspXdnsSsp
+    echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspXdnsSsp on atom reset"
+    cd /usr/ccsp/xdns
+    $BINPATH/CcspXdnsSsp -subsys $Subsys
 	
 	xfinityenable=`psmcli get dmsb.hotspot.enable`
 

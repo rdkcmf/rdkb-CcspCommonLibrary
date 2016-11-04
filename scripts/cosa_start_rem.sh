@@ -231,6 +231,15 @@ fi
 #cd ..
 #fi
 
+if [ -e /nvram/disableCcspXDNS ]; then
+        echo_t "***Disabling CcspXDNS*****"
+elif [ -e ./xdns ]; then
+    cd xdns
+    echo_t "$BINPATH/CcspXdnsSsp -subsys $Subsys &"
+    $BINPATH/CcspXdnsSsp -subsys $Subsys &
+    cd ..
+fi
+
 if [ -e /nvram/disableCcspLMLite ]; then
 	echo_t "***Disabling CcspLMLite*****"
 elif [ -e ./lm ]; then
