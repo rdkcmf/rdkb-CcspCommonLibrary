@@ -55,7 +55,8 @@ ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
 ip route add default via 192.168.106.1
 
 #start dropbear
-dropbear -E -B -p $ATOM_INTERFACE_IP:22 &
+echo "starting dropbear ATOM"
+dropbear -E -B -p $ATOM_INTERFACE_IP:22 > /dev/null 2>&1 &
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
