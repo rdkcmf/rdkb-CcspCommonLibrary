@@ -112,6 +112,7 @@ extern volatile unsigned int CR_RDKLogLevel;
 extern volatile unsigned int Harvester_RDKLogLevel; /*Added for RDKB-4343*/
 extern volatile unsigned int NOTIFY_RDKLogLevel; 
 extern volatile unsigned int WECB_RDKLogLevel;
+extern volatile unsigned int PWRMGR_RDKLogLevel;
 
 extern volatile BOOL LM_RDKLogEnable;
 extern volatile BOOL SNMP_RDKLogEnable;
@@ -126,6 +127,7 @@ extern volatile BOOL CR_RDKLogEnable;
 extern volatile BOOL Harvester_RDKLogEnable; /*Added for RDKB-4343*/
 extern volatile BOOL NOTIFY_RDKLogEnable;
 extern volatile BOOL WECB_RDKLogEnable;
+extern volatile BOOL PWRMGR_RDKLogEnable;
 
 /*
  *  Whether a debug trace is output depends on the following factors:
@@ -342,6 +344,12 @@ else if(!strcmp(pComponentName,"LOG.RDK.WECBMASTER"))                           
         ComponentName= "LOG.RDK.WECBMASTER";                                                  \
         LogLevel = WECB_RDKLogLevel;\
         LogEnable = WECB_RDKLogEnable;\
+}\
+else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))                            \
+{                                                                                               \
+        ComponentName= "LOG.RDK.PWRMGR";                                                  \
+        LogLevel = PWRMGR_RDKLogLevel;\
+        LogEnable = PWRMGR_RDKLogEnable;\
 }\
 else\
 {\
