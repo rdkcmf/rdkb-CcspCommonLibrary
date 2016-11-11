@@ -5,6 +5,7 @@ source /etc/device.properties
 
 export LOG4C_RCPATH=/etc
 
+cp /usr/ccsp/ccsp_msg.cfg /tmp
 
 ulimit -c unlimited
 if [ "$BUILD_TYPE" != "prod" ]; then
@@ -67,8 +68,6 @@ if [ -f "$PWD/core_compr" ]; then
 
 	./core_report.sh &
 fi
-
-cp ccsp_msg.cfg /tmp
 
 touch /tmp/cp_subsys_ert
 
