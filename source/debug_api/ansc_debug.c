@@ -113,6 +113,8 @@ volatile BOOL WECB_RDKLogEnable = TRUE;
 volatile unsigned int WECB_RDKLogLevel = 4;
 volatile BOOL PWRMGR_RDKLogEnable = TRUE;
 volatile unsigned int PWRMGR_RDKLogLevel = 4;
+volatile BOOL FSC_RDKLogEnable = TRUE;
+volatile unsigned int FSC_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
