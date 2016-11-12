@@ -1,14 +1,13 @@
 [Unit]
 Description=CcspLogent service
 
-After=CcspCrSsp.service
-
 [Service]
 Type=notify
 NotifyAccess=main
 PIDFile=/var/tmp/log_agent.pid
 WorkingDirectory=/usr/ccsp/logagent
 Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
 ExecStart=/usr/bin/log_agent -subsys $Subsys
 Restart=always
 

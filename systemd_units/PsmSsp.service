@@ -1,7 +1,7 @@
 [Unit]
 Description=PsmSsp service
 
-After=logagent.service
+After=CcspCrSsp.service logagent.service
 
 [Service]
 Type=notify
