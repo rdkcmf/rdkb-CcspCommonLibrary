@@ -30,6 +30,21 @@ else
         Subsys=""
 fi
 
+echo "Starting brlan1 initialization, check whether brlan1 is there or not"
+ifconfig | grep brlan1
+if [ $? == 1 ]; then
+    echo "brlan1 not present go ahead and create it"
+    sysevent set multinet-up 2
+fi
+
+xfinityenable=`psmcli get dmsb.hotspot.enable`
+if [ $xfinityenable -eq 1 ];then
+    echo "Xfinitywifi is enabled bring up brlan2 and brlan3 if not already present"
+    sysevent set hotspot-start  
+else
+    echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
+fi
+
 echo_t "Elected subsystem is $Subsys"
 
 if [ -e ./pam ]; then
