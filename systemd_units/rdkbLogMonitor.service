@@ -5,11 +5,13 @@ After=logagent.service dbus.service
 ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/bin/sh -c '/rdklogger/rdkbLogMonitor.sh &'
+ExecStop=/bin/sh -c 'echo "==> sync logs to nvram before reboot" >>/rdklogs/logs/Consolelog.txt.0'
+ExecStop=/bin/sh -c 'source /rdklogger/logfiles.sh;syncLogs_nvram2'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=wan-initialized.target
