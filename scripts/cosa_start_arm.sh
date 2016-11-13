@@ -57,6 +57,7 @@ if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall CcspMtaAgentSsp
 	killall CcspCMAgentSsp
     killall CcspLMLite
+    killall CcspXdnsSsp
 	killall webpa
 fi
 
