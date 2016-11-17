@@ -73,42 +73,10 @@ export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 export LOG4C_RCPATH=/rdklogger
 
 #zqiu: update the bbhm for 2.1s11
-/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
-
-# Check if bbhm has Notify flag present
-NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
-REDIRCTEXISTS=""
-
-# If Notify flag is not present then we will add it as per the syscfg DB value
-if [ "$NOTIFYPRESENT" = "" ]
-then
-	REDIRECT_VALUE=`syscfg get redirection_flag`
-	if [ "$REDIRECT_VALUE" = "" ]
-	then
-		#Just making sure if syscfg command didn't fail
-		REDIRCTEXISTS=`cat /nvram/syscfg.db | grep redirection_flag | cut -f2 -d=`
-	fi
-
-	if [ "$REDIRECT_VALUE" = "false" ] || [ "$REDIRCTEXISTS" = "false" ];
-	then
-		
-		echo " Apply Notifywifichanges flse"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	elif [ "$REDIRECT_VALUE" = "true" ] || [ "$REDIRCTEXISTS" = "true" ];
-	then
-		echo " Apply Notifywifichanges tue"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	fi
+if [ "$MFG_NAME" = "Arris" ]; then
+    /usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+else
+    echo "bbhm patch is not required"
 fi
 
 # Start coredump
@@ -144,12 +112,6 @@ else
 	Subsys=""
 fi
 
-# Remove all disable flags
-if [ -e /nvram/disablewecb ]; then
-	echo "***Removing all disable flags*****"
-        rm -rf /nvram/disable*
-fi
-
 echo "Elected subsystem is $Subsys"
 
 if [ "$CR_IN_PEER" != "yes" ]
@@ -162,20 +124,6 @@ then
 		echo "$BINPATH/CcspCrSsp -subsys $Subsys"
 		$BINPATH/CcspCrSsp -subsys $Subsys
 	fi
-fi
-
-#if [ -e /nvram/disablelogagent ]; then
-#	echo "***disabling Loagent****"
-if [ -e ./logagent ]; then
-	cd logagent
-
-	if [ "x"$Subsys = "x" ];then
-		$BINPATH/log_agent
-	else
-		echo "$BINPATH/log_agent -subsys $Subsys"
-		$BINPATH/log_agent -subsys $Subsys
-	fi
-	cd ..
 fi
 
 #if [ -e /nvram/disablePsmSSP ]; then
@@ -202,19 +150,6 @@ if [ -e ./pam ]; then
 	fi
 	cd ..
 fi
-
-
-if [ -e ./wecb ];
-then                                                                                                                                                                                                                   
-    cd wecb                                                                                                                
-    if [ "x"$Subsys = "x" ];then                                                                                           
-        $BINPATH/CcspWecbController                                                                                               
-    else                                                                                                                   
-        echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
-       $BINPATH/CcspWecbController -subsys $Subsys                                                                               
-    fi                                                                                                                     
-    cd ..                                                                                                                  
-fi  
 
 if [ -e /nvram/disablenotifycomp ]; then
         echo "***disabling Loagent****"
