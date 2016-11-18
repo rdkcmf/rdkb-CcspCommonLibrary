@@ -103,19 +103,6 @@ else
     echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
 fi
 
-if [ -e /nvram/disableCcspMtaAgentSsp ]; then
-   echo_t "****DISABLE MTAAGENTSSP*****"
-elif [ -e ./mta ]; then
-    cd mta
-    if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspMtaAgentSsp
-    else
-        echo_t "$BINPATH/CcspMtaAgentSsp -subsys $Subsys"
-        $BINPATH/CcspMtaAgentSsp -subsys $Subsys
-    fi
-    cd ..
-fi
-
 if [ -e /nvram/disableCcspMoCA ]; then
    echo "****DISABLE MoCA*****"
 elif [ -e ./moca ]; then
@@ -125,6 +112,43 @@ elif [ -e ./moca ]; then
     else
         echo "$BINPATH/CcspMoCA -subsys $Subsys"
         $BINPATH/CcspMoCA -subsys $Subsys
+    fi
+    cd ..
+fi
+
+if [ -e ./wecb ];
+then
+    cd wecb
+    if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspWecbController
+    else
+        echo "$BINPATH/CcspWecbController -subsys $Subsys"
+        $BINPATH/CcspWecbController -subsys $Subsys
+    fi
+    cd ..
+fi
+
+if [ -e ./logagent ]; then
+    cd logagent
+
+    if [ "x"$Subsys = "x" ];then
+        $BINPATH/log_agent
+    else
+        echo "$BINPATH/log_agent -subsys $Subsys"
+        $BINPATH/log_agent -subsys $Subsys
+    fi
+    cd ..
+fi
+
+if [ -e /nvram/disableCcspMtaAgentSsp ]; then
+   echo_t "****DISABLE MTAAGENTSSP*****"
+elif [ -e ./mta ]; then
+    cd mta
+    if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspMtaAgentSsp
+    else
+        echo_t "$BINPATH/CcspMtaAgentSsp -subsys $Subsys"
+        $BINPATH/CcspMtaAgentSsp -subsys $Subsys
     fi
     cd ..
 fi
