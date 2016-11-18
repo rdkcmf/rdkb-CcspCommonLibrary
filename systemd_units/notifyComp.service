@@ -8,7 +8,9 @@ Type=forking
 WorkingDirectory=/usr/ccsp/notify-comp
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/notify_comp -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting notify_comp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

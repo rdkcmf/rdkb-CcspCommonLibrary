@@ -8,7 +8,9 @@ PIDFile=/var/tmp/log_agent.pid
 WorkingDirectory=/usr/ccsp/logagent
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/log_agent -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting log_agent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog

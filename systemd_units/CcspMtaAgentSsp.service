@@ -8,8 +8,10 @@ Type=forking
 PIDFile=/var/tmp/CcspMtaAgent.pid
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/mta
 ExecStart=/usr/bin/CcspMtaAgentSsp -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspMtaAgentSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console
