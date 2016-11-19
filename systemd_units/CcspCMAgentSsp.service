@@ -7,8 +7,10 @@ After=CcspPandMSsp.service CcspMtaAgentSsp.service
 Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/cm
 ExecStart=/usr/bin/CcspCMAgentSsp -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspCMAgentSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console
