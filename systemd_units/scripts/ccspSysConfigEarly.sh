@@ -20,42 +20,46 @@ if [ -f "$PWD/cosa_start_custom_1.sh" ]; then
 fi
 
 #update the bbhm for 2.1s11
-/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+if [ "$MFG_NAME" = "Arris" ]; then
+    /usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+    
+    # Check if bbhm has Notify flag present
+    NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
+    REDIRCTEXISTS=""
 
-# Check if bbhm has Notify flag present
-NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
-REDIRCTEXISTS=""
+    # If Notify flag is not present then we will add it as per the syscfg DB value
+    if [ "$NOTIFYPRESENT" = "" ]
+    then
+            REDIRECT_VALUE=`syscfg get redirection_flag`
+            if [ "$REDIRECT_VALUE" = "" ]
+            then
+                    #Just making sure if syscfg command didn't fail
+                    REDIRCTEXISTS=`cat /nvram/syscfg.db | grep redirection_flag | cut -f2 -d=`
+            fi
 
-# If Notify flag is not present then we will add it as per the syscfg DB value
-if [ "$NOTIFYPRESENT" = "" ]
-then
-	REDIRECT_VALUE=`syscfg get redirection_flag`
-	if [ "$REDIRECT_VALUE" = "" ]
-	then
-		#Just making sure if syscfg command didn't fail
-		REDIRCTEXISTS=`cat /nvram/syscfg.db | grep redirection_flag | cut -f2 -d=`
-	fi
+            if [ "$REDIRECT_VALUE" = "false" ] || [ "$REDIRCTEXISTS" = "false" ];
+            then
 
-	if [ "$REDIRECT_VALUE" = "false" ] || [ "$REDIRCTEXISTS" = "false" ];
-	then
-		
-		echo " Apply Notifywifichanges flse"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	elif [ "$REDIRECT_VALUE" = "true" ] || [ "$REDIRCTEXISTS" = "true" ];
-	then
-		echo " Apply Notifywifichanges tue"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	fi
+                    echo " Apply Notifywifichanges flse"
+                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
+                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
+                    cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
+                    cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
+                    rm /var/tmp/bbhm_cur_cfg.xml
+                    rm /var/tmp/bbhm_bak_cfg.xml
+            elif [ "$REDIRECT_VALUE" = "true" ] || [ "$REDIRCTEXISTS" = "true" ];
+            then
+                    echo " Apply Notifywifichanges tue"
+                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
+                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
+                    cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
+                    cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
+                    rm /var/tmp/bbhm_cur_cfg.xml
+                    rm /var/tmp/bbhm_bak_cfg.xml
+            fi
+    fi
+else
+    echo "bbhm patch is not required"
 fi
 
 # Start coredump
