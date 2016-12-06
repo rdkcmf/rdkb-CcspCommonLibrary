@@ -1,7 +1,7 @@
 [Unit]
 Description=processMonitor service
 
-After=CcspPandMSsp.service CcspTandDSsp.service
+After=CcspPandMSsp.service CcspXdnsSsp.service
 
 [Service]
 Type=simple
