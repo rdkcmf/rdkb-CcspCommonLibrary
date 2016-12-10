@@ -184,6 +184,7 @@ elif [ -e ./tr069pa ]; then
                 $BINPATH/CcspTr069PaSsp -subsys $Subsys
         fi
         sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
+        sysevent setunique GeneralPurposeFirewallRule " -A INPUT ! -i erouter0 -p tcp -m tcp --dport 7547 -j DROP "
         cd ..
 fi
 
