@@ -126,6 +126,20 @@ then
 	fi
 fi
 
+#if [ -e /nvram/disablelogagent ]; then
+#	echo "***disabling Loagent****"
+if [ -e ./logagent ]; then
+	cd logagent
+
+	if [ "x"$Subsys = "x" ];then
+		$BINPATH/log_agent
+	else
+		echo "$BINPATH/log_agent -subsys $Subsys"
+		$BINPATH/log_agent -subsys $Subsys
+	fi
+	cd ..
+fi
+
 #if [ -e /nvram/disablePsmSSP ]; then
 #	echo "***disabling PsmSSP****"
 if [ "x"$Subsys = "x" ];then
