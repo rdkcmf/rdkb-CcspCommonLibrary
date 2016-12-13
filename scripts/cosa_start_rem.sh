@@ -128,18 +128,6 @@ then
     cd ..
 fi
 
-if [ -e ./logagent ]; then
-    cd logagent
-
-    if [ "x"$Subsys = "x" ];then
-        $BINPATH/log_agent
-    else
-        echo "$BINPATH/log_agent -subsys $Subsys"
-        $BINPATH/log_agent -subsys $Subsys
-    fi
-    cd ..
-fi
-
 if [ -e /nvram/disableCcspMtaAgentSsp ]; then
    echo_t "****DISABLE MTAAGENTSSP*****"
 elif [ -e ./mta ]; then
