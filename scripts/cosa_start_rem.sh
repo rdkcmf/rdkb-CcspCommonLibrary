@@ -37,12 +37,20 @@ if [ $? == 1 ]; then
     sysevent set multinet-up 2
 fi
 
-xfinityenable=`psmcli get dmsb.hotspot.enable`
-if [ $xfinityenable -eq 1 ];then
-    echo "Xfinitywifi is enabled bring up brlan2 and brlan3 if not already present"
-    sysevent set hotspot-start  
+# Waiting for brlan1 interface creation for 30 sec
+iter=0
+max_iter=2
+while [ ! -f /tmp/brlan1_up ] && [ "$iter" -le $max_iter ]
+do
+    iter=$((iter+1))
+    echo "Sleep Iteration# $iter"
+    sleep 10
+done
+
+if [ ! -f /tmp/brlan1_up ]; then
+    echo "brlan1 is not up after maximum iterations i.e 30 sec go ahead with the execution"
 else
-    echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
+    echo "brlan1 is created after interation $iter go ahead with the execution"
 fi
 
 echo_t "Elected subsystem is $Subsys"
@@ -103,6 +111,11 @@ else
     echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
 fi
 
+echo_t "XCONF SCRIPT : Calling XCONF Client"
+/etc/xb3_firmwareDwnld.sh &
+
+sleep 5 
+
 if [ -e /nvram/disableCcspMoCA ]; then
    echo "****DISABLE MoCA*****"
 elif [ -e ./moca ]; then
@@ -116,6 +129,8 @@ elif [ -e ./moca ]; then
     cd ..
 fi
 
+sleep 5 
+
 if [ -e ./wecb ];
 then
     cd wecb
@@ -127,6 +142,8 @@ then
     fi
     cd ..
 fi
+
+sleep 5 
 
 if [ -e /nvram/disableCcspMtaAgentSsp ]; then
    echo_t "****DISABLE MTAAGENTSSP*****"
@@ -160,6 +177,8 @@ fi
 #$PWD/avahi-daemon --file=$PWD/avahi-daemon.conf -D
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
+
+sleep 5 
 
 if [ -e /nvram/disableCcspTr069PaSsp ]; then
    echo_t "****DISABLE CcspTr069PaSsp*****"
@@ -209,6 +228,8 @@ fi
 
 #fi
 
+sleep 5 
+
 if [ -e /nvram/disableCcspTandDSsp ]; then
    echo_t "****DISABLE CcspTandDSsp*****"
 elif [ -e ./tad ]; then
@@ -222,6 +243,8 @@ elif [ -e ./tad ]; then
         fi
         cd ..
 fi
+
+sleep 5 
 
 echo_t "*** Start CcspSafeNAT ***"
 if [ -e ./ccsp-safenat-broadband ]; then
@@ -259,6 +282,8 @@ fi
 #cd ..
 #fi
 
+sleep 5 
+
 if [ -e /nvram/disableCcspXDNS ]; then
         echo_t "***Disabling CcspXDNS*****"
 elif [ -e ./xdns ]; then
@@ -268,6 +293,8 @@ elif [ -e ./xdns ]; then
     cd ..
 fi
 
+sleep 5 
+
 if [ -e /nvram/disableCcspLMLite ]; then
 	echo_t "***Disabling CcspLMLite*****"
 elif [ -e ./lm ]; then
@@ -276,9 +303,16 @@ elif [ -e ./lm ]; then
     $BINPATH/CcspLMLite -subsys $Subsys &
 fi
 
-echo_t "XCONF SCRIPT : Calling XCONF Client"
-cd /fss/gw/etc
-./xb3_firmwareDwnld.sh &
+echo "bringing up XfinityWifi interfaces after all CCSP processes are up"
+xfinityenable=`psmcli get dmsb.hotspot.enable`
+if [ $xfinityenable -eq 1 ];then
+    echo "Xfinitywifi is enabled bring up brlan2 and brlan3 if not already present"
+    sysevent set hotspot-start
+else
+    echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
+fi
+
+sleep 5
 
 SELFHEAL_ENABLE=`syscfg get selfheal_enable`
 if [ "$SELFHEAL_ENABLE" == "false" ]
