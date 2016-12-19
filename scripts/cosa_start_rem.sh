@@ -330,6 +330,14 @@ elif [ -e ./xdns ]; then
 fi
 
 sleep 5 
+if [ -e /nvram/disableCcspEthAgent ]; then
+   echo "****DISABLE EthAgent*****"
+elif [ -e ./ethagent ]; then
+    cd ethagent
+    echo_t "$BINPATH/CcspEthAgent -subsys $Subsys"
+    $BINPATH/CcspEthAgent -subsys $Subsys
+    cd ..
+fi
 
 if [ -e /nvram/disableCcspLMLite ]; then
 	echo_t "***Disabling CcspLMLite*****"

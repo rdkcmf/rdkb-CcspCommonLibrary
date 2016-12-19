@@ -117,6 +117,7 @@ extern volatile unsigned int NOTIFY_RDKLogLevel;
 extern volatile unsigned int WECB_RDKLogLevel;
 extern volatile unsigned int PWRMGR_RDKLogLevel;
 extern volatile unsigned int FSC_RDKLogLevel;
+extern volatile unsigned int ETHAGENT_RDKLogLevel;
 
 /* Mesh Wifi log levels */
 extern volatile unsigned int MESH_RDKLogLevel;
@@ -141,6 +142,7 @@ extern volatile BOOL NOTIFY_RDKLogEnable;
 extern volatile BOOL WECB_RDKLogEnable;
 extern volatile BOOL PWRMGR_RDKLogEnable;
 extern volatile BOOL FSC_RDKLogEnable;
+extern volatile BOOL ETHAGENT_RDKLogEnable;
 #if defined(_MDC_SUPPORTED_)
 extern volatile BOOL MDC_RDKLogEnable; //Added for RDKB-4237
 /* The MDCLOG macro is a way to conditionally include code in the
@@ -405,6 +407,12 @@ else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))  \
         LogLevel = MeshService_RDKLogLevel;             \
         LogEnable = MeshService_RDKLogEnable;           \
 }                                                       \
+else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ethagent"))                                    \
+{                                                                                               \
+        ComponentName= "LOG.RDK.ETHAGENT";                                                  \
+        LogLevel = ETHAGENT_RDKLogLevel;\
+        LogEnable = ETHAGENT_RDKLogEnable;\
+}                                                                                               \
 else\
 {\
 		ComponentName = "LOG.RDK.Misc";							\

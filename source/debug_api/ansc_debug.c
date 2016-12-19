@@ -125,6 +125,8 @@ volatile unsigned int MeshService_RDKLogLevel = 5;
 volatile BOOL MDC_RDKLogEnable = TRUE; //Added for RDKB-4237
 volatile unsigned int MDC_RDKLogLevel = 4; //Added for RDKB-4237
 #endif
+volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
+volatile unsigned int ETHAGENT_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
