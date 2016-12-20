@@ -150,10 +150,6 @@ fi
 echo_t "starting process monitor script"
 sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
-echo_t "Monitor ATOM log folder size"
-sh /rdklogger/atom_log_monitor.sh &
-
-
 if [ -f "/usr/ccsp/tdk_start.sh" ]
 then
     if [ -f /version.txt ]
@@ -213,6 +209,9 @@ else
 fi
 
 done
+
+echo_t "Monitor ATOM log folder size"
+sh /rdklogger/atom_log_monitor.sh &
 
 if [ "$CR_IN_PEER" = "yes" ]
 then
