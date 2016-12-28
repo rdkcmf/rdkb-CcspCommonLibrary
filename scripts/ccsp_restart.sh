@@ -262,3 +262,6 @@ ulimit -c unlimited
                 echo "$BINPATH/log_agent -subsys $Subsys"
                 $BINPATH/log_agent -subsys $Subsys
         fi
+        if [ -f  /lib/rdk/dcm.service ]; then
+                /bin/sh /lib/rdk/dcm.service &
+        fi
