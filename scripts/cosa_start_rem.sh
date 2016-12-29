@@ -14,6 +14,14 @@ export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBR
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 export LOG4C_RCPATH=/fss/gw/rdklogger
 
+if [ -f /tmp/cosa_start_rem_triggered ]; then
+	echo_t "Already cosa_start_rem.sh script was triggered"
+	exit
+else
+    touch  /tmp/cosa_start_rem_triggered
+	echo_t "Triggered cosa_start_rem script and created tmp/cosa_start_rem_triggered file"
+fi
+
 isCloudCapable=1
 isCloudCapable=`syscfg get cloud_capable_flag`
 if [ $isCloudCapable -eq 0 ]
