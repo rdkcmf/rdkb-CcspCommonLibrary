@@ -236,36 +236,20 @@ fi
 
 #fi
 
-sleep 5 
+#sleep 5 
 
-if [ -e /nvram/disableCcspTandDSsp ]; then
-   echo_t "****DISABLE CcspTandDSsp*****"
-elif [ -e ./tad ]; then
-        cd tad
-        #delay TaD in order to reduce CPU overload and make PAM ready early
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/CcspTandDSsp
-        else
-        echo_t "$BINPATH/CcspTandDSsp -subsys $Subsys"
-                $BINPATH/CcspTandDSsp -subsys $Subsys
-        fi
-        cd ..
-fi
-
-sleep 5 
-
-echo_t "*** Start CcspSafeNAT ***"
-if [ -e ./ccsp-safenat-broadband ]; then
-        cd ccsp-safenat-broadband
-
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/CcspSafeNAT
-        else
-                echo_t "$BINPATH/CcspSafeNAT -subsys $Subsys"
-                $BINPATH/CcspSafeNAT -subsys $Subsys
-        fi
-        cd ..
-fi
+#echo_t "*** Start CcspSafeNAT ***"
+#if [ -e ./ccsp-safenat-broadband ]; then
+#        cd ccsp-safenat-broadband
+#
+#        if [ "x"$Subsys = "x" ];then
+#                $BINPATH/CcspSafeNAT
+#        else
+#                echo_t "$BINPATH/CcspSafeNAT -subsys $Subsys"
+#                $BINPATH/CcspSafeNAT -subsys $Subsys
+#        fi
+#        cd ..
+#fi
 
 #if [ -e ./ccspRecoveryManager ]; then
 #        if [ "x"$Subsys = "x" ];then
@@ -289,17 +273,6 @@ fi
 #fi
 #cd ..
 #fi
-
-sleep 5 
-
-if [ -e /nvram/disableCcspXDNS ]; then
-        echo_t "***Disabling CcspXDNS*****"
-elif [ -e ./xdns ]; then
-    cd xdns
-    echo_t "$BINPATH/CcspXdnsSsp -subsys $Subsys &"
-    $BINPATH/CcspXdnsSsp -subsys $Subsys &
-    cd ..
-fi
 
 sleep 5 
 
@@ -374,3 +347,30 @@ sleep 5
 echo "XCONF SCRIPT : Calling XCONF Client"
 cd /etc/
 ./xb3_firmwareSched.sh &
+
+sleep 5 
+
+if [ -e /nvram/disableCcspTandDSsp ]; then
+   echo_t "****DISABLE CcspTandDSsp*****"
+elif [ -e ./tad ]; then
+        cd tad
+        #delay TaD in order to reduce CPU overload and make PAM ready early
+        if [ "x"$Subsys = "x" ];then
+                $BINPATH/CcspTandDSsp
+        else
+        echo_t "$BINPATH/CcspTandDSsp -subsys $Subsys"
+                $BINPATH/CcspTandDSsp -subsys $Subsys
+        fi
+        cd ..
+fi
+
+sleep 5 
+
+if [ -e /nvram/disableCcspXDNS ]; then
+        echo_t "***Disabling CcspXDNS*****"
+elif [ -e ./xdns ]; then
+    cd xdns
+    echo_t "$BINPATH/CcspXdnsSsp -subsys $Subsys &"
+    $BINPATH/CcspXdnsSsp -subsys $Subsys &
+    cd ..
+fi
