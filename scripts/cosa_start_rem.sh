@@ -335,7 +335,7 @@ if [ -f /usr/bin/inotify-minidump-watcher ];then
 fi
 
 
-/etc/utopia/service.d/service_sshd.sh sshd-start &
+#/etc/utopia/service.d/service_sshd.sh sshd-start &
 
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
