@@ -79,6 +79,18 @@ else
     echo "bbhm patch is not required"
 fi
 
+if [ ! -f "/nvram/l2net_port_details_cleaned" ] 
+then
+	echo "Clearing up bridge data from from DB"
+	cp /nvram/bbhm_cur_cfg.xml /tmp/b3
+	sed -i '/dmsb.l2net.2.Port./d' /tmp/b3
+	sed -i '/Provision.COSALibrary.Bridging.NextPortInstanceNum2.NextPortInstanceNum/d' /tmp/b3
+        sed -i '/Provision.COSALibrary.BridgingHalfAdded./d' /tmp/b3
+	cp /tmp/b3 /nvram/bbhm_cur_cfg.xml
+	rm /tmp/b3
+	touch "/nvram/l2net_port_details_cleaned"
+fi
+
 # Start coredump
 if [ -f "$PWD/core_compr" ]; then
 	if ! [ -e "/var/core" ]; then
@@ -147,6 +159,19 @@ if [ "x"$Subsys = "x" ];then
 else
     echo "$BINPATH/PsmSsp -subsys $Subsys"
 	$BINPATH/PsmSsp -subsys $Subsys
+fi
+
+if [ -e /nvram/disableCcspMoCA ]; then
+   echo "****DISABLE MoCA*****"        
+elif [ -e ./moca ]; then
+    cd moca
+    if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspMoCA         
+    else             
+        echo "$BINPATH/CcspMoCA -subsys $Subsys"
+        $BINPATH/CcspMoCA -subsys $Subsys
+    fi
+    cd ..        
 fi
 
 sleep 5
