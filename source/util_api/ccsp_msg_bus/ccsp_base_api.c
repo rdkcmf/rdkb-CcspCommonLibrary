@@ -292,7 +292,7 @@ int CcspBaseIf_setParameterValues(
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
 	    //CcspTraceError(("dbus_message_iter_append_basic ret = %d \n", ret));
 
-	    CcspTraceError(("%d : Name = %s , value = %s \n", i, val[i].parameterName, val[i].parameterValue));
+	    //CcspTraceInfo(("%d : Name = %s , value = %s \n", i, val[i].parameterName, val[i].parameterValue));
 	
         dbus_message_iter_close_container (&array_iter,
                                            &struct_iter);
