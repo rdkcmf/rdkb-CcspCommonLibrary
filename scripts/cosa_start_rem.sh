@@ -349,6 +349,12 @@ if [ -f  /lib/rdk/dcm.service ]; then
    /bin/sh /lib/rdk/dcm.service &
 fi
 
+echo "Enable DCM RFC feature"
+# Enable DCM RFC feature RDKB-8798
+if [ -f  /lib/rdk/dcmrfc.service ]; then
+   /bin/sh /lib/rdk/dcmrfc.service &
+fi
+
 #RDKB-7535
 
 if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
