@@ -3,7 +3,7 @@ Description=Cosa service
 After=CcspPandMSsp.service
 
 [Service]
-Type=forking
+Type=simple
 PIDFile=/var/tmp/CcspWifiSsp.pid
 WorkingDirectory=/usr/ccsp/wifi
 Environment="Subsys=eRT."
@@ -13,5 +13,6 @@ ExecStart=/usr/bin/CcspWifiSsp -subsys $Subsys
 ExecStartPost=/bin/sh -c '/usr/ccsp/wifi/wifiTelemetrySetup.sh'
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWifiSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
+RestartSec=2
 
 StandardOutput=syslog
