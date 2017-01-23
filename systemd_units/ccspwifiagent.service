@@ -3,10 +3,15 @@ Description=Cosa service
 After=CcspPandMSsp.service
 
 [Service]
-Type=simple
-WorkingDirectory=/usr/ccsp
-ExecStart=/bin/sh -c '/usr/ccsp/wifi/cosa_start_wifiagent.sh &' 
-RemainAfterExit=yes
+Type=forking
+PIDFile=/var/tmp/CcspWifiSsp.pid
+WorkingDirectory=/usr/ccsp/wifi
+Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties 
+ExecStart=/usr/bin/CcspWifiSsp -subsys $Subsys
+ExecStartPost=/bin/sh -c '/usr/ccsp/wifi/wifiTelemetrySetup.sh'
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWifiSsp" >> ${PROCESS_RESTART_LOG}'
+Restart=always
 
-StandardOutput=syslog+console
-
+StandardOutput=syslog
