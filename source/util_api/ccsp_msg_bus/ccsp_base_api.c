@@ -609,17 +609,17 @@ int CcspBaseIf_setParameterAttributes(
     DBusMessageIter struct_iter;
     int i;
 #ifdef USE_NOTIFY_COMPONENT
-	parameterValStruct_t notif_val[20];
+	parameterValStruct_t notif_val[1];
 	char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent"; 
 	char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
 	char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
 	char* faultParam = NULL;
-	BOOL notify_changed = FALSE;
 	UINT notification_count = 0;
 	char PA_name[256];
 	char true_false[10];
 	char notification_parameter[256];
-    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+	char** p_notification_parameter;
+	CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 	_ansc_strcpy(PA_name, bus_info->component_id);
 #endif
     message = dbus_message_new_method_call (dst_component_id,
@@ -631,7 +631,17 @@ int CcspBaseIf_setParameterAttributes(
         CcspTraceError(("No memory\n"));
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
     }
+#ifdef USE_NOTIFY_COMPONENT
+	p_notification_parameter = (char**) bus_info->mallocfunc(sizeof(char*) * size);
 
+	if (!p_notification_parameter )
+	{
+	    CcspTraceError(("No memory\n"));
+	    return CCSP_ERR_MEMORY_ALLOC_FAIL;
+	}
+
+	memset(p_notification_parameter, 0, sizeof(char*) * size);
+#endif
     dbus_message_iter_init_append (message, &iter);
 
     tmp = sessionId;
@@ -654,19 +664,16 @@ int CcspBaseIf_setParameterAttributes(
 #ifdef USE_NOTIFY_COMPONENT
 		if(val[i].notificationChanged)
 		{
-			notify_changed = TRUE;
-
 			if(val[i].notification)
 				_ansc_strcpy(true_false, "true");
 			else
 				_ansc_strcpy(true_false, "false");
 
 			sprintf(notification_parameter,"%s,%s,%s",val[i].parameterName,PA_name, true_false);
-		
+			p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
+			_ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
 
-			notif_val[notification_count].parameterName =  param_name ;
-			notif_val[notification_count].parameterValue = notification_parameter;
-			notif_val[notification_count].type = ccsp_string;
+
 			notification_count++;
 			
 		}
@@ -703,8 +710,13 @@ int CcspBaseIf_setParameterAttributes(
     }
     dbus_message_unref (message);
 #ifdef USE_NOTIFY_COMPONENT
-	if(notify_changed)
+
+	notif_val[0].parameterName = param_name;
+	notif_val[0].type = ccsp_string;
+
+	for(i = 0; i < notification_count ; i++)
 	{
+		notif_val[0].parameterValue = p_notification_parameter[i];
 		
 		ret1 = CcspBaseIf_setParameterValues(
 		  bus_handle,
@@ -713,7 +725,7 @@ int CcspBaseIf_setParameterAttributes(
 		  sessionId,
 		  0,
 		  notif_val,
-		  notification_count,
+		  1,
 		  TRUE,
 		  &faultParam
 		  );
@@ -721,12 +733,20 @@ int CcspBaseIf_setParameterAttributes(
 		if(ret1 != CCSP_SUCCESS)
 		{
 			CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret1));
-			for(i = 0; i < notification_count ; i++)
-			{
-				CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[i].parameterValue));
-			}
+			CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[0].parameterValue));
 		}
+
 	}
+
+
+	for(i = 0; i < notification_count ; i++)
+	{
+		if(p_notification_parameter[i])
+			bus_info->freefunc(p_notification_parameter[i]);
+	}
+
+	if(p_notification_parameter)
+		bus_info->freefunc(p_notification_parameter);
 #endif	
     return ret;
 }
