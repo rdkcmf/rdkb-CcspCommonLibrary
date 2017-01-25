@@ -88,7 +88,7 @@ fi
 rdk_wifi_upgrade_vlan106
 
 # Config vlan 106 Secure ssid (phrase 2): RDKB-6974
-/usr/ccsp/wifi/rdk_wifi_configure_lnf_ap.sh
+/lib/rdk/rdk_wifi_configure_lnf_ap.sh
 
 # enable core files on atom
 ulimit -c unlimited
