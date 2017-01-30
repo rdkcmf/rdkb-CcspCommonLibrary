@@ -115,6 +115,10 @@ volatile BOOL PWRMGR_RDKLogEnable = TRUE;
 volatile unsigned int PWRMGR_RDKLogLevel = 4;
 volatile BOOL FSC_RDKLogEnable = TRUE;
 volatile unsigned int FSC_RDKLogLevel = 4;
+volatile BOOL MESH_RDKLogEnable = TRUE;
+volatile unsigned int MESH_RDKLogLevel = 4;
+
+
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
