@@ -92,7 +92,7 @@ rdk_wifi_upgrade_vlan106
 
 # enable core files on atom
 ulimit -c unlimited
-echo "/tmp/core.%e.%p" > /proc/sys/kernel/core_pattern
+echo "/tmp/core.%e" > /proc/sys/kernel/core_pattern
 
 cp -f ccsp_msg.cfg /tmp
 
