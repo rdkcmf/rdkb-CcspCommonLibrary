@@ -322,12 +322,13 @@ fi
 
 sleep 5
 
-SELFHEAL_ENABLE=`syscfg get selfheal_enable`
-if [ "$SELFHEAL_ENABLE" == "false" ]
-then
-	echo_t "Running process monitoring script"
-	/etc/process_monitor.sh &
-fi
+#Changes done for RDKB-8751
+#SELFHEAL_ENABLE=`syscfg get selfheal_enable`
+#if [ "$SELFHEAL_ENABLE" == "false" ]
+#then
+#	echo_t "Running process monitoring script"
+#	/etc/process_monitor.sh &
+#fi
 
 # starting the minidump watcher & uploader
 if [ -f /usr/bin/inotify-minidump-watcher ];then
