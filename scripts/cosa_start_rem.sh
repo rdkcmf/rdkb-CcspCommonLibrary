@@ -87,23 +87,30 @@ elif [ -e ./cm ]; then
         cd ..
 fi
 
-if [ -e /nvram/webpa_cfg.json ]; then
-    echo_t "webpa_cfg.json exists in nvram"
- else
-    echo_t "webpa_cfg.json not found in nvram"
-    cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-    echo_t "webpa_cfg.json file does not exist. Hence copying the factory default file.."
-fi
-    
-WEBPAVER=`cat /nvram/webpa_cfg.json | grep "file-version" | awk '{print $2}' | sed 's|[\"\",]||g'`
-echo_t "WEBPAVER is $WEBPAVER"
-if [ "$WEBPAVER" = "" ];then
-    cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-    echo_t "Copying factory default file as webpa file-version does not exist in current cfg file.."
-fi
-    
-ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
-echo_t "ENABLEWEBPA is $ENABLEWEBPA"
+if [ -f "/etc/PARODUS_ENABLE" ]; then
+    echo "Starting parodus in background "
+    cd /usr/ccsp/parodus
+    sh  ./parodus_start.sh &
+    echo "Started parodus_start script"
+    cd -
+else
+    if [ -e /nvram/webpa_cfg.json ]; then
+        echo_t "webpa_cfg.json exists in nvram"
+     else
+        echo_t "webpa_cfg.json not found in nvram"
+        cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
+        echo_t "webpa_cfg.json file does not exist. Hence copying the factory default file.."
+    fi
+        
+    WEBPAVER=`cat /nvram/webpa_cfg.json | grep "file-version" | awk '{print $2}' | sed 's|[\"\",]||g'`
+    echo_t "WEBPAVER is $WEBPAVER"
+    if [ "$WEBPAVER" = "" ];then
+        cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
+        echo_t "Copying factory default file as webpa file-version does not exist in current cfg file.."
+    fi
+        
+    ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
+    echo_t "ENABLEWEBPA is $ENABLEWEBPA"
 
 if [ -e /nvram/disablewebpa ]; then
     echo_t "***Disabling webpa*****"
@@ -117,6 +124,8 @@ elif [ "$ENABLEWEBPA" = "true" ];then
     fi
 else
     echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
+fi
+
 fi
 
 echo_t "XCONF SCRIPT : Calling XCONF Client"
@@ -279,6 +288,7 @@ sleep 5
 if [ -e /nvram/disableCcspLMLite ]; then
 	echo_t "***Disabling CcspLMLite*****"
 elif [ -e ./lm ]; then
+    echo_t "***Starting CcspLMLite****"
     cd lm
     echo_t "$BINPATH/CcspLMLite -subsys $Subsys &"
     $BINPATH/CcspLMLite -subsys $Subsys &
