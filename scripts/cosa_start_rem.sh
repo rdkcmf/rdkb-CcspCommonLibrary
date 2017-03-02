@@ -282,6 +282,7 @@ elif [ -e ./lm ]; then
     cd lm
     echo_t "$BINPATH/CcspLMLite -subsys $Subsys &"
     $BINPATH/CcspLMLite -subsys $Subsys &
+    cd ..
 fi
 
 echo "bringing up XfinityWifi interfaces after all CCSP processes are up"
@@ -329,27 +330,6 @@ if [ -f  /lib/rdk/dcmrfc.service ]; then
    /bin/sh /lib/rdk/dcmrfc.service &
 fi
 
-#RDKB-7535
-
-if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
-then
-	/rdklogger/rdkbLogMonitor.sh &
-fi
-
-if [ -f "/rdklogger/fileUploadRandom.sh" ]
-then
-	/rdklogger/fileUploadRandom.sh &
-fi
-
-
-#waiting for DCM service to complete
-sleep 5
-echo "XCONF SCRIPT : Calling XCONF Client"
-cd /etc/
-./xb3_firmwareSched.sh &
-
-sleep 5 
-
 if [ -e /nvram/disableCcspTandDSsp ]; then
    echo_t "****DISABLE CcspTandDSsp*****"
 elif [ -e ./tad ]; then
@@ -374,3 +354,23 @@ elif [ -e ./xdns ]; then
     $BINPATH/CcspXdnsSsp -subsys $Subsys &
     cd ..
 fi
+
+#RDKB-7535
+
+if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
+then
+	/rdklogger/rdkbLogMonitor.sh &
+fi
+
+if [ -f "/rdklogger/fileUploadRandom.sh" ]
+then
+	/rdklogger/fileUploadRandom.sh &
+fi
+
+
+#waiting for DCM service to complete
+sleep 5
+echo "XCONF SCRIPT : Calling XCONF Client"
+cd /etc/
+./xb3_firmwareSched.sh &
+
