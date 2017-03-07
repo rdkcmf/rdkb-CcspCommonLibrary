@@ -89,10 +89,12 @@ fi
 
 if [ -f "/etc/PARODUS_ENABLE" ]; then
     echo "Starting parodus in background "
-    cd /usr/ccsp/parodus
-    sh  ./parodus_start.sh &
-    echo "Started parodus_start script"
-    cd -
+    if [ -e ./parodus ]; then
+    	cd parodus
+    	sh  ./parodus_start.sh &
+    	echo "Started parodus_start script"
+    	cd ..
+    fi
 else
     if [ -e /nvram/webpa_cfg.json ]; then
         echo_t "webpa_cfg.json exists in nvram"
