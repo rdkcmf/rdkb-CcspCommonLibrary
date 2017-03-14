@@ -186,7 +186,7 @@ sleep 60
 while :
 do
 
-if [ -f "/tmp/wifi_initialized" ]
+if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ]
 then
 
 	##### webpa #####
