@@ -1,0 +1,13 @@
+[Unit]
+Description=CcspCrSsp Restart Service
+
+[Service]
+Type=oneshot
+#Give 10 Seconds if Normal Shutdown Sequence was triggered
+ExecStartPre=/bin/sh -c 'sleep 10'
+ExecStartPre=/bin/sh -c 'sync'
+ExecStartPre=/bin/sh -c 'source /rdklogger/logfiles.sh;syncLogs_nvram2'
+ExecStart=/bin/sh -c 'reboot'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
