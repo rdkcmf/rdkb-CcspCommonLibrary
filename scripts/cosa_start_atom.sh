@@ -90,6 +90,9 @@ rdk_wifi_upgrade_vlan106
 # Config vlan 106 Secure ssid (phrase 2): RDKB-6974
 /lib/rdk/rdk_wifi_configure_lnf_ap.sh
 
+# Config mesh backhal SSID
+/usr/ccsp/wifi/meshapcfg.sh
+
 # enable core files on atom
 ulimit -c unlimited
 echo "/tmp/core.%e" > /proc/sys/kernel/core_pattern
