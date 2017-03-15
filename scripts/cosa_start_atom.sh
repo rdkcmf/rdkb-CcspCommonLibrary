@@ -185,6 +185,19 @@ do
 
 if [ -f "/tmp/wifi_initialized" ]
 then
+
+	##### webpa #####
+	
+	if [ -f "/etc/PARODUS_ENABLE" ]; then
+	  	echo "Starting webpa from ATOM side"
+		if [ -f /usr/bin/webpa ];then
+	     	/usr/bin/webpa &
+		fi
+		echo "Started webpa on atom"
+	else
+	  echo_t "****Parodus is disabled.****"
+	fi
+
 	if [ -e ./harvester ]; then
         	echo_t "****STARTING HARVESTER***"
 	        cd harvester
