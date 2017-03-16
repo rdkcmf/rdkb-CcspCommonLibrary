@@ -11,8 +11,7 @@ Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStartPre=/bin/sh -c '(/usr/ccsp/ccspSysConfigEarly.sh)'
 ExecStart=/usr/bin/CcspCrSsp -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: CcspCrSsp Restarted Rebooting" >> ${PROCESS_RESTART_LOG}'
-ExecStop=/bin/sh -c 'echo 0 >> /tmp/CcspCrSsp_Restarted'
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspCrSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console
