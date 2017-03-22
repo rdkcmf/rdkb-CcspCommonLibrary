@@ -1,6 +1,8 @@
 [Unit]
 Description=CcspLogent service
 
+After=CcspCrSsp.service
+
 [Service]
 Type=notify
 NotifyAccess=main
