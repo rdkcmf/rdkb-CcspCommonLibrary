@@ -163,6 +163,19 @@ fi
 
 sleep 5
 
+if [ -e /nvram/disableCcspCMAgentSsp ]; then
+   echo_t "****DISABLE CcspCMAgentSsp*****"
+elif [ -e ./cm ]; then
+        cd cm
+        if [ "x"$Subsys = "x" ];then
+        $BINPATH/CcspCMAgentSsp
+        else
+        echo_t "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
+                $BINPATH/CcspCMAgentSsp -subsys $Subsys
+        fi
+        cd ..
+fi
+
 #if [ -e /nvram/disableCcspPandMSsp ]; then
 #	echo "***disabling PAM****"
 if [ -e ./pam ]; then
