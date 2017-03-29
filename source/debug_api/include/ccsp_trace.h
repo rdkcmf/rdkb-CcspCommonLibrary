@@ -231,7 +231,7 @@ extern volatile BOOL FSC_RDKLogEnable;
 char *ComponentName;\
 volatile unsigned int LogLevel;\
 volatile BOOLEAN LogEnable;\
-if(RDKLogEnable == TRUE)\
+if(RDKLogEnable == TRUE && pComponentName)\
 {\
 if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pam"))						\
 {												\
