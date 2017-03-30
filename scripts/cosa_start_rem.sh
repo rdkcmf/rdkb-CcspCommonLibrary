@@ -74,19 +74,6 @@ syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
 echo_t "PWD is `pwd`"
 
-if [ -e /nvram/disableCcspCMAgentSsp ]; then
-   echo_t "****DISABLE CcspCMAgentSsp*****"
-elif [ -e ./cm ]; then
-        cd cm
-        if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspCMAgentSsp
-        else
-        echo_t "$BINPATH/CcspCMAgentSsp -subsys $Subsys"
-                $BINPATH/CcspCMAgentSsp -subsys $Subsys
-        fi
-        cd ..
-fi
-
 if [ -f "/etc/PARODUS_ENABLE" ]; then
     echo "Starting parodus in background "
     if [ -e ./parodus ]; then
