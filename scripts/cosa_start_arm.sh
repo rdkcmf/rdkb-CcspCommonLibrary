@@ -73,10 +73,10 @@ export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 export LOG4C_RCPATH=/rdklogger
 
 #zqiu: update the bbhm for 2.1s11
-if [ "$MFG_NAME" = "Arris" ]; then
+if [ "$BOX_TYPE" = "XB3" ]; then
     /usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
 else
-    echo "bbhm patch is not required"
+    echo "bbhm patch is not required for other platforms"
 fi
 
 if [ ! -f "/nvram/l2net_port_details_cleaned" ] 
@@ -110,7 +110,9 @@ cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
 #./DbusCfg
-$BINPATH/dbus-daemon --config-file=./basic.conf --fork
+if [ "$MANUFACTURE" != "Technicolor" ]; then
+	$BINPATH/dbus-daemon --config-file=./basic.conf --fork
+fi
 
 mkdir -p $LOG_PATH
 
