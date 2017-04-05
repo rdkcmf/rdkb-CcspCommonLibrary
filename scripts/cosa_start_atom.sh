@@ -85,6 +85,12 @@ fi
 
 #####END: Changes for ARRISXB3-3853
 
+# starting the rpcserver
+echo_t "starting rpcserver atom"
+if [ -f /usr/bin/rpcserver ];then
+      /usr/bin/rpcserver &
+fi
+
 # upgrade the wifi config to suppot vlan 106
 # This script is only for ARRISXB3 and Ciscoxb3. All other product do not need this step.
 rdk_wifi_upgrade_vlan106
@@ -168,12 +174,6 @@ then
             sh /usr/ccsp/tdk_start.sh &
         fi
     fi
-fi
-
-# starting the rpcserver
-echo_t "starting rpcserver atom"
-if [ -f /usr/bin/rpcserver ];then
-      /usr/bin/rpcserver &
 fi
 
 if [ "$BOX_TYPE" = "XB3" ] && [ -f "/etc/webgui_atom.sh" ]
