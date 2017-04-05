@@ -36,6 +36,8 @@ BINPATH="/usr/bin"
 
 . /etc/device.properties
 
+MAX_WAIT_TIME=300
+
 killall CcspWifiSsp
 killall harvester
 killall CcspCrSsp
@@ -151,8 +153,6 @@ if [ -e ./wifi ]; then
 	cd ..
 fi
 
-echo_t "starting process monitor script"
-sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
 if [ -f "/usr/ccsp/tdk_start.sh" ]
 then
@@ -183,10 +183,12 @@ then
 fi
 
 sleep 60 
+timer=0
+
 while :
 do
 
-if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ]
+if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -eq $MAX_WAIT_TIME ]
 then
 
 	##### webpa #####
@@ -223,9 +225,16 @@ then
 else
 	echo "Waiting for Wifi init completion to start Harvester"
 	sleep 10
+	timer=`expr $timer + 10`
+	if [ $timer -eq $MAX_WAIT_TIME ]; then
+	    echo "Waited for 5 min, wifi/pam is still not up. Start webpa, harvester, service manager process and break the loop"
+	fi
 fi
 
 done
+
+echo_t "starting process monitor script"
+sh /usr/ccsp/wifi/process_monitor_atom.sh &
 
 echo_t "Monitor ATOM log folder size"
 sh /rdklogger/atom_log_monitor.sh &
