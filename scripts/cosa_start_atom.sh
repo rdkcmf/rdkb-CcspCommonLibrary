@@ -42,6 +42,8 @@ killall CcspWifiSsp
 killall harvester
 killall CcspCrSsp
 killall rpcserver
+killall CcspMdcSsp
+
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 $ATOM_INTERFACE_IP
@@ -159,6 +161,22 @@ if [ -e ./wifi ]; then
 	fi
 	cd ..
 fi
+
+if [ -e ./mdc ]; then
+        echo " Start Mdc"
+        # Interface for internal MDC NAT traffic to/from ARM
+        vconfig add eth0 4040
+        ifconfig eth0.4040 192.168.250.1 netmask 255.255.255.252 up
+	cd mdc
+	if [ "x"$Subsys = "x" ];then
+            $BINPATH/CcspMdcSsp &
+	else
+            echo "./CcspMdcSsp -subsys $Subsys &"
+            $BINPATH/CcspMdcSsp -subsys $Subsys &
+	fi
+	cd ..
+fi
+
 
 
 if [ -f "/usr/ccsp/tdk/StartTDK.sh" ]

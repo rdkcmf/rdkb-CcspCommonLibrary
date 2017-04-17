@@ -109,6 +109,9 @@ extern volatile unsigned int MTA_RDKLogLevel;
 extern volatile unsigned int CM_RDKLogLevel;
 extern volatile unsigned int WiFi_RDKLogLevel;
 extern volatile unsigned int CR_RDKLogLevel;
+#if defined(_MDC_SUPPORTED_)
+extern volatile unsigned int MDC_RDKLogLevel; //Added for RDKB-4237
+#endif
 extern volatile unsigned int Harvester_RDKLogLevel; /*Added for RDKB-4343*/
 extern volatile unsigned int NOTIFY_RDKLogLevel; 
 extern volatile unsigned int WECB_RDKLogLevel;
@@ -134,7 +137,25 @@ extern volatile BOOL NOTIFY_RDKLogEnable;
 extern volatile BOOL WECB_RDKLogEnable;
 extern volatile BOOL PWRMGR_RDKLogEnable;
 extern volatile BOOL FSC_RDKLogEnable;
+#if defined(_MDC_SUPPORTED_)
+extern volatile BOOL MDC_RDKLogEnable; //Added for RDKB-4237
+/* The MDCLOG macro is a way to conditionally include code in the
+   CcspTraceExec() macro.  An #ifdef inside the macro is not allowed */
+#define MDCLOG {\
+ ComponentName="LOG.RDK.MDC";\
+ LogLevel = MDC_RDKLogLevel;\
+ LogEnable = MDC_RDKLogEnable;\
+}
 
+#else
+/* The MDCLOG macro is a way to conditionally include code in the
+   CcspTraceExec() macro.  An #ifdef inside the macro is not allowed */
+#define MDCLOG {\
+ ComponentName="";\
+ LogLevel = 0;\
+ LogEnable = FALSE;\
+}
+#endif
 /*
  *  Whether a debug trace is output depends on the following factors:
  *      1) the trace level passed in the trace statement is higher (smaller value)
@@ -300,6 +321,11 @@ else if(!strcmp(pComponentName,COMPNAME))					\
 	ComponentName="LOG.RDK.WIFI";							\
 	LogLevel = WiFi_RDKLogLevel;\
 	LogEnable = WiFi_RDKLogEnable;\
+}\
+/*Added for rdkb-4237*/\
+else if(!strcmp(pComponentName,"mdc"))					\
+{												\
+        MDCLOG \
 }\
 /*Added for RDKB-4343*/\
 else if(!strcmp(pComponentName,"harvester")) 					\
