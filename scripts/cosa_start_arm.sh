@@ -206,7 +206,7 @@ elif [ -e ./notify-comp ]; then
         cd ..
 fi
 
-if [ -f "/usr/ccsp/tdk_start.sh" ]
+if [ -f "/usr/ccsp/tdk/StartTDK.sh" ]
 then
     if [ -f /version.txt ]
     then
@@ -217,7 +217,7 @@ then
         if [ $flag -gt 0 ];then
             echo "Found TDK Image"
             echo "Invoking TDK start up script"
-            sh /usr/ccsp/tdk_start.sh &
+            sh /usr/ccsp/tdk/StartTDK.sh &
         fi
     fi
 fi
