@@ -70,6 +70,7 @@ LOG_FOLDER="/rdklogs/logs/"
 CRONPATH="/tmp/cron/"
 CRONFILE=$CRONPATH"root"
 CRONFILE_BK="/tmp/cron_tab.txt"
+MESHAGENT="/usr/bin/meshAgent"
 
 mkdir -p $LOG_FOLDER
 
@@ -251,6 +252,10 @@ then
 			echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE
 			echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+			if [ -f $MESHAGENT ]
+			then
+			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
+			fi
 		else
 			if [ ! -d $CRONPATH ]
 			then
@@ -260,6 +265,10 @@ then
 			echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" > $CRONFILE
 			echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+			if [ -f $MESHAGENT ]
+			then
+			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
+            fi
 		fi
 		crond -c $CRONPATH -l 9
 	else
@@ -268,6 +277,10 @@ then
 		echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE_BK
 		echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE_BK
 		echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
+		if [ -f $MESHAGENT ]
+		then
+		    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
+        fi
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
 	fi
