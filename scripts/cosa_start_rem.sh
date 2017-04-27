@@ -319,6 +319,11 @@ if [ -f /usr/bin/inotify-minidump-watcher ];then
       /usr/bin/inotify-minidump-watcher /minidumps /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
 fi
 
+# Upload minidumps generated before the inotify call
+if [ -f /lib/rdk/uploadDumps.sh ];then
+     sh /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
+fi
+
 
 #/etc/utopia/service.d/service_sshd.sh sshd-start &
 
