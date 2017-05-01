@@ -321,7 +321,7 @@ fi
 
 # Upload minidumps generated before the inotify call
 if [ -f /lib/rdk/uploadDumps.sh ];then
-     sh /lib/rdk/uploadDumps.sh  "\"\" 0" "*.dmp" &
+     sh /lib/rdk/uploadDumps.sh  "" 0 &
 fi
 
 
