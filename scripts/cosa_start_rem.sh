@@ -370,6 +370,16 @@ elif [ -e ./xdns ]; then
     cd ..
 fi
 
+if [ -e ./CcspArmMdc ]; then
+    # make sure MDC firewall rules are disabled at boot
+    syscfg set MDC-ENABLED 0
+    cd CcspArmMdc
+    echo "Starting ARM MDC"
+    echo "$BINPATH/Arm_Mdc -subsys $Subsys"
+    $BINPATH/Arm_Mdc -subsys $Subsys
+    cd ..
+fi
+
 #RDKB-7535
 
 if [ -f "/rdklogger/rdkbLogMonitor.sh" ]

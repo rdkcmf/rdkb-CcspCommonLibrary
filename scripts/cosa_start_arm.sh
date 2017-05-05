@@ -59,6 +59,7 @@ if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
     killall CcspLMLite
     killall CcspXdnsSsp
 	killall webpa
+    killall Arm_Mdc
 fi
 
 #
