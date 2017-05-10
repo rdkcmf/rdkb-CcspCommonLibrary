@@ -75,7 +75,7 @@ syscfg commit
 echo_t "PWD is `pwd`"
 
 if [ -f "/etc/PARODUS_ENABLE" ]; then
-    echo "Starting parodus in background "
+    echo_t "Starting parodus in background "
     if [ -e ./parodus ]; then
     	cd parodus
     	sh  ./parodus_start.sh &
