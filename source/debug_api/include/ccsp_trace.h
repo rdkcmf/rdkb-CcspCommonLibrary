@@ -328,7 +328,7 @@ else if(!strcmp(pComponentName,"mdc"))					\
         MDCLOG \
 }\
 /*Added for RDKB-4343*/\
-else if(!strcmp(pComponentName,"harvester")) 					\
+else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.harvester")) 					\
 {												\
 	ComponentName="LOG.RDK.Harvester";							\
 	LogLevel = Harvester_RDKLogLevel;\
