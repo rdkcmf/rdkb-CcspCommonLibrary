@@ -334,7 +334,7 @@ fi
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
     echo "starting drop bear"
-    dropbear -E -B -p $ARM_INTERFACE_IP:22 > /dev/null 2>&1 &
+    dropbear -E -B -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 fi
 
