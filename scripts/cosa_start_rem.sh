@@ -6,6 +6,7 @@
 source /etc/utopia/service.d/log_capture_path.sh
 
 BINPATH="/usr/bin"
+UTOPIA_PATH=/etc/utopia/service.d
 
 cd /fss/gw/usr/ccsp/
 
@@ -37,6 +38,9 @@ elif [ -e /tmp/cp_subsys_emg ]; then
 else
         Subsys=""
 fi
+
+echo "Creating MESH vlans"
+$UTOPIA_PATH/service_multinet_exec create_mesh_vlan &
 
 echo "Starting brlan1 initialization, check whether brlan1 is there or not"
 ifconfig | grep brlan1
