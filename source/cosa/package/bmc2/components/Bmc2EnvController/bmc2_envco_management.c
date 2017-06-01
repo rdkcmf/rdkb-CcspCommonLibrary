@@ -913,7 +913,8 @@ Bmc2CleanCmdSimpleArg
     }
     if ( (pCmdArg)->pValueRange )                                      
     {                                                                  
-        Bmc2FreeCmdArgValueRange((pCmdArg)->pValueRange);             
+        Bmc2FreeCmdArgValueRange((pCmdArg)->pValueRange);
+        (pCmdArg)->pValueRange = NULL;
     }                                                                  
 }
 
@@ -954,7 +955,6 @@ Bmc2FreeCmdArgValueRange
     if ( pCmdArgVrange )                                     
     {                                                        
         Bmc2CleanCmdArgValueRange(pCmdArgVrange);            
-        AnscFreeMemory(pCmdArgVrange);                       
     }
 }
 
