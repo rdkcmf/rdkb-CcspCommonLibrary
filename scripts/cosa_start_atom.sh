@@ -274,6 +274,7 @@ then
 			then
 			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
 			fi
+			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
 		else
 			if [ ! -d $CRONPATH ]
 			then
@@ -287,6 +288,7 @@ then
 			then
 			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
             fi
+			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
 		fi
 		crond -c $CRONPATH -l 9
 	else
@@ -299,6 +301,7 @@ then
 		then
 		    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
         fi
+		echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
 	fi
