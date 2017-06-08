@@ -195,6 +195,11 @@ then
     fi
 fi
 
+if [ "$BOX_TYPE" = "XB3" ]
+then
+    echo 2 > /proc/irq/45/smp_affinity
+fi
+
 if [ "$BOX_TYPE" = "XB3" ] && [ -f "/etc/webgui_atom.sh" ]
 then
    echo_t "Starting web gui"
