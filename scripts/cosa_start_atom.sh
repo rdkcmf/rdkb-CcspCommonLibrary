@@ -263,6 +263,9 @@ sh /usr/ccsp/wifi/process_monitor_atom.sh &
 echo_t "Monitor ATOM log folder size"
 sh /rdklogger/atom_log_monitor.sh &
 
+echo_t "starting wifi_default_radius_port_script"
+/usr/ccsp/wifi/wifi_default_radius_port.sh
+
 if [ "$CR_IN_PEER" = "yes" ]
 then
 	echo_t "Start monitoring system statistics on the atom side"
