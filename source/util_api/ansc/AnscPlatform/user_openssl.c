@@ -36,6 +36,7 @@
 #include "user_openssl.h"
 #include "pthread.h"
 #include "openssl/crypto.h"
+#include "openssl/x509v3.h"
 #include "ansc_platform.h"
 
 #define  USER_OPENSSL_Redirect_AnscTrace            0
@@ -297,6 +298,10 @@ int openssl_poll (int fd, long timeout, int set, void *ctx)
 SSL * openssl_connect (int fd)
 {
   SSL *ssl = NULL;
+  const char *servername = NULL;
+  X509_VERIFY_PARAM *param = NULL;
+  servername = "acs-dt-ai-vip.comcast.net";
+  
   SSL_CTX *ssl_ctx = g_ssl_ctx[SSL_CLIENT_CALLS];
 
   if (ssl_ctx == NULL) {
@@ -305,8 +310,22 @@ SSL * openssl_connect (int fd)
 
   ssl = SSL_new (ssl_ctx);
 
+//RDKB-9319 : Add host validation
+  param = SSL_get0_param(ssl);
+
+  /* Enable automatic hostname checks */
+  X509_VERIFY_PARAM_set_hostflags(param,X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+  X509_VERIFY_PARAM_set1_host(param, servername, 0);
+
+  X509_VERIFY_PARAM_add1_host(param,"acswg.g.comcast.net",0);
+  X509_VERIFY_PARAM_add1_host(param,"acs.g.comcast.net",0);
+  X509_VERIFY_PARAM_add1_host(param,"acswg-dt-ai-vip.comcast.net",0);
+
+  SSL_set_verify(ssl, SSL_VERIFY_PEER, 0);
+  
   if (!ssl)
     goto error;
+  AnscTraceWarning(("openssl_connect - Hostnames added to verify \n"));
 
   if (!SSL_set_fd (ssl, fd))
     goto error;
@@ -314,7 +333,26 @@ SSL * openssl_connect (int fd)
   SSL_set_connect_state (ssl);
 
   if (SSL_connect (ssl) <= 0 || ssl->state != SSL_ST_OK)
+  {
     goto error;
+  }
+  else
+  {
+    AnscTraceWarning(("openssl_connect - get peer certificate result\n"));
+    X509 *cert = SSL_get_peer_certificate(ssl);
+    if(cert) {
+    const long cert_res = SSL_get_verify_result(ssl);
+    if(cert_res != X509_V_OK)
+    {
+      AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK\n")); 
+       X509_free(cert);
+    }
+    else
+    {
+      AnscTraceInfo(("openssl_connect - get peer certificate result is OK.\n"));
+    }
+    }
+  }
 
   AnscTraceWarning(("openssl_connect - connected socket %d to SSL handle %p\n", fd, ssl));
 
@@ -438,6 +476,19 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         AnscTraceWarning(("%s - X509 certificate successfully verified on host %s\n", __FUNCTION__,
                    host));
 
+    //RDKB-9319: Get TLS version and log
+    char* sslVersion = NULL;
+    sslVersion = SSL_get_version(ssl);
+    AnscTraceWarning(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
+
+    if(!strcmp(sslVersion, "TLSv1.2"))
+    {
+      AnscTraceInfo(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
+    }
+    else
+    {
+      AnscTraceWarning(("%s - TR-069 insufficient TLS level %s from ACS %s\n",__FUNCTION__,sslVersion,host));
+    }
     X509_free (cert);
 
 no_cert:
