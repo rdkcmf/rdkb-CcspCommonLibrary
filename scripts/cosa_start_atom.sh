@@ -282,7 +282,7 @@ then
 			then
 			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
 			fi
-			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
+			echo "30 * * * * /rdklogger/log_cpu_info_atom.sh"  >> $CRONFILE
 		else
 			if [ ! -d $CRONPATH ]
 			then
@@ -296,7 +296,7 @@ then
 			then
 			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
             fi
-			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
+			echo "30 * * * * /rdklogger/log_cpu_info_atom.sh"  >> $CRONFILE
 		fi
 		crond -c $CRONPATH -l 9
 	else
@@ -309,7 +309,7 @@ then
 		then
 		    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
         fi
-		echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE_BK
+		echo "30 * * * * /rdklogger/log_cpu_info_atom.sh" >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
 	fi
