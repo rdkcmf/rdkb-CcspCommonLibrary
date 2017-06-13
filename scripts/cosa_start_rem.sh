@@ -172,17 +172,17 @@ fi
 
 sleep 5 
 
-if [ -e ./wecb ];
-then
-    cd wecb
-    if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspWecbController
-    else
-        echo "$BINPATH/CcspWecbController -subsys $Subsys"
-        $BINPATH/CcspWecbController -subsys $Subsys
-    fi
-    cd ..
-fi
+#if [ -e ./wecb ];
+#then
+#    cd wecb
+#   if [ "x"$Subsys = "x" ];then
+#        $BINPATH/CcspWecbController
+#    else
+#       echo "$BINPATH/CcspWecbController -subsys $Subsys"
+#        $BINPATH/CcspWecbController -subsys $Subsys
+#    fi
+ #   cd ..
+#fi
 
 sleep 5 
 
