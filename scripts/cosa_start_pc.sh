@@ -19,10 +19,6 @@
 
 ln -s /usr/lib/libupnp.so.3 /usr/lib/libupnp.so
 ln -s /usr/lib/libixml.so.2 /usr/lib/libixml.so
-ln -s $PWD/avahi/libdaemon.so.0 /usr/lib/libdaemon.so.0
-ln -s $PWD/avahi/libavahi-common.so /usr/lib/libavahi-common.so.3
-ln -s $PWD/avahi/libavahi-core.so.5 /usr/lib/libavahi-core.so.5
-ln -s $PWD/avahi/libavahi-client.so /usr/lib/libavahi-client.so.3
 
 if [ "x"$1 = "x" ];then
     sleep 3
@@ -46,7 +42,6 @@ killall CcspCMAgentSsp
 killall cherokee-worker
 killall cherokee
 killall CcspLMLite
-killall avahi-daemon
 ps aux|grep "dbus-daemon --config-file="|awk '{print$2}'|xargs kill
 
 export PATH=$PWD/../../:$PATH
@@ -55,7 +50,6 @@ export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 
 cp ccsp_msg.cfg /mnt/sysdata0
 cp ccsp_msg.cfg /tmp
-cp avahi/avahi-dbus.conf /etc/dbus-1/system.d/
 
 if [ "x"$1 = "x" ];then
     sleep 10
@@ -145,11 +139,6 @@ if [ "x"$1 = "x""pam" ]; then
   exit 0
 fi
 
-if [ -e ./avahi ]; then
-    cd avahi
-    $PWD/avahi-daemon --file=$PWD/avahi-daemon.conf -D
-    cd ..
-fi
 
 sleep 2
 if [ -e ./tr069pa  ]; then
