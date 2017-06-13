@@ -280,7 +280,7 @@ then
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			if [ -f $MESHAGENT ]
 			then
-			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
+			    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
 			fi
 			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
 		else
@@ -294,7 +294,7 @@ then
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			if [ -f $MESHAGENT ]
 			then
-			    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
+			    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
             fi
 			echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE
 		fi
@@ -307,7 +307,7 @@ then
 		echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
 		if [ -f $MESHAGENT ]
 		then
-		    echo "10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
+		    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
         fi
 		echo "30 * * * * mpstat -P ALL 1"  >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
