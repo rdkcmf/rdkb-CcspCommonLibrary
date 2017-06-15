@@ -1,7 +1,7 @@
 [Unit]
 Description=Notify Comp service
 
-After=CcspPandMSsp.service CcspWecbController.service
+After=CcspPandMSsp.service
 
 [Service]
 Type=forking
