@@ -100,7 +100,8 @@ rdk_wifi_upgrade_vlan106
 
 # Enable XH for 5GHZ by default.
 # This script is only for ARRISXB3 and Ciscoxb3.
-rdk_wifi_upgrade_xh5
+#rdk_wifi_upgrade_xh5
+rdk_wifi_upgrade_xhv2
 
 # Config vlan 106 Secure ssid (phrase 2): RDKB-6974
 /lib/rdk/rdk_wifi_configure_lnf_ap.sh
