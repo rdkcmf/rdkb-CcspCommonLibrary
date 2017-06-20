@@ -438,6 +438,11 @@ then
 	/rdklogger/fileUploadRandom.sh &
 fi
 
+if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
+    if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
+        /lib/rdk/run_snmpv3_master.sh &
+    fi
+fi
 
 #waiting for DCM service to complete
 sleep 5
