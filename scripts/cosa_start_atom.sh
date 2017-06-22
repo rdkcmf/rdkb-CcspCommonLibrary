@@ -100,7 +100,8 @@ rdk_wifi_upgrade_vlan106
 
 # Enable XH for 5GHZ by default.
 # This script is only for ARRISXB3 and Ciscoxb3.
-rdk_wifi_upgrade_xh5
+#rdk_wifi_upgrade_xh5
+rdk_wifi_upgrade_xhv2
 
 # Upgdate the correct Vlan for Secure SSIDs.
 rdk_wifi_upgrade_secureSSID_vlan
