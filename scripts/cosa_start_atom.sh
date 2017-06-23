@@ -286,6 +286,7 @@ then
 			echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE
 			echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+			echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 			if [ -f $MESHAGENT ]
 			then
 			    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
@@ -300,10 +301,11 @@ then
 			echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" > $CRONFILE
 			echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+			echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 			if [ -f $MESHAGENT ]
 			then
 			    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE
-            fi
+                        fi
 			echo "30 * * * * /rdklogger/log_cpu_info_atom.sh"  >> $CRONFILE
 		fi
 		crond -c $CRONPATH -l 9
@@ -313,10 +315,11 @@ then
 		echo "20 * * * * /rdklogger/log_mem_cpu_info_atom.sh" >> $CRONFILE_BK
 		echo "0 * * * *  /usr/ccsp/wifi/l2shealth_log.sh" >> $CRONFILE_BK
 		echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
+		echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 		if [ -f $MESHAGENT ]
 		then
 		    echo "*/10 * * * *  /usr/ccsp/mesh/meshwifi_log.sh" >> $CRONFILE_BK
-        fi
+                fi
 		echo "30 * * * * /rdklogger/log_cpu_info_atom.sh" >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
