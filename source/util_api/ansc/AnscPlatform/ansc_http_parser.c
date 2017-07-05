@@ -1428,7 +1428,7 @@ HttpSmpoUtilGetSizeBasicCredential
             AnscCopyMemory(pBuf + ulUser + 1, pBasic->Password, ulPass);
         }
 
-        pBuf[ulBufLen]      = 0;
+        pBuf[ulBufLen-1]      = 0;
 
         /* Encode the USER:PASS */
         pEncBuf = AnscBase64Encode(pBuf, ulBufLen - 1);
