@@ -8995,6 +8995,15 @@ HttpSmpoUtilParseRelPath
         {
             if (pNext == pPathEnd)
             {
+                /* Fix 'out of bounds read'.
+                 * Theoretically PathLevl could exceed HTTP_MAX_PATH_LEVEL_NUMBER
+                 * and thus overrun PathArray.
+                 */
+                if (pUri->PathLevel >= HTTP_MAX_PATH_LEVEL_NUMBER)
+                {
+                    AnscTrace("%s - pUri->PathLevel %d exceeds HTTP_MAX_PATH_LEVEL_NUMBER!\n", __FUNCTION__, pUri->PathLevel);
+                    break;
+                }
                 pUri->PathArray[pUri->PathLevel][0] = '/';
                 pUri->PathArray[pUri->PathLevel][1] = 0;
                 pUri->PathLevel ++;
