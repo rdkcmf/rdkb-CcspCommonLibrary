@@ -129,10 +129,10 @@ echo_t "Elected subsystem is $Subsys"
 
 sleep 1
 
-
 echo_t "Starting telnet"
-/usr/sbin/telnetd -b $ATOM_INTERFACE_IP
-
+if [ -e /usr/sbin/telnetd ]; then
+    /usr/sbin/telnetd -b $ATOM_INTERFACE_IP
+fi
 echo_t "Starting inotify watcher for telemetry"
 /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 
