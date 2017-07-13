@@ -119,6 +119,11 @@ rdk_wifi_upgrade_secureSSID_vlan
 # Config mesh backhal SSID
 /usr/ccsp/wifi/meshapcfg.sh
 
+# Config check in wifi cfg database
+if [ -f /usr/sbin/wifi_inconsistent_config_check.sh ];then
+	/usr/sbin/wifi_inconsistent_config_check.sh
+fi
+
 # enable core files on atom
 ulimit -c unlimited
 echo "/tmp/core.%e" > /proc/sys/kernel/core_pattern
