@@ -122,6 +122,10 @@ extern volatile unsigned int FSC_RDKLogLevel;
 extern volatile unsigned int MESH_RDKLogLevel;
 extern volatile BOOL MESH_RDKLogEnable;
 
+/* Mesh Service log levels */
+extern volatile unsigned int MeshService_RDKLogLevel;
+extern volatile BOOL MeshService_RDKLogEnable;
+
 extern volatile BOOL LM_RDKLogEnable;
 extern volatile BOOL SNMP_RDKLogEnable;
 extern volatile BOOL TR69_RDKLogEnable;
@@ -395,6 +399,12 @@ else if(!strcmp(pComponentName,"LOG.RDK.MESH"))                            \
         LogLevel = MESH_RDKLogLevel;\
         LogEnable = MESH_RDKLogEnable;\
 }\
+else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))  \
+{                                                       \
+        ComponentName= "LOG.RDK.MeshService";           \
+        LogLevel = MeshService_RDKLogLevel;             \
+        LogEnable = MeshService_RDKLogEnable;           \
+}                                                       \
 else\
 {\
 		ComponentName = "LOG.RDK.Misc";							\

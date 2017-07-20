@@ -117,6 +117,8 @@ volatile BOOL FSC_RDKLogEnable = TRUE;
 volatile unsigned int FSC_RDKLogLevel = 4;
 volatile BOOL MESH_RDKLogEnable = TRUE;
 volatile unsigned int MESH_RDKLogLevel = 4;
+volatile BOOL MeshService_RDKLogEnable = TRUE;
+volatile unsigned int MeshService_RDKLogLevel = 5;
 
 
 #if defined(_MDC_SUPPORTED_)
