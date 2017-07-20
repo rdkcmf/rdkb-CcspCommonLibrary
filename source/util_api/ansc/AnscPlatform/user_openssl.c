@@ -56,6 +56,8 @@ static int *lock_count;
 
 static pthread_once_t openssl_is_initialized = PTHREAD_ONCE_INIT;
 static void openssl_thread_setup(void);
+//static int isComcastImage = 0;
+
 void initialize_openssl_lib()
 {
     openssl_thread_setup();
@@ -121,6 +123,40 @@ openssl_print_errors (void)
   unsigned long curerr = 0;
   while ((curerr = ERR_get_error ()) != 0)
     AnscTraceWarning(("OpenSSL: %s\n", ERR_error_string(curerr, NULL)));
+}
+
+#define DEVICE_PROPERTIES    "/etc/device.properties"
+/*
+ *  RDKB-12305  Adding method to check whether comcast device or not
+ *  Procedure     : bIsComcastImage
+ *  Purpose       : return True for Comcast build.
+ *  Parameters    :
+ *  Return Values :
+ *  1             : 1 for comcast images
+ *  2             : 0 for other images
+ */
+static int bIsComcastImage( void)
+{
+   char fileContent[255] = {'\0'};
+   FILE *deviceFilePtr;
+   char *pPartnerId = NULL;
+   int offsetValue = 0;
+   int isComcastImg = 1;
+   deviceFilePtr = fopen( DEVICE_PROPERTIES, "r" );
+
+   if (deviceFilePtr) {
+       while (fscanf(deviceFilePtr , "%s", fileContent) != EOF ) {
+           if ((pPartnerId = strstr(fileContent, "PARTNER_ID")) != NULL) {
+               isComcastImg = 0;
+               break;
+           }
+       }
+       fclose(deviceFilePtr);
+   } else {
+       return 0;
+   }
+
+   return isComcastImg;
 }
 
 /* 
@@ -300,8 +336,11 @@ SSL * openssl_connect (int fd)
   SSL *ssl = NULL;
   const char *servername = NULL;
   X509_VERIFY_PARAM *param = NULL;
-  servername = "acs-dt-ai-vip.comcast.net";
-  
+
+  if ( bIsComcastImage() ) { 
+     servername = "acs-dt-ai-vip.comcast.net";
+  }
+
   SSL_CTX *ssl_ctx = g_ssl_ctx[SSL_CLIENT_CALLS];
 
   if (ssl_ctx == NULL) {
@@ -309,23 +348,29 @@ SSL * openssl_connect (int fd)
   }
 
   ssl = SSL_new (ssl_ctx);
+  
+  if ( bIsComcastImage() ) {
+  
+     //RDKB-9319 : Add host validation
+     param = SSL_get0_param(ssl);
+  
+     /* Enable automatic hostname checks */
+     X509_VERIFY_PARAM_set_hostflags(param,X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
+     X509_VERIFY_PARAM_set1_host(param, servername, 0);
 
-//RDKB-9319 : Add host validation
-  param = SSL_get0_param(ssl);
+     X509_VERIFY_PARAM_add1_host(param,"acswg.g.comcast.net",0);
+     X509_VERIFY_PARAM_add1_host(param,"acs.g.comcast.net",0);
+     X509_VERIFY_PARAM_add1_host(param,"acswg-dt-ai-vip.comcast.net",0);
 
-  /* Enable automatic hostname checks */
-  X509_VERIFY_PARAM_set_hostflags(param,X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-  X509_VERIFY_PARAM_set1_host(param, servername, 0);
-
-  X509_VERIFY_PARAM_add1_host(param,"acswg.g.comcast.net",0);
-  X509_VERIFY_PARAM_add1_host(param,"acs.g.comcast.net",0);
-  X509_VERIFY_PARAM_add1_host(param,"acswg-dt-ai-vip.comcast.net",0);
-
-  SSL_set_verify(ssl, SSL_VERIFY_PEER, 0);
+     SSL_set_verify(ssl, SSL_VERIFY_PEER, 0);
+  }
   
   if (!ssl)
     goto error;
-  AnscTraceWarning(("openssl_connect - Hostnames added to verify \n"));
+
+  if ( bIsComcastImage() ) {
+     AnscTraceWarning(("openssl_connect - Hostnames added to verify \n"));
+  }
 
   if (!SSL_set_fd (ssl, fd))
     goto error;
@@ -338,19 +383,21 @@ SSL * openssl_connect (int fd)
   }
   else
   {
-    AnscTraceWarning(("openssl_connect - get peer certificate result\n"));
-    X509 *cert = SSL_get_peer_certificate(ssl);
-    if(cert) {
-    const long cert_res = SSL_get_verify_result(ssl);
-    if(cert_res != X509_V_OK)
-    {
-      AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK\n")); 
-       X509_free(cert);
-    }
-    else
-    {
-      AnscTraceInfo(("openssl_connect - get peer certificate result is OK.\n"));
-    }
+    if ( bIsComcastImage() ) {
+       AnscTraceWarning(("openssl_connect - get peer certificate result\n"));
+       X509 *cert = SSL_get_peer_certificate(ssl);
+       if(cert) {
+          const long cert_res = SSL_get_verify_result(ssl);
+          if(cert_res != X509_V_OK)
+          {
+             AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK\n")); 
+             X509_free(cert);
+          }
+          else
+          {
+             AnscTraceInfo(("openssl_connect - get peer certificate result is OK.\n"));
+          }
+       }
     }
   }
 
@@ -476,19 +523,21 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         AnscTraceWarning(("%s - X509 certificate successfully verified on host %s\n", __FUNCTION__,
                    host));
 
-    //RDKB-9319: Get TLS version and log
-    char* sslVersion = NULL;
-    sslVersion = SSL_get_version(ssl);
-    AnscTraceWarning(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
+    if ( bIsComcastImage() ) {
+       //RDKB-9319: Get TLS version and log
+       char* sslVersion = NULL;
+       sslVersion = SSL_get_version(ssl);
+       AnscTraceWarning(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
 
-    if(!strcmp(sslVersion, "TLSv1.2"))
-    {
-      AnscTraceInfo(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
-    }
-    else
-    {
-      AnscTraceWarning(("%s - TR-069 insufficient TLS level %s from ACS %s\n",__FUNCTION__,sslVersion,host));
-    }
+       if(!strcmp(sslVersion, "TLSv1.2"))
+       {
+          AnscTraceInfo(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
+       }
+       else
+       {
+          AnscTraceWarning(("%s - TR-069 insufficient TLS level %s from ACS %s\n",__FUNCTION__,sslVersion,host));
+       }
+    } 
     X509_free (cert);
 
 no_cert:
