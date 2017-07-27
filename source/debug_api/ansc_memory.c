@@ -1462,6 +1462,11 @@ void AnscLiveMemoryInspectRecordDetail
                 
                 AnscReleaseSpinLock(&g_tRecordDetailSpinLock);
                 pMemoryAllocItem = (PANSC_MEMORY_ALLOC_ITEM)AnscGetMemoryAllocItem(pMemoryBlock);                
+                if ( !pMemoryAllocItem )
+                {
+                    CcspTraceWarning2(pComponentName, ("Cannot find the memory block before this one!!!\n"));
+                    return;
+                }
                 AnscAcquireSpinLock(&g_tRecordDetailSpinLock);
 
                 pMemoryArray1    = (PUCHAR                 )((ULONG)pMemoryBlock - ANSC_MEMORY_ALLOC_HEAD_SIZE);

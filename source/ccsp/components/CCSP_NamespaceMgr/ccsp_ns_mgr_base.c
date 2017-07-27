@@ -467,7 +467,11 @@ CcspNsMgrChangeToRegNamespaceName
         }
 
         pString     = AnscMoveToNextToken(pString, TR69_PARAM_NAME_SEPARATOR);
-        ulTokenSize = AnscSizeOfToken(pString, TR69_PARAM_NAME_SEPARATOR, AnscSizeOfString(pString));
+
+        if (pString != NULL)
+        {
+            ulTokenSize = AnscSizeOfToken(pString, TR69_PARAM_NAME_SEPARATOR, AnscSizeOfString(pString));
+        }
     }
 
     *pbChange = bChange;

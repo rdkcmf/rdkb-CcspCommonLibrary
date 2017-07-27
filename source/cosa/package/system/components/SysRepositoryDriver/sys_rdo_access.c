@@ -811,13 +811,13 @@ SysRdoAddRecord
     {
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT1;
+        goto  EXIT;
     }
     else if ( AnscTcGetTokenCount(pTokenChain) == 0 )
     {
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
@@ -853,13 +853,13 @@ SysRdoAddRecord
 
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( !pThisFolder )
     {
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( AnscTcGetTokenCount(pTokenChain) != 1 )
     {
@@ -867,7 +867,7 @@ SysRdoAddRecord
 
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( (pThisFolder->GetPermission((ANSC_HANDLE)pThisFolder) & SYS_RFO_PERMISSION_RECORD_ADD) == 0 )
     {
@@ -875,7 +875,7 @@ SysRdoAddRecord
 
         pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else
     {
@@ -903,11 +903,10 @@ SysRdoAddRecord
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
     ******************************************************************/
 
-EXIT2:
+EXIT:
 
-    AnscTcFree((ANSC_HANDLE)pTokenChain);
-
-EXIT1:
+    if (pTokenChain)
+        AnscTcFree((ANSC_HANDLE)pTokenChain);
 
     return  (ANSC_HANDLE)pThisRecord;
 }
@@ -969,13 +968,13 @@ SysRdoDelRecord
     {
         returnStatus = ANSC_STATUS_BAD_NAME;
 
-        goto  EXIT1;
+        goto  EXIT;
     }
     else if ( AnscTcGetTokenCount(pTokenChain) == 0 )
     {
         returnStatus = ANSC_STATUS_BAD_NAME;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
@@ -1011,13 +1010,13 @@ SysRdoDelRecord
 
         returnStatus = ANSC_STATUS_BAD_NAME;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( !pThisFolder )
     {
         returnStatus = ANSC_STATUS_BAD_NAME;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( AnscTcGetTokenCount(pTokenChain) != 1 )
     {
@@ -1025,7 +1024,7 @@ SysRdoDelRecord
 
         returnStatus = ANSC_STATUS_BAD_NAME;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else if ( (pThisFolder->GetPermission((ANSC_HANDLE)pThisFolder) & SYS_RFO_PERMISSION_RECORD_DELETE) == 0 )
     {
@@ -1033,7 +1032,7 @@ SysRdoDelRecord
 
         returnStatus = ANSC_STATUS_ACCESS_DENIED;
 
-        goto  EXIT2;
+        goto  EXIT;
     }
     else
     {
@@ -1056,11 +1055,10 @@ SysRdoDelRecord
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
     ******************************************************************/
 
-EXIT2:
+EXIT:
 
-    AnscTcFree((ANSC_HANDLE)pTokenChain);
-
-EXIT1:
+    if (pTokenChain)
+        AnscTcFree((ANSC_HANDLE)pTokenChain);
 
     return  returnStatus;
 }
