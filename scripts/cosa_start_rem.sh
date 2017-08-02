@@ -146,12 +146,6 @@ fi
 
 fi
 
-if [ -f /usr/bin/notify_lease ]
-then
-	echo "Initializing notify_lease"
-        /usr/bin/notify_lease
-fi
-
 echo_t "XCONF SCRIPT : Calling XCONF Client"
 /etc/xb3_firmwareDwnld.sh &
 
