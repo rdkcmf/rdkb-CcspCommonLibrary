@@ -6,7 +6,9 @@ source /etc/device.properties
 if [ -f /tmp/pam_initialized ] || [ -f /tmp/psm_initialized ]; then
 	#This will be launched even during the happy path. For those cases give time for system to shutdown
 	sleep 10
-	echo "`date`: CcspCrSsp Restarted Rebooting" >> ${PROCESS_RESTART_LOG}
+	syscfg set X_RDKCENTRAL-COM_LastRebootReason CR_crash
+	syscfg set X_RDKCENTRAL-COM_LastRebootCounter "1"
+	syscfg commit
 	sync
 	source /rdklogger/logfiles.sh;syncLogs_nvram2
 	reboot
