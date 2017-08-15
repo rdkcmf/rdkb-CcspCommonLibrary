@@ -430,6 +430,14 @@ if [ -e ./xdns ]; then
     cd ..
 fi
 
+if [ -e ./advsec ]; then
+    cd advsec
+    echo_t "$BINPATH/CcspAdvSecuritySsp -subsys $Subsys &"
+    $BINPATH/CcspAdvSecuritySsp -subsys $Subsys &
+    cd ..
+fi
+
+
 if [ -e ./CcspArmMdc ]; then
     # make sure MDC firewall rules are disabled at boot
     syscfg set MDC-ENABLED 0
