@@ -37,7 +37,6 @@ BINPATH="/usr/bin"
 . /etc/device.properties
 
 MAX_WAIT_TIME=300
-
 killall CcspWifiSsp
 killall harvester
 killall CcspCrSsp
@@ -232,8 +231,7 @@ timer=0
 while :
 do
 
-if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -eq $MAX_WAIT_TIME ]
-then
+if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -ge $MAX_WAIT_TIME ];then
 
 	##### webpa #####
 	
