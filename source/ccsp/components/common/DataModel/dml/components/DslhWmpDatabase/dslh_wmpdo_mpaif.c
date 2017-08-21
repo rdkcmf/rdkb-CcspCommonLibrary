@@ -631,6 +631,7 @@ DslhWmpdoMpaSetParameterValues
     ULONG                           j                    = 0;
     BOOL                            bFromAcs             = FALSE;
     BOOL                            bFromSnmp            = FALSE;
+    BOOL                            bPendingNotificaton            = FALSE;
     ULONG                           dataType             = 0;
     char  str[500] = {0};
     bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
@@ -866,10 +867,12 @@ DslhWmpdoMpaSetParameterValues
                     }
 
                     printf("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize);
+                    bPendingNotificaton = TRUE;
+                    paramCount = j;
                     if(ulArraySize == i+1)
                     {
-                        paramCount = j;
                         j = 0;
+                        bPendingNotificaton = FALSE;
 						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
 						if(res != 0)
 							CcspTraceWarning(("Create Send_Notification_Thread error %d ", res));
@@ -900,7 +903,18 @@ DslhWmpdoMpaSetParameterValues
                     (ANSC_HANDLE)pObjRecord
                 );
     }
-
+#ifdef USE_NOTIFY_COMPONENT
+    if(bPendingNotificaton)
+    {
+       int resp = 0;
+       pthread_t Send_Notification_Thread;
+       CcspTraceWarning(("Send all pending notifications %d\n", bPendingNotificaton));
+       bPendingNotificaton = FALSE;
+       resp = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);
+       if(resp != 0)
+           CcspTraceWarning(("Create Send_Notification_Thread error %d\n", resp));
+    }
+#endif
     if ( bFaultEncountered )
     {
         /* returnStatus = ANSC_STATUS_BAD_PARAMETER; */
