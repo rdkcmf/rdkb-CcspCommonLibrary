@@ -483,7 +483,7 @@ COSAGetParamValueString
     }
 
     uSize = AnscSizeOfString(pString);
-
+    *pulSize = AnscSizeOfString(pBuffer);
     if( *pulSize < uSize)
     {
         *pulSize = uSize;
