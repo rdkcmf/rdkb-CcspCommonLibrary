@@ -129,4 +129,5 @@ AnscCreateSimpleProxyTcp
 
     // Assume it is not supported.
     //return  AnscSptoCreate(hContainerContext, hOwnerContext, hAnscReserved);
+    return NULL;
 }

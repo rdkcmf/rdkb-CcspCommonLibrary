@@ -542,6 +542,7 @@ void* Send_Notification_Thread_Func()
 	      }
        }
 paramCount=0;
+    return NULL;
 }
 #endif
 /**********************************************************************

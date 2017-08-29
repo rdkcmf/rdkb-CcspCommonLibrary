@@ -1601,7 +1601,7 @@ DslhObjroDelChildObject
 #ifdef USE_NOTIFY_COMPONENT
 extern ANSC_HANDLE bus_handle;
 
-Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
+void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 {
 
 	char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
