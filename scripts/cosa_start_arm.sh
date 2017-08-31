@@ -131,8 +131,6 @@ echo "Elected subsystem is $Subsys"
 
 if [ "$CR_IN_PEER" != "yes" ]
 then
-	#if [ -e /nvram/disableCr ]; then
-	#	echo "***disabling CcspCr****"
 	if [ "x"$Subsys = "x" ];then
 		$BINPATH/CcspCrSsp
 	else
@@ -141,8 +139,6 @@ then
 	fi
 fi
 
-#if [ -e /nvram/disablelogagent ]; then
-#	echo "***disabling Loagent****"
 if [ -e ./logagent ]; then
 	cd logagent
 
@@ -166,9 +162,7 @@ fi
 
 sleep 5
 
-if [ -e /nvram/disableCcspCMAgentSsp ]; then
-   echo "****DISABLE CcspCMAgentSsp*****"
-elif [ -e ./cm ]; then
+if [ -e ./cm ]; then
         cd cm
         if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspCMAgentSsp
@@ -179,8 +173,6 @@ elif [ -e ./cm ]; then
         cd ..
 fi
 
-#if [ -e /nvram/disableCcspPandMSsp ]; then
-#	echo "***disabling PAM****"
 if [ -e ./pam ]; then
 	cd pam
 
@@ -193,9 +185,7 @@ if [ -e ./pam ]; then
 	cd ..
 fi
 
-if [ -e /nvram/disablenotifycomp ]; then
-        echo "***disabling Loagent****"
-elif [ -e ./notify-comp ]; then
+if [ -e ./notify-comp ]; then
         cd notify-comp
 
         if [ "x"$Subsys = "x" ];then

@@ -164,9 +164,7 @@ else
     ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
     echo_t "ENABLEWEBPA is $ENABLEWEBPA"
 
-if [ -e /nvram/disablewebpa ]; then
-    echo_t "***Disabling webpa*****"
-elif [ "$ENABLEWEBPA" = "true" ];then
+if [ "$ENABLEWEBPA" = "true" ]; then
     echo_t "ENABLEWEBPA is true..Intializing WebPA.."
     if [ "x"$Subsys = "x" ];then
         $BINPATH/webpa
@@ -185,9 +183,7 @@ echo_t "XCONF SCRIPT : Calling XCONF Client"
 
 sleep 5 
 
-if [ -e /nvram/disableCcspMoCA ]; then
-   echo "****DISABLE MoCA*****"
-elif [ -e ./moca ]; then
+if [ -e ./moca ]; then
     cd moca
     if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspMoCA
@@ -214,9 +210,7 @@ sleep 5
 
 sleep 5 
 
-if [ -e /nvram/disableCcspMtaAgentSsp ]; then
-   echo_t "****DISABLE MTAAGENTSSP*****"
-elif [ -e ./mta ]; then
+if [ -e ./mta ]; then
     cd mta
     if [ "x"$Subsys = "x" ];then
         $BINPATH/CcspMtaAgentSsp
@@ -249,9 +243,7 @@ fi
 
 sleep 5 
 
-if [ -e /nvram/disableCcspTr069PaSsp ]; then
-   echo_t "****DISABLE CcspTr069PaSsp*****"
-elif [ -e ./tr069pa ]; then
+if [ -e ./tr069pa ]; then
         cd tr069pa
         if [ "x"$Subsys = "x" ]; then
                 $BINPATH/CcspTr069PaSsp
@@ -275,9 +267,7 @@ if [ -f "/etc/PARODUS_ENABLE" ]; then
     fi
 fi
 
-#if [ -e /nvram/disableCcspSsdSsp ]; then
-#   echo "****DISABLE CcspSsdSsp*****"
-#elif [ -e ./ssd ]; then
+#if [ -e ./ssd ]; then
 #        cd ssd
 #        if [ "x"$Subsys = "x" ];then
 #                $BINPATH/CcspSsdSsp
@@ -288,9 +278,7 @@ fi
 #        cd ..
 #fi
 
-#if [ -e /nvram/disableCcspFuSsp ]; then
-#   echo "****DISABLE CcspFuSsp*****"
-#elif [ -e ./fu ]; then
+#if [ -e ./fu ]; then
 #        cd fu
 #        if [ "x"$Subsys = "x" ];then
 #                $BINPATH/CcspFuSsp
@@ -348,18 +336,14 @@ fi
 
 sleep 5 
 
-if [ -e /nvram/disableCcspEthAgent ]; then
-   echo "****DISABLE EthAgent*****"
-elif [ -e ./ethagent ]; then
+if [ -e ./ethagent ]; then
     cd ethagent
     echo_t "$BINPATH/CcspEthAgent -subsys $Subsys"
     $BINPATH/CcspEthAgent -subsys $Subsys
     cd ..
 fi
 
-if [ -e /nvram/disableCcspLMLite ]; then
-	echo_t "***Disabling CcspLMLite*****"
-elif [ -e ./lm ]; then
+if [ -e ./lm ]; then
     echo_t "***Starting CcspLMLite****"
     cd lm
     echo_t "$BINPATH/CcspLMLite -subsys $Subsys &"
@@ -417,9 +401,7 @@ if [ -f  /lib/rdk/dcmrfc.service ]; then
    /bin/sh /lib/rdk/dcmrfc.service &
 fi
 
-if [ -e /nvram/disableCcspTandDSsp ]; then
-   echo_t "****DISABLE CcspTandDSsp*****"
-elif [ -e ./tad ]; then
+if [ -e ./tad ]; then
         cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
         if [ "x"$Subsys = "x" ];then
@@ -433,9 +415,7 @@ fi
 
 sleep 5 
 
-if [ -e /nvram/disableCcspXDNS ]; then
-        echo_t "***Disabling CcspXDNS*****"
-elif [ -e ./xdns ]; then
+if [ -e ./xdns ]; then
     cd xdns
     echo_t "$BINPATH/CcspXdnsSsp -subsys $Subsys &"
     $BINPATH/CcspXdnsSsp -subsys $Subsys &

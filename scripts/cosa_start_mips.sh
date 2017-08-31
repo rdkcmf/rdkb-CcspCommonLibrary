@@ -205,9 +205,7 @@ fi
 #    cd ..                                                                                                                  
 #fi  
 
-if [ -e /nvram/disablenotifycomp ]; then
-        echo "***disabling notify component***"
-elif [ -e ./notify-comp ]; then
+if [ -e ./notify-comp ]; then
         cd notify-comp
         if [ "x"$Subsys = "x" ];then
                 $BINPATH/notify_comp
