@@ -1304,6 +1304,8 @@ COSASetParamValueByPathName
         goto EXIT1;
     }
 
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+
     ret = CcspBaseIf_setParameterValues(
                 bus_handle,
                 dst_componentid,
@@ -1319,6 +1321,13 @@ COSASetParamValueByPathName
     if ( CCSP_SUCCESS != ret )
     {
         AnscTraceWarning(("SetValue failed with %d\n", ret));
+
+        if(pFaultParameter)
+        {
+            AnscTraceWarning(("SetValue failed with param : '%s'\n", pFaultParameter));
+            bus_info->freefunc(pFaultParameter);
+        }
+
         returnStatus = ANSC_STATUS_BAD_NAME;
     }
 

@@ -493,7 +493,7 @@ void* Send_Notification_Thread_Func()
 	char* faultParam = NULL;
 	int ret = 0;
 	int i = 0;
-        
+	CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 	notif_val[0].parameterName =  param_name ;
 	notif_val[0].type = ccsp_string;
     CcspTraceWarning((" Send_Notification_Thread_Func paramCount %d \n",paramCount));
@@ -527,7 +527,13 @@ void* Send_Notification_Thread_Func()
 		               );
 	         if(ret != CCSP_SUCCESS) //|| (ret != ANSC_SUCCESS))
 	         {
-	            CcspTraceWarning(("<< Failed to Send Notification %s %d >>\n",__FUNCTION__, ret));
+	            CcspTraceWarning(("<< Failed to CcspBaseIf_setParameterValues in %s %d >>\n",__FUNCTION__, ret));
+
+                if(faultParam)
+                {
+                    CcspTraceWarning(("CcspBaseIf_setParameterValues failed with param : '%s'\n", faultParam));
+                    bus_info->freefunc(faultParam);
+                }
 	         }
           }
        }
