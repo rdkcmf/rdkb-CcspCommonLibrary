@@ -4,6 +4,7 @@
 . /etc/include.properties
 
 source /etc/utopia/service.d/log_capture_path.sh
+source /rdklogger/logfiles.sh
 
 MAX_PARODUS_WAIT_TIME=300
 
@@ -453,6 +454,12 @@ if [ -e ./CcspArmMdc ]; then
 fi
 
 #RDKB-7535
+#Remove the contents of ATOM side log files.
+if [ -f "/nvram2/logs/pcdfailurelog" ]
+then
+        echo "RDKB_BOOTUP:  log processing and then flush ATOM logs"
+        cp /nvram2/logs/pcdfailurelog /rdklogs/logs/ & 
+fi
 
 if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
 then
