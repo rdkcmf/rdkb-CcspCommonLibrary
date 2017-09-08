@@ -88,7 +88,7 @@ fi
 #####END: Changes for ARRISXB3-3853
 
 #update the wifi_cfg for XB2
-if [ "$BOX_TYPE" = "XB2" ]; then
+if [ "$MODEL_NUM" = "DPC3939" ]; then
     /usr/ccsp/wifi/wifi_cfg_update_XB2.sh
 else
     echo "wifi patch is not required for other platforms"
