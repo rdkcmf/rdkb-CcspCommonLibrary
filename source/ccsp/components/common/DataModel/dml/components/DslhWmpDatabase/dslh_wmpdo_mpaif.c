@@ -2991,7 +2991,10 @@ DslhWmpdoMpaAddObject
     else
     {
         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pObjRecord->hDslhObjEntity;
-        pObjEntityChild = (PDSLH_OBJ_ENTITY_OBJECT)pObjEntity->GetObjEntity3((ANSC_HANDLE)pObjEntity);
+        if (pObjEntity != NULL)
+        {
+            pObjEntityChild = (PDSLH_OBJ_ENTITY_OBJECT)pObjEntity->GetObjEntity3((ANSC_HANDLE)pObjEntity);
+        }
     }
 
     if(!pObjEntity || !pObjEntity->ObjDescr )/*RDKB-5801 , CID-33336; , Free resource*/

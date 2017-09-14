@@ -3174,6 +3174,14 @@ BspTemplateObjIfElse
                     BspTemplateBranchCORemove((ANSC_HANDLE)pIf);
                 }
             }
+            else
+            {
+                if ( !pElse && pIf )
+                {
+                    BspTemplateBranchCORemove((ANSC_HANDLE)pIf);
+                }
+            }
+
 
             return pElseIf;
         }
@@ -5485,6 +5493,9 @@ BspTemplateObjArrayExpCondition
         }
         else
         {
+            BspTemplateBranchCORemove((ANSC_HANDLE)pArrayItem);
+            pArrayItem  = NULL;
+
             return pMyObject->ParseError
                     (
                         hThisObject,
