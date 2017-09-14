@@ -1,0 +1,13 @@
+[Unit]
+Description=DCM RFC service
+
+[Service]
+Type=oneshot
+ExecStartPre=/bin/sh -c 'sleep 300'
+ExecStart=/bin/sh -c '/lib/rdk/dcmrfc.service &'
+RemainAfterExit=yes
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=wan-initialized.target
