@@ -1,0 +1,12 @@
+[Unit]
+Description=Cosa-start service
+
+[Service]
+#Type=forking
+WorkingDirectory=/usr/ccsp
+ExecStart=/bin/sh -c '/usr/ccsp/cosa_start.sh'
+RemainAfterExit=yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
