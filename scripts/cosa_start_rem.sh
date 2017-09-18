@@ -186,8 +186,11 @@ fi
 
 fi
 
-echo_t "XCONF SCRIPT : Calling XCONF Client"
-/etc/xb3_firmwareDwnld.sh &
+isPeriodicFWCheckEnable=`syscfg get PeriodicFWCheck_Enable`
+if [ "$isPeriodicFWCheckEnable" == "false" ]; then
+	echo_t "XCONF SCRIPT : Calling XCONF Client"
+	/etc/xb3_firmwareDwnld.sh &
+fi
 
 sleep 5 
 
@@ -462,7 +465,9 @@ fi
 
 #waiting for DCM service to complete
 sleep 5
-echo "XCONF SCRIPT : Calling XCONF Client"
-cd /etc/
-./xb3_firmwareSched.sh &
 
+isPeriodicFWCheckEnabled=`syscfg get PeriodicFWCheck_Enable`
+if [ "$isPeriodicFWCheckEnabled" == "true" ]; then
+	echo "XCONF SCRIPT : Calling XCONF Client"
+	/etc/firmwareSched.sh &
+fi
