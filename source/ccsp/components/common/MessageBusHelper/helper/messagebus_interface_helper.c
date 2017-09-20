@@ -173,6 +173,12 @@ CcspCcMbi_GetParameterValues
     )
 {
     ANSC_STATUS                 returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
     PDSLH_MPA_INTERFACE         pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_MPR_INTERFACE         pDslhMprIf         = (PDSLH_MPR_INTERFACE        )g_pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)g_pDslhCpeController); 
     PSLAP_STRING_ARRAY          pParamNameArray    = (PSLAP_STRING_ARRAY         )NULL;
@@ -404,6 +410,13 @@ CcspCcMbi_SetParameterValues
     )
 {
     ANSC_STATUS                 returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE         pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_MPR_INTERFACE         pDslhMprIf         = (PDSLH_MPR_INTERFACE        )g_pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)g_pDslhCpeController); 
     PDSLH_CWMP_PARAM_VALUE      pParamArray        = NULL;
@@ -607,6 +620,13 @@ CcspCcMbi_SetCommit
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault     = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     int                             iStatus            = 0;
@@ -662,6 +682,13 @@ CcspCcMbi_SetParameterAttributes
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )g_pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)g_pDslhCpeController); 
     ULONG                           uMaxParam          = 128;
@@ -774,6 +801,13 @@ CcspCcMbi_GetParameterAttributes
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )g_pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)g_pDslhCpeController); 
     PSLAP_STRING_ARRAY              pParamNameArray    = (PSLAP_STRING_ARRAY         )NULL;
@@ -935,6 +969,13 @@ CcspCcMbi_AddTblRow
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     int                             iStatus            = 0;
 
@@ -996,6 +1037,13 @@ CcspCcMbi_DeleteTblRow
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     int                             iStatus            = 0;
 
@@ -1058,6 +1106,13 @@ CcspCcMbi_GetParameterNames
     )
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    if(!g_pDslhCpeController)
+    {
+        AnscTraceWarning(("!!! Component is not ready !!!\n"));
+        returnStatus = ANSC_STATUS_DISCARD;
+        return returnStatus;
+    }
+
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )g_pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)g_pDslhCpeController); 
     PDSLH_CWMP_PARAM_INFO           pParamInfoArray    = (PDSLH_CWMP_PARAM_INFO      )NULL;
