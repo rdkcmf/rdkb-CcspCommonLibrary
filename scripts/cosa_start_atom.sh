@@ -165,7 +165,7 @@ sleep 3
 if [ -f "/usr/ccsp/uptime_compare.sh" ]
 then
 sh /usr/ccsp/uptime_compare.sh &
-sleep 3
+sleep 10
 fi
 
 if [ -e ./wifi ]; then

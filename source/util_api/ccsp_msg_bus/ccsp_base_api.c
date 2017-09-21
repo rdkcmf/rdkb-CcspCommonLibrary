@@ -2373,7 +2373,7 @@ int CcspBaseIf_getHealth(
 
 BOOLEAN waitConditionReady(void* hMBusHandle, const char* dst_component_id, char* dbus_path, char *src_component_id){
     #define MAX_WAIT_TIME 10
-    #define TIME_INTERVAL 1000 // 1s
+    #define TIME_INTERVAL 2000 // 2s
 //    #define MAX_WAIT_TIME 5
   //  #define TIME_INTERVAL 200 //
     #define CCSP_COMMON_COMPONENT_HEALTH_Green 3
