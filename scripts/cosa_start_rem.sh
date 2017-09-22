@@ -25,6 +25,14 @@ else
 	echo_t "Triggered cosa_start_rem script and created tmp/cosa_start_rem_triggered file"
 fi
 
+
+if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
+    if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
+        /lib/rdk/run_snmpv3_master.sh &
+    fi
+fi
+
+
 isCloudCapable=1
 isCloudCapable=`syscfg get cloud_capable_flag`
 if [ $isCloudCapable -eq 0 ]
@@ -442,12 +450,6 @@ fi
 if [ -f "/rdklogger/fileUploadRandom.sh" ]
 then
 	/rdklogger/fileUploadRandom.sh &
-fi
-
-if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
-    if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
-        /lib/rdk/run_snmpv3_master.sh &
-    fi
 fi
 
 #waiting for DCM service to complete
