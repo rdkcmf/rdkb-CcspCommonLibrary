@@ -267,16 +267,17 @@ if [ -e ./tr069pa ]; then
         cd ..
 fi
 
-#Adapter for SNMP via WebPA
-if [ -f "/etc/PARODUS_ENABLE" ]; then
-    echo_t "Starting Parodus2Snmp in background.. "
-    if [ -f "$BINPATH/parodus2snmp" ]; then
-        echo_t "$BINPATH/parodus2snmp"
-        $BINPATH/parodus2snmp &
-    else
-        echo_t "Could not start Parodus2Snmp !!!"
-    fi
-fi
+#<Disabled for now- TBD for later implementation>#Adapter for SNMP via WebPA
+#if [ -f "/etc/PARODUS_ENABLE" ]; then
+#    echo_t "Starting Parodus2Snmp in background.. "
+#    if [ -f "$BINPATH/parodus2snmp" ]; then
+#        echo_t "$BINPATH/parodus2snmp"
+#        $BINPATH/parodus2snmp &
+#    else
+#        echo_t "Could not start Parodus2Snmp !!!"
+#    fi
+#fi
+
 
 #if [ -e ./ssd ]; then
 #        cd ssd
