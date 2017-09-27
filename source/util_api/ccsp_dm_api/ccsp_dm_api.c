@@ -495,6 +495,10 @@ static void FreeCompList(struct CdmComp *comps, int compCnt)
             AnscFreeMemory(comps[i].dbusPath);
 
         if (comps[i].isPath && comps[i].paths) {
+
+                if(comps[i].paths[0])
+                        AnscFreeMemory(comps[i].paths[0]);
+
             AnscFreeMemory(comps[i].paths);
         } else if (!comps[i].isPath && comps[i].paramVals) {
             for (j = 0; j < comps[i].paramCnt; j++) {
