@@ -472,3 +472,8 @@ if [ "$isPeriodicFWCheckEnabled" == "true" ]; then
 	echo "XCONF SCRIPT : Calling XCONF Client"
 	/etc/firmwareSched.sh &
 fi
+
+if [ "x$BOX_TYPE" = "xXB3" ] && [ "x$PARTNER_ID" = "xcox" ]; then
+echo_t "starting wan_ssh script"              
+sh /lib/rdk/wan_ssh.sh &    
+fi 
