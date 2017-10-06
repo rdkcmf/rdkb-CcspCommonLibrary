@@ -22,12 +22,6 @@ exec 3>&1 4>&2 >>$SELFHEALFILE 2>&1
 	fi
         killall CcspPandMSsp
 
-#	if [ -f "/tmp/wecb_initialized" ]
-#	then
-#		rm -rf /tmp/wecb_initialized
-#	fi
-#       killall CcspWecbController
-
 	if [ -f "/tmp/Notify_initialized" ]
 	then
 		rm -rf /tmp/Notify_initialized
@@ -204,16 +198,7 @@ ulimit -c unlimited
         fi
 
 	sleep 3
-	#CcspWiecbController
- #       echo "RDKB_SELFHEAL : Resetting process CcspWecbController on atom reset"
-#	cd /usr/ccsp/wecb
-#	if [ "x"$Subsys = "x" ];then
-   #     	$BINPATH/CcspWecbController
-#	else
-   #    		$BINPATH/CcspWecbController -subsys $Subsys
-  #  	fi
 
-	sleep 3
 	 #CcspLMLite
 	echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspLMLite on atom reset"
 	cd /usr/ccsp/lm

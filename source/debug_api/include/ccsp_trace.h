@@ -114,7 +114,6 @@ extern volatile unsigned int MDC_RDKLogLevel; //Added for RDKB-4237
 #endif
 extern volatile unsigned int Harvester_RDKLogLevel; /*Added for RDKB-4343*/
 extern volatile unsigned int NOTIFY_RDKLogLevel; 
-extern volatile unsigned int WECB_RDKLogLevel;
 extern volatile unsigned int PWRMGR_RDKLogLevel;
 extern volatile unsigned int FSC_RDKLogLevel;
 extern volatile unsigned int ETHAGENT_RDKLogLevel;
@@ -139,7 +138,6 @@ extern volatile BOOL WiFi_RDKLogEnable;
 extern volatile BOOL CR_RDKLogEnable;
 extern volatile BOOL Harvester_RDKLogEnable; /*Added for RDKB-4343*/
 extern volatile BOOL NOTIFY_RDKLogEnable;
-extern volatile BOOL WECB_RDKLogEnable;
 extern volatile BOOL PWRMGR_RDKLogEnable;
 extern volatile BOOL FSC_RDKLogEnable;
 extern volatile BOOL ETHAGENT_RDKLogEnable;
@@ -351,12 +349,6 @@ else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))					\
 	LogLevel = NOTIFY_RDKLogLevel;\
 	LogEnable = NOTIFY_RDKLogEnable;\
 }\
-else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wecb")) 				\
-{												\
-	ComponentName= "LOG.RDK.WECB";							\
-	LogLevel = WECB_RDKLogLevel;\
-	LogEnable = WECB_RDKLogEnable;\
-}\
 else if(!strcmp(pComponentName,"LOG.RDK.LM"))					\
 {												\
 	ComponentName="LOG.RDK.LM";							\
@@ -381,12 +373,6 @@ else if(!strcmp(pComponentName,"dhcp_snooperd"))    \
     LogLevel = RDKLogLevel;                         \
     LogEnable = RDKLogEnable;                       \
 }                                                   \
-else if(!strcmp(pComponentName,"LOG.RDK.WECBMASTER"))                            \
-{                                                                                               \
-        ComponentName= "LOG.RDK.WECBMASTER";                                                  \
-        LogLevel = WECB_RDKLogLevel;\
-        LogEnable = WECB_RDKLogEnable;\
-}\
 else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))                            \
 {                                                                                               \
         ComponentName= "LOG.RDK.PWRMGR";                                                  \
@@ -524,12 +510,6 @@ else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))					\
 	LogLevel = NOTIFY_RDKLogLevel;\
 	LogEnable = NOTIFY_RDKLogEnable;\
 }\
-else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wecb")) 				\
-{												\
-	ComponentName= "LOG.RDK.WECB";							\
-	LogLevel = WECB_RDKLogLevel;\
-	LogEnable = WECB_RDKLogEnable;\
-}\
 else if(!strcmp(pComponentName,"LOG.RDK.LM"))					\
 {												\
 	ComponentName="LOG.RDK.LM";							\
@@ -554,12 +534,6 @@ else if(!strcmp(pComponentName,"dhcp_snooperd"))    \
     LogLevel = RDKLogLevel;                         \
     LogEnable = RDKLogEnable;                       \
 }                                                   \
-else if(!strcmp(pComponentName,"LOG.RDK.WECBMASTER"))                            \
-{                                                                                               \
-        ComponentName= "LOG.RDK.WECBMASTER";                                                  \
-        LogLevel = WECB_RDKLogLevel;\
-        LogEnable = WECB_RDKLogEnable;\
-}\
 else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))                            \
 {                                                                                               \
         ComponentName= "LOG.RDK.PWRMGR";                                                  \
