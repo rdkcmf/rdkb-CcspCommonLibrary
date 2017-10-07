@@ -1,0 +1,19 @@
+[Unit]
+Description=CcspAdvSecuritySsp service
+
+After=CcspPandMSsp.service CcspTandDSsp.service
+
+[Service]
+Type=forking
+Environment="Subsys=eRT."
+Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
+WorkingDirectory=/usr/ccsp/advsec
+ExecStart=/usr/bin/CcspAdvSecuritySsp -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspXdnsSsp" >> ${PROCESS_RESTART_LOG}'
+Restart=always
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=multi-user.target
