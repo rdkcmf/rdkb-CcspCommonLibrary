@@ -196,3 +196,178 @@ AnscSetTraceLevel
     AnscSetTraceLevel_ansc(traceLevel);    
 }
 
+void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char *format, ...)
+{
+    char *ComponentName;
+    volatile unsigned int LogLevel;
+    volatile BOOLEAN LogEnable;
+
+    if(RDKLogEnable == TRUE && pComponentName)
+    {
+        if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pam"))
+        {
+            ComponentName="LOG.RDK.PAM";
+            LogLevel = PAM_RDKLogLevel;
+            LogEnable = PAM_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))
+        {
+            ComponentName = "LOG.RDK.TR69";
+            LogLevel = TR69_RDKLogLevel;
+            LogEnable = TR69_RDKLogEnable;
+            /*printf("-- LogLevel = %d\n LogEnable = %d\n",LogLevel,LogEnable);*/
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.psm"))
+        {
+            ComponentName= "LOG.RDK.PSM";
+            LogLevel = PSM_RDKLogLevel;
+            LogEnable = PSM_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.moca"))
+        {
+            ComponentName= "LOG.RDK.MOCA";
+            LogLevel = MOCA_RDKLogLevel;
+            LogEnable = MOCA_RDKLogEnable;
+            /*printf("-- MOCA LogLevel = %d\n LogEnable = %d\n",LogLevel,LogEnable);*/
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.CR"))
+        {
+            ComponentName="LOG.RDK.CR";
+            LogLevel = CR_RDKLogLevel;
+            LogEnable = CR_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.mta"))
+        {
+            ComponentName="LOG.RDK.MTA";
+            LogLevel = MTA_RDKLogLevel;
+            LogEnable = MTA_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.cm"))
+        {
+            ComponentName="LOG.RDK.CM";
+            LogLevel = CM_RDKLogLevel;
+            LogEnable = CM_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tdm"))
+        {
+            ComponentName="LOG.RDK.TDM";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ssd"))
+        {
+            ComponentName="LOG.RDK.SSD";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fu"))
+        {
+            ComponentName="LOG.RDK.FU";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,COMPNAME))
+        {
+            ComponentName="LOG.RDK.WIFI";
+            LogLevel = WiFi_RDKLogLevel;
+            LogEnable = WiFi_RDKLogEnable;
+        }
+        /*Added for rdkb-4237*/
+        else if(!strcmp(pComponentName,"mdc"))
+        {
+            MDCLOG
+        }
+        /*Added for RDKB-4343*/
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.harvester"))
+        {
+            ComponentName="LOG.RDK.Harvester";
+            LogLevel = Harvester_RDKLogLevel;
+            LogEnable = Harvester_RDKLogEnable;
+        }
+        /*Changes end here*/
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))
+        {
+            ComponentName= "LOG.RDK.NOTIFY";
+            LogLevel = NOTIFY_RDKLogLevel;
+            LogEnable = NOTIFY_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.LM"))
+        {
+            ComponentName="LOG.RDK.LM";
+            LogLevel = LM_RDKLogLevel;
+            LogEnable = LM_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))
+        {
+            ComponentName="LOG.RDK.SNMP";
+            LogLevel = SNMP_RDKLogLevel;
+            LogEnable = SNMP_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.hotspot"))
+        {
+            ComponentName = "LOG.RDK.HOTSPOT";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"dhcp_snooperd"))
+        {
+            ComponentName = "LOG.RDK.DHCPSNOOP";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))
+        {
+            ComponentName= "LOG.RDK.PWRMGR";
+            LogLevel = PWRMGR_RDKLogLevel;
+            LogEnable = PWRMGR_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.FSC"))
+        {
+            ComponentName= "LOG.RDK.FSC";
+            LogLevel = FSC_RDKLogLevel;
+            LogEnable = FSC_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.MESH"))
+        {
+            ComponentName= "LOG.RDK.MESH";
+            LogLevel = MESH_RDKLogLevel;
+            LogEnable = MESH_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))
+        {
+            ComponentName= "LOG.RDK.MeshService";
+            LogLevel = MeshService_RDKLogLevel;
+            LogEnable = MeshService_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ethagent"))
+        {
+            ComponentName= "LOG.RDK.ETHAGENT";
+            LogLevel = ETHAGENT_RDKLogLevel;
+            LogEnable = ETHAGENT_RDKLogEnable;
+        }
+        else
+        {
+            ComponentName = "LOG.RDK.Misc";
+            LogLevel = RDKLogLevel;
+            LogEnable = RDKLogEnable;
+        }
+        /*if( level<=RDKLogLevel)*/
+        if((level<=LogLevel)&&(LogEnable == TRUE))
+        {
+            /*  if ( level <= g_iTraceLevel)                */
+            if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))
+            {
+                /*printf("-- level = %d\n LogLevel = %d\n LogEnable = %d\n",level,LogLevel,LogEnable);*/
+            }
+            {
+                char    sfn[32];
+                va_list args;
+
+                CcspTraceShortenFileName(sfn, 32, fileName);
+                va_start(args, format);
+                RDK_LOG1(level, ComponentName, format, args);
+                va_end(args);
+            }
+        }
+    }
+}
