@@ -94,6 +94,15 @@ extern "C" {
 #include "rdk_debug.h"
 #endif
 
+
+#ifndef printf
+#define printf(arg ...) \
+ do {  \
+ printf(arg);\
+ fflush(stdout);\
+ } while (0)
+#endif
+
 extern  INT  g_iTraceLevel;
 extern char *g_TraceLevelStr[8];
 extern char * pComponentName;
