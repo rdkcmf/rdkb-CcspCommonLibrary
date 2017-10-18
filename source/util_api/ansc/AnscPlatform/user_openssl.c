@@ -473,7 +473,7 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         goto no_cert;
     }
 
-    if (0)
+    if (1)
     {
         char *subject = X509_NAME_oneline (X509_get_subject_name (cert), 0, 0);
         char *issuer = X509_NAME_oneline (X509_get_issuer_name (cert), 0, 0);
