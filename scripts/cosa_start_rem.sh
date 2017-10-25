@@ -5,7 +5,6 @@
 
 source /etc/utopia/service.d/log_capture_path.sh
 
-MAX_PARODUS_WAIT_TIME=300
 
 BINPATH="/usr/bin"
 UTOPIA_PATH=/etc/utopia/service.d
@@ -132,37 +131,9 @@ syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
 echo_t "PWD is `pwd`"
 
-timer=0
-parodus_start_up()
-{
-	while :
-	do
-		$BINPATH/parodusStart
-		echo_t "C execuable to start parodus is done"
-		if [ -e /tmp/parodusCmd.cmd ]; then
-			echo_t "parodusCmd.cmd exists in tmp"
-			parodusCmd=`cat /tmp/parodusCmd.cmd`
-			#start parodus
-			$parodusCmd &
-			echo_t "parodus process is started"
-			break
-			
-		else
-			echo_t "parodusCmd.cmd not found in tmp, retrying after 1 min.."
-			sleep 75
-			timer=`expr $timer + 75`
-			if [ $timer -eq $MAX_PARODUS_WAIT_TIME ]; then
-		    	   echo_t "Waited for 5 min. /tmp/parodusCmd.cmd does not exists, unable to start parodus"
-		    	   break
-			fi
-		fi
-		
-      	done
-}
 
 if [ -f "/etc/PARODUS_ENABLE" ]; then
-    echo_t "Starting parodus in background "
-    parodus_start_up &
+    echo_t "Parodus is enabled"
 else
     if [ -e /nvram/webpa_cfg.json ]; then
         echo_t "webpa_cfg.json exists in nvram"
@@ -487,3 +458,15 @@ if [ "x$BOX_TYPE" = "xXB3" ] && [ "x$PARTNER_ID" = "xcox" ]; then
 echo_t "starting wan_ssh script"              
 sh /lib/rdk/wan_ssh.sh &    
 fi 
+
+if [ -f "/etc/PARODUS_ENABLE" ]; then
+    # Checking parodus and parodusStart PID
+    PARODUS_PID=`pidof parodus`
+    PARODUSSTART_PID=`pidof parodusStart`
+    if [ "$PARODUS_PID" = "" ] && ["$PARODUSSTART_PID" = ""]; then 
+     	echo_t "wan-status ready event is not received.. Starting parodus in background "
+     	$BINPATH/parodusStart &
+    else
+    	echo_t "Parodus is started or start up is in progress"
+    fi
+fi
