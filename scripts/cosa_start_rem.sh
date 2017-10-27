@@ -262,8 +262,8 @@ if [ -e ./tr069pa ]; then
         echo_t "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
                 $BINPATH/CcspTr069PaSsp -subsys $Subsys
         fi
-        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
-        sysevent setunique GeneralPurposeFirewallRule " -A INPUT ! -i erouter0 -p tcp -m tcp --dport 7547 -j DROP "
+#        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
+#        sysevent setunique GeneralPurposeFirewallRule " -A INPUT ! -i erouter0 -p tcp -m tcp --dport 7547 -j DROP "
         cd ..
 fi
 
