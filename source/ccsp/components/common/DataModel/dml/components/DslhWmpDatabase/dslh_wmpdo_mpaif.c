@@ -511,8 +511,12 @@ void* Send_Notification_Thread_Func()
           }
           else
           {
-             printf("<< str[i] %s >>\n",str1[i]);
-             CcspTraceWarning(("<< str[i] %s >>\n",str1[i]));
+             /*sensitive information like keyPassphrase should not print*/
+             if(_ansc_strstr(str1[i],"KeyPassphrase") == NULL)
+             {
+                 printf("<< str[i] %s >>\n",str1[i]);
+                 CcspTraceWarning(("<< str[i] %s >>\n",str1[i]));
+             }
              notif_val[0].parameterValue = str1[i];
 	         ret =    CcspBaseIf_setParameterValues(
 		               bus_handle,
@@ -860,7 +864,8 @@ DslhWmpdoMpaSetParameterValues
                     {
 		               memset(str, 0, (sizeof(str)));
                        sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
-		               if(str != NULL)
+                       /*sensitive information like keyPassphrase should not print*/
+		               if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
 		               {
 		                 CcspTraceWarning(("<< %s sending Notification str %s >>\n",__FUNCTION__,str));
 		               }
@@ -868,7 +873,11 @@ DslhWmpdoMpaSetParameterValues
 		               memset(str1[j], 0, (strlen(str) + 1));
 		               strcpy(str1[j], str);
 		    
-		               CcspTraceWarning(("<< %s sending Notification %s >>\n",__FUNCTION__,str1[j]));
+                       /*sensitive information like keyPassphrase should not print*/
+		               if( _ansc_strstr(str1[j],"KeyPassphrase") == NULL)
+                       {
+		                   CcspTraceWarning(("<< %s sending Notification %s >>\n",__FUNCTION__,str1[j]));
+                       }
 		               CcspTraceWarning(("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize));
 		               j++;
                     }
