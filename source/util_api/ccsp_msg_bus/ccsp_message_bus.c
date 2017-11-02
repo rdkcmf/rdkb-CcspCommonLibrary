@@ -996,9 +996,26 @@ CCSP_Message_Bus_Init
 
     // Change to pthread_cond_wait() since connect thread may fail under high cpu usage 
     // i.e., wait until the connect thread succeeds and signal msg_threshold_cv
+
+// Commenting out pthread_cond_wait since CCSP_Message_Bus_Init is stuck beacuse of race condition. 
+// Signal is sent from CCSP_Message_Bus_Connect_Thread before pthread_cond_wait .
+
+#if 0
     pthread_mutex_lock(&bus_info->msg_mutex);
     count  = pthread_cond_wait(&bus_info->msg_threshold_cv, &bus_info->msg_mutex);
     pthread_mutex_unlock(&bus_info->msg_mutex);
+#endif
+
+          {
+
+                   char *msg = NULL; int ret = 0;
+
+                   if(thread_dbus_connect && (ret = pthread_join(thread_dbus_connect, (void **)&msg)) != 0) {
+
+           		 CcspTraceError(("<%s>: thread connect join returned %d with error %s\n", __FUNCTION__, ret, msg));
+		   }
+
+          }
 
     //create a thread to handle dbus request
     pthread_create(&thread_dbus_process, NULL, CCSP_Message_Bus_Process_Thread, (void *)bus_info);
