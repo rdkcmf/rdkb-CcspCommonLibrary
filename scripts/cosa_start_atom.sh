@@ -72,6 +72,7 @@ CRONPATH="/tmp/cron/"
 CRONFILE=$CRONPATH"root"
 CRONFILE_BK="/tmp/cron_tab.txt"
 MESHAGENT="/usr/bin/meshAgent"
+MODEL_NUM=`grep "MODEL_NUM" /etc/device.properties | cut -d "=" -f2`
 
 mkdir -p $LOG_FOLDER
 
@@ -117,6 +118,16 @@ rdk_wifi_upgrade_secureSSID_vlan
 # Config mesh backhal SSID
 /usr/ccsp/wifi/meshapcfg.sh
 
+#Check for radio swap cases and revert it to right one for Cisco 3941
+if [ "$MODEL_NUM" = "DPC3941" ]; then
+ if [ -f  /nvram/etc/ath/.configData ]; then
+  SWAPPED=`grep "AP_RADIO_ID=" /nvram/etc/ath/.configData | cut -f2 -d"="`
+  if [ "$SWAPPED" -eq 1 ]; then
+   echo "Radios are found to be swapped from previous config, restoring to right value"
+   /usr/ccsp/wifi/correctRadioCfg.sh
+  fi
+ fi
+fi
 # Config check in wifi cfg database
 if [ -f /usr/sbin/wifi_inconsistent_config_check.sh ];then
 	/usr/sbin/wifi_inconsistent_config_check.sh
