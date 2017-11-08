@@ -239,3 +239,18 @@ if [ -e ./notify-comp ]; then
         fi
         cd ..
 fi
+
+if [ -f "/etc/PARODUS_ENABLE" ]; then
+	if [ -e ./webpa ]; then
+		cd webpa
+		if [ "x"$Subsys = "x" ];then
+			$BINPATH/webpa
+		else
+			echo "$BINPATH/webpa -subsys $Subsys"
+			$BINPATH/webpa -subsys $Subsys
+		fi
+		cd ..
+	fi
+else
+	echo_t "****Parodus is disabled.****"
+fi
