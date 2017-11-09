@@ -127,6 +127,8 @@ if [ "$MODEL_NUM" = "DPC3941" ]; then
    /usr/ccsp/wifi/correctRadioCfg.sh
   fi
  fi
+ echo "Checking and configurig mesh APs properly"
+ /usr/ccsp/wifi/meshapcfgCorrection.sh
 fi
 # Config check in wifi cfg database
 if [ -f /usr/sbin/wifi_inconsistent_config_check.sh ];then
