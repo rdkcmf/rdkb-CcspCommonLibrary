@@ -26,7 +26,7 @@ else
 fi
 
 
-if [ -f "/etc/PARODUS_ENABLE" ]; then
+if [ -f "/etc/AKER_ENABLE" ]; then
     echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -m /nvram/pcs.bin.md5" > /tmp/aker_cmd.cmd
     aker_cmd=`cat /tmp/aker_cmd.cmd`
     $aker_cmd &
