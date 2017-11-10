@@ -1,0 +1,20 @@
+[Unit]
+Description=parodus service
+
+After=CcspTr069PaSsp.service
+
+[Service]
+Type=forking
+Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
+WorkingDirectory=/usr/ccsp/parodus
+ExecStartPre=/usr/bin/parodusStart
+Environment="PARODUS_COMMAND=$(/bin/cat /tmp/parodusCmd.cmd)"
+ExecStart=/bin/sh -c '${PARODUS_COMMAND} &'
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting parodus" >> ${PROCESS_RESTART_LOG}'
+Restart=always
+
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=wifi-initialized.target

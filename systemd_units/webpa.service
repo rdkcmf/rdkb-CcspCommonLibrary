@@ -4,13 +4,15 @@ Description=webpa service
 After=CcspTr069PaSsp.service
 
 [Service]
-Type=simple
-EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+Type=forking
 Environment="Subsys=eRT."
-ExecStart=/bin/sh -c '/usr/ccsp/webpa.sh &'
-RemainAfterExit=yes
-
-StandardOutput=syslog+console
+Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
+EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+WorkingDirectory=/usr/ccsp/webpa
+ExecStart=/usr/bin/webpa -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting webpa" >> ${PROCESS_RESTART_LOG}'
+Restart=always
 
 [Install]
 WantedBy=wifi-initialized.target
