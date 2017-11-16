@@ -33,7 +33,7 @@
 #######################################################################
 
 BINPATH="/usr/bin"
-source /etc/utopia/service.d/log_env_var.sh
+source /etc/utopia/service.d/log_capture_path.sh
 source /etc/device.properties
 
 ulimit -c unlimited
