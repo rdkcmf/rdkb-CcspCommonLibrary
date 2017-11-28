@@ -86,7 +86,7 @@ else
 fi
 
 HOME_LAN_ISOLATION=`psmcli get dmsb.l2net.HomeNetworkIsolation`
-if [ "$HOME_LAN_ISOLATION" -eq 1 ]; then
+if [ "$HOME_LAN_ISOLATION" = "1" ]; then
 echo "Starting brlan10 initialization, check whether brlan10 is there or not"
 ifconfig | grep brlan10
 if [ $? == 1 ]; then
