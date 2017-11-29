@@ -394,6 +394,11 @@ if [ -f  /lib/rdk/dcmrfc.service ]; then
    /bin/sh /lib/rdk/dcmrfc.service &
 fi
 
+# Check zram and enable based on RFC
+if [ -f  /lib/rdk/rdkzram.service ]; then
+   /bin/sh /lib/rdk/rdkzram.service &
+fi
+
 if [ -e ./tad ]; then
         cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
