@@ -27,7 +27,7 @@ fi
 
 
 if [ -f "/etc/AKER_ENABLE" ]; then
-    echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -m /nvram/pcs.bin.md5" > /tmp/aker_cmd.cmd
+    echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5" > /tmp/aker_cmd.cmd
     aker_cmd=`cat /tmp/aker_cmd.cmd`
     $aker_cmd &
     echo_t "aker process should have been started"
