@@ -118,11 +118,36 @@ static void openssl_thread_cleanup(void)
         OPENSSL_free(lock_count);
 }
 static void
-openssl_print_errors (void)
+openssl_print_errors (SSL *ssl)
 {
+
   unsigned long curerr = 0;
   while ((curerr = ERR_get_error ()) != 0)
     AnscTraceWarning(("OpenSSL: %s\n", ERR_error_string(curerr, NULL)));
+
+  if ( ssl != NULL ) {
+      int vresult = SSL_get_verify_result(ssl);
+      if (vresult != X509_V_OK ) {
+          X509 *cert;
+          cert = SSL_get_peer_certificate (ssl);
+          if (!cert) {
+              AnscTraceWarning(("Certificate not verified - ACS %s \n", X509_verify_cert_error_string(vresult)));
+          } else {
+              char *subject = X509_NAME_oneline (X509_get_subject_name (cert), 0, 0);
+              char *issuer = X509_NAME_oneline (X509_get_issuer_name (cert), 0, 0);
+              AnscTraceWarning(("ACS %s, certificate details: subject: %s issuer: %s\n",
+                  X509_verify_cert_error_string(vresult),
+                  subject,
+                  issuer));
+              OPENSSL_free (subject);
+              OPENSSL_free (issuer);
+              X509_free (cert);
+          }
+      }
+  } else {
+      AnscTraceWarning(("Unable to get ssl handles for ACS server \n"));
+  }
+
 }
 
 #define DEVICE_PROPERTIES    "/etc/device.properties"
@@ -225,7 +250,7 @@ int openssl_init (int who_calls)
   g_ssl_ctx[who_calls] = ssl_ctx = SSL_CTX_new (SSLv23_method ());
   if (!ssl_ctx)
   {
-    openssl_print_errors ();
+    openssl_print_errors (NULL);
     return 0;
   }
 
@@ -245,7 +270,7 @@ int openssl_init (int who_calls)
            (SSL_CTX_use_PrivateKey_file (ssl_ctx, BBHM_PRIVATE_KEY, SSL_FILETYPE_PEM) != 1) )
       {
         SSL_CTX_free (ssl_ctx);
-        openssl_print_errors ();
+        openssl_print_errors (NULL);
         return 0;
       }
       SSL_CTX_set_verify (ssl_ctx, SSL_VERIFY_NONE, NULL);
@@ -379,6 +404,7 @@ SSL * openssl_connect (int fd)
 
   if (SSL_connect (ssl) <= 0 || ssl->state != SSL_ST_OK)
   {
+    AnscTraceWarning(("openssl_connect - failed in SSL_set_connect_state \n"));
     goto error;
   }
   else
@@ -390,7 +416,7 @@ SSL * openssl_connect (int fd)
           const long cert_res = SSL_get_verify_result(ssl);
           if(cert_res != X509_V_OK)
           {
-             AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK\n")); 
+             AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK. ACS %s \n", X509_verify_cert_error_string (cert_res))); 
              X509_free(cert);
           }
           else
@@ -407,9 +433,8 @@ SSL * openssl_connect (int fd)
 
 error:
 
-  AnscTraceWarning(("openssl_connect - SSL handshake failed -- ssl state = %d.\n", ssl->state));
-
-  openssl_print_errors ();
+  AnscTraceWarning(("openssl_connect - SSL handshake failed -- ssl state = %s.\n", SSL_state_string(ssl)));
+  openssl_print_errors (ssl);
 
   if (ssl)
     SSL_free (ssl);
@@ -444,7 +469,7 @@ SSL * openssl_accept (int conn_fd)
 error:
     AnscTraceWarning(("openssl_accept - SSL handshake failed.\n"));
 
-    openssl_print_errors ();
+    openssl_print_errors (ssl);
 
     if (ssl)
         SSL_free (ssl);
@@ -456,12 +481,13 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
 {
     X509 *cert;
     char common_name[256] = {0};
+    
     long vresult;
     int success = 1;
 
     if (!ssl)
     {
-        AnscTraceWarning(("%s - ssl handle is null!\n", __FUNCTION__));
+        AnscTraceWarning(("%s - ssl handle is null !!! \n", __FUNCTION__));
         return 0;
     }
 
@@ -473,16 +499,11 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         goto no_cert;
     }
 
-    if (1)
-    {
-        char *subject = X509_NAME_oneline (X509_get_subject_name (cert), 0, 0);
-        char *issuer = X509_NAME_oneline (X509_get_issuer_name (cert), 0, 0);
-        AnscTraceWarning(("%s - certificate:\n  subject: %s\n  issuer:  %s\n",
+    char *subject = X509_NAME_oneline (X509_get_subject_name (cert), 0, 0);
+    char *issuer = X509_NAME_oneline (X509_get_issuer_name (cert), 0, 0);
+    AnscTraceWarning(("%s - certificate:\n  subject: %s\n  issuer:  %s\n",
                    __FUNCTION__,
                    subject, issuer));
-        OPENSSL_free (subject);
-        OPENSSL_free (issuer);
-    }
 
     vresult = SSL_get_verify_result (ssl);
     if (vresult != X509_V_OK )
@@ -508,7 +529,15 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
             success = 1;
         }
 #endif
+
+        AnscTraceWarning(("ACS %s, certificate details: subject: %s issuer: %s\n",
+            X509_verify_cert_error_string(vresult),
+            subject,
+            issuer));
     }
+
+    OPENSSL_free (subject);
+    OPENSSL_free (issuer);
 
     if ( success ) {
         common_name[0] = '\0';
@@ -541,7 +570,7 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
     X509_free (cert);
 
 no_cert:
-
+    openssl_print_errors (ssl);
     return success;
 }
 
@@ -549,6 +578,7 @@ int _server_openssl_validate_certificate (int fd, char *data, SSL *ssl)
 {
 /*server verify client's certificate logic. 
  the logic is different per product, need customization*/
+    openssl_print_errors(ssl);
     return 1;
 }
 
