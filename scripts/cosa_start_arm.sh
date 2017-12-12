@@ -86,6 +86,12 @@ else
     echo "bbhm patch is not required for other platforms"
 fi
 
+if [ -f /lib/rdk/dm_crypt_encryption.sh ]; then
+   /lib/rdk/dm_crypt_encryption.sh &
+fi
+
+
+
 if [ ! -f "/nvram/l2net_port_details_cleaned" ] 
 then
 	echo "Clearing up bridge data from from DB"

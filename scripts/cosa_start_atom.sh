@@ -43,6 +43,11 @@ killall CcspCrSsp
 killall rpcserver
 killall CcspMdcSsp
 
+if [ -f /lib/rdk/dm_crypt_encryption_atom.sh ]; then
+   /lib/rdk/dm_crypt_encryption_atom.sh &
+fi
+
+
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 $ATOM_INTERFACE_IP
