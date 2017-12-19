@@ -484,7 +484,7 @@ DslhWmpdoEnrollObjects
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
 #ifdef FEATURE_SUPPORT_RDKLOG
-rdk_logger_init( DEBUG_INI_NAME);
+    RDK_LOGGER_INIT();
 #endif
 
     return  ANSC_STATUS_SUCCESS;
