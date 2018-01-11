@@ -120,8 +120,6 @@ rdk_wifi_upgrade_secureSSID_vlan
 # Config vlan 106 Secure ssid (phrase 2): RDKB-6974
 /lib/rdk/rdk_wifi_configure_lnf_ap.sh
 
-# Config mesh backhal SSID
-/usr/ccsp/wifi/meshapcfg.sh
 
 #Check for radio swap cases and revert it to right one for Cisco 3941
 if [ "$MODEL_NUM" = "DPC3941" ]; then
@@ -135,6 +133,10 @@ if [ "$MODEL_NUM" = "DPC3941" ]; then
  echo "Checking and configurig mesh APs properly"
  /usr/ccsp/wifi/meshapcfgCorrection.sh
 fi
+
+# Config mesh backhal SSID
+/usr/ccsp/wifi/meshapcfg.sh
+
 # Config check in wifi cfg database
 if [ -f /usr/sbin/wifi_inconsistent_config_check.sh ];then
 	/usr/sbin/wifi_inconsistent_config_check.sh
