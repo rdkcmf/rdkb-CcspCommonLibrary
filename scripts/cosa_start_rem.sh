@@ -139,6 +139,11 @@ syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
 echo_t "PWD is `pwd`"
 
+# Enable XCONF Conf config fetch
+if [ -f  /lib/rdk/dcm.service ]; then
+    echo_t "DCM SCRIPT: Calling dcm.service"
+    /bin/sh /lib/rdk/dcm.service &
+fi
 
 if [ -f "/etc/PARODUS_ENABLE" ]; then
     echo_t "Parodus is enabled"
@@ -389,11 +394,6 @@ if [ "x$MULTI_CORE" == "xyes" ]; then
     echo "starting drop bear"
     dropbear -E -s -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
-fi
-
-# Enable XCONF Conf config fetch
-if [ -f  /lib/rdk/dcm.service ]; then
-   /bin/sh /lib/rdk/dcm.service &
 fi
 
 echo "Enable DCM RFC feature"
