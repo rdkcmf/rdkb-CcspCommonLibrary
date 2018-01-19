@@ -145,39 +145,40 @@ if [ -f  /lib/rdk/dcm.service ]; then
     /bin/sh /lib/rdk/dcm.service &
 fi
 
-if [ -f "/etc/PARODUS_ENABLE" ]; then
-    echo_t "Parodus is enabled"
-else
-    if [ -e /nvram/webpa_cfg.json ]; then
-        echo_t "webpa_cfg.json exists in nvram"
-     else
-        echo_t "webpa_cfg.json not found in nvram"
-        cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-        echo_t "webpa_cfg.json file does not exist. Hence copying the factory default file.."
-    fi
-        
-    WEBPAVER=`cat /nvram/webpa_cfg.json | grep "file-version" | awk '{print $2}' | sed 's|[\"\",]||g'`
-    echo_t "WEBPAVER is $WEBPAVER"
-    if [ "$WEBPAVER" = "" ];then
-        cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
-        echo_t "Copying factory default file as webpa file-version does not exist in current cfg file.."
-    fi
-        
-    ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
-    echo_t "ENABLEWEBPA is $ENABLEWEBPA"
-
-if [ "$ENABLEWEBPA" = "true" ]; then
-    echo_t "ENABLEWEBPA is true..Intializing WebPA.."
-    if [ "x"$Subsys = "x" ];then
-        $BINPATH/webpa
+if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]; then
+    if [ -f "/etc/PARODUS_ENABLE" ]; then
+        echo_t "Parodus is enabled"
     else
-        echo_t "./webpa -subsys $Subsys"
-        $BINPATH/webpa -subsys $Subsys
-    fi
-else
-    echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
-fi
+        if [ -e /nvram/webpa_cfg.json ]; then
+            echo_t "webpa_cfg.json exists in nvram"
+         else
+            echo_t "webpa_cfg.json not found in nvram"
+            cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
+            echo_t "webpa_cfg.json file does not exist. Hence copying the factory default file.."
+        fi
+            
+        WEBPAVER=`cat /nvram/webpa_cfg.json | grep "file-version" | awk '{print $2}' | sed 's|[\"\",]||g'`
+        echo_t "WEBPAVER is $WEBPAVER"
+        if [ "$WEBPAVER" = "" ];then
+            cp /etc/webpa_cfg.json /nvram/webpa_cfg.json
+            echo_t "Copying factory default file as webpa file-version does not exist in current cfg file.."
+        fi
+            
+        ENABLEWEBPA=`cat /nvram/webpa_cfg.json | grep EnablePa | awk '{print $2}' | sed 's|[\"\",]||g'`
+        echo_t "ENABLEWEBPA is $ENABLEWEBPA"
 
+    if [ "$ENABLEWEBPA" = "true" ]; then
+        echo_t "ENABLEWEBPA is true..Intializing WebPA.."
+        if [ "x"$Subsys = "x" ];then
+            $BINPATH/webpa
+        else
+            echo_t "./webpa -subsys $Subsys"
+            $BINPATH/webpa -subsys $Subsys
+        fi
+    else
+        echo_t "EnablePa parameter is set to false. Hence not initializng WebPA.."
+    fi
+    fi
 fi
 
 isPeriodicFWCheckEnable=`syscfg get PeriodicFWCheck_Enable`
@@ -472,7 +473,7 @@ echo_t "starting wan_ssh script"
 sh /lib/rdk/wan_ssh.sh &    
 fi 
 
-if [ -f "/etc/PARODUS_ENABLE" ]; then
+if [ [[ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]]  && [-f "/etc/PARODUS_ENABLE" ]]; then
     # Checking parodus and parodusStart PID
     PARODUS_PID=`pidof parodus`
     PARODUSSTART_PID=`pidof parodusStart`
