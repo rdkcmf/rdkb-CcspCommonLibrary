@@ -65,6 +65,10 @@ fi
 #
 #	Allow custom plug-ins
 #
+if [ -f /lib/rdk/cosa_start_pre.sh ]; then
+   /lib/rdk/cosa_start_pre.sh
+fi
+
 if [ -f "$PWD/cosa_start_custom_1.sh" ]; then
 	./cosa_start_custom_1.sh
 fi
@@ -84,12 +88,6 @@ if [ "$BOX_TYPE" = "XB3" ]; then
 else
     echo "bbhm patch is not required for other platforms"
 fi
-
-if [ -f /lib/rdk/dm_crypt_encryption.sh ]; then
-   /lib/rdk/dm_crypt_encryption.sh &
-fi
-
-
 
 if [ ! -f "/nvram/l2net_port_details_cleaned" ] 
 then

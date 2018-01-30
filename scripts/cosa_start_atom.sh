@@ -43,8 +43,8 @@ killall CcspCrSsp
 killall rpcserver
 killall CcspMdcSsp
 
-if [ -f /lib/rdk/dm_crypt_encryption_atom.sh ]; then
-   /lib/rdk/dm_crypt_encryption_atom.sh &
+if [ -f /lib/rdk/cosa_start_pre_atom.sh ]; then
+   /lib/rdk/cosa_start_pre_atom.sh
 fi
 
 
