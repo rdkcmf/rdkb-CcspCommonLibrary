@@ -940,10 +940,6 @@ AnscDstoReset
         if ( pMyObject->pHostAddr2 )
         {
             _xskt_freeaddrinfo(pMyObject->pHostAddr2);
-            /*
-             * Setting the ptr to NULL to avoid freeing it twice 
-             */
-            pMyObject->pHostAddr2 = NULL;
         }
     }
     else
@@ -951,10 +947,6 @@ AnscDstoReset
         if ( pMyObject->pHostAddr1 )
         {
             _ansc_freeaddrinfo(pMyObject->pHostAddr1);
-            /*
-             * Setting the ptr to NULL to avoid freeing it twice 
-             */
-            pMyObject->pHostAddr1 = NULL;
         }
     }
 #endif
