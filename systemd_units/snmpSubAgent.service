@@ -1,5 +1,6 @@
 [Unit]
 Description=SNMP Subagent service
+After=CcspCrSsp.service
 
 [Service]
 Type=simple
@@ -18,4 +19,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wan-initialized.target
+WantedBy=multi-user.target
