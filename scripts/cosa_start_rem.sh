@@ -473,7 +473,7 @@ echo_t "starting wan_ssh script"
 sh /lib/rdk/wan_ssh.sh &    
 fi 
 
-if [ [[ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]]  && [-f "/etc/PARODUS_ENABLE" ]]; then
+if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]  && [ -f "/etc/PARODUS_ENABLE" ]; then
     # Checking parodus and parodusStart PID
     PARODUS_PID=`pidof parodus`
     PARODUSSTART_PID=`pidof parodusStart`
