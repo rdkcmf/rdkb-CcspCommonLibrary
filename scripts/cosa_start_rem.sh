@@ -25,6 +25,7 @@ else
 fi
 
 
+if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]; then
 if [ -f "/etc/AKER_ENABLE" ]; then
     echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5" > /tmp/aker_cmd.cmd
     aker_cmd=`cat /tmp/aker_cmd.cmd`
@@ -32,6 +33,7 @@ if [ -f "/etc/AKER_ENABLE" ]; then
     echo_t "aker process should have been started"
 else
     echo_t "aker NOT enabled"
+fi
 fi
 
 
