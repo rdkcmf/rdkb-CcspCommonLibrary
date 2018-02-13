@@ -484,3 +484,7 @@ if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]  && [ -f "/etc/PAROD
     	echo_t "Parodus is started or start up is in progress"
     fi
 fi
+
+echo_t "starting stahealth_log.sh"
+/usr/ccsp/wifi/stahealth_log.sh &
+
