@@ -47,7 +47,6 @@ if [ -f /lib/rdk/cosa_start_pre_atom.sh ]; then
    /lib/rdk/cosa_start_pre_atom.sh
 fi
 
-
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 $ATOM_INTERFACE_IP
@@ -63,8 +62,16 @@ ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
 ip route add default via 192.168.106.1
 
 #start dropbear
+if [ -f /etc/mount-utils/getConfigFile.sh ];then
+     . /etc/mount-utils/getConfigFile.sh
+fi
 echo "starting dropbear ATOM"
-dropbear -E -s -p $ATOM_INTERFACE_IP:22 > /dev/null 2>&1 &
+mkdir -p /tmp/.dropbear
+DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1.xyz"
+DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2.xyz"
+getConfigFile $DROPBEAR_PARAMS_1
+getConfigFile $DROPBEAR_PARAMS_2
+dropbear -r $DROPBEAR_PARAMS_1 -r $DROPBEAR_PARAMS_2 -E -s -p $ATOM_INTERFACE_IP:22 > /dev/null 2>&1 &
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 #####BEGIN: Changes for ARRISXB3-3853
@@ -363,3 +370,4 @@ if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
 		fi
 	fi
 fi
+rm -rf /tmp/.dropbear

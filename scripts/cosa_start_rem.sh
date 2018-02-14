@@ -5,12 +5,12 @@
 
 source /etc/utopia/service.d/log_capture_path.sh
 
-
 BINPATH="/usr/bin"
 UTOPIA_PATH=/etc/utopia/service.d
-
 cd /fss/gw/usr/ccsp/
-
+if [ -f /etc/mount-utils/getConfigFile.sh ];then
+   . /etc/mount-utils/getConfigFile.sh
+fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
@@ -393,7 +393,12 @@ fi
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
     echo "starting drop bear"
-    dropbear -E -s -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
+    mkdir -p /tmp/.dropbear
+    DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1.xyz"
+    DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2.xyz"
+    getConfigFile $DROPBEAR_PARAMS_1
+    getConfigFile $DROPBEAR_PARAMS_2
+    dropbear -r $DROPBEAR_PARAMS_1 -r $DROPBEAR_PARAMS_2 -E -s -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 fi
 
@@ -490,3 +495,5 @@ echo_t "starting stahealth_log.sh"
 
 echo_t "starting apshealth.sh"
 /usr/ccsp/wifi/apshealth.sh &
+
+rm -rf /tmp/.dropbear
