@@ -732,11 +732,8 @@ if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))\
     CcspTraceDebug2(pComponentName, msg)
 #endif
 
-#ifdef RDKLOGGER_SUPPORT_WIFI
 #define COMPNAME "com.cisco.spvtg.ccsp.wifi"
-#else		
-#define COMPNAME "com.cisco.spvtg.ccsp.logagent"
-#endif	
+
 void
 AnscSetTraceLevel
     (
