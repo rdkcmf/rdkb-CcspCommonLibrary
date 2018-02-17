@@ -75,7 +75,6 @@ export LOG4C_RCPATH=/rdklogger
 
 #update the confg for DPC3939
 if [ "$MODEL_NUM" = "DPC3939" ]; then
-    $BINPATH/syscfg_cur_upgrade_3939.sh
     $BINPATH/bbhm_cur_upgrade_3939
 fi
 
