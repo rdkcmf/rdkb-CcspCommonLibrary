@@ -238,12 +238,6 @@ then
     echo 2 > /proc/irq/45/smp_affinity
 fi
 
-if [ "$BOX_TYPE" = "XB3" ] && [ -f "/etc/webgui_atom.sh" ]
-then
-   echo_t "Starting web gui"
-   sh /etc/webgui_atom.sh &
-fi
-
 sleep 60 
 timer=0
 
@@ -251,6 +245,13 @@ while :
 do
 
 if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -ge $MAX_WAIT_TIME ];then
+
+
+	if [ "$BOX_TYPE" = "XB3" ] && [ -f "/etc/webgui_atom.sh" ]
+	then
+	   echo_t "Starting web gui"
+	   sh /etc/webgui_atom.sh &
+	fi
 
 	##### webpa #####
 	
