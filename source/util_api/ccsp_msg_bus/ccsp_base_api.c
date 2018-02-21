@@ -2381,7 +2381,7 @@ BOOLEAN waitConditionReady(void* hMBusHandle, const char* dst_component_id, char
     int ret   = 0;
     int health = 0;
     printf("%s start to check %s status\n", src_component_id, dst_component_id);
-    CcspTraceError(("%s start to check %s status\n", src_component_id, dst_component_id));
+    CcspTraceInfo(("%s start to check %s status\n", src_component_id, dst_component_id));
     while(times++ < MAX_WAIT_TIME)
     {
         //to call TAD dbus message to check TAD is ready
@@ -2390,12 +2390,12 @@ BOOLEAN waitConditionReady(void* hMBusHandle, const char* dst_component_id, char
         {
             CCSP_Msg_SleepInMilliSeconds(TIME_INTERVAL);
             printf("%s try to check %s health for %d times, health is %d\n", src_component_id, dst_component_id, times, health);
-            CcspTraceError(("%s try to check %s health for %d times, health is %d\n", src_component_id, dst_component_id, times, health));
+            CcspTraceInfo(("%s try to check %s health for %d times, health is %d\n", src_component_id, dst_component_id, times, health));
         }
         else
         {
             printf("%s is ready, %s continue\n",dst_component_id, src_component_id);
-            CcspTraceError(("%s is ready, %s continue\n",dst_component_id, src_component_id));
+            CcspTraceInfo(("%s is ready, %s continue\n",dst_component_id, src_component_id));
             return true;
         }
     }
