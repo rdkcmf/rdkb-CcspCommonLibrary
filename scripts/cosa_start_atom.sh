@@ -307,6 +307,9 @@ echo_t "starting wifi_default_radius_port_script"
 echo_t "starting stahealth_log.sh"
 sh /usr/ccsp/wifi/stahealth_log.sh &
 
+echo_t "starting apshealth.sh"
+/usr/ccsp/wifi/apshealth.sh &
+
 if [ "$CR_IN_PEER" = "yes" ]
 then
 	echo_t "Start monitoring system statistics on the atom side"
