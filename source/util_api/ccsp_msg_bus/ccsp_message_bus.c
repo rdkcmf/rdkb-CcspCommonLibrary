@@ -459,7 +459,7 @@ ccsp_msg_bus_reconnect
         CcspTraceError(("<%s>: error %d waiting for dbus_connect_thread_count to return to 0\n", __FUNCTION__, rc));
     }
 
-    CcspTraceWarning(("<%s>: Re-establishing connection...", __FUNCTION__));
+    CcspTraceWarning(("<%s>: Re-establishing connection...\n", __FUNCTION__));
     pthread_create(&thread_dbus_connect, NULL, CCSP_Message_Bus_Connect_Thread, (void *)conn); 
     CcspTraceWarning(("Ok.\n"));
 
@@ -498,6 +498,7 @@ filter_func
                 if(bus_info->run)
                 {
                     // This is not normal
+                    CcspTraceError(("<%s>: Signal received: Bus disconnected!\n", __FUNCTION__));
                     ccsp_msg_bus_reconnect(connection); 
                 }
             }
@@ -870,7 +871,7 @@ CCSP_Message_Bus_Process_Thread
 
         /* We leverage this pthread to check dbus connection. */
         curTime = time(NULL);
-        if ( ( curTime-preTime ) > CCSP_MESSAGE_BUS_TIMEOUT_MAX_SECOND  ){
+       if ( ( ( curTime-preTime ) > CCSP_MESSAGE_BUS_TIMEOUT_MAX_SECOND )  && ( ( curTime-preTime ) < ( 10 * CCSP_MESSAGE_BUS_TIMEOUT_MAX_SECOND ) ) ){
             CcspTraceWarning(("<%s> !!!!PSM mode switching happened. Send singal to check dbus connection\n", __FUNCTION__));
             CcspBaseIf_SendsystemKeepaliveSignal(bus_info);
         }
