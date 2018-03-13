@@ -352,3 +352,14 @@ then
 		rm -rf $CRONFILE_BK
 	fi
 fi
+
+#To set the default value for AP_WPA_GROUP_REKEY
+DEVICE_MODEL=`grep "DEVICE_MODEL" /etc/device.properties | cut -d '=' -f2`
+if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
+	AP_WPA_GROUP_REKEY_15=`cfg -e | grep AP_WPA_GROUP_REKEY_15|cut -d '=' -f2`
+	if [ “$AP_WPA_GROUP_REKEY_15”==”3600” ]; then
+		if [ -f /usr/ccsp/wifi/grp_rekey_flip.sh ]; then
+			sh /usr/ccsp/wifi/grp_rekey_flip.sh
+		fi
+	fi
+fi
