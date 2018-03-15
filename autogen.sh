@@ -19,6 +19,7 @@
 ##########################################################################
 # Run this to generate all the initial makefiles, etc.
 #
+# TESTING
 test -n "$srcdir" || srcdir=`dirname $0`
 test -n "$srcdir" || srcdir=.
 olddir=`pwd`
