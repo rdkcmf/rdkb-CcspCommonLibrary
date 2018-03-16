@@ -514,4 +514,9 @@ echo_t "starting stahealth_log.sh"
 echo_t "starting apshealth.sh"
 /usr/ccsp/wifi/apshealth.sh &
 
+if [ -f "/lib/rdk/xf3_wifi_self_heal.sh" ];then
+	echo_t "starting xf3_wifi_self_heal.sh"
+	/lib/rdk/xf3_wifi_self_heal.sh &
+fi
+
 rm -rf /tmp/.dropbear
