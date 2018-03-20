@@ -28,7 +28,6 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/CcspWifiSsp -subsys $Subsys
-ExecStartPost=/bin/sh -c '/usr/ccsp/wifi/wifiTelemetrySetup.sh'
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWifiSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
