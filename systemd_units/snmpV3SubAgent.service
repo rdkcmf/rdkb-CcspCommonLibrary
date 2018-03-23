@@ -18,10 +18,10 @@
 ##########################################################################
 [Unit]
 Description=SNMP Subagent service
-
-[Service]
 After=snmpd.service 
 Requires=snmpd.service
+
+[Service]
 Type=simple
 PIDFile=/var/tmp/snmp_subagent_2.pid
 EnvironmentFile=/etc/device.properties
@@ -38,4 +38,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wan-initialized.target
+WantedBy=multi-user.target
