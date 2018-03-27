@@ -32,5 +32,7 @@ ExecStart=/usr/bin/webpa -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting webpa" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
+StandardOutput=syslog+console
+
 [Install]
 WantedBy=wifi-initialized.target

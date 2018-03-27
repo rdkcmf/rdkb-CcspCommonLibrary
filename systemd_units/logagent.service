@@ -33,7 +33,7 @@ ExecStart=/usr/bin/log_agent -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting log_agent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=multi-user.target

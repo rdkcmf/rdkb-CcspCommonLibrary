@@ -31,4 +31,4 @@ ExecStart=/usr/bin/CcspWifiSsp -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWifiSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
-StandardOutput=syslog
+StandardOutput=syslog+console
