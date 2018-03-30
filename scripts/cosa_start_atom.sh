@@ -78,8 +78,8 @@ if [ -f /etc/mount-utils/getConfigFile.sh ];then
 fi
 echo "starting dropbear ATOM"
 mkdir -p /tmp/.dropbear
-DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1.xyz"
-DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2.xyz"
+DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1$$"
+DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2$$"
 getConfigFile $DROPBEAR_PARAMS_1
 getConfigFile $DROPBEAR_PARAMS_2
 dropbear -r $DROPBEAR_PARAMS_1 -r $DROPBEAR_PARAMS_2 -E -s -p $ATOM_INTERFACE_IP:22 > /dev/null 2>&1 &

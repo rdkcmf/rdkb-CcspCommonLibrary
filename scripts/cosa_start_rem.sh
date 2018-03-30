@@ -410,10 +410,10 @@ fi
 
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
-    echo "starting drop bear"
+    echo "starting dropbear"
     mkdir -p /tmp/.dropbear
-    DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1.xyz"
-    DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2.xyz"
+    DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1$$"
+    DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2$$"
     getConfigFile $DROPBEAR_PARAMS_1
     getConfigFile $DROPBEAR_PARAMS_2
     dropbear -r $DROPBEAR_PARAMS_1 -r $DROPBEAR_PARAMS_2 -E -s -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
