@@ -452,13 +452,19 @@ if [ -e ./xdns ]; then
     cd ..
 fi
 
-if [ -e ./advsec ]; then
-    cd advsec
-    echo_t "$BINPATH/CcspAdvSecuritySsp -subsys $Subsys &"
-    $BINPATH/CcspAdvSecuritySsp -subsys $Subsys &
-    cd ..
-fi
 
+fingerprintenable=`psmcli get eRT.com.cisco.spvtg.ccsp.advsecurity.Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable`
+if [ $fingerprintenable -eq 1 ];then
+    echo "Fingerprinting is enabled"
+    if [ -e ./advsec ]; then
+        cd advsec
+        echo_t "$BINPATH/CcspAdvSecuritySsp -subsys $Subsys &"
+        $BINPATH/CcspAdvSecuritySsp -subsys $Subsys &
+        cd ..
+    fi
+else
+    echo "Fingerprinting is not enabled"
+fi
 
 if [ -e ./CcspArmMdc ]; then
     # make sure MDC firewall rules are disabled at boot
