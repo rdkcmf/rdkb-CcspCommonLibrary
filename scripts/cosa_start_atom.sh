@@ -371,4 +371,14 @@ then
 	fi
 fi
 
+if [ "$BOX_TYPE" = "XB3" ]; then
+	NVRAM_MOUNT=$(cat /proc/mounts | grep -i nvram | cut -d ' ' -f 2)
+	MODE=$(cat /proc/mounts | grep nvram | cut -d ' ' -f 4 | cut -d ',' -f 1)
+	if [ "$NVRAM_MOUNT" = "" ]; then
+		echo "NVRAM is not mounted" >>$ATOMCONSOLELOGFILE
+	fi
+	if [ "$MODE" = "ro" ]; then
+		echo "NVRAM is mounted as read only" >>$ATOMCONSOLELOGFILE
+	fi
+fi
 rm -rf /tmp/.dropbear
