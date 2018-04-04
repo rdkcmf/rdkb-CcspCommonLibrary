@@ -268,8 +268,8 @@ ulimit -c unlimited
         if [ -f  /lib/rdk/dcm.service ]; then
                 /bin/sh /lib/rdk/dcm.service &
         fi
-        echo "Enable DCM RFC feature from ccsp restart"
-        # Enable DCM RFC feature RDKB-8798
-        if [ -f  /lib/rdk/dcmrfc.service ]; then
-                /bin/sh /lib/rdk/dcmrfc.service &
+        echo "Enable RFC feature from ccsp restart"
+        # Enable RFC feature
+        if [ -f  /lib/rdk/rfc.service ]; then
+                /bin/sh /lib/rdk/rfc.service &
         fi

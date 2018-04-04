@@ -420,10 +420,10 @@ if [ "x$MULTI_CORE" == "xyes" ]; then
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 fi
 
-echo "Enable DCM RFC feature"
-# Enable DCM RFC feature RDKB-8798
-if [ -f  /lib/rdk/dcmrfc.service ]; then
-   /bin/sh /lib/rdk/dcmrfc.service &
+echo "Enable RFC feature"
+# Enable RFC feature
+if [ -f  /lib/rdk/rfc.service ]; then
+   /bin/sh /lib/rdk/rfc.service &
 fi
 
 # Check zram and enable based on RFC

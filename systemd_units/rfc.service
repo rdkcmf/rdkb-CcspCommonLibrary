@@ -17,12 +17,12 @@
 # limitations under the License.
 ##########################################################################
 [Unit]
-Description=DCM RFC service
+Description=RFC service
 
 [Service]
 Type=oneshot
 ExecStartPre=/bin/sh -c 'sleep 300'
-ExecStart=/bin/sh -c '/lib/rdk/dcmrfc.service &'
+ExecStart=/bin/sh -c '/lib/rdk/rfc.service &'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
