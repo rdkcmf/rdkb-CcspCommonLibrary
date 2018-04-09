@@ -163,7 +163,7 @@ if [ -f  /lib/rdk/dcm.service ]; then
     /bin/sh /lib/rdk/dcm.service &
 fi
 
-if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]; then
+if [ "x$BOX_TYPE" = "xXB3" ]; then
     if [ -f "/etc/PARODUS_ENABLE" ]; then
         echo_t "Parodus is enabled"
     else
@@ -502,7 +502,7 @@ echo_t "starting wan_ssh script"
 sh /lib/rdk/wan_ssh.sh &    
 fi 
 
-if [ "x$BOX_TYPE" = "xXB3" ] || [ "x$BOX_TYPE" = "xTCCBR" ]  && [ -f "/etc/PARODUS_ENABLE" ]; then
+if [ "x$BOX_TYPE" = "xXB3" ] && [ -f "/etc/PARODUS_ENABLE" ]; then
     # Checking parodus and parodusStart PID
     PARODUS_PID=`pidof parodus`
     PARODUSSTART_PID=`pidof parodusStart`
