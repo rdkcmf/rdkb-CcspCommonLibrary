@@ -478,9 +478,11 @@ fi
 
 #RDKB-7535
 
-if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
-then
-	/rdklogger/rdkbLogMonitor.sh &
+if [ "x$BOX_TYPE" = "xXB3" ]; then
+	if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
+	then
+		/rdklogger/rdkbLogMonitor.sh &
+	fi
 fi
 
 if [ -f "/rdklogger/fileUploadRandom.sh" ]
