@@ -47,6 +47,17 @@ if [ -f /lib/rdk/cosa_start_pre_atom.sh ]; then
    /lib/rdk/cosa_start_pre_atom.sh
 fi
 
+#To set the default value for AP_WPA_GROUP_REKEY
+DEVICE_MODEL=`grep "DEVICE_MODEL" /etc/device.properties | cut -d '=' -f2`
+if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
+        AP_WPA_GROUP_REKEY_16=`cfg -e | grep AP_WPA_GROUP_REKEY_16|cut -d '=' -f2`
+        if [ "$AP_WPA_GROUP_REKEY_16"=="3600" ]; then
+                if [ -f /usr/ccsp/wifi/grp_rekey_flip.sh ]; then
+                        sh /usr/ccsp/wifi/grp_rekey_flip.sh
+                fi
+        fi
+fi
+
 # have IP address for dbus config generated
 vconfig add eth0 500
 ifconfig eth0.500 $ATOM_INTERFACE_IP
@@ -360,14 +371,4 @@ then
 	fi
 fi
 
-#To set the default value for AP_WPA_GROUP_REKEY
-DEVICE_MODEL=`grep "DEVICE_MODEL" /etc/device.properties | cut -d '=' -f2`
-if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
-	AP_WPA_GROUP_REKEY_15=`cfg -e | grep AP_WPA_GROUP_REKEY_15|cut -d '=' -f2`
-	if [ “$AP_WPA_GROUP_REKEY_15”==”3600” ]; then
-		if [ -f /usr/ccsp/wifi/grp_rekey_flip.sh ]; then
-			sh /usr/ccsp/wifi/grp_rekey_flip.sh
-		fi
-	fi
-fi
 rm -rf /tmp/.dropbear
