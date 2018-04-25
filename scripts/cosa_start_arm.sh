@@ -203,6 +203,10 @@ if [ -e ./pam ]; then
 	cd ..
 fi
 
+if [ -f /lib/rdk/start-upnp-service ]; then
+    /lib/rdk/start-upnp-service start &
+fi
+
 if [ -e ./notify-comp ]; then
         cd notify-comp
 
