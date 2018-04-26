@@ -174,33 +174,6 @@ WEB_SITE_MANAGER_PROPERTY,  *PWEB_SITE_MANAGER_PROPERTY;
     WEB VIRTUAL HOST CONFIGURATION PARAMETERS DEFINITION
 ***********************************************************/
 
-/*
- * The Host request-header field specifies the Internet host and port number of the resource being
- * requested, as obtained from the original URI given by the user or referring resource (generally
- * an HTTP URL). The Host field value MUST represent the naming authority of the origin server or
- * gateway given by the original URL. This allows the origin server or gateway to differentiate be-
- * tween internally-ambiguous URLs, such as the root "/" URL of a server for multiple host names on
- * a single IP address.
- *
- *      Host = "Host" ":" host [ ":" port ] ;
- *
- * A "host" without any trailing port information implies the default port for the service
- * requested (e.g., "80" for an HTTP URL). For example, a request on the origin server for
- *
- *      <http://www.w3.org/pub/WWW/>
- *
- * would properly include:
- *
- *      GET /pub/WWW/ HTTP/1.1
- *      Host: www.w3.org
- *
- * A client MUST include a Host header field in all HTTP/1.1 request messages. If the requested URI
- * does not include an Internet host name for the service being requested, then the Host header
- * field MUST be given with an empty value. An HTTP/1.1 proxy MUST ensure that any request message
- * it forwards does contain an appropriate Host header field that identifies the service being
- * requested by the proxy. All Internet-based HTTP/1.1 servers MUST respond with a 400 (Bad Request)
- * status code to any HTTP/1.1 request message which lacks a Host header field.
- */
 #define  WEB_MAX_HOST_NAME_SIZE                     128
 #define  WEB_WILDCARD_HOST_NAME                     "*"
 #define  WEB_DEF_SESSION_TIMEOUT                    60 * 20             /* in seconds - 20 minutes */
