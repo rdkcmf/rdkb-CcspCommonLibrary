@@ -452,18 +452,22 @@ if [ -e ./xdns ]; then
     cd ..
 fi
 
+ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
+ADVSEC_MIGRATION_SCRIPT=/usr/ccsp/pam/advsec_migrate_psm_to_syscfg.sh
+if [ -f $ADVSEC_MIGRATION_SCRIPT ]; then
+#This script should be removed once migration from PSM to SysCfg DB is complete for AdvSec Finger Print service.
+	$ADVSEC_MIGRATION_SCRIPT
+fi
 
-fingerprintenable=`psmcli get eRT.com.cisco.spvtg.ccsp.advsecurity.Device.DeviceInfo.X_RDKCENTRAL-COM_DeviceFingerPrint.Enable`
+fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
 if [ $fingerprintenable -eq 1 ];then
-    echo "Fingerprinting is enabled"
-    if [ -e ./advsec ]; then
-        cd advsec
-        echo_t "$BINPATH/CcspAdvSecuritySsp -subsys $Subsys &"
-        $BINPATH/CcspAdvSecuritySsp -subsys $Subsys &
-        cd ..
+    echo "Device_Finger_Printing_enabled:true"
+    if [ -f $ADVSEC_LAUNCH_SCRIPT ]; then
+        echo_t "$ADVSEC_LAUNCH_SCRIPT"
+        $ADVSEC_LAUNCH_SCRIPT -enable &
     fi
 else
-    echo "Fingerprinting is not enabled"
+    echo "Device_Finger_Printing_enabled:false"
 fi
 
 if [ -e ./CcspArmMdc ]; then
