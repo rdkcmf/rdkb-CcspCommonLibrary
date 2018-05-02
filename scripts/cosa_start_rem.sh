@@ -410,13 +410,6 @@ fi
 
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
-    echo "starting dropbear"
-    mkdir -p /tmp/.dropbear
-    DROPBEAR_PARAMS_1="/tmp/.dropbear/dropcfg1$$"
-    DROPBEAR_PARAMS_2="/tmp/.dropbear/dropcfg2$$"
-    getConfigFile $DROPBEAR_PARAMS_1
-    getConfigFile $DROPBEAR_PARAMS_2
-    dropbear -r $DROPBEAR_PARAMS_1 -r $DROPBEAR_PARAMS_2 -E -s -p $ARM_INTERFACE_IP:22 -P /var/run/dropbear_ipc.pid > /dev/null 2>&1 &
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 fi
 
@@ -521,5 +514,6 @@ if [ "x$BOX_TYPE" = "xXB3" ]; then
 	echo_t "starting apshealth.sh"
 	/usr/ccsp/wifi/apshealth.sh &
 fi
-
+#MESH-596: dropbear is started in cosa_start and files are deleted here, to give dropbear
+#litlle time to decrypt the files
 rm -rf /tmp/.dropbear

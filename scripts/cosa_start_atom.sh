@@ -95,6 +95,7 @@ CRONPATH="/tmp/cron/"
 CRONFILE=$CRONPATH"root"
 CRONFILE_BK="/tmp/cron_tab.txt"
 MESHAGENT="/usr/bin/meshAgent"
+DNSMASQ_FILE="/nvram/dnsmasq.leases"
 MODEL_NUM=`grep "MODEL_NUM" /etc/device.properties | cut -d "=" -f2`
 
 mkdir -p $LOG_FOLDER
@@ -154,6 +155,12 @@ fi
 
 # Config mesh backhal SSID
 /usr/ccsp/wifi/meshapcfg.sh
+
+# Remove existing dnsmasq.leases file from Atom, since mesh uses new design of direct notification 
+#from dnsmasq
+if [ $MODEL_NUM == "DPC3941" ] || [ $MODEL_NUM == "TG1682G" ] || [ $MODEL_NUM == "TG1682" ] || [ $MODEL_NUM == "DPC3939" ]; then
+ rm -rf $DNSMASQ_FILE
+fi
 
 # Config check in wifi cfg database
 if [ -f /usr/sbin/wifi_inconsistent_config_check.sh ];then
