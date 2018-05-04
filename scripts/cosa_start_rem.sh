@@ -528,9 +528,4 @@ if [ "x$BOX_TYPE" = "xXB3" ]; then
 	/usr/ccsp/wifi/apshealth.sh &
 fi
 
-if [ -f "/lib/rdk/xf3_wifi_self_heal.sh" ];then
-	#echo_t "starting xf3_wifi_self_heal.sh"
-	#/lib/rdk/xf3_wifi_self_heal.sh &
-fi
-
 rm -rf /tmp/.dropbear
