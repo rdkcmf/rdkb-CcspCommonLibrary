@@ -18,6 +18,7 @@
 ##########################################################################
 [Unit]
 Description=CcspCMAgentSsp service
+ConditionPathExists=!/nvram/ETHWAN_ENABLE
 
 After=CcspPandMSsp.service CcspMtaAgentSsp.service
 

@@ -17,23 +17,16 @@
 # limitations under the License.
 ##########################################################################
 [Unit]
-Description=CcspMtaAgentSsp service
-ConditionPathExists=!/nvram/ETHWAN_ENABLE
+Description=GwprovappEthWan service
 
-After=CcspPandMSsp.service notifyComp.service
+#Note: Requires, Wants, and After are device specific. see gwprovapp.conf
 
 [Service]
-Type=forking
-PIDFile=/var/tmp/CcspMtaAgent.pid
-Environment="Subsys=eRT."
-Environment="LOG4C_RCPATH=/etc"
+#Note: Don't Uncomment Below Line: Each Device needs a conf file to launch the binary
+#ExecStart=/usr/bin/gw_prov_utopia $IP
 EnvironmentFile=/etc/device.properties
-WorkingDirectory=/usr/ccsp/mta
-ExecStartPre=/bin/sh -c 'sleep 30'
-ExecStart=/usr/bin/CcspMtaAgentSsp -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspMtaAgentSsp" >> ${PROCESS_RESTART_LOG}'
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting gw_prov_ethwan" >> ${PROCESS_RESTART_LOG}'
 Restart=always
-
 StandardOutput=syslog+console
 
 [Install]
