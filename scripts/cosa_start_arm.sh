@@ -182,6 +182,12 @@ if [ -e ./cm ]; then
         cd ..
 fi
 
+ADVSEC_MIGRATION_SCRIPT=/usr/ccsp/pam/advsec_migrate_psm_to_syscfg.sh
+if [ -f $ADVSEC_MIGRATION_SCRIPT ]; then
+#This script should be removed once migration from PSM to SysCfg DB is complete for AdvSec Finger Print service.
+        $ADVSEC_MIGRATION_SCRIPT
+fi
+
 if [ -e ./pam ]; then
 	cd pam
 
