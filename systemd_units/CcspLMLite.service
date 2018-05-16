@@ -19,7 +19,7 @@
 [Unit]
 Description=CcspLMLite service
 
-After=CcspEthAgent.service
+After=CcspPandMSsp.service CcspEthAgent.service CcspMoca.service
 
 [Service]
 Type=forking
@@ -34,4 +34,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=multi-user.target

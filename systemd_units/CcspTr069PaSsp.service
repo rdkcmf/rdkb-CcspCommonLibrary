@@ -19,7 +19,7 @@
 [Unit]
 Description=CcspTr069PaSsp service
 
-After=harvester.service
+After=CcspPandMSsp.service
 
 [Service]
 Type=forking
@@ -34,4 +34,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=multi-user.target

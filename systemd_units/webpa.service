@@ -19,7 +19,7 @@
 [Unit]
 Description=webpa service
 
-After=CcspTr069PaSsp.service
+After=CcspPandMSsp.service
 
 [Service]
 Type=forking
@@ -35,4 +35,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=multi-user.target
