@@ -30,7 +30,7 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStartPre=/bin/sh -c '(/usr/ccsp/utopiaInitCheck.sh)'
-ExecStartPre=/bin/sh -c '(/usr/ccsp/pam/advsec_migrate_psm_to_syscfg.sh)'
+ExecStartPre=-/bin/sh -c '(/usr/ccsp/pam/advsec_migrate_psm_to_syscfg.sh load_syscfg_setting)'
 ExecStart=/usr/bin/CcspPandMSsp -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspPandMSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
