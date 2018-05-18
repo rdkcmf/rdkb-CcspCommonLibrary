@@ -384,4 +384,9 @@ if [ "$BOX_TYPE" = "XB3" ]; then
 		echo "NVRAM is mounted as read only" >>$ATOMCONSOLELOGFILE
 	fi
 fi
+if [ "$DEVICE_MODEL" = "TCHXB3" ]; then
+        if [ -e /nvram/pamssp_backtrace ]; then
+                rm -rf /nvram/pamssp_backtrace
+        fi
+fi
 rm -rf /tmp/.dropbear
