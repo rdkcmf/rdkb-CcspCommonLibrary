@@ -43,10 +43,6 @@ killall CcspCrSsp
 killall rpcserver
 killall CcspMdcSsp
 
-if [ -f /lib/rdk/cosa_start_pre_atom.sh ]; then
-   /lib/rdk/cosa_start_pre_atom.sh
-fi
-
 #To set the default value for AP_WPA_GROUP_REKEY
 DEVICE_MODEL=`grep "DEVICE_MODEL" /etc/device.properties | cut -d '=' -f2`
 if [ "$DEVICE_MODEL"=="TCHXB3" ]; then

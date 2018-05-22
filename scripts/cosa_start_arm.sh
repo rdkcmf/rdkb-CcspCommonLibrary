@@ -68,10 +68,6 @@ fi
 #
 #	Allow custom plug-ins
 #
-if [ -f /lib/rdk/cosa_start_pre.sh ]; then
-   /lib/rdk/cosa_start_pre.sh
-fi
-
 if [ -f "$PWD/cosa_start_custom_1.sh" ]; then
 	./cosa_start_custom_1.sh
 fi
