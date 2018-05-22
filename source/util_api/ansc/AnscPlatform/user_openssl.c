@@ -162,23 +162,13 @@ openssl_print_errors (SSL *ssl)
  */
 static int bIsComcastImage( void)
 {
-   char fileContent[255] = {'\0'};
-   FILE *deviceFilePtr;
-   char *pPartnerId = NULL;
-   int offsetValue = 0;
+   char PartnerId[255] = {'\0'};
    int isComcastImg = 1;
-   deviceFilePtr = fopen( DEVICE_PROPERTIES, "r" );
 
-   if (deviceFilePtr) {
-       while (fscanf(deviceFilePtr , "%s", fileContent) != EOF ) {
-           if ((pPartnerId = strstr(fileContent, "PARTNER_ID")) != NULL) {
-               isComcastImg = 0;
-               break;
-           }
-       }
-       fclose(deviceFilePtr);
-   } else {
-       return 0;
+   getPartnerId ( PartnerId ) ;
+   
+   if ( 0 != strcmp ( PartnerId, "comcast") ) {
+       isComcastImg = 0;
    }
 
    return isComcastImg;

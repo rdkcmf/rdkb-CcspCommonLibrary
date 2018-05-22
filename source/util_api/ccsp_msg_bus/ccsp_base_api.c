@@ -3730,3 +3730,35 @@ int CcspBaseIf_SetRemoteParameterValue
   return ret;
 
 }
+
+int getPartnerId ( char *partnerID)
+{
+
+	FILE 	*file = NULL;
+	char 	*name = "/lib/rdk/getpartnerid.sh";
+	char 	*arg = "GetPartnerID";
+	char 	buffer [ 64 ] = { 0 };
+	char 	command[256] = {0};
+
+	snprintf(command,sizeof(command),"%s %s",name,arg);
+	file = popen ( command, "r" );
+	if(file)
+	{
+	   char *pos;
+	   fgets ( buffer, 64, file );
+	   pclose ( file );
+	   file = NULL;
+
+	   if ( ( pos = strchr( buffer, '\n' ) ) != NULL ) {
+		   *pos = '\0';
+	   }
+	   sprintf( partnerID, "%s", buffer );
+	   return CCSP_SUCCESS;
+	}
+	else
+	{
+		CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
+		return CCSP_FAILURE;
+	}
+	
+}
