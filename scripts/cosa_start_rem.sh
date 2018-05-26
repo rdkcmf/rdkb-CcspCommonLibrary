@@ -38,6 +38,17 @@ if [ -f /tmp/cosa_start_rem_triggered ]; then
 	echo_t "Already cosa_start_rem.sh script was triggered"
 	exit
 else
+	loop_count=0
+	while [ $loop_count -lt 6 ]; do
+		wan_event=`sysevent get wan-status`
+		if [ "$wan_event" == "started" ]; then
+			break
+		fi
+		echo "wan-status is not started yet. sleeping for 10 sec in cosa_start_rem.sh ..."
+		sleep 10
+		loop_count=$((loop_count + 1))
+	done
+
     touch  /tmp/cosa_start_rem_triggered
 	echo_t "Triggered cosa_start_rem script and created tmp/cosa_start_rem_triggered file"
 fi
