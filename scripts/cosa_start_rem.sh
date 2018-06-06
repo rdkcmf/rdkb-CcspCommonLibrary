@@ -430,9 +430,12 @@ if [ -f  /lib/rdk/rfc.service ]; then
    /bin/sh /lib/rdk/rfc.service &
 fi
 
-# Check zram and enable based on RFC
-if [ -f  /lib/rdk/rdkzram.service ]; then
-   /bin/sh /lib/rdk/rdkzram.service &
+# XF3 enables zram using systemd
+if [ "$BOX_TYPE" != "XF3" ]; then
+  # Check zram and enable based on RFC
+  if [ -f  /lib/rdk/rdkzram.service ]; then
+     /bin/sh /lib/rdk/rdkzram.service &
+  fi
 fi
 
 if [ -e ./tad ]; then
