@@ -23,7 +23,6 @@ After=CcspEthAgent.service
 
 [Service]
 Type=forking
-PIDFile=/var/tmp/CcspLMLite.pid
 WorkingDirectory=/usr/ccsp/lm
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
