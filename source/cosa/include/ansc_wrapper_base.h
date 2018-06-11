@@ -622,7 +622,7 @@ ANSC_UINT64,  *PANSC_UINT64;
  * These macros and inline functions shield the rest of the container from dealing with the byte-order
  * issue caused by different endian types supported by different cpu.
  */
-#ifdef   _ANSC_LITTLE_ENDIAN_
+#if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
 
     #define  AnscMemoryFromNToH                     AnscSwapMemory
     #define  AnscUlongFromNToH                      AnscSwapUlong
@@ -662,7 +662,7 @@ ANSC_UINT64,  *PANSC_UINT64;
         #error "Need half-word access support!"
     #endif /* _ANSC_NO_HALFWORD_SUPPORT_ */
 
-    #ifdef  _ANSC_LITTLE_ENDIAN_
+    #if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
 
         ANSC_FORCEINLINE
         USHORT
@@ -839,7 +839,7 @@ ANSC_UINT64,  *PANSC_UINT64;
 
 #else
 
-    #ifdef  _ANSC_LITTLE_ENDIAN_
+    #if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
 
         #define  AnscReadUshort(addr)               (*(PUSHORT)(addr))
         #define  AnscReadUlong(addr)                (*(PULONG )(addr))
