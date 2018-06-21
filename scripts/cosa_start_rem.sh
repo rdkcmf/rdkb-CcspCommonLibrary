@@ -216,7 +216,7 @@ if [ "$isPeriodicFWCheckEnable" == "false" ]; then
 	/etc/xb3_firmwareDwnld.sh &
 fi
 
-sleep 5 
+#sleep 5 
 
 if [ -e ./moca ]; then
     cd moca
@@ -229,7 +229,7 @@ if [ -e ./moca ]; then
     cd ..
 fi
 
-sleep 5 
+#sleep 5 
 
 #if [ -e ./wecb ];
 #then
@@ -243,7 +243,7 @@ sleep 5
  #   cd ..
 #fi
 
-sleep 5 
+#sleep 5 
 
 if [ -e ./mta ]; then
     cd mta
@@ -276,7 +276,7 @@ fi
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
-sleep 5 
+#sleep 5 
 
 if [ -e ./tr069pa ]; then
         cd tr069pa
@@ -370,7 +370,7 @@ fi
 #cd ..
 #fi
 
-sleep 5 
+#sleep 5 
 
 if [ -e ./ethagent ]; then
     cd ethagent
@@ -396,7 +396,7 @@ else
     echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
 fi
 
-sleep 5
+#sleep 5
 
 #Changes done for RDKB-8751
 #SELFHEAL_ENABLE=`syscfg get selfheal_enable`
@@ -450,7 +450,7 @@ if [ -e ./tad ]; then
         cd ..
 fi
 
-sleep 5 
+#sleep 5 
 
 if [ -e ./xdns ]; then
     cd xdns
@@ -496,7 +496,7 @@ then
 fi
 
 #waiting for DCM service to complete
-sleep 5
+#sleep 5
 
 isPeriodicFWCheckEnabled=`syscfg get PeriodicFWCheck_Enable`
 if [ "$isPeriodicFWCheckEnabled" == "true" ]; then
