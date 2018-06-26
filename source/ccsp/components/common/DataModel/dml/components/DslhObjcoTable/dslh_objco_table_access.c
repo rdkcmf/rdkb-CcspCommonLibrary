@@ -696,6 +696,7 @@ DslhObjcoTableDelEntryObject
     PDSLH_TR69_INTERFACE            pDslhTr69If           = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_CONTROLLER_OBJECT     pEntryObj             = (PDSLH_OBJ_CONTROLLER_OBJECT)hEntryObj;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord        = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
+    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase      = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     
     if( hEntryObj == NULL)
@@ -724,6 +725,8 @@ DslhObjcoTableDelEntryObject
                 pDslhTr69If->Methods.MethodWithLastName.DelEntry(pMyObject->hInsContext, pEntryObj->hInsContext);
         }
     }
+
+    pDslhWmpDatabase->FlushDynObjVar((ANSC_HANDLE)pDslhWmpDatabase, pDslhObjRecord);
 
     return  returnStatus;
 }
