@@ -22,6 +22,8 @@ Description=RFC service
 [Service]
 Type=oneshot
 ExecStartPre=/bin/sh -c 'sleep 300'
+EnvironmentFile=/etc/device.properties
+ExecStart=/bin/sh -c 'echo "Enable RFC feature" >> ${PARODUS_START_LOG_FILE}'
 ExecStart=/bin/sh -c '/lib/rdk/rfc.service &'
 RemainAfterExit=yes
 
