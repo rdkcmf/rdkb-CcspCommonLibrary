@@ -487,6 +487,7 @@ char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
 char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
 char *str1[50] = {0};
 int paramCount=0;
+pthread_mutex_t NotifyMutex;
 
 void* Send_Notification_Thread_Func()
 {
@@ -552,6 +553,7 @@ void* Send_Notification_Thread_Func()
 	      }
        }
 paramCount=0;
+pthread_mutex_unlock(&NotifyMutex);
     return NULL;
 }
 #endif
@@ -850,6 +852,7 @@ DslhWmpdoMpaSetParameterValues
             parameterSigStruct_t            vcSig              = {0};
             pthread_t Send_Notification_Thread;
     		int res;
+		static int bFirst = TRUE;
             if(pVarEntity->ParamDescr->NotifyStatus != 3)
             {
                 if(pVarRecord->Notification)
@@ -860,8 +863,15 @@ DslhWmpdoMpaSetParameterValues
                     parseOldVal(pVarRecord->OldParamValue, &vcSig);
                     vcSig.writeID = pVarRecord->ReqSenderID;
                     vcSig.type = dataType;
+		    if (bFirst)
+			{
+				pthread_mutex_init(&NotifyMutex,0);
+				bFirst = FALSE;
+			}
+		    
                     if(strcmp(vcSig.newValue,vcSig.oldValue))
                     {
+			pthread_mutex_lock(&NotifyMutex);
 		               memset(str, 0, (sizeof(str)));
                        sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
                        /*sensitive information like keyPassphrase should not print*/
@@ -880,6 +890,7 @@ DslhWmpdoMpaSetParameterValues
                        }
 		               CcspTraceWarning(("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize));
 		               j++;
+			pthread_mutex_unlock(&NotifyMutex);
                     }
 
                     printf("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize);
@@ -888,10 +899,14 @@ DslhWmpdoMpaSetParameterValues
                     if(ulArraySize == i+1)
                     {
                         j = 0;
+			pthread_mutex_lock(&NotifyMutex);
                         bPendingNotificaton = FALSE;
 						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
 						if(res != 0)
+							{
+							pthread_mutex_unlock(&NotifyMutex);
 							CcspTraceWarning(("Create Send_Notification_Thread error %d ", res));
+							}
 					}
                 }
             }
