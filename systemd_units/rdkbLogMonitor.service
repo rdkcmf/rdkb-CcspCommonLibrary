@@ -32,4 +32,4 @@ RemainAfterExit=yes
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wan-initialized.target
+WantedBy=multi-user.target
