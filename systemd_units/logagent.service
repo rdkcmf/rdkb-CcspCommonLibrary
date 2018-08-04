@@ -22,8 +22,7 @@ Description=CcspLogent service
 After=CcspCrSsp.service
 
 [Service]
-Type=notify
-NotifyAccess=main
+Type=forking
 PIDFile=/var/tmp/log_agent.pid
 WorkingDirectory=/usr/ccsp/logagent
 Environment="Subsys=eRT."

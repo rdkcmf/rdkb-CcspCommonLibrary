@@ -22,8 +22,7 @@ Description=CcspPandMSsp service
 After=PsmSsp.service
 
 [Service]
-Type=notify
-NotifyAccess=main
+Type=forking
 PIDFile=/var/tmp/CcspPandMSsp.pid
 WorkingDirectory=/usr/ccsp/pam
 Environment="Subsys=eRT."
