@@ -67,6 +67,11 @@ vconfig add eth0 106
 ifconfig eth0.106 192.168.106.254 netmask 255.255.255.0 up
 ip route add default via 192.168.106.1
 
+# RDKB-15951 Creating Mesh Bhaul vlan in atom
+vconfig add eth0 1060
+ifconfig eth0.1060 192.168.245.254 netmask 255.255.255.0 up
+ip route add default via 192.168.245.1
+
 #start dropbear
 if [ -f /etc/mount-utils/getConfigFile.sh ];then
      . /etc/mount-utils/getConfigFile.sh
