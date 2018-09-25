@@ -236,15 +236,10 @@ do
 if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -ge $MAX_WAIT_TIME ];then
 
 	##### webpa #####
-	
-	if [ -f "/etc/PARODUS_ENABLE" ]; then
-	  	echo "Starting webpa from ATOM side"
-		if [ -f /usr/bin/webpa ];then
+	if [ -f /usr/bin/webpa ];then
+		echo "Starting webpa from ATOM side"
 	     	/usr/bin/webpa &
-		fi
 		echo "Started webpa on atom"
-	else
-	  echo_t "****Parodus is disabled.****"
 	fi
 
 	if [ -e ./harvester ]; then
