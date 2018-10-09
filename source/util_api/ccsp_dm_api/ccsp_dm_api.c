@@ -495,11 +495,11 @@ static void FreeCompList(struct CdmComp *comps, int compCnt)
             AnscFreeMemory(comps[i].dbusPath);
 
         if (comps[i].isPath && comps[i].paths) {
-
-                if(comps[i].paths[0])
-                        AnscFreeMemory(comps[i].paths[0]);
-
-            AnscFreeMemory(comps[i].paths);
+           for (j = 0; j < comps[i].paramCnt; j++) {
+               if(comps[i].paths[j])
+                   AnscFreeMemory(comps[i].paths[j]);
+           }
+           AnscFreeMemory(comps[i].paths);
         } else if (!comps[i].isPath && comps[i].paramVals) {
             for (j = 0; j < comps[i].paramCnt; j++) {
                 if (comps[i].paramVals[j].parameterName)
@@ -891,16 +891,16 @@ DmErr_t Cdm_GetParamString(const char *param, char *val, size_t size)
 
     err = Cdm_GetParam(param, &dmVal);
     if (err != CCSP_SUCCESS)
-        return err;
+        goto errout;
 
     if (dmVal->type != DM_PT_STR) {
-        Cdm_FreeParam(dmVal);
-        return CCSP_ERR_INVALID_PARAMETER_TYPE;
+		err =  CCSP_ERR_INVALID_PARAMETER_TYPE;
+        goto errout;
     }
 
     if (size <= dmVal->len) {
-        Cdm_FreeParam(dmVal);
-        return CCSP_ERR_RESOURCE_EXCEEDED;
+		err =  CCSP_ERR_RESOURCE_EXCEEDED;
+        goto errout;
     }
 
     /* although it's not true for now,
@@ -909,8 +909,15 @@ DmErr_t Cdm_GetParamString(const char *param, char *val, size_t size)
     memcpy(val, dmVal->v_str, dmVal->len);
     val[dmVal->len] = '\0'; /* this API is used for nil tailed str */
 
-    Cdm_FreeParam(dmVal);
-    return CCSP_SUCCESS;
+	err = CCSP_SUCCESS;
+
+errout:
+	if(dmVal->v_str)
+		AnscFreeMemory(dmVal->v_str);
+	if(dmVal)
+		AnscFreeMemory(dmVal);
+
+    return err;
 }
 
 DmErr_t Cdm_GetParamUlong(const char *param, unsigned long *val)
@@ -948,13 +955,15 @@ DmErr_t Cdm_GetParamUint(const char *param, unsigned int *val)
         return err;
 
     if (dmVal->type != DM_PT_UINT) {
-        Cdm_FreeParam(dmVal);
-        return CCSP_ERR_INVALID_PARAMETER_TYPE;
+		err = CCSP_ERR_INVALID_PARAMETER_TYPE;
+        goto lbl;
     }
 
-    *val = dmVal->v_uint;
-    Cdm_FreeParam(dmVal);
-    return CCSP_SUCCESS;
+	*val = dmVal->v_uint;
+    err = CCSP_SUCCESS;
+lbl:
+	AnscFreeMemory(dmVal);
+    return err;
 }
 
 DmErr_t Cdm_SetParamBool(const char *param, bool val, int commit)
@@ -1043,22 +1052,25 @@ DmErr_t Cdm_GetParam(const char *param, DmParamVal_t **val)
     paths[0] = param;
     err = Cdm_GetParamGrp(paths, 1, &params, &cnt);
     if (err != CCSP_SUCCESS)
-        return err;
+        goto errout;
 
     /* if more than one param got which one should we return ? */
     if (cnt != 1) {
-        Cdm_FreeParamGrp(params, cnt);
-        return CCSP_ERR_INTERNAL_ERROR;
+		err = CCSP_ERR_INTERNAL_ERROR;
+		goto errout;
     }
 
     *val = CloneParamVal(params[0].value);
     if (*val == NULL) {
-        Cdm_FreeParamGrp(params, cnt);
-        return CCSP_ERR_MEMORY_ALLOC_FAIL;
+		err = CCSP_ERR_MEMORY_ALLOC_FAIL;
+		goto errout;
     }
+	err = CCSP_SUCCESS;
 
+errout:
     Cdm_FreeParamGrp(params, cnt);
-    return CCSP_SUCCESS;
+    return err;
+
 }
 
 DmErr_t Cdm_SetParam(const char *param, const DmParamVal_t *val, int commit)
@@ -1331,7 +1343,7 @@ static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], 
         valStru = NULL, valNum = 0;
     }
 
-    FreeCompList(compList, compCnt);
+    FreeCompList(compList, paramCnt);
     *params = paramBuf;
     *cnt = paramCnt;
     return CCSP_SUCCESS;
@@ -1341,7 +1353,7 @@ errout:
         free_parameterValStruct_t(cdm.busHdl, valNum, valStru);
     if (paramBuf)
         AnscFreeMemory(paramBuf);
-    FreeCompList(compList, compCnt);
+    FreeCompList(compList, paramCnt);
     return err;
 }
 
@@ -1363,7 +1375,36 @@ void Cdm_FreeParamGrp(DmParam_t params[], int cnt)
         return;
 
     for (i = 0; i < cnt; i++)
-        Cdm_FreeParam(params[i].value);
+    {
+		switch(params[i].value->type)
+		{
+			case DM_PT_STR:
+					if(params[i].value->v_str)
+						AnscFreeMemory(params[i].value->v_str);
+					break;
+
+			case DM_PT_DATETIME:
+					if(params[i].value->v_datetime)
+						AnscFreeMemory(params[i].value->v_datetime);
+					break;
+
+			case DM_PT_BASE64:
+					if(params[i].value->v_base64)
+						AnscFreeMemory(params[i].value->v_base64);
+					break;
+
+			case DM_PT_BIN:
+					if(params[i].value->v_bin)
+						AnscFreeMemory(params[i].value->v_bin);
+					break;
+
+			default:
+					break;
+		}
+
+		if(params[i].value)
+			AnscFreeMemory(params[i].value);
+    }
     AnscFreeMemory(params);
 }
 
