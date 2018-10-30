@@ -1,0 +1,36 @@
+@ This file defines commands that CLI accepts, each command definition takes one line
+@ and the definition has following format.
+@   
+@   domain_pattern "," command_name "," relative_scp_page_path "," rw_flag "," permission
+@
+@ domain pattern could be empty, if a command applies to all domains e.g.
+@ command_name defines the name of a command
+@ relative_scp_page_path defines the SCP page path relative to CLI root path
+@ rw_flag defines if a command is read-only or writable
+@ permission specifies if a command can be executed by Administrator (1) or any user (2)
+@
+@ empty line is skipped
+@ A line starting with '@' indicates a comment
+
+,r_domain,,1,u
+,exit,,1,u
+,add,,0,a
+,no,,0,a
+,show,,1,u
+,dm,domain.scp,0,u
+dm,showobject,tr069/object/show.scp,0,u
+dm,set,tr069/param/param.scp,0,a
+dm,multiset,domain.scp,0,a
+dm-multiset,set,tr069/param/param.scp,0,a
+dm-multiset,commit,tr069/param/commit.scp,0,a
+dm-multiset,quit,tr069/param/quit.scp,0,a
+,cwmp,domain.scp,0,u
+cwmp,enable,cwmp/common.scp,0,a
+cwmp,disable,cwmp/common.scp,0,a
+cwmp,reboot,cwmp/reboot.scp,0,a
+cwmp,set,cwmp/set.scp,0,a
+cwmp,setacs,cwmp/setacs.scp,0,a
+,diag,domain.scp,0,u
+diag,ping,diag/ping.scp,0,u
+diag,traceroute,diag/traceroute.scp,0,u
+

@@ -1,0 +1,120 @@
+<#
+//ping <target> [size <num in byte>] [times <1~100>] [ timeout <num in ms>]
+    include "../function.scp"
+    
+    subsysPrefix = ""
+    sessionID = 0
+    CLIwriteID = 2
+    ACSwriteID = 0
+    writeID = CLIwriteID
+    CLIpriority = 5
+    commit = 0
+ 
+    count = Command.GetCount()
+    ping_target= Command.GetParamByIndex(0)
+
+    size= 60
+    times= 3
+    timeout= 1000
+
+    min_waittime = 15
+    max_waittime = 30
+    
+    while i=1; i<count; i+= 2
+        key = Command.GetParamByIndex(i)
+        val = Command.GetParamByIndex(i+1)
+        if _strcmpi(key, "times") == 0
+            times = _atoi(val)
+        elseif _strcmpi(key, "size") == 0
+            size = _atoi(val)
+        elseif _strcmpi(key, "timeout") == 0
+            timeout = _atoi(val)
+        else
+            = "unknown key --- " $ key $ "\r\n"       
+            return
+        endif
+    endwhile
+   
+    //input validation 
+    if ( (times < 1) || (times > 100) )
+        = "ping times should be set in range 1~100\r\n"
+        return
+    endif
+
+    tree = Services.Dslh.ParamTree
+    ping = "Device.IP.Diagnostics.IPPing."
+
+    tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, ping $ "Host", ping_target)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, ping $ "NumberOfRepetitions", times)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, ping $ "Timeout", timeout)
+    tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, ping $ "DataBlockSize", size)
+ 
+    ret1 = tree.ApplyChanges(subsysPrefix, sessionID, writeID, ping)
+    if ret1 != 0
+        = " Failed to commit \r\n"
+    endif
+
+   ret = tree.SetParamValueString(subsysPrefix, sessionID, writeID, 1, ping $ "DiagnosticsState", "Requested")
+   if ret != 0
+       = " Failed to set diagnosticsstate for ping\r\n"   
+   endif 
+
+    sleep_iv = 500
+
+    total_to = times * timeout
+
+    // give some extra time in case ping times out
+    total_to = total_to * 125 / 100
+
+    if total_to > max_waittime * 1000
+        total_to = max_waittime * 1000
+    elseif total_to < min_waittime * 1000
+        total_to = min_waittime * 1000
+    endif
+
+    rep = total_to/sleep_iv
+
+    = "  "
+    while i = 0; i < rep; i ++
+        if i % 2 == 0
+            = "-"
+        else
+            = "|"
+        endif
+        
+        if i != 0 && (i % 32) == 0
+            = "\r\n  "
+        endif
+        
+        _sleep(sleep_iv)
+        ping_state = tree.GetParamValue(subsysPrefix, ping $ "DiagnosticsState")
+        if (ping_state != "")
+            break
+        endif
+        
+    endwhile
+
+    = "\r\n\r\n"
+
+    if ping_state == "Complete"
+        success_count = tree.GetParamValue(subsysPrefix, ping $ "SuccessCount")
+        failure_count = tree.GetParamValue(subsysPrefix,ping $ "FailureCount")
+        avg_response  = tree.GetParamValue(subsysPrefix,ping $ "AverageResponseTime")
+        min_response  = tree.GetParamValue(subsysPrefix,ping $ "MinimumResponseTime")
+        max_response  = tree.GetParamValue(subsysPrefix,ping $ "MaximumResponseTime")
+
+        = "  Recv/Lost packets: " $ success_count $ "/" $ failure_count $ "\r\n"
+        = "  Avg/Min/Max (ms) : " $ avg_response  $ "/" $ min_response $ "/" $ max_response $"\r\n"
+    else
+        if ping_state == "Error_CannotResolveHostName"
+            error = "host name cannot be resolved"
+        elseif ping_state == "Error_Internal"
+            error = "internal error"
+        else
+            error = " Timeout, or operation takes too long to complete"
+        endif
+
+        = "  Ping failed - " $ error $ "\r\n"
+    endif
+
+#>

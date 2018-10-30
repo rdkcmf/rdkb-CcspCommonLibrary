@@ -1,0 +1,17 @@
+<!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+<busconfig>
+  <listen>tcp:host=localhost,port=12368</listen>
+  <allow_anonymous></allow_anonymous>
+  <auth>ANONYMOUS</auth>
+  <include ignore_missing="yes">nonexistent.conf</include>
+  <policy context="default">
+    <allow user="*"/>
+    <!-- Allow everything to be sent -->
+    <allow send_destination="*" eavesdrop="true"/>
+    <!-- Allow everything to be received -->
+    <allow eavesdrop="true"/>
+    <!-- Allow anyone to own anything -->
+    <allow own="*"/>
+  </policy>
+</busconfig>

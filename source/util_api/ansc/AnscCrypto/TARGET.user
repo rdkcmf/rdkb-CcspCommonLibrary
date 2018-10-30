@@ -1,0 +1,49 @@
+####################################################################################
+# If not stated otherwise in this file or this component's Licenses.txt file the
+# following copyright and licenses apply:
+
+#  Copyright 2018 RDK Management
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+# http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#######################################################################################
+# this file will be included as part of the makefile for current directory
+# in the building process
+#
+# it allows some customization in optional TARGET file in each dir
+# following settings are defined in TARGET file:
+#
+#	OBJDIRS   = the subdirs to build <dirname>.o
+#	NOOBJDIRS = the subdirs not to build <dirname>.o 
+#
+#       these tell make which group of subdirs to build dirname.o 
+#       and which group not to build. you can define either one
+#       or both or none of these two.
+#
+#         - if either group is defined, other subdirs will belong to the 
+#           other group
+#         - if both groups are defined, other subdirs will not be built
+#         - if none is defined, do same as in parent directory
+#
+#	TARGET  = the_application_to_build
+#
+#       this is the final target for build a test or demo application
+#       don't set it if only to build .o
+#
+#	DEPDIRS  = the/library/dir \
+#       that/used/in/the \
+#       src/of/this/dir
+#
+#	INCPATH  += extra/include/dir
+#
+
+NOOBJDIRS =	crypto

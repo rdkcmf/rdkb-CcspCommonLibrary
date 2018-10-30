@@ -1,0 +1,14 @@
+[Unit]
+Description=CcspWebUI service
+After=CcspLMLite.service 
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/www
+ExecStart=/bin/sh -c '/etc/webgui.sh'
+RemainAfterExit=yes
+
+StandardOutput=syslog
+
+[Install]
+WantedBy=wifi-initialized.target

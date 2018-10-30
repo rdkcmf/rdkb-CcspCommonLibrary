@@ -1,0 +1,15 @@
+<#
+    dn = Domain.GetDomainName()
+   
+    if _strcmpi(dn, "dm") == 0
+
+        Server.Execute("tr069/object/add.scp")        
+        
+    else
+    
+        = "  %Invalid command in domain <" $ dn $ ">\r\n"
+    
+    endif
+
+#>
+

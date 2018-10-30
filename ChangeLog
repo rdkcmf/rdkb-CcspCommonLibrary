@@ -1,0 +1,268 @@
+CcspCommonLibrary
+- move arch/source/util_api/ansc/AnscCryptoPubSSLeay/ansc_crypto_pub_ssleay_* to
+       source/util_api/ansc/AnscCryptoPubSSLeay/
+- move arch/source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/dslh_wmpdo_mprif_priv.c to
+       source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/
+- move arch/pc/include/ccsp_custom.h to
+       source/ccsp/include/ccsp_custom_pc.h
+- move arch/intel_usg/boards/rdkb_atom/include/ccsp_custom.h to
+       source/ccsp/include/ccsp_custom_atom.h 
+- mkdir config
+- mkdir scripts
+- move arch/pc/scripts/cosa_start.sh to
+       scripts/cosa_start_pc.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cosa_start.sh to
+       scripts/cosa_start_atom.sh
+- move arch/intel_usg/boards/arm_shared/scripts/cosa_start.sh to
+       scripts/cosa_start_arm.sh
+- move arch/pc/scripts/cli_start.sh to
+       scripts/cli_start_pc.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cli_start.sh to
+       scripts/cli_start_atom.sh
+- move arch/intel_usg/boards/arm_shared/scripts/cli_start.sh to
+       scripts/cli_start_arm.sh
+- move arch/intel_usg/boards/rdkb_atom/scripts/cosa_stop.sh 
+       scripts/
+- move arch/pc/config/ccsp_msg.cfg to
+       config/ccsp_msg_pc.cfg
+- move arch/intel_usg/boards/rdkb_atom/config/ccsp_msg.cfg to
+       config/ccsp_msg_atom.cfg
+- move arch/intel_usg/boards/arm_shared/config/ccsp_msg.cfg to
+       config/ccsp_msg_arm.cfg
+- move arch/pc/config/basic.conf to
+       config/basic_pc.conf
+- move arch/intel_usg/boards/rdkb_atom/config/basic.conf to
+       config/basic_atom.conf
+- move arch/intel_usg/boards/arm_shared/config/basic.conf to
+       config/basic_arm.conf
+- move arch/pc/boards/rdkb/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.pc.orig
+- move arch/intel_usg/boards/rdkb_atom/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.atom.orig
+- move arch/intel_usg/boards/arm_shared/cmpnt_build_custom_pre.mk to
+       cmpnt_build_custom_pre.mk.arm.orig
+- remove arch directory
+- move Makefile to Makefile.orig
+- remove empty LICENSE file
+- add autogen.sh
+- add configure.ac
+- add Makefile.am
+- touch AUTHORS
+- touch ChangeLog
+- touch NEWS
+- add source/Makefile.am
+- add source/ccsp/Makefile.am
+- add source/ccsp/components/Makefile.am
+- add source/ccsp/components/common/Makefile.am
+- add source/ccsp/components/common/DataModel/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhCpeController/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhDataModelAgent/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhObjController/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhObjEntity/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhObjRecord/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhObjcoTable/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhVarEntity/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhVarRecord/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/DslhWmpDatabase/Makefile.am
+- add source/ccsp/components/common/DataModel/dml/components/Makefile.am
+- add source/cosa/package/Makefile.am
+- add source/cosa/package/bmc2/Makefile.am
+- add source/cosa/package/bmw2/Makefile.am
+- add source/cosa/package/bmw2/bree/Makefile.am
+- add source/cosa/package/bmw2/bree/components/BreeSpo/Makefile.am
+- add source/cosa/package/bmw2/bree/components/BreeSrm/Makefile.am
+- add source/cosa/package/bmw2/bwrm/Makefile.am
+- add source/cosa/package/bmw2/bwrm/components/BwrmCookedPage/Makefile.am
+- add source/cosa/package/bmw2/bwrm/components/BwrmEnvController/Makefile.am
+- add source/cosa/package/bmw2/bwrm/components/BwrmFileManager/Makefile.am
+- add source/cosa/package/bmw2/bwrm/components/BwrmPageManager/Makefile.am
+- add source/cosa/package/bmw2/bwsp/Makefile.am
+- add source/cosa/package/bmw2/bwsp/components/BwspPortalHost/Makefile.am
+- add source/cosa/package/bmw2/bwsp/components/BwspSiteCreator/Makefile.am
+- add source/cosa/package/bmw2/bwsp/components/BwspWebServlet/Makefile.am
+- add source/cosa/package/cli/Makefile.am
+- add source/cosa/package/cli/components/Makefile.am
+- add source/cosa/package/cli/components/ScliShell/Makefile.am
+- add source/cosa/package/slap/Makefile.am
+- add source/cosa/package/slap/services/Makefile.am
+- add source/cosa/package/slap/services/bmc2/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Application/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Command/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Domain/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Input/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Output/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Server/Makefile.am
+- add source/cosa/package/slap/services/bmc2/SlapBmc2Terminal/Makefile.am
+- add source/cosa/package/slap/services/dslh/Makefile.am
+- add source/cosa/package/slap/services/dslh/SlapDslhParamTree/Makefile.am
+- add source/cosa/package/system/Makefile.am
+- add source/cosa/package/system/components/SysCtlvProcessor/Makefile.am
+- add source/cosa/package/system/components/SysInfoRepository/Makefile.am
+- add source/cosa/package/system/components/SysIroV2/Makefile.am
+- add source/cosa/package/system/components/SysRecycleBin/Makefile.am
+- add source/cosa/package/system/components/SysRepositoryDriver/Makefile.am
+- add source/cosa/package/system/components/SysRepositoryFolder/Makefile.am
+- add source/cosa/package/system/components/SysRepositoryRecord/Makefile.am
+- add source/cosa/package/system/components/SysRroAstr/Makefile.am
+- add source/cosa/package/system/components/SysRroBool/Makefile.am
+- add source/cosa/package/system/components/SysRroBstr/Makefile.am
+- add source/cosa/package/system/components/SysRroEnum/Makefile.am
+- add source/cosa/package/system/components/SysRroHcxt/Makefile.am
+- add source/cosa/package/system/components/SysRroSint/Makefile.am
+- add source/cosa/package/system/components/SysRroUint/Makefile.am
+- add source/cosa/package/system/components/SysSetupManager/Makefile.am
+- add source/cosa/Makefile.am
+- add source/cosa/package/bmc2/components/Bmc2ComDomain/Makefile.am
+- add source/cosa/package/bmc2/components/Bmc2ComExecutor/Makefile.am
+- add source/cosa/package/bmc2/components/Bmc2ComTerminal/Makefile.am
+- add source/cosa/package/bmc2/components/Bmc2EnvController/Makefile.am
+- add source/cosa/package/bmc2/components/Bmc2ReqController/Makefile.am
+- add source/cosa/package/bmc2/components/Makefile.am
+- add source/cosa/utilities/AnscObjectArray/AnscByteArray/Makefile.am
+- add source/cosa/utilities/AnscObjectArray/AnscPtrArray/Makefile.am
+- add source/cosa/utilities/AnscObjectArray/AnscStringArray/Makefile.am
+- add source/cosa/utilities/AnscObjectArray/AnscUIntArray/Makefile.am
+- add source/cosa/utilities/AnscObjectArray/ObjectArrayBase/Makefile.am
+- add source/cosa/utilities/Makefile.am
+- add source/cosa/utilities/bsp_eng/Makefile.am
+- add source/debug_api/Makefile.am
+- add source/util_api/Makefile.am
+- add source/util_api/tls/Makefile.am
+- add source/util_api/slap/Makefile.am
+- add source/util_api/stun/Makefile.am
+- add source/util_api/ansc/Makefile.am
+- add source/util_api/ccsp_msg_bus/Makefile.am
+- add source/util_api/ccsp_dm_api/Makefile.am
+- add source/util_api/web/Makefile.am
+- add source/util_api/asn.1/Makefile.am
+- add source/util_api/http/Makefile.am
+- add source/util_api/ansc/AnscAtomTable/Makefile.am
+- add source/util_api/ansc/AnscBrokerEngineTcp/Makefile.am
+- add source/util_api/ansc/AnscBrokerServerTcp/Makefile.am
+- add source/util_api/ansc/AnscBrokerSocketTcp/Makefile.am
+- add source/util_api/ansc/AnscCoVer3/Makefile.am
+- add source/util_api/ansc/AnscComponentObject/Makefile.am
+- add source/util_api/ansc/AnscCrypto/Makefile.am
+- add source/util_api/ansc/AnscCryptoPub/Makefile.am
+- add source/util_api/ansc/AnscCryptoPubSSLeay/Makefile.am
+- add source/util_api/ansc/AnscDaemonEngineTcp/Makefile.am
+- add source/util_api/ansc/AnscDaemonEngineUdp/Makefile.am
+- add source/util_api/ansc/AnscDaemonServerTcp/Makefile.am
+- add source/util_api/ansc/AnscDaemonServerUdp/Makefile.am
+- add source/util_api/ansc/AnscDaemonSocketTcp/Makefile.am
+- add source/util_api/ansc/AnscDaemonSocketUdp/Makefile.am
+- add source/util_api/ansc/AnscLightComponent/Makefile.am
+- add source/util_api/ansc/AnscLpcConnector/Makefile.am
+- add source/util_api/ansc/AnscLpccoTcp/Makefile.am
+- add source/util_api/ansc/AnscModuleContainer/Makefile.am
+- add source/util_api/ansc/AnscObjectContainer/Makefile.am
+- add source/util_api/ansc/AnscObjectMapper/Makefile.am
+- add source/util_api/ansc/AnscPlatform/Makefile.am
+- add source/util_api/ansc/AnscQueryInterface/Makefile.am
+- add source/util_api/ansc/AnscSimpleClientTcp/Makefile.am
+- add source/util_api/ansc/AnscSimpleClientUdp/Makefile.am
+- add source/util_api/ansc/AnscSimpleSystemTime/Makefile.am
+- add source/util_api/ansc/AnscString/Makefile.am
+- add source/util_api/ansc/AnscStringUtil/Makefile.am
+- add source/util_api/ansc/AnscTimerScheduler/Makefile.am
+- add source/util_api/ansc/AnscUtilBox/Makefile.am
+- add source/util_api/ansc/AnscXmlDomParser/Makefile.am
+- add source/util_api/ansc/AnscXsocket/Makefile.am
+- add source/util_api/asn.1/components/Makefile.am
+- add source/util_api/asn.1/components/al_pkcs12/Makefile.am
+- add source/util_api/asn.1/components/al_pki/Makefile.am
+- add source/util_api/asn.1/components/asn1_basic/Makefile.am
+- add source/util_api/asn.1/components/asn1_x509/Makefile.am
+- add source/util_api/http/components/HttpAdvancedProxy/Makefile.am
+- add source/util_api/http/components/HttpAtoCgiEnv/Makefile.am
+- add source/util_api/http/components/HttpAtoFxCat1/Makefile.am
+- add source/util_api/http/components/HttpAtoFxCat2/Makefile.am
+- add source/util_api/http/components/HttpAtoHeader/Makefile.am
+- add source/util_api/http/components/HttpAtoMethod/Makefile.am
+- add source/util_api/http/components/HttpAtoStatus/Makefile.am
+- add source/util_api/http/components/HttpAuth/Makefile.am
+- add source/util_api/http/components/HttpAuthClient/Makefile.am
+- add source/util_api/http/components/HttpBasicMessage/Makefile.am
+- add source/util_api/http/components/HttpBmoRep/Makefile.am
+- add source/util_api/http/components/HttpBmoReq/Makefile.am
+- add source/util_api/http/components/HttpFormContent/Makefile.am
+- add source/util_api/http/components/HttpMboChunked/Makefile.am
+- add source/util_api/http/components/HttpMboFile/Makefile.am
+- add source/util_api/http/components/HttpMboIdentity/Makefile.am
+- add source/util_api/http/components/HttpMessageBody/Makefile.am
+- add source/util_api/http/components/HttpProxySession/Makefile.am
+- add source/util_api/http/components/HttpPsoVer2/Makefile.am
+- add source/util_api/http/components/HttpSimpleClient/Makefile.am
+- add source/util_api/http/components/HttpSimpleProxy/Makefile.am
+- add source/util_api/http/components/HttpSimpleServer/Makefile.am
+- add source/util_api/http/components/HttpTransRecord/Makefile.am
+- add source/util_api/http/components/HttpWebcSession/Makefile.am
+- add source/util_api/http/components/HttpWebcTrans/Makefile.am
+- add source/util_api/http/components/HttpWebsSession/Makefile.am
+- add source/util_api/http/components/HttpWebsTrans/Makefile.am
+- add source/util_api/http/components/Makefile.am
+- add source/util_api/http/containers/HttpHelperContainer/Makefile.am
+- add source/util_api/http/containers/Makefile.am
+- add source/util_api/http/utilities/HttpSimpleMsgParser/Makefile.am
+- add source/util_api/http/utilities/Makefile.am
+- add source/util_api/slap/components/Makefile.am
+- add source/util_api/slap/components/SlapAccessManager/Makefile.am
+- add source/util_api/slap/components/SlapEnvController/Makefile.am
+- add source/util_api/slap/components/SlapLoamBroker/Makefile.am
+- add source/util_api/slap/components/SlapLoamClient/Makefile.am
+- add source/util_api/slap/components/SlapLoamServer/Makefile.am
+- add source/util_api/slap/components/SlapObjAgent/Makefile.am
+- add source/util_api/slap/components/SlapObjBroker/Makefile.am
+- add source/util_api/slap/components/SlapObjContainer/Makefile.am
+- add source/util_api/slap/components/SlapObjEntity/Makefile.am
+- add source/util_api/slap/components/SlapObjMapper/Makefile.am
+- add source/util_api/slap/components/SlapObjProxy/Makefile.am
+- add source/util_api/slap/components/SlapObjRecord/Makefile.am
+- add source/util_api/slap/components/SlapObjWrapper/Makefile.am
+- add source/util_api/slap/components/SlapOwoLoac/Makefile.am
+- add source/util_api/slap/components/SlapOwoLoao/Makefile.am
+- add source/util_api/slap/components/SlapOwoUoac/Makefile.am
+- add source/util_api/slap/components/SlapOwoUoao/Makefile.am
+- add source/util_api/slap/components/SlapScoBuffer/Makefile.am
+- add source/util_api/slap/components/SlapScoCollection/Makefile.am
+- add source/util_api/slap/components/SlapScoGallery/Makefile.am
+- add source/util_api/slap/components/SlapScoStandard/Makefile.am
+- add source/util_api/slap/components/SlapSrvComponent/Makefile.am
+- add source/util_api/slap/components/SlapSrvProxy/Makefile.am
+- add source/util_api/slap/components/SlapVarConverter/Makefile.am
+- add source/util_api/slap/components/SlapVarEntity/Makefile.am
+- add source/util_api/slap/components/SlapVarHelper/Makefile.am
+- add source/util_api/slap/components/SlapVarMapper/Makefile.am
+- add source/util_api/stun/components/Makefile.am
+- add source/util_api/stun/components/StunSimpleClient/Makefile.am
+- add source/util_api/tls/components/Makefile.am
+- add source/util_api/tls/components/TlsAlertHandler/Makefile.am
+- add source/util_api/tls/components/TlsAppConnector/Makefile.am
+- add source/util_api/tls/components/TlsCipherSwitch/Makefile.am
+- add source/util_api/tls/components/TlsConnController/Makefile.am
+- add source/util_api/tls/components/TlsCryptoProvider/Makefile.am
+- add source/util_api/tls/components/TlsEnvController/Makefile.am
+- add source/util_api/tls/components/TlsHandShaker/Makefile.am
+- add source/util_api/tls/components/TlsHsoClient/Makefile.am
+- add source/util_api/tls/components/TlsHsoServer/Makefile.am
+- add source/util_api/tls/components/TlsRecordClient/Makefile.am
+- add source/util_api/tls/components/TlsRecordKeeper/Makefile.am
+- add source/util_api/tls/components/TlsSessionEntry/Makefile.am
+- add source/util_api/tls/components/TlsSessionManager/Makefile.am
+- add source/util_api/tls/containers/Makefile.am
+- add source/util_api/tls/containers/TlsModuleContainer/Makefile.am
+- add source/util_api/web/components/Makefile.am
+- add source/util_api/web/components/WebAuthServer/Makefile.am
+- add source/util_api/web/components/WebGeneralSession/Makefile.am
+- add source/util_api/web/components/WebResourceLocator/Makefile.am
+- add source/util_api/web/components/WebResourceOwner/Makefile.am
+- add source/util_api/web/components/WebRooFsm/Makefile.am
+- add source/util_api/web/components/WebSimpleServer/Makefile.am
+- add source/util_api/web/components/WebStatusAtomTable/Makefile.am
+- add source/util_api/web/components/WebUriPath/Makefile.am
+- add source/util_api/web/components/WebVirtualHost/Makefile.am
+- add source/util_api/web/containers/Makefile.am
+- add source/util_api/web/containers/WebModuleContainer/Makefile.am
+
+

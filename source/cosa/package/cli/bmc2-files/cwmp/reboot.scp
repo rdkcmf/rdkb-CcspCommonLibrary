@@ -1,0 +1,16 @@
+<#
+    include "../function.scp"
+
+    subsysPrefix = ""
+    sessionID = 0
+    CLIwriteID = 2
+    ACSwriteID = 0
+    writeID = CLIwriteID
+    commit = 1
+
+    tree = Services.Dslh.ParamTree
+    reboot = "com.cisco.spvtg.ccsp.rm.Reboot."
+
+    tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, reboot $ "Enable", 1)
+    
+#>

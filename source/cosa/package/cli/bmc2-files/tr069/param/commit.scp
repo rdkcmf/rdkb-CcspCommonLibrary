@@ -1,0 +1,33 @@
+<#
+    include "../../function.scp"
+
+    subsysPrefix = ""
+    sessionID = 0
+    CLIwriteID = 2
+    ACSwriteID = 0
+    writeID = CLIwriteID
+
+    tree = Services.Dslh.ParamTree
+    ret = 0
+    size = 0
+ 
+    size = Terminal.GetItem("multisetSize")
+    
+    while i = 0; i < size; i++
+        name = Terminal.GetItem("multisetName" $ i)
+    
+        ret = tree.ApplyChanges(subsysPrefix, sessionID, writeID, name )
+        if ret != 0
+           = "Commit failed for parameter "$ name $".\r\n"
+        endif
+    endwhile
+   
+    //clean the cache
+    while i = 0; i < size; i++
+        Terminal.SetItem("multisetName" $ i, "")
+    endwhile
+    
+    Terminal.SetItem("multisetSize", 0)
+    
+    Domain.Exit()
+#>

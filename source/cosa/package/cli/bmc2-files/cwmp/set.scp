@@ -1,0 +1,76 @@
+<#
+    include "../function.scp"
+    
+    subsysPrefix = ""
+	sessionID = 0
+	writeID = 2
+	commit = 1
+
+    tree = Services.Dslh.ParamTree   
+    
+    count   = Command.GetCount()
+
+    if count == 0
+
+        = "No update is made.\r\n"
+            
+        return
+        
+    endif  
+    
+	base = "Device.ManagementServer."
+
+    while i=0; i<count; i+= 2
+    
+        key = Command.GetParamByIndex(i)
+        val = Command.GetParamByIndex(i+1)
+    
+        if key == "periodicInform"
+        
+           if val == "enable" 
+              tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, base $ "PeriodicInformEnable", 1)
+              
+           else   
+              tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, base $ "PeriodicInformEnable", 0)
+              
+           endif
+                   
+        elseif key == "periodicInformInterval"
+        
+           tree.SetParamValueUint(subsysPrefix, sessionID, writeID, commit, base $ "PeriodicInformInterval", _atoi(val))
+           
+        elseif key == "connectionReqUsername"
+        
+           tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, base $ "ConnectionRequestUsername", val)
+        
+        elseif key == "connectionReqPassword"
+        
+           tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, base $ "ConnectionRequestPassword", val)
+           
+        else
+        
+           = "unknown key --- " $ key $ "\r\n"   
+           
+        endif    
+        
+    endwhile
+
+    /* apply the change */
+	if tree.ApplyChanges(subsysPrefix, base) != 0 
+	
+	   = "Failed to commit the changes"
+	  
+	else 
+
+       = "The configuration is updated successfully.\r\n"	
+      	  
+	endif
+
+#>
+
+
+
+
+
+
+

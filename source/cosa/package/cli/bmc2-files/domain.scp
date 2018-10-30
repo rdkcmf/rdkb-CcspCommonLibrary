@@ -1,0 +1,128 @@
+<#
+    include "function.scp"
+	subsysPrefix = ""
+
+    cn  = Command.GetCommandName()
+    dn  = Domain.GetDomainName()
+    count  = Command.GetCount() 
+    dim params[count]
+    while i=0; i<count; i++
+        params[i] = Command.GetParamByIndex(i)
+    endwhile
+
+    if ( cn == "dm" )
+
+        Terminal.EnterDomain(cn)
+
+        Domain.AddCommand("exit")
+        Domain.SetCommandSyntaxString("exit", "", "")
+
+        Domain.AddCommand("show")        
+        reqArgs = "NN##string#{parameter or object name}#"
+        Domain.SetCommandSyntaxString("show", reqArgs, "")
+
+        Domain.AddCommand("add")
+        reqArgs = "NN##string#{object name}#"
+        Domain.SetCommandSyntaxString("add", reqArgs, "")
+
+        Domain.AddCommand("no")
+        reqArgs = "NN##string#{object name}#"
+        Domain.SetCommandSyntaxString("no", reqArgs, "")
+
+        Domain.AddCommand("showobject")
+        reqArgs = "NN##string#addable{show addable objects}|deletable{show deletable objects}|parents{show parents objects}|all{show all objects}#addable|deletable|parents|all"
+        Domain.SetCommandSyntaxString("showobject", reqArgs, "")
+
+        Domain.AddCommand("set")
+        reqArgs = "NN##string#{specify parameter name}#"
+        reqArgs = reqArgs $ "!" $ "NA#type{parameter type}#string#int{integer}|uint{unsigned integer}|string{string}|base64{Base64 encoded string}|datetime{TR-069 Datetime}|boolean{boolean}#int|uint|string|base64|datetime|boolean"
+        reqArgs = reqArgs $ "!" $ "NA#value{parameter value}#string#{specify parameter value in accordance with the specified type}#"
+        Domain.SetCommandSyntaxString("set", reqArgs, "")
+
+        Domain.AddCommand("multiset")
+        Domain.SetCommandSyntaxString("multiset", "", "")
+
+    elseif ( cn == "multiset" )
+
+        Terminal.SetItem("multisetSize", 0)
+        Terminal.EnterDomain("dm-" $ cn)
+
+        Domain.AddCommand("set")
+        reqArgs = "NN##string#{specify parameter name}#"
+        reqArgs = reqArgs $ "!" $ "NA#type{parameter type}#string#int{integer}|uint{unsigned integer}|string{string}|base64{Base64 encoded string}|datetime{TR-069 Datetime}|boolean{boolean}#int|uint|string|base64|datetime|boolean"
+        reqArgs = reqArgs $ "!" $ "NA#value{parameter value}#string#{specify parameter value in accordance with the specified type}#"
+        Domain.SetCommandSyntaxString("set", reqArgs, "")
+        
+        Domain.AddCommand("commit")        
+        Domain.SetCommandSyntaxString("commit", "","")
+
+        Domain.AddCommand("quit")        
+        Domain.SetCommandSyntaxString("quit", "","")
+
+    elseif ( cn == "cwmp" )
+
+        Terminal.EnterDomain(cn)
+
+        Domain.AddCommand("exit")
+        Domain.SetCommandSyntaxString("exit", "", "")
+
+        Domain.AddCommand("show")        
+        Domain.SetCommandSyntaxString("show", "","")
+
+        Domain.AddCommand("enable")        
+        Domain.SetCommandSyntaxString("enable", "","")
+
+        Domain.AddCommand("disable")        
+        Domain.SetCommandSyntaxString("disable", "","")
+
+        Domain.AddCommand("setacs")
+        optArgs = "NA#url{specify acs url}#string#{acs url}#"
+        optArgs = optArgs $ "!" $ "NA#username{specify username}#string#{user name}#"
+        optArgs = optArgs $ "!" $ "NA#password{specify password}#string#{password}#"
+        Domain.SetCommandSyntaxString("setacs", "", optArgs)
+
+        Domain.AddCommand("set")
+        optArgs = "NA#periodicInform{enable PeriodicInform or not}#string#enable{enable broadcast}|disable{disable broadcast}#enable|disable"
+        optArgs = optArgs $ "!" $ "NA#periodicInformInterval{specify periodic inform intervals}#uint#{intervals in second}#"
+        optArgs = optArgs $ "!" $ "NA#connectionReqUsername{specify connection request user name}#string#{connection request user name}#"
+        optArgs = optArgs $ "!" $ "NA#connectionReqPassword{specify connection request password}#string#{connection request password}#"
+        Domain.SetCommandSyntaxString("set", "", optArgs)
+
+        Domain.AddCommand("reboot")        
+        Domain.SetCommandSyntaxString("reboot", "","")
+    elseif ( cn == "diag" )
+
+       Terminal.EnterDomain(cn)
+
+        Domain.AddCommand("exit")
+        Domain.SetCommandSyntaxString("exit", "", "")
+        
+        Domain.AddCommand("ping")
+        reqArgs = "NN##string#{target host name or IP address}#"
+        optArgs = "NA#size{specify ping packet size}#uint#{packet size}#{1~65535}"
+        optArgs = optArgs $ "!" $ "NA#times{specify times of ping}#uint#{times}#{1~100}"
+        optArgs = optArgs $ "!" $ "NA#timeout{specify ping timeout}#uint#{timeout in milliseconds}#{1~}"
+        Domain.SetCommandSyntaxString("ping", reqArgs, optArgs)
+
+        Domain.AddCommand("traceroute")
+        reqArgs = "NN##string#{target host name or IP address}#"
+        optArgs = "NA#size{specify ping packet size}#uint#{packet size}#{1~65535}"
+        optArgs = optArgs $ "!" $ "NA#times{specify number of tries per hop}#uint#{times}#{1~3}"
+        optArgs = optArgs $ "!" $ "NA#timeout{specify traceroute timeout}#uint#{timeout in milliseconds}#{1~}"
+        optArgs = optArgs $ "!" $ "NA#maxhop{specify maximum hop count}#uint#{max hop count}#{1~64}"
+        Domain.SetCommandSyntaxString("traceroute", reqArgs, optArgs)
+
+    else
+    
+        Terminal.EnterDomain(cn)
+    
+        Domain.AddCommand("show")
+        Domain.SetCommandSyntaxString("show", "", "")
+
+        Domain.AddCommand("exit")
+        Domain.SetCommandSyntaxString("exit", "", "")
+        
+    endif
+
+#>
+

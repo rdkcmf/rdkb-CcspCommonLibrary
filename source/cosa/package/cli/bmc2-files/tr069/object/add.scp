@@ -1,0 +1,24 @@
+<#
+    include "../../function.scp"
+    
+    subsysPrefix = ""
+    
+	   /*sessionID stays 0 unless when in an active session */
+	   /*use AcqWriteAccess() slap call to enter an active session */
+	sessionID = 0
+
+    count = Command.GetCount()
+
+    cmd   = Command.GetCommandName()
+    para  = Command.GetParamByIndex(0)
+
+    tree = Services.Dslh.ParamTree
+    stat = tree.AddObject(subsysPrefix, sessionID, para)
+    
+    if stat == 0
+        = "Failed to add object " $ para $ "\r\n"
+    else
+        = "Object '"$ para $ stat $ ". is added successfully.\r\n"     
+    endif
+#>
+

@@ -1,0 +1,16 @@
+<#
+    proc param_show()
+    
+        ="\r\n"
+        ="  show <param name>           -Show parameters.\r\n"
+
+    endproc
+
+    proc object_show()
+    
+        ="\r\n"
+        ="  show <canadd>|<candel>      -Add or Delete objects.\r\n"
+
+    endproc
+
+#>

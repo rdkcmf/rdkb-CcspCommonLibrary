@@ -1,0 +1,16 @@
+<#
+    include "../../function.scp"
+    dn = Domain.GetDomainName()
+
+   //clean the cache
+    size = 0
+    size = Terminal.GetItem("multisetSize")
+
+    while i = 0; i < size; i++
+        Terminal.SetItem("multisetName" $ i, "")
+    endwhile
+
+   Terminal.SetItem("multisetSize", 0)
+
+   Domain.Exit()
+#>

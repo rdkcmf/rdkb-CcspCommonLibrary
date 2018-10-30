@@ -1,0 +1,1443 @@
+<#
+	subsysPrefix = ""
+	sessionID = 0
+	writeID = 2
+	commit = 1
+
+/*
+scp base key support list
+
+    _atoi  
+    _atof
+    _itoa
+    _ftoa
+    _strstr //return the previous index of substring
+    _strleft
+    _strright 
+    _strlen
+    _strgetchar
+    _sleep(millseconds)
+    
+this file add the following support
+ 
+proc _is_digit (c)
+proc _is_letter (c)
+proc _is_letter_digit (c)
+proc _is_letter_digit_str(s)
+proc is_integer (s)
+proc is_integer_in_range (s, a, b)
+proc _add_space(number)
+proc split_string(s,number,del,arr)
+proc is_email(s)
+proc is_domain(s)
+proc is_ip_address(s)
+proc is_anyip_address(s)
+proc is_ip_mask(mask)
+proc _is_mask_octet(octet)
+proc is_hex_string(s)
+proc is_mac2(s,splitname)
+proc is_mac(s)
+proc _ip_to_ulong(s)
+proc _ulong_to_ip(s)
+proc ip_in_network(ip2, ip1, mask)
+proc check_dhcp_range(start, end, ip, mask, msg)
+proc word_wrap(str, len, out)
+proc is_ip_addresses(s)
+proc check_type_ok(str1, type)   
+proc checkparameter(allpara,param_dhcp)
+proc getparam(params, keyname)
+proc integer_length( intval )
+proc escape_html_str(str)
+proc print_error_param(str)
+proc print_imcomplete_cmd()
+proc get_stringindex(str)
+proc _itoa2(num)
+proc getWanEthernetMode(tree, wcd2, ipoe_mode, pppoe)
+proc GetDhcpOptions(optionGroup, opotion_name, option_type, option_tag)
+proc GetDhcpv6OptionType(option_tag)
+proc lower_string(string)
+proc forceMacAddrSep(macaddr, sep)
+proc moreResult(cur, total)
+
+*/    
+
+
+/* only support positive integer*/
+proc itoa2 (s)
+    if (s <0)
+        return ""        
+    endif
+
+    result = ""
+    while num = s/10,res=s%10; num != 0; res=num%10,num = num/10
+        if res == 0
+            result = "0" $ result
+        elseif res == 1
+            result = "1" $ result
+        elseif res == 2
+            result = "2" $ result
+        elseif res == 3
+            result = "3" $ result
+        elseif res == 4
+            result = "4" $ result
+        elseif res == 5
+            result = "5" $ result
+        elseif res == 6
+            result = "6" $ result
+        elseif res == 7
+            result = "7" $ result
+        elseif res == 8
+            result = "8" $ result
+        elseif res == 9
+            result = "9" $ result
+        endif        
+    endwhile
+
+    if res == 0
+        result = "0" $ result
+    elseif res == 1
+        result = "1" $ result
+    elseif res == 2
+        result = "2" $ result
+    elseif res == 3
+        result = "3" $ result
+    elseif res == 4
+        result = "4" $ result
+    elseif res == 5
+        result = "5" $ result
+    elseif res == 6
+        result = "6" $ result
+    elseif res == 7
+        result = "7" $ result
+    elseif res == 8
+        result = "8" $ result
+    elseif res == 9
+        result = "9" $ result
+    endif        
+
+    return result
+    
+endproc
+
+
+proc _is_mask_octet(octet)
+    if octet==  0 || octet==128 || octet==192 || octet==224 || octet==240 || octet==248 || octet==252 || octet==254 || octet==255
+        return 1
+    else
+        return 0
+    endif
+endproc
+
+proc _is_digit (c)
+    if c >= "0" && c <= "9"
+        return 1
+    else
+        return 0
+    endif
+endproc
+
+proc _is_letter (c)
+    if ((c >= "a") && (c <= "z")) || ((c >= "A") && (c <= "Z"))
+        return 1
+    else
+        return 0
+    endif
+endproc
+
+proc _is_letter_digit (c)
+    if (_is_letter(c) || _is_digit(c))
+        return 1
+    else
+        return 0
+    endif
+endproc
+
+proc _is_letter_digit_str(s)
+    if s==""    
+        return 0        
+    endif
+    len = _strlen(s)
+    while i = 0; i < len; i++
+        c = _strgetchar(s,i)
+        if _is_letter_digit(c) == 0
+            return 0
+        endif
+    endwhile
+    
+    return 1
+endproc
+
+
+proc is_integer (s)
+    if s==""    
+        return 0     
+    endif
+    
+    start = 0
+    
+    c = _strgetchar(s,0)
+    if "-" == c
+		start = 1
+	endif
+
+    while i = start; i < _strlen(s); i++
+        c = _strgetchar(s,i)
+        if _is_digit(c) == 0
+            return 0
+        endif
+    endwhile
+    
+    return 1
+endproc
+
+
+proc is_integer_in_range (s, a, b)
+    if is_integer(s) == 0
+        return 0
+    endif
+
+    num = _atoi(s)
+
+    if (num >= a) && (num <= b)
+        return 1
+    else
+        return 0
+    endif
+endproc
+
+proc _add_space(number)
+
+    while i=0; i<number; i++
+
+        =" "
+
+    endwhile
+
+endproc
+
+// tokenize string by 'del' and return string array of maximum length 'number'
+proc split_string(s,number,del,arr)
+    if s == "" || s == 0
+        return
+    endif
+
+    // remember to append "del" at the end of "s"
+    c = _strgetchar(s,_strlen(s)-1)
+    if c != del
+        r = s $ del
+    else
+        r = s
+    endif
+
+    while i=0;i<number+1;i++
+        p = _strstr(r,del)
+        if p != -1
+            arr[i] = _strleft(r,p)
+            r = _strright(r,_strlen(r)-p-1)
+        else
+            break
+        endif
+    endwhile
+    
+    arr.length = i
+
+endproc
+
+proc is_email(s)
+
+    if ( (_strstr(s,"@") != -1) && (_strstr(s,".") != -1) )
+       return 1
+    else
+       return 0
+    endif
+endproc
+
+proc mac_formattor(mac,splitor)
+    dim arr[6]
+    splitname = _strgetchar(mac,2)
+    split_string(mac,6,splitname,arr)
+    if arr.length != 6
+        return 0
+    endif
+
+    ret = arr[0] $ splitor $ arr[1] $ splitor $ arr[2] $ splitor $ arr[3] $ splitor $ arr[4] $ splitor $ arr[5]
+
+    return ret
+    
+endproc
+
+proc is_domain(s)
+
+    if (_strstr(s,".") != -1)
+       return 1
+    else
+       return 0
+    endif
+endproc
+
+proc is_ip_address(s)
+    dim arr[4]
+    split_string(s,4,".",arr)
+    if arr.length != 4
+        return 0
+    endif
+    
+    if is_integer_in_range(arr[0], 0, 255) == 0 || is_integer_in_range(arr[1], 0, 255) == 0 || is_integer_in_range(arr[2], 0, 255) == 0 || is_integer_in_range(arr[3], 0, 255) == 0
+        return 0
+    endif
+
+    if _atoi(arr[0]) == 0 || _atoi(arr[0]) == 255
+        return 0
+    endif
+
+    return 1
+endproc
+
+proc is_anyip_address(s)
+    dim arr[4]
+    split_string(s,4,".",arr)
+    if arr.length != 4
+        return 0
+    endif
+    
+    if is_integer_in_range(arr[0], 0, 255) == 0 || is_integer_in_range(arr[1], 0, 255) == 0 || is_integer_in_range(arr[2], 0, 255) == 0 || is_integer_in_range(arr[3], 0, 255) == 0
+        return 0
+    endif
+
+    return 1
+endproc
+
+
+
+proc is_ip_mask(mask)
+
+    dim arr[4]
+    split_string(mask,4,".",arr)
+
+    if arr.length != 4
+        return 0
+    endif
+
+    if is_integer_in_range(arr[0], 0, 255) == 0 || is_integer_in_range(arr[1], 0, 255) == 0 || is_integer_in_range(arr[2], 0, 255) == 0 || is_integer_in_range(arr[3], 0, 255) == 0
+        return 0
+    endif
+
+    dim octs[4]
+    octs.type = 2
+    while i=0;i<4;i++
+        octs[i] = _atoi(arr[i])
+    endwhile
+
+    if (octs[0]==255)
+        if (octs[1]==255)
+          if (octs[2]==255)
+            if ( _is_mask_octet(octs[3])==1 )
+              return 1
+            endif
+          else
+            if ( ( _is_mask_octet(octs[2])==1 ) && (octs[3]==0) )
+              return 1
+            endif
+          endif
+        elseif ( ( _is_mask_octet(octs[1])==1 ) &&   (octs[2]==0) && (octs[3]==0) )
+            return 1
+        endif
+    elseif (_is_mask_octet(octs[0])==1) && (octs[1]==0) && (octs[2]==0) && (octs[3]==0)
+      return 1
+    endif
+
+    return 0
+endproc
+
+proc _is_mask_octet(octet)
+    if octet==  0 || octet==128 || octet==192 || octet==224 || octet==240 || octet==248 || octet==252 || octet==254
+        return 1
+    else
+        return 0
+    endif
+
+endproc
+
+proc is_hex_string(s)
+    if (s == "") 
+       return 0
+    endif
+
+    len = _strlen(s)
+    if (len%2 != 0 ) 
+        return 0
+    endif
+
+    while i=0;i<len;i++
+        c = _strgetchar(s,i)
+        
+        if (c>="0"&&c<="9") || (c>="A"&&c<="F") || (c>="a"&&c<="f")
+            continue
+        else
+            return 0
+        endif
+    endwhile
+
+    return 1
+endproc
+
+proc is_mac2(s,splitname)
+    if _strlen(splitname) != 1
+        return 0
+    endif
+
+    dim arr[6]  
+    split_string(s,6,splitname,arr)
+
+    if arr.length != 6
+        return 0
+    endif
+
+    while i=0;i<6;i++
+        if is_hex_string(arr[i]) != 1
+          return 0
+        endif
+    endwhile
+
+    return 1
+endproc
+
+proc is_mac(s)
+    return is_mac2(s,"-")    
+endproc
+        
+
+proc _ip_to_ulong(s)
+    dim arr[4]
+    split_string(s,4,".",arr)
+    if arr.length != 4
+        return 0
+    endif
+
+    ul= _atoi(arr[3])+256*_atoi(arr[2])+65536*_atoi(arr[1])+16777216*_atoi(arr[0])
+    
+    return ul
+
+endproc
+
+proc _ulong_to_ip(s)
+    p1 = itoa2((s>>24)&0xFF)
+    p2 = itoa2((s>>16)&0xFF)
+    p3 = itoa2((s>>8)&0xFF)
+    p4 = itoa2((s&0xFF))
+
+    return (p1) $ "."  $ (p2) $ "."  $ (p3) $ "."  $ (p4)
+endproc
+ 
+proc ip_in_network(ip2, ip1, mask)
+
+    if is_ip_address(ip2)==0 || is_ip_address(ip1)==0
+        return 0
+    endif
+
+    mbin=_ip_to_ulong(mask)
+
+    ip2bin=_ip_to_ulong(ip2) & mbin
+    ip1bin=_ip_to_ulong(ip1) & mbin
+
+    if (ip1bin != ip2bin)
+        return 0
+    else
+        return 1
+    endif
+endproc
+
+
+proc check_dhcp_range(start, end, ip, mask, msg)
+    if ip_in_network(start, ip, mask) == 0 || ip_in_network(end, ip, mask) == 0
+        msg = "You have entered an invalid IP address for DHCP Pool!"
+        return 1
+    endif
+ 
+    sbin=_ip_to_ulong(start)
+    ebin=_ip_to_ulong(end)
+    ipbin=_ip_to_ulong(ip)
+
+    if sbin==0 || ebin==0 || sbin>=ebin
+        msg = "You have entered invalid DHCP Pool range: - the first DHCP address must be less than last DHCP address"
+        return 2
+    elseif ipbin >= sbin && ipbin <= ebin
+        msg = "You have entered invalid DHCP Pool range, pool range should not include " $ ip
+        return 3
+    endif
+
+    msg = ""
+    return 0
+
+endproc
+
+proc word_wrap(str, len, out)
+
+    line = 0
+    i=_strlen(str)
+    while k=0;i>len;k=0
+        l = _strleft(str, len)
+        r = _strright(str, i-len)
+        out[line++] = l
+        i = i - len
+        str = r
+    endwhile
+
+    if str != "" && str != 0
+        out[line++] = str
+    endif
+
+    out.length = line
+
+    return line
+endproc
+
+proc is_ip_addresses(s)
+    dim arr[4]
+    split_string(s,32,",",arr)
+    if ( arr.length > 32) || ( arr.length < 0 )
+        return 0
+    endif
+
+    while i=0;i<arr.length;i++
+        if !(is_ip_address(arr[i]))
+            return 0
+        endif
+    endwhile
+
+    return 1
+endproc
+
+
+
+
+/***********************************************
+    This procedure check whehter str1 is one kind of this type
+    current support:
+    ip   ---- normal ip dot address
+    ips  ---- normal ip dot address seperated by ","
+    integer --- normal integer
+    domain --- one domain, example: www.263.com
+ **********************************************/
+proc check_type_ok(str1, type)   
+    if type == "ip"
+        return is_ip_address(str1) 
+    elseif type == "anyip"
+        return is_anyip_address(str1)
+    elseif type == "ips"
+        return is_ip_addresses(str1)
+    elseif type == "integer"
+        return is_integer(str1)
+    elseif type == "domain"
+        return is_domain(str1)
+    elseif type == "mask"
+        return is_ip_mask(str1)
+    elseif type == "string"
+        return _is_letter_digit_str(str1)
+    elseif type == "hex"
+        return is_hex_string(str1)
+    elseif type == "mac"
+        splitname = _strgetchar(str1,2)
+        return is_mac2(str1,splitname)
+    elseif type == "notcare"
+        return 1
+    else
+        = "\r\n Not support this kind of type :" $ type $ "\r\n"    
+        return 0
+
+    endif
+endproc
+
+/***********************************************
+    This procedure check whehter param_dhcp includes legal 
+    parameters, which is limited by allpara
+
+    param_dhcp is an array including every parameters in order
+    param_dhcp is an array of array including limitation to parameters
+    current, only one single parameter is supported.
+
+    example:
+        cmd is 
+            dhcp n minip <ipaddr>   lease <num>  [dns1 <ipaddr>] [dns2 <ipaddr>] 
+
+        allpara is:
+            dim allpara[4][3]
+            // this part define all parameters that is legal. 
+            //for necessary parameters, they are defined by order
+            //for optional parameters, they can be not by order
+            allpara[0][0] = "null"  // this mean n
+            allpara[1][0] = "minip"
+            allpara[2][0] = "lease"
+            allpara[3][0] = "dns2"
+            allpara[4][0] = "dns1"
+
+            //this part defines the type of every parameters
+            //currently, only support ip, domain, integer, ips
+            allpara[0][2] = "integer"
+            allpara[1][2] = "ip"
+            allpara[2][2] = "integer"
+            allpara[3][2] = "ip"
+            allpara[4][2] = "ip"
+
+            //this part defines whether one parameter is necessary or optional
+            // 1 ---- necesary
+            // 0 ---- optional
+            allpara[0][1] = 1
+            allpara[1][1] = 1
+            allpara[2][1] = 1
+            allpara[3][1] = 0
+            allpara[4][1] = 0
+
+       return value:
+            this procedure return one error message to point the error place
+       if return is "right", it means no error. The parameters are legal.
+ ***********************************************/
+
+proc checkparameter(allpara,param_cmd)   
+    //begin proc    
+    dim allpara_flag[allpara.length]
+    while i=0;i<allpara.length;i++
+        allpara_flag[i] = 0
+    endwhile
+    
+    mustpara = 0
+    singpara = 0
+    while i=0;i<allpara.length;i++
+        if(allpara[i][1] == 1)
+            mustpara++
+        else
+            break
+        endif
+    endwhile
+        
+    flag = 1
+    errormes = "right"
+
+    //begin compare but possible first single parameter
+    //check some necessary
+    while i=j=m=0;i< mustpara*2;i=i+2,m++
+
+        if i >= param_cmd.length
+            flag = 0
+            errormes = "LessParam"
+            break
+        endif
+
+        if(param_cmd[i] != allpara[m][0]) 
+            flag = 0
+            errormes = param_cmd[i]
+            break
+        elseif i+1 >= param_cmd.length
+            flag = 0
+            errormes = "LessParam"
+            break
+        elseif !(check_type_ok(param_cmd[i+1],allpara[m][2]))
+            flag = 0
+            errormes = param_cmd[i+1]
+            break
+        endif
+
+    endwhile
+
+    if (flag != 0) &&  (i != (mustpara*2))
+        flag = 0
+        errormes = "LessParam"
+    endif
+
+    //check optional parameter
+    if flag != 0
+
+        while ;i<param_cmd.length;i=i+2
+            
+            //search all key
+            while j=m;j<allpara.length;j++
+                
+                if allpara[j][0] == param_cmd[i]
+                    
+                   //duplicate key word
+                    if allpara_flag[j] == 1
+                        flag = 0
+                        errormes = param_cmd[i]
+                    else
+                        
+                        //check data type
+                        if param_cmd.length == (i+1)
+                            flag = 0
+                            errormes = "LessParam"
+                            break
+                        endif
+                        
+                        if (check_type_ok(param_cmd[i+1],allpara[j][2]))                                
+                            allpara_flag[j] = 1
+                        else
+                            // type error
+                            flag = 0
+                            errormes = param_cmd[i+1]
+                        endif 
+                       
+                    endif//rightpara_flag[j] == 1
+                    
+                    break
+                    
+                endif //allpara[j][0] == param_cmd[i]
+                
+            endwhile
+
+            //can't find it
+            if j>=allpara.length
+                flag = 0
+                errormes = param_cmd[i]
+            endif
+
+            //some parameter error, exit
+            if flag == 0
+                break
+            endif
+                
+        endwhile
+               
+    endif //flag != 0
+            
+    return errormes
+endproc
+
+/********************************************************************
+    this procedure return the value of one key
+    eg:  dhcp minip <ipaddr> lease <num> [dns1 <ipaddr>] [dns2 <ipaddr>] 
+    params[8] = "minip" "192.168.1.3" lease 2323 dns1 192.168.1.5 dns2 3.4.3.3
+    key = "dns1
+    it wil return "192.168.1.5"
+
+    When there is not key in params, it return "getparam_error"    
+ *********************************************************************/
+proc getparam(params, keyname)
+    if param_dhcp.length%2 != 0
+        return "getparam_error"
+    endif
+    while i=0;i<params.length;i=i+2
+        if params[i] == keyname
+            
+            //= "getparam " $ keyname $ " " $ params[i+1] $"\r\n"
+            hehe = params[i+1]
+            return hehe
+        endif
+    endwhile
+
+    return "getparam_error"
+
+endproc
+
+proc integer_length( intval )
+    i = intval
+
+    j = 0
+    if i < 0
+        i = -1 * i
+        j = 1
+    endif
+
+    
+    while j++; i>9; i=i/10
+        
+        j++
+    endwhile
+
+    return j
+
+endproc
+
+proc escape_html_str(str)
+    ret_str = ""
+    while j = 0 ; j < _strlen(str);
+        c = _strgetchar(str,j)
+        if c == "<"
+            ret_str = ret_str $ "&lt;"
+        elseif c == "\""
+            ret_str = ret_str $ "&quot;"
+        elseif c == ">"
+            ret_str = ret_str $ "&gt;"
+        elseif c == "&"
+            ret_str = ret_str $ "&amp;"
+        elseif c == "\""
+            ret_str = ret_str $ "&#34;"
+        elseif c == "\'"
+            ret_str = ret_str $ "&#39;"
+        elseif c == "\`"
+            ret_str = ret_str $ "&#96;"
+        elseif c == "\\"
+            ret_str = ret_str $ "&#92;"
+        elseif c == "\/"
+            ret_str = ret_str $ "&#47;"
+        elseif c == "?"
+            ret_str = ret_str $ "&#63;"
+        elseif c == "%"
+            ret_str = ret_str $ "&#37;"
+        elseif c == ","
+            ret_str = ret_str $ "&#44;"
+        elseif c == "\n"
+            ret_str = ret_str $ ""
+        else
+            ret_str = ret_str $ c
+        endif
+        j++
+    endwhile
+    return ret_str
+endproc
+
+proc print_error_param(str)
+    = "% Invalid input detected at \"" $ str $ "\"\r\n"
+endproc
+
+proc print_incomplete_cmd()
+    = "%  Incomplete command." $ "\r\n"
+endproc
+
+/*this function name is improper,use above*/
+proc print_imcomplete_cmd()
+    print_incomplete_cmd()
+endproc
+
+proc print_error_param1(str)
+    if (str== "")
+        = "%  Incomplete command." $ "\r\n" 
+    else
+        = "% Invalid input detected at \"" $ str $ "\"\r\n"
+    endif
+endproc
+
+proc _itoa1(num)
+    if (num == 0)
+        return "0"
+    elseif (num == 1)
+        return "1"    
+    elseif (num == 2)
+        return "2"
+    elseif (num == 3)
+        return "3"
+    elseif (num == 4)
+        return "4"
+    elseif (num == 5)
+        return "5"
+    elseif (num == 6)
+        return "6"
+    elseif (num == 7)
+        return "7"
+    elseif (num == 8)
+        return "8"
+    elseif (num == 9)
+        return "9"
+    endif
+endproc
+proc _itoa2(num)
+    dim array[100]    
+
+    if (num == 0)
+        return "0"
+    endif
+    i1= num
+    while i=0 ; i1 != 0; i++
+        mod= i1%10
+        array[i] = _itoa1(mod)
+        i1= i1/10
+    endwhile
+    
+    
+    ret= ""
+    while j=i; j>0 ;j--
+        ret= ret $ array[j-1]
+    endwhile
+    return ret
+endproc
+
+proc getEncapModeFromL3(tree, pvc, ethernet)
+    ret = ""
+
+    conn_type = tree.GetParamValue(subsysPrefix, pvc $ "ConnectionType")
+
+    isPpp = 0
+    wcd = ""
+    last = _strstr(pvc, "WANPPPConnection")
+    if last >= 0
+        isPpp = 1
+        wcd = _strleft(pvc, last)
+    else
+    last = _strstr(pvc, "WANIPConnection")
+    wcd = _strleft(pvc, last)
+    endif
+
+    if ethernet == 1
+        if conn_type == "PPPoE_Bridged"
+            ret = "Ethernet pppoebridge"
+        elseif conn_type == "IP_Routed" || conn_type == "DHCP_Spoofed"
+            if isPpp == 1
+                ret = "Ethernet PPPoE"
+            else
+                ret = "Ethernet DHCP/Static"
+            endif
+        endif
+
+    else
+        link_type = tree.GetParamValue(subsysPrefix, wcd $ "WANDSLLinkConfig." $ "LinkType")
+
+        if link_type == "EoA"
+            if conn_type == "PPPoE_Bridged"
+                ret = "pppoebridge"
+            elseif conn_type == "IP_Routed" || conn_type == "DHCP_Spoofed"
+                if isPpp == 1
+                    ret = "pppoe"
+                else
+                    ret = "2684bridged"
+                endif
+            endif
+        elseif link_type == "PPPoA"
+            ret = "pppoa"
+        elseif link_type == "IPoA"
+            ret = "ipoa"
+            endif
+        endif
+
+    return ret
+
+endproc
+
+proc enumTargetIfs(ifs, names, no_mode, ifds)
+
+    if_count = 0
+    dim bgs[]
+    dim wans[]
+    dim nameArray[]
+
+    ifs.length = 0
+    names.length = 0
+
+    tree = Services.Dslh.ParamTree
+
+    dim wd_types[]
+    wd_types[0] = "DSL"
+    wd_types[1] = "ETHERNET"
+
+    while ifidx = 0; ifidx < wd_types.length; ifidx ++
+        is_ethwan = (ifidx != 0)
+
+        wdev = GetWanDevice(wd_types[ifidx], wdevifcfg, wdevconnlinkcfg)
+        if wdev == ""
+            continue
+        endif
+
+        if wdevifcfg != ""
+            if_enable = tree.GetParamValue(subsysPrefix, wdevifcfg $ "Enable")
+            if if_enable == 0
+                continue
+            endif
+        endif
+
+        // go through all wan connection devices
+        wcd = wdev $ "WANConnectionDevice."
+        ret  = tree.GetParamNames(subsysPrefix, wcd, 1:wans)      
+
+        while i=0; i<wans.length;i++
+            if wdevconnlinkcfg != ""
+                link_enable = tree.GetParamValue(subsysPrefix, wans[i] $ wdevconnlinkcfg $ "Enable")
+                if link_enable == 0
+                    continue
+                endif
+            endif
+
+            // WANIPConnection
+            ipc = wans[i] $ "WANIPConnection."
+            ret  = tree.GetParamNames(subsysPrefix, ipc, 1:nameArray)
+            while j=0;j<nameArray.length;j++
+                inst = nameArray[j]
+                name = tree.GetParamValue(subsysPrefix, inst $ "Name")
+                mode = getEncapModeFromL3(tree, inst, is_ethwan)
+                if_enable = tree.GetParamValue(subsysPrefix, inst $ "Enable")
+
+                if if_enable
+                    ifs[cn] = inst
+                    if no_mode != 0
+                        names[cn] = name $ " (" $ mode $ ")"
+                    else
+                        names[cn] = name
+                    endif
+                    ifds[cn] = mode
+                    cn ++
+                endif
+            endwhile
+
+            // WANPPPConnection
+            pppc = wans[i] $ "WANPPPConnection."
+
+            ret  = tree.GetParamNames(subsysPrefix, pppc, 1:nameArray)
+            while j=0;j<nameArray.length;j++
+                inst = nameArray[j]
+                name = tree.GetParamValue(subsysPrefix, inst $ "Name")
+                mode = getEncapModeFromL3(tree, inst, is_ethwan)
+                if_enable = tree.GetParamValue(subsysPrefix, inst $ "Enable")
+
+                if if_enable
+                    ifs[cn] = inst
+                    if no_mode != 0
+                        names[cn] = name $ " (" $ mode $ ")"
+                    else
+                        names[cn] = name
+                    endif
+                    ifds[cn] = mode
+                    cn ++
+                endif
+           endwhile 
+
+            vb = wans[i]$"X_CISCO_COM_WANVLANBridge."
+            ret  = tree.GetParamNames(subsysPrefix, vb, 1:bgs)
+            while j=0;j<bgs.length;j++ 
+                if tree.GetParamValue(subsysPrefix, bgs[j] $ "Enable") != 0
+                    ifs[cn] = bgs[j]
+                    if no_mode != 0
+                        names[cn] = "PVC/VLAN Bridge" $ " (" $ (j+1) $ ")"
+                    else
+                        names[cn] = "vbridge" $ (j+1)
+                    endif
+                     vlan_id = tree.GetParamValue(subsysPrefix, bgs[j] $ "VLANIDMark")
+                     ifds[cn] = "VLAN ID " $ vlan_id
+                    cn ++
+                endif
+            endwhile
+
+        endwhile    // wan connection devices
+
+    endwhile        // loop through all supported wan dev types
+
+endproc
+
+
+proc show_targetif()
+    tree = Services.Dslh.ParamTree
+    dim if_insts[]
+    dim if_names[]
+    dim if_desc[]
+    enumTargetIfs(if_insts, if_names, 0, if_desc)
+
+    results= "  available target interfaces:\r\n  \"\" \r\n  "
+    results= results $ "  ---------------------------:\r\n  \"\" \r\n  "
+    while i=0; i<if_insts.length; i++
+        if tree.GetParamValue(subsysPrefix, if_insts[i] $ "Enable") != 0
+            results = results $ if_names[i] $"\r\n  "
+        endif 
+    endwhile
+    =results
+endproc
+
+proc getFirstInstance(tree, name)
+    ret  = tree.GetParamNames(subsysPrefix, name, 1:nameArray)
+    inst = ""
+
+    count= nameArray.length
+    if count == 0
+        = name $ " does NOT have instance!"
+        return ""
+    endif
+
+    while i=0;i<count;
+        inst = inst $ nameArray[i]
+        return inst
+        i++
+    endwhile
+    return ""
+endproc
+
+
+proc getWanEthernetMode(tree, wcd2, ipoe_mode, pppoe)
+	ipoe_mode = "dhcp"
+	pppoe = ""
+
+	ip = wcd2 $ "WANIPConnection.1."
+	ppp = getFirstInstance(tree, wcd2 $ "WANPPPConnection.")
+
+	if ppp == ""
+		id = tree.AddObject(subsysPrefix, wcd2 $ "WANPPPConnection.")
+		ppp = wcd2 $ "WANPPPConnection." $ id $ "."
+		tree.SetParamValueString(subsysPrefix, sessionID, writeID, commit, ppp $ "ConnectionType", "IP_Routed")
+		tree.SetParamValueBool(subsysPrefix, sessionID, writeID, commit, ppp $ "NATEnabled", 1)
+		tree.ApplyChanges(subsysPrefix, ppp)
+	endif
+
+	if tree.GetParamValue(subsysPrefix, ip $ "Enable") != 0
+		ad = tree.GetParamValue(subsysPrefix, ip $ "AddressingType")
+		if ad == "DHCP"
+			ipoe_mode = "dhcp"
+		else
+			ipoe_mode = "static"
+		endif
+	else
+		ipoe_mode = ""
+	endif
+	
+	if tree.GetParamValue(subsysPrefix, ppp $ "Enable") != 0
+		pppoe = "ether_pppoe"
+	endif
+
+	return
+
+endproc
+
+
+
+proc GetDhcpOptions(optionGroup, option_name, option_type, option_tag)
+        /*
+            optionGroup:
+                1 - Sent DHCP Options
+                2 - Request DHCP Options
+                3 - Proxy DHCP Options
+         */
+
+        /*
+        Option type:
+	        1 IP
+	        2 STRING
+	        3 MAC
+	        4 BOOL (1 char)
+	        5 IP LIST
+	        6 ULONG
+	        7 MASK
+
+	        100 HEX STRING(variable), covers all other types
+        */
+
+    if optionGroup == 1     
+		option_name[i] = "Host Name"
+		option_type[i] = 2
+		option_tag[i++] = 12
+
+		option_name[i] = "Requested IP Address"
+		option_type[i] = 1
+		option_tag[i++] = 50
+
+		option_name[i] = "Vendor Class-identifier"
+		option_type[i] = 2
+		option_tag[i++] = 60
+
+		option_name[i] = "Client Identifier"
+		option_type[i] = 100
+		option_tag[i++] = 61
+
+		option_name[i] = "User Class"
+		option_type[i] = 100
+		option_tag[i++] = 77
+    else
+        i = 0
+	    option_name[i] = "Subnet Mask"
+	    option_type[i] = 7
+	    option_tag[i++] = 1
+
+	    option_name[i] = "Default Gateway (Router)"
+	    option_type[i] = 5
+	    option_tag[i++] = 3
+
+	    option_name[i] = "Domain Name Server"
+	    option_type[i] = 5
+	    option_tag[i++] = 6
+
+	    option_name[i] = "Host Name"
+	    option_type[i] = 2
+	    option_tag[i++] = 12
+
+	    option_name[i] = "Domain Name"
+	    option_type[i] = 2
+	    option_tag[i++] = 15
+
+	    option_name[i] = "NTP Server"
+	    option_type[i] = 5
+	    option_tag[i++] = 42
+
+	    option_name[i] = "Vendor Specific Information"
+	    option_type[i] = 2
+	    option_tag[i++] = 43
+
+	    option_name[i] = "Lease Time"
+	    option_type[i] = 6
+	    option_tag[i++] = 51
+
+	    option_name[i] = "DHCP Server Identifier"
+	    option_type[i] = 1
+	    option_tag[i++] = 54
+
+	    option_name[i] = "DHCP Notification Message"
+	    option_type[i] = 2
+	    option_tag[i++] = 56
+
+	    option_name[i] = "Renewal Time"
+	    option_type[i] = 6
+	    option_tag[i++] = 58
+
+	    option_name[i] = "Rebinding Time"
+	    option_type[i] = 6
+	    option_tag[i++] = 59
+
+	    option_name[i] = "Classless Static Route"
+	    option_type[i] = 100
+	    option_tag[i++] = 121
+
+	    option_name[i] = "VI - Vendor-Specific Information"
+	    option_type[i] = 2
+	    option_tag[i++] = 125
+
+	    option_name[i] = "TFTP Server IP Address"
+	    option_type[i] = 1
+	    option_tag[i++] = 128
+    endif
+
+endproc
+
+
+proc GetDhcpv6OptionType(option_tag)
+
+    /* supported types:
+     *  1. Hex
+     *  2. String
+     */
+
+     return 1
+
+endproc
+
+
+proc lower_string(string)
+
+    lstr = ""
+    len = _strlen(string)
+    dim upper_lower[26][2]
+    
+    i = 0
+    upper_lower[i][0]     = "A"
+    upper_lower[i++][1]   = "a"
+    upper_lower[i][0]     = "B"
+    upper_lower[i++][1]   = "b"
+    upper_lower[i][0]     = "C"
+    upper_lower[i++][1]   = "c"
+    upper_lower[i][0]     = "D"
+    upper_lower[i++][1]   = "d"
+    upper_lower[i][0]     = "E"
+    upper_lower[i++][1]   = "e"
+    upper_lower[i][0]     = "F"
+    upper_lower[i++][1]   = "f"
+    upper_lower[i][0]     = "G"
+    upper_lower[i++][1]   = "g"
+    upper_lower[i][0]     = "H"
+    upper_lower[i++][1]   = "h"
+    upper_lower[i][0]     = "I"
+    upper_lower[i++][1]   = "i"
+    upper_lower[i][0]     = "J"
+    upper_lower[i++][1]   = "j"
+    upper_lower[i][0]     = "K"
+    upper_lower[i++][1]   = "k"
+    upper_lower[i][0]     = "L"
+    upper_lower[i++][1]   = "l"
+    upper_lower[i][0]     = "M"
+    upper_lower[i++][1]   = "m"
+    upper_lower[i][0]     = "N"
+    upper_lower[i++][1]   = "n"
+    upper_lower[i][0]     = "O"
+    upper_lower[i++][1]   = "o"
+    upper_lower[i][0]     = "P"
+    upper_lower[i++][1]   = "p"
+    upper_lower[i][0]     = "Q"
+    upper_lower[i++][1]   = "q"
+    upper_lower[i][0]     = "R"
+    upper_lower[i++][1]   = "r"
+    upper_lower[i][0]     = "S"
+    upper_lower[i++][1]   = "s"
+    upper_lower[i][0]     = "T"
+    upper_lower[i++][1]   = "t"
+    upper_lower[i][0]     = "U"
+    upper_lower[i++][1]   = "u"
+    upper_lower[i][0]     = "V"
+    upper_lower[i++][1]   = "v"
+    upper_lower[i][0]     = "W"
+    upper_lower[i++][1]   = "w"
+    upper_lower[i][0]     = "X"
+    upper_lower[i++][1]   = "x"
+    upper_lower[i][0]     = "Y"
+    upper_lower[i++][1]   = "y"
+    upper_lower[i][0]     = "Z"
+    upper_lower[i++][1]   = "z"
+
+    while j = 0; j < len; j ++
+        c = _strgetchar(string, j)
+        to = ""
+        while k = 0; k < i; k ++
+            if c == upper_lower[k][0]
+                to = upper_lower[k][1]
+                break
+            endif
+        endwhile
+
+        if to == ""
+            lstr = lstr $ c
+        else
+            lstr = lstr $ to
+        endif
+    endwhile
+
+    return lstr
+
+endproc
+
+
+// proc GetWanDevice returns TR-098 WAN Device name by given type
+// this proc is written to make SCP pages not using hard-code
+// WAN Device names, instead we're trying to enumerate all
+// WAN Devices to get the expected device name. This is one-time
+// thing and we will save the result into Terminal object for
+// future references.
+// wan_dev_type has the following values:
+//      DSL
+//      ETHERNET
+// there might be other values in future, e.g. when xPON WAN Device
+// is being used. 
+
+proc GetWanDevice(wan_dev_type, wdevifcfg, wdevconnlinkcfg)
+
+    wan_if_cfg      = ""
+    wdevconnlinkcfg = ""
+
+    if wan_dev_type == "DSL"    
+        wan_if_cfg = "WANDSLInterfaceConfig."
+        wdevconnlinkcfg = "WANDSLLinkConfig."
+    elseif wan_if_cfg == "ETHERNET"      
+        wan_if_cfg = "WANEthernetInterfaceConfig."
+    else
+        wan_if_cfg = "WANEthernetInterfaceConfig."
+    endif
+
+    if wan_if_cfg == ""
+        return  ""
+    endif
+
+    item_name = wan_dev_type $ "-WANDEVICE"
+
+    wan_dev_name = Terminal.GetItem(item_name)
+
+    if wan_dev_name != ""
+        wdevifcfg = wan_dev_name $ wan_if_cfg
+        return  wan_dev_name
+    endif
+
+    tree = Services.Dslh.ParamTree
+    wdev  = "Device.WANDevice."
+    ret   = tree.GetParamNames(subsysPrefix, wdev, 1:nameArray)
+
+    while i=0; i < nameArray.length; i ++
+        inst = nameArray[i]
+        ret   = tree.GetParamNames(subsysPrefix, inst $ wan_if_cfg, 1:nameWanIfCfg)
+        if nameWanIfCfg.length != 0
+            Terminal.SetItem(item_name, inst)
+            wdevifcfg = inst $ wan_if_cfg
+            return  inst
+        endif
+    endwhile
+
+    return  ""
+
+endproc
+
+
+proc enumRuleIfs(rifs, rifs_name)
+
+    rifs.length = 0
+    rifs_name.length = 0
+    if_count = 0
+
+	tree = Services.Dslh.ParamTree
+    leic = "Device.LANDevice.1.LANEthernetInterfaceConfig."
+	wlc  = "Device.LANDevice.1.WLANConfiguration."
+
+    tree.GetParamNames(subsysPrefix, leic, 1:ethifs)
+    tree.GetParamNames(subsysPrefix, wlc, 1:wlanifs)
+
+    rifs[if_count] = ""
+    rifs_name[if_count++] = "ALL"
+    rifs[if_count] = ""
+    rifs_name[if_count++] = "WAN"
+    rifs[if_count] = ""
+    rifs_name[if_count++] = "LAN"
+    rifs[if_count] = ""
+    rifs_name[if_count++] = "LOCAL"
+
+    while i = 0; i < ethifs.length; i ++
+    	if tree.GetParamValue(subsysPrefix, ethifs[i] $ "Enable") != 0
+            ethifname = tree.GetParamValue(subsysPrefix, ethifs[i] $ "Name")
+            if ethifname == "" 
+                ethifname = "eth" $ (i+1)
+            endif
+            rifs[if_count] = ethifs[i]
+            rifs_name[if_count++] = ethifname
+        endif
+    endwhile
+
+    while i = 0; i < wlanifs.length; i ++
+    	if tree.GetParamValue(subsysPrefix, wlanifs[i] $ "Enable") != 0
+            wlanifname = tree.GetParamValue(subsysPrefix, wlanifs[i] $ "Name")
+            if wlanifname == "" 
+                wlanifname = "wl" $ (i+1)
+            endif
+            rifs[if_count] = wlanifs[i]
+            rifs_name[if_count++] = wlanifname
+        endif
+    endwhile
+
+endproc
+
+
+proc getEnabledTargetIfs(tifs, tifs_desc)
+
+    tifs.length = 0
+    tifs_desc.length = 0
+    tifs_count  = 0
+
+    tree = Services.Dslh.ParamTree
+    dim if_insts[]
+    dim if_names[]
+    dim if_desc[]
+    enumTargetIfs(if_insts, if_names, 0, if_desc)
+    
+    while i=0; i<if_insts.length; i++
+        if tree.GetParamValue(subsysPrefix, if_insts[i] $ "Enable") != 0
+            tifs_desc[tifs_count] = if_desc[i]
+            tifs[tifs_count++] = if_names[i]
+        endif 
+    endwhile
+
+endproc
+
+
+proc forceMacAddrSep(macaddr, sep)
+
+    while i = 0; i < 16; i ++
+        c = _strgetchar(macaddr, i)
+        if ( c == ":" || c == "-" ) && (sep != c)
+            _strsetchar(macaddr, i, sep)
+        endif
+    endwhile
+
+endproc
+
+
+proc moreResult(cur, total)
+
+    // cur - current portion of display (must be less or equal to total)
+    // total - total number of result
+    // return value - 0: no more result meaning exit, 1: next page, 2: all left
+
+    = "--More -- (" $ cur $ "/" $ total $ "), 'x' to exit, 'a' to display all rest, others next page) "
+    resp = Input.Read2("c", 1, 0, 1)
+    if resp == "x" || resp == "X"
+        return 0
+    elseif resp == "a" || resp == "A"
+        return 2
+    else
+        return 1
+    endif
+
+endproc
+
+#>
+
