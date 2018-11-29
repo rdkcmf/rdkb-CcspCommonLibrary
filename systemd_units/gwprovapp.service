@@ -25,6 +25,7 @@ Description=Gwprovapp service
 #Note: Don't Uncomment Below Line: Each Device needs a conf file to launch the binary
 #ExecStart=/usr/bin/gw_prov_utopia $IP
 EnvironmentFile=/etc/device.properties
+ExecStartPre=-/bin/sh -c 'mkdir -p /rdklogs/logs/'
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting gw_prov_utopia" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 StandardOutput=syslog+console
