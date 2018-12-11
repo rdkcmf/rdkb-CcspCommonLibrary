@@ -250,17 +250,6 @@ if [ -f "/tmp/wifi_initialized" ] && [ -f "/tmp/pam_initialized" ] || [ $timer -
 	        cd ..
 	fi
 
-	if [ -e ./ccsp-servicemanager-broadband ]; then
-        	echo "****STARTING SERVICEMANAGER***"
-        	cd ccsp-servicemanager-broadband
-	        if [ "x"$Subsys = "x" ];then
-        		$BINPATH/CcspServiceManager &
-	        else	
-        		echo "$BINPATH/CcspServiceManager -subsys $Subsys &"
-		        $BINPATH/CcspServiceManager -subsys $Subsys &
-        	fi
-        cd ..
-	fi
 	break
 else
 	echo "Waiting for Wifi init completion to start Harvester"

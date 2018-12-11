@@ -360,19 +360,6 @@ if [ -e ./harvester ]; then
 fi
 
 #Added this from cosa_start_atom.sh since in tchxb6 all Ccsp Componets are running on Arm side
-if [ -e ./ccsp-servicemanager-broadband ]; then
-        echo_t "****STARTING SERVICEMANAGER***"
-        cd ccsp-servicemanager-broadband
-        if [ "x"$Subsys = "x" ];then
-        $BINPATH/CcspServiceManager &
-        else
-        echo_t "$BINPATH/CcspServiceManager -subsys $Subsys &"
-        $BINPATH/CcspServiceManager -subsys $Subsys &
-        fi
-        cd ..
-fi
-
-#Added this from cosa_start_atom.sh since in tchxb6 all Ccsp Componets are running on Arm side
 if [ -e ./wifi ]; then
        cd wifi
        if [ "x"$Subsys = "x" ];then
