@@ -213,6 +213,18 @@ fi
 
 sleep 5
 
+if [ -e ./notify-comp ]; then
+        cd notify-comp
+
+        if [ "x"$Subsys = "x" ];then
+                $BINPATH/notify_comp
+        else
+                echo "$BINPATH/notify_comp -subsys $Subsys"
+                $BINPATH/notify_comp -subsys $Subsys
+        fi
+        cd ..
+fi
+
 if [ -e ./cm ]; then
         cd cm
         if [ "x"$Subsys = "x" ];then
@@ -254,19 +266,6 @@ fi
 #    fi                                                                                                                     
 #    cd ..                                                                                                                  
 #fi  
-
-
-if [ -e ./notify-comp ]; then
-        cd notify-comp
-
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/notify_comp
-        else
-                echo "$BINPATH/notify_comp -subsys $Subsys"
-                $BINPATH/notify_comp -subsys $Subsys
-        fi
-        cd ..
-fi
 
 #Mesh-596: We need to start dropbear a bit earlier so that lease sync happens
 #for plume
