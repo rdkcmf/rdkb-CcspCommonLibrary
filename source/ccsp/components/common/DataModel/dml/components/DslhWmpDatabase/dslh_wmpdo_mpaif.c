@@ -1837,15 +1837,6 @@ EXIT3:
         ppValueArray = NULL;
     }
 
-    if ( returnStatus == ANSC_STATUS_SUCCESS )
-    {
-        goto  EXIT1;
-    }
-    else
-    {
-        goto  EXIT2;
-    }
-
 EXIT2:
     if ( pObjRecordArray ) /*RDKB-5801 , CID-33303, Free resource*/
     {
@@ -1866,11 +1857,6 @@ EXIT2:
 
     return  returnStatus;
 
-EXIT1:
-
-    AnscReleaseTsLock(&pMyObject->AccessTsLock);
-
-    return  returnStatus;
 }
 
 
