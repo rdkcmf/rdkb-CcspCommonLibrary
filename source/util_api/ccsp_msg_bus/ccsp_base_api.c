@@ -3288,13 +3288,6 @@ int PSM_Get_Record_Value2
                     psmName, CCSP_DBUS_PATH_PSM, parameterNames[0]));
     */
 
-    if( (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_l3net") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_l2net") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_brport") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.HomeSecurity_l3net") == 0) ) {
-    fprintf(stderr, " DEBUG <pid%d>[%s]: psmName='%s', path='%s', para='%s'\n",
-                    getpid(), __FUNCTION__,
-                    psmName, CCSP_DBUS_PATH_PSM, parameterNames[0]);
-
-    }
-
     ret = CcspBaseIf_getParameterValues(
                   bus_handle,
                   psmName,
@@ -3310,28 +3303,12 @@ int PSM_Get_Record_Value2
                     getpid(), __FUNCTION__, ret, size));
 
     if(val && val[0] && size) {
-       	CcspTraceDebug(("<pid%d>[%s]: name='%s', value='%s'\n", 
+        CcspTraceDebug(("<pid%d>[%s]: name='%s', value='%s'\n", 
                         getpid(), __FUNCTION__, 
                         val[0]->parameterName ? val[0]->parameterName : "NULL",
                         val[0]->parameterValue ? val[0]->parameterValue : "NULL"));
     }
     */
-
-
-    if( (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_l3net") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_l2net") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.PrimaryLAN_brport") == 0) || (strcmp(pRecordName, "dmsb.MultiLAN.HomeSecurity_l3net") == 0) ) {
-    fprintf(stderr, "DEBUG <pid%d>[%s]: ret='%d', size='%d'\n",
-                    getpid(), __FUNCTION__, ret, size);
-
-
-    if(val && val[0] && size) {
-        fprintf(stderr, "DEBUG <pid%d>[%s]: name='%s', value='%s'\n",
-                        getpid(), __FUNCTION__,
-                        val[0]->parameterName ? val[0]->parameterName : "NULL",
-                        val[0]->parameterValue ? val[0]->parameterValue : "NULL");
-
-    }
-
-    }
 
     if(ret == CCSP_SUCCESS) {
         if(val && val[0] && size) {
