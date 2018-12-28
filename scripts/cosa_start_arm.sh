@@ -280,18 +280,22 @@ if [ "x$MULTI_CORE" == "xyes" ]; then
 
 fi
 
-if [ -f "/usr/ccsp/tdk/StartTDK.sh" ]
+if [ -f /version.txt ]
 then
-    if [ -f /version.txt ]
-    then
-        echo "version.txt exists"
-        imgname=`cat /version.txt | grep -i 'imagename'`
-        echo $imgname
-        flag=`echo $imgname|awk '{print match($0,"TDK")}'`;
-        if [ $flag -gt 0 ];then
-            echo "Found TDK Image"
-            echo "Invoking TDK start up script"
-            sh /usr/ccsp/tdk/StartTDK.sh &
-        fi
-    fi
+   echo "version.txt exists"
+   imgname=`cat /version.txt | grep -i 'imagename'`
+   echo $imgname
+   flag=`echo $imgname|awk '{print match($0,"TDK")}'`;
+   if [ $flag -gt 0 ];then
+       if [ -f "/usr/ccsp/tdk/StartTDK.sh" ]
+       then
+           echo "Found TDK Image"
+           echo "Invoking TDK start up script"
+           sh /usr/ccsp/tdk/StartTDK.sh &
+       else
+           echo "Found RDM enabled TDK Image"
+           echo "Invoking tdk_download script"
+           sh /usr/sbin/tdkb_download.sh &
+       fi
+   fi
 fi
