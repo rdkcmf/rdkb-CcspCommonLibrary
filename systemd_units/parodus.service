@@ -25,7 +25,6 @@ After=CcspPandMSsp.service
 Type=forking
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
-WorkingDirectory=/usr/ccsp/parodus
 ExecStartPre=/bin/sh -c 'while true; do var=`sysevent get wan-status | grep started`; if [ "$var" != "" ]; then sleep 5; break; fi; sleep 5; done'
 ExecStartPre=/usr/bin/parodusStart
 Environment="PARODUS_COMMAND=$(/bin/cat /tmp/parodusCmd.cmd)"
