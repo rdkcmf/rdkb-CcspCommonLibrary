@@ -114,10 +114,12 @@ volatile unsigned int MeshService_RDKLogLevel = 5;
 
 volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
 volatile unsigned int ETHAGENT_RDKLogLevel = 4;
-
 volatile BOOL BLE_RDKLogEnable = TRUE;
 volatile unsigned int BLE_RDKLogLevel = 4;
-;
+volatile BOOL WANAGENT_RDKLogEnable = TRUE;
+volatile unsigned int WANAGENT_RDKLogLevel = 4;
+volatile BOOL TELCOVOIPAGENT_RDKLogEnable = TRUE;
+volatile unsigned int TELCOVOIPAGENT_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -343,6 +345,18 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.ETHAGENT";
             LogLevel = ETHAGENT_RDKLogLevel;
             LogEnable = ETHAGENT_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanagent"))
+        {
+            ComponentName= "LOG.RDK.WANAGENT";
+            LogLevel = WANAGENT_RDKLogLevel;
+            LogEnable = WANAGENT_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoipagent"))
+        {
+            ComponentName= "LOG.RDK.TELCOVOIPAGENT";
+            LogLevel = TELCOVOIPAGENT_RDKLogLevel;
+            LogEnable = TELCOVOIPAGENT_RDKLogEnable;
         }
         else
         {
