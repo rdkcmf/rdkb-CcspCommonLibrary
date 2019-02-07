@@ -320,18 +320,6 @@ if [ -e ./ethagent ]; then
     cd ..
 fi
 
-ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
-fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
-if [ "$fingerprintenable" == "1" ];then
-    echo "Device_Finger_Printing_enabled:true"
-    if [ -f $ADVSEC_LAUNCH_SCRIPT ]; then
-        echo_t "$ADVSEC_LAUNCH_SCRIPT"
-        $ADVSEC_LAUNCH_SCRIPT -enable &
-    fi
-else
-    echo "Device_Finger_Printing_enabled:false"
-fi
-
 if [ -e ./lm ]; then
     echo_t "***Starting CcspLMLite****"
     cd lm
@@ -445,6 +433,19 @@ if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
     if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
         /lib/rdk/run_snmpv3_master.sh &
     fi
+fi
+
+ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
+fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
+rabidEnabled=`syscfg get Advsecurity_RabidEnable`
+if [ "$fingerprintenable" = "1" ] || [ "$rabidEnabled" = "1" ]; then
+    echo "Device_Finger_Printing_enabled:true"
+    if [ -f $ADVSEC_LAUNCH_SCRIPT ]; then
+        echo_t "$ADVSEC_LAUNCH_SCRIPT"
+        $ADVSEC_LAUNCH_SCRIPT -start &
+    fi
+else
+    echo "Device_Finger_Printing_enabled:false"
 fi
 
 #if [ "x$BOX_TYPE" == "xTCCBR" ]; then
