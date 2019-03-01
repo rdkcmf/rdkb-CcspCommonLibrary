@@ -3739,7 +3739,20 @@ int getPartnerId ( char *partnerID)
 	char 	*arg = "GetPartnerID";
 	char 	buffer [ 64 ] = { 0 };
 	char 	command[256] = {0};
-
+	sprintf(command,"syscfg get PartnerID");
+	file = popen ( command, "r" );
+	if(file)
+	{
+	   fgets ( buffer, 64, file );
+	   pclose ( file );
+	   file = NULL;
+	   if(buffer[0] != '\0')
+	   {
+	   sprintf( partnerID, "%s", buffer );
+	   return CCSP_SUCCESS;
+	   }
+	}
+	memset(command,0,sizeof(command));
 	snprintf(command,sizeof(command),"%s %s",name,arg);
 	file = popen ( command, "r" );
 	if(file)
