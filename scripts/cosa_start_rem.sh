@@ -157,6 +157,10 @@ fi
 fi
 echo_t "Elected subsystem is $Subsys"
 
+if [ -f /lib/rdk/start-upnp-service ]; then
+    /lib/rdk/start-upnp-service start &
+fi
+
 if [ -e ./pam ]; then
     cd pam
         #double background to detach the script from the tty
