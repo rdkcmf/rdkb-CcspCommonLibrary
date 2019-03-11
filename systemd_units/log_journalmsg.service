@@ -10,12 +10,9 @@ Description= Log Dmesg
 After=CcspMtaAgentSsp.service
 
 [Service]
-Type=oneshot
-RemainAfterExit=yes
-ExecStartPre=/bin/sh -c 'sleep 120'
+Type=simple
 ExecStart=/rdklogger/update_journal_log.sh start
-ExecStop=/rdklogger/update_journal_log.sh stop
-#StandardOutput=syslog+console
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
