@@ -495,11 +495,11 @@ static void FreeCompList(struct CdmComp *comps, int compCnt)
             AnscFreeMemory(comps[i].dbusPath);
 
         if (comps[i].isPath && comps[i].paths) {
-
-                if(comps[i].paths[0])
-                        AnscFreeMemory(comps[i].paths[0]);
-
-            AnscFreeMemory(comps[i].paths);
+           for (j = 0; j < comps[i].paramCnt; j++) {
+               if(comps[i].paths[j])
+                   AnscFreeMemory(comps[i].paths[j]);
+           }
+           AnscFreeMemory(comps[i].paths);
         } else if (!comps[i].isPath && comps[i].paramVals) {
             for (j = 0; j < comps[i].paramCnt; j++) {
                 if (comps[i].paramVals[j].parameterName)
@@ -1343,7 +1343,7 @@ static DmErr_t GetParamGrp(const char *paths[], int npath, DmParam_t *params[], 
         valStru = NULL, valNum = 0;
     }
 
-    FreeCompList(compList, compCnt);
+    FreeCompList(compList, paramCnt);
     *params = paramBuf;
     *cnt = paramCnt;
     return CCSP_SUCCESS;
@@ -1353,7 +1353,7 @@ errout:
         free_parameterValStruct_t(cdm.busHdl, valNum, valStru);
     if (paramBuf)
         AnscFreeMemory(paramBuf);
-    FreeCompList(compList, compCnt);
+    FreeCompList(compList, paramCnt);
     return err;
 }
 
