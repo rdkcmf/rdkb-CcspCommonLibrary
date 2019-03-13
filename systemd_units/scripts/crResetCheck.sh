@@ -20,10 +20,12 @@
 # Component Register can safely restart if no other RDKB components have initialized
 
 source /etc/device.properties
-  
 if [ -f /tmp/pam_initialized ] || [ -f /tmp/psm_initialized ]; then
 	#This will be launched even during the happy path. For those cases give time for system to shutdown
 	sleep 10
+	if [ -e "/usr/bin/onboarding_log" ]; then
+	    /usr/bin/onboarding_log "Device reboot due to reason CR_crash"
+	fi
 	syscfg set X_RDKCENTRAL-COM_LastRebootReason CR_crash
 	syscfg set X_RDKCENTRAL-COM_LastRebootCounter "1"
 	syscfg commit
