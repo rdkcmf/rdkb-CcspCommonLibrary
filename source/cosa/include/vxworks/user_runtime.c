@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2002
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This wrapper file implements the commonly used C runtime

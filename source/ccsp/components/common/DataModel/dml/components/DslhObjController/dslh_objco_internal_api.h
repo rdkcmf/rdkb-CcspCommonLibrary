@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc.,
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This header file contains the prototype definition for all

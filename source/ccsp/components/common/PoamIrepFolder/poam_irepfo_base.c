@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2003
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements the basic container object functions

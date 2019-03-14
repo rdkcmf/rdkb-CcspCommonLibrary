@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System, Inc.
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the SLAP TLV memory format

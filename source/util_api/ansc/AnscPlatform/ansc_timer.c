@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2007
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements the platform-dependent timer

@@ -42,13 +42,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc.
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements basic NamespaceMgr functions

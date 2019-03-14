@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2008
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the STUN element parameters that can be

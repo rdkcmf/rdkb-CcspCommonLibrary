@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2005
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements the advanced utilities functions

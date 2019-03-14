@@ -42,13 +42,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2005
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This wrapper file defines the base class data structure and

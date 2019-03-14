@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc.
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements the helper functions for CCSP components:

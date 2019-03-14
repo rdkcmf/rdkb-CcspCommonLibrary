@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2006
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements the data management functions 

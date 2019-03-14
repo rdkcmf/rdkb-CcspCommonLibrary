@@ -44,13 +44,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2002
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This header file defines the status for the general ASN.1 

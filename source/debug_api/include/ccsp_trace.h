@@ -42,13 +42,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems Inc., 2011 ~ 
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This API header file defines all the CCSP trace related

@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2007
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This wrapper file defines all the platform-independent

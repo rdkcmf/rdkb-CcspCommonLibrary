@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2005
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the configuration parameters and message

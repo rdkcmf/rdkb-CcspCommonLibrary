@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     functional description:
 
         This file defines the structures and prototypes used in

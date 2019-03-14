@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2001
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the system- and package-wide compiling

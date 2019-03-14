@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    Copyright:
-
-        Cisco Systems, Inc., 1997~2001
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     Functional Description:
 
         Utilities for using SSLeay

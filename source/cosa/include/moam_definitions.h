@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2002
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the Moam element parameters that can be
