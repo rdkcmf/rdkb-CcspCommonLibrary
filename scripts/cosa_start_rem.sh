@@ -400,6 +400,7 @@ fi
 
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
+    rm -rf /telemetry/*.cmd
     /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
 fi
 
