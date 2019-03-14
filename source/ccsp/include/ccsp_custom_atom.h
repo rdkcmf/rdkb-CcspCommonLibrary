@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 2011 ~
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This header file gives the custom module definitions for

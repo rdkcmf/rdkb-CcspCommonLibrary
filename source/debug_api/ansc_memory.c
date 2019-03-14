@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems Inc., 2011 ~ 
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This module implements all the CCSP memory related

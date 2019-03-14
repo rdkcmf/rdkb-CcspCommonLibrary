@@ -41,13 +41,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco System  , Inc., 1997 ~ 2010
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         To support multiple Execution Environments (EE) on CPE or 

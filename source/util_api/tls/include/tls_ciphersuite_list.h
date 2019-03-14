@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2003
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file encapsulates all the Cipher Suite Descriptors

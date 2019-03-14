@@ -42,13 +42,6 @@
 
     ---------------------------------------------------------------
 
-    copyright:
-
-        Cisco Systems, Inc., 1997 ~ 2006
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     description:
 
         This file defines the Object Id for the MEP object.
