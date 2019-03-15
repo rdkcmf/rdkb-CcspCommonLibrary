@@ -1,0 +1,11 @@
+[Unit]
+Description=Hotspot service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'sysevent set hotspot-start'
+RemainAfterExit=Yes
+StandardOutput=syslog+console
+
+[Install]
+WantedBy=wifi-initialized.target
