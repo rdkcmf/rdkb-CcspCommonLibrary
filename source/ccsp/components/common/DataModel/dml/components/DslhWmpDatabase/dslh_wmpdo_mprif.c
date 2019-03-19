@@ -1199,13 +1199,16 @@ DslhWmpdoMprGetVarRecord
     {
         pParamNameToken = ACCESS_ANSC_STRING_TOKEN(pSLinkEntry);
     }
-
-    pObjRecord =
-        (PDSLH_OBJ_RECORD_OBJECT)pRootObjRecord->GetObjRecord2
+    
+    if(pRootObjRecord)
+    {
+        pObjRecord =
+            (PDSLH_OBJ_RECORD_OBJECT)pRootObjRecord->GetObjRecord2
             (
                 (ANSC_HANDLE)pRootObjRecord,
                 (ANSC_HANDLE)pParamPathTokens
             );
+    }
 
     if ( !pObjRecord )
     {
