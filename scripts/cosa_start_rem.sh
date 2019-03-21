@@ -234,13 +234,16 @@ if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
     echo_t "Disabling TR069Pa for BWG "
 else
 if [ -e ./tr069pa ]; then
-	cd tr069pa
+     cd tr069pa
+     enable_TR69_Binary=`syscfg get EnableTR69Binary`
+     if [ "" = "$enable_TR69_Binary" ] || [ "true" = "$enable_TR69_Binary" ]; then
 	if [ "x"$Subsys = "x" ]; then
 		$BINPATH/CcspTr069PaSsp
 	else
 	echo_t "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
 		$BINPATH/CcspTr069PaSsp -subsys $Subsys
 	fi
+     fi
 #        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
 #        sysevent setunique GeneralPurposeFirewallRule " -A INPUT ! -i erouter0 -p tcp -m tcp --dport 7547 -j DROP "
 	cd ..
