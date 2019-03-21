@@ -475,6 +475,37 @@ if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
   fi
 fi
 
+if [ "x$BOX_TYPE" = "xXB3" ]; then
+echo "Bringup Mesh QinQ ...."
+ip link add link l2sd0.100 l2sd0.100.1060 type vlan proto 802.1Q id 1060
+ip link set l2sd0.100.1060 up
+brctl addif br403 l2sd0.100.1060
+ip rule add from all iif l2sd0.100.1060 lookup erouter
+
+ip link add link l2sd0.100 l2sd0.100.101 type vlan proto 802.1Q id 101
+ip link set l2sd0.100.101 up
+brctl addif brlan1 l2sd0.100.101
+ip rule add from all iif l2sd0.100.101 lookup erouter
+
+ip link add link l2sd0.100 l2sd0.100.106 type vlan proto 802.1Q id 106
+ip link set l2sd0.100.106 up
+brctl addif br106 l2sd0.100.106
+ip rule add from all iif l2sd0.100.106 lookup erouter
+
+#Enable external switch for QinQ support in case of Cisco
+if [ "$MODEL_NUM" = "DPC3941" ] ; then
+ cli system/l2switch/extswitch/QinQ_NutralPort 1
+ cli system/l2switch/extswitch/QinQ_NutralPort 2
+ cli system/l2switch/extswitch/QinQ_NutralPort 3
+ cli system/l2switch/extswitch/QinQ_NutralPort 4
+
+ cli system/l2switch/extswitch/mapPortToVlan 100 1 1
+ cli system/l2switch/extswitch/mapPortToVlan 100 1 2
+ cli system/l2switch/extswitch/mapPortToVlan 100 1 3
+ cli system/l2switch/extswitch/mapPortToVlan 100 1 4
+ 
+fi
+fi
 #if [ "x$BOX_TYPE" == "xTCCBR" ]; then
 #	echo_t "starting apshealth.sh"
 #	/usr/ccsp/wifi/apshealth.sh &
