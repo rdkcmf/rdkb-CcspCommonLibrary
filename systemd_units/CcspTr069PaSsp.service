@@ -20,6 +20,7 @@
 Description=CcspTr069PaSsp service
 
 After=CcspPandMSsp.service
+ConditionPathExists=!/tmp/disableTr069
 
 [Service]
 Type=forking

@@ -250,14 +250,17 @@ ulimit -c unlimited
 	if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
         echo_t "Disabling TR069Pa for BWG "
         else
-        echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspTr069PaSsp on atom reset"
-	cd /usr/ccsp/tr069pa
-	if [ "x"$Subsys = "x" ]; then
-		$BINPATH/CcspTr069PaSsp
-	else
+	enable_TR69_Binary=`syscfg get EnableTR69Binary`
+	if [ "" = "$enable_TR69_Binary" ] || [ "true" = "$enable_TR69_Binary" ]; then
+            echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspTr069PaSsp on atom reset"
+	    cd /usr/ccsp/tr069pa
+	    if [ "x"$Subsys = "x" ]; then
+                $BINPATH/CcspTr069PaSsp
+		else
 		$BINPATH/CcspTr069PaSsp -subsys $Subsys
+            fi
 	fi
-        fi
+	fi
 
 	sleep 2
 	echo "RDKB_SELFHEAL : Resetting process log_agent on atom reset"
