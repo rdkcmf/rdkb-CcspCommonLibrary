@@ -169,7 +169,6 @@ typedef struct _CCSP_MESSAGE_BUS_INFO
     pthread_cond_t  msg_threshold_cv;
     CCSP_MSG_QUEUE *msg_queue;
     DBusObjectPathMessageFunction thread_msg_func;
-    int dbus_connect_thread_count;
 
 } CCSP_MESSAGE_BUS_INFO;
 
