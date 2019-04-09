@@ -61,6 +61,17 @@ unsigned int deadlock_detection_log_index               = 0;
 
 void CcspBaseIf_deadlock_detection_log_save();
 
+static inline time_t GetCurrentTime(void)
+{
+#if defined(CLOCK_MONOTONIC)
+    struct timespec now;
+    clock_gettime(CLOCK_MONOTONIC, &now);
+    return now.tv_sec;
+#else
+    return time(NULL); 
+#endif
+}
+
 /* These two macro are used to transfer information for deadlock detection thread */
 #define CCSP_DEADLOCK_DETECTION_ENTER(messageType1, parameterArray, size1)     \
     if ( deadlock_detection_enable )                                     \
@@ -71,7 +82,7 @@ void CcspBaseIf_deadlock_detection_log_save();
             deadlock_detection_info.messageType   = messageType1;         \
             deadlock_detection_info.parameterInfo = (void *)parameterArray; \
             deadlock_detection_info.size          = size1;                \
-            deadlock_detection_info.enterTime     = time(NULL);           \
+            deadlock_detection_info.enterTime     = GetCurrentTime();           \
             if ( strstr("getParameterValues", messageType1 ) )            \
             {    deadlock_detection_info.detectionDuration = CcspBaseIf_deadlock_detection_time_getval_seconds; } \
             else                                                         \
@@ -1572,7 +1583,7 @@ void CcspBaseIf_deadlock_detection_log_save
     unsigned long                 index          = deadlock_detection_log_index;
     int                           i              = 0;
     char                          timestr[128]   = {0};
-    time_t                        t1             = time(NULL);
+    time_t                        t1             = GetCurrentTime();
     
     if ( !deadlock_detection_enable )
         return;
@@ -1679,7 +1690,7 @@ CcspBaseIf_deadlock_detection_log_print
     FILE *                        fd             = NULL;
     int                           i              = 0;
     char                          timestr[128]   = {0};
-    time_t                        t1             = time(NULL);
+    time_t                        t1             = GetCurrentTime();
     
     if ( !deadlock_detection_enable )
         return;
@@ -1789,7 +1800,7 @@ CcspBaseIf_Deadlock_Detection_Thread
         {
             pthread_mutex_lock(&(info->info_mutex));
 
-            currentTime = time(NULL);
+            currentTime = GetCurrentTime();
             if ( (currentTime - info->enterTime) >= info->detectionDuration )
             {
                // (2*(info->detectionDuration)) This check is just for checking invalid time difference  
@@ -1821,7 +1832,7 @@ CcspBaseIf_Deadlock_Detection_Thread
     if (deadLockHappen)
     {  
         char                          timestr[128]   = {0};
-        time_t                        t1             = time(NULL);
+        time_t                        t1             = GetCurrentTime();
         
         strftime(timestr, sizeof(timestr), "%Y-%m-%d %H:%M:%S", localtime(&t1));   
     
