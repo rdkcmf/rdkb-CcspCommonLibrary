@@ -144,9 +144,15 @@ typedef struct _CCSP_MESSAGE_BUS_CONNECTION
 {
     DBusConnection *conn;
     char address[256];
+    pthread_mutex_t connect_mutex;
     int connected;
     void * bus_info_ptr;
     DBusLoop *loop;
+    int self_pipe[2];
+    pthread_mutex_t dispatch_mutex;
+    int needs_dispatch;
+    pthread_t loop_thread;
+    pthread_t connect_thread;
 
 } CCSP_MESSAGE_BUS_CONNECTION;
 
@@ -169,6 +175,8 @@ typedef struct _CCSP_MESSAGE_BUS_INFO
     pthread_cond_t  msg_threshold_cv;
     CCSP_MSG_QUEUE *msg_queue;
     DBusObjectPathMessageFunction thread_msg_func;
+    int dbus_connect_thread_count;
+    int dbus_loop_thread_count;
 
 } CCSP_MESSAGE_BUS_INFO;
 
