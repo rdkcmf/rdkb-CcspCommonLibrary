@@ -132,8 +132,12 @@ static void              append_event_info(char*, const char*, const char*, cons
 static int               CCSP_Message_Bus_Register_Event_Priv(DBusConnection*, const char*, const char*, const char*, const char*, int);
 static int               CCSP_Message_Save_Register_Event(void*, const char*, const char*, const char*, const char*);
 static int               CCSP_Message_Bus_Register_Path_Priv(void*, const char*, DBusObjectPathMessageFunction, void*);
+static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_callback_t, void*);
+static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
 static DBusWakeupMainFunction wake_mainloop(void *);
+
+int rbus_enabled = 0;
 
 // External Interface, defined in ccsp_message_bus.h
 /*
@@ -1067,6 +1071,51 @@ CCSP_Message_Bus_Init
        bus_info->component_id[sizeof(bus_info->component_id)-1] = '\0';
     }
 
+    rbus_enabled = (access("/nvram/rbus", F_OK) == 0);
+    RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");
+    if(rbus_enabled)
+    {
+        rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+        CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
+
+        if((err = rbus_openBrokerConnection(component_id)) != RTMESSAGE_BUS_SUCCESS)
+        {
+            CcspTraceError(("<%s>: rbus_openBrokerConnection fails\n", __FUNCTION__));
+        }
+        else
+        {
+            if((err = rbus_registerObj(component_id, bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+            {
+                CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
+            }
+            else
+            {
+                if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.CR") == 0)
+                {
+                    if((err = rbus_registerEvent(component_id, CCSP_SYSTEM_READY_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for system ready \n", __FUNCTION__, err);
+                    if((err = rbus_registerEvent(component_id, CCSP_CURRENT_SESSION_ID_SIGNAL )) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for currentSessionIDSignal\n", __FUNCTION__, err);
+                    if((err = rbus_registerEvent(component_id,CCSP_DEVICE_PROFILE_CHANGE_SIGNAL )) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for deviceProfileChangeSignal)\n", __FUNCTION__, err);
+                }
+                else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.tr069pa") == 0)
+                {
+                    if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for diagCompleteSignal\n", __FUNCTION__, err);
+                    if(( err = rbus_registerEvent(component_id,CCSP_PARAMETER_VALUE_CHANGE_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for parameterValueChangeSignal\n", __FUNCTION__, err);
+                }
+                else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.rm") == 0)
+                {
+                    if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
+                }
+            }
+        }
+        return 0;
+    }
+
     //    CcspTraceDebug(("<%s>: component id = '%s'\n", __FUNCTION__, bus_info->component_id));
 
     // init var, mutex, msg_queue
@@ -1751,6 +1800,277 @@ CCSP_Message_Bus_Register_Path_Priv
     dbus_error_free(&error);
 
     return ret;
+}
+
+static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+{
+    rtError err = RT_OK;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)user_data;
+
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+    RBUS_LOG("%s Component ID: %s\n", __FUNCTION__, bus_info->component_id);
+    if(NULL != method && func != NULL)
+    {
+        if(!strncmp(method, METHOD_GETPARAMETERVALUES, MAX_METHOD_NAME_LENGTH) && func->getParameterValues)
+        {
+            int result = 0, i =0, size =0;
+            unsigned int writeID = 0;
+            int32_t param_size = 1, tmp = 0;
+            char **parameterNames = 0, names = 0;
+            parameterValStruct_t **val = 0;
+
+            rtError err = RT_OK;
+            rbus_PopInt32(request, (int32_t*)&writeID);
+            rbus_PopInt32(request, &param_size);
+
+            if(param_size > 0)
+            {
+                parameterNames = bus_info->mallocfunc(param_size*sizeof(char *));
+                memset(parameterNames, 0, param_size*sizeof(char *));
+            }
+
+            for(i = 0; i < param_size; i++)
+            {
+                parameterNames[i] = NULL;
+                rbus_PopString(request, &parameterNames[i]);
+                RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
+            }
+
+            result = func->getParameterValues(writeID, parameterNames, param_size, &size, &val , func->getParameterValues_data);
+            RBUS_LOG("%s size %d result %d\n", __FUNCTION__, size, result);
+            bus_info->freefunc(parameterNames);
+
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            rbus_AppendInt32(*response, size);
+            for(i = 0; i < size; i++)
+            {
+                RBUS_LOG("%s val[%d]->parameterName %s val[%d]->parameterValue %s\n", __FUNCTION__, i, val[i]->parameterName, i, val[i]->parameterValue);
+                rbus_AppendString(*response, val[i]->parameterName);
+                rbus_AppendString(*response, val[i]->parameterValue);
+                rbus_AppendInt32(*response, val[i]->type);
+            }
+            free_parameterValStruct_t(bus_info, size, val);
+        }
+        else if(!strncmp(method, METHOD_GETHEALTH, MAX_METHOD_NAME_LENGTH) && func->getHealth)
+        {
+            int32_t result = 0;
+            result = func->getHealth();
+            rtMessage_Create(response);
+            rbus_AppendInt32(*response, result);
+            RBUS_LOG("exiting METHOD_GETHEALTH with result %d\n", result);
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if(!strncmp(method, METHOD_SETPARAMETERVALUES, MAX_METHOD_NAME_LENGTH) && func->setParameterValues)
+        {
+            int param_size = 0, i = 0, result = 0;
+            parameterValStruct_t * parameterVal = 0;
+            unsigned int writeID = 0;
+            int32_t sessionId = 0, tmp = 0;
+            dbus_bool commit = 0;
+            char *invalidParameterName = 0;
+
+            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            rbus_PopInt32(request, &sessionId);
+            rbus_PopInt32(request, (int32_t*)&writeID);
+            rbus_PopInt32(request, (int32_t*)&param_size);
+            if(param_size > 0)
+            {
+                parameterVal = bus_info->mallocfunc(param_size*sizeof(parameterValStruct_t ));
+                memset(parameterVal, 0, param_size*sizeof(parameterValStruct_t ));
+            }
+            for(i = 0; i < param_size; i++)
+            {
+                parameterVal[i].parameterName = NULL;
+                rbus_PopString(request, &parameterVal[i].parameterName);
+                parameterVal[i].parameterValue = NULL;
+                rbus_PopString(request, &parameterVal[i].parameterValue);
+                rbus_PopInt32(request, &parameterVal[i].type);
+            }
+            char *str = NULL;
+            rbus_PopString(request, &str); //commit
+            commit = (str && strcmp(str, "TRUE") == 0)?1:0;
+            result = func->setParameterValues(sessionId, writeID, parameterVal, param_size, commit,&invalidParameterName, func->setParameterValues_data);
+            RBUS_LOG("%s :setParameterValues result %d\n", __FUNCTION__, result);
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            if(invalidParameterName != NULL)
+                rbus_AppendString(*response, invalidParameterName); //invalid param
+            else
+                rbus_AppendString(*response, ""); //invalid param
+            bus_info->freefunc(parameterVal);
+            bus_info->freefunc(invalidParameterName);
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if(!strncmp(method, METHOD_GETPARAMETERATTRIBUTES, MAX_METHOD_NAME_LENGTH) && func->getParameterAttributes)
+        {
+            char **parameterNames = 0, **names = 0;
+            parameterAttributeStruct_t **val = 0;
+            int size = 0, result = 0, i = 0, ret = 0, param_size = 0;
+            int32_t tmp = 0;
+            rbus_PopInt32(request, &param_size);
+
+            if(param_size)
+            {
+                parameterNames = bus_info->mallocfunc(param_size*sizeof(char *));
+                memset(parameterNames, 0, param_size*sizeof(char *));
+            }
+
+            for(i = 0; i < param_size; i++)
+            {
+                parameterNames[i] = NULL;
+                rbus_PopString(request, &parameterNames[i]);
+                RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
+            }
+
+            size = 0;
+            result = func->getParameterAttributes(parameterNames, param_size, &size, &val , func->getParameterAttributes_data);
+            bus_info->freefunc(parameterNames);
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp);
+            rbus_AppendInt32(*response, size);
+
+            for(i = 0; i < size; i++)
+            {
+                rbus_AppendString(*response, val[i]->parameterName);
+                rbus_AppendInt32(*response, val[i]->notificationChanged);
+                rbus_AppendInt32(*response, val[i]->notification);
+                rbus_AppendInt32(*response, val[i]->accessControlChanged);
+                rbus_AppendInt32(*response, val[i]->access);
+                rbus_AppendInt32(*response, val[i]->accessControlBitmask);
+            }
+
+            free_parameterAttributeStruct_t(bus_info, size, val);
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if(!strncmp(method, METHOD_COMMIT, MAX_METHOD_NAME_LENGTH) && func->setCommit)
+        {
+            int32_t tmp = 0, sessionId = 0, writeID = 0, commit = 0;
+            int result = 0;
+            rbus_PopInt32(request, &sessionId);
+            rbus_PopInt32(request, &writeID);
+            rbus_PopInt32(request, &commit);
+            result = func->setCommit(sessionId, writeID, commit, func->setCommit_data);
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if(!strncmp(method, METHOD_SETPARAMETERATTRIBUTES, MAX_METHOD_NAME_LENGTH) && func->setParameterAttributes)
+        {
+            char ** names = 0;
+            parameterAttributeStruct_t * parameterAttribute = 0;
+            int i = 0, sessionId = 0, param_size = 0, result = 0, tmp = 0;
+            int32_t temp = 0;
+            rbus_PopInt32(request, &sessionId);
+            rbus_PopInt32(request, &param_size);
+            if(param_size > 0)
+            {
+                parameterAttribute = bus_info->mallocfunc(param_size*sizeof(parameterAttributeStruct_t));
+                memset(parameterAttribute, 0, param_size*sizeof(parameterAttributeStruct_t));
+            }
+            for(i = 0; i < param_size; i++)
+            {
+                rbus_PopString(request, &parameterAttribute[i].parameterName);
+                rbus_PopInt32(request, &parameterAttribute[i].notificationChanged);
+                rbus_PopInt32(request, &parameterAttribute[i].notification);
+                rbus_PopInt32(request, &parameterAttribute[i].access);
+                rbus_PopInt32(request, &parameterAttribute[i].accessControlChanged);
+                rbus_PopInt32(request, &parameterAttribute[i].accessControlBitmask);
+            }
+            result = func->setParameterAttributes(sessionId, parameterAttribute, param_size, func->setParameterAttributes_data);
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            bus_info->freefunc(parameterAttribute);
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if(!strncmp(method, METHOD_GETPARAMETERNAMES, MAX_METHOD_NAME_LENGTH) && func->getParameterNames)
+        {
+            int ret = 0 ,i = 0,size = 0;
+            int32_t btmp = 0 ,result = 0, tmp = 0;
+            char * parameterName = 0;
+            parameterInfoStruct_t **val = 0;
+            rbus_PopString(request, &parameterName);
+            rbus_PopInt32(request, &btmp); //next level
+            result = func->getParameterNames(parameterName,btmp, &size, &val, func->getParameterNames_data );
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            rbus_AppendInt32(*response, size);
+            for(i = 0; i < size; i++)
+            {
+                rbus_AppendString(*response, val[i]->parameterName);
+                btmp = val[i]->writable;
+                rbus_AppendInt32(*response, btmp);
+                RBUS_LOG("%s Param [%d] Name=%s, Writable=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable);
+            }
+            free_parameterInfoStruct_t(bus_info, size, val);
+        }
+        else if (!strncmp(method, METHOD_ADDTBLROW, MAX_METHOD_NAME_LENGTH) && func->AddTblRow)
+        {
+            int instanceNumber = 0, result = 0;
+            int32_t tmp = 0, sessionId = 0;
+            char *str = 0, *inst_str = 0;
+            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            rbus_PopInt32(request, &sessionId);
+            rbus_PopString(request, &str); //object name
+            result = func->AddTblRow(sessionId, str, &instanceNumber , func->AddTblRow_data);
+            if (result == CCSP_SUCCESS)
+            {
+                inst_str = (char*)bus_info->mallocfunc(strlen(str)+12);
+                sprintf(inst_str, "%s.%d.", str, instanceNumber);
+                if((err = rbus_addElement(bus_info->component_id, inst_str)) != RTMESSAGE_BUS_SUCCESS)
+                {
+                    RBUS_LOG_ERR("rbus_addElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
+                }
+            }
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            tmp = instanceNumber;
+            rbus_AppendInt32(*response, tmp); //inst num
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if (!strncmp(method, METHOD_DELETETBLROW, MAX_METHOD_NAME_LENGTH) && func->DeleteTblRow)
+        {
+            int instanceNumber = 0, result = 0;
+            int32_t tmp = 0, sessionId = 0;
+            char * str = 0;
+            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            rbus_PopInt32(request, &sessionId);
+            rbus_PopString(request, &str); //obj name
+            result = func->DeleteTblRow(sessionId, str , func->DeleteTblRow_data);
+            if (result == CCSP_SUCCESS)
+            {
+                if((err = rbus_removeElement(bus_info->component_id, str)) != RTMESSAGE_BUS_SUCCESS)
+                {
+                    RBUS_LOG_ERR("rbus_removeElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
+                }
+            }
+            rtMessage_Create(response);
+            tmp = result;
+            rbus_AppendInt32(*response, tmp); //result
+            return DBUS_HANDLER_RESULT_HANDLED;
+        }
+    }
+    return 0;
+}
+
+static int
+CCSP_Message_Bus_Register_Path_Priv_rbus
+(
+ void* bus_handle,
+ rbus_callback_t funcptr,
+ void * user_data
+)
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    bus_info->rbus_callback = funcptr;
+    return CCSP_Message_Bus_OK;
 }
 
 int 
