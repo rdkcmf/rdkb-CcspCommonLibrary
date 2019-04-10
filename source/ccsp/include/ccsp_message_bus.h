@@ -63,7 +63,9 @@
 
 #include <dbus/dbus.h>
 #include <pthread.h>
-
+#include <rbus-core/rbus_core.h>
+#include <rbus-core/rbus_marshalling.h>
+#include <rbus-core/rbus_session_mgr.h>
 /*
 notes: see readme.txt
 */
@@ -84,6 +86,19 @@ notes: see readme.txt
 #define CCSP_MESSAGE_BUS_MAX_PATH               20
 
 #define CCSP_MESSAGE_BUS_TIMEOUT_MAX_SECOND     60
+
+#define WRITEID         "WRITEID"
+#define PARAM_SIZE      "PARAM_SIZE"
+#define SESSIONID       "SESSIONID"
+#define COMMIT          "COMMIT"
+#define INVALID_PARAM   "INVALID_PARAM"
+#define RESULT          "RESULT"
+#define OBJNAME         "OBJNAME"
+#define INST_NUM        "INST_NUM"
+#define PRIORITY        "PRIORITY"
+#define PARAM_NAME      "PARAM_NAME"
+#define NEXT_LEVEL      "NEXT_LEVEL"
+
 
 typedef void*(*CCSP_MESSAGE_BUS_MALLOC) ( size_t size ); // this signature is different from standard malloc
 typedef void (*CCSP_MESSAGE_BUS_FREE)   ( void * ptr );
@@ -177,6 +192,7 @@ typedef struct _CCSP_MESSAGE_BUS_INFO
     DBusObjectPathMessageFunction thread_msg_func;
     int dbus_connect_thread_count;
     int dbus_loop_thread_count;
+    rbus_callback_t rbus_callback;
 
 } CCSP_MESSAGE_BUS_INFO;
 

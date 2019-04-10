@@ -19,13 +19,13 @@
 
 /**********************************************************************
    Copyright [2014] [Cisco Systems, Inc.]
- 
+
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
- 
+
        http://www.apache.org/licenses/LICENSE-2.0
- 
+
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -50,8 +50,31 @@
 /* For AnscEqualString */
 #include "ansc_platform.h"
 
+#include "ansc_xml_dom_parser_interface.h"
+#include "ansc_xml_dom_parser_external_api.h"
+#include "ansc_xml_dom_parser_status.h"
+
+/* define default CR device profile name */
+#ifndef CCSP_ETHWAN_ENABLE
+#define CCSP_ETHWAN_ENABLE "/nvram/ETHWAN_ENABLE"
+#endif
+
+#ifndef CCSP_CR_DEVICE_PROFILE_XML_FILE
+#define CCSP_CR_DEVICE_PROFILE_XML_FILE "/usr/ccsp/cr-deviceprofile.xml"
+#endif
+
+#ifndef CCSP_CR_ETHWAN_DEVICE_PROFILE_XML_FILE
+#define CCSP_CR_ETHWAN_DEVICE_PROFILE_XML_FILE "/usr/ccsp/cr-ethwan-deviceprofile.xml"
+#endif
+
+typedef struct _component_info {
+    char **list;
+    int size;
+} component_info;
+
 int   CcspBaseIf_timeout_seconds        = 60; //seconds
 int   CcspBaseIf_timeout_getval_seconds = 120; //seconds
+#define  CcspBaseIf_timeout_rbus  (CcspBaseIf_timeout_seconds * 1000) // in milliseconds
 
 int CcspBaseIf_freeResources(
     void* bus_handle,
@@ -229,8 +252,7 @@ int CcspBaseIf_getMaxMemoryUsage(
     return ret;
 }
 
-
-int CcspBaseIf_setParameterValues(
+int CcspBaseIf_setParameterValues_rbus(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
@@ -240,8 +262,69 @@ int CcspBaseIf_setParameterValues(
     int size,
     dbus_bool commit,
     char ** invalidParameterName
-)
+    )
 {
+    int i = 0;
+    int ret = CCSP_FAILURE;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, sessionId);
+    rbus_AppendInt32(request, (int32_t)writeID);
+    rbus_AppendInt32(request, size);
+
+    for(i = 0; i < size; i++)
+    {
+        rbus_AppendString(request, val[i].parameterName);
+        rbus_AppendString(request, val[i].parameterValue);
+        rbus_AppendInt32(request, val[i].type);
+    }
+    rbus_AppendString(request, commit ? "TRUE" : "FALSE");
+
+    char *object_name = val[0].parameterName;
+    if(dst_component_id && (strstr(dst_component_id, ".psm") || size < 1))
+    {
+        object_name = dst_component_id;
+    }
+
+    RBUS_LOG("%s Calling rbus_invokeRemoteMethod for param on %s\n", __FUNCTION__, object_name);
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_SETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, ret);
+        return ret;
+    }
+
+    rbus_PopInt32(response, &ret);
+    char *str = NULL;
+    rbus_PopString(response, &str); //invalid param
+    if(str)
+    {
+        *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
+        strcpy(*invalidParameterName, str);
+    }
+    else
+        *invalidParameterName = 0;
+
+    rtMessage_Release(response);
+    return ret;
+}
+
+int CcspBaseIf_setParameterValues(
+        void* bus_handle,
+        const char* dst_component_id,
+        char* dbus_path,
+        int sessionId,
+        unsigned int writeID,
+        parameterValStruct_t *val,
+        int size,
+        dbus_bool commit,
+        char ** invalidParameterName
+        )
+{
+    if(rbus_enabled == 1)
+        return CcspBaseIf_setParameterValues_rbus(bus_handle, dst_component_id, dbus_path,sessionId, writeID,val,size,commit,invalidParameterName);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -256,9 +339,9 @@ int CcspBaseIf_setParameterValues(
 
     *invalidParameterName = 0;
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "setParameterValues");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "setParameterValues");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -276,40 +359,40 @@ int CcspBaseIf_setParameterValues(
         CcspTraceError(("error\n"));
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_ARRAY,
-                                            "(ssi)",
-                                            &array_iter);
+            DBUS_TYPE_ARRAY,
+            "(ssi)",
+            &array_iter);
     for(i = 0; i < size; i++)
     {
         dbus_message_iter_open_container (&array_iter,
-                                          DBUS_TYPE_STRUCT,
-                                          "ssi",
-                                          &struct_iter);
+                DBUS_TYPE_STRUCT,
+                "ssi",
+                &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING(&struct_iter, val[i].parameterName);
         DBUS_MESSAGE_APPEND_STRING(&struct_iter, val[i].parameterValue);
         tmp = val[i].type;
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
-	    //CcspTraceError(("dbus_message_iter_append_basic ret = %d \n", ret));
+        //CcspTraceError(("dbus_message_iter_append_basic ret = %d \n", ret));
 
-	    //CcspTraceInfo(("%d : Name = %s , value = %s \n", i, val[i].parameterName, val[i].parameterValue));
-	
+        //CcspTraceInfo(("%d : Name = %s , value = %s \n", i, val[i].parameterName, val[i].parameterValue));
+
         dbus_message_iter_close_container (&array_iter,
-                                           &struct_iter);
+                &struct_iter);
     }
 
     ret = dbus_message_iter_close_container (&iter,
             &array_iter);
-//	CcspTraceError(("dbus_message_iter_close_container ret = %d \n", ret));
+    //	CcspTraceError(("dbus_message_iter_close_container ret = %d \n", ret));
     tmp = size;
     dbus_message_iter_append_basic (&iter, DBUS_TYPE_INT32, &tmp);
     dbus_message_iter_append_basic (&iter, DBUS_TYPE_BOOLEAN, &commit);
     ret = CCSP_Message_Bus_Send_Msg(bus_handle, message, CcspBaseIf_timeout_seconds , &reply);
     //CcspTraceError(("CCSP_Message_Bus_Send_Msg ret = %d \n", ret));
-    
+
     if(reply )
     {
-	    char *str = 0;
+        char *str = 0;
         DBusMessageIter iter;
         dbus_message_iter_init (reply, &iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_STRING)
@@ -317,7 +400,7 @@ int CcspBaseIf_setParameterValues(
             dbus_message_iter_get_basic (&iter, &str);
             if(str)
             {
-               *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
+                *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
                 strcpy(*invalidParameterName, str);
             }
         }
@@ -336,6 +419,34 @@ int CcspBaseIf_setParameterValues(
     return ret;
 }
 
+int CcspBaseIf_setCommit_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    unsigned int writeID,
+    dbus_bool commit
+    )
+{
+    int ret = CCSP_FAILURE;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, sessionId);
+    rbus_AppendInt32(request, writeID);
+    rbus_AppendInt32(request, (int32_t)commit);
+
+     if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id , METHOD_COMMIT, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+     {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod on %s: Err: %d\n", __FUNCTION__, dst_component_id, ret);
+        return ret;
+    }
+
+    rbus_PopInt32(response, &ret);
+    rtMessage_Release(response);
+    return ret;
+}
+
 int CcspBaseIf_setCommit(
     void* bus_handle,
     const char* dst_component_id,
@@ -345,6 +456,9 @@ int CcspBaseIf_setCommit(
     dbus_bool commit
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_setCommit_rbus(bus_handle, dst_component_id, dbus_path, sessionId, writeID, commit);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -352,9 +466,9 @@ int CcspBaseIf_setCommit(
     dbus_uint32_t utmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "setCommit");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "setCommit");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -370,9 +484,9 @@ int CcspBaseIf_setCommit(
     if(reply )
     {
         if(dbus_message_get_args (reply,
-                                  NULL,
-                                  DBUS_TYPE_INT32, &tmp1,
-                                  DBUS_TYPE_INVALID))
+                    NULL,
+                    DBUS_TYPE_INT32, &tmp1,
+                    DBUS_TYPE_INVALID))
         {
             ret = tmp1;
         }
@@ -381,6 +495,100 @@ int CcspBaseIf_setCommit(
     }
     dbus_message_unref (message);
 
+    return ret;
+}
+
+int CcspBaseIf_getParameterValues_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    char * parameterNames[],
+    int param_size,
+    int *val_size,
+    parameterValStruct_t ***parameterval
+    )
+{
+    parameterValStruct_t **val = 0;
+    *val_size = 0;
+    int err = CCSP_FAILURE, ret = CCSP_FAILURE;
+    int i = 0;
+    int param_len = 0;
+    int32_t type = 0;
+    unsigned int writeID = 0;
+    rtMessage request, response;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+
+    if ( _ansc_strcmp(bus_info->component_id, "ccsp.busclient" ) == 0 )
+    {
+        writeID = DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
+    }
+    else if ( _ansc_strcmp(bus_info->component_id, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 )
+    {
+        writeID = DSLH_MPA_ACCESS_CONTROL_SNMP;
+    }
+    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.lms") == 0 )
+    {
+        writeID = DSLH_MPA_ACCESS_CONTROL_LM;
+    }
+    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.wifi") == 0 )
+    {
+        writeID = DSLH_MPA_ACCESS_CONTROL_WIFI;
+    }
+    else
+        writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, (int32_t)writeID);
+    rbus_AppendInt32(request, (int32_t)param_size);
+
+    for(i = 0; i < param_size; i++)
+    {
+        rbus_AppendString(request, parameterNames[i]);
+    }
+
+    param_len = strlen(parameterNames[0]);
+    char *object_name = parameterNames[0];
+    if(dst_component_id) {
+        if((parameterNames[0][param_len - 1] == '.') || strstr(dst_component_id, ".psm") || param_size < 1)
+            object_name = dst_component_id;
+    }
+
+    RBUS_LOG("Calling rbus_invokeRemoteMethod for %s\n", object_name);
+    if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, err);
+        return err;
+    }
+
+    rbus_PopInt32(response, &ret);
+    rbus_PopInt32(response, val_size);
+    RBUS_LOG("No. of o/p params: %d\n", *val_size);
+    if(*val_size)
+    {
+        val = bus_info->mallocfunc(*val_size*sizeof(parameterValStruct_t *));
+        memset(val, 0, *val_size*sizeof(parameterValStruct_t *));
+        char *tmpbuf = NULL;
+
+        for(i = 0; i < *val_size; i++)
+        {
+            val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
+            memset(val[i], 0, sizeof(parameterValStruct_t));
+            tmpbuf = NULL;
+            rbus_PopString(response, &tmpbuf);
+            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+            strcpy(val[i]->parameterName, tmpbuf);
+            tmpbuf = NULL;
+            rbus_PopString(response, &tmpbuf);
+            val[i]->parameterValue = bus_info->mallocfunc(strlen(tmpbuf)+1);
+            strcpy(val[i]->parameterValue, tmpbuf);
+            rbus_PopInt32(response, &type);
+            val[i]->type = type;
+            RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
+        }
+    }
+
+    rtMessage_Release(response);
+    *parameterval = val;
     return ret;
 }
 
@@ -395,6 +603,9 @@ int CcspBaseIf_getParameterValues(
     parameterValStruct_t ***parameterval
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getParameterValues_rbus(bus_handle, dst_component_id, dbus_path, parameterNames, param_size, val_size, parameterval);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -411,9 +622,9 @@ int CcspBaseIf_getParameterValues(
     *val_size = 0;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "getParameterValues");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "getParameterValues");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -446,13 +657,13 @@ int CcspBaseIf_getParameterValues(
         CcspTraceError(("error\n"));
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_ARRAY,
-                                            "s",
-                                            &array_iter);
+            DBUS_TYPE_ARRAY,
+            "s",
+            &array_iter);
     for(i = 0; i < param_size; i++)
     {
         DBUS_MESSAGE_APPEND_STRING( &array_iter, parameterNames[i]);
-//        ret = dbus_message_iter_append_basic (&array_iter, DBUS_TYPE_STRING, &parameterNames[i]);
+        //        ret = dbus_message_iter_append_basic (&array_iter, DBUS_TYPE_STRING, &parameterNames[i]);
     }
 
     ret = dbus_message_iter_close_container (&iter,
@@ -538,7 +749,7 @@ int CcspBaseIf_getParameterValues(
         }
 
         dbus_message_unref (reply);
-       
+
         /* check whether parameterName and parameterValue is not NULL to avoid segFault */
         if (*val_size == 1 && val[0]->parameterName && val[0]->parameterValue)
         { 
@@ -550,11 +761,9 @@ int CcspBaseIf_getParameterValues(
             {
                 /*for shared memory, type field actually stores shared memory size*/
                 int shmSize = val[0]->type;
-
                 CcspTraceInfo(("dbus uses shared memory, totalSize %d\n", shmSize));
                 free_parameterValStruct_t(bus_handle, *val_size, val);
                 ret = CcspBaseIf_getParameterValues_Shm(bus_handle, shmSize, val_size, &val);
-
             }
         }
     }
@@ -564,22 +773,20 @@ int CcspBaseIf_getParameterValues(
     dbus_message_unref (message);
     *parameterval = val;
     return ret;
-
 }
-
 
 void  free_parameterValStruct_t (void *bus_handle, int size,parameterValStruct_t **val)
 {
     int i;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-	
-	if(val) 
-	{	
+
+	if(val)
+	{
     if(size)
     {
         for(i = 0; i < size; i++)
         {
-        		if(val[i]) 
+        		if(val[i])
 				{
             if(val[i]->parameterName)  bus_info->freefunc(val[i]->parameterName);
             if(val[i]->parameterValue) bus_info->freefunc(val[i]->parameterValue);
@@ -592,6 +799,120 @@ void  free_parameterValStruct_t (void *bus_handle, int size,parameterValStruct_t
     }
 }
 
+int CcspBaseIf_setParameterAttributes_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    parameterAttributeStruct_t *val,
+    int size
+    )
+{
+    int i = 0, ret = 0, ret1 = 0;
+    int32_t btmp = 0;
+    rtMessage request, response;
+
+#ifdef USE_NOTIFY_COMPONENT
+    parameterValStruct_t notif_val[1];
+    char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
+    char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+    char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
+    char* faultParam = NULL;
+    UINT notification_count = 0;
+    char PA_name[256];
+    char true_false[10];
+    char notification_parameter[256];
+    char** p_notification_parameter = NULL;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    _ansc_strcpy(PA_name, bus_info->component_id);
+    p_notification_parameter = (char**) (bus_info->mallocfunc(sizeof(char*) * size));
+    if (!p_notification_parameter )
+    {
+        CcspTraceError(("No memory\n"));
+        return CCSP_ERR_MEMORY_ALLOC_FAIL;
+    }
+    memset(p_notification_parameter, 0, sizeof(char*) * size);
+#endif
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, sessionId);
+    rbus_AppendInt32(request, size);
+
+    for(i = 0; i < size; i++)
+    {
+        rbus_AppendString(request, val[i].parameterName);
+#ifdef USE_NOTIFY_COMPONENT
+        if(val[i].notificationChanged)
+        {
+            if(val[i].notification)
+                _ansc_strcpy(true_false, "true");
+            else
+                _ansc_strcpy(true_false, "false");
+            sprintf(notification_parameter,"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+            p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
+            _ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
+            notification_count++;
+        }
+#endif
+        rbus_AppendInt32(request, val[i].notificationChanged);
+        rbus_AppendInt32(request, val[i].notification);
+        rbus_AppendInt32(request, val[i].access);
+        rbus_AppendInt32(request, val[i].accessControlChanged);
+        rbus_AppendInt32(request, val[i].accessControlBitmask);
+    }
+
+    char *object_name = val[0].parameterName;
+    if(dst_component_id)
+    {
+        if(strstr(dst_component_id, ".psm") || size < 1)
+        {
+            object_name = dst_component_id;
+        }
+    }
+
+     if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_SETPARAMETERATTRIBUTES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+     {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod on %s: Err: %d\n", __FUNCTION__, dst_component_id, ret);
+        return ret;
+    }
+
+#ifdef USE_NOTIFY_COMPONENT
+    notif_val[0].parameterName = param_name;
+    notif_val[0].type = ccsp_string;
+    for(i = 0; i < notification_count; i++)
+    {
+        notif_val[0].parameterValue = p_notification_parameter[i];
+        ret1 = CcspBaseIf_setParameterValues(
+                bus_handle,
+                compo,
+                bus,
+                sessionId,
+                0,
+                notif_val,
+                1,
+                TRUE,
+                &faultParam
+                );
+        if(ret1 != CCSP_SUCCESS)
+        {
+            CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret1));
+            CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[0].parameterValue));
+        }
+    }
+    for(i = 0; i < notification_count ; i++)
+    {
+        if(p_notification_parameter[i])
+            bus_info->freefunc(p_notification_parameter[i]);
+    }
+    if(p_notification_parameter)
+        bus_info->freefunc(p_notification_parameter);
+#endif
+
+    rbus_PopInt32(response, &ret);
+    rtMessage_Release(response);
+    return ret;
+}
+
 int CcspBaseIf_setParameterAttributes(
     void* bus_handle,
     const char* dst_component_id,
@@ -601,6 +922,9 @@ int CcspBaseIf_setParameterAttributes(
     int size
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_setParameterAttributes_rbus(bus_handle, dst_component_id, dbus_path, sessionId, val, size);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -613,38 +937,38 @@ int CcspBaseIf_setParameterAttributes(
     DBusMessageIter struct_iter;
     int i;
 #ifdef USE_NOTIFY_COMPONENT
-	parameterValStruct_t notif_val[1];
-	char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent"; 
-	char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
-	char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
-	char* faultParam = NULL;
-	UINT notification_count = 0;
-	char PA_name[256];
-	char true_false[10];
-	char notification_parameter[256];
-	char** p_notification_parameter;
-	CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-	_ansc_strcpy(PA_name, bus_info->component_id);
+    parameterValStruct_t notif_val[1];
+    char compo[256] = "eRT.com.cisco.spvtg.ccsp.notifycomponent";
+    char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
+    char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
+    char* faultParam = NULL;
+    UINT notification_count = 0;
+    char PA_name[256];
+    char true_false[10];
+    char notification_parameter[256];
+    char** p_notification_parameter;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    _ansc_strcpy(PA_name, bus_info->component_id);
 #endif
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "setParameterAttributes");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "setParameterAttributes");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
     }
 #ifdef USE_NOTIFY_COMPONENT
-	p_notification_parameter = (char**) bus_info->mallocfunc(sizeof(char*) * size);
+    p_notification_parameter = (char**) bus_info->mallocfunc(sizeof(char*) * size);
 
-	if (!p_notification_parameter )
-	{
-	    CcspTraceError(("No memory\n"));
-	    return CCSP_ERR_MEMORY_ALLOC_FAIL;
-	}
+    if (!p_notification_parameter )
+    {
+        CcspTraceError(("No memory\n"));
+        return CCSP_ERR_MEMORY_ALLOC_FAIL;
+    }
 
-	memset(p_notification_parameter, 0, sizeof(char*) * size);
+    memset(p_notification_parameter, 0, sizeof(char*) * size);
 #endif
     dbus_message_iter_init_append (message, &iter);
 
@@ -654,33 +978,33 @@ int CcspBaseIf_setParameterAttributes(
 
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_ARRAY,
-                                            "(sbbibu)",
-                                            &array_iter);
+            DBUS_TYPE_ARRAY,
+            "(sbbibu)",
+            &array_iter);
     for(i = 0; i < size ; i++)
     {
         dbus_message_iter_open_container (&array_iter,
-                                          DBUS_TYPE_STRUCT,
-                                          "sbbibu",
-                                          &struct_iter);
+                DBUS_TYPE_STRUCT,
+                "sbbibu",
+                &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING( &struct_iter, val[i].parameterName);
 #ifdef USE_NOTIFY_COMPONENT
-		if(val[i].notificationChanged)
-		{
-			if(val[i].notification)
-				_ansc_strcpy(true_false, "true");
-			else
-				_ansc_strcpy(true_false, "false");
+        if(val[i].notificationChanged)
+        {
+            if(val[i].notification)
+                _ansc_strcpy(true_false, "true");
+            else
+                _ansc_strcpy(true_false, "false");
 
-			snprintf(notification_parameter,sizeof(notification_parameter),"%s,%s,%s",val[i].parameterName,PA_name, true_false);
-			p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
-			_ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
+            snprintf(notification_parameter,sizeof(notification_parameter),"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+            p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
+            _ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
 
 
-			notification_count++;
-			
-		}
+            notification_count++;
+
+        }
 #endif
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &val[i].notificationChanged);
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &val[i].notification);
@@ -691,7 +1015,7 @@ int CcspBaseIf_setParameterAttributes(
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
 
         dbus_message_iter_close_container (&array_iter,
-                                           &struct_iter);
+                &struct_iter);
     }
 
     ret = dbus_message_iter_close_container (&iter,
@@ -703,9 +1027,9 @@ int CcspBaseIf_setParameterAttributes(
     if(reply )
     {
         if(dbus_message_get_args (reply,
-                                  NULL,
-                                  DBUS_TYPE_INT32, &res,
-                                  DBUS_TYPE_INVALID))
+                    NULL,
+                    DBUS_TYPE_INT32, &res,
+                    DBUS_TYPE_INVALID))
         {
             ret = res;
         }
@@ -715,43 +1039,111 @@ int CcspBaseIf_setParameterAttributes(
     dbus_message_unref (message);
 #ifdef USE_NOTIFY_COMPONENT
 
-	notif_val[0].parameterName = param_name;
-	notif_val[0].type = ccsp_string;
+    notif_val[0].parameterName = param_name;
+    notif_val[0].type = ccsp_string;
 
-	for(i = 0; i < notification_count ; i++)
-	{
-		notif_val[0].parameterValue = p_notification_parameter[i];
-		
-		ret1 = CcspBaseIf_setParameterValues(
-		  bus_handle,
-		  compo,
-		  bus,
-		  sessionId,
-		  0,
-		  notif_val,
-		  1,
-		  TRUE,
-		  &faultParam
-		  );
+    for(i = 0; i < notification_count ; i++)
+    {
+        notif_val[0].parameterValue = p_notification_parameter[i];
 
-		if(ret1 != CCSP_SUCCESS)
-		{
-			CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret1));
-			CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[0].parameterValue));
-		}
+        ret1 = CcspBaseIf_setParameterValues(
+                bus_handle,
+                compo,
+                bus,
+                sessionId,
+                0,
+                notif_val,
+                1,
+                TRUE,
+                &faultParam
+                );
 
-	}
+        if(ret1 != CCSP_SUCCESS)
+        {
+            CcspTraceError(("NOTIFICATION: %s : CcspBaseIf_setParameterValues failed. ret value = %d \n", __FUNCTION__, ret1));
+            CcspTraceError(("NOTIFICATION: %s : Parameter = %s \n", __FUNCTION__, notif_val[0].parameterValue));
+        }
+
+    }
 
 
-	for(i = 0; i < notification_count ; i++)
-	{
-		if(p_notification_parameter[i])
-			bus_info->freefunc(p_notification_parameter[i]);
-	}
+    for(i = 0; i < notification_count ; i++)
+    {
+        if(p_notification_parameter[i])
+            bus_info->freefunc(p_notification_parameter[i]);
+    }
 
-	if(p_notification_parameter)
-		bus_info->freefunc(p_notification_parameter);
-#endif	
+    if(p_notification_parameter)
+        bus_info->freefunc(p_notification_parameter);
+#endif
+    return ret;
+}
+
+int CcspBaseIf_getParameterAttributes_rbus(
+        void* bus_handle,
+        const char* dst_component_id,
+        char* dbus_path,
+        char * parameterNames[],
+        int size,
+        int *val_size,
+        parameterAttributeStruct_t ***parameterAttributeval
+        )
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    int i=0, err = CCSP_FAILURE, ret = CCSP_FAILURE;
+    parameterAttributeStruct_t **val = 0;
+    *val_size = 0;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request,size);
+    for(i = 0; i < size; i++)
+    {
+        rbus_AppendString(request, parameterNames[i]);
+    }
+
+    char *object_name = parameterNames[0];
+    int param_len = strlen(parameterNames[0]);
+    if(dst_component_id)
+    {
+        if((parameterNames[0][param_len - 1] == '.') && (strstr(dst_component_id, ".psm") || size < 1))
+        {
+            object_name = dst_component_id;
+        }
+    }
+
+     if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERATTRIBUTES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod on %s: Err: %d\n", __FUNCTION__, dst_component_id, err);
+        return err;
+    }
+
+    rbus_PopInt32(response, &ret);
+    rbus_PopInt32(response, val_size);
+    if(*val_size)
+    {
+        val = bus_info->mallocfunc(*val_size*sizeof(parameterAttributeStruct_t *));
+        memset(val, 0, *val_size*sizeof(parameterAttributeStruct_t *));
+        char *tmpbuf = NULL;
+
+        for(i = 0; i < *val_size; i++)
+        {
+            val[i] = bus_info->mallocfunc(sizeof(parameterAttributeStruct_t));
+            memset(val[i], 0, sizeof(parameterAttributeStruct_t));
+            tmpbuf = NULL;
+            rbus_PopString(response, &tmpbuf);
+            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+            strcpy(val[i]->parameterName, tmpbuf);
+            rbus_PopInt32(response, &val[i]->notificationChanged);
+            rbus_PopInt32(response, &val[i]->notification);
+            rbus_PopInt32(response, &val[i]->accessControlChanged);
+            rbus_PopInt32(response, &val[i]->access);
+            rbus_PopInt32(response, &val[i]->accessControlBitmask);
+        }
+    }
+
+    rtMessage_Release(response);
+    *parameterAttributeval = val;
     return ret;
 }
 
@@ -766,6 +1158,9 @@ int CcspBaseIf_getParameterAttributes(
 
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getParameterAttributes_rbus(bus_handle, dst_component_id, dbus_path, parameterNames, size, val_size, parameterAttributeval);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -779,9 +1174,9 @@ int CcspBaseIf_getParameterAttributes(
     parameterAttributeStruct_t **val = 0;
     *val_size = 0;
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "getParameterAttributes");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "getParameterAttributes");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -792,9 +1187,9 @@ int CcspBaseIf_getParameterAttributes(
 
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_ARRAY,
-                                            "s",
-                                            &array_iter);
+            DBUS_TYPE_ARRAY,
+            "s",
+            &array_iter);
     for(i = 0; i < size; i++)
     {
 
@@ -907,7 +1302,6 @@ int CcspBaseIf_getParameterAttributes(
     dbus_message_unref (message);
     *parameterAttributeval = val;
     return ret;
-
 }
 
 void free_parameterAttributeStruct_t(void *bus_handle, int size, parameterAttributeStruct_t **val)
@@ -926,6 +1320,37 @@ void free_parameterAttributeStruct_t(void *bus_handle, int size, parameterAttrib
     }
 }
 
+int CcspBaseIf_AddTblRow_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    char *objectName,
+    int *instanceNumber
+    )
+{
+    int ret = CCSP_FAILURE;
+    int32_t tmp = 0;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, sessionId);
+    rbus_AppendString(request, objectName);
+
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id, METHOD_ADDTBLROW, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s: Err: %d\n", __FUNCTION__, dst_component_id, ret);
+        return ret;
+    }
+
+    rbus_PopInt32(response, &ret); //result
+    rbus_PopInt32(response, &tmp); //inst num
+
+    rtMessage_Release(response);
+    *instanceNumber = tmp;
+    return ret;
+}
+
 int CcspBaseIf_AddTblRow(
     void* bus_handle,
     const char* dst_component_id,
@@ -935,6 +1360,9 @@ int CcspBaseIf_AddTblRow(
     int *instanceNumber
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_AddTblRow_rbus(bus_handle, dst_component_id, dbus_path, sessionId, objectName, instanceNumber);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -943,9 +1371,9 @@ int CcspBaseIf_AddTblRow(
     dbus_uint32_t utmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "AddTblRow");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "AddTblRow");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -959,10 +1387,10 @@ int CcspBaseIf_AddTblRow(
     if(reply )
     {
         if(dbus_message_get_args (reply,
-                                  NULL,
-                                  DBUS_TYPE_UINT32, &utmp,
-                                  DBUS_TYPE_INT32, &tmp2,
-                                  DBUS_TYPE_INVALID))
+                    NULL,
+                    DBUS_TYPE_UINT32, &utmp,
+                    DBUS_TYPE_INT32, &tmp2,
+                    DBUS_TYPE_INVALID))
         {
             *instanceNumber = utmp;
             ret = tmp2;
@@ -975,6 +1403,32 @@ int CcspBaseIf_AddTblRow(
     return ret;
 }
 
+int CcspBaseIf_DeleteTblRow_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    char * objectName
+    )
+{
+    int ret = CCSP_FAILURE;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, sessionId);
+    rbus_AppendString(request, objectName);
+
+     if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id, METHOD_DELETETBLROW, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod on %s: Err: %d\n", __FUNCTION__, dst_component_id, ret);
+        return CCSP_FAILURE;
+    }
+
+    rbus_PopInt32(response, &ret);
+    rtMessage_Release(response);
+    return ret;
+}
+
 int CcspBaseIf_DeleteTblRow(
     void* bus_handle,
     const char* dst_component_id,
@@ -983,15 +1437,18 @@ int CcspBaseIf_DeleteTblRow(
     char * objectName
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_DeleteTblRow_rbus(bus_handle, dst_component_id, dbus_path, sessionId, objectName);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
     dbus_int32_t tmp1 = sessionId;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "DeleteTblRow");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "DeleteTblRow");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1005,9 +1462,9 @@ int CcspBaseIf_DeleteTblRow(
     if(reply )
     {
         if(dbus_message_get_args (reply,
-                                  NULL,
-                                  DBUS_TYPE_INT32, &tmp1,
-                                  DBUS_TYPE_INVALID))
+                    NULL,
+                    DBUS_TYPE_INT32, &tmp1,
+                    DBUS_TYPE_INVALID))
         {
             ret = tmp1;
         }
@@ -1017,6 +1474,74 @@ int CcspBaseIf_DeleteTblRow(
     }
     dbus_message_unref (message);
 
+    return ret;
+}
+
+int CcspBaseIf_getParameterNames_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    char * parameterName,
+    dbus_bool nextLevel,
+    int *size ,
+    parameterInfoStruct_t ***parameter
+    )
+{
+    int32_t btmp = 0, type = 0;
+    btmp = (int32_t)nextLevel;
+    int i = 0, param_len = 0, ret = CCSP_FAILURE;
+    rtMessage request, response;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    parameterInfoStruct_t **val=NULL;
+    *parameter = 0;
+    *size = 0;
+
+    rtMessage_Create(&request);
+    param_len = strlen(parameterName);
+    rbus_AppendString(request, parameterName);
+    rbus_AppendInt32(request, btmp);
+
+    char *object_name = parameterName;
+    if(dst_component_id)
+    {
+        if((parameterName[param_len - 1] == '.') || (strstr(dst_component_id, ".psm") || size < 1))
+        {
+            object_name = dst_component_id;
+        }
+    }
+
+    RBUS_LOG("Calling rbus_invokeRemoteMethod for %s\n",object_name);
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERNAMES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod on %s: Err: %d\n", __FUNCTION__, dst_component_id, ret);
+        return ret;
+    }
+
+    rbus_PopInt32(response, &ret);
+    rbus_PopInt32(response, size);
+    if(*size)
+    {
+        val = bus_info->mallocfunc(*size*sizeof(parameterValStruct_t *));
+        memset(val, 0, *size*sizeof(parameterValStruct_t *));
+        char *tmpbuf = NULL;
+
+        for(i = 0; i < *size; i++)
+        {
+            val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
+            memset(val[i], 0, sizeof(parameterValStruct_t));
+            tmpbuf = NULL;
+            rbus_PopString(response, &tmpbuf);
+            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+            strcpy(val[i]->parameterName, tmpbuf);
+            rbus_PopInt32(response, &type);
+            val[i]->writable = type;
+            RBUS_LOG("Param [%d] Name = %s, Type = %d\n",
+                    i, val[i]->parameterName, type);
+        }
+    }
+
+    *parameter = val;
+    rtMessage_Release(response);
     return ret;
 }
 
@@ -1030,6 +1555,9 @@ int CcspBaseIf_getParameterNames(
     parameterInfoStruct_t ***parameter
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getParameterNames_rbus(bus_handle, dst_component_id, dbus_path, parameterName, nextLevel, size, parameter);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1042,9 +1570,9 @@ int CcspBaseIf_getParameterNames(
     *parameter = 0;
     *size = 0;
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "getParameterNames");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "getParameterNames");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1212,7 +1740,7 @@ int CcspBaseIf_EnumRecords
 	                pRecArray[i].RecordType = CCSP_BASE_PARAM;
                 }
             }
-               
+
         }
     }
     *ppRecArray = pRecArray;
@@ -1284,6 +1812,30 @@ CcspBaseIf_GetNextLevelInstances
     return ret;
 }
 
+int CcspBaseIf_registerCapabilities_rbus(
+        void* bus_handle,
+        const char* dst_component_id,
+        const char *component_name,
+        int component_version,
+        const char *dbus_path,
+        const char *subsystem_prefix,
+        name_spaceType_t * name_space,
+        int size
+        )
+{
+    int i = 0;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+
+    for(i = 0; i < size; i++)
+    {
+        if((err = rbus_addElement(component_name, name_space[i].name_space)) != RTMESSAGE_BUS_SUCCESS)
+        {
+            RBUS_LOG_ERR("rbus_addElement: %s Err: %d\n", name_space[i].name_space, err);
+        }
+    }
+
+    return CCSP_SUCCESS;
+}
 
 int CcspBaseIf_registerCapabilities(
     void* bus_handle,
@@ -1296,6 +1848,9 @@ int CcspBaseIf_registerCapabilities(
     int size
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_registerCapabilities_rbus(bus_handle, dst_component_id, component_name, component_version, dbus_path, subsystem_prefix, name_space, size);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1307,9 +1862,9 @@ int CcspBaseIf_registerCapabilities(
     int i;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "registerCapabilities");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "registerCapabilities");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1325,22 +1880,22 @@ int CcspBaseIf_registerCapabilities(
 
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_ARRAY,
-                                            "(si)",
-                                            &array_iter);
+            DBUS_TYPE_ARRAY,
+            "(si)",
+            &array_iter);
     for(i = 0; i < size; i++)
     {
         dbus_message_iter_open_container (&array_iter,
-                                          DBUS_TYPE_STRUCT,
-                                          "si",
-                                          &struct_iter);
+                DBUS_TYPE_STRUCT,
+                "si",
+                &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING (&struct_iter, name_space[i].name_space);
         tmp = name_space[i].dataType;
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
 
         dbus_message_iter_close_container (&array_iter,
-                                           &struct_iter);
+                &struct_iter);
     }
 
     ret = dbus_message_iter_close_container (&iter,
@@ -1364,8 +1919,27 @@ int CcspBaseIf_registerCapabilities(
         dbus_message_unref (reply);
     }
     dbus_message_unref (message);
+
     return ret;
 
+}
+
+int CcspBaseIf_unregisterNamespace_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name,
+    const char *name_space)
+{
+    RBUS_LOG("%s calling rbus_removeElement for %s with component %s\n", __FUNCTION__, name_space, component_name);
+
+    if(RTMESSAGE_BUS_SUCCESS != rbus_removeElement(component_name, name_space));
+    {
+        RBUS_LOG("%s rbus_removeElement fails\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
+
+    RBUS_LOG("%s rbus_removeElement succeeds\n", __FUNCTION__);
+    return CCSP_SUCCESS;
 }
 
 int CcspBaseIf_unregisterNamespace (
@@ -1374,6 +1948,9 @@ int CcspBaseIf_unregisterNamespace (
     const char *component_name,
     const char *name_space)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_unregisterNamespace_rbus(bus_handle, dst_component_id, component_name, name_space);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1381,9 +1958,9 @@ int CcspBaseIf_unregisterNamespace (
     DBusMessageIter iter;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "unregisterNamespace");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "unregisterNamespace");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1414,12 +1991,33 @@ int CcspBaseIf_unregisterNamespace (
 
 }
 
+int CcspBaseIf_unregisterComponent_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name
+    )
+{
+    RBUS_LOG("%s calling rbus_unregisterObj for %s \n", __FUNCTION__, component_name);
+
+    if(RTMESSAGE_BUS_SUCCESS != rbus_unregisterObj(component_name));
+    {
+        RBUS_LOG("%s rbus_unregisterObj fails\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
+
+    RBUS_LOG("%s rbus_unregisterObj succeeds \n", __FUNCTION__);
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_unregisterComponent (
     void* bus_handle,
     const char* dst_component_id,
     const char *component_name
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_unregisterComponent_rbus(bus_handle, dst_component_id, component_name);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1427,9 +2025,9 @@ int CcspBaseIf_unregisterComponent (
     DBusMessageIter iter;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "unregisterComponent");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "unregisterComponent");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1458,6 +2056,86 @@ int CcspBaseIf_unregisterComponent (
 
 }
 
+int CcspBaseIf_discComponentSupportingNamespace_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *name_space,
+    const char *subsystem_prefix,
+    componentStruct_t ***components,
+    int *size)
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    componentStruct_t **val=NULL;
+    *components = 0;
+    char dummy_comp[12] = {"dummy"};
+    const char *comp = NULL;
+    rtMessage response;
+    int i = 0, ret = 0;
+
+    RBUS_LOG("%s Namespace: %s\n", __FUNCTION__, name_space);//check if its a wildcard expression
+    if(name_space[strlen(name_space)-1] == '.')
+    {
+        RBUS_LOG("%s Wildcard expression: %s\n", __FUNCTION__, name_space);
+        ret = rbus_resolveWildcardDestination(name_space, size, &response);
+
+        if(ret == RTMESSAGE_BUS_SUCCESS)
+        {
+            if(*size == 0)
+            {
+                *size = 1;
+                val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
+                val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
+                val[0]->componentName = bus_info->mallocfunc(strlen(name_space)+1);
+                val[0]->dbusPath = bus_info->mallocfunc(strlen(dummy_comp)+1);
+                strcpy( val[0]->componentName, name_space);
+                strcpy( val[0]->dbusPath, dummy_comp);
+                val[0]->type = ccsp_string;
+                val[0]->remoteCR_name = NULL;
+                val[0]->remoteCR_dbus_path = NULL;
+            }
+            else
+            {
+                val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
+                for(i = 0; i < *size; i++)
+                {
+                    rbus_PopString(response, &comp);
+                    RBUS_LOG("Destination %d is %s\n", i, comp);
+                    val[i] = bus_info->mallocfunc(sizeof(componentStruct_t));
+                    val[i]->componentName = bus_info->mallocfunc(strlen(comp)+1);
+                    val[i]->dbusPath = bus_info->mallocfunc(strlen(comp)+1);
+                    strcpy( val[i]->componentName, comp);
+                    strcpy( val[i]->dbusPath, comp);
+                    val[i]->type = ccsp_string;
+                    val[i]->remoteCR_name = NULL;
+                    val[i]->remoteCR_dbus_path = NULL;
+                }
+            }
+        }
+        else
+        {
+            RBUS_LOG_ERR("%s rbus_resolveWildcardDestination failed for %s Error: %d\n", __FUNCTION__, name_space, ret);
+        }
+        rtMessage_Release(response);
+    }
+    else
+    {
+        RBUS_LOG("%s: Non Wildcard expression: %s\n", __FUNCTION__, name_space);
+        *size = 1;
+        val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
+        val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
+        val[0]->componentName = bus_info->mallocfunc(strlen(dummy_comp)+1);
+        val[0]->dbusPath = bus_info->mallocfunc(strlen(dummy_comp)+1);
+        strcpy( val[0]->componentName, dummy_comp);
+        strcpy( val[0]->dbusPath, dummy_comp);
+        val[0]->type = ccsp_string;
+        val[0]->remoteCR_name = NULL;
+        val[0]->remoteCR_dbus_path = NULL;
+    }
+
+    *components = val;
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_discComponentSupportingNamespace (
     void* bus_handle,
     const char* dst_component_id,
@@ -1466,6 +2144,9 @@ int CcspBaseIf_discComponentSupportingNamespace (
     componentStruct_t ***components,
     int *size)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_discComponentSupportingNamespace_rbus(bus_handle, dst_component_id, name_space, subsystem_prefix, components, size);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1477,9 +2158,9 @@ int CcspBaseIf_discComponentSupportingNamespace (
     *components = 0;
     *size = 0;
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "discComponentSupportingNamespace");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "discComponentSupportingNamespace");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -1489,7 +2170,8 @@ int CcspBaseIf_discComponentSupportingNamespace (
     dbus_message_iter_init_append (message, &iter);
     DBUS_MESSAGE_APPEND_STRING (&iter, name_space);
     DBUS_MESSAGE_APPEND_STRING (&iter, subsystem_prefix);
-
+    
+    RBUS_LOG("%s calling CR for : %s\n", __FUNCTION__, name_space);
     ret = CCSP_Message_Bus_Send_Msg(bus_handle, message, CcspBaseIf_timeout_seconds , &reply);
     if(reply )
     {
@@ -1558,7 +2240,7 @@ int CcspBaseIf_discComponentSupportingNamespace (
                     dbus_message_iter_get_basic (&struct_iter, &res);
                     val[i]->type = res;
                 }
-                
+
                 dbus_message_iter_next	 (&struct_iter);
                 if(dbus_message_iter_get_arg_type (&struct_iter) == DBUS_TYPE_STRING)
                 {
@@ -1688,14 +2370,14 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
                 val->dbusPath = NULL;
 
         }
-        
+
         dbus_message_iter_next	 (&struct_iter);
         if(dbus_message_iter_get_arg_type (&struct_iter) == DBUS_TYPE_INT32)
         {
             dbus_message_iter_get_basic (&struct_iter, &res);
             val->type = res;
         }
-        
+
         dbus_message_iter_next	 (&struct_iter);
         if(dbus_message_iter_get_arg_type (&struct_iter) == DBUS_TYPE_STRING)
         {
@@ -1740,6 +2422,52 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
 
 }
 
+int CcspBaseIf_discNamespaceSupportedByComponent_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name,
+    name_spaceType_t ***name_space,
+    int *size
+    )
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    rtMessage response;
+    int ret = CCSP_FAILURE;
+    name_spaceType_t **val = NULL;
+    *name_space = 0;
+    *size = 0;
+
+    RBUS_LOG("calling %s for %s \n", __FUNCTION__, component_name);
+    ret = rbus_GetElementsAddedByObject(component_name, &response);
+
+    if(ret == RTMESSAGE_BUS_SUCCESS)
+    {
+        const char *comp;
+        rbus_PopInt32(response, size);
+        RBUS_LOG("%s returns size as %d\n", __FUNCTION__, *size);
+
+        if(*size)
+        {
+            int i;
+            val = bus_info->mallocfunc(*size * sizeof(name_spaceType_t *));
+            memset(val, 0, *size * sizeof(name_spaceType_t *));
+
+            for(i = 0; i < *size; i++)
+            {
+                rbus_PopString(response, &comp);
+                val[i] = bus_info->mallocfunc(sizeof(name_spaceType_t));
+                val[i]->name_space = bus_info->mallocfunc(strlen(comp)+1);
+                strncpy(val[i]->name_space, comp, strlen(comp));
+                RBUS_LOG("%s returns name_space %d as %s\n", __FUNCTION__, i, val[i]->name_space);
+            }
+        }
+
+        RBUS_LOG("exiting %s\n", __FUNCTION__);
+        rtMessage_Release(response);
+        *name_space = val;
+        return CCSP_SUCCESS;
+    }
+}
 
 int CcspBaseIf_discNamespaceSupportedByComponent (
     void* bus_handle,
@@ -1818,7 +2546,7 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
                         val[i]->name_space = NULL;
 
                 }
-                
+
 		        dbus_message_iter_next	 (&struct_iter);
 		        if(dbus_message_iter_get_arg_type (&struct_iter) == DBUS_TYPE_INT32)
 		        {
@@ -1861,6 +2589,51 @@ void free_name_spaceType_t (void* bus_handle, int size, name_spaceType_t **val)
     }
 }
 
+int CcspBaseIf_getRegisteredComponents_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    registeredComponent_t ***components,
+    int *size
+    )
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    registeredComponent_t **val = NULL;
+    *components = 0;
+    *size = 0;
+    rtMessage response;
+
+    int ret = rbus_registeredComponents(&response);
+
+    if(ret == RTMESSAGE_BUS_SUCCESS)
+    {
+        const char *comp;
+        rbus_PopInt32(response, size);
+        RBUS_LOG("%s returns size as %d\n", __FUNCTION__, *size);
+
+        if(*size)
+        {
+            int i;
+            val = bus_info->mallocfunc(*size*sizeof(registeredComponent_t *));
+            memset(val, 0, *size*sizeof(registeredComponent_t *));
+
+            for(i = 0; i < *size; i++)
+            {
+                val[i] = bus_info->mallocfunc(sizeof(registeredComponent_t));
+                val[i]->componentName = NULL;
+                val[i]->dbusPath = NULL;
+                val[i]->subsystem_prefix = NULL;
+                rbus_PopString(response, &comp);
+                val[i]->componentName = bus_info->mallocfunc(strlen(comp)+1);
+                strncpy(val[i]->componentName, comp, strlen(comp));
+                RBUS_LOG("%s returns component %d as %s\n", __FUNCTION__, i, val[i]->componentName);
+            }
+        }
+    }
+    rtMessage_Release(response);
+    *components = val;
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_getRegisteredComponents (
     void* bus_handle,
     const char* dst_component_id,
@@ -1868,6 +2641,9 @@ int CcspBaseIf_getRegisteredComponents (
     int *size
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getRegisteredComponents_rbus(bus_handle, dst_component_id, components, size);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -1878,9 +2654,9 @@ int CcspBaseIf_getRegisteredComponents (
     *components = 0;
     *size = 0;
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "getRegisteredComponents");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "getRegisteredComponents");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -2071,7 +2847,7 @@ int CcspBaseIf_checkNamespaceDataType (
     dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
     dbus_message_iter_close_container (&iter,
                                        &struct_iter);
-    
+
     DBUS_MESSAGE_APPEND_STRING (&iter, subsystem_prefix);
 
     ret = CCSP_Message_Bus_Send_Msg(bus_handle, message, CcspBaseIf_timeout_seconds , &reply);
@@ -2142,12 +2918,174 @@ int CcspBaseIf_dumpComponentRegistry (
 
 }
 
+void update_component_info(component_info *compInfo)
+{
+    ANSC_HANDLE                     pFileHandle        = NULL;
+    char*                           pXMLContent        = NULL;
+    char*                           pBackContent       = NULL;
+    PANSC_XML_DOM_NODE_OBJECT       pXmlNode           = (PANSC_XML_DOM_NODE_OBJECT)NULL;
+    PANSC_XML_DOM_NODE_OBJECT       pListNode          = (PANSC_XML_DOM_NODE_OBJECT)NULL;
+    PANSC_XML_DOM_NODE_OBJECT       pChildNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
+    PANSC_XML_DOM_NODE_OBJECT       pComponentNode     = (PANSC_XML_DOM_NODE_OBJECT)NULL;
+    char                            buffer[512]        = { 0 };
+    ULONG                           uLength            = 512;
+    ULONG                           uFileLength        = 0;
+    ULONG                           uBufferSize        = 0;
+    USHORT                          uComponentCount    = 0;
+
+    /* load from the file */
+    if (access(CCSP_ETHWAN_ENABLE, F_OK) == 0)
+    {
+        pFileHandle =
+            AnscOpenFile
+            (
+             CCSP_CR_ETHWAN_DEVICE_PROFILE_XML_FILE,
+             ANSC_FILE_O_BINARY | ANSC_FILE_O_RDONLY,
+             ANSC_FILE_S_IREAD
+            );
+    }
+    else
+    {
+        pFileHandle =
+            AnscOpenFile
+            (
+             CCSP_CR_DEVICE_PROFILE_XML_FILE,
+             ANSC_FILE_O_BINARY | ANSC_FILE_O_RDONLY,
+             ANSC_FILE_S_IREAD
+            );
+    }
+
+    if( pFileHandle == NULL)
+    {
+        AnscTrace("Failed to load the file : '%s'\n", CCSP_CR_DEVICE_PROFILE_XML_FILE);
+        return FALSE;
+    }
+
+    uFileLength = AnscGetFileSize( pFileHandle);
+    pXMLContent = (char*)AnscAllocateMemory( uFileLength + 8);
+
+    if( pXMLContent == NULL)
+    {
+        AnscCloseFile(pFileHandle); /*RDKB-6901, CID-33521, free unused resources before exit */
+        return FALSE;
+    }
+
+    uBufferSize = uFileLength + 8;
+    if( AnscReadFile( pFileHandle, pXMLContent, &uBufferSize) != ANSC_STATUS_SUCCESS)
+    {
+        AnscFreeMemory(pXMLContent);
+        AnscCloseFile(pFileHandle); /*RDKB-6901, CID-33521, free unused resources before exit */
+        return FALSE;
+    }
+
+    if( pFileHandle != NULL)
+    {
+        AnscCloseFile(pFileHandle);
+    }
+
+    /* parse the XML content */
+    pBackContent = pXMLContent;
+    pXmlNode = (PANSC_XML_DOM_NODE_OBJECT)
+        AnscXmlDomParseString((ANSC_HANDLE)NULL, (PCHAR*)&pXMLContent, uBufferSize);
+    AnscFreeMemory(pBackContent);
+
+    if( pXmlNode == NULL)
+    {
+        AnscTraceWarning(("Failed to parse the CR profile file.\n"));
+        return FALSE;
+    }
+
+    /* get the component array node */
+    pListNode = (PANSC_XML_DOM_NODE_OBJECT) AnscXmlDomNodeGetChildByName(pXmlNode, "components");
+    /* get the name */
+    if(pListNode != NULL)
+    {
+        pChildNode = (PANSC_XML_DOM_NODE_OBJECT) AnscXmlDomNodeGetHeadChild(pListNode);
+        compInfo->list = (char **)AnscAllocateMemory(sizeof(char*) * AnscQueueQueryDepth(&pListNode->ChildNodeQueue));
+
+        while(pChildNode != NULL && compInfo->list != NULL)
+        {
+            /* load component information */
+            pComponentNode = (PANSC_XML_DOM_NODE_OBJECT) pChildNode->GetChildByName(pChildNode, "name");
+            uLength = sizeof(buffer)-1;
+
+            if( pComponentNode != NULL && pComponentNode->GetDataString(pComponentNode, NULL, buffer, &uLength) == ANSC_STATUS_SUCCESS && uLength > 0)
+            {
+                compInfo->list[compInfo->size] = (char*)AnscAllocateMemory(AnscSizeOfString(buffer) + 1);
+                buffer[uLength] = NULL;
+                AnscCopyString(compInfo->list[compInfo->size], (char*)buffer);
+                RBUS_LOG("%s component name read is %s \n",__FUNCTION__, compInfo->list[compInfo->size]);
+                compInfo->size++;
+            }
+            pChildNode = (PANSC_XML_DOM_NODE_OBJECT) AnscXmlDomNodeGetNextChild(pListNode, pChildNode);
+        }
+    }
+    else
+    {
+        RBUS_LOG("\"components\" list is empty\n");
+    }
+    if( pXmlNode != NULL)
+    {
+        pXmlNode->Remove(pXmlNode);
+    }
+}
+
+int CcspBaseIf_isSystemReady_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    dbus_bool *val
+    )
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    static component_info *compInfo = NULL;
+    *val = 0;
+    // Read the Device Profile file
+    if(compInfo == NULL)
+    {
+        compInfo = (component_info*)bus_info->mallocfunc(sizeof(component_info));
+        compInfo->list = NULL;
+        compInfo->size = 0;
+        update_component_info(compInfo);
+    }
+    // Get list of registered components from rtrouted
+    int numComp = 0;
+    registeredComponent_t **ppComp = NULL;
+
+    CcspBaseIf_getRegisteredComponents_rbus(bus_handle, dst_component_id, &ppComp, &numComp);
+    int compInfoIndex = 0, regCompIndex = 0;
+
+    for(compInfoIndex = 0; compInfoIndex < compInfo->size; compInfoIndex++)
+    {
+        for(regCompIndex = 0; regCompIndex < numComp; regCompIndex++)
+        {
+            if(strstr(ppComp[regCompIndex]->componentName, compInfo->list[compInfoIndex]))
+                break; // A match is found from the retrieved list
+        }
+        if(regCompIndex == numComp)
+        {
+            RBUS_LOG("component \"%s\" is not found in registered component list\n", compInfo->list[compInfoIndex]);
+            break; // No matching name found in retrieved list i.e system not ready
+        }
+    }
+    free_registeredComponent_t(bus_handle, numComp, ppComp);
+    if(compInfoIndex == compInfo->size)
+    {
+        RBUS_LOG("Successfully exiting CcspBaseIf_isSystemReady_rbus\n");
+        *val = 1;
+    }
+
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_isSystemReady (
     void* bus_handle,
     const char* dst_component_id,
     dbus_bool *val
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_isSystemReady_rbus(bus_handle, dst_component_id, val);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -2155,9 +3093,9 @@ int CcspBaseIf_isSystemReady (
     dbus_bool_t btmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "isSystemReady");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "isSystemReady");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -2190,6 +3128,40 @@ int CcspBaseIf_isSystemReady (
     return ret;
 }
 
+int CcspBaseIf_requestSessionID_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    int priority,
+    int *sessionID)
+{
+    rtMessage response;
+    int result = 0;
+
+    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_REQUEST_SESSION_ID, NULL, 1000, &response)))
+    {
+        if(RT_OK == rbus_PopInt32(response, &result))
+        {
+            if(RTMESSAGE_BUS_SUCCESS != result)
+            {
+                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
+            }
+            else
+            {
+                if(RT_OK == rbus_PopInt32(response, sessionID))
+                    RBUS_LOG("Got new session id %d\n", *sessionID);
+                else
+                    RBUS_LOG_ERR("Malformed response from session manager.\n");
+            }
+        }
+    }
+    else
+    {
+        RBUS_LOG_ERR("RPC with session manager failed.\n");
+    }
+
+    return result;
+}
+
 int CcspBaseIf_requestSessionID (
     void* bus_handle,
     const char* dst_component_id,
@@ -2197,6 +3169,9 @@ int CcspBaseIf_requestSessionID (
     int *sessionID
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_requestSessionID_rbus(bus_handle, dst_component_id, priority, sessionID);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -2204,9 +3179,9 @@ int CcspBaseIf_requestSessionID (
     dbus_int32_t tmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "requestSessionID");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "requestSessionID");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -2241,6 +3216,40 @@ int CcspBaseIf_requestSessionID (
     return ret;
 }
 
+int CcspBaseIf_getCurrentSessionID_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    int *priority,
+    int *sessionID
+    )
+{
+    rtMessage response;
+    int result = 0;
+
+    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_GET_CURRENT_SESSION_ID, NULL, 1000, &response)))
+    {
+        if(RT_OK == rbus_PopInt32(response, &result))
+        {
+            if(RTMESSAGE_BUS_SUCCESS != result)
+            {
+                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
+            }
+            else
+            {
+                if(RT_OK == rbus_PopInt32(response, sessionID))
+                    RBUS_LOG("Got new session id %d\n", *sessionID);
+                else
+                    RBUS_LOG_ERR("Malformed response from session manager.\n");
+            }
+        }
+    }
+    else
+    {
+        RBUS_LOG_ERR("RPC with session manager failed.\n");
+    }
+
+    return result;
+}
 
 int CcspBaseIf_getCurrentSessionID (
     void* bus_handle,
@@ -2249,6 +3258,9 @@ int CcspBaseIf_getCurrentSessionID (
     int *sessionID
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getCurrentSessionID_rbus(bus_handle, dst_component_id, priority, sessionID);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -2256,9 +3268,9 @@ int CcspBaseIf_getCurrentSessionID (
     dbus_int32_t tmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "getCurrentSessionID");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "getCurrentSessionID");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -2296,12 +3308,50 @@ int CcspBaseIf_getCurrentSessionID (
     return ret;
 }
 
+int CcspBaseIf_informEndOfSession_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    int sessionID
+    )
+{
+    rtMessage out, response;
+    int result = 0;
+
+    rtMessage_Create(&out);
+    rbus_AppendInt32(out, sessionID);
+
+    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, 1000, &response)))
+    {
+        if(RT_OK == rbus_PopInt32(response, &result))
+        {
+            if(RTMESSAGE_BUS_SUCCESS != result)
+            {
+                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
+                return;
+            }
+            else
+            {
+                RBUS_LOG("Successfully ended session %d.\n", sessionID);
+            }
+        }
+    }
+    else
+    {
+        RBUS_LOG_ERR("RPC with session manager failed.\n");
+    }
+
+    return result;
+}
+
 int CcspBaseIf_informEndOfSession (
     void* bus_handle,
     const char* dst_component_id,
     int sessionID
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_informEndOfSession_rbus (bus_handle, dst_component_id, sessionID);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -2309,9 +3359,9 @@ int CcspBaseIf_informEndOfSession (
     dbus_int32_t tmp ;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            CCSP_DBUS_PATH_CR,
-                                            CCSP_DBUS_INTERFACE_CR,
-                                            "informEndOfSession");
+            CCSP_DBUS_PATH_CR,
+            CCSP_DBUS_INTERFACE_CR,
+            "informEndOfSession");
     if (!message )
     {
         CcspTraceError(("No memory\n"));
@@ -2338,12 +3388,40 @@ int CcspBaseIf_informEndOfSession (
     return ret;
 }
 
+int CcspBaseIf_getHealth_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int *health)
+{
+    int ret = CCSP_FAILURE;
+    int32_t status = 0;
+    rtMessage request, response;
+
+    rtMessage_Create(&request);
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id, METHOD_GETHEALTH, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, ret);
+        return CCSP_FAILURE;
+    }
+
+    rbus_PopInt32(response, &status);
+    RBUS_LOG("exiting CcspBaseIf_getHealth_rbus with status %d\n", status);
+    *health = (int)status;
+
+    rtMessage_Release(response);
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_getHealth(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
     int *health)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_getHealth_rbus(bus_handle, dst_component_id, dbus_path, health);
+
     DBusMessage *message= NULL;
     DBusMessage *reply = NULL;
     int ret = CCSP_FAILURE;
@@ -2352,9 +3430,9 @@ int CcspBaseIf_getHealth(
     DBusMessageIter iter;
 
     message = dbus_message_new_method_call (dst_component_id,
-                                            dbus_path,
-                                            CCSP_DBUS_INTERFACE_BASE,
-                                            "getHealth");
+            dbus_path,
+            CCSP_DBUS_INTERFACE_BASE,
+            "getHealth");
     if (!message )
     {
         printf ("No memory\n");
@@ -2596,50 +3674,50 @@ int CcspBaseIf_registerBase(
     const char *subsystem_prefix
 )
 {
-#define  CCSP_NAME_PREFIX      ""	
+#define  CCSP_NAME_PREFIX      ""
 
     char buf[11][256];
     name_spaceType_t name_space[11];
     sprintf(buf[0],"%s%s.Name",CCSP_NAME_PREFIX,component_name);
     name_space[0].name_space = buf[0];
     name_space[0].dataType = ccsp_string;
-    
+
     sprintf(buf[1],"%s%s.Version",CCSP_NAME_PREFIX,component_name);
     name_space[1].name_space = buf[1];
     name_space[1].dataType = ccsp_int;
-    
+
     sprintf(buf[2],"%s%s.Author",CCSP_NAME_PREFIX,component_name);
     name_space[2].name_space = buf[2];
     name_space[2].dataType = ccsp_string;
-    
+
     sprintf(buf[3],"%s%s.Health",CCSP_NAME_PREFIX,component_name);
     name_space[3].name_space = buf[3];
     name_space[3].dataType = ccsp_string;
-    
+
     sprintf(buf[4],"%s%s.State",CCSP_NAME_PREFIX,component_name);
     name_space[4].name_space = buf[4];
     name_space[4].dataType = ccsp_int;
-    
-    
+
+
     sprintf(buf[5],"%s%s.Logging.Enable",CCSP_NAME_PREFIX,component_name);
     name_space[5].name_space = buf[5];
     name_space[5].dataType = ccsp_boolean;
-    
-    
+
+
     sprintf(buf[6],"%s%s.Logging.LogLevel",CCSP_NAME_PREFIX,component_name);
     name_space[6].name_space = buf[6];
     name_space[6].dataType = ccsp_int;
-    
-    
+
+
     sprintf(buf[7],"%s%s.Memory.MinUsage",CCSP_NAME_PREFIX,component_name);
     name_space[7].name_space = buf[7];
     name_space[7].dataType = ccsp_int;
-    
-    
+
+
     sprintf(buf[8],"%s%s.Memory.MaxUsage",CCSP_NAME_PREFIX,component_name);
     name_space[8].name_space = buf[8];
     name_space[8].dataType = ccsp_int;
-    
+
     sprintf(buf[9],"%s%s.Memory.Consumed",CCSP_NAME_PREFIX,component_name);
     name_space[9].name_space = buf[9];
     name_space[9].dataType = ccsp_int;
@@ -2655,12 +3733,54 @@ int CcspBaseIf_registerBase(
            );
 }
 
+int CcspBaseIf_SendparameterValueChangeSignal_rbus (
+    void* bus_handle,
+    parameterSigStruct_t *val,
+    int size
+    )
+{
+    int32_t utmp = 0, tmp = 0;
+    int i = 0;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    int ret = CCSP_FAILURE;
+    rtMessage request;
+
+    rtMessage_Create(&request);
+    rbus_AppendInt32(request, size);
+
+    for(i = 0; i < size; i++)
+    {
+        rbus_AppendString(request, val[i].parameterName);
+        rbus_AppendString(request, val[i].oldValue);
+        rbus_AppendString(request, val[i].newValue);
+        tmp = val[i].type;
+        rbus_AppendInt32(request, tmp);
+        rbus_AppendString(request, val[i].subsystem_prefix);
+        utmp = val[i].writeID;
+        rbus_AppendInt32(request, (int32_t)utmp);
+    }
+
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    err = rbus_publishEvent(bus_info->component_id, "parameterValueChangeSignal", request);
+    if(err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        return CCSP_FAILURE;
+    }
+
+    rtMessage_Release(request);
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_SendparameterValueChangeSignal (
     void* bus_handle,
     parameterSigStruct_t *val,
     int size
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendparameterValueChangeSignal_rbus(bus_handle, val, size);
+
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -2699,15 +3819,15 @@ int CcspBaseIf_SendparameterValueChangeSignal (
 
 
     dbus_message_iter_open_container (&iter,
-                                      DBUS_TYPE_ARRAY,
-                                      "(sssisu)",
-                                      &array_iter);
+            DBUS_TYPE_ARRAY,
+            "(sssisu)",
+            &array_iter);
     for(i = 0; i < size; i++)
     {
         dbus_message_iter_open_container (&array_iter,
-                                          DBUS_TYPE_STRUCT,
-                                          "sssisu",
-                                          &struct_iter);
+                DBUS_TYPE_STRUCT,
+                "sssisu",
+                &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING (&struct_iter, val[i].parameterName);
 
@@ -2720,11 +3840,11 @@ int CcspBaseIf_SendparameterValueChangeSignal (
         dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
 
         dbus_message_iter_close_container (&array_iter,
-                                           &struct_iter);
+                &struct_iter);
     }
 
     dbus_message_iter_close_container (&iter,
-                                       &array_iter);
+            &array_iter);
 
     tmp = size;
     dbus_message_iter_append_basic (&iter, DBUS_TYPE_INT32, &tmp);
@@ -2740,6 +3860,8 @@ int CcspBaseIf_SendtransferCompleteSignal (
     void* bus_handle
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle, "transferCompleteSignal");
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -2778,6 +3900,8 @@ int CcspBaseIf_SendtransferFailedSignal (
     void* bus_handle
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle, "transferFailedSignal");
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -2859,6 +3983,33 @@ int CcspBaseIf_SenddeviceProfileChangeSignal (
     return CCSP_SUCCESS;
 }
 
+int CcspBaseIf_SendcurrentSessionIDSignal_rbus (
+    void* bus_handle,
+    int priority,
+    int sessionID
+    )
+{
+    int ret = CCSP_SUCCESS;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+
+    rtMessage request;
+    rtMessage_Create(&request);
+
+    rbus_AppendInt32(request, (int32_t)priority);
+    rbus_AppendInt32(request, (int32_t)sessionID);
+
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    err = rbus_publishEvent( bus_info->component_id, "currentSessionIDSignal", request);
+
+    if (err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        ret = CCSP_FAILURE;
+    }
+    rtMessage_Release(request);
+
+    return ret;
+}
 
 int CcspBaseIf_SendcurrentSessionIDSignal (
     void* bus_handle,
@@ -2866,6 +4017,9 @@ int CcspBaseIf_SendcurrentSessionIDSignal (
     int sessionID
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendcurrentSessionIDSignal_rbus(bus_handle, priority, sessionID);
+
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -2986,25 +4140,89 @@ int CcspBaseIf_SendSignal(
 
 int CcspBaseIf_SenddiagCompleteSignal(void * bus_handle)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle,  "diagCompleteSignal");
     return CcspBaseIf_SendSignal(bus_handle,  "diagCompleteSignal");
 }
 
 int CcspBaseIf_SendsystemReadySignal(void * bus_handle)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle,  "systemReadySignal");
     return CcspBaseIf_SendSignal(bus_handle,  "systemReadySignal");
 }
 
 int CcspBaseIf_SendsystemRebootSignal(void * bus_handle)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle,  "systemRebootSignal");
     return CcspBaseIf_SendSignal(bus_handle,  "systemRebootSignal");
 }
 
 /* This keep alive message just wants to say "hello" to dbus daemon. No one care it.*/
 int CcspBaseIf_SendsystemKeepaliveSignal(void * bus_handle)
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_SendSignal_rbus(bus_handle,  "systemKeepaliveSignal");
     return CcspBaseIf_SendSignal(bus_handle,  "systemKeepaliveSignal");
 }
 
+int CcspBaseIf_SendSignal_rbus(void * bus_handle, char *event)
+{
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    int ret = CCSP_SUCCESS;
+    rtMessage out;
+    rtMessage_Create(&out);
+
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    err = rbus_publishEvent(bus_info->component_id, event, out);
+    if (err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        ret = CCSP_FAILURE;
+    }
+
+    return ret;
+}
+
+int CcspBaseIf_Register_Event_rbus
+(
+ void* bus_handle,
+ const char* sender,
+ const char* event_name
+ )
+{
+    CcspTraceError(("%s : rbus_registerEvent called for event: %s\n", __FUNCTION__, event_name));
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    char * comp = NULL;
+
+    if(strcmp(event_name, "diagCompleteSignal") == 0)
+        comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
+    else if(strcmp(event_name, "systemReadySignal") == 0)
+        comp = "eRT.com.cisco.spvtg.ccsp.CR";
+    else if(strcmp(event_name, "systemRebootSignal") == 0)
+        comp = "eRT.com.cisco.spvtg.ccsp.rm";
+    else if(strcmp(event_name, "parameterValueChangeSignal") == 0)
+        comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
+    else if(strcmp(event_name, "currentSessionIDSignal") == 0)
+        comp = "eRT.com.cisco.spvtg.ccsp.CR";
+    else
+    {
+        RBUS_LOG_ERR("%s event \n", __FUNCTION__, event_name);
+        return CCSP_SUCCESS;
+    }
+
+    err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, bus_handle);
+
+    if (err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_subscribeToEvent returns Err: %d : Event %s\n", __FUNCTION__, err, event_name);
+        return CCSP_FAILURE;
+    }
+
+    RBUS_LOG("%s : rbus_registerEvent success for : %s\n", __FUNCTION__, event_name);
+    return CCSP_SUCCESS;
+}
 
 //PSM function
 
@@ -3103,7 +4321,7 @@ int PSM_Set_Record_Value
                );
     if(var_string)
         bus_info->freefunc(var_string);
-    if(str)  
+    if(str)
        bus_info->freefunc(str);
     return ret;
 }
@@ -3149,7 +4367,7 @@ int PSM_Get_Record_Value
     if(size < 1)
         return CCSP_CR_ERR_INVALID_PARAM;
 
-    if(ulRecordType)    
+    if(ulRecordType)
        *ulRecordType = val[0]->type;
 
     /* ccsp data type is always defined the same as SYS_REP_RECORD_TYPE__? */
@@ -3266,9 +4484,9 @@ int PSM_Set_Record_Value2
         if(strcmp(pVal,PSM_FALSE) && strcmp(pVal, PSM_TRUE))
         {
 	        return CCSP_CR_ERR_INVALID_PARAM;
-    } 
-    } 
-    
+    }
+    }
+
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
         sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
@@ -3290,9 +4508,9 @@ int PSM_Set_Record_Value2
                1,
                &str
            );
-    
-                  
-    if(str)  
+
+
+    if(str)
        bus_info->freefunc(str);
     return ret;
 }
@@ -3345,12 +4563,12 @@ int PSM_Get_Record_Value2
               );
 
     /*
-    CcspTraceDebug(("<pid%d>[%s]: ret='%d', size='%d'\n", 
+    CcspTraceDebug(("<pid%d>[%s]: ret='%d', size='%d'\n",
                     getpid(), __FUNCTION__, ret, size));
 
     if(val && val[0] && size) {
-        CcspTraceDebug(("<pid%d>[%s]: name='%s', value='%s'\n", 
-                        getpid(), __FUNCTION__, 
+        CcspTraceDebug(("<pid%d>[%s]: name='%s', value='%s'\n",
+                        getpid(), __FUNCTION__,
                         val[0]->parameterName ? val[0]->parameterName : "NULL",
                         val[0]->parameterValue ? val[0]->parameterValue : "NULL"));
     }
@@ -3429,7 +4647,7 @@ int PSM_Del_Record
                         1
                     );
 
-            if ( ret != CCSP_SUCCESS ) 
+            if ( ret != CCSP_SUCCESS )
                 break;
         }
 
@@ -3458,7 +4676,7 @@ int PSM_Del_Record
     }
 }
 
-int PsmGroupGet(void *bus_handle, const char *subsys, 
+int PsmGroupGet(void *bus_handle, const char *subsys,
         const char *names[], int nname, parameterValStruct_t ***records, int *nrec)
 {
     char psmName[256];
@@ -3468,7 +4686,7 @@ int PsmGroupGet(void *bus_handle, const char *subsys,
 
     snprintf(psmName, sizeof(psmName), "%s%s", (subsys ? subsys : ""), CCSP_DBUS_PSM);
 
-    return CcspBaseIf_getParameterValues(bus_handle, psmName, CCSP_DBUS_PATH_PSM, 
+    return CcspBaseIf_getParameterValues(bus_handle, psmName, CCSP_DBUS_PATH_PSM,
             (char **)names, nname, nrec, records);
 }
 
@@ -3481,11 +4699,11 @@ int PsmGetNextLevelInstances
 (
    void* bus_handle,
    char const * const pSubSystemPrefix,
-   char const * const pParentPath, 
-   unsigned int* pulNumInstance, 
+   char const * const pParentPath,
+   unsigned int* pulNumInstance,
    unsigned int**  ppInstanceArray
 )
-{  
+{
    char psmName[256];
 
    if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
@@ -3546,7 +4764,7 @@ int PSM_Reset_UserChangeFlag
 (
     void*                       bus_handle,
     char const * const          pSubSystemPrefix,
-    char const * const          pathName 
+    char const * const          pathName
 )
 {
     char record_name[256];
@@ -3568,8 +4786,8 @@ int  CcspIf_Register_Event
 {
     if(NULL == dbus_path_event && NULL == dbus_interface_event)
         return CcspBaseIf_Register_Event(bus_handle, sender, event_name);
-   
-    CCSP_Message_Bus_Set_Event_Callback(bus_handle,CcspBaseIf_evt_callback, bus_handle); 	
+
+    CCSP_Message_Bus_Set_Event_Callback(bus_handle,CcspBaseIf_evt_callback, bus_handle);
     return CCSP_Message_Bus_Register_Event(bus_handle, sender, dbus_path_event, dbus_interface_event,event_name);
 }
 
@@ -3586,7 +4804,7 @@ int  CcspIf_UnRegister_Event
     {
         return CcspBaseIf_UnRegister_Event(bus_handle, sender, event_name);
     }
-    return CCSP_Message_Bus_UnRegister_Event(bus_handle, sender, dbus_path_event, dbus_interface_event,event_name);	
+    return CCSP_Message_Bus_UnRegister_Event(bus_handle, sender, dbus_path_event, dbus_interface_event,event_name);
 }
 
 /*
@@ -3664,28 +4882,43 @@ CcspIf_notifyCwmpEventToAP
     return ret;
 }
 
-int  CcspBaseIf_Register_Event
+int CcspBaseIf_Register_Event
 (
     void* bus_handle,
     const char* sender,
     const char* event_name
 )
 {
-   CCSP_Message_Bus_Set_Event_Callback(bus_handle,CcspBaseIf_evt_callback, bus_handle); 	
-   return CCSP_Message_Bus_Register_Event(bus_handle, sender, CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT,event_name );
+    if(rbus_enabled == 1)
+        return CcspBaseIf_Register_Event_rbus(bus_handle, sender, event_name);
+    CCSP_Message_Bus_Set_Event_Callback(bus_handle,CcspBaseIf_evt_callback, bus_handle);
+    return CCSP_Message_Bus_Register_Event(bus_handle, sender, CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT,event_name );
 }
 
-int  CcspBaseIf_UnRegister_Event
+int CcspBaseIf_UnRegister_Event_rbus(
+    void* bus_handle,
+    const char* sender,
+    const char* event_name)
+{
+    if(RTMESSAGE_BUS_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name))
+    {
+        RBUS_LOG_ERR("rbus_unsubscribeFromEvent::CcspBaseIf_UnRegister_Event_rbus returns error for sender %s for event_name %s \n", sender, event_name);
+        return CCSP_FAILURE;
+    }
+    return CCSP_SUCCESS;
+}
+
+int CcspBaseIf_UnRegister_Event
 (
     void* bus_handle,
     const char* sender,
     const char* event_name
 )
 {
-   return CCSP_Message_Bus_UnRegister_Event(bus_handle, sender, CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT,event_name );
-	
+    if(rbus_enabled == 1)
+        return CcspBaseIf_UnRegister_Event_rbus(bus_handle, sender, event_name);
+    return CCSP_Message_Bus_UnRegister_Event(bus_handle, sender, CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT,event_name );
 }
-
 
 int CcspBaseIf_GetRemoteParameterValue(
     void* bus_handle,
@@ -3712,10 +4945,10 @@ int CcspBaseIf_GetRemoteParameterValue(
 
   if(ret != CCSP_SUCCESS )
      return ret;
-     
+
   if(msize < 1)
      return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
-   
+
   ret = CcspBaseIf_getParameterValues(
           bus_handle,
           components[0]->componentName,
@@ -3725,7 +4958,7 @@ int CcspBaseIf_GetRemoteParameterValue(
           val_size,
           val
           );
-  
+
   return ret;
 }
 
@@ -3757,10 +4990,10 @@ int CcspBaseIf_SetRemoteParameterValue
 
   if(ret != CCSP_SUCCESS )
      return ret;
-     
+
   if(msize < 1)
      return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
-   
+
   ret = CcspBaseIf_setParameterValues(
           bus_handle,
           components[0]->componentName,
@@ -3772,7 +5005,7 @@ int CcspBaseIf_SetRemoteParameterValue
           commit,
           invalidParameterName
           );
-  
+
   return ret;
 
 }
@@ -3823,4 +5056,26 @@ int getPartnerId ( char *partnerID)
 		CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
 		return CCSP_FAILURE;
 	}
+}
+
+int Rbus_to_CCSP_error_mapper (int Rbus_error_code)
+{
+    int CCSP_error_code = CCSP_Message_Bus_ERROR;
+    switch (Rbus_error_code)
+    {
+        case  0  : CCSP_error_code = CCSP_Message_Bus_OK; break;               // RTMESSAGE_BUS_SUCCESS
+        case  1  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_GENERAL
+        case  2  : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;  // RTMESSAGE_BUS_ERROR_INVALID_PARAM
+        case  3  : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RTMESSAGE_BUS_ERROR_INSUFFICIENT_MEMORY
+        case  4  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_INVALID_STATE
+        case  5  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_REMOTE_END_DECLINED_TO_RESPOND
+        case  6  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RTMESSAGE_BUS_ERROR_REMOTE_END_FAILED_TO_RESPOND
+        case  7  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RTMESSAGE_BUS_ERROR_REMOTE_TIMED_OUT
+        case  8  : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;     // RTMESSAGE_BUS_ERROR_MALFORMED_RESPONSE
+        case  9  : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RTMESSAGE_BUS_ERROR_UNSUPPORTED_METHOD
+        case  10 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT
+        case  11 : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RTMESSAGE_BUS_ERROR_OUT_OF_RESOURCES
+        case  12 : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RTMESSAGE_BUS_ERROR_DESTINATION_UNREACHABLE
+    }
+    return CCSP_error_code;
 }

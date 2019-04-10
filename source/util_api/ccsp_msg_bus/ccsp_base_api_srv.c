@@ -1570,6 +1570,60 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
+int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rtMessage message, void * user_data)
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+
+    if(!strcmp(event_name,"parameterValueChangeSignal") && func->parameterValueChangeSignal)
+    {
+        parameterSigStruct_t *val = 0;
+        int param_size = 0, i = 0;
+
+        rbus_PopInt32(message, (int32_t*)&param_size);
+
+        if(param_size)
+        {
+            val = bus_info->mallocfunc(param_size*sizeof(parameterSigStruct_t ));
+            memset(val, 0, param_size*sizeof(parameterSigStruct_t ));
+        }
+
+        for(i = 0; i < param_size; i++)
+        {
+            rbus_PopString(message, &val[i].parameterName);
+            rbus_PopString(message, &val[i].oldValue);
+            rbus_PopString(message, &val[i].newValue);
+            rbus_PopInt32(message, (int32_t*)&val[i].type);
+            rbus_PopString(message, &val[i].subsystem_prefix);
+            rbus_PopInt32(message, (int32_t*)&val[i].writeID);
+        }
+
+        func->parameterValueChangeSignal(val, param_size,func->parameterValueChangeSignal_data);
+
+        bus_info->freefunc(val);
+    }
+    else if(!strcmp(event_name,"currentSessionIDSignal") && func->currentSessionIDSignal)
+    {
+        int32_t sessionID;
+        int32_t priority;
+        rbus_PopInt32(message, &priority);
+        rbus_PopInt32(message, &sessionID);
+        func->currentSessionIDSignal(priority, sessionID, func->currentSessionIDSignal_data);
+    }
+    else if(!strcmp(event_name,"diagCompleteSignal") && func->diagCompleteSignal)
+    {
+        func->diagCompleteSignal(func->diagCompleteSignal_data);
+    }
+    else if(!strcmp(event_name, "systemReadySignal") && func->systemReadySignal)
+    {
+        func->systemReadySignal(func->systemReadySignal_data);
+    }
+    else
+        CcspTraceInfo(("%s handle event_name %s\n",__FUNCTION__, event_name));
+
+    return DBUS_HANDLER_RESULT_HANDLED;
+}
+
 void  CcspBaseIf_Set_Default_Event_Callback
 (
     void* bus_handle,

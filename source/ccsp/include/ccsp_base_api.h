@@ -76,10 +76,19 @@ Notes:
 #define CCSP_DBUS_PATH_CR          "/com/cisco/spvtg/ccsp/CR"
 #define CCSP_DBUS_PATH_PSM         "/com/cisco/spvtg/ccsp/PSM"
 #define CCSP_DBUS_PATH_EVENT       "/com/cisco/spvtg/ccsp/EVENT"
-
+#define CCSP_RBUS_EVENT            "/com/cisco/spvtg/ccsp/EVENT"
 #define CCSP_DBUS_INTERFACE_EVENT  "com.cisco.spvtg.ccsp.EVENT"
 #define CCSP_DBUS_INTERFACE_CR     "com.cisco.spvtg.ccsp.CR"
 #define CCSP_DBUS_INTERFACE_BASE   "com.cisco.spvtg.ccsp.baseInterface"
+
+#define CCSP_SYSTEM_READY_SIGNAL            "systemReadySignal"
+#define CCSP_CURRENT_SESSION_ID_SIGNAL      "currentSessionIDSignal"
+#define CCSP_DEVICE_PROFILE_CHANGE_SIGNAL   "deviceProfileChangeSignal"
+#define CCSP_DIAG_COMPLETE_SIGNAL           "diagCompleteSignal"
+#define CCSP_PARAMETER_VALUE_CHANGE_SIGNAL  "parameterValueChangeSignal"
+#define CCSP_SYSTEM_REBOOT_SIGNAL           "systemRebootSignal"
+
+#define METHOD_GETHEALTH                    "METHOD_GETHEALTH"
 
 #define CCSP_COMPONENT_ID_WebUI    0x00000001
 #define CCSP_COMPONENT_ID_SNMP     0x00000002
@@ -156,7 +165,7 @@ Notes:
 #define CCSP_INVALID_PSMCLI_CMD                     209
 
 typedef unsigned int dbus_bool ; //1 is true, 0 is false
-
+extern int rbus_enabled;
 
 #define DBUS_MESSAGE_APPEND_STRING(iter,string) do {   \
     if(string)  \
@@ -207,7 +216,21 @@ typedef unsigned int dbus_bool ; //1 is true, 0 is false
 	    return DBUS_HANDLER_RESULT_HANDLED; \
 	} \
   } while (0)
-  
+
+#define RBUS_LOG(...) do {\
+    if(access("/nvram/rbus_print", F_OK) == 0) {\
+        printf(__VA_ARGS__); \
+        fflush(stdout); \
+    }\
+    if(access("/nvram/rbus_log_to_file", F_OK) == 0) {\
+        CcspTraceInfo((__VA_ARGS__));\
+    }\
+} while(0)
+
+#define RBUS_LOG_ERR(...) do {\
+    CcspTraceInfo((__VA_ARGS__));\
+} while(0)
+
 enum dataType_e
 {
     ccsp_string = 0,
@@ -334,9 +357,29 @@ int CcspBaseIf_setParameterValues(
     dbus_bool commit,
     char ** invalidParameterName
 );
+int CcspBaseIf_setParameterValues_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    unsigned int writeID,
+    parameterValStruct_t *val,
+    int size,
+    dbus_bool commit,
+    char ** invalidParameterName
+);
 
 //commit the change
 int CcspBaseIf_setCommit(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    unsigned int writeID,
+    dbus_bool commit
+);
+
+int CcspBaseIf_setCommit_rbus(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
@@ -356,10 +399,28 @@ int CcspBaseIf_getParameterValues(
     parameterValStruct_t ***val
 );
 
+int CcspBaseIf_getParameterValues_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    char * parameterNames[],
+    int size,
+    int *val_size,
+    parameterValStruct_t ***val
+);
 void free_parameterValStruct_t (void* bus_handle, int size,parameterValStruct_t **val);
 
 //sets the attributes on data model parameters
 int CcspBaseIf_setParameterAttributes(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    parameterAttributeStruct_t *val,
+    int size
+);
+
+int CcspBaseIf_setParameterAttributes_rbus(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
@@ -380,6 +441,16 @@ int CcspBaseIf_getParameterAttributes(
 
 );
 
+int CcspBaseIf_getParameterAttributes_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    char * parameterNames[],
+    int size,
+    int *val_size,
+    parameterAttributeStruct_t ***val
+);
+
 void free_parameterAttributeStruct_t(void* bus_handle, int size, parameterAttributeStruct_t **val);
 
 /*
@@ -397,6 +468,14 @@ int CcspBaseIf_AddTblRow(
     int * instanceNumber
 );
 
+int CcspBaseIf_AddTblRow_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    char * objectName,
+    int * instanceNumber
+);
 /*
     This API deletes a row from the table object. The object name is a partial
     path and must end with a "." (dot) after the instance number.
@@ -410,6 +489,13 @@ int CcspBaseIf_DeleteTblRow(
     char * objectName
 );
 
+int CcspBaseIf_DeleteTblRow_rbus(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    int sessionId,
+    char * objectName
+);
 /*
     This API is used to return the supported parameter names under a data model object
     parameterName is either a complete Parameter name, or a partial path name of an object.
@@ -425,6 +511,16 @@ caller need free val
 */
 
 int CcspBaseIf_getParameterNames(
+    void* bus_handle,
+    const char* dst_component_id,
+    char* dbus_path,
+    char * parameterName,
+    dbus_bool nextLevel,
+    int *size ,
+    parameterInfoStruct_t ***val
+);
+
+int CcspBaseIf_getParameterNames_rbus(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
@@ -573,6 +669,12 @@ int CcspBaseIf_unregisterNamespace (
     const char *component_name,
     const char *name_space);
 
+int CcspBaseIf_unregisterNamespace_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name,
+    const char *name_space);
+
 /*
 This API unregisters the component from the component internal registry, if it had been previously registered. All capabilities/namespaces for the component are removed from the internal registry.  This will also result in the generation of "deviceProfileChangeSignal" on the message bus. Any registered component interested in the signal will get notified by the message bus.
 */
@@ -582,11 +684,24 @@ int CcspBaseIf_unregisterComponent (
     const char *component_name
 );
 
+int CcspBaseIf_unregisterComponent_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name
+);
 /*
 This API returns the component that owns the given namespace. There can be only one owner of the namespace. If there is no owner for the requested namespace registered with the Component Registrar, an error code (CCSP_CR_ERR_UNSUPPORTED_NAMESPACE) is returned.
    caller need free components
 */
 int CcspBaseIf_discComponentSupportingNamespace (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *name_space,
+    const char *subsystem_prefix,
+    componentStruct_t ***components,
+    int *size);
+
+int CcspBaseIf_discComponentSupportingNamespace_rbus (
     void* bus_handle,
     const char* dst_component_id,
     const char *name_space,
@@ -618,12 +733,28 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
     name_spaceType_t ***name_space,
     int *size
 );
+
+int CcspBaseIf_discNamespaceSupportedByComponent_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    const char *component_name,
+    name_spaceType_t ***name_space,
+    int *size
+);
+
 void free_name_spaceType_t (void* bus_handle, int size, name_spaceType_t **val);
 
 /*
 This API returns all component names and their D-Bus paths registered with Component Regsitrar.
 */
 int CcspBaseIf_getRegisteredComponents (
+    void* bus_handle,
+    const char* dst_component_id,
+    registeredComponent_t ***components,
+    int *size
+);
+
+int CcspBaseIf_getRegisteredComponents_rbus (
     void* bus_handle,
     const char* dst_component_id,
     registeredComponent_t ***components,
@@ -661,6 +792,12 @@ int CcspBaseIf_isSystemReady (
     dbus_bool *val
 );
 
+int CcspBaseIf_isSystemReady_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    dbus_bool *val
+);
+
 /*
 This API is used by components to ensure session integrity of its transactions. It returns the session ID if there is no active session in progress.
 */
@@ -671,8 +808,22 @@ int CcspBaseIf_requestSessionID (
     int *sessionID
 );
 
+int CcspBaseIf_requestSessionID_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    int priority,
+    int *sessionID
+);
+
 /*This API returns the current session ID and its associated priority. */
 int CcspBaseIf_getCurrentSessionID (
+    void* bus_handle,
+    const char* dst_component_id,
+    int *sessionID,
+    int *priority
+);
+
+int CcspBaseIf_getCurrentSessionID_rbus (
     void* bus_handle,
     const char* dst_component_id,
     int *sessionID,
@@ -694,6 +845,11 @@ int CcspBaseIf_informEndOfSession (
     int sessionID
 );
 
+int CcspBaseIf_informEndOfSession_rbus (
+    void* bus_handle,
+    const char* dst_component_id,
+    int sessionID
+);
 
 int CcspBaseIf_SendparameterValueChangeSignal (
     void* bus_handle,
@@ -979,6 +1135,13 @@ int  CcspIf_Register_Event
     const char* dbus_interface_event
 );
 
+int  CcspBaseIf_Register_Event_rbus
+(
+    void* bus_handle,
+    const char* sender,
+    const char* event_name
+);
+
 int  CcspIf_UnRegister_Event
 (
     void* bus_handle,
@@ -987,6 +1150,15 @@ int  CcspIf_UnRegister_Event
     const char* dbus_path_event,
     const char* dbus_interface_event
 );
+
+int  CcspBaseIf_UnRegister_Event_rbus
+(
+    void* bus_handle,
+    const char* sender,
+    const char* event_name
+);
+
+int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
 
 #define  NOTIFYCWMPEVENT_TIMEOUT                         30
 #define  STBSERVICE_AP_INTERFACE_NAME                    "com.cisco.stbservice.autoprovisioning"
@@ -1045,6 +1217,10 @@ int CcspBaseIf_SendSignal(
     char *event
 );
 
+int CcspBaseIf_SendSignal_rbus(
+    void * bus_handle,
+    char *event
+);
 
 int CcspBaseIf_GetRemoteParameterValue(
     void* bus_handle,
@@ -1099,5 +1275,6 @@ int PsmGroupGet(void *bus_handle,
 void PsmFreeRecords(void *bus_handle, 
         parameterValStruct_t **records, 
         int nrec);
-                  
+
+int Rbus_to_CCSP_error_mapper(int error_code);
 #endif /* CCSP_BASE_API_H */
