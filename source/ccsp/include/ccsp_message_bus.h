@@ -79,7 +79,7 @@ notes: see readme.txt
 #define CCSP_MESSAGE_BUS_NOT_SUPPORT    193 //remote can't support this api
 
 // resource limits
-#define CCSP_MESSAGE_BUS_MAX_CONNECTION         5
+#define CCSP_MESSAGE_BUS_MAX_CONNECTION         15
 #define CCSP_MESSAGE_BUS_MAX_FILTER             50
 #define CCSP_MESSAGE_BUS_MAX_PATH               20
 
