@@ -3746,6 +3746,7 @@ int getPartnerId ( char *partnerID)
 	char 	buffer [ 64 ] = { 0 };
 	char 	command[256] = {0};
 #ifndef _PLATFORM_RASPBERRYPI_
+	char 	*pos;
 	sprintf(command,"syscfg get PartnerID");
 	file = popen ( command, "r" );
 	if(file)
@@ -3768,7 +3769,6 @@ int getPartnerId ( char *partnerID)
 	file = popen ( command, "r" );
 	if(file)
 	{
-	   char *pos;
 	   fgets ( buffer, 64, file );
 	   pclose ( file );
 	   file = NULL;
