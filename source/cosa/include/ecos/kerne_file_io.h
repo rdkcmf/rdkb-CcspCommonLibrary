@@ -77,17 +77,17 @@
         DEFINITION OF BASIC DATA TYPE AND STRUCTURES
 ***********************************************************/
 
-#define O_RDONLY	0x0
-#define O_WRONLY	0x1
-#define O_RDWR		0x2
-#define O_ACCMODE	0x3		/* Mask for O_RDONLY | O_WRONLY | O_RDWR */
-#define O_NDELAY	0x4		/* Non-blocking I/O */
-#define O_APPEND	0x8		/* append (writes guaranteed at the end) */
-#define O_NONBLOCK	0x10	/* Non-blocking I/0, but different effect */
-#define O_BINARY	0x20
-#define O_CREAT		0x40
-#define O_TRUNC		0x80
-#define O_NOCTTY	0x100
+#define O_NOCTTY        0x100
+#define O_TRUNC         0x80
+#define O_CREAT         0x40
+#define O_BINARY        0x20
+#define O_NONBLOCK      0x10
+#define O_APPEND        0x8             
+#define O_NDELAY        0x4             
+#define O_ACCMODE       0x3             
+#define O_RDWR          0x2
+#define O_WRONLY        0x1
+#define O_RDONLY        0x0
 
 #define SEEK_CUR    1
 #define SEEK_END    2
