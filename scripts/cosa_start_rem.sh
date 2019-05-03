@@ -292,12 +292,9 @@ if [ -e ./tad ]; then
         cd ..
 fi
 
-isPeriodicFWCheckEnable=`syscfg get PeriodicFWCheck_Enable`
-if [ "$isPeriodicFWCheckEnable" == "false" ]; then
-    if [ "x$BOX_TYPE" == "xXB3" ]; then
-	       echo_t "XCONF SCRIPT : Calling XCONF Client"
-		/etc/xb3_firmwareDwnld.sh &
-	fi
+if [ "x$BOX_TYPE" == "xXB3" ]; then
+       echo_t "XCONF SCRIPT : Calling XCONF Client"
+       /etc/firmwareSched.sh &
 fi
 
 #if [ -e ./ccspRecoveryManager ]; then
