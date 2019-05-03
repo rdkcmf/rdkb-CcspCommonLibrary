@@ -3743,13 +3743,17 @@ int getPartnerId ( char *partnerID)
 	file = popen ( command, "r" );
 	if(file)
 	{
+	   char *pos;
 	   fgets ( buffer, 64, file );
 	   pclose ( file );
 	   file = NULL;
 	   if(buffer[0] != '\0')
 	   {
-	   sprintf( partnerID, "%s", buffer );
-	   return CCSP_SUCCESS;
+		if ( ( pos = strchr( buffer, '\n' ) ) != NULL ) {
+		   *pos = '\0';
+	   	}
+		sprintf( partnerID, "%s", buffer );
+		return CCSP_SUCCESS;
 	   }
 	}
 	memset(command,0,sizeof(command));
