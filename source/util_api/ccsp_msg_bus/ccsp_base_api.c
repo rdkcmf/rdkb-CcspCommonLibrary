@@ -2365,9 +2365,11 @@ int CcspBaseIf_getHealth(
             dbus_message_iter_get_basic (&iter, &status);
             *health = status;
             dbus_message_unref (reply);
+            dbus_message_unref (message);
             return CCSP_SUCCESS;
         }
     }
+    dbus_message_unref (message);
     return CCSP_FAILURE;
 }
 
