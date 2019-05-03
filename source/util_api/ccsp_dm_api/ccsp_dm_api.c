@@ -1097,7 +1097,7 @@ static void FreeParam(DmParamVal_t *val, int raw)
 {
     void *ptr = NULL;
 
-    if (val)
+    if (val == NULL)
         return;
 
     if (raw)
