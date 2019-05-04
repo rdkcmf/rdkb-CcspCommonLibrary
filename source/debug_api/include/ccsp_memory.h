@@ -82,6 +82,7 @@ extern ULONG           g_ulAllocatedSizePeak;
 /* each component need to reset this variable to itself name as soon as early possibly .*/
 extern    char *                  pComponentName;
 
+
 /*#define  ANSC_MEMORY_USE_COUNTSIZE*/
 #define ANSC_MEMORY_USE_NATIVE
 #if defined ANSC_MEMORY_USE_NATIVE
@@ -143,7 +144,11 @@ AnscZeroMemory
     PVOID  pMemory,
     ULONG  ulMemorySize
 );
-
+VOID
+AnscFreeMemoryOrig
+(
+     PVOID  pMemoryBlock
+);
 VOID        
 AnscCopyMemory
 (
