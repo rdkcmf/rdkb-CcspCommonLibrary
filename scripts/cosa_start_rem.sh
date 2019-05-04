@@ -425,6 +425,10 @@ if [ -f  /lib/rdk/rdkzram.service ]; then
    /bin/sh /lib/rdk/rdkzram.service &
 fi
 
+if [ -f  /lib/rdk/rdkfwupgrader_cosa_unit.sh ]; then
+   /bin/sh /lib/rdk/rdkfwupgrader_cosa_unit.sh &
+fi
+
 #RDKB-7535
 if [ "x$BOX_TYPE" != "xTCCBR" ] && [ "x$WAN_TYPE" != "xEPON" ]; then
 	if [ -f "/rdklogger/rdkbLogMonitor.sh" ]
