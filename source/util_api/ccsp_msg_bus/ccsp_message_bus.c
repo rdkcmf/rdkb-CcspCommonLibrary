@@ -1014,6 +1014,7 @@ CCSP_Message_Bus_Init
 
            		 CcspTraceError(("<%s>: thread connect join returned %d with error %s\n", __FUNCTION__, ret, msg));
 		   }
+		   thread_dbus_connect = NULL;
 
           }
 
