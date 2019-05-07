@@ -678,6 +678,12 @@ int CcspBaseIf_getCurrentSessionID (
     int *priority
 );
 
+/*This API returns the telemetry information */
+int CcspBaseIf_SendTelemetryDataSignal (
+    void* bus_handle,
+    char* telemetry_data
+);
+
 /*
 This API informs the Component Registrar about the end of a particular session.  At this time the CR sets the session ID and priority back to 0 and generates a signal to inform all components about the session ID. The components now revert back to the normal operations on seeing session ID = 0.
 */
@@ -714,7 +720,6 @@ int CcspBaseIf_SendcurrentSessionIDSignal (
     int priority,
     int sessionID
 );
-
 
 //server side function
 typedef int  (*CCSPBASEIF_FREERESOURCES)(
@@ -826,6 +831,10 @@ typedef void (*CCSPBASEIF_CURRENTSESSIONIDSIGNAL )(
     void            *user_data
 );
 
+typedef void (*CCSPBASEIF_TELEMETRYDATASIGNAL )(
+    char* telemetry_data,
+    void* user_data
+);
 
 typedef  void (*CCSPBASEIF_DIAGCOMPLETESIGNAL )(
     void            *user_data
@@ -909,7 +918,10 @@ typedef struct _CCSP_Base_Func_CB
     
     CCSPBASEIF_CURRENTSESSIONIDSIGNAL              currentSessionIDSignal;
     void *                                         currentSessionIDSignal_data;   
-    
+   
+    CCSPBASEIF_TELEMETRYDATASIGNAL                 telemetryDataSignal;
+    void *                                         telemetryDataSignal_data;
+ 
     CCSPBASEIF_DIAGCOMPLETESIGNAL                  diagCompleteSignal;
     void *                                         diagCompleteSignal_data;   
     

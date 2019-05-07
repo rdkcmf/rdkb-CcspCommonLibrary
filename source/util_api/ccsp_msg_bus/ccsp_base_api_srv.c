@@ -46,6 +46,8 @@
 #include <dslh_definitions_database.h>
 #include "ccsp_trace.h"
 
+#define MAX_EVENT_NAME_LEN 128
+
 extern void* COSAGetMessageBusHandle();
 extern int   CcspBaseIf_timeout_seconds;
 extern int   CcspBaseIf_timeout_getval_seconds;
@@ -427,12 +429,12 @@ void CcspBaseIf_SetCallback2
 )
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    CCSP_Base_Func_CB* cb = (CCSP_Base_Func_CB*)bus_info->CcspBaseIf_func;
     if(!bus_info->CcspBaseIf_func)
     {
 	    bus_info->CcspBaseIf_func = bus_info->mallocfunc(sizeof(CCSP_Base_Func_CB));
 	    memset(bus_info->CcspBaseIf_func, 0, sizeof(CCSP_Base_Func_CB));
     }   
+    CCSP_Base_Func_CB* cb = (CCSP_Base_Func_CB*)bus_info->CcspBaseIf_func;
     if(!strcmp("setParameterValues", name))
     {
 	    cb->setParameterValues = func;
@@ -528,7 +530,13 @@ void CcspBaseIf_SetCallback2
         cb->currentSessionIDSignal = func;
 	    cb->currentSessionIDSignal_data = user_data;
     }   
-       
+      
+    else if(!strncmp("telemetryDataSignal", name, MAX_EVENT_NAME_LEN))
+    {
+        cb->telemetryDataSignal = func;
+        cb->telemetryDataSignal_data = user_data;
+    }
+ 
     else if(!strcmp("diagCompleteSignal", name))
     {
         cb->diagCompleteSignal = func;
@@ -1516,6 +1524,15 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
                                   DBUS_TYPE_INVALID))
     	    func->currentSessionIDSignal(priority, sessionID, func->currentSessionIDSignal_data);
 	}
+    if(!strncmp(method,"telemetryDataSignal",MAX_EVENT_NAME_LEN) && !strncmp(interface, CCSP_DBUS_INTERFACE_EVENT,MAX_EVENT_NAME_LEN) && func->telemetryDataSignal)
+    {
+        char* telemetry_data = 0;
+        if(dbus_message_get_args (message,
+                                  NULL,
+                                  DBUS_TYPE_STRING, &telemetry_data,
+                                  DBUS_TYPE_INVALID))
+           func->telemetryDataSignal(telemetry_data, func->telemetryDataSignal_data);
+    }
     if(!strcmp(method,"diagCompleteSignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->diagCompleteSignal)
     {
     	    func->diagCompleteSignal(func->diagCompleteSignal_data);
