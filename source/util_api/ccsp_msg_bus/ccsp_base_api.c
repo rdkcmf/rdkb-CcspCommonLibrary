@@ -2905,6 +2905,46 @@ int CcspBaseIf_SendcurrentSessionIDSignal (
     return CCSP_SUCCESS;
 }
 
+int CcspBaseIf_SendTelemetryDataSignal (
+    void* bus_handle,
+    char* telemetry_data
+)
+{
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    DBusMessage *message;
+    int i;
+    DBusConnection *conn;
+
+    /*to support daemon redundency*/
+    pthread_mutex_lock(&bus_info->info_mutex);
+    for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i)
+    {
+        if(bus_info->connection[i].connected && bus_info->connection[i].conn )
+        {
+            conn = bus_info->connection[i].conn;
+            break;
+        }
+
+    }
+    pthread_mutex_unlock(&bus_info->info_mutex);
+
+    if(i ==  CCSP_MESSAGE_BUS_MAX_CONNECTION)
+        return CCSP_ERR_NOT_CONNECT;
+
+
+    message = dbus_message_new_signal (CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT, "telemetryDataSignal" );
+
+    if(!message)
+        return CCSP_ERR_MEMORY_ALLOC_FAIL;
+
+    dbus_message_append_args (message, DBUS_TYPE_STRING, &telemetry_data, DBUS_TYPE_INVALID);
+
+    dbus_connection_send (conn, message, NULL);
+
+    dbus_message_unref (message);
+    return CCSP_SUCCESS;
+}
+
 int CcspBaseIf_SendSignal(
     void * bus_handle,
     char *event
