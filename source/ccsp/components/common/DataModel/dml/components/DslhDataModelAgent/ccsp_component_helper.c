@@ -493,6 +493,10 @@ CcspComponentLoadDmXmlList
     returnStatus = ANSC_STATUS_SUCCESS;
 
 EXIT:
+    if ( pXmlCfgList && (returnStatus != ANSC_STATUS_SUCCESS))
+    {
+        AnscFreeMemory(pXmlCfgList);
+    }
 
     if( pRootNode != NULL)
     {
