@@ -723,8 +723,7 @@ AnscSctoEngage
     	goto  EXIT2;
     }
 
-    return  ANSC_STATUS_SUCCESS;
-
+    return ANSC_STATUS_SUCCESS;
 
     /******************************************************************
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
@@ -751,6 +750,7 @@ EXIT1:
 
         pMyObject->Reset((ANSC_HANDLE)pMyObject);
     }
+
 
     return  returnStatus;
 }

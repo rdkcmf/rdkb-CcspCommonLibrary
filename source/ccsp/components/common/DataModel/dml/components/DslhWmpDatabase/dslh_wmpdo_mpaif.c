@@ -1786,7 +1786,7 @@ DslhWmpdoMpaGetParameterValues
     *pulArraySize      = ulParameterIndex;
     returnStatus       = ANSC_STATUS_SUCCESS; 
 
-    goto  EXIT3;
+    //goto  EXIT3; --No imapct of this statement. so commented out
 
     /******************************************************************
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
@@ -1831,6 +1831,20 @@ EXIT3:
     }
 
 EXIT2:
+    if(returnStatus == ANSC_STATUS_RESOURCES)
+    {
+    /* This occures when ppNameArray,ppValueArray allocation fails..Release pParameterValueArray which is allocated prior to it */
+        if ( pParameterValueArray )
+        {
+           for ( i = 0; i < ulParameterIndex; i++ )
+           {
+              DslhCwmpCleanParamValue((&pParameterValueArray[i]));
+           }
+
+           AnscFreeMemory(pParameterValueArray);
+        }
+    }
+
     if ( pObjRecordArray ) /*RDKB-5801 , CID-33303, Free resource*/
     {
         AnscFreeMemory(pObjRecordArray);
