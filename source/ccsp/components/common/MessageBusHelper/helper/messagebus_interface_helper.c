@@ -78,7 +78,7 @@
 #include "messagebus_interface_global.h"
 
 
-ULONG    g_uMaxParamInResponse   = 5000/*DSLH_WMPDO_MAX_PARAM_VALUES_IN_RESPONSE*/;
+ULONG    g_uMaxParamInResponse   = 20000/*DSLH_WMPDO_MAX_PARAM_VALUES_IN_RESPONSE*/;
 int      g_currentSessionID      = 0;
 ULONG    g_lastWriteEntity       = 0;
 ULONG    g_currentWriteEntity    = 0;
