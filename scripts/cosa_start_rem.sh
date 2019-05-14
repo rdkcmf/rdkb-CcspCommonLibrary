@@ -178,6 +178,9 @@ if [ -f  /lib/rdk/dcm.service ]; then
     /bin/sh /lib/rdk/dcm.service &
 fi
 
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
+echo_t "Disabling MTA for BWG "
+else
 if [ -e ./mta ]; then
     cd mta
     if [ "x"$Subsys = "x" ];then
@@ -187,6 +190,7 @@ if [ -e ./mta ]; then
         $BINPATH/CcspMtaAgentSsp -subsys $Subsys
     fi
     cd ..
+fi
 fi
 
 if [ -e ./moca ]; then
@@ -220,6 +224,9 @@ fi
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
+    echo_t "Disabling TR069Pa for BWG "
+else
 if [ -e ./tr069pa ]; then
 	cd tr069pa
 	if [ "x"$Subsys = "x" ]; then
@@ -231,6 +238,7 @@ if [ -e ./tr069pa ]; then
 #        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
 #        sysevent setunique GeneralPurposeFirewallRule " -A INPUT ! -i erouter0 -p tcp -m tcp --dport 7547 -j DROP "
 	cd ..
+fi
 fi
 
 #if [ -e ./ssd ]; then
@@ -451,6 +459,15 @@ fi
 #TCCBR-3882: Initializing log_journal.service from here until all dependent services are implemented
 if [ "x$BOX_TYPE" == "xTCCBR" ]; then
         /rdklogger/update_journal_log.sh &
+fi
+
+# Setting maintenance window default values for BWG devices
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
+  rebootReason=`syscfg get X_RDKCENTRAL-COM_LastRebootReason`
+  if [ "$rebootReason" = "factory-reset" ]; then
+  dmcli eRT setv Device.DeviceInfo.X_RDKCENTRAL-COM_MaintenanceWindow.FirmwareUpgradeStartTime string "0"
+  dmcli eRT setv Device.DeviceInfo.X_RDKCENTRAL-COM_MaintenanceWindow.FirmwareUpgradeEndTime string "10800"
+  fi
 fi
 
 #if [ "x$BOX_TYPE" == "xTCCBR" ]; then

@@ -177,6 +177,9 @@ ulimit -c unlimited
 
 	sleep 3
 	#mta
+	if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
+		echo_t "Disabling MTA for BWG "
+	else
 	echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspMtaAgentSsp on atom reset"
 	cd /usr/ccsp/mta
 	if [ "x"$Subsys = "x" ];then
@@ -184,7 +187,7 @@ ulimit -c unlimited
    	 else
 	$BINPATH/CcspMtaAgentSsp -subsys $Subsys
         fi
-
+	fi
 
 	sleep 3
 	echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process webpa on atom reset"
@@ -244,12 +247,16 @@ ulimit -c unlimited
 	sleep 5
 
 	#CcspTr069PaSsp
+	if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
+        echo_t "Disabling TR069Pa for BWG "
+        else
         echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspTr069PaSsp on atom reset"
 	cd /usr/ccsp/tr069pa
-        if [ "x"$Subsys = "x" ]; then
-                $BINPATH/CcspTr069PaSsp
-        else
+	if [ "x"$Subsys = "x" ]; then
+		$BINPATH/CcspTr069PaSsp
+	else
 		$BINPATH/CcspTr069PaSsp -subsys $Subsys
+	fi
         fi
 
 	sleep 2
