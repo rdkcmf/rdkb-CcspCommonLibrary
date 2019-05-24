@@ -448,6 +448,11 @@ else
     echo "Device_Finger_Printing_enabled:false"
 fi
 
+#TCCBR-3882: Initializing log_journal.service from here until all dependent services are implemented
+if [ "x$BOX_TYPE" == "xTCCBR" ]; then
+        /rdklogger/update_journal_log.sh &
+fi
+
 #if [ "x$BOX_TYPE" == "xTCCBR" ]; then
 #	echo_t "starting apshealth.sh"
 #	/usr/ccsp/wifi/apshealth.sh &
