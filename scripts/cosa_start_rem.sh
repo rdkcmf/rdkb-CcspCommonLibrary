@@ -102,7 +102,7 @@ fi
 echo "Creating MESH vlans"
 $UTOPIA_PATH/service_multinet_exec create_mesh_vlan &
 
-if [ "x$BOX_TYPE" != "xTCCBR" ]; then
+if [ "$IS_BCI" != "yes" ]; then
 echo "Starting brlan1 initialization, check whether brlan1 is there or not"
 ifconfig | grep brlan1
 if [ $? == 1 ]; then
