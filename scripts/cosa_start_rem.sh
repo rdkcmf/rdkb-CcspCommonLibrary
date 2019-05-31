@@ -462,3 +462,35 @@ fi
 #fi
 
 rm -rf /tmp/.dropbear
+
+
+#Setting bridge mode value during flip from Native to RDKB
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
+    Old_Path=$(pwd)
+    tar -tf /nvram/nativeConfigData.tar | grep native_to_rdkb
+    if [ $? -ne 0 ]; then
+        mkdir /tmp/native_bck
+        tar xvf /nvram/nativeConfigData.tar -C /tmp/native_bck
+        bridgemode=`grep ^bridge_mode /tmp/native_bck/syscfg.db  | awk -F = '{print $2}'`
+        eroutermode=`grep last_erouter_mode /tmp/native_bck/syscfg.db  | awk -F = '{print $2}'`
+        if [ "$bridgemode" == 2 ] && [  "$eroutermode" == 0 ]; then
+           dmcli eRT setv Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode string full-bridge-static
+	   syscfg set bridge_mode 3
+           syscfg set last_erouter_mode 3
+	   syscfg commit
+        else
+           if [ "$bridgemode" == 2 ] && [ "$eroutermode" == 3 ]; then
+              dmcli eRT setv Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode string bridge-static
+	      syscfg set bridge_mode 2
+              syscfg set last_erouter_mode 3
+              syscfg commit
+           fi
+        fi
+        rm -rf /tmp/native_bck
+        cd /nvram
+        touch native_to_rdkb
+        tar xvf nativeConfigData.tar
+        tar cvf nativeConfigData.tar bbhm_cur_cfg.xml syscfg.db dnsmasq.leases native_to_rdkb
+    fi
+    cd $Old_Path
+fi
