@@ -76,6 +76,12 @@ else
     echo_t "aker NOT enabled"
 fi
 
+if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
+    if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
+        /lib/rdk/run_snmpv3_master.sh &
+    fi
+fi
+
 
 isCloudCapable=1
 isCloudCapable=`syscfg get cloud_capable_flag`
@@ -435,12 +441,6 @@ if [ "$isPeriodicFWCheckEnabled" == "true" ]; then
 	if [ "x$BOX_TYPE" != "xTCCBR" ]; then
 		/etc/firmwareSched.sh &
 	fi
-fi
-
-if [ "x$ENABLE_SNMPv3" == "xtrue" ]; then
-    if [ -f /lib/rdk/run_snmpv3_master.sh ]; then
-        /lib/rdk/run_snmpv3_master.sh &
-    fi
 fi
 
 ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
