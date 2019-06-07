@@ -114,6 +114,10 @@ volatile unsigned int MeshService_RDKLogLevel = 5;
 
 volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
 volatile unsigned int ETHAGENT_RDKLogLevel = 4;
+
+volatile BOOL BLE_RDKLogEnable = TRUE;
+volatile unsigned int BLE_RDKLogLevel = 4;
+;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -321,6 +325,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.MESH";
             LogLevel = MESH_RDKLogLevel;
             LogEnable = MESH_RDKLogEnable;
+        }
+       else if(!strcmp(pComponentName,"LOG.RDK.BLE"))
+        {
+            ComponentName= "LOG.RDK.BLE";
+            LogLevel = BLE_RDKLogLevel;
+            LogEnable = BLE_RDKLogEnable;
         }
         else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))
         {
