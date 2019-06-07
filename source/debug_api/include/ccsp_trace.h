@@ -132,6 +132,8 @@ extern volatile BOOL PWRMGR_RDKLogEnable;
 extern volatile BOOL FSC_RDKLogEnable;
 extern volatile BOOL ETHAGENT_RDKLogEnable;
 
+extern volatile unsigned int BLE_RDKLogLevel;
+extern volatile BOOL BLE_RDKLogEnable;
 /*
  *  Whether a debug trace is output depends on the following factors:
  *      1) the trace level passed in the trace statement is higher (smaller value)
