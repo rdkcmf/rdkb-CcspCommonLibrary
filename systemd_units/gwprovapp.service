@@ -18,6 +18,8 @@
 ##########################################################################
 [Unit]
 Description=Gwprovapp service
+ConditionPathExists=/nvram/secure
+After=securemount.service
 
 #Note: Requires, Wants, and After are device specific. see gwprovapp.conf
 
