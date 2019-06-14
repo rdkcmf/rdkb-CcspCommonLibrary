@@ -487,30 +487,32 @@ rm -rf /tmp/.dropbear
 #Setting bridge mode value during flip from Native to RDKB
 if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
     Old_Path=$(pwd)
-    tar -tf /nvram/nativeConfigData.tar | grep native_to_rdkb
+    tar -tf /nvram/nativeConfigData.tar | grep native_bridge
     if [ $? -ne 0 ]; then
-        mkdir /tmp/native_bck
-        tar xvf /nvram/nativeConfigData.tar -C /tmp/native_bck
-        bridgemode=`grep ^bridge_mode /tmp/native_bck/syscfg.db  | awk -F = '{print $2}'`
-        eroutermode=`grep last_erouter_mode /tmp/native_bck/syscfg.db  | awk -F = '{print $2}'`
+        mkdir /tmp/bck_bridge
+        tar xvf /nvram/nativeConfigData.tar -C /tmp/bck_bridge
+        bridgemode=`grep ^bridge_mode /tmp/bck_bridge/syscfg.db  | awk -F = '{print $2}'`
+        eroutermode=`grep last_erouter_mode /tmp/bck_bridge/syscfg.db  | awk -F = '{print $2}'`
         if [ "$bridgemode" == 2 ] && [  "$eroutermode" == 0 ]; then
+		   echo "Setting Basic bridge mode after flip"
            dmcli eRT setv Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode string full-bridge-static
-	   syscfg set bridge_mode 3
-           syscfg set last_erouter_mode 3
-	   syscfg commit
         else
            if [ "$bridgemode" == 2 ] && [ "$eroutermode" == 3 ]; then
+		      echo "Setting Advanced bridge mode after flip"
               dmcli eRT setv Device.X_CISCO_COM_DeviceControl.LanManagementEntry.1.LanMode string bridge-static
-	      syscfg set bridge_mode 2
-              syscfg set last_erouter_mode 3
-              syscfg commit
            fi
         fi
-        rm -rf /tmp/native_bck
-        cd /nvram
-        touch native_to_rdkb
-        tar xvf nativeConfigData.tar
-        tar cvf nativeConfigData.tar bbhm_cur_cfg.xml syscfg.db dnsmasq.leases native_to_rdkb
+	#Enabling HTTP if it is enabled in Native
+	HTTP_Enable=`grep mgmt_wan_httpaccess= /tmp/bck_bridge/syscfg.db  | awk -F = '{print $2}'`
+	if [ "$HTTP_Enable" == 1 ]; then
+	   echo "Enabling HTTP support if it is enabled in Native"
+	   dmcli eRT setv Device.UserInterface.X_CISCO_COM_RemoteAccess.HttpEnable bool true
+	fi
+        cd /tmp/bck_bridge
+        touch /nvram/native_bridge
+        tar cvf nativeConfigData.tar bbhm_cur_cfg.xml syscfg.db dnsmasq.leases /nvram/native_bridge /nvram/native_dns
+        cp nativeConfigData.tar /nvram/nativeConfigData.tar
     fi
     cd $Old_Path
+    rm -rf /tmp/bck_bridge
 fi
