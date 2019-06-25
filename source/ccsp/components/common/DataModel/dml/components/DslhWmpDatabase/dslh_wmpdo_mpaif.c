@@ -1741,6 +1741,7 @@ DslhWmpdoMpaGetParameterValues
                 if( returnStatus != ANSC_STATUS_SUCCESS)
                 {
                     AnscTrace("Failed in ->GetBulkParamValue.\n");
+                    goto EXIT3;
                 }
             }
 
