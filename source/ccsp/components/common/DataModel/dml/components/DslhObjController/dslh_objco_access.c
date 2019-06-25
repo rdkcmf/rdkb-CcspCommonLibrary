@@ -1106,6 +1106,10 @@ DslhObjcoGetParamValueByName
 
                         return pInterface->GetEntryParamString(pMyObject->hInsContext, pName, pSlapVariable->Variant.varString, &uLength);
                     }
+                    else if (returnStatus == -1)
+                    {    //Callee (function being called) may return -1 if param is not supported
+                         return ANSC_STATUS_NOT_SUPPORTED;
+                    }
                     else
                     {
                         pSlapVariable->Variant.varString = AnscCloneString(pTempBuf);
