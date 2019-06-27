@@ -241,10 +241,15 @@ ulimit -c unlimited
 	fi
 
 	sleep 2
-	#CcspHomeSecurity
-	echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspHomeSecurity on atom reset"
+        
+        #CcspHomeSecurity
+        if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then 
+         echo_t "Disabling CcpsHomeSecurity for BWG "
+        else
+        echo "[`getDateTime`] RDKB_SELFHEAL : Resetting process CcspHomeSecurity on atom reset"
 	CcspHomeSecurity 8081&
-	sleep 5
+        sleep 5
+        fi
 
 	#CcspTr069PaSsp
 	if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
