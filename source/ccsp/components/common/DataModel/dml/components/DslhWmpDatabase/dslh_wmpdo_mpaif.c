@@ -860,7 +860,7 @@ DslhWmpdoMpaSetParameterValues
                     {
 			pthread_mutex_lock(&NotifyMutex);
 		               memset(str, 0, (sizeof(str)));
-                       sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue,vcSig.oldValue,vcSig.type);
+                       sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
 		               /*sensitive information like keyPassphrase should not print*/
 			       if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
 		               {
