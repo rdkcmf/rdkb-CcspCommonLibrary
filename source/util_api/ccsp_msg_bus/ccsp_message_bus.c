@@ -62,9 +62,10 @@ const int NANOSEC_PER_MILLISEC = 1000000;
 /* Use a 2 second timeout for sending strings */
 #define CCSP_MESSAGE_BUS_SEND_STR_TIMEOUT_SECONDS 2
 
-/* Use a 20 second timeout waiting for threads during init and exit */
-#define CCSP_MESSAGE_BUS_CONNECT_TIMEOUT_SECONDS 20
-#define CCSP_MESSAGE_BUS_DISCONNECT_TIMEOUT_SECONDS 20
+/* Use a timeout waiting for threads to clean up during exit */
+/* For initial connection, use a very conservative timeout since previously connect would wait forever */
+#define CCSP_MESSAGE_BUS_CONNECT_TIMEOUT_SECONDS 300
+#define CCSP_MESSAGE_BUS_DISCONNECT_TIMEOUT_SECONDS 60
 
 /* For each processing loop user a 1.03 second timeout */
 #define CCSP_MESSAGE_BUS_PROCESSING_TIMEOUT_SECONDS 1
