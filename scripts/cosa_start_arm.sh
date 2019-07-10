@@ -152,7 +152,7 @@ cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
 #./DbusCfg
-if [ "$MANUFACTURE" != "Technicolor" ]; then
+if [ "$MANUFACTURE" != "Technicolor" ] && [ "$BOX_TYPE" != "XB3" ]; then
 	$BINPATH/dbus-daemon --config-file=./basic.conf --fork
 fi
 
