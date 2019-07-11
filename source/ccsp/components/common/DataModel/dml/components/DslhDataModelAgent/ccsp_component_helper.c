@@ -313,6 +313,10 @@ CcspComponentLoadCfg
 
 EXIT:
 
+    if( pRootNode != NULL)
+    {
+        AnscXmlDomNodeRemove(pRootNode);
+    }
     AnscFreeMemory(pXMLContent);
 
     return  returnStatus;
@@ -492,6 +496,11 @@ EXIT:
     if ( pXmlCfgList && (returnStatus != ANSC_STATUS_SUCCESS))
     {
         AnscFreeMemory(pXmlCfgList);
+    }
+
+    if( pRootNode != NULL)
+    {
+        AnscXmlDomNodeRemove(pRootNode);
     }
 
     AnscFreeMemory(pXMLContent);
