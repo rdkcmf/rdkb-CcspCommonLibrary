@@ -125,7 +125,9 @@ UserGetTickInMilliSeconds2();
 
 #define UserGetTickInMilliSecondsAbs UserGetTickInMilliSeconds2
 
+#ifndef INTEL_SDK_7_2
 extern __inline void UserSetDelta();
+#endif
 
 ULONG
 UserGetTickInMicroSeconds();
