@@ -373,15 +373,18 @@ if [ -e ./wifi ]; then
 fi
 fi
 
-echo "bringing up XfinityWifi interfaces after all CCSP processes are up"
-xfinityenable=`psmcli get dmsb.hotspot.enable`
-if [ $xfinityenable -eq 1 ];then
-    echo "Xfinitywifi is enabled bring up brlan2 and brlan3 if not already present"
-    sysevent set hotspot-start
-else
-    echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
+#CBR not a best place to start here, we will end up creating bridges before
+#wifi dml initialized, currently moving this to xfinity_hotspot_bridge_setup.sh
+if [ "x$BOX_TYPE" != "xTCCBR" ]; then
+	echo "bringing up XfinityWifi interfaces after all CCSP processes are up"
+	xfinityenable=`psmcli get dmsb.hotspot.enable`
+	if [ $xfinityenable -eq 1 ];then
+	    	echo "Xfinitywifi is enabled bring up brlan2 and brlan3 if not already present"
+    		sysevent set hotspot-start
+	else
+    		echo "Xfinitywifi is not enabled no need to bring up brlan2 and brlan3 interfaces"
+	fi
 fi
-
 sleep 5
 
 SELFHEAL_ENABLE=`syscfg get selfheal_enable`
