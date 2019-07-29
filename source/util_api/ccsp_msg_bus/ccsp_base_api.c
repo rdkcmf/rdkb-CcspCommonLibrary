@@ -538,20 +538,24 @@ int CcspBaseIf_getParameterValues(
         }
 
         dbus_message_unref (reply);
-        
-        /*check for shared memory*/
-        if (*val_size == 1 &&
-            !strcmp(val[0]->parameterName, SHM_PARAM_NAME) &&
-            !strcmp(val[0]->parameterValue, SHM_PARAM_NAME) &&
-            ret == CCSP_SUCCESS)
-        {
-            /*for shared memory, type field actually stores shared memory size*/
-            int shmSize = val[0]->type;
-            
-            CcspTraceInfo(("dbus uses shared memory, totalSize %d\n", shmSize));
-            free_parameterValStruct_t(bus_handle, *val_size, val);
-            ret = CcspBaseIf_getParameterValues_Shm(bus_handle, shmSize, val_size, &val);
-            
+       
+        /* check whether parameterName and parameterValue is not NULL to avoid segFault */
+        if (*val_size == 1 && val[0]->parameterName && val[0]->parameterValue)
+        { 
+            /*check for shared memory*/
+            if (*val_size == 1 &&
+                    !strcmp(val[0]->parameterName, SHM_PARAM_NAME) &&
+                    !strcmp(val[0]->parameterValue, SHM_PARAM_NAME) &&
+                    ret == CCSP_SUCCESS)
+            {
+                /*for shared memory, type field actually stores shared memory size*/
+                int shmSize = val[0]->type;
+
+                CcspTraceInfo(("dbus uses shared memory, totalSize %d\n", shmSize));
+                free_parameterValStruct_t(bus_handle, *val_size, val);
+                ret = CcspBaseIf_getParameterValues_Shm(bus_handle, shmSize, val_size, &val);
+
+            }
         }
     }
 
