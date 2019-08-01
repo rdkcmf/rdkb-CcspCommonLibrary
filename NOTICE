@@ -4,5 +4,8 @@ Licensed under the Apache License, Version 2.0
 Copyright 2014 Cisco Systems, Inc.
 Licensed under the Apache License, Version 2.0
 
+Extracts from RFC2246:
+Copyright (C) The Internet Society (1999). All Rights Reserved.
+
 This software contains code derived from the RSA Data Security
 Inc. MD4 Message-Digest Algorithm, md4.h/md4_global.h.
