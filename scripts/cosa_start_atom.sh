@@ -119,6 +119,10 @@ if [ -f /usr/bin/rpcserver ];then
       /usr/bin/rpcserver &
 fi
 
+if [ -f /usr/ccsp/wifi/bwg_wifi_setting.sh ];then
+      /usr/ccsp/wifi/bwg_wifi_setting.sh
+fi
+
 # upgrade the wifi config to suppot vlan 106
 # This script is only for ARRISXB3 and Ciscoxb3. All other product do not need this step.
 rdk_wifi_upgrade_vlan106
