@@ -39,8 +39,9 @@ fi
 
 #update the bbhm for 2.1s11
 if [ "$MFG_NAME" = "Arris" ]; then
-    /usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
-    
+	if [ "$MODEL_NUM" = "TG4482A" ] ; then
+		/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+	fi
     # Check if bbhm has Notify flag present
     NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
     REDIRCTEXISTS=""
