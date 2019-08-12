@@ -3745,7 +3745,6 @@ int getPartnerId ( char *partnerID)
 	char 	*arg = "GetPartnerID";
 	char 	buffer [ 64 ] = { 0 };
 	char 	command[256] = {0};
-#ifndef _PLATFORM_RASPBERRYPI_
 	char 	*pos;
 	sprintf(command,"syscfg get PartnerID");
 	file = popen ( command, "r" );
@@ -3784,38 +3783,4 @@ int getPartnerId ( char *partnerID)
 		CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
 		return CCSP_FAILURE;
 	}
-#else
-        sprintf(command,"syscfg get PartnerID");
-        file = popen ( command, "r" );
-        if(file)
-        {
-           fgets ( buffer, 64, file );
-           pclose ( file );
-           file = NULL;
-           if(buffer[0] != '\0')
-	   {
-		if(strncmp(buffer,"comcast",6) == 0)
-		{
-			sprintf( partnerID, "RDKM");
-			memset(command,0,sizeof(command));
-			sprintf(command,"syscfg set PartnerID RDKM");
-			system(command);
-			system("syscfg commit");
-			return CCSP_SUCCESS;
-		}
-		else
-		{
-			sprintf( partnerID, "%s", buffer );
-			return CCSP_SUCCESS;
-		}
-	  }
-
-	}
-	else
-        {
-                CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
-                return CCSP_FAILURE;
-        }
-#endif
-	
 }
