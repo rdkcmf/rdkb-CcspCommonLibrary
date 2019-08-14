@@ -44,6 +44,7 @@ killall rpcserver
 
 #To set the default value for AP_WPA_GROUP_REKEY
 DEVICE_MODEL=`grep "DEVICE_MODEL" /etc/device.properties | cut -d '=' -f2`
+MFG_NAME=`grep "MFG_NAME" /etc/device.properties | cut -d '=' -f2`
 if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
         AP_WPA_GROUP_REKEY_16=`cfg -e | grep AP_WPA_GROUP_REKEY_16|cut -d '=' -f2`
         if [ "$AP_WPA_GROUP_REKEY_16"=="3600" ]; then
@@ -268,8 +269,10 @@ sh /usr/ccsp/wifi/process_monitor_atom.sh &
 echo_t "Monitor ATOM log folder size"
 sh /rdklogger/atom_log_monitor.sh &
 
-echo_t "starting wifi_default_radius_port_script"
-/usr/ccsp/wifi/wifi_default_radius_port.sh
+if [ "$MFG_NAME" = "Cisco" ]; then
+    echo_t "starting wifi_default_radius_port_script"
+    /usr/ccsp/wifi/wifi_default_radius_port.sh
+fi
 
 echo_t "starting apshealth.sh"
 /usr/ccsp/wifi/apshealth.sh &
