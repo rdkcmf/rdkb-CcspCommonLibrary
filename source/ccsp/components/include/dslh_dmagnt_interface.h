@@ -95,6 +95,10 @@
 #define COSA_XML_notify_alwaysOff                 "alwaysOff"
 #define COSA_XML_notify_alwaysOn                  "alwaysOn"
 
+#define COSA_XML_bsUpdate_firmware                "firmware"
+#define COSA_XML_bsUpdate_rfcUpdate               "rfcUpdate"
+#define COSA_XML_bsUpdate_allUpdate               "allUpdate"
+
 /* COSA object type definition */
 #define COSA_XML_type_object                      "object"
 #define COSA_XML_type_staticTable                 "staticTable"
@@ -157,6 +161,7 @@
 #define  COSA_XML_NODE_param_name                 "name"
 #define  COSA_XML_NODE_param_type                 "type"
 #define  COSA_XML_NODE_param_syntax               "syntax"
+#define  COSA_XML_NODE_param_bsUpdate             "bsUpdate"
 #define  COSA_XML_NODE_param_notify               "notify"
 #define  COSA_XML_NODE_param_notifyThrdEnabled    "notifyThresholdEnabled"
 #define  COSA_XML_NODE_param_notifyThresholdMin   "notifyThresholdMin"
