@@ -151,6 +151,10 @@
 #define  DSLH_CWMP_NOTIFY_STATUS_alwaysOff          3
 #define  DSLH_CWMP_NOTIFY_STATUS_configActive       4
 
+#define  DSLH_CWMP_BS_UPDATE_firmware               1
+#define  DSLH_CWMP_BS_UPDATE_rfcUpdate              2
+#define  DSLH_CWMP_BS_UPDATE_allUpdate              3
+
 typedef  SLAP_STRING         (*PFN_DSLHPARAM_GET_STRING)(ANSC_HANDLE  hThisObject);
 typedef  SLAP_INT            (*PFN_DSLHPARAM_GET_INT   )(ANSC_HANDLE  hThisObject);
 typedef  SLAP_UINT32         (*PFN_DSLHPARAM_GET_UINT32)(ANSC_HANDLE  hThisObject);
@@ -190,8 +194,7 @@ _DSLH_CWMP_PARAM_DESCR
     BOOL                            bInvisible;             /* indicates that this parameter is for internal use   */
     BOOL                            bNeedReboot;            /* if TRUE, CPE must be reboot after value is changed  */
     BOOL                            bMonitor;               /* if TRUE, parameter is monitored for user change     */
-
-
+    ULONG                           bsUpdate;               /* who can update:"firmware", "rfcUpdate", "allUpdate" */
     ULONG                           CallEntry_GetValue;     /* function entry for retrieving the parameter value   */
     ULONG                           CallEntry_TstValue;     /* function entry for examining the parameter value    */
     ULONG                           CallEntry_SetValue;     /* function entry for configuring the parameter value  */

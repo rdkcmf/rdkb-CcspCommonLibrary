@@ -2011,6 +2011,33 @@ DslhDmagntParseParamInfo
 
     pParamDesp->Syntax = AnscCloneString(buffer);
 
+    /* get the bsUpdate */
+    pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+        pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_bsUpdate);
+
+    AnscZeroMemory(buffer, 1024);
+    uLength = 1023;
+
+    if( pChildNode != NULL && ANSC_STATUS_SUCCESS == pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength))
+    {
+        if( AnscEqualString(buffer, COSA_XML_bsUpdate_firmware, TRUE))
+        {
+            pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_firmware;
+        }
+        else if( AnscEqualString(buffer, COSA_XML_bsUpdate_rfcUpdate, TRUE))
+        {
+            pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_rfcUpdate;
+        }
+        else
+        {
+            pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_allUpdate;
+        }
+    }
+    else /* by default bsUpdate is allUpdate */
+    {
+        pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_allUpdate;
+    }
+
     /* get the writable */
     pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
         pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_writable);

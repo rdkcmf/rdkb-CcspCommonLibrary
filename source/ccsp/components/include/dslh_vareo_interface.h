@@ -242,6 +242,7 @@ typedef  ANSC_STATUS
     int                             Notification;                                           \
                                                                                             \
     QUEUE_HEADER*                   TokenTable;                                             \
+    ULONG                           bsUpdate;                                               \
                                                                                             \
     /* end of object class content */                                                       \
 

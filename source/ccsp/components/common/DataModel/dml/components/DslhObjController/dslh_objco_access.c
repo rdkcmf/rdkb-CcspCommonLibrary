@@ -83,6 +83,8 @@
 #include "dslh_varro_exported_api.h"
 #include "dslh_varro_interface.h"
 
+ULONG g_currentBsUpdate;
+
 /**********************************************************************
 
     caller:     owner of this object
@@ -290,6 +292,9 @@ DslhObjcoValidate
                     pCallingName = pParamDescr->Name;
                 }
 
+                g_currentBsUpdate = pChildVarEntity->bsUpdate;
+                AnscTraceWarning(("DslhObjcoValidate: %s, bsUpdate = %d\n\n", pCallingName, pChildVarEntity->bsUpdate));
+
                 switch ( pChildVarEntity->Syntax )
                 {
                     case    SLAP_VAR_SYNTAX_bool :
@@ -360,7 +365,6 @@ DslhObjcoValidate
 
                             break;
                 }
-
                 pDslhRvqIf->ClearParamUpdated(pDslhRvqIf->hOwnerContext, pParamDescr->Name);
             }
         }

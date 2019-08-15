@@ -300,6 +300,7 @@ DslhWmpdoMprRegParameter
     pVarEntity->ParamDescr         = pParamDescr;
     pVarEntity->DataType           = ulParamDataType;
     pVarEntity->Syntax             = ulParamSyntax;
+    pVarEntity->bsUpdate           = pParamDescr->bsUpdate;
     pVarEntity->ContentType        = ulParamContentType;
     pVarEntity->FormatValue1       = ulFormatValue1;
     pVarEntity->FormatValue2       = ulFormatValue2;
