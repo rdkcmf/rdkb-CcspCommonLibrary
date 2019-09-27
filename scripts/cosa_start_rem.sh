@@ -167,12 +167,12 @@ if [ -f /lib/rdk/start-upnp-service ]; then
     /lib/rdk/start-upnp-service start &
 fi
 
-if [ -e ./pam ]; then
-    cd pam
+#if [ -e ./pam ]; then
+    #cd pam
         #double background to detach the script from the tty
-        ((sh /etc/email_notification_monitor.sh 12 &) &)
-        cd ..
-fi
+        #((sh /etc/email_notification_monitor.sh 12 &) &)
+        #cd ..
+#fi
 echo_t "Enabling ssh by default"
 syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
