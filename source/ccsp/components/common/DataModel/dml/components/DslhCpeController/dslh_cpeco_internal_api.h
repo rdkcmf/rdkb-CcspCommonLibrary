@@ -290,6 +290,14 @@ DslhCpecoLoadExternalDMLibFile
     );
 
 ANSC_STATUS
+DslhCpecoLoadExternalDMLibFile2
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bPopulateTree
+    );
+
+ANSC_STATUS
 DslhCpecoLoadInternalDMLibFile
     (
         ANSC_HANDLE                 hThisObject,
@@ -324,6 +332,31 @@ DslhCpecoRegisterDataModel
         ANSC_HANDLE                 hThisObject,
         char*                       pCR_id,
         char*                       pXMLFile,
+        char*                       pCompName,
+        ULONG                       version,
+        char*                       pDbusPath,
+        char*                       pPrefix
+    );
+
+ANSC_STATUS
+DslhCpecoRegisterDataModel2
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pCR_id,
+        void*                       pfnXMLLoader,
+        char*                       pCompName,
+        ULONG                       version,
+        char*                       pDbusPath,
+        char*                       pPrefix
+    );
+
+ANSC_STATUS
+DslhCpecoRegisterDataModelInternal
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pCR_id,
+        char*                       pXMLFile,
+        void*                       pfnXMLLoader,
         char*                       pCompName,
         ULONG                       version,
         char*                       pDbusPath,

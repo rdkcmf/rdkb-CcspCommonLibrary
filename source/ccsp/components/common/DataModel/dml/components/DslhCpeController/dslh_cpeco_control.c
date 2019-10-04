@@ -58,6 +58,7 @@
         *   DslhCpecoRegisterHiddenObject
         *   DslhCpecoRegisterHiddenObject2
         *   DslhCpecoRegisterDataModel
+        *   DslhCpecoRegisterDataModel2
 
     ---------------------------------------------------------------
 
@@ -674,11 +675,28 @@ DslhCpecoLoadExternalDMLibFile
     {
         AnscCloseFile(pFileHandle);
     }
-
     returnStatus = pDslhDataModelAgent->LoadDataModelXML(pDslhDataModelAgent, pXMLContent, uBufferSize,TRUE /* external */, bPopulateTree );
-
     AnscFreeMemory(pXMLContent);
+    return returnStatus;
+}
 
+ANSC_STATUS
+DslhCpecoLoadExternalDMLibFile2
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bPopulateTree
+    )
+{
+    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    PDSLH_CPE_CONTROLLER_OBJECT     pMyObject          = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
+    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
+
+    if( pDslhDataModelAgent == NULL || pfnXMLLoader == NULL)
+    {
+        return ANSC_STATUS_FAILURE;
+    }
+    returnStatus = pDslhDataModelAgent->LoadDataModelXML2(pDslhDataModelAgent, pfnXMLLoader,TRUE /* external */, bPopulateTree);
     return returnStatus;
 }
 
@@ -1112,13 +1130,13 @@ dslhCpeCheckEmptyObject
 	return ANSC_STATUS_SUCCESS;
 }
 
-
 ANSC_STATUS
-DslhCpecoRegisterDataModel
+DslhCpecoRegisterDataModelInternal
     (
         ANSC_HANDLE                 hThisObject,
         char*                       pCR_id,
         char*                       pXMLFile,
+        void*                       pfnXMLLoader,
         char*                       pCompName,
         ULONG                       version,
         char*                       pDbusPath,
@@ -1183,14 +1201,19 @@ DslhCpecoRegisterDataModel
     }
     */
     AnscSListInitializeHeader(&pMyObject->DmlCallbackList);    
-    
-    
+
     if( pXMLFile != NULL && AnscSizeOfString(pXMLFile) > 4)
     {
         /* load COSA plugin library */
         int ret = 0;
         ret = pMyObject->LoadExternalDMLibFile(pMyObject, pXMLFile, FALSE);
-
+        if (ret)
+            AnscTraceWarning(("DslhCpecoLoadExternalDMLibFile failed!!! ret: %d\n", ret));
+    }
+    else if( pfnXMLLoader != NULL )
+    {
+        int ret = 0;
+        ret = pMyObject->LoadExternalDMLibFile2(pMyObject, pfnXMLLoader, FALSE);
         if (ret)
             AnscTraceWarning(("DslhCpecoLoadExternalDMLibFile failed!!! ret: %d\n", ret));
     }
@@ -1368,4 +1391,54 @@ EXIT:
     else
         return returnStatus;
 
+}
+
+ANSC_STATUS
+DslhCpecoRegisterDataModel
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pCR_id,
+        char*                       pXMLFile,
+        char*                       pCompName,
+        ULONG                       version,
+        char*                       pDbusPath,
+        char*                       pPrefix
+    )
+{
+    return DslhCpecoRegisterDataModelInternal
+          (
+              hThisObject,
+              pCR_id,
+              pXMLFile,
+              NULL,
+              pCompName,
+              version,
+              pDbusPath,
+              pPrefix
+          );
+}
+
+ANSC_STATUS
+DslhCpecoRegisterDataModel2
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pCR_id,
+        void*                       pfnXmlLoader,
+        char*                       pCompName,
+        ULONG                       version,
+        char*                       pDbusPath,
+        char*                       pPrefix
+    )
+{
+    return DslhCpecoRegisterDataModelInternal
+          (
+              hThisObject,
+              pCR_id,
+              NULL,
+              pfnXmlLoader,
+              pCompName,
+              version,
+              pDbusPath,
+              pPrefix
+          );
 }

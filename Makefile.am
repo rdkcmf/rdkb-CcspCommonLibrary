@@ -195,6 +195,7 @@ libccsp_common_la_DEPENDENCIES= \
 	source/util_api/asn.1/components/al_pki/libCcspCommonLibrary_al_pki.la \
 	source/util_api/asn.1/components/asn1_x509/libCcspCommonLibrary_asn1_x509.la \
 	source/util_api/asn.1/components/asn1_basic/libCcspCommonLibrary_asn1_basic.la \
-	source/util_api/asn.1/components/al_pkcs12/libCcspCommonLibrary_al_pkcs12.la
+	source/util_api/asn.1/components/al_pkcs12/libCcspCommonLibrary_al_pkcs12.la \
+	source/dm_pack/libCcspCommonLibrary_dm_pack.la
 
 libccsp_common_la_LIBADD=$(libccsp_common_la_DEPENDENCIES)

@@ -381,9 +381,11 @@ DslhCpecoInitialize
     pMyObject->RegisterHiddenObject     = DslhCpecoRegisterHiddenObject;
     pMyObject->RegisterHiddenObject2    = DslhCpecoRegisterHiddenObject2;
     pMyObject->LoadExternalDMLibFile    = DslhCpecoLoadExternalDMLibFile;
+    pMyObject->LoadExternalDMLibFile2   = DslhCpecoLoadExternalDMLibFile2;
     pMyObject->LoadInternalDMLibFile    = DslhCpecoLoadInternalDMLibFile;
     pMyObject->UnloadDMLibFile          = DslhCpecoUnloadDMLibFile;
     pMyObject->RegisterCcspDataModel    = DslhCpecoRegisterDataModel;
+    pMyObject->RegisterCcspDataModel2   = DslhCpecoRegisterDataModel2;
 
 
     pMyObject->SetParameterArray        = DslhCpecoSetParameterArray;
