@@ -268,6 +268,7 @@ AC_CONFIG_FILES(
 	source/util_api/asn.1/components/Makefile
 	source/util_api/asn.1/Makefile
 	source/util_api/Makefile
+	source/dm_pack/Makefile
 	source/Makefile
 	Makefile
 )

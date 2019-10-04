@@ -49,6 +49,7 @@
         of the Dslh DataModelAgent object;
 
         *   DslhDmagntLoadDataModelXML
+        *   DslhDmagntLoadDataModelXML2
         *   DslhDmagntUnloadDataModelXML
         *   DslhDmagntMemoryUsage
         *   DslhDmagntMemoryTable
@@ -182,6 +183,43 @@ DslhDmagntLoadDataModelXML
         BOOL                        bPopulateTree
     )
 {
+    PCHAR pBackBuffer = pXMLContent;
+
+    return DslhDmagntLoadDataModelXMLInternal(
+      hThisObject,
+      AnscXmlDomParseString((ANSC_HANDLE)NULL, (PCHAR*)&pBackBuffer, uXMLLength),
+      bExternal,
+      bPopulateTree
+    );
+}
+
+ANSC_STATUS
+DslhDmagntLoadDataModelXML2
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bExternal,
+        BOOL                        bPopulateTree
+    )
+{
+    typedef PVOID (*PFN_ANSC_XML_CODE_GEN_LOAD)();
+    return DslhDmagntLoadDataModelXMLInternal(
+      hThisObject,
+      (*((PFN_ANSC_XML_CODE_GEN_LOAD)pfnXMLLoader))(),
+      bExternal,
+      bPopulateTree
+    );
+}
+
+ANSC_STATUS
+DslhDmagntLoadDataModelXMLInternal
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pXMLNode,
+        BOOL                        bExternal,
+        BOOL                        bPopulateTree
+    )
+{
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PDSLH_CPE_CONTROLLER_OBJECT     pCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE        )pCpeController->GetDslhMprIf(pCpeController);
@@ -191,15 +229,13 @@ DslhDmagntLoadDataModelXML
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)NULL;
     PDSLH_LCB_INTERFACE             pDslhLcbIf        = (PDSLH_LCB_INTERFACE)pMyObject->hDslhLcbIf;
-    PCHAR                           pBackBuffer       = pXMLContent;
     ANSC_STATUS                     returnStatus      = 0;
     char*                           pRootName         = NULL;
     char                            buffer[64]        = { 0 };
     ULONG                           uLength           = 63;
+    FILE*                           debugFile         = NULL;
     
-    pRootNode = (PANSC_XML_DOM_NODE_OBJECT)
-        AnscXmlDomParseString((ANSC_HANDLE)NULL, (PCHAR*)&pBackBuffer, uXMLLength);
-
+    pRootNode = pXMLNode;
     if( pRootNode == NULL)
     {
         AnscTraceWarning(("Failed to parse the data model XML file.\n"));
@@ -208,7 +244,29 @@ DslhDmagntLoadDataModelXML
 
         goto EXIT;
     }
+#if 0
+    /*mrollins: debug code to write out the xml.  used to compare xml create from dm pack to original*/
+    {
+      ULONG size = 0;
+      ULONG sizeleft = 0;
+      char* buffer = NULL;
+      FILE* file;
 
+      size = sizeleft = pRootNode->GetEncodedSize(pRootNode);
+      buffer = malloc(size);
+      if(pRootNode->Encode(pRootNode, buffer, &sizeleft) == ANSC_STATUS_SUCCESS)
+      {
+        file = fopen("/tmp/dmdbg.xml", "w");
+        fwrite(buffer, 1, size, file);
+        fclose(file);
+        printf("Encode success size=%lu sizeleft=%lu\n", size, sizeleft);fflush(stdout);
+      }
+      else
+      {
+        printf("Encode failed size=%lu sizeleft=%lu\n", size, sizeleft);fflush(stdout);
+      }
+    }
+#endif
     /* get RootObjName */
     pRootName = pDslhMprIf->GetRootObjName(pDslhMprIf->hOwnerContext);
 

@@ -267,6 +267,14 @@ typedef  ANSC_STATUS
 (*PFN_DSLHCPECO_LOAD_LIB2)
     (
         ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bPopulateTree
+    );
+
+typedef  ANSC_STATUS
+(*PFN_DSLHCPECO_LOAD_LIB3)
+    (
+        ANSC_HANDLE                 hThisObject,
         char*                       pLibXmlFile
     );
 
@@ -327,6 +335,17 @@ typedef ANSC_STATUS
         char*                       pPrefix
     );
 
+typedef ANSC_STATUS
+(*PFN_DSLHCPECO_REGDATAMODEL2)
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       pCR_id,
+        void*                       pfnXmlLoader,
+        char*                       pCompName,
+        ULONG                       version,
+        char*                       pDbusPath,
+        char*                       pPrefix
+    );
 /*
  * The CPE WAN Management Protocol allows an ACS to provision a CPE or collection of CPE based on a
  * variety of criteria. The provisioning mechanism includes specific provisioning parameters and a
@@ -378,11 +397,13 @@ typedef ANSC_STATUS
     PFN_DSLHCPECO_REG_OBJ           RegisterHiddenObject;                                   \
     PFN_DSLHCPECO_REG_OBJ2          RegisterObject2;                                        \
     PFN_DSLHCPECO_REG_OBJ2          RegisterHiddenObject2;                                  \
-    PFN_DSLHCPECO_LOAD_LIB2         LoadInternalDMLibFile;                                  \
+    PFN_DSLHCPECO_LOAD_LIB3         LoadInternalDMLibFile;                                  \
     PFN_DSLHCPECO_LOAD_LIB          LoadExternalDMLibFile;                                  \
-    PFN_DSLHCPECO_LOAD_LIB2         UnloadDMLibFile;                                        \
-    PFN_DSLHCPECO_LOAD_LIB2         LoadRpcExtXMLFile;                                      \
+    PFN_DSLHCPECO_LOAD_LIB2         LoadExternalDMLibFile2;                                 \
+    PFN_DSLHCPECO_LOAD_LIB3         UnloadDMLibFile;                                        \
+    PFN_DSLHCPECO_LOAD_LIB3         LoadRpcExtXMLFile;                                      \
     PFN_DSLHCPECO_REGDATAMODEL      RegisterCcspDataModel;                                  \
+    PFN_DSLHCPECO_REGDATAMODEL2     RegisterCcspDataModel2;                                 \
                                                                                             \
     PFN_DSLHCPECO_ADDIF             AddInterface;                                           \
     PFN_DSLHCPECO_GETIF             GetInterfaceByName;                                     \

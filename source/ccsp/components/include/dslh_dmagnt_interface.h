@@ -309,6 +309,16 @@ typedef  ANSC_STATUS
     );
 
 typedef  ANSC_STATUS
+(*PFN_DSLHDMAGNT_LOAD2)
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bExternal,
+        BOOL                        bPopulateTree
+    );
+
+
+typedef  ANSC_STATUS
 (*PFN_DSLHDMAGNT_UNLOAD)
     (
         ANSC_HANDLE                 hThisObject,
@@ -370,6 +380,7 @@ typedef  ANSC_STATUS
                                                                                             \
     PFN_DSLHDMAGNT_REGBASE          RegBaseDataModel;                                       \
     PFN_DSLHDMAGNT_LOAD             LoadDataModelXML;                                       \
+    PFN_DSLHDMAGNT_LOAD2            LoadDataModelXML2;                                      \
     PFN_DSLHDMAGNT_UNLOAD           UnloadDataModelXML;                                     \
     PFN_DSLHDMAGNT_MEMORY           MemoryUsage;                                            \
     PFN_DSLHDMAGNT_MEMORY           MemoryTable;                                            \

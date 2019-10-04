@@ -16,4 +16,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-SUBDIRS = cosa debug_api ccsp util_api
+SUBDIRS = cosa debug_api ccsp util_api dm_pack
