@@ -240,8 +240,10 @@ if [ -e ./tr069pa ]; then
 	if [ "x"$Subsys = "x" ]; then
 		$BINPATH/CcspTr069PaSsp
 	else
-	echo_t "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
-		$BINPATH/CcspTr069PaSsp -subsys $Subsys
+	    echo_t "$BINPATH/CcspTr069PaSsp -subsys $Subsys"
+        if [ -f  $BINPATH/CcspTr069PaSsp ]; then
+        	$BINPATH/CcspTr069PaSsp -subsys $Subsys
+        fi
 	fi
      fi
 #        sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
