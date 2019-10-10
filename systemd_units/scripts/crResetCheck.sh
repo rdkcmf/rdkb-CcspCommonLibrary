@@ -30,6 +30,7 @@ if [ -f /tmp/pam_initialized ] || [ -f /tmp/psm_initialized ]; then
 	syscfg set X_RDKCENTRAL-COM_LastRebootCounter "1"
 	syscfg commit
 	sync
+	echo "`date`: CcspCrSsp Crashed Rebooting" >> ${PROCESS_RESTART_LOG}
 	source /rdklogger/logfiles.sh;syncLogs_nvram2
 	reboot
 else
