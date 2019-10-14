@@ -21,6 +21,10 @@
 . /etc/device.properties
 . /etc/include.properties
 
+if [ -f /etc/telemetry2_0.properties ]; then
+    . /etc/telemetry2_0.properties 
+fi
+
 source /etc/utopia/service.d/log_capture_path.sh
 BBHM_CUR_CFG="/nvram/bbhm_cur_cfg.xml"
 BINPATH="/usr/bin"
@@ -420,7 +424,14 @@ fi
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
     rm -rf /telemetry/*.cmd
-    /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
+    T2_ENABLE=`syscfg get T2Enable` 
+    if [ ! -f $T2_0_BIN ]; then                                                 
+    	echo_t  "Unable to find $T2_0_BIN ... Switching T2 Enable to false !!!"
+    	T2_ENABLE="false"                                                                       
+    fi
+    if [ "x$T2_ENABLE" != "xtrue" ]; then  
+        /usr/bin/inotify-minidump-watcher /telemetry /lib/rdk/telemetryEventListener.sh 0 "*.cmd" &
+    fi
 fi
 
 echo "Enable RFC feature"
