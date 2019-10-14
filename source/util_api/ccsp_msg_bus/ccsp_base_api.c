@@ -2917,7 +2917,7 @@ int CcspBaseIf_SendTelemetryDataSignal (
 
     /*to support daemon redundency*/
     pthread_mutex_lock(&bus_info->info_mutex);
-    for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i)
+    for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i++)
     {
         if(bus_info->connection[i].connected && bus_info->connection[i].conn )
         {
