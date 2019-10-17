@@ -18,8 +18,6 @@
 ##########################################################################
 [Unit]
 Description=CcspLogent service
-# Dependent on Utopia Created syscfg shared memory being created in logagent.path too
-# Remove After as soon as all devices start using logagent.path
 After=CcspCrSsp.service
 
 [Service]
