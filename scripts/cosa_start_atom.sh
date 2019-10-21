@@ -94,7 +94,7 @@ export LOG4C_RCPATH=/rdklogger
 LOG_FOLDER="/rdklogs/logs/"
 CRONPATH="/tmp/cron/"
 CRONFILE=$CRONPATH"root"
-CRONFILE_BK="/tmp/cron_tab.txt"
+CRONFILE_BK="/tmp/cron_tab$$.txt"
 MESHAGENT="/usr/bin/meshAgent"
 DNSMASQ_FILE="/nvram/dnsmasq.leases"
 MODEL_NUM=`grep "MODEL_NUM" /etc/device.properties | cut -d "=" -f2`
