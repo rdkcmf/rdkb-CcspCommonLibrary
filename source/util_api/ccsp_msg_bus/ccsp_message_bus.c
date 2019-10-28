@@ -1311,7 +1311,7 @@ CCSP_Message_Bus_Exit
     for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i++)
     {
         /* Stop all the loop threads */
-        if(bus_info->connection[i].loop)
+        if(bus_info->connection[i].loop && bus_info->connection[i].conn )
         {
             dbus_connection_lock(bus_info->connection[i].conn);
             wake_mainloop(&bus_info->connection[i]);
