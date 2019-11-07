@@ -294,7 +294,7 @@ if [ -e ./tad ]; then
         cd ..
 fi
 
-if [ "x$BOX_TYPE" == "xXB3" ]; then
+if [ "x$BOX_TYPE" != "xTCCBR" ]; then
        echo_t "XCONF SCRIPT : Calling XCONF Client"
        /etc/firmwareSched.sh &
 fi
@@ -442,14 +442,6 @@ fi
 if [ -f "/rdklogger/fileUploadRandom.sh" ]
 then
 	/rdklogger/fileUploadRandom.sh &
-fi
-
-isPeriodicFWCheckEnabled=`syscfg get PeriodicFWCheck_Enable`
-if [ "$isPeriodicFWCheckEnabled" == "true" ]; then
-	echo "XCONF SCRIPT : Calling XCONF Client"
-	if [ "x$BOX_TYPE" != "xTCCBR" ]; then
-		/etc/firmwareSched.sh &
-	fi
 fi
 
 ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
