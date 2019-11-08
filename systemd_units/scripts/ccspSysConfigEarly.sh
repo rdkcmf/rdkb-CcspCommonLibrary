@@ -31,9 +31,20 @@ export LOG4C_RCPATH=/etc
 
 cp /usr/ccsp/ccsp_msg.cfg /tmp
 
-ulimit -c unlimited
+if [ "$BOX_TYPE" = "HUB4" ]; then
+    #Disable core dump generation
+    ulimit -c 0
+else
+    ulimit -c unlimited
+fi
+
 if [ "$BUILD_TYPE" != "prod" ]; then
-      echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
+    if [ "$BOX_TYPE" = "HUB4" ]; then
+        #Disable core dump generation
+        echo /dev/null > /proc/sys/kernel/core_pattern
+    else
+        echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
+    fi
 fi
 
 #
