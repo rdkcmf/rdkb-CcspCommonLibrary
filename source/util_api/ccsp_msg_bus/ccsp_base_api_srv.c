@@ -45,6 +45,7 @@
 #include <signal.h>
 #include <dslh_definitions_database.h>
 #include "ccsp_trace.h"
+#include <rbus_message_bus.h>
 
 #define MAX_EVENT_NAME_LEN 128
 

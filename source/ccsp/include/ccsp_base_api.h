@@ -1158,7 +1158,6 @@ int  CcspBaseIf_UnRegister_Event_rbus
     const char* event_name
 );
 
-int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
 
 #define  NOTIFYCWMPEVENT_TIMEOUT                         30
 #define  STBSERVICE_AP_INTERFACE_NAME                    "com.cisco.stbservice.autoprovisioning"

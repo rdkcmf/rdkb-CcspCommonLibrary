@@ -43,6 +43,7 @@
 #include "ccsp_base_api.h"
 #include "ccsp_trace.h"
 #include <fcntl.h>
+#include <rbus_message_bus.h>
 
 #ifndef WIN32 
 #include <sys/time.h>
@@ -1070,9 +1071,10 @@ CCSP_Message_Bus_Init
        strncpy(bus_info->component_id, component_id , sizeof(bus_info->component_id) -1);
        bus_info->component_id[sizeof(bus_info->component_id)-1] = '\0';
     }
-
+    
+    #ifndef _RBUS_NOT_REQ_
     rbus_enabled = (access("/nvram/rbus", F_OK) == 0);
-    RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");
+    RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");  
     if(rbus_enabled)
     {
         rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
@@ -1084,7 +1086,7 @@ CCSP_Message_Bus_Init
         }
         else
         {
-            if((err = rbus_registerObj(component_id, bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+            if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
             {
                 CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
             }
@@ -1115,7 +1117,7 @@ CCSP_Message_Bus_Init
         }
         return 0;
     }
-
+    #endif
     //    CcspTraceDebug(("<%s>: component id = '%s'\n", __FUNCTION__, bus_info->component_id));
 
     // init var, mutex, msg_queue
@@ -1802,6 +1804,7 @@ CCSP_Message_Bus_Register_Path_Priv
     return ret;
 }
 
+#ifndef _RBUS_NOT_REQ_
 static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
 {
     rtError err = RT_OK;
@@ -2069,10 +2072,10 @@ CCSP_Message_Bus_Register_Path_Priv_rbus
 )
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    bus_info->rbus_callback = funcptr;
+    bus_info->rbus_callback = (void *)funcptr;
     return CCSP_Message_Bus_OK;
 }
-
+#endif
 int 
 CCSP_Message_Bus_Register_Path2
 (
