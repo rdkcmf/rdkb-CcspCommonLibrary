@@ -63,9 +63,7 @@
 
 #include <dbus/dbus.h>
 #include <pthread.h>
-#include <rbus-core/rbus_core.h>
-#include <rbus-core/rbus_marshalling.h>
-#include <rbus-core/rbus_session_mgr.h>
+
 /*
 notes: see readme.txt
 */
@@ -192,7 +190,7 @@ typedef struct _CCSP_MESSAGE_BUS_INFO
     DBusObjectPathMessageFunction thread_msg_func;
     int dbus_connect_thread_count;
     int dbus_loop_thread_count;
-    rbus_callback_t rbus_callback;
+    void* rbus_callback;
 
 } CCSP_MESSAGE_BUS_INFO;
 
