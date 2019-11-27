@@ -3255,7 +3255,7 @@ int PSM_Set_Record_Value2
 {
     parameterValStruct_t val[1];
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    char *str;
+    char *str = NULL;
     char psmName[256];
     int ret;
 
