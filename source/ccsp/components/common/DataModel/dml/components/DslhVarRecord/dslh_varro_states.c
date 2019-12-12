@@ -500,9 +500,22 @@ DslhVarroSetNotification
 	pFullName = pMyObject->GetFullName(pMyObject);
 	if(strstr(pFullName,"NumberOfEntries"))
 	{
-		AnscTraceEntry(("Param '%s' cannot be set to Notification Active.\n", pFullName));
-                AnscFreeMemory(pFullName);
-		return  ANSC_STATUS_UNAPPLICABLE;
+
+#if defined(DEVICE_GATEWAY_ASSOCIATION_FEATURE)
+
+     if(!strstr(pFullName,"ManageableDeviceNumberOfEntries"))
+        {
+            AnscTraceEntry(("Param '%s' cannot be set to Notification Active.\n", pFullName));
+            AnscFreeMemory(pFullName);
+            return  ANSC_STATUS_UNAPPLICABLE;
+        }
+#else
+
+             AnscTraceEntry(("Param '%s' cannot be set to Notification Active.\n", pFullName));
+             AnscFreeMemory(pFullName);
+             return  ANSC_STATUS_UNAPPLICABLE;  
+#endif             
+
 	}
         AnscFreeMemory(pFullName);
     if ( iNotification == DSLH_CWMP_NOTIFICATION_active && pVarEntity->ParamDescr->NotifyStatus != DSLH_CWMP_NOTIFY_STATUS_configActive)
