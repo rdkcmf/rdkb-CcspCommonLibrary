@@ -19,4 +19,9 @@
 #######################################################################################
 
 source /etc/device.properties
-rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync && reboot"
+
+sleep 60
+#set rbus crash only in rbus mode
+if [ -e /nvram/rbus ]; then
+    rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync && reboot"
+fi
