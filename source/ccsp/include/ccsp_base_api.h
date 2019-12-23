@@ -1276,5 +1276,5 @@ void PsmFreeRecords(void *bus_handle,
         int nrec);
 
 int Rbus_to_CCSP_error_mapper(int error_code);
-int obj_name_finder(char *paramName, char **compName, int *pfree);
+int obj_name_finder(char *paramName, char **compName, int *pfree, int isWildcard);
 #endif /* CCSP_BASE_API_H */
