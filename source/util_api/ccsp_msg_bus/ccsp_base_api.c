@@ -77,10 +77,9 @@ int   CcspBaseIf_timeout_seconds        = 60; //seconds
 int   CcspBaseIf_timeout_getval_seconds = 120; //seconds
 #define  CcspBaseIf_timeout_rbus  (CcspBaseIf_timeout_seconds * 1000) // in milliseconds
 
-#define Object_component_name_wifi_index 0
-char *Object_component_name[] =
+char *Object_component_name[][256] = 
 {
-   "eRT.com.cisco.spvtg.ccsp.wifi"
+    {"Device.WiFi.", "eRT.com.cisco.spvtg.ccsp.wifi"}
 };
 
 char *subObjectList[] =
@@ -97,44 +96,64 @@ char *subObjectList[] =
     "Device.DeviceInfo.Webpa.",
     "Device.DeviceInfo.SupportedDataModel.",
     "Device.DeviceInfo.X_RDKCENTRAL-COM.",
-    "Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.",
     "Device.X_RDKCENTRAL-COM_Report.InterfaceDevicesWifi.",
     "Device.X_RDKCENTRAL-COM_Report.RadioInterfaceStatistics.",
     "Device.X_RDKCENTRAL-COM_Report.NeighboringAP.",
     "Device.X_RDKCENTRAL-COM_Report.NetworkDevicesStatus.",
     "Device.X_RDK_WebConfig.ConfigFile.",
-    "Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic."
+    "Device.X_RDKCENTRAL-COM_Report.NetworkDevicesTraffic.",
+    "Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMEthLogEnabled",
+    "Device.DeviceInfo.X_RDKCENTRAL-COM_xOpsDeviceMgmt.Logging.xOpsDMMoCALogEnabled"
 };
 
-int obj_name_finder(char *paramName, char **objName, int *pfree)
+#define WILDCARD_QUERY 1
+#define NON_WILDCARD_QUERY 0
+
+int obj_name_finder(char *paramName, char **objName, int *pfree, int isWildcard)
 {
+    int i = 0, len_Object_component_name = sizeof(Object_component_name)/sizeof(Object_component_name[0]);
 
-    int  len = sizeof(subObjectList)/sizeof(subObjectList[0]);
-    int i = 0, j = 0 , h = 0;
-    char *x;
-    if (!strncmp(paramName, "Device.WiFi.", 12))
+    for(i = 0; i < len_Object_component_name; i ++)
     {
-        *objName =  Object_component_name[Object_component_name_wifi_index];
-        return 0;
-    }
-
-    for ( i = 0; i < len; i ++)
-    {
-        if(!strncmp(paramName, subObjectList[i], (strlen(subObjectList[i]))))
+        if (!strncmp(paramName, Object_component_name[i][0], strlen(Object_component_name[i][0])))
         {
-            *objName = subObjectList[i];
+            *objName =  Object_component_name[i][1];
             return 0;
         }
     }
 
-    for (x=paramName; *x, j < 2; x++)
+    if(! isWildcard)
     {
-        h++;
-        if(*x == '.')
-            j ++;
+        int  len_subObjectList = sizeof(subObjectList)/sizeof(subObjectList[0]);
+        int i = 0, j = 0 , h = 0;
+        char *x;
+
+        for ( i = 0; i < len_subObjectList; i ++)
+        {
+            if(!strncmp(paramName, subObjectList[i], (strlen(subObjectList[i]))))
+            {
+                *objName = subObjectList[i];
+                return 0;
+            }
+        }
+        
+        for (x=paramName; (*x) && (j < 2); x++)
+        {
+            h++;
+            if(*x == '.')
+                j ++;
+        }
+
+        if(j == 2)
+        {
+            *objName = strndup(paramName, h);
+            *pfree = 1;
+        }
+        else
+            *objName = paramName;
     }
-    *objName = strndup(paramName, h);
-    *pfree = 1;
+    else
+        *objName = paramName;
     return 0;
 }
 
@@ -2130,7 +2149,6 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     componentStruct_t **val=NULL;
     *components = 0;
-    char dummy_comp[12] = {"dummy"};
     char *comp = NULL, *comp1 = NULL;
     rtMessage response;
     int i = 0, ret = 0, pfree = 0;
@@ -2148,13 +2166,13 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
                 *size = 1;
                 val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
                 val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
-                obj_name_finder(name_space, &comp, &pfree);
-                if(pfree)
-                    free(comp);
+                obj_name_finder(name_space, &comp, &pfree, WILDCARD_QUERY);
                 val[0]->componentName = bus_info->mallocfunc(strlen(comp)+1);
                 val[0]->dbusPath = bus_info->mallocfunc(strlen(comp)+1);
                 strcpy( val[0]->componentName, comp);
                 strcpy( val[0]->dbusPath, comp);
+                if(pfree)
+                    free(comp);
                 val[0]->type = ccsp_string;
                 val[0]->remoteCR_name = NULL;
                 val[0]->remoteCR_dbus_path = NULL;
@@ -2166,15 +2184,16 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
                 {
                     rbus_PopString(response, &comp1);
                     RBUS_LOG("Destination %d is %s\n", i, comp1);
-                    pfree = 0;
-                    obj_name_finder(comp1, &comp, &pfree);
-                    if(pfree)
-                        free(comp);
                     val[i] = bus_info->mallocfunc(sizeof(componentStruct_t));
-                    val[i]->componentName = bus_info->mallocfunc(strlen(comp)+1);
+                    comp = NULL;
+                    pfree = 0;
+                    obj_name_finder(comp1, &comp, &pfree, WILDCARD_QUERY);
+                     val[i]->componentName = bus_info->mallocfunc(strlen(comp)+1);
                     val[i]->dbusPath = bus_info->mallocfunc(strlen(comp)+1);
                     strcpy( val[i]->componentName, comp);
                     strcpy( val[i]->dbusPath, comp);
+                    if(pfree)
+                    free(comp);
                     val[i]->type = ccsp_string;
                     val[i]->remoteCR_name = NULL;
                     val[i]->remoteCR_dbus_path = NULL;
@@ -2193,13 +2212,13 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         *size = 1;
         val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
         val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
-        obj_name_finder(name_space, &comp, &pfree);
-        if(pfree)
-            free(comp);
+        obj_name_finder(name_space, &comp, &pfree, NON_WILDCARD_QUERY);
         val[0]->componentName = bus_info->mallocfunc(strlen(comp)+1);
         val[0]->dbusPath = bus_info->mallocfunc(strlen(comp)+1);
         strcpy( val[0]->componentName, comp);
         strcpy( val[0]->dbusPath, comp);
+        if(pfree)
+            free(comp);
         val[0]->type = ccsp_string;
         val[0]->remoteCR_name = NULL;
         val[0]->remoteCR_dbus_path = NULL;
