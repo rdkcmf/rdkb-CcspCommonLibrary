@@ -4286,7 +4286,7 @@ int CcspBaseIf_Register_Event_rbus
  )
 {
     #ifndef _RBUS_NOT_REQ_
-    CcspTraceError(("%s : rbus_registerEvent called for event: %s\n", __FUNCTION__, event_name));
+    CcspTraceInfo(("%s : rbus_registerEvent called for event: %s\n", __FUNCTION__, event_name));
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
     char * comp = NULL;
 

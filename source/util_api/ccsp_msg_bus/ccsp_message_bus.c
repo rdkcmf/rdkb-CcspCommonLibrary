@@ -1779,6 +1779,18 @@ CCSP_Message_Bus_Register_Path_Priv
             break;
         }
     }
+    
+    if(rbus_enabled)
+    {
+        pthread_mutex_unlock(&bus_info->info_mutex);
+        dbus_error_free(&error);
+        return CCSP_Message_Bus_OK;
+        /*
+         * this is already handed by CCSP_Message_Bus_Register_Path_Priv_rbus during init
+         * hence there is no need to progress further in this function in rbus mode.
+        */
+    }
+    
     if(i != CCSP_MESSAGE_BUS_MAX_PATH) 
     {
         for(j = 0; j < CCSP_MESSAGE_BUS_MAX_CONNECTION; j++)
@@ -1786,13 +1798,13 @@ CCSP_Message_Bus_Register_Path_Priv
             if(bus_info->connection[j].connected && bus_info->connection[j].conn )
             {
                 if(dbus_connection_try_register_object_path
-                      (
-                          bus_info->connection[j].conn,
-                          path,
-                          &bus_info->path_array[i].echo_vtable,
-                          (void*)user_data,
-                          &error
-                       ))
+                        (
+                         bus_info->connection[j].conn,
+                         path,
+                         &bus_info->path_array[i].echo_vtable,
+                         (void*)user_data,
+                         &error
+                        ))
                     ret = CCSP_Message_Bus_OK;
             }
         }
