@@ -1858,13 +1858,16 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rtMessage_Create(response);
             tmp = result;
             rbus_AppendInt32(*response, tmp); //result
-            rbus_AppendInt32(*response, size);
-            for(i = 0; i < size; i++)
+            if(tmp == CCSP_SUCCESS )
             {
-                RBUS_LOG("%s val[%d]->parameterName %s val[%d]->parameterValue %s\n", __FUNCTION__, i, val[i]->parameterName, i, val[i]->parameterValue);
-                rbus_AppendString(*response, val[i]->parameterName);
-                rbus_AppendString(*response, val[i]->parameterValue);
-                rbus_AppendInt32(*response, val[i]->type);
+                rbus_AppendInt32(*response, size);
+                for(i = 0; i < size; i++)
+                {
+                    RBUS_LOG("%s val[%d]->parameterName %s val[%d]->parameterValue %s\n", __FUNCTION__, i, val[i]->parameterName, i, val[i]->parameterValue);
+                    rbus_AppendString(*response, val[i]->parameterName);
+                    rbus_AppendString(*response, val[i]->parameterValue);
+                    rbus_AppendInt32(*response, val[i]->type);
+                }
             }
             free_parameterValStruct_t(bus_info, size, val);
         }
@@ -1911,10 +1914,13 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rtMessage_Create(response);
             tmp = result;
             rbus_AppendInt32(*response, tmp); //result
-            if(invalidParameterName != NULL)
-                rbus_AppendString(*response, invalidParameterName); //invalid param
-            else
-                rbus_AppendString(*response, ""); //invalid param
+            if( tmp == CCSP_SUCCESS)
+            {
+                if(invalidParameterName != NULL)
+                    rbus_AppendString(*response, invalidParameterName); //invalid param
+                else
+                    rbus_AppendString(*response, ""); //invalid param
+            }
             bus_info->freefunc(parameterVal);
             bus_info->freefunc(invalidParameterName);
             return DBUS_HANDLER_RESULT_HANDLED;
@@ -1946,18 +1952,20 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rtMessage_Create(response);
             tmp = result;
             rbus_AppendInt32(*response, tmp);
-            rbus_AppendInt32(*response, size);
-
-            for(i = 0; i < size; i++)
+            if( tmp == CCSP_SUCCESS )
             {
-                rbus_AppendString(*response, val[i]->parameterName);
-                rbus_AppendInt32(*response, val[i]->notificationChanged);
-                rbus_AppendInt32(*response, val[i]->notification);
-                rbus_AppendInt32(*response, val[i]->accessControlChanged);
-                rbus_AppendInt32(*response, val[i]->access);
-                rbus_AppendInt32(*response, val[i]->accessControlBitmask);
-            }
+                rbus_AppendInt32(*response, size);
 
+                for(i = 0; i < size; i++)
+                {
+                    rbus_AppendString(*response, val[i]->parameterName);
+                    rbus_AppendInt32(*response, val[i]->notificationChanged);
+                    rbus_AppendInt32(*response, val[i]->notification);
+                    rbus_AppendInt32(*response, val[i]->accessControlChanged);
+                    rbus_AppendInt32(*response, val[i]->access);
+                    rbus_AppendInt32(*response, val[i]->accessControlBitmask);
+                }
+            }
             free_parameterAttributeStruct_t(bus_info, size, val);
             return DBUS_HANDLER_RESULT_HANDLED;
         }
@@ -2015,13 +2023,16 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rtMessage_Create(response);
             tmp = result;
             rbus_AppendInt32(*response, tmp); //result
-            rbus_AppendInt32(*response, size);
-            for(i = 0; i < size; i++)
+            if( tmp == CCSP_SUCCESS)
             {
-                rbus_AppendString(*response, val[i]->parameterName);
-                btmp = val[i]->writable;
-                rbus_AppendInt32(*response, btmp);
-                RBUS_LOG("%s Param [%d] Name=%s, Writable=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable);
+                rbus_AppendInt32(*response, size);
+                for(i = 0; i < size; i++)
+                {
+                    rbus_AppendString(*response, val[i]->parameterName);
+                    btmp = val[i]->writable;
+                    rbus_AppendInt32(*response, btmp);
+                    RBUS_LOG("%s Param [%d] Name=%s, Writable=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable);
+                }
             }
             free_parameterInfoStruct_t(bus_info, size, val);
         }

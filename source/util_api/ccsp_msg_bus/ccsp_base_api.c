@@ -378,16 +378,19 @@ int CcspBaseIf_setParameterValues_rbus(
     }
 
     rbus_PopInt32(response, &ret);
-    char *str = NULL;
-    rbus_PopString(response, &str); //invalid param
-    if(str)
+    if(ret == CCSP_SUCCESS)
     {
-        *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
-        strcpy(*invalidParameterName, str);
-    }
-    else
-        *invalidParameterName = 0;
+        char *str = NULL;
+        rbus_PopString(response, &str); //invalid param
+        if(str)
+        {
+            *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
+            strcpy(*invalidParameterName, str);
+        }
+        else
+            *invalidParameterName = 0;
 
+    }
     rtMessage_Release(response);
     return ret;
 }
@@ -643,29 +646,32 @@ int CcspBaseIf_getParameterValues_rbus(
     }
 
     rbus_PopInt32(response, &ret);
-    rbus_PopInt32(response, val_size);
-    RBUS_LOG("No. of o/p params: %d\n", *val_size);
-    if(*val_size)
+    if(ret == CCSP_SUCCESS)
     {
-        val = bus_info->mallocfunc(*val_size*sizeof(parameterValStruct_t *));
-        memset(val, 0, *val_size*sizeof(parameterValStruct_t *));
-        char *tmpbuf = NULL;
-
-        for(i = 0; i < *val_size; i++)
+        rbus_PopInt32(response, val_size);
+        RBUS_LOG("No. of o/p params: %d\n", *val_size);
+        if(*val_size)
         {
-            val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
-            memset(val[i], 0, sizeof(parameterValStruct_t));
-            tmpbuf = NULL;
-            rbus_PopString(response, &tmpbuf);
-            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-            strcpy(val[i]->parameterName, tmpbuf);
-            tmpbuf = NULL;
-            rbus_PopString(response, &tmpbuf);
-            val[i]->parameterValue = bus_info->mallocfunc(strlen(tmpbuf)+1);
-            strcpy(val[i]->parameterValue, tmpbuf);
-            rbus_PopInt32(response, &type);
-            val[i]->type = type;
-            RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
+            val = bus_info->mallocfunc(*val_size*sizeof(parameterValStruct_t *));
+            memset(val, 0, *val_size*sizeof(parameterValStruct_t *));
+            char *tmpbuf = NULL;
+
+            for(i = 0; i < *val_size; i++)
+            {
+                val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
+                memset(val[i], 0, sizeof(parameterValStruct_t));
+                tmpbuf = NULL;
+                rbus_PopString(response, &tmpbuf);
+                val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+                strcpy(val[i]->parameterName, tmpbuf);
+                tmpbuf = NULL;
+                rbus_PopString(response, &tmpbuf);
+                val[i]->parameterValue = bus_info->mallocfunc(strlen(tmpbuf)+1);
+                strcpy(val[i]->parameterValue, tmpbuf);
+                rbus_PopInt32(response, &type);
+                val[i]->type = type;
+                RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
+            }
         }
     }
 
@@ -1201,26 +1207,29 @@ int CcspBaseIf_getParameterAttributes_rbus(
     }
 
     rbus_PopInt32(response, &ret);
-    rbus_PopInt32(response, val_size);
-    if(*val_size)
+    if( ret == CCSP_SUCCESS )
     {
-        val = bus_info->mallocfunc(*val_size*sizeof(parameterAttributeStruct_t *));
-        memset(val, 0, *val_size*sizeof(parameterAttributeStruct_t *));
-        char *tmpbuf = NULL;
-
-        for(i = 0; i < *val_size; i++)
+        rbus_PopInt32(response, val_size);
+        if(*val_size)
         {
-            val[i] = bus_info->mallocfunc(sizeof(parameterAttributeStruct_t));
-            memset(val[i], 0, sizeof(parameterAttributeStruct_t));
-            tmpbuf = NULL;
-            rbus_PopString(response, &tmpbuf);
-            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-            strcpy(val[i]->parameterName, tmpbuf);
-            rbus_PopInt32(response, &val[i]->notificationChanged);
-            rbus_PopInt32(response, &val[i]->notification);
-            rbus_PopInt32(response, &val[i]->accessControlChanged);
-            rbus_PopInt32(response, &val[i]->access);
-            rbus_PopInt32(response, &val[i]->accessControlBitmask);
+            val = bus_info->mallocfunc(*val_size*sizeof(parameterAttributeStruct_t *));
+            memset(val, 0, *val_size*sizeof(parameterAttributeStruct_t *));
+            char *tmpbuf = NULL;
+
+            for(i = 0; i < *val_size; i++)
+            {
+                val[i] = bus_info->mallocfunc(sizeof(parameterAttributeStruct_t));
+                memset(val[i], 0, sizeof(parameterAttributeStruct_t));
+                tmpbuf = NULL;
+                rbus_PopString(response, &tmpbuf);
+                val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+                strcpy(val[i]->parameterName, tmpbuf);
+                rbus_PopInt32(response, &val[i]->notificationChanged);
+                rbus_PopInt32(response, &val[i]->notification);
+                rbus_PopInt32(response, &val[i]->accessControlChanged);
+                rbus_PopInt32(response, &val[i]->access);
+                rbus_PopInt32(response, &val[i]->accessControlBitmask);
+            }
         }
     }
 
@@ -1600,28 +1609,30 @@ int CcspBaseIf_getParameterNames_rbus(
     }
 
     rbus_PopInt32(response, &ret);
-    rbus_PopInt32(response, size);
-    if(*size)
+    if( ret == CCSP_SUCCESS )
     {
-        val = bus_info->mallocfunc(*size*sizeof(parameterValStruct_t *));
-        memset(val, 0, *size*sizeof(parameterValStruct_t *));
-        char *tmpbuf = NULL;
-
-        for(i = 0; i < *size; i++)
+        rbus_PopInt32(response, size);
+        if(*size)
         {
-            val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
-            memset(val[i], 0, sizeof(parameterValStruct_t));
-            tmpbuf = NULL;
-            rbus_PopString(response, &tmpbuf);
-            val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-            strcpy(val[i]->parameterName, tmpbuf);
-            rbus_PopInt32(response, &type);
-            val[i]->writable = type;
-            RBUS_LOG("Param [%d] Name = %s, Type = %d\n",
-                    i, val[i]->parameterName, type);
+            val = bus_info->mallocfunc(*size*sizeof(parameterValStruct_t *));
+            memset(val, 0, *size*sizeof(parameterValStruct_t *));
+            char *tmpbuf = NULL;
+
+            for(i = 0; i < *size; i++)
+            {
+                val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
+                memset(val[i], 0, sizeof(parameterValStruct_t));
+                tmpbuf = NULL;
+                rbus_PopString(response, &tmpbuf);
+                val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
+                strcpy(val[i]->parameterName, tmpbuf);
+                rbus_PopInt32(response, &type);
+                val[i]->writable = type;
+                RBUS_LOG("Param [%d] Name = %s, Type = %d\n",
+                        i, val[i]->parameterName, type);
+            }
         }
     }
-
     *parameter = val;
     rtMessage_Release(response);
     return ret;
