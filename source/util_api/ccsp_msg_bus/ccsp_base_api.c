@@ -2210,12 +2210,12 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
                     val[i]->remoteCR_dbus_path = NULL;
                 }
             }
+            rtMessage_Release(response);
         }
         else
         {
             RBUS_LOG_ERR("%s rbus_resolveWildcardDestination failed for %s Error: %d\n", __FUNCTION__, name_space, ret);
         }
-        rtMessage_Release(response);
     }
     else
     {
@@ -2731,8 +2731,8 @@ int CcspBaseIf_getRegisteredComponents_rbus(
                 RBUS_LOG("%s returns component %d as %s\n", __FUNCTION__, i, val[i]->componentName);
             }
         }
+        rtMessage_Release(response);
     }
-    rtMessage_Release(response);
     *components = val;
     return CCSP_SUCCESS;
 }
