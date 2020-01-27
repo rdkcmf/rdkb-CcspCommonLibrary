@@ -36,11 +36,7 @@ BINPATH="/usr/bin"
 source /etc/utopia/service.d/log_env_var.sh
 source /etc/device.properties
 
-SECURE_SYSCFG=`syscfg get UpdateNvram`
-SYSCFG_DB_FILE="/nvram/syscfg.db"
-if [ "$SECURE_SYSCFG" = "false" ]; then
-      SYSCFG_DB_FILE="/opt/secure/data/syscfg.db"
-fi
+SYSCFG_DB_FILE="/opt/secure/data/syscfg.db"
 
 ulimit -c unlimited
 if [ "$BUILD_TYPE" != "prod" ]; then

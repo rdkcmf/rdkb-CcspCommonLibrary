@@ -21,12 +21,6 @@
 
 source /etc/device.properties
 
-SECURE_SYSCFG=`syscfg get UpdateNvram`
-SYSCFG_DB_FILE="/nvram/syscfg.db"
-if [ "$SECURE_SYSCFG" = "false" ]; then
-      SYSCFG_DB_FILE="/opt/secure/data/syscfg.db"
-fi
-
 export LOG4C_RCPATH=/etc
 
 cp /usr/ccsp/ccsp_msg.cfg /tmp

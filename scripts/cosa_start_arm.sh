@@ -38,10 +38,10 @@ source /etc/utopia/service.d/log_env_var.sh
 source /etc/utopia/service.d/log_capture_path.sh
 source /etc/device.properties
 
-SECURE_SYSCFG=`syscfg get UpdateNvram`
-SYSCFG_DB_FILE="/nvram/syscfg.db"
-if [ "$SECURE_SYSCFG" = "false" ]; then
-      SYSCFG_DB_FILE="/opt/secure/data/syscfg.db"
+if [ "$BOX_TYPE" = "XB3" ] || [ "$BOX_TYPE" = "HUB4" ] || [ "$MODEL_NUM" = "TG4482A" ]; then
+SYS_DB_FILE="/nvram/syscfg.db"
+else
+SYS_DB_FILE="/opt/secure/data/syscfg.db"
 fi
 
 ulimit -c unlimited
