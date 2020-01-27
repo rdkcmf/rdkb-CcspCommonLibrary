@@ -37,8 +37,8 @@ int                         size = 0;
 componentStruct_t **        ppComponents = NULL;
 char log[300] = {0};
 char paramName[100] = {0};
-strcpy(l_Subsystem, Subsytem);
-strcpy(paramName, pParameterName);
+strncpy(l_Subsystem, Subsytem, sizeof(l_Subsystem)-1);
+strncpy(paramName, pParameterName, sizeof(paramName)-1);
 sprintf(dst_pathname_cr, "%s%s", l_Subsystem, CCSP_DBUS_INTERFACE_CR);
 
        /* ret = CcspBaseIf_discComponentSupportingNamespace(bus_handle,
@@ -99,8 +99,8 @@ componentStruct_t **        ppComponents = NULL;
 char log[300] = {0};
 char paramName[100] = {0};
 char *p = &paramName;
-strcpy(l_Subsystem, Subsytem);
-strcpy(paramName, pParameterName);
+strncpy(l_Subsystem, Subsytem, sizeof(l_Subsystem)-1);
+strncpy(paramName, pParameterName, sizeof(paramName)-1);
 sprintf(dst_pathname_cr, "%s%s", l_Subsystem, CCSP_DBUS_INTERFACE_CR);
 
 		ret = CcspBaseIf_discComponentSupportingNamespace(bus_handle,

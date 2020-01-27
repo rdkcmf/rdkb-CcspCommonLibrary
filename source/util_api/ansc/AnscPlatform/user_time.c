@@ -344,7 +344,8 @@ UserSetTzString(char *pTimeZone, ...)
     bDaylightSavingsUsed = param;
     if (UserGetZone(pTimeZone, bDaylightSavingsUsed) != 0) {
 	//printf("%s\n", UserGetZone(pTimeZone, bDaylightSavingsUsed));
-        strcpy(zone, UserGetZone(pTimeZone, bDaylightSavingsUsed));
+        //sizeof(zone)-2 to accommodate the "\n" in the following
+        strncpy(zone, UserGetZone(pTimeZone, bDaylightSavingsUsed), sizeof(zone)-2);
     }
     strcat(zone,"\n");
 
