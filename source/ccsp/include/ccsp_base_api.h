@@ -228,7 +228,7 @@ extern int rbus_enabled;
 } while(0)
 
 #define RBUS_LOG_ERR(...) do {\
-    CcspTraceInfo((__VA_ARGS__));\
+    CcspTraceError((__VA_ARGS__));\
 } while(0)
 
 enum dataType_e
