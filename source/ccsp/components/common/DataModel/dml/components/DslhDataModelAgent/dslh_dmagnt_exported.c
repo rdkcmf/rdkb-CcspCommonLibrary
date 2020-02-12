@@ -1214,7 +1214,7 @@ EXIT1:
 
     /*CCSP_Message_Bus_Exit(bus_handle);*/
 
-    return ANSC_STATUS_SUCCESS;
+    return returnStatus;
 }
 
 
