@@ -82,6 +82,7 @@ Notes:
 #define CCSP_DBUS_INTERFACE_BASE   "com.cisco.spvtg.ccsp.baseInterface"
 
 #define CCSP_SYSTEM_READY_SIGNAL            "systemReadySignal"
+#define CCSP_TELEMETRY_DATA_SIGNAL           "telemetryDataSignal"
 #define CCSP_CURRENT_SESSION_ID_SIGNAL      "currentSessionIDSignal"
 #define CCSP_DEVICE_PROFILE_CHANGE_SIGNAL   "deviceProfileChangeSignal"
 #define CCSP_DIAG_COMPLETE_SIGNAL           "diagCompleteSignal"

@@ -47,6 +47,7 @@
 #define rbus_error_t                                      int
 #define rtError                                           int
 #define rbus_callback_t                                   int
+#define MESSAGE_FIELD_PAYLOAD                            "DUMMY"
 #define METHOD_INVALID                                   "DUMMY"
 #define METHOD_SETPARAMETERVALUES                        "DUMMY"
 #define METHOD_GETPARAMETERVALUES                        "DUMMY"
@@ -101,10 +102,13 @@
 #define rbus_PopInt32(x, y)                                 0
 #define rbus_AppendString(x, y)                             0
 #define rbus_PopString(x, y)                                0
+#define rbus_SetString(x,y,z)                               0
+#define rbus_GetString(x,y,z)                               0
 #else
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_marshalling.h>
 #include <rbus-core/rbus_session_mgr.h>
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 #endif
           

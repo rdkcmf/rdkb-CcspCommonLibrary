@@ -4166,11 +4166,33 @@ int CcspBaseIf_SendcurrentSessionIDSignal (
     return CCSP_SUCCESS;
 }
 
+void* CcspBaseIf_SendTelemetryDataSignal_rbus(void* telemetry_data)
+{
+  int ret;
+  rtMessage out;
+  rtMessage response;
+  rtMessage_Create(&out);
+  char* Telemetry_data = (char*)telemetry_data;
+  rbus_SetString(out, MESSAGE_FIELD_PAYLOAD, Telemetry_data);
+  if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.telemetry", CCSP_TELEMETRY_DATA_SIGNAL,out, 1000, &response))) != CCSP_Message_Bus_OK)
+  {
+            RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for telemetry data:%s returns with Err: %d\n", __FUNCTION__,Telemetry_data, ret);
+  }
+}
+
 int CcspBaseIf_SendTelemetryDataSignal (
     void* bus_handle,
     char* telemetry_data
 )
 {
+    if(rbus_enabled == 1) 
+    {
+        int ret = CCSP_SUCCESS;
+        pthread_t thread_id;
+        pthread_create(&thread_id, NULL, CcspBaseIf_SendTelemetryDataSignal_rbus, (void*)telemetry_data); 
+        pthread_join(thread_id, NULL); 
+        return ret;
+    }
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
