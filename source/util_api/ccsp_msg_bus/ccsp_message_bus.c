@@ -137,7 +137,7 @@ static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_ca
 static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
 static DBusWakeupMainFunction wake_mainloop(void *);
-
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 int rbus_enabled = 0;
 
 // External Interface, defined in ccsp_message_bus.h
@@ -1112,6 +1112,16 @@ CCSP_Message_Bus_Init
                 {
                     if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
+                }
+                else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.telemetry") == 0)
+                {
+                     rbus_method_table_entry_t table[1] = {
+                                {CCSP_TELEMETRY_DATA_SIGNAL, (void*)bus_info, telemetry_send_signal_rbus}, 
+                                        };
+                    if( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS )
+                    {
+                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
+                    }
                 }
             }
         }
@@ -2180,7 +2190,18 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
     }
     return 0;
 }
-
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+{
+    (void) destination;
+    (void) method;
+    int err = CCSP_Message_Bus_OK;
+    char* telemetry_data = NULL;
+    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+    err = rbus_GetString(request, MESSAGE_FIELD_PAYLOAD, &telemetry_data);
+    func->telemetryDataSignal(telemetry_data,func->telemetryDataSignal_data);
+    return err;
+}
 static int
 CCSP_Message_Bus_Register_Path_Priv_rbus
 (
