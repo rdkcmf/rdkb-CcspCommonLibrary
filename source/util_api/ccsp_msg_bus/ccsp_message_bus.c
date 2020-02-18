@@ -1094,23 +1094,23 @@ CCSP_Message_Bus_Init
             {
                 if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.CR") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id, CCSP_SYSTEM_READY_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id, CCSP_SYSTEM_READY_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for system ready \n", __FUNCTION__, err);
-                    if((err = rbus_registerEvent(component_id, CCSP_CURRENT_SESSION_ID_SIGNAL )) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id, CCSP_CURRENT_SESSION_ID_SIGNAL,NULL,NULL )) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for currentSessionIDSignal\n", __FUNCTION__, err);
-                    if((err = rbus_registerEvent(component_id,CCSP_DEVICE_PROFILE_CHANGE_SIGNAL )) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id,CCSP_DEVICE_PROFILE_CHANGE_SIGNAL,NULL,NULL )) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for deviceProfileChangeSignal)\n", __FUNCTION__, err);
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.tr069pa") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for diagCompleteSignal\n", __FUNCTION__, err);
-                    if(( err = rbus_registerEvent(component_id,CCSP_PARAMETER_VALUE_CHANGE_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                    if(( err = rbus_registerEvent(component_id,CCSP_PARAMETER_VALUE_CHANGE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for parameterValueChangeSignal\n", __FUNCTION__, err);
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.rm") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL)) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
                 }
             }
@@ -1817,6 +1817,26 @@ CCSP_Message_Bus_Register_Path_Priv
 }
 
 #ifndef _RBUS_NOT_REQ_
+typedef enum _rbus_data_type_t {
+    RBUS_DATATYPE_BOOLEAN  = 0x500,  /**< Boolean ("true" / "false" or "0" / "1")                */
+    RBUS_DATATYPE_INT16,             /**< Short (ex: 32767 or -32768)                            */
+    RBUS_DATATYPE_UINT16,            /**< Unsigned Short (ex: 65535)                             */
+    RBUS_DATATYPE_INT32,             /**< Integer (ex: 2147483647 or -2147483648)                */
+    RBUS_DATATYPE_UINT32,            /**< Unsigned Integer (ex: 4,294,967,295)                   */
+    RBUS_DATATYPE_INT64,             /**< Long (ex: 9223372036854775807 or -9223372036854775808) */
+    RBUS_DATATYPE_UINT64,            /**< Unsigned Long (ex: 18446744073709551615)               */
+    RBUS_DATATYPE_STRING,            /**< Null terminated string                                 */
+    RBUS_DATATYPE_DATE_TIME,         /**< ISO-8601 format (YYYY-MM-DDTHH:MM:SSZ)                 */
+    RBUS_DATATYPE_BASE64,            /**< Base64 representation of the binary data               */
+    RBUS_DATATYPE_BINARY,            /**< Hex representation of the binary data                  */
+    RBUS_DATATYPE_FLOAT,             /**< Float (ex: 1.2E-38 or 3.4E+38)                         */
+    RBUS_DATATYPE_DOUBLE,            /**< Double (ex: 2.3E-308 or 1.7E+308)                      */
+    RBUS_DATATYPE_BYTE,              /**< A byte (ex: 00 or FF)                                  */
+    RBUS_DATATYPE_REFERENCE,         /**< Reference variable. Use case specific                  */
+    RBUS_DATATYPE_EVENT_DEST_NAME,   /**< the destination name of an event receiver              */
+    RBUS_DATATYPE_NONE
+} rbusNewDataType_t;
+
 static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
 {
     rtError err = RT_OK;
@@ -1865,8 +1885,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 {
                     RBUS_LOG("%s val[%d]->parameterName %s val[%d]->parameterValue %s\n", __FUNCTION__, i, val[i]->parameterName, i, val[i]->parameterValue);
                     rbus_AppendString(*response, val[i]->parameterName);
-                    rbus_AppendString(*response, val[i]->parameterValue);
                     rbus_AppendInt32(*response, val[i]->type);
+                    rbus_AppendString(*response, val[i]->parameterValue);
                 }
             }
             free_parameterValStruct_t(bus_info, size, val);
@@ -1888,6 +1908,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t sessionId = 0, tmp = 0;
             dbus_bool commit = 0;
             char *invalidParameterName = 0;
+            int32_t dataType = 0;
 
             rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
             rbus_PopInt32(request, &sessionId);
@@ -1898,17 +1919,91 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 parameterVal = bus_info->mallocfunc(param_size*sizeof(parameterValStruct_t ));
                 memset(parameterVal, 0, param_size*sizeof(parameterValStruct_t ));
             }
+
             for(i = 0; i < param_size; i++)
             {
                 parameterVal[i].parameterName = NULL;
                 rbus_PopString(request, &parameterVal[i].parameterName);
-                parameterVal[i].parameterValue = NULL;
-                rbus_PopString(request, &parameterVal[i].parameterValue);
-                rbus_PopInt32(request, &parameterVal[i].type);
+                rbus_PopInt32(request, &dataType);
+                if (dataType < RBUS_DATATYPE_BOOLEAN)
+                {
+                    parameterVal[i].type = dataType;
+                    parameterVal[i].parameterValue = NULL;
+                    rbus_PopString(request, &parameterVal[i].parameterValue);
+                }
+                else
+                {
+                    rbusNewDataType_t typeVal = (rbusNewDataType_t) dataType;
+                    void *pValue = NULL;
+                    int length = 0;
+                    rbus_PopBinaryData(request, &pValue, &length);
+                    parameterVal[i].parameterValue = bus_info->mallocfunc(length);
+                    switch(typeVal)
+                    {
+                        case RBUS_DATATYPE_BOOLEAN:
+                            sprintf(parameterVal[i].parameterValue, "%d", *(int*)pValue);
+                            parameterVal[i].type = ccsp_boolean;
+                            break;
+                        case RBUS_DATATYPE_INT16:
+                        case RBUS_DATATYPE_INT32:
+                            sprintf(parameterVal[i].parameterValue, "%d", *(int*)pValue);
+                            parameterVal[i].type = ccsp_int;
+                            break;
+                        case RBUS_DATATYPE_UINT16:
+                        case RBUS_DATATYPE_UINT32:
+                            sprintf(parameterVal[i].parameterValue, "%u", *(unsigned int*)pValue);
+                            parameterVal[i].type = ccsp_unsignedInt;
+                            break;
+                        case RBUS_DATATYPE_INT64:
+                            sprintf(parameterVal[i].parameterValue, "%lld", *(long long*)pValue);
+                            parameterVal[i].type = ccsp_long;
+                            break;
+                        case RBUS_DATATYPE_UINT64:
+                            sprintf(parameterVal[i].parameterValue, "%llu", *(unsigned long long*)pValue);
+                            parameterVal[i].type = ccsp_unsignedLong;
+                            break;
+                        case RBUS_DATATYPE_STRING:
+                            strcpy (parameterVal[i].parameterValue, pValue);
+                            parameterVal[i].type = ccsp_string;
+                            break;
+                        case RBUS_DATATYPE_DATE_TIME:
+                            strcpy (parameterVal[i].parameterValue, pValue);
+                            parameterVal[i].type = ccsp_dateTime;
+                            break;
+                        case RBUS_DATATYPE_BASE64:
+                            strcpy (parameterVal[i].parameterValue, pValue);
+                            parameterVal[i].type = ccsp_base64;
+                            break;
+                        case RBUS_DATATYPE_FLOAT:
+                            parameterVal[i].type = ccsp_float;
+                            sprintf(parameterVal[i].parameterValue, "%f", *(float*)pValue);
+                            break;
+                        case RBUS_DATATYPE_DOUBLE:
+                            parameterVal[i].type = ccsp_double;
+                            sprintf(parameterVal[i].parameterValue, "%f", *(float*)pValue);
+                            break;
+                        case RBUS_DATATYPE_BYTE:
+                        {
+                            int k = 0;
+                            unsigned char* pVar = (unsigned char*)pValue;
+                            parameterVal[i].type = ccsp_byte;
+                            for (k = 0; k < length; k++)
+                                sprintf (&parameterVal[i].parameterValue[i * 2], "%02X", pVar[i]);
+                            break;
+                        }
+                        case RBUS_DATATYPE_REFERENCE:
+                        case RBUS_DATATYPE_BINARY:
+                        case RBUS_DATATYPE_EVENT_DEST_NAME:
+                        case RBUS_DATATYPE_NONE:
+                            strcpy (parameterVal[i].parameterValue, "");
+                            parameterVal[i].type = ccsp_none;
+                            break;
+                    }
+                }
             }
             char *str = NULL;
             rbus_PopString(request, &str); //commit
-            commit = (str && strcmp(str, "TRUE") == 0)?1:0;
+            commit = (str && strcasecmp(str, "TRUE") == 0)?1:0;
             result = func->setParameterValues(sessionId, writeID, parameterVal, param_size, commit,&invalidParameterName, func->setParameterValues_data);
             RBUS_LOG("%s :setParameterValues result %d\n", __FUNCTION__, result);
             rtMessage_Create(response);
