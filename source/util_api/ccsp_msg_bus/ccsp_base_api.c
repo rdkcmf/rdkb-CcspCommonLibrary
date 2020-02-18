@@ -278,8 +278,8 @@ int CcspBaseIf_setParameterValues_rbus(
     for(i = 0; i < size; i++)
     {
         rbus_AppendString(request, val[i].parameterName);
-        rbus_AppendString(request, val[i].parameterValue);
         rbus_AppendInt32(request, val[i].type);
+        rbus_AppendString(request, val[i].parameterValue);
     }
     rbus_AppendString(request, commit ? "TRUE" : "FALSE");
 
@@ -583,12 +583,12 @@ int CcspBaseIf_getParameterValues_rbus(
                 rbus_PopString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
                 strcpy(val[i]->parameterName, tmpbuf);
+                rbus_PopInt32(response, &type);
+                val[i]->type = type;
                 tmpbuf = NULL;
                 rbus_PopString(response, &tmpbuf);
                 val[i]->parameterValue = bus_info->mallocfunc(strlen(tmpbuf)+1);
                 strcpy(val[i]->parameterValue, tmpbuf);
-                rbus_PopInt32(response, &type);
-                val[i]->type = type;
                 RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
             }
         }
