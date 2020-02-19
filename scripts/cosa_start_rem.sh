@@ -459,6 +459,19 @@ then
 	/rdklogger/fileUploadRandom.sh &
 fi
 
+# Calling ShortsDownload script to download shorts(socat and stunnel) packages
+if [ -f /lib/rdk/shortsDownload.sh ]; then
+   #Default Value of ShortsDL RFC should be true
+   isShortsUnset=`syscfg get ShortsDL`
+   if [ "x$isShortsUnset" ==  "x" ]; then
+       echo "Set ShortsDL RFC default value true!!!"
+       syscfg set ShortsDL true
+       syscfg commit
+   fi
+   echo "starting rdkshorts scripts"
+   /bin/sh /lib/rdk/shortsDownload.sh &
+fi
+
 ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
 fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
 rabidEnabled=`syscfg get Advsecurity_RabidEnable`
