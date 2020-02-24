@@ -94,6 +94,7 @@
 #define rbus_subscribeToTimedUpdateEvents(x, y, a, b, c)    0
 #define rbus_unsubscribeFromTimedUpdateEvents(x, y)         0
 #define rbus_resolveWildcardDestination(x, y, z)            0
+#define rbus_findMatchingObjects(x, y, z)                   0
 #define rbus_registeredComponents(a)                        0
 #define rbus_GetElementsAddedByObject(a, b)                 0
 #define rbus_AppendInt32(x, y)                              0
