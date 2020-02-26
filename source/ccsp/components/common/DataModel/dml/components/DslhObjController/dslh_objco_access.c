@@ -84,6 +84,7 @@
 #include "dslh_varro_interface.h"
 
 ULONG g_currentBsUpdate;
+char g_currentParamFullName[512];
 
 /**********************************************************************
 
@@ -294,6 +295,8 @@ DslhObjcoValidate
 
                 g_currentBsUpdate = pChildVarEntity->bsUpdate;
                 AnscTraceWarning(("DslhObjcoValidate: %s, bsUpdate = %d\n\n", pCallingName, pChildVarEntity->bsUpdate));
+
+                snprintf(g_currentParamFullName, sizeof(g_currentParamFullName),"%s%s",pDslhObjRecord->FullName, pParamDescr->Name);
 
                 switch ( pChildVarEntity->Syntax )
                 {
@@ -1057,6 +1060,8 @@ DslhObjcoGetParamValueByName
     {
         return pMyObject->GetBulkParamValue(pMyObject, &pName, &pSlapVariable, 1);
     }
+
+    snprintf(g_currentParamFullName, sizeof(g_currentParamFullName),"%s%s",pObjRecord->FullName, pName);
 
     switch ( pSlapVariable->Syntax )
     {
