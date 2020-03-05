@@ -635,12 +635,13 @@ int CcspBaseIf_getParameterValues_rbus(
                 }
                 else
                 {
-                    rbusNewDataType_t typeVal = (rbusNewDataType_t) type;
-                    void *pValue = NULL;
-                    int length = 0;
-                    rbus_PopBinaryData(response, &pValue, &length);
-                    val[i]->parameterValue = bus_info->mallocfunc(length);
-                    ccsp_convert_legacy_messages_rbus (typeVal, pValue, length, &val[i]->type, val[i]->parameterValue);
+                     /* 64 bytes long char buffer is good enough for all the data types except string */
+                    if (RBUS_DATATYPE_STRING != (rbusNewDataType_t) type)
+                        val[i]->parameterValue = bus_info->mallocfunc(64);
+                    else
+                        val[i]->parameterValue = bus_info->mallocfunc(250);
+
+                    ccsp_handle_rbus_component_reply (response, (rbusNewDataType_t) type, &val[i]->type, val[i]->parameterValue);
                 }
 
                 RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
@@ -1414,6 +1415,11 @@ int CcspBaseIf_AddTblRow_rbus(
 
     rtMessage_Release(response);
     *instanceNumber = tmp;
+
+    /* If the component that owns the table is rbus-2.0 component, the return code will be different. */
+    if (RBUS_RETURN_CODE_SUCCESS == ret)
+        ret = CCSP_SUCCESS;
+
     return ret;
 }
 
@@ -1492,6 +1498,11 @@ int CcspBaseIf_DeleteTblRow_rbus(
 
     rbus_PopInt32(response, &ret);
     rtMessage_Release(response);
+
+    /* If the component that owns the table is rbus-2.0 component, the return code will be different. */
+    if (RBUS_RETURN_CODE_SUCCESS == ret)
+        ret = CCSP_SUCCESS;
+
     return ret;
 }
 

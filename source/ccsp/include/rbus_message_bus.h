@@ -104,12 +104,48 @@
 #define rbus_PopString(x, y)                                0
 #define rbus_SetString(x,y,z)                               0
 #define rbus_GetString(x,y,z)                               0
+#define ccsp_handle_rbus_component_reply(a, b, c, d)        0
+#define RBUS_RETURN_CODE_SUCCESS                            0
+#define RBUS_RETURN_CODE_FAILURE                            1
+#define rbusNewDataType_t                                   int
+#define RBUS_DATATYPE_BOOLEAN                               0x500
+#define RBUS_DATATYPE_STRING                                0x50E
+
 #else
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_marshalling.h>
 #include <rbus-core/rbus_session_mgr.h>
 #include <rbus-core/rtLog.h>
+
+#define RBUS_RETURN_CODE_SUCCESS 0
+#define RBUS_RETURN_CODE_FAILURE 1
+
+typedef enum _rbus_data_type_t {
+    RBUS_DATATYPE_BOOLEAN  = 0x500,  /** stdbool true or false */
+    RBUS_DATATYPE_CHAR,              /** char of size 1 byte*/
+    RBUS_DATATYPE_BYTE,              /** unsigned char */
+    RBUS_DATATYPE_INT8,              /** 8 bit int */
+    RBUS_DATATYPE_UINT8,             /** 8 bit unsigned int */
+    RBUS_DATATYPE_INT16,             /** 16 bit int */
+    RBUS_DATATYPE_UINT16,            /** 16 bit unsigned int */
+    RBUS_DATATYPE_INT32,             /** 32 bit int */
+    RBUS_DATATYPE_UINT32,            /** 32 bit unsigned int */
+    RBUS_DATATYPE_INT64,             /** 64 bit int */
+    RBUS_DATATYPE_UINT64,            /** 64 bit unsigned int */
+    RBUS_DATATYPE_SINGLE,            /** 32 bit float */
+    RBUS_DATATYPE_DOUBLE,            /** 64 bit float */
+    RBUS_DATATYPE_DATETIME,          /** timeval num secs/msecs from epoch */
+    RBUS_DATATYPE_STRING,            /** null terminated C style string */
+    RBUS_DATATYPE_BYTES,             /** byte array */
+    RBUS_DATATYPE_PROPERTY,          /**< property instance */
+    RBUS_DATATYPE_OBJECT,            /** object instance */
+    RBUS_DATATYPE_NONE
+} rbusNewDataType_t;
+
+
+
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
+void ccsp_handle_rbus_component_reply (rtMessage request, rbusNewDataType_t typeVal, enum dataType_e *pType, char* pStringValue);
 #endif
           

@@ -1894,54 +1894,123 @@ CCSP_Message_Bus_Register_Path_Priv
 }
 
 #ifndef _RBUS_NOT_REQ_
-void ccsp_convert_legacy_messages_rbus (rbusNewDataType_t typeVal, void* pValue, int length, enum dataType_e *pType, char* pStringValue)
+void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char* pStringValue)
 {
+    int32_t ival = 0;
+    double fval = 0;
+    void *pValue = NULL;
+    int length = 0;
+
     switch(typeVal)
     {
-        case RBUS_DATATYPE_BOOLEAN:
-            sprintf(pStringValue, "%d", *(int*)pValue);
-            *pType = ccsp_boolean;
-            break;
         case RBUS_DATATYPE_INT16:
         case RBUS_DATATYPE_INT32:
-            sprintf(pStringValue, "%d", *(int*)pValue);
+            rbus_PopInt32(msg, &ival);
+            sprintf(pStringValue, "%d", ival);
             *pType = ccsp_int;
             break;
+
         case RBUS_DATATYPE_UINT16:
         case RBUS_DATATYPE_UINT32:
-            sprintf(pStringValue, "%u", *(unsigned int*)pValue);
+            rbus_PopInt32(msg, &ival);
+            sprintf(pStringValue, "%u", (uint32_t)ival);
             *pType = ccsp_unsignedInt;
             break;
+
         case RBUS_DATATYPE_INT64:
-            sprintf(pStringValue, "%lld", *(long long*)pValue);
+        {
+            union UNION64
+            {
+                int32_t i32[2];
+                int64_t i64;
+            };
+            union UNION64 u;
+            rbus_PopInt32(msg, &u.i32[0]);
+            rbus_PopInt32(msg, &u.i32[1]);
+            sprintf(pStringValue, "%lld", u.i64);
             *pType = ccsp_long;
             break;
+        }
         case RBUS_DATATYPE_UINT64:
-            sprintf(pStringValue, "%llu", *(unsigned long long*)pValue);
+        {
+            union UNION64
+            {
+                int32_t i32[2];
+                uint64_t u64;
+            };
+            union UNION64 u;
+            rbus_PopInt32(msg, &u.i32[0]);
+            rbus_PopInt32(msg, &u.i32[1]);
+            sprintf(pStringValue, "%llu", u.u64);
             *pType = ccsp_unsignedLong;
             break;
+        }
+        case RBUS_DATATYPE_SINGLE:
+            rbus_PopDouble(msg, &fval);
+            sprintf(pStringValue, "%f", fval);
+            *pType = ccsp_float;
+            break;
+        case RBUS_DATATYPE_DOUBLE:
+            rbus_PopDouble(msg, &fval);
+            sprintf(pStringValue, "%f", fval);
+            *pType = ccsp_double;
+            break;
+        case RBUS_DATATYPE_DATETIME:
+        {
+            struct timeval tv = {0};
+            struct tm *tmpTime = NULL;
+            rbus_PopInt32(msg, &ival);
+            tv.tv_sec = ival;
+            rbus_PopInt32(msg, &ival);
+            tv.tv_usec = ival;
+
+            tmpTime = localtime(&tv.tv_sec);
+            if (tmpTime)
+            {
+                char tmpBuff[40] = ""; /* 27 bytes is good enough; */
+                strftime(tmpBuff, 40, "%Y-%m-%dT%H:%M:%S", tmpTime);
+                sprintf(pStringValue, "%s.%06d", tmpBuff, tv.tv_usec);
+            }
+            else
+                sprintf(pStringValue, "");
+
+            *pType = ccsp_dateTime;
+        }
+            break;
+        case RBUS_DATATYPE_BOOLEAN:
+        {
+            rbus_PopBinaryData(msg, &pValue, &length);
+            unsigned char boolValue = *(unsigned char*)pValue;
+            sprintf(pStringValue, "%s", boolValue ? "true" : "false");
+            *pType = ccsp_boolean;
+            break;
+        }
+        case RBUS_DATATYPE_CHAR:
+        case RBUS_DATATYPE_INT8:
+        {
+            rbus_PopBinaryData(msg, &pValue, &length);
+            signed char tmpValue = *(signed char*)pValue;
+            sprintf(pStringValue, "%d", tmpValue);
+            *pType = ccsp_int;
+            break;
+        }
+        case RBUS_DATATYPE_UINT8:
+        case RBUS_DATATYPE_BYTE:
+        {
+            rbus_PopBinaryData(msg, &pValue, &length);
+            unsigned char tmpValue = *(unsigned char*)pValue;
+            sprintf(pStringValue, "%u", tmpValue);
+            *pType = ccsp_unsignedInt;
+            break;
+        }
         case RBUS_DATATYPE_STRING:
+            rbus_PopBinaryData(msg, &pValue, &length);
             strcpy (pStringValue, pValue);
             *pType = ccsp_string;
             break;
-        case RBUS_DATATYPE_DATE_TIME:
-            strcpy (pStringValue, pValue);
-            *pType = ccsp_dateTime;
-            break;
-        case RBUS_DATATYPE_BASE64:
-            strcpy (pStringValue, pValue);
-            *pType = ccsp_base64;
-            break;
-        case RBUS_DATATYPE_FLOAT:
-            *pType = ccsp_float;
-            sprintf(pStringValue, "%f", *(float*)pValue);
-            break;
-        case RBUS_DATATYPE_DOUBLE:
-            *pType = ccsp_double;
-            sprintf(pStringValue, "%f", *(float*)pValue);
-            break;
-        case RBUS_DATATYPE_BYTE:
+        case RBUS_DATATYPE_BYTES:
         {
+            rbus_PopBinaryData(msg, &pValue, &length);
 
             int k = 0;
             unsigned char* pVar = (unsigned char*)pValue;
@@ -1950,10 +2019,10 @@ void ccsp_convert_legacy_messages_rbus (rbusNewDataType_t typeVal, void* pValue,
                 sprintf (&pStringValue[k * 2], "%02X", pVar[k]);
             break;
         }
-        case RBUS_DATATYPE_REFERENCE:
-        case RBUS_DATATYPE_BINARY:
-        case RBUS_DATATYPE_EVENT_DEST_NAME:
+        case RBUS_DATATYPE_PROPERTY:
+        case RBUS_DATATYPE_OBJECT:
         case RBUS_DATATYPE_NONE:
+        default:
             strcpy (pStringValue, "");
             *pType = ccsp_none;
             break;
@@ -2057,12 +2126,13 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 }
                 else
                 {
-                    rbusNewDataType_t typeVal = (rbusNewDataType_t) dataType;
-                    void *pValue = NULL;
-                    int length = 0;
-                    rbus_PopBinaryData(request, &pValue, &length);
-                    parameterVal[i].parameterValue = bus_info->mallocfunc(length);
-                    ccsp_convert_legacy_messages_rbus (typeVal, pValue, length, &parameterVal[i].type, parameterVal[i].parameterValue);
+                    /* 64 bytes long char buffer is good enough for all the data types except string */
+                    if (RBUS_DATATYPE_STRING != (rbusNewDataType_t) dataType)
+                        parameterVal[i].parameterValue = bus_info->mallocfunc(64);
+                    else
+                        parameterVal[i].parameterValue = bus_info->mallocfunc(250);
+
+                    ccsp_handle_rbus_component_reply (request, (rbusNewDataType_t) dataType, &parameterVal[i].type, parameterVal[i].parameterValue);
                 }
             }
             char *str = NULL;
