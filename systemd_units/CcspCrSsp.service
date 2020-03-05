@@ -18,6 +18,7 @@
 ##########################################################################
 [Unit]
 Description=CcspCrSsp service
+After=rbus.service
 
 [Service]
 Type=forking
