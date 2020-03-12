@@ -23,5 +23,18 @@ source /etc/device.properties
 sleep 60
 #set rbus crash only in rbus mode
 if [ -e /nvram/rbus ]; then
-    rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync && reboot"
+    check_rbus=`systemctl status rbus.service | cut -d$'\n' -f7 | cut -d "," -f2 | cut -d ")" -f1 | cut -d '=' -f2`
+    if [ "$check_rbus" != "TERM" ]; then
+       if [ "$BOX_TYPE" = "XB3" ];then
+          rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync"
+          sh /lib/rdk/uploadDumps.sh '' 0
+          rpcclient $ARM_ARPING_IP "sh /rdklogger/backupLogs.sh false Rbus_crash"         
+       else
+          syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync
+          sh /lib/rdk/uploadDumps.sh '' 0
+          sh /rdklogger/backupLogs.sh "false" "Rbus_crash"
+          
+       fi
+    fi
+    reboot
 fi
