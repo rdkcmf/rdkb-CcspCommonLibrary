@@ -33,7 +33,7 @@
 #######################################################################
 
 BINPATH="/usr/bin"
-BBHM_CUR_CFG="/nvram/bbhm_cur_cfg.xml"
+BBHM_CUR_CFG="/tmp/bbhm_cur_cfg.xml"
 source /etc/utopia/service.d/log_env_var.sh
 source /etc/utopia/service.d/log_capture_path.sh
 source /etc/device.properties
@@ -86,7 +86,7 @@ export LOG4C_RCPATH=/rdklogger
 
 #zqiu: update the bbhm for 2.1s11
 if [ "$BOX_TYPE" = "XB3" ]; then
-    /usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+    /usr/ccsp/psm/bbhm_patch.sh -f /tmp/bbhm_cur_cfg.xml
 else
     echo "bbhm patch is not required for other platforms"
 fi
