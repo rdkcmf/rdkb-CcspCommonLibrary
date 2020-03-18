@@ -72,7 +72,7 @@
 
 #define  PSM_DEF_XML_CONFIG_FILE_PATH          ""
 #define  PSM_DEF_XML_CONFIG_FILE_NAME          "./config/bbhm_def_cfg.xml.gz"
-#define  PSM_CUR_XML_CONFIG_FILE_NAME          "/nvram/bbhm_cur_cfg.xml.gz"
+#define  PSM_CUR_XML_CONFIG_FILE_NAME          "/tmp/bbhm_cur_cfg.xml.gz"
 #define  PSM_BAK_XML_CONFIG_FILE_NAME          "/nvram/bbhm_bak_cfg.xml.gz"
 #define  PSM_TMP_XML_CONFIG_FILE_NAME          "/nvram/bbhm_tmp_cfg.xml.gz"
 
@@ -80,7 +80,7 @@
 
 #define  PSM_DEF_XML_CONFIG_FILE_PATH          ""
 #define  PSM_DEF_XML_CONFIG_FILE_NAME          "./config/bbhm_def_cfg.xml"
-#define  PSM_CUR_XML_CONFIG_FILE_NAME          "/nvram/bbhm_cur_cfg.xml"
+#define  PSM_CUR_XML_CONFIG_FILE_NAME          "/tmp/bbhm_cur_cfg.xml"
 #define  PSM_BAK_XML_CONFIG_FILE_NAME          "/nvram/bbhm_bak_cfg.xml"
 #define  PSM_TMP_XML_CONFIG_FILE_NAME          "/nvram/bbhm_tmp_cfg.xml"
 #endif
