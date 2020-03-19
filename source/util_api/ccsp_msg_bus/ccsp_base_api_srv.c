@@ -1929,10 +1929,14 @@ CcspBaseIf_Deadlock_Detection_Thread
         
         pthread_mutex_unlock(&(info->info_mutex));
         
-        signal(SIGSEGV, sig_empty_handler);
-        signal(SIGBUS, sig_empty_handler);
-        signal(SIGFPE, sig_empty_handler);
-        signal(SIGILL, sig_empty_handler);
+        // TODO: When a memory access violation occurs, the empty signal handler simply returns and execution continues.
+        // This immediately triggers another SIGSEGV and the cycle repeats endlessly.
+        // The obvious workaround it to comment out these 4 lines. We are trying to terminate the process anyway,
+        // so we should let the SIGSEGV crash the process instead of trying to recover.
+        //signal(SIGSEGV, sig_empty_handler);
+        //signal(SIGBUS, sig_empty_handler);
+        //signal(SIGFPE, sig_empty_handler);
+        //signal(SIGILL, sig_empty_handler);
 
         
         exit(-1);
