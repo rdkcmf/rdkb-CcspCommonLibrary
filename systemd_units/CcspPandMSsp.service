@@ -28,7 +28,6 @@ WorkingDirectory=/usr/ccsp/pam
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
-ExecStartPre=-/bin/sh -c '(/usr/ccsp/pam/advsec_migrate_psm_to_syscfg.sh load_syscfg_setting)'
 ExecStartPre=-/bin/sh -c 'rm -rf /tmp/pam_initialized'
 ExecStart=/usr/bin/CcspPandMSsp -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspPandMSsp" >> ${PROCESS_RESTART_LOG}'

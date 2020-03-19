@@ -475,7 +475,7 @@ fi
 ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
 fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
 rabidEnabled=`syscfg get Advsecurity_RabidEnable`
-if [ "$fingerprintenable" = "1" ] || [ "$rabidEnabled" = "1" ]; then
+if [ "$fingerprintenable" = "1" ] && [ "$rabidEnabled" = "1" ]; then
     echo "Device_Finger_Printing_enabled:true"
     if [ -f $ADVSEC_LAUNCH_SCRIPT ]; then
         echo_t "$ADVSEC_LAUNCH_SCRIPT"
