@@ -26,7 +26,7 @@ Type=simple
 PIDFile=/var/tmp/snmp_subagent_v3.pid
 EnvironmentFile=/etc/device.properties
 Environment="LOG4C_RCPATH=/etc"
-Environment="SNMPDLMODPATH=$PWD/libs\"
+Environment="SNMPDLMODPATH=$PWD/libs"
 Environment="MIBDIRS=$PWD/mibs"
 Environment="MIBS=ALL"
 WorkingDirectory=/usr/ccsp/snmp
