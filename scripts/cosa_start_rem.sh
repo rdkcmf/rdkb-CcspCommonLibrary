@@ -472,6 +472,9 @@ if [ -f /lib/rdk/shortsDownload.sh ]; then
    /bin/sh /lib/rdk/shortsDownload.sh &
 fi
 
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
+   echo "BWG does not support Advanced security"
+else
 ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
 fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
 if [ "$fingerprintenable" = "1" ]; then
@@ -482,6 +485,7 @@ if [ "$fingerprintenable" = "1" ]; then
     fi
 else
     echo "Device_Finger_Printing_enabled:false"
+fi
 fi
 
 #TCCBR-3882: Initializing log_journal.service from here until all dependent services are implemented
