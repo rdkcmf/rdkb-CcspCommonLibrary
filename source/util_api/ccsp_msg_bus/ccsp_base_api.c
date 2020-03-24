@@ -4378,7 +4378,6 @@ int CcspBaseIf_SendTelemetryDataSignal (
     return CCSP_SUCCESS;
 }
 
-#ifdef ENABLE_WEBCONFIG_SUPPORT
 int CcspBaseIf_WebConfigSignal_rbus (
     void* bus_handle,
     char* webconfig
@@ -4446,7 +4445,6 @@ int CcspBaseIf_WebConfigSignal (
     dbus_message_unref (message);
     return CCSP_SUCCESS;
 }
-#endif /* ENABLE_WEBCONFIG_SUPPORT */
 
 int CcspBaseIf_SendSignal(
     void * bus_handle,

@@ -560,6 +560,11 @@ void CcspBaseIf_SetCallback2
         cb->dlCompleteSignal = func;
         cb->dlCompleteSignal_data = user_data;
     }
+    else if(!strcmp("webconfigSignal", name))
+    {
+        cb->webconfigSignal = func;
+        cb->webconfigSignal_data = user_data;
+    }
 }
 
 #define CCSP_DBUS_LARGE_REPLY_SIZE_MIN 75000  // bytes
@@ -1550,7 +1555,17 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
     if(!strcmp(method,"systemReadySignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->systemReadySignal)
     {
     	    func->systemReadySignal(func->systemReadySignal_data);
-	}	   
+    }
+
+    if(!strcmp(method,"webconfigSignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->webconfigSignal)
+    {
+        char* webconfig_data = 0;
+        if(dbus_message_get_args (message,
+                                  NULL,
+                                  DBUS_TYPE_STRING, &webconfig_data,
+                                  DBUS_TYPE_INVALID))
+           func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
+    }
 	if(!strcmp(method,STBSERVICE_CDL_DLC_SIGNAL) && !strcmp(interface, STBSERVICE_CDL_INTERFACE) && func->dlCompleteSignal)
     {
         DBusMessageIter iter = {0};
