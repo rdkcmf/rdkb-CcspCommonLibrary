@@ -879,6 +879,17 @@ int CcspBaseIf_SendcurrentSessionIDSignal (
     int sessionID
 );
 
+int CcspBaseIf_WebConfigSignal (
+    void* bus_handle,
+    char* webconfig
+);
+/*This API returns the telemetry information */
+int CcspBaseIf_SendWebConfigDataSignal (
+    void* bus_handle,
+    char* webconfig_data
+);
+
+
 //server side function
 typedef int  (*CCSPBASEIF_FREERESOURCES)(
     int priority,
@@ -1006,6 +1017,11 @@ typedef  void (*CCSPBASEIF_SYSTEMREBOOTSIGNAL )(
     void            *user_data
 );
 
+typedef void (*CCSPBASEIF_WEBCONFIGSIGNAL )(
+    char* webconfig_data,
+    void* user1_data
+);
+
 typedef int (*CCSPBASEIF_GETHEEALTH)();
 
 typedef int (*CCSPPAIF_RESTARTBOOTSTRAP)( 
@@ -1087,7 +1103,9 @@ typedef struct _CCSP_Base_Func_CB
     void *                                         systemReadySignal_data;   
 
     CCSPBASEIF_SYSTEMREBOOTSIGNAL                  systemRebootSignal;
-    void *                                         systemRebootSignal_data;   
+    void *                                         systemRebootSignal_data;  
+    CCSPBASEIF_WEBCONFIGSIGNAL                     webconfigSignal;
+    void *                                         webconfigSignal_data;
 } CCSP_Base_Func_CB;
 
 /*

@@ -270,7 +270,10 @@ AC_CONFIG_FILES(
 	source/util_api/Makefile
 	source/dm_pack/Makefile
 	source/Makefile
+        WebConfig_Framework/Makefile
 	Makefile
+
+
 )
 
 
