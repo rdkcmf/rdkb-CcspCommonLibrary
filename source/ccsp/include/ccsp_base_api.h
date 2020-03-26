@@ -248,6 +248,29 @@ enum dataType_e
     ccsp_none,
 } ;
 
+#define RBUS_RETURN_CODE_SUCCESS 0
+#define RBUS_RETURN_CODE_FAILURE 1
+
+typedef enum _rbus_data_type_t {
+    RBUS_DATATYPE_BOOLEAN  = 0x500,  /**< Boolean ("true" / "false" or "0" / "1")                */
+    RBUS_DATATYPE_INT16,             /**< Short (ex: 32767 or -32768)                            */
+    RBUS_DATATYPE_UINT16,            /**< Unsigned Short (ex: 65535)                             */
+    RBUS_DATATYPE_INT32,             /**< Integer (ex: 2147483647 or -2147483648)                */
+    RBUS_DATATYPE_UINT32,            /**< Unsigned Integer (ex: 4,294,967,295)                   */
+    RBUS_DATATYPE_INT64,             /**< Long (ex: 9223372036854775807 or -9223372036854775808) */
+    RBUS_DATATYPE_UINT64,            /**< Unsigned Long (ex: 18446744073709551615)               */
+    RBUS_DATATYPE_STRING,            /**< Null terminated string                                 */
+    RBUS_DATATYPE_DATE_TIME,         /**< ISO-8601 format (YYYY-MM-DDTHH:MM:SSZ)                 */
+    RBUS_DATATYPE_BASE64,            /**< Base64 representation of the binary data               */
+    RBUS_DATATYPE_BINARY,            /**< Hex representation of the binary data                  */
+    RBUS_DATATYPE_FLOAT,             /**< Float (ex: 1.2E-38 or 3.4E+38)                         */
+    RBUS_DATATYPE_DOUBLE,            /**< Double (ex: 2.3E-308 or 1.7E+308)                      */
+    RBUS_DATATYPE_BYTE,              /**< A byte (ex: 00 or FF)                                  */
+    RBUS_DATATYPE_REFERENCE,         /**< Reference variable. Use case specific                  */
+    RBUS_DATATYPE_EVENT_DEST_NAME,   /**< the destination name of an event receiver              */
+    RBUS_DATATYPE_NONE
+} rbusNewDataType_t;
+
 enum access_e
 {
     CCSP_RO,
@@ -541,7 +564,7 @@ void free_parameterInfoStruct_t (void* bus_handle, int size, parameterInfoStruct
     When each component receives buscheck(), it invokes the namespace type check API in the Component
     Registrar for each of the data model parameters accessed by this component and owned by another component.
     The Component Registrar verifies that each data model parameter is registered by a component and that the
-    data model type specified in the API is the same as the data model type registered by the ¡°owner¡± component.
+    data model type specified in the API is the same as the data model type registered by the Â¡Â°ownerÂ¡Â± component.
     The component sends TDM a response to buscheck() with all checked parameter names and PASS/FAIL for each
     parameter. If during buscheck(), it is found that there are missing or unregistered parameters,
     appropriate errors are flagged.
@@ -609,7 +632,7 @@ int CcspBaseIf_registerBase(
 
 
 //following helper functions are wrappers for CcspBaseIf_getParameterValues, have been removed from base interface
-//This API returns the internal state of the component. The state reflects the Component¡¯s internal lifecycle state
+//This API returns the internal state of the component. The state reflects the ComponentÂ¡Â¯s internal lifecycle state
 int CcspBaseIf_queryStatus(
     void* bus_handle,
     const char* dst_component_id,
@@ -617,7 +640,7 @@ int CcspBaseIf_queryStatus(
     int *internalState
 );
 
-//This API returns the health of the component as ¡°Red/Bad¡±, ¡°Yellow/warning¡±, ¡°Green/good
+//This API returns the health of the component as Â¡Â°Red/BadÂ¡Â±, Â¡Â°Yellow/warningÂ¡Â±, Â¡Â°Green/good
 int CcspBaseIf_healthCheck(
     void* bus_handle,
     const char* dst_component_id,
@@ -631,7 +654,7 @@ int CcspBaseIf_getAllocatedMemory(
     char* dbus_path,
     int *directAllocatedMemory);
 
-//This API returns the maximum memory requirements for the component. It is the component owner¡¯s best estimates
+//This API returns the maximum memory requirements for the component. It is the component ownerÂ¡Â¯s best estimates
 int CcspBaseIf_getMaxMemoryUsage(
     void* bus_handle,
     const char* dst_component_id,
@@ -1277,4 +1300,5 @@ void PsmFreeRecords(void *bus_handle,
         int nrec);
 
 int Rbus_to_CCSP_error_mapper(int error_code);
+void ccsp_convert_legacy_messages_rbus (rbusNewDataType_t typeVal, void* pValue, int length, enum dataType_e *pType, char* pStringValue);
 #endif /* CCSP_BASE_API_H */

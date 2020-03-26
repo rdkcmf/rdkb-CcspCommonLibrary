@@ -1827,25 +1827,72 @@ CCSP_Message_Bus_Register_Path_Priv
 }
 
 #ifndef _RBUS_NOT_REQ_
-typedef enum _rbus_data_type_t {
-    RBUS_DATATYPE_BOOLEAN  = 0x500,  /**< Boolean ("true" / "false" or "0" / "1")                */
-    RBUS_DATATYPE_INT16,             /**< Short (ex: 32767 or -32768)                            */
-    RBUS_DATATYPE_UINT16,            /**< Unsigned Short (ex: 65535)                             */
-    RBUS_DATATYPE_INT32,             /**< Integer (ex: 2147483647 or -2147483648)                */
-    RBUS_DATATYPE_UINT32,            /**< Unsigned Integer (ex: 4,294,967,295)                   */
-    RBUS_DATATYPE_INT64,             /**< Long (ex: 9223372036854775807 or -9223372036854775808) */
-    RBUS_DATATYPE_UINT64,            /**< Unsigned Long (ex: 18446744073709551615)               */
-    RBUS_DATATYPE_STRING,            /**< Null terminated string                                 */
-    RBUS_DATATYPE_DATE_TIME,         /**< ISO-8601 format (YYYY-MM-DDTHH:MM:SSZ)                 */
-    RBUS_DATATYPE_BASE64,            /**< Base64 representation of the binary data               */
-    RBUS_DATATYPE_BINARY,            /**< Hex representation of the binary data                  */
-    RBUS_DATATYPE_FLOAT,             /**< Float (ex: 1.2E-38 or 3.4E+38)                         */
-    RBUS_DATATYPE_DOUBLE,            /**< Double (ex: 2.3E-308 or 1.7E+308)                      */
-    RBUS_DATATYPE_BYTE,              /**< A byte (ex: 00 or FF)                                  */
-    RBUS_DATATYPE_REFERENCE,         /**< Reference variable. Use case specific                  */
-    RBUS_DATATYPE_EVENT_DEST_NAME,   /**< the destination name of an event receiver              */
-    RBUS_DATATYPE_NONE
-} rbusNewDataType_t;
+void ccsp_convert_legacy_messages_rbus (rbusNewDataType_t typeVal, void* pValue, int length, enum dataType_e *pType, char* pStringValue)
+{
+    switch(typeVal)
+    {
+        case RBUS_DATATYPE_BOOLEAN:
+            sprintf(pStringValue, "%d", *(int*)pValue);
+            *pType = ccsp_boolean;
+            break;
+        case RBUS_DATATYPE_INT16:
+        case RBUS_DATATYPE_INT32:
+            sprintf(pStringValue, "%d", *(int*)pValue);
+            *pType = ccsp_int;
+            break;
+        case RBUS_DATATYPE_UINT16:
+        case RBUS_DATATYPE_UINT32:
+            sprintf(pStringValue, "%u", *(unsigned int*)pValue);
+            *pType = ccsp_unsignedInt;
+            break;
+        case RBUS_DATATYPE_INT64:
+            sprintf(pStringValue, "%lld", *(long long*)pValue);
+            *pType = ccsp_long;
+            break;
+        case RBUS_DATATYPE_UINT64:
+            sprintf(pStringValue, "%llu", *(unsigned long long*)pValue);
+            *pType = ccsp_unsignedLong;
+            break;
+        case RBUS_DATATYPE_STRING:
+            strcpy (pStringValue, pValue);
+            *pType = ccsp_string;
+            break;
+        case RBUS_DATATYPE_DATE_TIME:
+            strcpy (pStringValue, pValue);
+            *pType = ccsp_dateTime;
+            break;
+        case RBUS_DATATYPE_BASE64:
+            strcpy (pStringValue, pValue);
+            *pType = ccsp_base64;
+            break;
+        case RBUS_DATATYPE_FLOAT:
+            *pType = ccsp_float;
+            sprintf(pStringValue, "%f", *(float*)pValue);
+            break;
+        case RBUS_DATATYPE_DOUBLE:
+            *pType = ccsp_double;
+            sprintf(pStringValue, "%f", *(float*)pValue);
+            break;
+        case RBUS_DATATYPE_BYTE:
+        {
+
+            int k = 0;
+            unsigned char* pVar = (unsigned char*)pValue;
+            *pType = ccsp_byte;
+            for (k = 0; k < length; k++)
+                sprintf (&pStringValue[k * 2], "%02X", pVar[k]);
+            break;
+        }
+        case RBUS_DATATYPE_REFERENCE:
+        case RBUS_DATATYPE_BINARY:
+        case RBUS_DATATYPE_EVENT_DEST_NAME:
+        case RBUS_DATATYPE_NONE:
+            strcpy (pStringValue, "");
+            *pType = ccsp_none;
+            break;
+    }
+    return;
+}
 
 static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
 {
@@ -1948,67 +1995,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                     int length = 0;
                     rbus_PopBinaryData(request, &pValue, &length);
                     parameterVal[i].parameterValue = bus_info->mallocfunc(length);
-                    switch(typeVal)
-                    {
-                        case RBUS_DATATYPE_BOOLEAN:
-                            sprintf(parameterVal[i].parameterValue, "%d", *(int*)pValue);
-                            parameterVal[i].type = ccsp_boolean;
-                            break;
-                        case RBUS_DATATYPE_INT16:
-                        case RBUS_DATATYPE_INT32:
-                            sprintf(parameterVal[i].parameterValue, "%d", *(int*)pValue);
-                            parameterVal[i].type = ccsp_int;
-                            break;
-                        case RBUS_DATATYPE_UINT16:
-                        case RBUS_DATATYPE_UINT32:
-                            sprintf(parameterVal[i].parameterValue, "%u", *(unsigned int*)pValue);
-                            parameterVal[i].type = ccsp_unsignedInt;
-                            break;
-                        case RBUS_DATATYPE_INT64:
-                            sprintf(parameterVal[i].parameterValue, "%lld", *(long long*)pValue);
-                            parameterVal[i].type = ccsp_long;
-                            break;
-                        case RBUS_DATATYPE_UINT64:
-                            sprintf(parameterVal[i].parameterValue, "%llu", *(unsigned long long*)pValue);
-                            parameterVal[i].type = ccsp_unsignedLong;
-                            break;
-                        case RBUS_DATATYPE_STRING:
-                            strcpy (parameterVal[i].parameterValue, pValue);
-                            parameterVal[i].type = ccsp_string;
-                            break;
-                        case RBUS_DATATYPE_DATE_TIME:
-                            strcpy (parameterVal[i].parameterValue, pValue);
-                            parameterVal[i].type = ccsp_dateTime;
-                            break;
-                        case RBUS_DATATYPE_BASE64:
-                            strcpy (parameterVal[i].parameterValue, pValue);
-                            parameterVal[i].type = ccsp_base64;
-                            break;
-                        case RBUS_DATATYPE_FLOAT:
-                            parameterVal[i].type = ccsp_float;
-                            sprintf(parameterVal[i].parameterValue, "%f", *(float*)pValue);
-                            break;
-                        case RBUS_DATATYPE_DOUBLE:
-                            parameterVal[i].type = ccsp_double;
-                            sprintf(parameterVal[i].parameterValue, "%f", *(float*)pValue);
-                            break;
-                        case RBUS_DATATYPE_BYTE:
-                        {
-                            int k = 0;
-                            unsigned char* pVar = (unsigned char*)pValue;
-                            parameterVal[i].type = ccsp_byte;
-                            for (k = 0; k < length; k++)
-                                sprintf (&parameterVal[i].parameterValue[i * 2], "%02X", pVar[i]);
-                            break;
-                        }
-                        case RBUS_DATATYPE_REFERENCE:
-                        case RBUS_DATATYPE_BINARY:
-                        case RBUS_DATATYPE_EVENT_DEST_NAME:
-                        case RBUS_DATATYPE_NONE:
-                            strcpy (parameterVal[i].parameterValue, "");
-                            parameterVal[i].type = ccsp_none;
-                            break;
-                    }
+                    ccsp_convert_legacy_messages_rbus (typeVal, pValue, length, &parameterVal[i].type, parameterVal[i].parameterValue);
                 }
             }
             char *str = NULL;
