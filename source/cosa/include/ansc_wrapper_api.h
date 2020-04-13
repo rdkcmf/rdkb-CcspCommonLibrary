@@ -2708,5 +2708,12 @@ AnscX509CertGetKeyType
         PULONG                      cert_key_bits
     );
 
+void
+AnscMacToLower
+    (
+        char*                       dest,
+        char const*                 src,
+        size_t                      n
+    );
 
 #endif

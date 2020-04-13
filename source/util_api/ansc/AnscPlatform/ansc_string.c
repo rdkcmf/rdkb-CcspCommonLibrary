@@ -1332,3 +1332,32 @@ AnscIp6AddressToString
 
     return var_string;
 }
+
+void
+AnscMacToLower
+    (
+        char*                       dest,
+        char const*                 src,
+        size_t                      n
+    )
+{
+    if (dest == NULL || src == NULL)
+        return;
+
+    int i = 0;
+
+    // src must be null terminated
+    while ((*src != '\0') && (i < n))
+    {
+        if (*src != ':')
+        {
+            dest[i++] = tolower(*src);
+        }
+        src++;
+    }
+
+    while (i < n)
+    {
+        dest[i++] = '\0';
+    }
+}
