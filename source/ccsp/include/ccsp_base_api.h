@@ -219,11 +219,11 @@ extern int rbus_enabled;
   } while (0)
 
 #define RBUS_LOG(...) do {\
-    if(access("/nvram/rbus_print", F_OK) == 0) {\
+    if(access("/nvram/rbus_support_print", F_OK) == 0) {\
         printf(__VA_ARGS__); \
         fflush(stdout); \
     }\
-    if(access("/nvram/rbus_log_to_file", F_OK) == 0) {\
+    if(access("/nvram/rbus_support_log_to_file", F_OK) == 0) {\
         CcspTraceInfo((__VA_ARGS__));\
     }\
 } while(0)

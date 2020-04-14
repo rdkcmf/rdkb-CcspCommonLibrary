@@ -1131,7 +1131,7 @@ CCSP_Message_Bus_Init
     }
     
     #ifndef _RBUS_NOT_REQ_
-    rbus_enabled = (access("/nvram/rbus", F_OK) == 0);
+    rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
     RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");  
     if(rbus_enabled)
     {
