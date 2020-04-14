@@ -21,19 +21,19 @@
 source /etc/device.properties
 
 if [ "$1" = 1 ]; then
-    touch /nvram/rbus_on_pending
-    if [ -e /nvram/rbus_off_pending ]; then
-         rm /nvram/rbus_off_pending
+    touch /nvram/rbus_support_on_pending
+    if [ -e /nvram/rbus_support_off_pending ]; then
+         rm /nvram/rbus_support_off_pending
     fi
     if [ "$BOX_TYPE" = "XB3" ]; then
-        rpcclient $ATOM_ARPING_IP "touch /nvram/rbus_on_pending && rm /nvram/rbus_off_pending"
+        rpcclient $ATOM_ARPING_IP "touch /nvram/rbus_support_on_pending && rm /nvram/rbus_support_off_pending"
     fi
 else
-    touch /nvram/rbus_off_pending
-    if [ -e /nvram/rbus_on_pending ]; then
-         rm /nvram/rbus_on_pending
+    touch /nvram/rbus_support_off_pending
+    if [ -e /nvram/rbus_support_on_pending ]; then
+         rm /nvram/rbus_support_on_pending
     fi
     if [ "$BOX_TYPE" = "XB3" ]; then 
-         rpcclient $ATOM_ARPING_IP "touch /nvram/rbus_off_pending && rm /nvram/rbus_on_pending"
+         rpcclient $ATOM_ARPING_IP "touch /nvram/rbus_support_off_pending && rm /nvram/rbus_support_on_pending"
     fi
 fi
