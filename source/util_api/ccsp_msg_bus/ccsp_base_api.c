@@ -292,7 +292,7 @@ int CcspBaseIf_setParameterValues_rbus(
     RBUS_LOG("%s Calling rbus_invokeRemoteMethod for param on %s\n", __FUNCTION__, object_name);
     if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_SETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
     {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, ret);
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: for param[0]=%s failed with Err: %d\n", __FUNCTION__, val[0].parameterName, ret);
         return ret;
     }
 
@@ -560,7 +560,7 @@ int CcspBaseIf_getParameterValues_rbus(
     RBUS_LOG("Calling rbus_invokeRemoteMethod for %s\n", object_name);
     if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
     {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, err);
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: for param[0]=%s failed with Err: %d\n", __FUNCTION__, parameterNames[0], ret);
         return err;
     }
 
@@ -2247,14 +2247,15 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
     }
     else
     {
+        int length = strlen(name_space);
         RBUS_LOG("%s: Non Wildcard expression: %s\n", __FUNCTION__, name_space);
         *size = 1;
         val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
         val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
-        val[0]->componentName = bus_info->mallocfunc(strlen(dummy_comp)+1);
-        val[0]->dbusPath = bus_info->mallocfunc(strlen(dummy_comp)+1);
-        strcpy( val[0]->componentName, dummy_comp);
-        strcpy( val[0]->dbusPath, dummy_comp);
+        val[0]->componentName = bus_info->mallocfunc(length+1);
+        val[0]->dbusPath = bus_info->mallocfunc(length+1);
+        strcpy( val[0]->componentName, name_space);
+        strcpy( val[0]->dbusPath, name_space);
         val[0]->type = ccsp_string;
         val[0]->remoteCR_name = NULL;
         val[0]->remoteCR_dbus_path = NULL;
