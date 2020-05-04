@@ -140,6 +140,7 @@ static DBusWakeupMainFunction wake_mainloop(void *);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 int rbus_enabled = 0;
 
+
 // External Interface, defined in ccsp_message_bus.h
 /*
 void CCSP_Msg_SleepInMilliSeconds(int milliSecond);
@@ -1035,6 +1036,25 @@ CCSP_Message_Bus_Init
     int                   rc               = 0;
     struct                timespec timeout = { 0, 0 };
 
+    static void *stashedHandleForTelemetry = NULL; /*added for telemetry*/
+
+    /*if its telemetry and we have a stashed handle, give it back
+      if no handle yet (which is unexpected) then do full init so t2 gets something back
+    */
+    if(strcmp(component_id, "com.cisco.spvtg.ccsp.t2commonlib") == 0)
+    {
+        if(stashedHandleForTelemetry)
+        {
+            CcspTraceWarning(("<%s>: telemetry2_0 stashed handle returned\n", __FUNCTION__));
+            *bus_handle = stashedHandleForTelemetry;
+            return 0;
+        }
+        else
+        {
+            CcspTraceWarning(("<%s>: telemetry2_0 stashed handle does not exist so creating new\n", __FUNCTION__));
+        }
+    }
+
     if(!config_file)
         config_file = "ccsp_msg.cfg";
 
@@ -1060,6 +1080,9 @@ CCSP_Message_Bus_Init
     memset(bus_info, 0, sizeof(CCSP_MESSAGE_BUS_INFO));
     *bus_handle = bus_info; // return
 
+    /*stash this for telemetry*/
+    stashedHandleForTelemetry = *bus_handle;
+
     // assign malloc and free func
     if(mallocfc) bus_info->mallocfunc = mallocfc;
     else bus_info->mallocfunc = malloc;
@@ -1079,13 +1102,13 @@ CCSP_Message_Bus_Init
     {
         rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
         CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
-
         if((err = rbus_openBrokerConnection(component_id)) != RTMESSAGE_BUS_SUCCESS)
         {
-            CcspTraceError(("<%s>: rbus_openBrokerConnection fails\n", __FUNCTION__));
+            CcspTraceError(("<%s>: rbus_openBrokerConnection fails for component_id=%s with %d\n", __FUNCTION__,component_id,err));
         }
         else
         {
+            CcspTraceInfo(("connection opened for %s\n",component_id));
             if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
             {
                 CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
