@@ -2630,6 +2630,9 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
     int *size
 )
 {
+    if(rbus_enabled == 1)
+        return CcspBaseIf_discNamespaceSupportedByComponent_rbus(bus_handle, dst_component_id, component_name, name_space, size);
+
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
