@@ -108,6 +108,7 @@
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_marshalling.h>
 #include <rbus-core/rbus_session_mgr.h>
+#include <rbus-core/rtLog.h>
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 #endif

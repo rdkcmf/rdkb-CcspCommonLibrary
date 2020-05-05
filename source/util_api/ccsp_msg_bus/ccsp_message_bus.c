@@ -1017,6 +1017,41 @@ CCSP_Msg_SleepInMilliSeconds
 #endif
 }
 
+#ifndef _RBUS_NOT_REQ_
+void
+ccsp_rbus_logHandler
+(
+    rtLogLevel level,
+    const char* file,
+    int line,
+    int threadId,
+    char* message
+)
+{
+
+    switch (level)
+    {
+        case RT_LOG_FATAL:
+            CcspTraceCritical(("%s:%d %s\n", file, line, message));
+            break;
+        case RT_LOG_ERROR:
+            CcspTraceError(("%s:%d %s\n", file, line, message));
+            break;
+        case RT_LOG_WARN:
+            CcspTraceWarning(("%s:%d %s\n", file, line, message));
+            break;
+        case RT_LOG_INFO:
+            CcspTraceInfo(("%s:%d %s\n", file, line, message));
+            break;
+        case RT_LOG_DEBUG:
+            CcspTraceNotice(("%s:%d %s\n", file, line, message));
+            break;
+    }
+    return;
+}
+#endif /* _RBUS_NOT_REQ_ */
+
+
 int 
 CCSP_Message_Bus_Init
 (
@@ -1109,6 +1144,10 @@ CCSP_Message_Bus_Init
         else
         {
             CcspTraceInfo(("connection opened for %s\n",component_id));
+
+            /* Register with rtLog to use CCSPTRACE_LOGS */
+            rtLogSetLogHandler(ccsp_rbus_logHandler);
+
             if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
             {
                 CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
