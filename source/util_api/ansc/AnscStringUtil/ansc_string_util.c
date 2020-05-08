@@ -1291,4 +1291,52 @@ AnscMemorySearch
     return  NULL;
 }
 
+BOOL
+is_IpAddress
+    (
+        PUCHAR                      pString
+    )
+{
+    struct sockaddr_in sa;
+    if(inet_pton(AF_INET, pString, &(sa.sin_addr))==1)
+        return TRUE;
+    else
+        return FALSE;
+}
 
+BOOL
+is_Ipv6_address
+    (
+        PUCHAR                      pString
+    )
+{
+    struct sockaddr_in6 sa;
+    if(inet_pton(AF_INET6, pString, &(sa.sin6_addr))==1)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+BOOL
+AnscValidStringCheck
+    (
+        PUCHAR                      pString
+    )
+{
+    int i =0;
+    
+    /* check if pstring doesn't hold NULL or whitespaces */
+    if((pString == NULL) || (*pString=='\0'))
+    {
+        return FALSE;
+    }
+    while(pString[i] != '\0')
+    {
+        if ((pString[i] == ' ') || (pString[i] == '<') || (pString[i] == '>') || (pString[i] == '&') || (pString[i] == '\'') || (pString[i] == '\"') || (pString[i] == '|'))
+        {
+            return FALSE;
+        }
+        i++;
+    }
+    return TRUE;
+}
