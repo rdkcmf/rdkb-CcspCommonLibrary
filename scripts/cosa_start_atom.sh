@@ -335,6 +335,14 @@ if [ "$BOX_TYPE" = "XB3" ]; then
 	fi
 fi
 
+if [ "$DEVICE_MODEL"=="TCHXB3" ]; then
+    if [ -e "/tmp/.atomnvmnt.log" ]; then
+        cat /tmp/.atomnvmnt.log >> /rdklogs/logs/AtomConsolelog.txt.0
+        rm -rf /tmp/.atomnvmnt.log
+        touch /nvram/.atomnvmnt.log
+    fi
+fi
+
 rm -rf /tmp/.dropbear
 
 if [ -f /version.txt ]
