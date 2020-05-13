@@ -270,6 +270,17 @@ int CcspBaseIf_setParameterValues_rbus(
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     rtMessage request, response;
 
+    /* There is a case which we have seen in RDKB-29328, where set is called with Size as 0.
+     * No action to be taken for that..
+     */
+    if (0 == size)
+    {
+        CcspTraceWarning(("%s component calls SET without the dml element name. Returning success as there no action taken\n", bus_info->component_id));
+        *invalidParameterName = 0;
+        ret = CCSP_SUCCESS;
+        return ret;
+    }
+
     rtMessage_Create(&request);
     rbus_AppendInt32(request, sessionId);
     rbus_AppendInt32(request, (int32_t)writeID);
@@ -283,6 +294,7 @@ int CcspBaseIf_setParameterValues_rbus(
     }
     rbus_AppendString(request, commit ? "TRUE" : "FALSE");
 
+    /* If the size is 0, val itself is NULL; val[0].parameterName is NULL pointer dereferencing. We avoided it in the above if condition per RDKB-29328 */
     char *object_name = val[0].parameterName;
     if(dst_component_id && (strstr(dst_component_id, ".psm") || size < 1))
     {
@@ -541,6 +553,17 @@ int CcspBaseIf_getParameterValues_rbus(
     else
         writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
 
+    /* There is a case which we have seen in RDKB-29328, where set is called with Size as 0.
+     * No action to be taken for that..
+     */
+    if (0 == param_size)
+    {
+        CcspTraceWarning(("%s component calls GET without the dml element name. Returning success as there no action taken\n", bus_info->component_id));
+        ret = CCSP_SUCCESS;
+        *val_size = 0;
+        return ret;
+    }
+
     rtMessage_Create(&request);
     rbus_AppendInt32(request, (int32_t)writeID);
     rbus_AppendInt32(request, (int32_t)param_size);
@@ -550,6 +573,7 @@ int CcspBaseIf_getParameterValues_rbus(
         rbus_AppendString(request, parameterNames[i]);
     }
 
+    /* If the param_size is 0, parameterNames is NULL; We avoided it in the above if condition per RDKB-29328 */
     param_len = strlen(parameterNames[0]);
     char *object_name = parameterNames[0];
     if(dst_component_id) {
