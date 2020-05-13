@@ -19,7 +19,7 @@
 [Unit]
 Description=CcspCMAgentSsp service
 
-After=CcspPandMSsp.service notifyComp.service
+After=PsmSsp.service notifyComp.service
 
 [Service]
 Type=forking

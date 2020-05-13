@@ -21,6 +21,7 @@ Description=CcspTelemetry service
 After=CcspPandMSsp.service
 [Service]
 Type=oneshot
+ExecStartPre=/bin/sh -c 'sleep 2'
 ExecStart=/bin/sh -c '/lib/rdk/dcm.service &'
 RemainAfterExit=yes
 
