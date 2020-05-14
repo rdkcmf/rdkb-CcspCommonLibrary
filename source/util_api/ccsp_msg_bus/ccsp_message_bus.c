@@ -1175,6 +1175,11 @@ CCSP_Message_Bus_Init
                     if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
                 }
+                else if(strcmp(component_id,"ccsp.webconfignotify") ==0)
+                {
+                    if((err = rbus_registerEvent(component_id,"webconfigSignal",NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
+                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for webconfigSignal\n",__FUNCTION__, err);
+                }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.telemetry") == 0)
                 {
                      rbus_method_table_entry_t table[1] = {

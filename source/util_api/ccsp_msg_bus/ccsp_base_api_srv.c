@@ -574,7 +574,11 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                                    CCSP_MESSAGE_BUS_INFO *bus_info)
 {
     //    CcspTraceDebug(("<%s.%d> input: interface='%s', method='%s'\n", __FUNCTION__, getpid(), interface, method));
-
+    if(rbus_enabled == 1)
+    {
+        CcspTraceError(("came inside %s in rbus it should be handled in thread_path_message_func_rbus\n",__FUNCTION__));
+        return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    }
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
     if(!strcmp("org.freedesktop.DBus.Introspectable", interface)  && !strcmp(method, "Introspect"))
     {
@@ -1393,6 +1397,11 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
               DBusMessage     *message,
               void            *user_data)
 {
+    if(rbus_enabled == 1)
+    {
+        CcspTraceInfo(("came inside %s in rbus it will be handled in CcspBaseIf_evt_callback_rbus\n",__FUNCTION__));
+        return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    }
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
     const char *interface = dbus_message_get_interface(message);
@@ -1571,6 +1580,7 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
+#ifndef _RBUS_NOT_REQ_
 int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rtMessage message, void * user_data)
 {
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
@@ -1603,6 +1613,17 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
 
         bus_info->freefunc(val);
     }
+    else if(!strcmp(event_name,"deviceProfileChangeSignal") && func->deviceProfileChangeSignal)
+    {
+        int32_t isAvailable;
+        char *component_name = 0;
+        char *component_dbus_path = 0;
+        rbus_PopString(message, &component_name);
+        rbus_PopString(message, &component_dbus_path);
+        rbus_PopInt32(message, &isAvailable);
+        func->deviceProfileChangeSignal(component_name,component_dbus_path,isAvailable,func->deviceProfileChangeSignal_data);
+    }
+
     else if(!strcmp(event_name,"currentSessionIDSignal") && func->currentSessionIDSignal)
     {
         int32_t sessionID;
@@ -1619,11 +1640,27 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
     {
         func->systemReadySignal(func->systemReadySignal_data);
     }
+#ifdef ENABLE_WEBCONFIG_SUPPORT
+    else if(!strcmp(event_name,"webconfigSignal") && func->webconfigSignal)
+    {
+        char* webconfig_data = 0;
+        rbus_PopString(message, &webconfig_data);
+        func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
+    }
+#endif /* ENABLE_WEBCONFIG_SUPPORT */
+    else if(!strcmp(event_name,"systemRebootSignal") && func->systemRebootSignal)
+    {
+        func->systemRebootSignal(func->systemRebootSignal_data);
+    }
     else
-        CcspTraceInfo(("%s handle event_name %s\n",__FUNCTION__, event_name));
+    {
+        CcspTraceError(("%s %s event not handled\n",__FUNCTION__, event_name));
+        return RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT;
+    }
 
-    return DBUS_HANDLER_RESULT_HANDLED;
+    return RTMESSAGE_BUS_SUCCESS;
 }
+#endif /* _RBUS_NOT_REQ_ */
 
 void  CcspBaseIf_Set_Default_Event_Callback
 (
