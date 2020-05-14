@@ -84,6 +84,11 @@ int CcspBaseIf_freeResources(
     int priority
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG("rbus %s supports this function in different way\n", __FUNCTION__);
+        return CCSP_SUCCESS;
+    }
     DBusMessage *message = NULL;
     DBusMessage *reply = NULL; /*RDKB-6231, CID-33211, init before use */
     int ret = CCSP_FAILURE;
@@ -339,7 +344,9 @@ int CcspBaseIf_setParameterValues(
         )
 {
     if(rbus_enabled == 1)
+    {
         return CcspBaseIf_setParameterValues_rbus(bus_handle, dst_component_id, dbus_path,sessionId, writeID,val,size,commit,invalidParameterName);
+    }
 
     DBusMessage *message;
     DBusMessage *reply;
@@ -473,7 +480,9 @@ int CcspBaseIf_setCommit(
 )
 {
     if(rbus_enabled == 1)
+    {
         return CcspBaseIf_setCommit_rbus(bus_handle, dst_component_id, dbus_path, sessionId, writeID, commit);
+    }
 
     DBusMessage *message;
     DBusMessage *reply;
@@ -584,7 +593,7 @@ int CcspBaseIf_getParameterValues_rbus(
     RBUS_LOG("Calling rbus_invokeRemoteMethod for %s\n", object_name);
     if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
     {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: for param[0]=%s failed with Err: %d\n", __FUNCTION__, parameterNames[0], ret);
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: for param[0]=%s failed with Err: %d\n", __FUNCTION__, parameterNames[0], err);
         return err;
     }
 
@@ -656,7 +665,9 @@ int CcspBaseIf_getParameterValues(
 )
 {
     if(rbus_enabled == 1)
+    {
         return CcspBaseIf_getParameterValues_rbus(bus_handle, dst_component_id, dbus_path, parameterNames, param_size, val_size, parameterval);
+    }
 
     DBusMessage *message;
     DBusMessage *reply;
@@ -2464,6 +2475,11 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
     componentStruct_t **component
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG_ERR("%s unsupported function in rbus is called, please check\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -2631,7 +2647,9 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
 )
 {
     if(rbus_enabled == 1)
+    {
         return CcspBaseIf_discNamespaceSupportedByComponent_rbus(bus_handle, dst_component_id, component_name, name_space, size);
+    }
 
     DBusMessage *message;
     DBusMessage *reply;
@@ -2973,6 +2991,11 @@ int CcspBaseIf_checkNamespaceDataType (
     const char *subsystem_prefix,
     dbus_bool *typeMatch)
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG_ERR("%s unsupported function in rbus is called, please check\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     DBusMessageIter struct_iter;
@@ -3039,6 +3062,11 @@ int CcspBaseIf_dumpComponentRegistry (
     const char* dst_component_id
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG_ERR("%s unsupported function in rbus is called, please check\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -3483,7 +3511,7 @@ int CcspBaseIf_informEndOfSession_rbus (
             if(RTMESSAGE_BUS_SUCCESS != result)
             {
                 RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
-                return;
+                return result;
             }
             else
             {
@@ -3649,6 +3677,11 @@ int CcspBaseIf_busCheck(
     const char* dst_component_id
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG("rbus %s supports this function in a differnt way\n", __FUNCTION__);
+        return CCSP_SUCCESS;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -3687,6 +3720,11 @@ int CcspBaseIf_finalize(
     const char* dst_component_id
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG("rbus %s supports this function in a different way\n", __FUNCTION__);
+        return CCSP_SUCCESS;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -3725,6 +3763,11 @@ int CcspBaseIf_initialize(
     const char* dst_component_id
 )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG("rbus %s supports this function in a different way\n", __FUNCTION__);
+        return CCSP_SUCCESS;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -3920,7 +3963,7 @@ int CcspBaseIf_SendparameterValueChangeSignal_rbus (
     err = rbus_publishEvent(bus_info->component_id, "parameterValueChangeSignal", request);
     if(err != RTMESSAGE_BUS_SUCCESS)
     {
-        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d for bus_info->component_id =%s\n", __FUNCTION__, err,bus_info->component_id);
         return CCSP_FAILURE;
     }
 
@@ -4091,6 +4134,34 @@ int CcspBaseIf_SendtransferFailedSignal (
     dbus_message_unref (message);
     return CCSP_SUCCESS;
 }
+int CcspBaseIf_SenddeviceProfileChangeSignal_rbus (
+    void* bus_handle,
+    char *component_name,
+    char *component_dbus_path,
+    dbus_bool isAvailable
+)
+{
+    int ret = CCSP_SUCCESS;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+
+    rtMessage request;
+    rtMessage_Create(&request);
+    rbus_AppendString(request,component_name);
+    rbus_AppendString(request,component_dbus_path);
+    rbus_AppendInt32(request, (int32_t)isAvailable);
+
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, "deviceProfileChangeSignal");
+    err = rbus_publishEvent(bus_info->component_id,"deviceProfileChangeSignal",request);
+    if (err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        ret = CCSP_FAILURE;
+    }
+    rtMessage_Release(request);
+
+    return ret;
+}
 
 
 int CcspBaseIf_SenddeviceProfileChangeSignal (
@@ -4100,6 +4171,10 @@ int CcspBaseIf_SenddeviceProfileChangeSignal (
     dbus_bool isAvailable
 )
 {
+    if(rbus_enabled == 1)
+    {
+        return CcspBaseIf_SenddeviceProfileChangeSignal_rbus(bus_handle,component_name,component_dbus_path,isAvailable); 
+    }
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -4277,11 +4352,85 @@ int CcspBaseIf_SendTelemetryDataSignal (
     return CCSP_SUCCESS;
 }
 
+#ifdef ENABLE_WEBCONFIG_SUPPORT
+int CcspBaseIf_WebConfigSignal_rbus (
+    void* bus_handle,
+    char* webconfig
+)
+{
+    int ret = CCSP_FAILURE;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rtMessage request;
+
+    rtMessage_Create(&request);
+    rbus_AppendString(request,webconfig);
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, "webconfigsignal");
+    err = rbus_publishEvent(bus_info->component_id,"webconfigsignal",request);
+    if (err != RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        ret = CCSP_FAILURE;
+    }
+    rtMessage_Release(request);
+
+    return ret;
+}
+
+int CcspBaseIf_WebConfigSignal (
+    void* bus_handle,
+    char* webconfig
+)
+{
+    if(rbus_enabled == 1)
+    {
+        return CcspBaseIf_WebConfigSignal_rbus(bus_handle,webconfig);
+    }
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    DBusMessage *message;
+    int i;
+    DBusConnection *conn;
+
+    /*to support daemon redundency*/
+    pthread_mutex_lock(&bus_info->info_mutex);
+    for(i = 0; i < CCSP_MESSAGE_BUS_MAX_CONNECTION; i)
+    {
+        if(bus_info->connection[i].connected && bus_info->connection[i].conn )
+        {
+            conn = bus_info->connection[i].conn;
+            break;
+        }
+
+    }
+    pthread_mutex_unlock(&bus_info->info_mutex);
+
+    if(i ==  CCSP_MESSAGE_BUS_MAX_CONNECTION)
+        return CCSP_ERR_NOT_CONNECT;
+
+
+    message = dbus_message_new_signal (CCSP_DBUS_PATH_EVENT, CCSP_DBUS_INTERFACE_EVENT, "webconfigSignal" );
+
+    if(!message)
+        return CCSP_ERR_MEMORY_ALLOC_FAIL;
+
+    dbus_message_append_args (message, DBUS_TYPE_STRING, &webconfig, DBUS_TYPE_INVALID);
+
+    dbus_connection_send (conn, message, NULL);
+
+    dbus_message_unref (message);
+    return CCSP_SUCCESS;
+}
+#endif /* ENABLE_WEBCONFIG_SUPPORT */
+
 int CcspBaseIf_SendSignal(
     void * bus_handle,
     char *event
 )
 {
+    if(rbus_enabled == 1)
+    {
+        return CcspBaseIf_SendSignal_rbus(bus_handle, event);
+    }
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
@@ -4353,6 +4502,7 @@ int CcspBaseIf_SendSignal_rbus(void * bus_handle, char *event)
     rtMessage_Create(&out);
 
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, event);
     err = rbus_publishEvent(bus_info->component_id, event, out);
     if (err != RTMESSAGE_BUS_SUCCESS)
     {
@@ -4384,12 +4534,14 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
     else if(strcmp(event_name, "parameterValueChangeSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
-    else if(strcmp(event_name, "currentSessionIDSignal") == 0)
+    else if(strcmp(event_name, "currentSessionIDSignal") == 0 || strcmp(event_name, "deviceProfileChangeSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
+    else if( strcmp(event_name, "webconfigsignal") == 0)
+        comp = "ccsp.webconfignotify";
     else
     {
-        RBUS_LOG_ERR("%s event \n", __FUNCTION__, event_name);
-        return CCSP_SUCCESS;
+        RBUS_LOG_ERR("%s RBUS_EVENT_NOT_SUBSCRIBED:: Failed to subscribe %s \n", __FUNCTION__, event_name);
+        return CCSP_FAILURE;
     }
 
     err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, bus_handle);
@@ -4965,6 +5117,10 @@ int  CcspIf_Register_Event
     const char* dbus_interface_event
 )
 {
+    if(rbus_enabled == 1)
+    {
+        return CcspBaseIf_Register_Event(bus_handle, sender, event_name);
+    }
     if(NULL == dbus_path_event && NULL == dbus_interface_event)
         return CcspBaseIf_Register_Event(bus_handle, sender, event_name);
 
@@ -4981,6 +5137,10 @@ int  CcspIf_UnRegister_Event
     const char* dbus_interface_event
 )
 {
+    if(rbus_enabled == 1)
+    {
+        return CcspBaseIf_UnRegister_Event(bus_handle, sender, event_name);
+    }
     if(NULL == dbus_path_event && NULL == dbus_interface_event)
     {
         return CcspBaseIf_UnRegister_Event(bus_handle, sender, event_name);
@@ -5004,6 +5164,11 @@ CcspIf_notifyCwmpEventToAP
         char*                               pTimeStamp
     )
 {
+    if(rbus_enabled == 1)
+    {
+        RBUS_LOG_ERR("%s unsupported function in rbus is called, please check\n", __FUNCTION__);
+        return CCSP_FAILURE;
+    }
     DBusMessage *message;
     DBusMessage *reply;
     int ret = CCSP_FAILURE;
@@ -5015,9 +5180,9 @@ CcspIf_notifyCwmpEventToAP
     int i;
 
     message = dbus_message_new_method_call (STBSERVICE_AP_DESTINATION_NAME,
-                                            STBSERVICE_AP_PATH_NAME,
-                                            STBSERVICE_AP_INTERFACE_NAME,
-                                            "notifyCwmpEvent");
+            STBSERVICE_AP_PATH_NAME,
+            STBSERVICE_AP_INTERFACE_NAME,
+            "notifyCwmpEvent");
     if (!message )
     {
         printf ("No memory\n");
@@ -5028,9 +5193,9 @@ CcspIf_notifyCwmpEventToAP
 
 
     ret = dbus_message_iter_open_container (&iter,
-                                            DBUS_TYPE_STRUCT,
-                                            "iss",
-                                            &struct_iter);
+            DBUS_TYPE_STRUCT,
+            "iss",
+            &struct_iter);
 
 
     tmp = ulEventCode;
@@ -5043,7 +5208,7 @@ CcspIf_notifyCwmpEventToAP
     ret = CCSP_Message_Bus_Send_Msg(bus_handle, message, NOTIFYCWMPEVENT_TIMEOUT , &reply);
     if(reply )
     {
-	    char *str = 0;
+        char *str = 0;
         DBusMessageIter iter;
         dbus_message_iter_init (reply, &iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_INT32)
