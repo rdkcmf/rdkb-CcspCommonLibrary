@@ -93,7 +93,7 @@ extern    char *                  pComponentName;
     realloc((pMemory), (size))
 
 #define AnscFreeMemory(pMemory) \
-    free((pMemory))
+    AnscFreeMemoryOrig(pMemory)
 
 #define AnscGetMemorySize(pMemory) \
     AnscGetMemorySizeNative((pComponentName), (pMemory))
