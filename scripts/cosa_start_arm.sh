@@ -91,6 +91,12 @@ else
     echo "bbhm patch is not required for other platforms"
 fi
 
+#Update bbhm values during flip for DPC3939B/DPC3941B platforms
+if [ $MODEL_NUM == "DPC3939B" ] || [ $MODEL_NUM == "DPC3941B" ]; then
+    echo "Updating secure xfinity client limit during flip"
+    /usr/ccsp/psm/bbhm_flip.sh -f /tmp/bbhm_cur_cfg.xml
+fi
+
 # Start coredump
 if [ -f "$PWD/core_compr" ]; then
 	if ! [ -e "/var/core" ]; then
