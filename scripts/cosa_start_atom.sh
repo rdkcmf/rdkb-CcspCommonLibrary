@@ -278,9 +278,6 @@ if [ "$MFG_NAME" = "Cisco" ]; then
     /usr/ccsp/wifi/wifi_default_radius_port.sh
 fi
 
-echo_t "starting apshealth.sh"
-/usr/ccsp/wifi/apshealth.sh &
-
 echo_t "starting stahealth_log.sh"
 sh /usr/ccsp/wifi/stahealth_log.sh &
 
