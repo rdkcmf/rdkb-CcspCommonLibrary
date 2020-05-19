@@ -120,6 +120,9 @@ volatile BOOL WANAGENT_RDKLogEnable = TRUE;
 volatile unsigned int WANAGENT_RDKLogLevel = 4;
 volatile BOOL TELCOVOIPAGENT_RDKLogEnable = TRUE;
 volatile unsigned int TELCOVOIPAGENT_RDKLogLevel = 4;
+
+volatile BOOL ADVSEC_RDKLogEnable = TRUE;
+volatile unsigned int ADVSEC_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -357,6 +360,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.TELCOVOIPAGENT";
             LogLevel = TELCOVOIPAGENT_RDKLogLevel;
             LogEnable = TELCOVOIPAGENT_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.advsec"))
+        {
+            ComponentName="LOG.RDK.ADVSEC";
+            LogLevel = ADVSEC_RDKLogLevel;
+            LogEnable = ADVSEC_RDKLogEnable;
         }
         else
         {
