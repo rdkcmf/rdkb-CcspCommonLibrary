@@ -2103,12 +2103,12 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
     const  char *comp = NULL;
     rtMessage response;
     int i = 0, ret = 0;
-    char dummy_comp[12] = {"dummy"};
     const char** destinations = NULL;
 
     /*Handle WebPA and other components that need the component name while doing get/set*/
-
-    if(!strncmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.webpaagent", strlen("eRT.com.cisco.spvtg.ccsp.webpaagent")))
+    if(( _ansc_strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.webpaagent" ) == 0) ||
+       ( _ansc_strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.pam" ) == 0 )       ||
+       ( _ansc_strcmp(bus_info->component_id, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 ))
     {
         char **compName = 0, *pcomp =NULL;
         int num = 1; //only 1 element is passed to get it's component name
@@ -2118,21 +2118,20 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
             pcomp = *compName;
             if(!strcmp(pcomp, ""))
             {
+                /* If NOT a wildcard query, return it */
+                if(name_space[strlen(name_space)-1] != '.')
+                {
+                    RBUS_LOG("%s Namespace: %s is not supported\n", __FUNCTION__, name_space);
+                    return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
+                }
+
                 ret = rbus_resolveWildcardDestination(name_space, size, &response);
                 if(ret == RTMESSAGE_BUS_SUCCESS)
                 {
                     if(*size == 0)
                     {
-                        *size = 1;
-                        val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
-                        val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
-                        val[0]->componentName = bus_info->mallocfunc(strlen(name_space)+1);
-                        val[0]->dbusPath = bus_info->mallocfunc(strlen(dummy_comp)+1);
-                        strcpy( val[0]->componentName, name_space);
-                        strcpy( val[0]->dbusPath, dummy_comp);
-                        val[0]->type = ccsp_string;
-                        val[0]->remoteCR_name = NULL;
-                        val[0]->remoteCR_dbus_path = NULL;
+                        RBUS_LOG("%s Namespace: %s is not supported\n", __FUNCTION__, name_space);
+                        return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
                     }
                     else
                     {
@@ -2176,12 +2175,13 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
                 }
                 else
                 {
-                    CcspTraceInfo(("rbus_resolveWildcardDestination failed inside webpaagent\n"));
+                    RBUS_LOG_ERR("%s Couldnt find the matching component returning Failure for %s\n", __FUNCTION__, name_space);
                     return CCSP_FAILURE;
                 }
             }
             else
             {
+                RBUS_LOG("%s Returning %s as Component Name for Namespace: %s\n", __FUNCTION__, pcomp, name_space);
                 val = bus_info->mallocfunc(sizeof(componentStruct_t *));
                 val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
                 val[0]->componentName = bus_info->mallocfunc(strlen(pcomp)+1);
@@ -2197,7 +2197,10 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
             return CCSP_SUCCESS;
         }
         else
+        {
+            RBUS_LOG_ERR("%s Couldnt find the matching component returning Failure for %s\n", __FUNCTION__, name_space);
             return CCSP_FAILURE;
+        }
     }
 
     RBUS_LOG("%s Namespace: %s\n", __FUNCTION__, name_space);//check if its a wildcard expression
@@ -2210,16 +2213,8 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         {
             if(*size == 0)
             {
-                *size = 1;
-                val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
-                val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
-                val[0]->componentName = bus_info->mallocfunc(strlen(name_space)+1);
-                val[0]->dbusPath = bus_info->mallocfunc(strlen(dummy_comp)+1);
-                strcpy( val[0]->componentName, name_space);
-                strcpy( val[0]->dbusPath, dummy_comp);
-                val[0]->type = ccsp_string;
-                val[0]->remoteCR_name = NULL;
-                val[0]->remoteCR_dbus_path = NULL;
+                RBUS_LOG("%s Namespace: %s is not supported\n", __FUNCTION__, name_space);
+                return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
             }
             else
             {
@@ -2413,6 +2408,11 @@ int CcspBaseIf_discComponentSupportingNamespace (
     }
     dbus_message_unref (message);
     *components = val;
+
+    /* Print only when extra log enabled */
+    if (ret != CCSP_SUCCESS)
+        RBUS_LOG("%s failed for Namespace: %s with error code %d\n", __FUNCTION__, name_space, ret);
+
     return ret;
 
 }
