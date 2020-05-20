@@ -514,15 +514,7 @@ ip rule add from all iif l2sd0.100.106 lookup erouter
 
 #Enable external switch for QinQ support in case of Cisco
 if [ "$MODEL_NUM" = "DPC3941" ] ; then
- cli system/l2switch/extswitch/QinQ_NutralPort 1
- cli system/l2switch/extswitch/QinQ_NutralPort 2
- cli system/l2switch/extswitch/QinQ_NutralPort 3
- cli system/l2switch/extswitch/QinQ_NutralPort 4
-
- cli system/l2switch/extswitch/mapPortToVlan 100 1 1
- cli system/l2switch/extswitch/mapPortToVlan 100 1 2
- cli system/l2switch/extswitch/mapPortToVlan 100 1 3
- cli system/l2switch/extswitch/mapPortToVlan 100 1 4
+ cli system/l2switch/extswitch/acceptTag
  
 fi
 fi
