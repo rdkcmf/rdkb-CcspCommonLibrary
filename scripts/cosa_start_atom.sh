@@ -267,9 +267,6 @@ fi
 
 done
 
-echo_t "starting process monitor script"
-sh /usr/ccsp/wifi/process_monitor_atom.sh &
-
 echo_t "Monitor ATOM log folder size"
 sh /rdklogger/atom_log_monitor.sh &
 
