@@ -2138,7 +2138,6 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         int num = 1; //only 1 element is passed to get it's component name
         if(RTMESSAGE_BUS_SUCCESS == rbus_findMatchingObjects(&name_space, num, &compName))
         {
-            *size = 1;
             pcomp = *compName;
             if(!strcmp(pcomp, ""))
             {
@@ -2206,6 +2205,7 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
             else
             {
                 RBUS_LOG("%s Returning %s as Component Name for Namespace: %s\n", __FUNCTION__, pcomp, name_space);
+                *size = 1;
                 val = bus_info->mallocfunc(sizeof(componentStruct_t *));
                 val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
                 val[0]->componentName = bus_info->mallocfunc(strlen(pcomp)+1);
