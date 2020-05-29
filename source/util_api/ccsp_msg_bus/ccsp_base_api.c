@@ -2248,8 +2248,23 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         {
             if(*size == 0)
             {
-                RBUS_LOG("%s Namespace: %s is not supported\n", __FUNCTION__, name_space);
-                return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
+                /* Possibly the Table entry.. lets avoide one another socket call and return the namespace itself as component name as RBUS supports it.
+                 * There might be a error printed in log in rbus mode for a GET in a worst case scenario but thats OKEY.
+                 * Because in dbus mode, it makes socket call and determine whether the table entry exists or not and returns failure and the client
+                 * will not even call GET. But there is a costly socket call involved here which is avoided in rbus mode.
+                 */
+                RBUS_LOG("%s Return the given namespace (%s) itself as component name\n", __FUNCTION__, name_space);
+                int length = strlen(name_space);
+                *size = 1;
+                val = bus_info->mallocfunc(*size*sizeof(componentStruct_t *));
+                val[0] = bus_info->mallocfunc(sizeof(componentStruct_t));
+                val[0]->componentName = bus_info->mallocfunc(length+1);
+                val[0]->dbusPath = bus_info->mallocfunc(length+1);
+                strcpy( val[0]->componentName, name_space);
+                strcpy( val[0]->dbusPath, name_space);
+                val[0]->type = ccsp_string;
+                val[0]->remoteCR_name = NULL;
+                val[0]->remoteCR_dbus_path = NULL;
             }
             else
             {
