@@ -164,6 +164,12 @@ if [ -e ./pam ]; then
 	cd ..
 fi
 
+#Start ocsp
+if [ -f /lib/rdk/ocsp-support.sh ]; then
+	echo_t "Starting ocsp script"
+    sh /lib/rdk/ocsp-support.sh &
+fi
+
 if [ -e ./notify-comp ]; then
         cd notify-comp
         if [ "x"$Subsys = "x" ];then

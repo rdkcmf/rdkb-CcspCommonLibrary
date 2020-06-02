@@ -364,3 +364,10 @@ then
        fi
    fi
 fi
+
+#Start ocsp
+if [ -f /lib/rdk/ocsp-support.sh ]; then
+    echo_t "Starting ocsp script"
+    sh /lib/rdk/ocsp-support.sh &
+fi
+
