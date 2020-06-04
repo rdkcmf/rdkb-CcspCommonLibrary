@@ -264,3 +264,9 @@ then
        fi
    fi
 fi
+
+#running dibbler init script 
+if [ $MODEL_NUM == "DPC3941B" ] || [ $MODEL_NUM == "DPC3939B" ] || [ "$MODEL_NUM" = "CGA4131COM" ]; then
+echo "Coping server-notify.sh into /var/lib/dibbler"
+sh /etc/dibbler/dibbler-server-init.sh
+fi
