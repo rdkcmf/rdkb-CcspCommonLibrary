@@ -91,54 +91,6 @@ else
     echo "bbhm patch is not required for other platforms"
 fi
 
-# Check if bbhm has Notify flag present
-NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
-REDIRCTEXISTS=""
-
-# If Notify flag is not present then we will add it as per the syscfg DB value
-if [ "$NOTIFYPRESENT" = "" ]
-then
-	REDIRECT_VALUE=`syscfg get redirection_flag`
-	if [ "$REDIRECT_VALUE" = "" ]
-	then
-		#Just making sure if syscfg command didn't fail
-		REDIRCTEXISTS=`cat $SYSCFG_DB_FILE | grep redirection_flag | cut -f2 -d=`
-	fi
-
-	if [ "$REDIRECT_VALUE" = "false" ] || [ "$REDIRCTEXISTS" = "false" ];
-	then
-		
-		echo " Apply Notifywifichanges flse"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	elif [ "$REDIRECT_VALUE" = "true" ] || [ "$REDIRCTEXISTS" = "true" ];
-	then
-		echo " Apply Notifywifichanges tue"
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-		sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-		cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-		cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-		rm /var/tmp/bbhm_cur_cfg.xml
-		rm /var/tmp/bbhm_bak_cfg.xml
-	fi
-fi
-
-if [ ! -f "/nvram/l2net_port_details_cleaned" ] 
-then
-	echo "Clearing up bridge data from from DB"
-	cp /nvram/bbhm_cur_cfg.xml /tmp/b3
-	sed -i '/dmsb.l2net.2.Port./d' /tmp/b3
-	sed -i '/Provision.COSALibrary.Bridging.NextPortInstanceNum2.NextPortInstanceNum/d' /tmp/b3
-        sed -i '/Provision.COSALibrary.BridgingHalfAdded./d' /tmp/b3
-	cp /tmp/b3 /nvram/bbhm_cur_cfg.xml
-	rm /tmp/b3
-	touch "/nvram/l2net_port_details_cleaned"
-fi
-
 # Start coredump
 if [ -f "$PWD/core_compr" ]; then
 	if ! [ -e "/var/core" ]; then

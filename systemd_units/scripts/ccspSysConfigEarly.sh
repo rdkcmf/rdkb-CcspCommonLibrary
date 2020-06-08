@@ -54,70 +54,35 @@ if [ -f "$PWD/cosa_start_custom_1.sh" ]; then
 	./cosa_start_custom_1.sh
 fi
 
-#update the bbhm for 2.1s11
 if [ "$MFG_NAME" = "Arris" ]; then
 	if [ "$MODEL_NUM" = "TG4482A" ] ; then
 		/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
 	fi
-    # Check if bbhm has Notify flag present
-    NOTIFYPRESENT=`cat /nvram/bbhm_cur_cfg.xml | grep NotifyWiFiChanges`
-    REDIRCTEXISTS=""
-
-    # If Notify flag is not present then we will add it as per the syscfg DB value
-    if [ "$NOTIFYPRESENT" = "" ]
-    then
-            REDIRECT_VALUE=`syscfg get redirection_flag`
-            if [ "$REDIRECT_VALUE" = "" ]
-            then
-                    #Just making sure if syscfg command didn't fail
-                    REDIRCTEXISTS=`cat $SYSCFG_DB_FILE  | grep redirection_flag | cut -f2 -d=`
-            fi
-
-            if [ "$REDIRECT_VALUE" = "false" ] || [ "$REDIRCTEXISTS" = "false" ];
-            then
-
-                    echo " Apply Notifywifichanges flse"
-                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">false</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-                    cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-                    cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-                    rm /var/tmp/bbhm_cur_cfg.xml
-                    rm /var/tmp/bbhm_bak_cfg.xml
-            elif [ "$REDIRECT_VALUE" = "true" ] || [ "$REDIRCTEXISTS" = "true" ];
-            then
-                    echo " Apply Notifywifichanges tue"
-                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_cur_cfg.xml > /var/tmp/bbhm_cur_cfg.xml
-                    sed '10 a \ \ \ <Record name=\"eRT.com.cisco.spvtg.ccsp.Device.WiFi.NotifyWiFiChanges\" type=\"astr\">true</Record>' /nvram/bbhm_bak_cfg.xml > /var/tmp/bbhm_bak_cfg.xml
-                    cp /var/tmp/bbhm_cur_cfg.xml /nvram/bbhm_cur_cfg.xml
-                    cp /var/tmp/bbhm_bak_cfg.xml /nvram/bbhm_bak_cfg.xml
-                    rm /var/tmp/bbhm_cur_cfg.xml
-                    rm /var/tmp/bbhm_bak_cfg.xml
-            fi
-    fi
-else
-    echo "bbhm patch is not required"
 fi
 
 # Check if Hotspot Max Num of STA is updated.
 if [ "$IS_BCI" = "yes" ]; then
-	grep "<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>" /nvram/bbhm_cur_cfg.xml
-	if [ "$?" == "1" ];then
-		cp /nvram/bbhm_cur_cfg.xml /tmp/b1
-		cat /tmp/b1 | sed s/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">0<\/Record>"/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>"/ >/tmp/b2
-		cp /tmp/b2 /nvram/bbhm_cur_cfg.xml
-		rm /tmp/b1
-		rm /tmp/b2
+	if [ -f /nvram/bbhm_cur_cfg.xml ]; then
 
-		grep "<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>" /nvram/bbhm_cur_cfg.xml
-		if [  "$?" == "1" ] ; then
+		grep "<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>" /nvram/bbhm_cur_cfg.xml
+		if [ "$?" == "1" ];then
 			cp /nvram/bbhm_cur_cfg.xml /tmp/b1
-			cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
-			cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
-			cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
-			cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
-			cp /tmp/b1 /nvram/bbhm_cur_cfg.xml
+			cat /tmp/b1 | sed s/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">0<\/Record>"/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>"/ >/tmp/b2
+			cp /tmp/b2 /nvram/bbhm_cur_cfg.xml
 			rm /tmp/b1
 			rm /tmp/b2
+
+			grep "<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>" /nvram/bbhm_cur_cfg.xml
+			if [  "$?" == "1" ] ; then
+				cp /nvram/bbhm_cur_cfg.xml /tmp/b1
+				cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
+				cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
+				cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
+				cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
+				cp /tmp/b1 /nvram/bbhm_cur_cfg.xml
+				rm /tmp/b1
+				rm /tmp/b2
+			fi
 		fi
 	fi
 fi
