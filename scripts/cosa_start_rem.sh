@@ -352,15 +352,8 @@ if [ -e ./lm ]; then
     echo_t "***Starting CcspLMLite****"
     cd lm
     echo_t "$BINPATH/CcspLMLite -subsys $Subsys &"
-	if [ "x$BOX_TYPE" == "xXB3" ] && [ "x$DEVICE_MODEL" == "xTCHXB3" ]; then
-		    ulimit -s 2048
-		    $BINPATH/CcspLMLite -subsys $Subsys &
-		    ulimit -s 64
-	else
-		    $BINPATH/CcspLMLite -subsys $Subsys &
-	fi
-
-	cd ..
+    $BINPATH/CcspLMLite -subsys $Subsys &
+    cd ..
 fi
 
 if [ "x$BOX_TYPE" == "xTCCBR" ]; then
