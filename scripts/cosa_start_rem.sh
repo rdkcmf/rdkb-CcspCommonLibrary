@@ -468,16 +468,13 @@ fi
 if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
    echo "BWG does not support Advanced security"
 else
-ADVSEC_LAUNCH_SCRIPT=/usr/ccsp/pam/launch_adv_security.sh
-fingerprintenable=`syscfg get Advsecurity_DeviceFingerPrint`
-if [ "$fingerprintenable" = "1" ]; then
-    echo "Device_Finger_Printing_enabled:true"
-    if [ -f $ADVSEC_LAUNCH_SCRIPT ]; then
-        echo_t "$ADVSEC_LAUNCH_SCRIPT"
-        $ADVSEC_LAUNCH_SCRIPT -start &
-    fi
-else
-    echo "Device_Finger_Printing_enabled:false"
+if [ "$DEVICE_MODEL" = "TCHXB3" ]; then
+    /usr/sbin/cujo_download.sh &
+elif [ -e ./advsec ]; then
+    cd advsec
+    echo_t "$BINPATH/CcspAdvSecuritySsp -subsys $Subsys &"
+    $BINPATH/CcspAdvSecuritySsp -subsys $Subsys &
+    cd ..
 fi
 fi
 

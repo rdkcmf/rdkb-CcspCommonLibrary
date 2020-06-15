@@ -20,7 +20,6 @@
 Description=CcspAdvSecuritySsp service
 
 After=CcspPandMSsp.service CcspTandDSsp.service
-ConditionPathExists=/tmp/advsec_initialized_sysd
 
 [Service]
 Type=forking
