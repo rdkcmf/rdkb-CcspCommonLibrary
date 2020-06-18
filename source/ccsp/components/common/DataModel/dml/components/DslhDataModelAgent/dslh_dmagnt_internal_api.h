@@ -110,6 +110,24 @@ DslhDmagntLoadDataModelXML
     );
 
 ANSC_STATUS
+DslhDmagntLoadDataModelXML2
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pfnXMLLoader,
+        BOOL                        bExternal,
+        BOOL                        bPopulateTree
+    );
+
+ANSC_STATUS
+DslhDmagntLoadDataModelXMLInternal
+    (
+        ANSC_HANDLE                 hThisObject,
+        void*                       pXMLNode,
+        BOOL                        bExternal,
+        BOOL                        bPopulateTree
+    );
+
+ANSC_STATUS
 DslhDmagntUnloadDataModelXML
     (
         ANSC_HANDLE                 hThisObject,

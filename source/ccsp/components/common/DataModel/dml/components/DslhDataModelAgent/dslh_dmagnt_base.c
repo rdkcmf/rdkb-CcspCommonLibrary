@@ -349,6 +349,7 @@ DslhDmagntInitialize
     pMyObject->Cancel              = DslhDmagntCancel;
 
     pMyObject->LoadDataModelXML    = DslhDmagntLoadDataModelXML;
+    pMyObject->LoadDataModelXML2   = DslhDmagntLoadDataModelXML2;
     pMyObject->UnloadDataModelXML  = DslhDmagntUnloadDataModelXML;
     pMyObject->RegisterInternalApi = DslhDmagntRegisterInternalApi;
     pMyObject->MemoryUsage         = DslhDmagntMemoryUsage;
