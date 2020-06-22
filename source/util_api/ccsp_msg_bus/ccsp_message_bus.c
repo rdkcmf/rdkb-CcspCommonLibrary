@@ -134,13 +134,13 @@ static int               CCSP_Message_Bus_Register_Event_Priv(DBusConnection*, c
 static int               CCSP_Message_Save_Register_Event(void*, const char*, const char*, const char*, const char*);
 static int               CCSP_Message_Bus_Register_Path_Priv(void*, const char*, DBusObjectPathMessageFunction, void*);
 static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_callback_t, void*);
-static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out);
+static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out, const rtMessageHeader* hdr);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
 static DBusWakeupMainFunction wake_mainloop(void *);
-static int webcfg_signal_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
-static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
-static int cr_isSystemReady_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
-static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
+static int webcfg_signal_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
+static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
+static int cr_isSystemReady_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
 int rbus_enabled = 0;
 
 
@@ -2103,8 +2103,9 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
     return;
 }
 
-static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    (void)hdr;
     rtError err = RT_OK;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)user_data;
 
@@ -2382,10 +2383,11 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
     return 0;
 }
 
-static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
     (void) destination;
     (void) method;
+    (void) hdr;
     int err = CCSP_Message_Bus_OK;
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
@@ -2399,10 +2401,11 @@ static int cr_registerCaps_rbus(const char * destination, const char * method, r
     return err;
 }
 
-static int cr_isSystemReady_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+static int cr_isSystemReady_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
     (void) destination;
     (void) method;
+    (void) hdr;
     int err = CCSP_Message_Bus_OK;
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
@@ -2417,10 +2420,11 @@ static int cr_isSystemReady_rbus (const char * destination, const char * method,
     return err;
 }
 
-static int webcfg_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+static int webcfg_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
     (void) destination;
     (void) method;
+    (void) hdr;
     int err = CCSP_Message_Bus_OK;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
@@ -2436,10 +2440,11 @@ static int webcfg_signal_rbus(const char * destination, const char * method, rtM
     return err;
 }
 
-static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
     (void) destination;
     (void) method;
+    (void) hdr;
     int err = CCSP_Message_Bus_OK;
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
