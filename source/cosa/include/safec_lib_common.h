@@ -70,6 +70,9 @@ typedef int errno_t;
 
 #define strtok_s(dest, dmax, delim, ptr) strtok_r(dest, delim, ptr)
 
+#define sprintf_s( dst, max, fmt, ...)  EOK; \
+  sprintf( dst, fmt, ##__VA_ARGS__ );
+
 static inline int strcmp_s(const char *dst, int dmax, const char *src, int *r) {
         if((src ==  NULL) || (dst == NULL) || (dmax == 0))
             return ESNULLP;
