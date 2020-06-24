@@ -83,9 +83,17 @@ extern ANSC_HANDLE bus_handle;
 #define INVALID_IP 		       208
 #define INVALID_PORT 		       209
 #define INVALID_PROTOCOL 	       210
+#define INVALID_MAC      	       211
+#define STATIC_IP_NOT_IN_LANRANGE  212
+#define LAN_PARAM_IP_RANGE_INVALID 213
+#define LAN_PARAM_NETMASK_INVALID  214
+#define COSA_SYNCHRONIZE_FAILED    215
+#define FILE_OPEN_ERROR                216
+#define LAN_PARAM_LEASETIME_INVALID    217
+#define LAN_PARAM_GATEWAY_IP_INVALID    218
 #define VALID_IP 		       0
 
-
+#define INVALID_DMZ_WAN_IP             6001
 
 #define SYSCFG_FAILURE                 1001
 #define SYSEVENT_FAILURE               1002
@@ -93,6 +101,9 @@ extern ANSC_HANDLE bus_handle;
 
 #define WIFI_HAL_FAILURE               2001
 #define WIFI_AP_ENABLE_HAL_FAILURE     2002
+
+#define ADVSEC_FAILURE                 3001
+#define MOCA_HAL_FAILURE               5001
 
 
 typedef  enum
