@@ -576,7 +576,7 @@ void* messageQueueProcessing()
 							CcspTraceError(("%s : Execution failed Error Code :%hu Reason: %s \n",__FUNCTION__,execReturn->ErrorCode,execReturn->ErrorMsg));
 							updateVersionAndState(exec_data->version,execReturn->ErrorCode,blobDataProcessing);
 							send_NACK(exec_data->subdoc_name,queueData.txid_queue[queueData.front],exec_data->version,execReturn->ErrorCode,execReturn->ErrorMsg);
-			            			if ( (exec_data->rollbackFunc) && ( VALIDATION_FALIED != execReturn->ErrorCode ) )
+			                if ( (exec_data->rollbackFunc) && ( VALIDATION_FALIED != execReturn->ErrorCode ) )
                                                		{	
 								rollbkRet = exec_data->rollbackFunc();
 
@@ -607,7 +607,7 @@ void* messageQueueProcessing()
 						CcspTraceError(("%s : Execution failed Error Code :%hu Reason: %s \n",__FUNCTION__,execReturn->ErrorCode,execReturn->ErrorMsg));
 						updateVersionAndState(exec_data->version,execReturn->ErrorCode,blobDataProcessing);
 						send_NACK(exec_data->subdoc_name,queueData.txid_queue[queueData.front],exec_data->version,execReturn->ErrorCode,execReturn->ErrorMsg);
-			            		if ( (exec_data->rollbackFunc) && ( VALIDATION_FALIED != execReturn->ErrorCode ) )
+                        if ( (exec_data->rollbackFunc) && ( VALIDATION_FALIED != execReturn->ErrorCode ) )
                                        		{
 							rollbkRet = exec_data->rollbackFunc();
 
