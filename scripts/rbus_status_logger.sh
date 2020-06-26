@@ -20,17 +20,17 @@
 
 source /etc/log_timestamp.sh
 
-if [ -e /nvram/rbus ]
+if [ -e /nvram/rbus_support ]
 then
          echo_t "[RDKB_SELFHEAL] : Device is in RBUS mode" >> /rdklogs/logs/SelfHeal.txt.0
 else
          echo_t "[RDKB_SELFHEAL] : Device is in DBUS mode" >> /rdklogs/logs/SelfHeal.txt.0
 fi
 
-if [ -e /nvram/rbus_off_pending ]
+if [ -e /nvram/rbus_support_off_pending ]
 then
          echo_t "[RDKB_SELFHEAL] : RFC applied for DBUS mode and will take effect in next reboot" >> /rdklogs/logs/SelfHeal.txt.0
-elif [ -e /nvram/rbus_on_pending ]
+elif [ -e /nvram/rbus_support_on_pending ]
 then
          echo_t "[RDKB_SELFHEAL] : RFC applied for RBUS mode and will take effect in next reboot" >> /rdklogs/logs/SelfHeal.txt.0
 fi

@@ -22,7 +22,7 @@ source /etc/device.properties
 
 sleep 60
 #set rbus crash only in rbus mode
-if [ -e /nvram/rbus ]; then
+if [ -e /nvram/rbus_support ]; then
     check_rbus=`systemctl status rbus.service | cut -d$'\n' -f7 | cut -d "," -f2 | cut -d ")" -f1 | cut -d '=' -f2`
     if [ "$check_rbus" != "TERM" ]; then
        if [ "$BOX_TYPE" = "XB3" ];then
