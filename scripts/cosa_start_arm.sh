@@ -83,6 +83,7 @@ fi
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 export LOG4C_RCPATH=/rdklogger
+export BOX_TYPE ATOM_ARPING_IP
 
 #zqiu: update the bbhm for 2.1s11
 if [ "$BOX_TYPE" = "XB3" ]; then
