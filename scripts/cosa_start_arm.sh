@@ -252,15 +252,11 @@ then
    echo $imgname
    flag=`echo $imgname|awk '{print match($0,"TDK")}'`;
    if [ $flag -gt 0 ];then
-       if [ -f "/usr/ccsp/tdk/StartTDK.sh" ]
+       if [ -f "/usr/sbin/tdkb_launcher.sh" ]
        then
            echo "Found TDK Image"
-           echo "Invoking TDK start up script"
-           sh /usr/ccsp/tdk/StartTDK.sh &
-       else
-           echo "Found RDM enabled TDK Image"
-           echo "Invoking tdk_download script"
-           sh /usr/sbin/tdkb_download.sh &
+           echo "Invoking TDK-B launcher script"
+           sh /usr/sbin/tdkb_launcher.sh &
        fi
    fi
 fi
