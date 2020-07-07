@@ -886,14 +886,14 @@ DslhWmpdoMpaSetParameterValues
                     if(ulArraySize == i+1)
                     {
                         j = 0;
-			pthread_mutex_lock(&NotifyMutex);
+			/*pthread_mutex_lock(&NotifyMutex);
                         bPendingNotificaton = FALSE;
 						res = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);		
 						if(res != 0)
 							{
 							pthread_mutex_unlock(&NotifyMutex);
 							CcspTraceWarning(("Create Send_Notification_Thread error %d ", res));
-							}
+							}*/
 					}
                 }
             }
@@ -921,22 +921,11 @@ DslhWmpdoMpaSetParameterValues
                     (ANSC_HANDLE)pObjRecord
                 );
     }
-#ifdef USE_NOTIFY_COMPONENT
-    if(bPendingNotificaton)
-    {
-       int resp = 0;
-       pthread_t Send_Notification_Thread;
-       CcspTraceWarning(("Send all pending notifications %d\n", bPendingNotificaton));
-       bPendingNotificaton = FALSE;
-       resp = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);
-       if(resp != 0)
-           CcspTraceWarning(("Create Send_Notification_Thread error %d\n", resp));
-    }
-#endif
+
     if ( bFaultEncountered )
     {
         /* returnStatus = ANSC_STATUS_BAD_PARAMETER; */
-
+        
         goto  EXIT2;
     }
     
@@ -972,10 +961,24 @@ DslhWmpdoMpaSetParameterValues
     if ( bFaultEncountered )
     {
         returnStatus = CCSP_ERR_INVALID_PARAMETER_VALUE;
-
+        #ifdef USE_NOTIFY_COMPONENT
+        paramCount = 0;
+        bPendingNotificaton = FALSE;
+        #endif
         goto  EXIT2;
     }
-
+#ifdef USE_NOTIFY_COMPONENT
+    if(bPendingNotificaton)
+    {
+       int resp = 0;
+       pthread_t Send_Notification_Thread;
+       CcspTraceWarning(("Send all pending notifications %d\n", bPendingNotificaton));
+       bPendingNotificaton = FALSE;
+       resp = pthread_create(&Send_Notification_Thread, NULL, Send_Notification_Thread_Func, NULL);
+       if(resp != 0)
+           CcspTraceWarning(("Create Send_Notification_Thread error %d\n", resp));
+    }
+#endif
     /*
      * In the third round, we first commit the parameter changes at the object level by calling
      * CommitChanges() of each ObjRecord; and then we commit the change for each individual para-
