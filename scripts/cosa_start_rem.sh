@@ -26,7 +26,7 @@ if [ -f /etc/telemetry2_0.properties ]; then
 fi
 
 source /etc/utopia/service.d/log_capture_path.sh
-BBHM_CUR_CFG="/tmp/bbhm_cur_cfg.xml"
+BBHM_CUR_CFG="/nvram/bbhm_cur_cfg.xml"
 BINPATH="/usr/bin"
 UTOPIA_PATH=/etc/utopia/service.d
 if [ "x$BOX_TYPE" = "xXB3" ]; then
