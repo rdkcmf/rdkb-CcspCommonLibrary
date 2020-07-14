@@ -278,6 +278,12 @@ mbiIf_SendParameterValueChangeSignal
         AnscFreeMemory((char*)pParamSignal->newValue);
     }
 
+    //Handling memory leak
+    if ( pParamSignal->subsystem_prefix )
+    {
+        AnscFreeMemory((char*)pParamSignal->subsystem_prefix);
+    }
+
     AnscFreeMemory(pParamSignal);
 
     return (returnStatus == CCSP_SUCCESS) ? ANSC_STATUS_SUCCESS : ANSC_STATUS_FAILURE;
