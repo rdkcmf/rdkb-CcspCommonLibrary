@@ -2389,6 +2389,11 @@ int CcspBaseIf_discComponentSupportingNamespace (
     DBusMessageIter iter;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 
+    if (bus_handle == NULL)
+    {
+        return CCSP_FAILURE;
+    }
+
     componentStruct_t **val=NULL;
     *components = 0;
     *size = 0;
