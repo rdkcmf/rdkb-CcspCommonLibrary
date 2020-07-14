@@ -119,7 +119,7 @@ AnscSctoEngage
     ansc_addrinfo*                  pansc_server_addrinfo = NULL;
     ansc_addrinfo*                  pansc_client_addrinfo = NULL;
     xskt_addrinfo                   xskt_hints            = {0};
-    xskt_addrinfo*                  pxskt_server_addrinfo = NULL;
+    xskt_addrinfo*                  pxskt_server_addrinfo = NULL, *pxskt_server_addrinfo_orig = NULL; //Modification for handling memory leak
     xskt_addrinfo*                  pxskt_client_addrinfo = NULL;
     USHORT                          usPort                = 0;
     char                            port[6] = {0};
@@ -208,7 +208,7 @@ AnscSctoEngage
                     pMyObject->GetPeerName((ANSC_HANDLE)pMyObject), 
                     port,
                     &xskt_hints,
-                    &pxskt_server_addrinfo
+	            &pxskt_server_addrinfo_orig // Modification for handling memory leak
                 ) ||
              _xskt_getaddrinfo
                 (
@@ -236,6 +236,7 @@ AnscSctoEngage
 
             goto  EXIT1;
         }
+	pxskt_server_addrinfo = pxskt_server_addrinfo_orig;
 
         AnscTrace("!!! after getaddrinfo !!!\n");
     }
@@ -723,7 +724,7 @@ AnscSctoEngage
     	goto  EXIT2;
     }
 
-    return ANSC_STATUS_SUCCESS;
+    goto FREE_ADDRINFO;
 
     /******************************************************************
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
@@ -751,6 +752,28 @@ EXIT1:
         pMyObject->Reset((ANSC_HANDLE)pMyObject);
     }
 
+FREE_ADDRINFO: // Handling memory leak
+#ifdef _ANSC_IPV6_COMPATIBLE_
+    if ( pxskt_server_addrinfo_orig )
+    {
+        _xskt_freeaddrinfo(pxskt_server_addrinfo_orig);
+    }
+
+    if ( pxskt_client_addrinfo )
+    {
+        _xskt_freeaddrinfo(pxskt_client_addrinfo);
+    }
+
+    if ( pansc_server_addrinfo )
+    {
+        _ansc_freeaddrinfo(pansc_server_addrinfo);
+    }
+
+    if ( pansc_client_addrinfo )
+    {
+        _ansc_freeaddrinfo(pansc_client_addrinfo);
+    } 
+#endif
 
     return  returnStatus;
 }
