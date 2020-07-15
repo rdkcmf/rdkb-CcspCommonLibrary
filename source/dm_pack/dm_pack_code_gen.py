@@ -117,14 +117,14 @@ def printElement(elem,depth):
     offset = offset + "  "
   if(len(elem)==0):
     if elem.text:
-      print(offset+"<"+elem.tag+">"+elem.text+"</"+elem.tag+">")
+      print((offset+"<"+elem.tag+">"+elem.text+"</"+elem.tag+">"))
     else:
-      print(offset+"<"+elem.tag+">"+"</"+elem.tag+">")
+      print((offset+"<"+elem.tag+">"+"</"+elem.tag+">"))
   else:
-    print(offset+"<"+elem.tag+">")
+    print((offset+"<"+elem.tag+">"))
     for subelem in elem:
       printElement(subelem,depth+1)
-    print(offset+"</"+elem.tag+">")
+    print((offset+"</"+elem.tag+">"))
 
 def calcMaxDepth(elem,depth):
   if elem.tag=="parameter":
