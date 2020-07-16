@@ -37,74 +37,37 @@
 #include "ccsp_message_bus.h"   // for CCSP_Message_Bus_Init/Exit
 #include "slap_definitions.h"
 #include "ccsp_trace.h"
+#include "webconfig_err.h"
 
 extern ANSC_HANDLE bus_handle;
 
 
-#define FRAMEWORK_DEBUG "/tmp/webconfig_dbg"
-#define ACK 1
-#define NACK 0
+#define FRAMEWORK_DEBUG 		 	"/tmp/webconfig_dbg"
+#define ACK 					1
+#define NACK 					0
 
-#define VERSION_ALREADY_EXIST 100
-#define EXECUTION_IN_QUEUE 101
-#define VERSION_UPDATE_REQUIRED 200
-
-
-#define WEBCONFIG_QUEUE_NAME "/webconfig_queue"
-
-#define MAX_SIZE  1024
-
-#define MAX_EVENTS_IN_MQUEUE 50  
-#define QUEUE_SIZE 50
+#define VERSION_ALREADY_EXIST    		100
+#define EXECUTION_IN_QUEUE		 	101
+#define VERSION_UPDATE_REQUIRED  		200
 
 
-#define DEFAULT_TIMEOUT_PER_ENTRY 3
-#define DEFAULT_TIMEOUT 10
+#define WEBCONFIG_QUEUE_NAME 	 		"/webconfig_queue"
+
+#define MAX_SIZE 				 1024
+
+#define MAX_EVENTS_IN_MQUEUE 	   		   50  
+#define QUEUE_SIZE 				   50
+
+
+#define DEFAULT_TIMEOUT_PER_ENTRY 		    3
+#define DEFAULT_TIMEOUT 		   	   10
 // Blob MAX execution timeout will be  MAX_FUNC_EXEC_TIMEOUT * TIMEOUT 
-#define MAX_FUNC_EXEC_TIMEOUT 3
+#define MAX_FUNC_EXEC_TIMEOUT 			    3
 
 // Default log interval and iterations
 
-#define DEFAULT_DEBUG_INTERVAL 10
-#define DEFAULT_DEBUG_ITER 12
-
-
-#define ROLLBACK_SUCCESS 	       0
-
-#define BLOB_EXEC_SUCCESS              200
-#define BLOB_EXECUTION_TIMEDOUT	       201
-#define NULL_BLOB_EXEC_POINTER 	       202
-#define SUBDOC_NOT_SUPPORTED 	       203
-#define MQUEUE_OPEN_FAILED	       204
-#define MQUEUE_SEND_FAILED	       205
-#define QUEUE_PUSH_FAILED	       206
-#define VALIDATION_FALIED	       207   // Return this error if rollback is not required
-
-#define INVALID_IP 		       208
-#define INVALID_PORT 		       209
-#define INVALID_PROTOCOL 	       210
-#define INVALID_MAC      	       211
-#define STATIC_IP_NOT_IN_LANRANGE  212
-#define LAN_PARAM_IP_RANGE_INVALID 213
-#define LAN_PARAM_NETMASK_INVALID  214
-#define COSA_SYNCHRONIZE_FAILED    215
-#define FILE_OPEN_ERROR                216
-#define LAN_PARAM_LEASETIME_INVALID    217
-#define LAN_PARAM_GATEWAY_IP_INVALID    218
-#define VALID_IP 		       0
-
-#define INVALID_DMZ_WAN_IP             6001
-
-#define SYSCFG_FAILURE                 1001
-#define SYSEVENT_FAILURE               1002
-#define MSG_QUEUE_POST_FAILURE         1003
-
-#define WIFI_HAL_FAILURE               2001
-#define WIFI_AP_ENABLE_HAL_FAILURE     2002
-
-#define ADVSEC_FAILURE                 3001
-#define MOCA_HAL_FAILURE               5001
-
+#define DEFAULT_DEBUG_INTERVAL                     10
+#define DEFAULT_DEBUG_ITER                         12
 
 typedef  enum
 _blob_exec_state
