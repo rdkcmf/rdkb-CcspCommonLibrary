@@ -109,6 +109,7 @@ extern volatile unsigned int FSC_RDKLogLevel;
 extern volatile unsigned int ETHAGENT_RDKLogLevel;
 extern volatile unsigned int WANAGENT_RDKLogLevel;
 extern volatile unsigned int TELCOVOIPAGENT_RDKLogLevel;
+extern volatile unsigned int XDNS_RDKLogLevel;
 
 /* Mesh Wifi log levels */
 extern volatile unsigned int MESH_RDKLogLevel;
@@ -135,6 +136,7 @@ extern volatile BOOL FSC_RDKLogEnable;
 extern volatile BOOL ETHAGENT_RDKLogEnable;
 extern volatile BOOL WANAGENT_RDKLogEnable;
 extern volatile BOOL TELCOVOIPAGENT_RDKLogEnable;
+extern volatile BOOL XDNS_RDKLogEnable;
 
 extern volatile unsigned int BLE_RDKLogLevel;
 extern volatile BOOL BLE_RDKLogEnable;
