@@ -148,7 +148,7 @@ typedef size_t
 	size_t
 	);
 
-void send_ACK (char *subdoc_name, uint16_t txid, uint32_t version, unsigned long timeout );
+void send_ACK (char *subdoc_name, uint16_t txid, uint32_t version, unsigned long timeout,char *msg );
 
 void send_NACK (char *subdoc_name, uint16_t txid, uint32_t version, uint16_t ErrCode,char *failureReason);
 
