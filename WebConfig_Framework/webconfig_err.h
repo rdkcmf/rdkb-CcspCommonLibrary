@@ -60,6 +60,11 @@
 
 #define INVALID_DMZ_WAN_IP              	6001
 
-
+#define MB_ERROR_PRECONDITION_FAILED            8001
+#define MB_ERROR_BRIDGE_MODE_ENABLED            8002
+#define MB_ERROR_RADIO_OFF                      8003
+#define MB_ERROR_BANDSTEERING_ENABLED           8004
+#define MB_ERROR_MESH_SERVICE_START_FAIL        8005
+#define MB_ERROR_MESH_SERVICE_STOP_FAIL         8006
 
 #endif /* _COSA_WEBCONFIG_ERROR_API_H */
