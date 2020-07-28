@@ -4646,7 +4646,7 @@ int CcspBaseIf_Register_Event_rbus
         return CCSP_FAILURE;
     }
 
-    err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, bus_handle);
+    err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle);
 
     if (err != RTMESSAGE_BUS_SUCCESS)
     {
