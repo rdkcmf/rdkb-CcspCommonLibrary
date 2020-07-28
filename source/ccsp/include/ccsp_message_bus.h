@@ -228,6 +228,8 @@ typedef struct _CCSP_MESSAGE_BUS_CB_DATA
 
 void CCSP_Msg_SleepInMilliSeconds(int milliSecond);
 
+int  CCSP_Msg_IsRbus_enabled(void);
+
 /*if mallocfunc, freefunc,config_file is NULL, default value will be used */
 int CCSP_Message_Bus_Init
 (

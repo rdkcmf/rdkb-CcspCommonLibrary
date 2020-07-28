@@ -89,6 +89,8 @@ Notes:
 #define CCSP_PARAMETER_VALUE_CHANGE_SIGNAL  "parameterValueChangeSignal"
 #define CCSP_SYSTEM_REBOOT_SIGNAL           "systemRebootSignal"
 
+#define METHOD_REGISTERCAPABILITIES         "registerCapabilities"
+#define METHOD_ISSYSTEMREADY                "isSystemReady"
 #define METHOD_GETHEALTH                    "METHOD_GETHEALTH"
 
 #define CCSP_COMPONENT_ID_WebUI    0x00000001
@@ -1022,6 +1024,12 @@ typedef void (*CCSPBASEIF_WEBCONFIGSIGNAL )(
     void* user1_data
 );
 
+typedef void (*CCSPBASEIF_REGISTERCAPS)(
+    char* component_name,
+    void* user_data
+);
+
+typedef int (*CCSPBASEIF_GETSYSTEMSTATUS)();
 typedef int (*CCSPBASEIF_GETHEEALTH)();
 
 typedef int (*CCSPPAIF_RESTARTBOOTSTRAP)( 
@@ -1106,6 +1114,12 @@ typedef struct _CCSP_Base_Func_CB
     void *                                         systemRebootSignal_data;  
     CCSPBASEIF_WEBCONFIGSIGNAL                     webconfigSignal;
     void *                                         webconfigSignal_data;
+
+    CCSPBASEIF_REGISTERCAPS                        registerCaps;
+    void *                                         registerCaps_data;
+
+    CCSPBASEIF_GETSYSTEMSTATUS                     isSystemReady;
+    void *                                         isSystemReady_data;
 } CCSP_Base_Func_CB;
 
 /*
