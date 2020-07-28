@@ -1903,6 +1903,7 @@ int CcspBaseIf_registerCapabilities_rbus(
         )
 {
     int i = 0;
+    int ret = CCSP_SUCCESS;
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
 
     for(i = 0; i < size; i++)
@@ -1913,7 +1914,21 @@ int CcspBaseIf_registerCapabilities_rbus(
         }
     }
 
-    return CCSP_SUCCESS;
+    {
+        rtMessage request, response;
+
+        CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+
+        rtMessage_Create(&request);
+        rbus_AppendString(request, component_name);
+        RBUS_LOG("%s : object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, METHOD_REGISTERCAPABILITIES);
+        if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_REGISTERCAPABILITIES, request, 1000, &response))) != CCSP_Message_Bus_OK)
+        {
+            RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s for %s returns with Err: %d\n", __FUNCTION__, METHOD_REGISTERCAPABILITIES, component_name, ret);
+            ret = CCSP_FAILURE;
+        }
+    }
+    return ret;
 }
 
 int CcspBaseIf_registerCapabilities(
@@ -3128,6 +3143,7 @@ int CcspBaseIf_dumpComponentRegistry (
 
 }
 
+#if 0
 void update_component_info(component_info *compInfo)
 {
     ANSC_HANDLE                     pFileHandle        = NULL;
@@ -3239,6 +3255,7 @@ void update_component_info(component_info *compInfo)
         pXmlNode->Remove(pXmlNode);
     }
 }
+#endif
 
 int CcspBaseIf_isSystemReady_rbus(
     void* bus_handle,
@@ -3247,8 +3264,16 @@ int CcspBaseIf_isSystemReady_rbus(
     )
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    int ret = CCSP_SUCCESS;
+
+    /* The below code maintains a static struture in all the components that
+     * links to Ccsp Common library; this is not a right approach; hence moved
+     * the support to CR itself but with limited capability
+     */
+#if 0
     static component_info *compInfo = NULL;
     *val = 0;
+
     // Read the Device Profile file
     if(compInfo == NULL)
     {
@@ -3283,8 +3308,23 @@ int CcspBaseIf_isSystemReady_rbus(
         RBUS_LOG("Successfully exiting CcspBaseIf_isSystemReady_rbus\n");
         *val = 1;
     }
+#else
+    rtMessage response;
 
-    return CCSP_SUCCESS;
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_ISSYSTEMREADY, NULL, 1000, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s s returns with Err: %d\n", __FUNCTION__, METHOD_ISSYSTEMREADY, ret);
+        ret = CCSP_FAILURE;
+    }
+    else
+    {
+        int isReady = 0;
+        rbus_PopInt32(response, &isReady);
+        *val = isReady;
+        rtMessage_Release(response);
+    }
+#endif
+    return ret;
 }
 
 int CcspBaseIf_isSystemReady (
@@ -4558,7 +4598,7 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
     else if(strcmp(event_name, "parameterValueChangeSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
-    else if(strcmp(event_name, "currentSessionIDSignal") == 0 || strcmp(event_name, "deviceProfileChangeSignal") == 0)
+    else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
     else if( strcmp(event_name, "webconfigsignal") == 0)
         comp = "ccsp.webconfignotify";
