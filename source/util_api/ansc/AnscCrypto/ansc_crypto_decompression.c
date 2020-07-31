@@ -278,6 +278,9 @@ AnscCryptoOutDecompress
         PULONG                      pOutSize
     )
 {
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(pOutSize);
     return  size;
 }
 
@@ -328,6 +331,9 @@ AnscCryptoDeflateDecompress
         PULONG                      pOutSize
     )
 {
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(pOutSize);
     return  size;
 }
 
@@ -494,6 +500,9 @@ AnscCryptoV42bisDecompress
         PULONG                      pOutSize
     )
 {
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(pOutSize);
     return  size;
 }
 
@@ -543,7 +552,6 @@ AnscCryptoZlibDecompress
         PULONG                      pOutSize
     )
 {
-
 #ifndef _NO_ANSC_ZLIB_
 
     LONG                            errCode;
@@ -560,8 +568,12 @@ AnscCryptoZlibDecompress
         return ANSC_STATUS_FAILURE;
     }
 
+#else
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(pOutSize);
 #endif
-
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -611,7 +623,6 @@ AnscCryptoGzipDecompress
         PULONG                      pOutSize
     )
 {
-
 #ifdef _ANSC_GZIP_USED_
 
     ULONG                           plainLen   = 0;
@@ -654,6 +665,11 @@ AnscCryptoGzipDecompress
     *pOutSize = plainLen;
 
 #else
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(pOutSize);
+
     AnscTrace("WARNING: GZIP is disabled!!!\n");
 #endif
 

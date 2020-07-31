@@ -112,9 +112,7 @@ HttpFcoGetFormElement
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject     = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_FORM_ELEMENT              pFormElement  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulHashIndex   = AnscHashString(name, AnscSizeOfString(name), HTTP_FCO_FEO_TABLE_SIZE);
@@ -177,9 +175,7 @@ HttpFcoAddFormElement
         ANSC_HANDLE                 hFeo
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject     = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_FORM_ELEMENT              pFormElement  = (PHTTP_FORM_ELEMENT       )hFeo;
     ULONG                           ulHashIndex   = 0;
 
@@ -237,9 +233,7 @@ HttpFcoDelFormElement
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject     = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_FORM_ELEMENT              pFormElement  = NULL;
     ULONG                           ulHashIndex   = 0;
 
@@ -297,11 +291,7 @@ HttpFcoDelAllFeos
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject     = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
-    PHTTP_FORM_ELEMENT              pFormElement  = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           i             = 0;
 
     for ( i = 0; i < HTTP_FCO_FEO_TABLE_SIZE; i++ )

@@ -112,7 +112,7 @@ HTTP_FUM_ENTITY, *PHTTP_FUM_ENTITY;
                 );                                                          \
         if ( pEntity )                                                      \
         {                                                                   \
-            pEntity->pUri   = AnscCloneString(pReqUri);                     \
+            pEntity->pUri   = (PUCHAR)AnscCloneString(pReqUri);                     \
             pEntity->hMdhIf = hIf;                                          \
         }                                                                   \
     } while (0)

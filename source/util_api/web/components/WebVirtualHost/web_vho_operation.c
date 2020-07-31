@@ -111,7 +111,6 @@ WebVhoAcquireAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     AnscAcquireLock(&pMyObject->SyncLock);
 
@@ -151,7 +150,6 @@ WebVhoReleaseAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     AnscReleaseLock(&pMyObject->SyncLock);
 
@@ -191,7 +189,6 @@ WebVhoEngage
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY   )&pMyObject->Property;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT )pMyObject->hResourceLocator;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo      = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
 
@@ -246,7 +243,6 @@ WebVhoCancel
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY   )&pMyObject->Property;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT )pMyObject->hResourceLocator;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo      = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
 
@@ -302,7 +298,6 @@ WebVhoMatchName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -350,10 +345,7 @@ WebVhoSessionTdoInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -406,8 +398,7 @@ WebVhoSessionTdoInvoke
 
                 pSession->AcquireAccess((ANSC_HANDLE)pSession);
 
-                returnStatus =
-                    pLsmIf->ExpireSession
+                pLsmIf->ExpireSession
                         (
                             pLsmIf->hOwnerContext,
                             (ANSC_HANDLE)pSession

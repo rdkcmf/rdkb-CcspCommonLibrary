@@ -99,7 +99,6 @@ BreeSpoReaderRead
     )
 {
     PBREESPO_READER_OBJECT          pMyObject = (PBREESPO_READER_OBJECT)hThisObject;
-    ULONG                           ulRead    = ulSize;
 
     if (pMyObject->bExternalSource || !pMyObject->pContent)
     {
@@ -168,7 +167,8 @@ BreeSpoReaderOpenExternal
         char                        *pName
     )
 {
-    PBREESPO_READER_OBJECT          pMyObject = (PBREESPO_READER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return ANSC_STATUS_NOT_SUPPORTED;
 }
@@ -185,7 +185,7 @@ BreeSpoReaderOpenInternal
 {
     PBREESPO_READER_OBJECT          pMyObject = (PBREESPO_READER_OBJECT)hThisObject;
 
-    pMyObject->pName            = AnscDupString(pName);
+    pMyObject->pName            = (char *)AnscDupString((PUCHAR)pName);
     pMyObject->pContent         = pContent;
     pMyObject->ulContentSize    = ulContentLen;
     pMyObject->ulCursor         = 0;

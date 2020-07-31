@@ -117,7 +117,6 @@ Bmc2ReqcoAddControlCommand
         ANSC_HANDLE                 hCommand
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject       = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_CONTROL_COMMAND     pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)hCommand;
 
@@ -227,7 +226,6 @@ Bmc2ReqcoPopControlCommand
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject       = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_CONTROL_COMMAND     pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY         )NULL;
@@ -275,7 +273,6 @@ Bmc2ReqcoClearCcoQueue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject       = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_CONTROL_COMMAND     pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY         )NULL;
@@ -334,7 +331,6 @@ Bmc2ReqcoGetObjReference
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject     = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_OBJ_REFERENCE       pObjReference = (PBMC2_REQCO_OBJ_REFERENCE  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
@@ -403,10 +399,8 @@ Bmc2ReqcoAddObjReference
         ANSC_HANDLE                 hObjReference
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject     = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_OBJ_REFERENCE       pObjReference = (PBMC2_REQCO_OBJ_REFERENCE  )hObjReference;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
     ULONG                           ulHashIndex   = AnscHashString(pObjReference->ObjName, AnscSizeOfString(pObjReference->ObjName), BMC2_REQCO_ORO_TABLE_SIZE);
 
     AnscAcquireLock   (&pMyObject->OroTableLock);
@@ -470,8 +464,7 @@ Bmc2ReqcoAddObjReference2
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject     = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_OBJ_REFERENCE       pObjReference = (PBMC2_REQCO_OBJ_REFERENCE  )NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
-    ULONG                           ulHashIndex   = AnscHashString(obj_name, AnscSizeOfString(obj_name), BMC2_REQCO_ORO_TABLE_SIZE);
+    AnscHashString(obj_name, AnscSizeOfString(obj_name), BMC2_REQCO_ORO_TABLE_SIZE);
 
     pObjReference = (PBMC2_REQCO_OBJ_REFERENCE)AnscAllocateMemory(sizeof(BMC2_REQCO_OBJ_REFERENCE));
 
@@ -534,7 +527,6 @@ Bmc2ReqcoDelObjReference
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
@@ -609,7 +601,6 @@ Bmc2ReqcoClearOroTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);

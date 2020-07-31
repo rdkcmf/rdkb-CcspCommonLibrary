@@ -117,8 +117,6 @@ AnscCreateBrokerEngineTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pBrokerEngineTcp = NULL;
 
     return  AnscBetoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

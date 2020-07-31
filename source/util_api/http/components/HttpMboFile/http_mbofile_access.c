@@ -111,9 +111,7 @@ HttpMboFileGetTransferSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
     ANSC_HANDLE                     hFile        = (ANSC_HANDLE          )NULL;
     ULONG                           ulFileSize   = 0;
     ULONG                           ulBodySize   = 0;
@@ -201,9 +199,7 @@ HttpMboFileAppendBodyBdo
         ANSC_HANDLE                 hBdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT  )hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE    )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = (PANSC_BUFFER_DESCRIPTOR)hBdo;
 
     AnscFreeBdo(pBodyBdo);
@@ -259,10 +255,8 @@ HttpMboFileAppendBodyFile
         int                         iRangeTo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
-
+    
     pMyObject->ClearBody((ANSC_HANDLE)pMyObject);
 
     if ( pFileName )
@@ -307,10 +301,8 @@ HttpMboFileClearBody
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
-
+    
     if ( pMyObject->FileName )
     {
         AnscFreeMemory(pMyObject->FileName);
@@ -369,11 +361,8 @@ HttpMboFileCopyBodyFrom
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
     ANSC_HANDLE                     hFile        = (ANSC_HANDLE          )NULL;
-    ULONG                           ulFileSize   = 0;
     ULONG                           ulCopySize   = 0;
 
     if ( !pMyObject->FileName )
@@ -415,8 +404,7 @@ HttpMboFileCopyBodyFrom
         AnscSeekFile(hFile, (ULONG)pMyObject->RangeFrom, ANSC_FILE_SEEK_SET);
 
         *pulSize     = ulCopySize;
-        returnStatus =
-            AnscReadFile
+        AnscReadFile
                 (
                     hFile,
                     buffer,
@@ -474,11 +462,9 @@ HttpMboFileCopyBodyInto
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
-
-    *pulSize = 0;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(pulSize);
 
     return  ANSC_STATUS_NOT_SUPPORTED;
 }
@@ -525,9 +511,9 @@ HttpMboFileSaveAsBody
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
 
     return  ANSC_STATUS_NOT_SUPPORTED;
 }
@@ -573,9 +559,9 @@ HttpMboFileSaveBodyAsFile
         BOOL                        bFlushBody
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_FILE_OBJECT           pMyObject    = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(file_name);
+    UNREFERENCED_PARAMETER(bFlushBody);
 
     return  ANSC_STATUS_NOT_SUPPORTED;
 }

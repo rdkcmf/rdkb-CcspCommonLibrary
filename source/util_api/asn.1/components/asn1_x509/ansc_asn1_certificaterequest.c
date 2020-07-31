@@ -187,7 +187,7 @@ AnscAsn1CreateCertificateRequest
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_CERTIFICATEREQUEST   pThisObject  = NULL;
 
     /*
@@ -364,6 +364,8 @@ AnscAsn1CertificateRequestCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -379,7 +381,7 @@ AnscAsn1CertificateRequestGetChildName
 {
 
 #ifndef _PKI_KERNEL
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -505,7 +507,6 @@ AnscAsn1PKCS10SetPublicKeyInfo
     )
 {
     PANSC_ASN1_CERTIFICATEREQUEST   pThisObject     = (PANSC_ASN1_CERTIFICATEREQUEST)hThisObject;
-    PANSC_ASN1_SUBJECTPUBLICKEYINFO pNewKeyInfo     = (PANSC_ASN1_SUBJECTPUBLICKEYINFO)hKeyHandle;
     PANSC_ASN1_OBJECT               pKeyObj         = (PANSC_ASN1_OBJECT)hKeyHandle;
     PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo;
     PANSC_ASN1_CERTIFICATIONREQUESTINFO
@@ -674,6 +675,7 @@ AnscAsn1PKCS10AfterDecoding
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_CERTIFICATEREQUEST   pThisObject  = (PANSC_ASN1_CERTIFICATEREQUEST)hThisObject;
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
@@ -852,7 +854,7 @@ AnscAsn1PKCS10InitName
         pPrintable->SetStringValue
             (
                 pPrintable, 
-                pNameValue,
+                (PUCHAR)pNameValue,
                 AnscSizeOfString(pNameValue)
             );
 
@@ -1273,7 +1275,7 @@ AnscAsn1CreateCertificationRequestInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_OBJECT               pChild;
     PANSC_ASN1_CERTIFICATIONREQUESTINFO 
                                     pThisObject  = NULL;
@@ -1401,6 +1403,7 @@ AnscAsn1CertificationRequestInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1436,7 +1439,7 @@ AnscAsn1CertificationRequestInfoGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:

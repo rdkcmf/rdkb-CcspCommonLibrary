@@ -227,6 +227,7 @@ HttpSmpoParseAcceptCharset
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Accept-Charset = "Accept-Charset" ":" 1#( charset [";" "q" "=" qvalue] ) */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -280,7 +281,7 @@ HttpSmpoParseAcceptCharset
             
             pCharset->Type  = HttpSmpoUtilGetCharsetType(pToken, ulLen);
 
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -360,6 +361,7 @@ HttpSmpoParseAcceptEncoding
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Accept-Encoding = "Accept-Encoding" ":" 1#( codings [ ";" "q" "=" qvalue ] ) */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -413,7 +415,7 @@ HttpSmpoParseAcceptEncoding
             
             pEncoding->Type  = HttpSmpoUtilGetEncodingType(pToken, ulLen);
 
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -493,6 +495,7 @@ HttpSmpoParseAcceptLanguage
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Accept-Language = "Accept-Language" ":" 1#( language-range [";" "q" "=" qvalue] ) */
     /* language-range = ( ( 1*8ALPHA *( "-" 1*8ALPHA ) ) | "*" ) */
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -548,7 +551,7 @@ HttpSmpoParseAcceptLanguage
             HttpSmpoUtilCopyHeaderString(pToken, ulLen, pLanguage->Tag, HTTP_MAX_LANGUAGE_TAG_SIZE);
             
             /* Quality */
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
 
             if (pQuality >= pToken + ulTokenSize)
@@ -629,6 +632,7 @@ HttpSmpoParseAcceptRanges
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Accept-Ranges = "Accept-Ranges" ":" acceptable-ranges */
     /* acceptable-ranges = 1#range-unit | "none" */
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -723,10 +727,11 @@ HttpSmpoParseAge
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
+    UNREFERENCED_PARAMETER(ulSize);
     /* Age = "Age" ":" age-value */
     /* age-value = delta-seconds */
 
-    PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_AGE                   pHfoAge     = NULL;
 
     pHfoAge  = (PHTTP_HFO_AGE)AnscAllocateMemory(sizeof(HTTP_HFO_AGE));
@@ -780,6 +785,7 @@ HttpSmpoParseAllow
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Allow = "Allow" ":" 1#Method */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -930,6 +936,7 @@ HttpSmpoParseCacheControl
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_CACHE_CONTROL         pHfoCacheCtrl   = NULL;
 
@@ -990,12 +997,12 @@ HttpSmpoParseConnection
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_CONNECTION            pHfoConnection  = (PHTTP_HFO_CONNECTION)NULL;
     PUCHAR                          pLast           = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex    = 0;
     PHTTP_CONNECTION_TOKEN          pConnToken;
     ULONG                           ulTokenType;
 
@@ -1040,12 +1047,12 @@ HttpSmpoParseConnection
 
             ulTokenType = IANA_CONNECTION_CODE_RESERVED;
 
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_CLOSE;
             }
             else
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_KEEP_ALIVE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_KEEP_ALIVE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_KEEP_ALIVE;
             }
@@ -1108,6 +1115,7 @@ HttpSmpoParseContentEncoding
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Content-Encoding = "Content-Encoding" ":" 1#content-coding */
     /* content-coding = token  */
 
@@ -1162,7 +1170,7 @@ HttpSmpoParseContentEncoding
             
             pEncoding->Type  = HttpSmpoUtilGetEncodingType(pToken, ulLen);
 
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -1242,6 +1250,7 @@ HttpSmpoParseContentLanguage
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Content-Language = "Content-Language" ":" 1#language-tag */
     /* language-tag = primary-tag *( "-" subtag ) */
 
@@ -1298,7 +1307,7 @@ HttpSmpoParseContentLanguage
             HttpSmpoUtilCopyHeaderString(pToken, ulLen, pLanguage->Tag, HTTP_MAX_LANGUAGE_TAG_SIZE);
             
             /* Quality */
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -1378,9 +1387,10 @@ HttpSmpoParseContentLength
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
+    UNREFERENCED_PARAMETER(ulSize);
     /* Content-Length = "Content-Length" ":" 1*DIGIT */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_CONTENT_LENGTH        pHfoContentLength   = NULL;
 
     pHfoContentLength  = (PHTTP_HFO_CONTENT_LENGTH)AnscAllocateMemory(sizeof(HTTP_HFO_CONTENT_LENGTH));
@@ -1436,7 +1446,6 @@ HttpSmpoParseContentLocation
 {
     /* Content-Location = "Content-Location" ":" ( absoluteURI | relativeURI ) */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_CONTENT_LOCATION      pHfoContentLocation = NULL;
     BOOL                            bSucc               = TRUE;
 
@@ -1516,6 +1525,7 @@ HttpSmpoParseContentMD5
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_CONTENT_MD5           pHfoContentMd5  = NULL;
 
@@ -1527,7 +1537,7 @@ HttpSmpoParseContentMD5
             (
                 pMsg,
                 ulSize,
-                pHfoContentMd5->Digest,
+                (char *)pHfoContentMd5->Digest,
                 ANSC_MD5_OUTPUT_SIZE
             );
     }
@@ -1576,14 +1586,13 @@ HttpSmpoParseContentRange
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Content-Range = "Content-Range" ":" content-range-spec */
     /* content-range-spec = byte-content-range-spec */
     /* byte-content-range-spec = bytes-unit SP first-byte-pos "-" last-byte-pos "/" entity-length */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_CONTENT_RANGE         pHfoContentRange    = NULL;
     PUCHAR                          pToken              = (PUCHAR)pBuf;
-    PUCHAR                          pLast               = pToken + ulSize - 1;
     PUCHAR                          pNext;
     PUCHAR                          pEntityLen;
 
@@ -1606,14 +1615,14 @@ HttpSmpoParseContentRange
             else
             {
                 pToken ++;
-                pHfoContentRange->FirstBytePos  = _ansc_atoi(pToken);
+                pHfoContentRange->FirstBytePos  = _ansc_atoi((const char *)pToken);
 
                 pNext ++;
-                pHfoContentRange->LastBytePos   = _ansc_atoi(pNext);
+                pHfoContentRange->LastBytePos   = _ansc_atoi((const char *)pNext);
             }
 
             pEntityLen ++;
-            pHfoContentRange->InstaceLength     = _ansc_atoi(pEntityLen);
+            pHfoContentRange->InstaceLength     = _ansc_atoi((const char *)pEntityLen);
         }
         else
         {
@@ -1769,7 +1778,7 @@ HttpSmpoParseDate
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pMsg        = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_HFO_DATE                  pHfoDate    = NULL;
     PHTTP_DATE                      pDate       = NULL;
     BOOL                            bSucc       = TRUE;
@@ -1839,6 +1848,7 @@ HttpSmpoParseETag
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* ETag = "ETag" ":" entity-tag */
     /* entity-tag = [weak] opaque-tag */
     /* weak = "W/" */
@@ -1914,6 +1924,7 @@ HttpSmpoParseExpect
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Expect = "Expect" ":" 1#expectation */
     /* expectation = "100-continue" | expectation-extension */
     /* expectation-extension = token [ "=" ( token | quoted-string ) *expect-params ] */
@@ -2025,7 +2036,7 @@ HttpSmpoParseExpires
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pMsg        = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_HFO_EXPIRES               pHfoExpires = NULL;
     PHTTP_DATE                      pDate       = NULL;
     BOOL                            bSucc       = TRUE;
@@ -2100,9 +2111,7 @@ HttpSmpoParseFrom
     /* addr-spec   =  local-part "@" domain */
     /* route-addr  =  "<" [route] addr-spec ">" */
 
-    PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_FROM                  pHfoFrom    = NULL;
-    PHTTP_DATE                      pDate       = NULL;
     BOOL                            bSucc       = TRUE;
 
     pHfoFrom    = (PHTTP_HFO_FROM)AnscAllocateMemory(sizeof(HTTP_HFO_FROM));
@@ -2162,13 +2171,12 @@ HttpSmpoParseHost
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Host = "Host" ":" host [":" port] */
 
     PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_HOST                  pHfoHost    = NULL;
-    BOOL                            bSucc       = TRUE;
     PUCHAR                          pToken      = pMsg;
-    PUCHAR                          pLast       = pMsg + ulSize - 1;
     PUCHAR                          pPort;
     ULONG                           ulTokenSize;
 
@@ -2198,7 +2206,7 @@ HttpSmpoParseHost
         else
         {
             pPort ++;
-            pHfoHost->HostPort  = _ansc_atoi(pPort);
+            pHfoHost->HostPort  = _ansc_atoi((const char *)pPort);
         }
     }
 
@@ -2246,12 +2254,12 @@ HttpSmpoParseIfMatch
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* If-Match = "If-Match" ":" ( "*" | 1#entity-tag ) */
     /* entity-tag = [weak] opaque-tag */
 
     PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_IF_MATCH              pHfoIfMatch = NULL;
-    BOOL                            bSucc       = TRUE;
     PUCHAR                          pToken      = pMsg;
     PUCHAR                          pLast       = pMsg + ulSize - 1;
     PHTTP_ENTITY_TAG                pEntityTag;
@@ -2350,7 +2358,7 @@ HttpSmpoParseIfModifiedSince
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_HFO_IF_MODIFIED_SINCE     pHfoIfModifiedSince = NULL;
     PHTTP_DATE                      pDate               = NULL;
     BOOL                            bSucc               = TRUE;
@@ -2420,12 +2428,12 @@ HttpSmpoParseIfNoneMatch
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* If-Match = "If-Match" ":" ( "*" | 1#entity-tag ) */
     /* entity-tag = [weak] opaque-tag */
 
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_IF_NONE_MATCH         pHfoIfNoneMatch = NULL;
-    BOOL                            bSucc           = TRUE;
     PUCHAR                          pToken          = pMsg;
     PUCHAR                          pLast           = pMsg + ulSize - 1;
     PHTTP_ENTITY_TAG                pEntityTag;
@@ -2524,6 +2532,7 @@ HttpSmpoParseIfRange
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* If-Range = "If-Range" ":" ( entity-tag | HTTP-date ) */
 
     PUCHAR                          pMsg        = (PUCHAR)pBuf;
@@ -2615,7 +2624,7 @@ HttpSmpoParseIfUnmodifiedSince
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pMsg                    = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_HFO_IF_UNMODIFIED_SINCE   pHfoIfUnmodifiedSince   = NULL;
     PHTTP_DATE                      pDate                   = NULL;
     BOOL                            bSucc                   = TRUE;
@@ -2685,7 +2694,7 @@ HttpSmpoParseLastModified
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pMsg                    = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_HFO_LAST_MODIFIED         pHfoLastModified        = NULL;
     PHTTP_DATE                      pDate                   = NULL;
     BOOL                            bSucc                   = TRUE;
@@ -2757,7 +2766,6 @@ HttpSmpoParseLocation
 {
     /* Location = "Location" ":" absoluteURI */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_LOCATION              pHfoLocation        = NULL;
     BOOL                            bSucc               = TRUE;
 
@@ -2825,9 +2833,10 @@ HttpSmpoParseMaxForwards
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
+    UNREFERENCED_PARAMETER(ulSize);
     /* Max-Forwards = "Max-Forwards" ":" 1*DIGIT */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_MAX_FORWARDS          pHfoMaxForwards     = NULL;
 
     pHfoMaxForwards  = (PHTTP_HFO_MAX_FORWARDS)AnscAllocateMemory(sizeof(HTTP_HFO_MAX_FORWARDS));
@@ -2881,6 +2890,7 @@ HttpSmpoParsePragma
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_PRAGMA                pHfoPragma  = NULL;
 
@@ -3099,6 +3109,7 @@ HttpSmpoParseRange
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Range = "Range" ":" ranges-specifier */
     /* ranges-specifier = byte-ranges-specifier */
     /* byte-ranges-specifier = bytes-unit "=" byte-range-set */
@@ -3156,7 +3167,7 @@ HttpSmpoParseRange
             else
             {
                 pHfoRange->bFbpPresent  = TRUE;
-                pHfoRange->FirstBytePos  = _ansc_atoi(pToken);
+                pHfoRange->FirstBytePos  = _ansc_atoi((const char *)pToken);
             }
 
             pToken  = pHyphen + 1;
@@ -3184,7 +3195,7 @@ HttpSmpoParseRange
             else
             {
                 pHfoRange->bLbpPresent  = TRUE;
-                pHfoRange->LastBytePos  = _ansc_atoi(pToken);
+                pHfoRange->LastBytePos  = _ansc_atoi((const char *)pToken);
             }
 
             if (pNext)
@@ -3244,7 +3255,6 @@ HttpSmpoParseReferer
 {
     /* Referer = "Referer" ":" ( absoluteURI | relativeURI ) */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_REFERER               pHfoReferer         = NULL;
     BOOL                            bSucc               = TRUE;
 
@@ -3324,6 +3334,7 @@ HttpSmpoParseRetryAfter
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Retry-After = "Retry-After" ":" ( HTTP-date | delta-seconds ) */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -3353,7 +3364,7 @@ HttpSmpoParseRetryAfter
         {
             pHfoRetryAfter->bDateUsed   = FALSE;
 
-            pHfoRetryAfter->DeltaSeconds    = _ansc_atoi(pMsg);
+            pHfoRetryAfter->DeltaSeconds    = _ansc_atoi((const char *)pMsg);
         }
     }
 
@@ -3401,6 +3412,7 @@ HttpSmpoParseServer
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_SERVER                pHfoServer      = NULL;
 
@@ -3461,6 +3473,7 @@ HttpSmpoParseTE
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* TE = "TE" ":" #(t-codings) */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -3514,7 +3527,7 @@ HttpSmpoParseTE
             
             pEncoding->Type  = HttpSmpoUtilGetTransferEncoding(pToken, ulLen);
 
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((const char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -3698,6 +3711,7 @@ HttpSmpoParseTransferEncoding
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Transfer-Encoding = "Transfer-Encoding" ":" 1#transfer-coding */
 
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
@@ -3791,6 +3805,7 @@ HttpSmpoParseUpgrade
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_UPGRADE               pHfoUpgrade     = NULL;
 
@@ -3851,6 +3866,7 @@ HttpSmpoParseUserAgent
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg            = (PUCHAR)pBuf;
     PHTTP_HFO_USER_AGENT            pHfoUserAgent   = NULL;
 
@@ -4015,6 +4031,7 @@ HttpSmpoParseVia
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Via = "Via" ":" 1#( received-protocol received-by [comment] ) */
     /* received-protocol = [protocol-name "/"] protocol-version */
     /* received-by = ( host [":" port] ) | pseudonym  */
@@ -4034,7 +4051,6 @@ HttpSmpoParseVia
     PUCHAR                          pHost;
     ULONG                           ulHost;
     PUCHAR                          pPort;
-    ULONG                           ulPort;
 
     pHfoVia  = (PHTTP_HFO_VIA)AnscAllocateMemory(sizeof(HTTP_HFO_VIA));
 
@@ -4108,7 +4124,6 @@ HttpSmpoParseVia
                     ulHost  = pPort - pHost + 1;
 
                     pPort ++;
-                    ulPort  = pNext - pPort;
                 }
                 else
                 {
@@ -4123,7 +4138,7 @@ HttpSmpoParseVia
 
                 if (pPort)
                 {
-                    pHop->HostPort  = _ansc_atoi(pPort);
+                    pHop->HostPort  = _ansc_atoi((const char *)pPort);
                 }
                 else
                 {
@@ -4186,6 +4201,7 @@ HttpSmpoParseWarning
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Warning = "Warning" ":" 1#warning-value */
     /* warning-value = warn-code SP warn-agent SP warn-text */
 
@@ -4200,7 +4216,6 @@ HttpSmpoParseWarning
     PUCHAR                          pHost;
     ULONG                           ulHost;
     PUCHAR                          pPort;
-    ULONG                           ulPort;
 
     pHfoWarning  = (PHTTP_HFO_WARNING)AnscAllocateMemory(sizeof(HTTP_HFO_WARNING));
 
@@ -4219,7 +4234,7 @@ HttpSmpoParseWarning
 
             /* code */
             pToken  = HttpSmpoUtilLinearWhiteSpace(pToken, pLast - pToken + 1);
-            pWarning->Code  = _ansc_atoi(pToken);
+            pWarning->Code  = _ansc_atoi((const char *)pToken);
 
             pNext   = _ansc_memchr(pToken, HTTP_SMPO_CHAR_COMMA, pLast - pToken + 1);
 
@@ -4303,7 +4318,6 @@ HttpSmpoParseWarning
                 ulHost  = pPort - pHost;
 
                 pPort ++;
-                ulPort  = pNext - pPort;
             }
             else
             {
@@ -4323,7 +4337,7 @@ HttpSmpoParseWarning
 
             if (pPort)
             {
-                pWarning->HostPort  = _ansc_atoi(pPort);
+                pWarning->HostPort  = _ansc_atoi((const char *)pPort);
             }
             else
             {
@@ -4484,12 +4498,12 @@ HttpSmpoParseProxyConnection
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_PROXY_CONNECTION      pHfoProxyConnection = (PHTTP_HFO_PROXY_CONNECTION)NULL;
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
     PHTTP_CONNECTION_TOKEN          pConnToken;
     ULONG                           ulTokenType;
 
@@ -4534,12 +4548,12 @@ HttpSmpoParseProxyConnection
 
             ulTokenType = IANA_CONNECTION_CODE_RESERVED;
 
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_CLOSE;
             }
             else
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_KEEP_ALIVE;
             }
@@ -4602,6 +4616,7 @@ HttpSmpoParseCookie
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value ) */
     /* cookie-version  =  "$Version" "=" value ( ";" | "," ) */
     /* cookie-value = cookie-name "=" cookie-name-value [";" cookie-path] [";" cookie-domain] */
@@ -4614,7 +4629,6 @@ HttpSmpoParseCookie
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
     PHTTP_COOKIE_CONTENT            pCookieContent;
     ULONG                           ulCount             = 0;
     PUCHAR                          pValue;
@@ -4681,25 +4695,25 @@ HttpSmpoParseCookie
 
         /* check the name */
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_VERSION) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, (char *)pName, ulLen, FALSE))
         {
             bVersionPresent = TRUE;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
@@ -4768,27 +4782,27 @@ HttpSmpoParseCookie
             bPort       = FALSE;
 
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_VERSION) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, (char *)pName, ulLen, FALSE))
             {
                 bVersion = TRUE;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, (char *)pName, ulLen, FALSE))
             {
                 bPath   = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
             {
                 bDomain = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, (char *)pName, ulLen, FALSE))
             {
                 bPort   = TRUE;
                 ulIndex --;
@@ -4824,7 +4838,7 @@ HttpSmpoParseCookie
                     {
                         pValue ++;
                     }
-                    pHfoCookie->CookieArray[0].Version = _ansc_atoi(pValue);
+                    pHfoCookie->CookieArray[0].Version = _ansc_atoi((const char *)pValue);
                 }
             }
             else
@@ -4955,6 +4969,7 @@ HttpSmpoParseSetCookie
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* Set-Cookie  = "Set-Cookie:" 1#Cookie-Entity */
     /* Cookie-Entity = cookie-name "=" cookie-name-value *(";" cookie-av) */
     /* cookie-name-value = cookie-name-value-token | quoted-string */
@@ -4974,7 +4989,6 @@ HttpSmpoParseSetCookie
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
     PHTTP_COOKIE_CONTENT            pCookieContent;
     ULONG                           ulCount             = 0;
     PUCHAR                          pValue;
@@ -5042,61 +5056,61 @@ HttpSmpoParseSetCookie
 
         /* check the name */
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_COMMENT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_DOMAIN) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_PORT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_PATH) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_SECURE) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_DISCARD) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_VERSION) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_EXPIRES) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
@@ -5177,70 +5191,70 @@ HttpSmpoParseSetCookie
             bVersion    = FALSE;
 
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_COMMENT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, (char *)pName, ulLen, FALSE))
             {
                 bComment    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, (char *)pName, ulLen, FALSE))
             {
                 bCommentUrl = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_DOMAIN) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
             {
                 bDomain     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_PORT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, (char *)pName, ulLen, FALSE))
             {
                 bPort       = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, (char *)pName, ulLen, FALSE))
             {
                 bMaxAge     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_PATH) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, (char *)pName, ulLen, FALSE))
             {
                 bPath       = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_SECURE) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, (char *)pName, ulLen, FALSE))
             {
                 bSecure     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_DISCARD) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, (char *)pName, ulLen, FALSE))
             {
                 bDiscard    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_VERSION) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, (char *)pName, ulLen, FALSE))
             {
                 bVersion    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_EXPIRES) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, (char *)pName, ulLen, FALSE))
             {
                 bExpires    = TRUE;
                 ulIndex --;
@@ -5339,7 +5353,7 @@ HttpSmpoParseSetCookie
             {
                 pValue ++;
 
-                pCookieContent->MaxAgeInSeconds = _ansc_atoi(pValue);
+                pCookieContent->MaxAgeInSeconds = _ansc_atoi((const char *)pValue);
             }
             else
             if (bVersion)
@@ -5351,7 +5365,7 @@ HttpSmpoParseSetCookie
                     pValue ++;
                 }
 
-                pCookieContent->Version = _ansc_atoi(pValue);
+                pCookieContent->Version = _ansc_atoi((const char *)pValue);
             }
             else
             if (bSecure)
@@ -5405,18 +5419,18 @@ HttpSmpoParseSetCookie
                         (
                             pDate, 
                             "%d-%3c-%d %d:%d:%d GMT",
-                            &pTime->DayOfMonth,
+                            (int *)&pTime->DayOfMonth,
                             mon,
-                            &pTime->Year,
-                            &pTime->Hour,
-                            &pTime->Minute,
-                            &pTime->Second
+                            (int *)&pTime->Year,
+                            (int *)&pTime->Hour,
+                            (int *)&pTime->Minute,
+                            (int *)&pTime->Second
                         );
 
                     pCookieContent->bPermanent = TRUE;
                 }
 
-                pTime->Month = HttpSmpoUtilGetMonth(mon, 3);
+                pTime->Month = HttpSmpoUtilGetMonth((PUCHAR)mon, 3);
 
                 if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SUNDAY, FALSE))
                     pTime->DayOfWeek = 0;
@@ -5510,9 +5524,11 @@ HttpSmpoParseCookie2
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(pBuf);
     /* Cookie2: $Version="1" */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_COOKIE2               pHfoCookie2         = (PHTTP_HFO_COOKIE2)NULL;
 
     pHfoCookie2 = (PHTTP_HFO_COOKIE2)AnscAllocateMemory(sizeof(HTTP_HFO_COOKIE2));

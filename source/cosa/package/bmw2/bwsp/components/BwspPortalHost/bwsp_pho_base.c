@@ -119,7 +119,7 @@ BwspPhoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_PORTAL_HOST_OBJECT        pMyObject    = NULL;
 
@@ -192,7 +192,7 @@ BwspPhoRemove
 
     WebVhoRemove((ANSC_HANDLE)pMyObject);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }
 
 
@@ -231,7 +231,7 @@ BwspPhoEnrollObjects
 
     WebVhoEnrollObjects((ANSC_HANDLE)pMyObject);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }
 
 
@@ -303,5 +303,5 @@ BwspPhoInitialize
      */
     pMyObject->ResetProperty((ANSC_HANDLE)pMyObject);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }

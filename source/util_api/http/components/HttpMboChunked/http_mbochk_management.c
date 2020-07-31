@@ -106,9 +106,7 @@ HttpMboChkClearChunkInfos
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_CHUNK_INFO                pChunkInfo   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -160,9 +158,7 @@ HttpMboChkGetCurChunkInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_CHUNK_INFO                pChunkInfo   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -226,8 +222,6 @@ HttpMboChkAddChunkInfo
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
-    PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PHTTP_CHUNK_INFO                pChunkInfo   = (PHTTP_CHUNK_INFO        )hChunkInfo;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp  = NULL;
 

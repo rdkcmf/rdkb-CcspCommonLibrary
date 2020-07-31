@@ -155,7 +155,6 @@ AnscSetTraceLevel_ansc
     )
 {
     int ansc_level = 0;
-    ANSC_TRACE_ID_CFG          IdCfg     = {0};
 
     if(traceLevel > CCSP_TRACE_LEVEL_DEBUG) traceLevel = CCSP_TRACE_LEVEL_DEBUG;
     else if(traceLevel < CCSP_TRACE_LEVEL_ALERT) traceLevel = CCSP_TRACE_LEVEL_ALERT;
@@ -413,7 +412,7 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogEnable = RDKLogEnable;
         }
         /*if( level<=RDKLogLevel)*/
-        if((level<=LogLevel)&&(LogEnable == TRUE))
+        if(((unsigned int)level<=LogLevel)&&(LogEnable == TRUE))
         {
             /*  if ( level <= g_iTraceLevel)                */
             if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))

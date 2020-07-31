@@ -97,7 +97,7 @@
 
 extern  PDSLH_DATAMODEL_AGENT_OBJECT         g_DslhDataModelAgent;
 
-static const char* msg_path = "/com/cisco/spvtg/ccsp/EVENT" ;
+/*static const char* msg_path = "/com/cisco/spvtg/ccsp/EVENT" ;
 static const char* msg_interface = "com.cisco.spvtg.ccsp.EVENT" ;
 static const char* msg_method = "__send" ;
 static const char* Introspect_msg = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n"
@@ -122,11 +122,15 @@ static const char* Introspect_msg = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
                                     "  </interface>\n"
                                     "</node>\n"
                                     ;
+*/
 
+//unused func
+#if 0
 static DBusHandlerResult path_message_func (DBusConnection  *conn,
                                      DBusMessage     *message,
                                      void            *user_data)
 {
+    UNREFERENCED_PARAMETER(user_data);
     const char *interface = dbus_message_get_interface(message);
     const char *method   = dbus_message_get_member(message);
     DBusMessage *reply;
@@ -183,6 +187,7 @@ static DBusHandlerResult path_message_func (DBusConnection  *conn,
     dbus_message_unref (reply);
     return DBUS_HANDLER_RESULT_HANDLED;
 }
+#endif
 
 /**********************************************************************
 
@@ -206,7 +211,7 @@ static DBusHandlerResult path_message_func (DBusConnection  *conn,
 
 **********************************************************************/
 
-BOOL
+ANSC_STATUS
 COSANotifyValueChange
    (
        void*                       hDmlAgent,
@@ -228,7 +233,7 @@ COSANotifyValueChange
 
     if ( !pVarRecord )
     {
-        AnscTrace("Invalid or unknown parameter name '%s', failed in COSANotifyValueChange.\n");
+        AnscTrace("COSANotifyValueChange: Invalid or unknown parameter name: %s\n", pParamName);
 
         return ANSC_STATUS_FAILURE;
     }
@@ -263,8 +268,7 @@ COSANotifyDiagComplete
        void*                       hDmlAgent
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDmlAgent       = (PDSLH_DATAMODEL_AGENT_OBJECT)hDmlAgent;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pDslhDmlAgent->hDslhCpeController;
+    UNREFERENCED_PARAMETER(hDmlAgent);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
 
     return  (returnStatus == ANSC_STATUS_SUCCESS);        
@@ -305,9 +309,9 @@ COSAValidateHierarchyInterface
         ULONG                       uType
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDmlAgent       = (PDSLH_DATAMODEL_AGENT_OBJECT)hDmlAgent;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pDslhDmlAgent->hDslhCpeController;
-
+    UNREFERENCED_PARAMETER(hDmlAgent);
+    UNREFERENCED_PARAMETER(pHierarchName);
+    UNREFERENCED_PARAMETER(uType);
     return TRUE;
 }
 
@@ -732,7 +736,7 @@ COSASetParamValue
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
 
-    return (void*)pDslhMprIf->SetParamValue(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, pParamValue);
+    return pDslhMprIf->SetParamValue(pDslhMprIf->hOwnerContext, DSLH_MPA_ENTITY_Subscriber/*DSLH_MPA_ENTITY_ACS*/, pParamName, pParamValue);
 }
 
 
@@ -1134,12 +1138,12 @@ COSAGetParamValueByPathName
     char * dst_pathname    =  NULL;
     char * pSubsystem = COSAGetSubsystemPrefix2();
 
-    int i, ret, size1, size2, len;
+    int i, size1, size2, len;
+    int ret = 0;
 
     componentStruct_t ** ppComponents = NULL;
     parameterValStruct_t **parameterVal = NULL;
 
-    ANSC_STATUS returnStatus = ANSC_STATUS_SUCCESS;
 
     /*ANSC_HANDLE bus_handle;*/
 
@@ -1175,7 +1179,6 @@ COSAGetParamValueByPathName
     }
     else
     {
-        returnStatus = ANSC_STATUS_BAD_NAME;
 
         goto EXIT1;
     }
@@ -1194,11 +1197,10 @@ COSAGetParamValueByPathName
     {
         len = _ansc_strlen(parameterVal[0]->parameterValue);
 
-        if( *parameterValueLength < len )
+        if( (int)*parameterValueLength < len )
         {
             *parameterValueLength = len;
 
-            returnStatus = ANSC_STATUS_RESOURCES;
         }
 
         strcpy(val->parameterValue, parameterVal[0]->parameterValue);
@@ -1253,7 +1255,8 @@ COSASetParamValueByPathName
     char * pSubsystem = COSAGetSubsystemPrefix2();
     char * pFaultParameter = NULL;
 
-    int i, ret, size;
+    int i, size;
+    int ret = 0;
 
     componentStruct_t ** ppComponents = NULL;
 

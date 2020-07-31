@@ -116,8 +116,6 @@ SlapCreateObjAgent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent = NULL;
 
     return  SlapOaoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

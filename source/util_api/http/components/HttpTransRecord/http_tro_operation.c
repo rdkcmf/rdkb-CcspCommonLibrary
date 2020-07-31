@@ -109,13 +109,9 @@ HttpTroTerminate
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject      = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT   )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket  = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq        = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep        = (PHTTP_BMO_REP_OBJECT          )pMyObject->hBmoRep;
-
+    
     pMyObject->AcquireAccess((ANSC_HANDLE)pMyObject);
 
     if ( pClientSocket )
@@ -159,7 +155,6 @@ HttpTroOpen
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject      = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
     PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT   )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket  = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
@@ -243,7 +238,6 @@ HttpTroClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject      = (PHTTP_TRANS_RECORD_OBJECT  )hThisObject;
     PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq        = (PHTTP_BMO_REQ_OBJECT       )pMyObject->hBmoReq;
@@ -253,8 +247,7 @@ HttpTroClose
     {
         pMyObject->hBmoReq = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pAdvancedProxy->ReleaseBmoReq
+          pAdvancedProxy->ReleaseBmoReq
                 (
                     (ANSC_HANDLE)pAdvancedProxy,
                     (ANSC_HANDLE)pBmoReq
@@ -265,8 +258,7 @@ HttpTroClose
     {
         pMyObject->hBmoRep = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pAdvancedProxy->ReleaseBmoRep
+        pAdvancedProxy->ReleaseBmoRep
                 (
                     (ANSC_HANDLE)pAdvancedProxy,
                     (ANSC_HANDLE)pBmoRep
@@ -307,10 +299,8 @@ HttpTroAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject      = (PHTTP_TRANS_RECORD_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -347,10 +337,8 @@ HttpTroReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject      = (PHTTP_TRANS_RECORD_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

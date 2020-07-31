@@ -125,7 +125,6 @@ AnscBktoGetHostAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostAddress.Dot;
@@ -167,7 +166,6 @@ AnscBktoSetHostAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->HostAddress.Value = *(PULONG)address;
@@ -206,7 +204,6 @@ AnscBktoGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostPort;
@@ -248,7 +245,6 @@ AnscBktoSetHostPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->HostPort = usPort;
@@ -287,7 +283,6 @@ AnscBktoGetPeerAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->PeerAddress.Dot;
@@ -329,7 +324,6 @@ AnscBktoSetPeerAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->PeerAddress.Value = *(PULONG)address;
@@ -368,7 +362,6 @@ AnscBktoGetPeerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->PeerPort;
@@ -410,7 +403,6 @@ AnscBktoSetPeerPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->PeerPort = usPort;
@@ -449,7 +441,6 @@ AnscBktoGetBrokerServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hBrokerServer;
@@ -491,7 +482,6 @@ AnscBktoSetBrokerServer
         ANSC_HANDLE                 hBrokerServer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->hBrokerServer = hBrokerServer;
@@ -530,7 +520,6 @@ AnscBktoGetBrokerEngine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hBrokerEngine;
@@ -572,7 +561,6 @@ AnscBktoSetBrokerEngine
         ANSC_HANDLE                 hBrokerEngine
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->hBrokerEngine = hBrokerEngine;
@@ -611,7 +599,6 @@ AnscBktoGetClientContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hClientContext;
@@ -653,7 +640,6 @@ AnscBktoSetClientContext
         ANSC_HANDLE                 hClientContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     pMyObject->hClientContext = hClientContext;
@@ -692,7 +678,6 @@ AnscBktoGetBufferSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->RecvBufferSize;
@@ -734,7 +719,6 @@ AnscBktoSetBufferSize
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->RecvBuffer )
@@ -780,7 +764,6 @@ AnscBktoGetBufferContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hRecvBufferTag;
@@ -832,7 +815,6 @@ AnscBktoSetBufferContext
         ANSC_HANDLE                 hBufferTag
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
 
@@ -883,7 +865,6 @@ AnscBktoIsToBeCleaned
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
 
     return  pMyObject->bToBeCleaned;
@@ -930,7 +911,6 @@ AnscBktoToClean
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
@@ -983,7 +963,6 @@ AnscBktoReturn
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
 
     returnStatus =
         pServer->ReleaseSocket
@@ -1026,7 +1005,6 @@ AnscBktoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
 

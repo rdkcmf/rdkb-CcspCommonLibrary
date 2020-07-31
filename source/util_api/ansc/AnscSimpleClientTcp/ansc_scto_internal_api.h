@@ -91,7 +91,7 @@ AnscSctoSetSocketBindToDevice
         BOOL                        bBind
     );
 
-PUCHAR
+PCHAR
 AnscSctoGetSocketDeviceName
     (
         ANSC_HANDLE                 hThisObject
@@ -101,7 +101,7 @@ ANSC_STATUS
 AnscSctoSetSocketDeviceName
     (
         ANSC_HANDLE                 hThisObject,
-        PUCHAR                      pDeviceName
+        PCHAR                       pDeviceName
     );
 
 PUCHAR

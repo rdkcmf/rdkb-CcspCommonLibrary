@@ -79,6 +79,54 @@
 #include "user_base.h"
 #include "user_file_io.h"
 
+extern inline int
+user_rename_file(char* old_file_name, char* new_file_name);
+
+extern inline int
+user_create_directory(char* dir_name);
+
+extern inline  int
+user_get_file_stat(char* file_name, void* h_file_property);
+
+extern inline int
+user_move_file(char* srcFile, char* dstFile);
+
+extern inline int
+user_copy_directory(char* srcDir, char* dstDir);
+
+extern inline int
+user_delete_directory(char* dir);
+
+extern inline int
+user_delete_file(char *filename);
+
+extern inline int
+user_get_file_size(PVOID h);
+
+extern inline  int
+user_find_first_file
+    (
+        char*                       dir_name,
+        char*                       tar_file_name,
+        void**                      ph_find_context,
+        char*                       pb_directory,    /* 0 file, !0 dir */
+        char*                       first_file_name
+    );
+
+extern inline  int
+user_find_next_file
+    (
+        void*                       h_find_context,
+        char*                       pb_directory,
+        char*                       next_file_name
+    );
+
+extern inline  void
+user_find_close
+    (
+        void*                      h_find_context
+    );
+
 /*
  S ! " #  $ % & '  ( ) * +  , - . /  0 1 2 3  4 5 6 7  8 9 : ;  < = > ?
  1 1 1 0  0 0 1 1  1 1 1 0  0 0 0 0                    0 0 0 1  1 1 1 1
@@ -103,7 +151,7 @@ escape_char
     int                             n = 0;
     const unsigned char *           p;
 
-    for( p = filename; *p; p ++ )
+    for( p = (const unsigned char *)filename; *p; p ++ )
     {
          if( esc_mask[*p >> 5] & (((unsigned int)0x80000000) >> (*p & 31)) )
          {
@@ -146,7 +194,7 @@ make_command
 
     for( i = 0, len = 0; i < arg_count; i ++ )
     {
-        len += args[i].flags ? escape_char(args[i].arg, NULL) : (strlen(args[i].arg) + 1);
+        len += args[i].flags ? (size_t)escape_char(args[i].arg, NULL) : (size_t)(strlen(args[i].arg) + 1);
 # if 0
         len += strlen(args[i].arg)+ 1;
         if( args[i].flags )

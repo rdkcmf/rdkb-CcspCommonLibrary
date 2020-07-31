@@ -308,13 +308,12 @@ HttpScoCasProcessResponse
         ANSC_HANDLE                 hWebcTransObj
     )
 {
+    UNREFERENCED_PARAMETER(hWebcTransObj);
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject       = (PHTTP_SIMPLE_CLIENT_OBJECT)hThisObject;
-    PHTTP_WEBC_TRANS_OBJECT         pWebcTrans      = (PHTTP_WEBC_TRANS_OBJECT   )hWebcTransObj;
     PHTTP_AUTH_CLIENT_OBJECT        pClientAuthObj  = (PHTTP_AUTH_CLIENT_OBJECT  )pMyObject->hClientAuthObj;
     PHTTP_CAS_INTERFACE             pCasIf          = (PHTTP_CAS_INTERFACE       )pMyObject->hCasIf;
-    PHTTP_BSP_INTERFACE             pBspIf          = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
-
+    
     if ( !pCasIf->IsAuthEnabled(pCasIf->hOwnerContext) )
     {
         return ANSC_STATUS_SUCCESS;

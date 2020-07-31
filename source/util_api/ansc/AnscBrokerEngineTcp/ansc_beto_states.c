@@ -110,7 +110,6 @@ AnscBetoGetBrokerServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hBrokerServer;
@@ -152,7 +151,6 @@ AnscBetoSetBrokerServer
         ANSC_HANDLE                 hBrokerServer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->hBrokerServer = hBrokerServer;
@@ -191,7 +189,6 @@ AnscBetoGetMaxSocketCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MaxSocketCount;
@@ -233,7 +230,6 @@ AnscBetoSetMaxSocketCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->MaxSocketCount = (ulCount < ANSC_BETO_MAX_SOCKET_COUNT)? ulCount : ANSC_BETO_MAX_SOCKET_COUNT;
@@ -272,7 +268,6 @@ AnscBetoGetControlFlags
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->ControlFlags;
@@ -314,7 +309,6 @@ AnscBetoSetControlFlags
         ULONG                       ulFlags
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->ControlFlags = ulFlags;
@@ -353,7 +347,6 @@ AnscBetoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     ansc_fd_set*                    pRecvSet1    = (ansc_fd_set*                  )pMyObject->RecvSocketSet;

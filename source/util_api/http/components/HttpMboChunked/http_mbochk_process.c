@@ -123,15 +123,11 @@ HttpMboChkExamine
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject           = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
-    PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     ULONG                           ulTestMboState      = HTTP_MBO_STATE_EMPTY;
-    ULONG                           ulPredictedBodySize = 0;
-    ULONG                           ulArrivedBodySize   = 0;
-    char*                           pChunkData          = NULL;
-
+    
     switch ( pMyObject->State )
     {
         case    HTTP_MBO_STATE_EMPTY :
@@ -201,15 +197,10 @@ HttpMboChkProcess
     PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp         = (PANSC_BUFFER_DESCRIPTOR )hBdo;
-    PANSC_BUFFER_DESCRIPTOR         pNewBodyBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo           = NULL;
     PHTTP_CHUNK_INFO                pChunkInfo          = NULL;
     char*                           pRawChunkLine       = (char*)pMyObject->ScratchPad1;
     ULONG                           ulRawChunkLineSize  = 0;
     char*                           pChunkData          = NULL;
-    ULONG                           ulPredictedBodySize = 0;
-    ULONG                           ulArrivedBodySize   = 0;
-    ULONG                           ulTotalPackedSize   = 0;
     ULONG                           ulCopySize          = 0;
     ULONG                           ulOrgLineSize       = 0;
 
@@ -405,14 +396,8 @@ HttpMboChkCloseUp
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject           = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp         = (PANSC_BUFFER_DESCRIPTOR )hBdo;
-    PANSC_BUFFER_DESCRIPTOR         pNewBodyBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo           = NULL;
-    ULONG                           ulPredictedBodySize = 0;
-    ULONG                           ulArrivedBodySize   = 0;
-    ULONG                           ulTotalPackedSize   = 0;
 
     if ( pMyObject->SkipSize > 0 )
     {
@@ -512,10 +497,7 @@ HttpMboChkRemoveCoding
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
-    PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -595,8 +577,6 @@ HttpMboChkProcessChunkData
     PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pCurBodyBdo         = (PANSC_BUFFER_DESCRIPTOR )hBdo;
     PANSC_BUFFER_DESCRIPTOR         pNewBodyBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pCurCrlfBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo           = NULL;
     PHTTP_CHUNK_INFO                pChunkInfo          = NULL;
     char*                           pRawChunkLine       = (char*)pMyObject->ScratchPad1;
     ULONG                           ulRawChunkLineSize  = 0;
@@ -606,7 +586,6 @@ HttpMboChkProcessChunkData
     ULONG                           ulExpectedChunkSize = ulExpectedSize - ulArrivedSize;
     ULONG                           ulCopySize          = 0;
     ULONG                           ulOrgLineSize       = 0;
-    BOOL                            bLastChunk          = FALSE;
     BOOL                            bNeedToNotify       = FALSE;
     BOOL                            bBccIfNotified      = FALSE;
 
@@ -1112,10 +1091,8 @@ HttpMboChkProcessTrailer
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject        = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf           = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf           = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp      = (PANSC_BUFFER_DESCRIPTOR )hBdo;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo        = NULL;
     char*                           pRawTrailer      = (char*)pMyObject->ScratchPad3;
     ULONG                           ulRawTrailerSize = 0;
     ULONG                           ulCopySize       = 0;

@@ -109,7 +109,6 @@ WebRooAcquireAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
 
     AnscAcquireLock(&pMyObject->SyncLock);
 
@@ -149,7 +148,6 @@ WebRooReleaseAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
 
     AnscReleaseLock(&pMyObject->SyncLock);
 
@@ -231,7 +229,7 @@ WebRooEngage
 
                 if ( pProperty->RegPath[0] != '\0' )
                 {
-                    AnscCopyString(pAuthProperty->Domain, pProperty->RegPath);
+                    AnscCopyString((char *)pAuthProperty->Domain, pProperty->RegPath);
                 }
 
                 pAuthServer->SetProperty((ANSC_HANDLE)pAuthServer, (ANSC_HANDLE)pAuthProperty);
@@ -286,7 +284,6 @@ WebRooCancel
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
     PWEB_AUTH_SERVER_OBJECT         pAuthServer  = (PWEB_AUTH_SERVER_OBJECT     )pMyObject->hAuthServer;
 
     if ( !pMyObject->bActive )

@@ -123,7 +123,7 @@ HttpSmpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_MSG_PARSER         pMyObject    = NULL;
 
@@ -191,7 +191,6 @@ HttpSmpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_MSG_PARSER         pMyObject    = (PHTTP_SIMPLE_MSG_PARSER)hThisObject;
 
     if (pMyObject->hHfpIf)
@@ -240,7 +239,6 @@ HttpSmpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_MSG_PARSER         pMyObject    = (PHTTP_SIMPLE_MSG_PARSER)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -282,7 +280,6 @@ HttpSmpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_MSG_PARSER         pMyObject     = (PHTTP_SIMPLE_MSG_PARSER)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf;
     ULONG                           i;

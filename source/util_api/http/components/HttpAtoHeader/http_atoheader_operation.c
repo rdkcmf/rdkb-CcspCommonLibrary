@@ -107,7 +107,6 @@ HttpAtoHeaderCreateCodeTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_HEADER_OBJECT         pMyObject    = (PHTTP_ATO_HEADER_OBJECT)hThisObject;
 
     pMyObject->AddAtomByName
@@ -544,7 +543,6 @@ HttpAtoHeaderCreateNameTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_HEADER_OBJECT         pMyObject    = (PHTTP_ATO_HEADER_OBJECT)hThisObject;
 
     pMyObject->AddAtomById
@@ -987,7 +985,6 @@ HttpAtoHeaderGetAtomCode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_HEADER_OBJECT         pMyObject       = (PHTTP_ATO_HEADER_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -1043,7 +1040,6 @@ HttpAtoHeaderGetAtomName
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_HEADER_OBJECT         pMyObject       = (PHTTP_ATO_HEADER_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

@@ -216,15 +216,12 @@ AnscTaskRoutine1
         void*                       runtime_record
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = (PANSC_TASK_RECORD)runtime_record;
-    ANSC_HANDLE                     hGlobalTro   = (ANSC_HANDLE      )NULL;
 
     AnscEnterTask(pTaskRecord);
 
     pTaskRecord->Handle = AnscGetCurTaskHandle();
 
-    hGlobalTro          =
 #ifndef  _ANSC_DEBUG_TASK_
         AnscAddTaskRecord
 #else
@@ -240,7 +237,7 @@ AnscTaskRoutine1
             );
 
 
-    returnStatus = pTaskRecord->Routine(pTaskRecord->hContext);
+    pTaskRecord->Routine(pTaskRecord->hContext);
 
     if ( g_bTraceEnabled )
     {
@@ -269,9 +266,8 @@ AnscTaskRoutine2
         void*                       runtime_record
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(runtime_record);
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
-    ANSC_HANDLE                     hGlobalTro   = (ANSC_HANDLE)NULL;
     BOOL                            bSuspended   = TRUE;
 
     AnscEnterTask(NULL);
@@ -316,7 +312,6 @@ AnscTaskRoutine2
 
     AnscReleaseTask((ANSC_HANDLE)pTaskRecord);
 
-    hGlobalTro =
         AnscAddTaskRecord
             (
                 pTaskRecord
@@ -339,7 +334,7 @@ AnscTaskRoutine2
             AnscReleaseSpinLock(&pTaskRecord->AccessSpinLock);
         }
 
-        returnStatus = pTaskRecord->Routine(pTaskRecord->hContext);
+        pTaskRecord->Routine(pTaskRecord->hContext);
         bSuspended   = TRUE;
 
         if ( g_bTraceEnabled )
@@ -372,7 +367,7 @@ AnscTaskJanitorRoutine
         void*                       runtime_record
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(runtime_record);
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -384,7 +379,7 @@ AnscTaskJanitorRoutine
 
         AnscAcquireSpinLock(&g_TpjTaskSListSpinLock);
 
-        while ( pSLinkEntry = AnscSListPopEntry(&g_TpjTaskSList) )
+        while ( (pSLinkEntry = AnscSListPopEntry(&g_TpjTaskSList) ))
         {
             pTaskRecord = ACCESS_ANSC_TASK_RECORD(pSLinkEntry);
 
@@ -409,8 +404,6 @@ AnscSpawnTask
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PFN_ANSC_TASK_ROUTINE           pTaskRoutine = (PFN_ANSC_TASK_ROUTINE)pTaskEntry;
-    PANSC_TASK_RECORD               pTaskRecord  = NULL;
 
     returnStatus =
         AnscSpawnTask2
@@ -435,8 +428,6 @@ AnscSpawnTask2
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PFN_ANSC_TASK_ROUTINE           pTaskRoutine = (PFN_ANSC_TASK_ROUTINE)pTaskEntry;
-    PANSC_TASK_RECORD               pTaskRecord  = NULL;
 
     returnStatus =
         AnscSpawnTask3
@@ -606,7 +597,6 @@ AnscInitializeTpm
         ULONG                       ulPoolSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ULONG                           i            = 0;
 
     if ( !g_bTpmEnabled )
@@ -642,8 +632,7 @@ AnscInitializeTpj
         ULONG                       ulPoolSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-
+    UNREFERENCED_PARAMETER(ulPoolSize);
     if ( !g_bTpjEnabled )
     {
         return  ANSC_STATUS_SUCCESS;
@@ -679,7 +668,6 @@ AnscAcquireTask
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PFN_ANSC_TASK_ROUTINE           pTaskRoutine = (PFN_ANSC_TASK_ROUTINE)pTaskEntry;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -722,7 +710,6 @@ AnscReleaseTask
         ANSC_HANDLE                 hTaskRecord
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = (PANSC_TASK_RECORD)hTaskRecord;
 
     AnscAcquireSpinLock(&pTaskRecord->AccessSpinLock);
@@ -745,8 +732,6 @@ AnscInitializeTroTable
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_TASK_RECORD               pTaskRecord  = NULL;
     ULONG                           i            = 0;
 
     if ( !g_bTrmInitialized )
@@ -770,7 +755,6 @@ AnscUnloadTroTable
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;
@@ -805,7 +789,6 @@ AnscGetCurTaskRecord
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ULONG                           ulTaskHandle = AnscGetCurTaskHandle();
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
 
@@ -835,7 +818,6 @@ AnscGetTaskRecord
         ULONG                       ulTaskHandle
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = AnscHashUlong(ulTaskHandle, ANSC_TASK_RECORD_TABLE_SIZE);
@@ -887,7 +869,6 @@ AnscAddTaskRecordTrace
 #endif
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ULONG                           ulHashIndex  = AnscHashUlong(pTaskRecord->Handle, ANSC_TASK_RECORD_TABLE_SIZE);
 
     if ( !g_bTrmInitialized )
@@ -953,7 +934,6 @@ AnscGetActiveTaskCount
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulTaskCount  = 0;
@@ -1011,7 +991,6 @@ AnscKillAllTasks
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;
@@ -1055,7 +1034,6 @@ AnscGetChildTaskCount
         ULONG                       ulTaskParent
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulTaskCount  = 0;
@@ -1227,7 +1205,6 @@ AnscGetParentTaskHandle
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord  = (PANSC_TASK_RECORD)AnscGetCurTaskRecord();
 
     if ( !pTaskRecord )
@@ -1245,7 +1222,6 @@ AnscGetTaskStorageUnit
         char*                       unit_name
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord      = (PANSC_TASK_RECORD      )AnscGetCurTaskRecord();
     PANSC_TASK_STORAGE_UNIT         pTaskStorageUnit = (PANSC_TASK_STORAGE_UNIT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY     )NULL;
@@ -1285,11 +1261,8 @@ AnscAddTaskStorageUnit
         ANSC_HANDLE                 unit_context
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord      = (PANSC_TASK_RECORD      )AnscGetCurTaskRecord();
     PANSC_TASK_STORAGE_UNIT         pTaskStorageUnit = (PANSC_TASK_STORAGE_UNIT)NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY     )NULL;
-    ULONG                           ulHashIndex      = AnscHashString(unit_name, AnscSizeOfString(unit_name), ANSC_TASK_SUO_TABLE_SIZE);
 
     if ( !pTaskRecord )
     {
@@ -1333,7 +1306,6 @@ AnscDelTaskStorageUnit
         char*                       unit_name
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_TASK_RECORD               pTaskRecord      = (PANSC_TASK_RECORD      )AnscGetCurTaskRecord();
     PANSC_TASK_STORAGE_UNIT         pTaskStorageUnit = (PANSC_TASK_STORAGE_UNIT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY     )NULL;

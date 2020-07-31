@@ -138,7 +138,6 @@ AnscLpccoTcpImcCallRequest
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket     = (PANSC_BROKER_SOCKET_TCP_OBJECT)NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr        = (PANSC_LPC_PARTY_ADDR          )NULL;
@@ -637,14 +636,10 @@ AnscLpccoTcpImcCallRequest2
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket     = (PANSC_BROKER_SOCKET_TCP_OBJECT)NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr        = (PANSC_LPC_PARTY_ADDR          )hPartyAddr;
-    PANSC_LPC_PARTY_ADDR            pManagerPartyAddr = (PANSC_LPC_PARTY_ADDR          )NULL;
-    PIMCP_PARTY_INFO                pRepliedPartyInfo = (PIMCP_PARTY_INFO              )NULL;
     PANSC_LPCCO_PENDING_CALL        pPendingCall      = (PANSC_LPCCO_PENDING_CALL      )NULL;
-    PANSC_BUFFER_DESCRIPTOR         pOutputBdo        = (PANSC_BUFFER_DESCRIPTOR       )NULL;
     ULONG                           ulCallSeqNum      = (ULONG                         )0;
     BOOL                            bSyncedCall       = TRUE;
     ANSC_EVENT                      callEvent;

@@ -128,12 +128,10 @@ SysRfoQueryAbsPath
         char*                       pPathString
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject     = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_FOLDER_PROPERTY pProperty     = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pParentFolder = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hParentFolder;
     char*                           pFolderPath   = pMyObject->AbsolutePath;
-    char*                           pParentPath   = NULL;
     ULONG                           ulPathLen     = 0;
 
     if ( !pFolderPath )
@@ -153,7 +151,6 @@ SysRfoQueryAbsPath
 
     if ( pParentFolder )
     {
-        pParentPath =
             pParentFolder->QueryAbsPath
                 (
                     (ANSC_HANDLE)pParentFolder,
@@ -224,9 +221,7 @@ SysRfoIsRemovable
         BOOL                        bRecursive
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     BOOL                            bRemovable   = TRUE;
@@ -310,7 +305,6 @@ SysRfoGrantAccess
         ULONG                       ulAccessMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     ULONG                           ulTmpMode    = ulAccessMode;
@@ -378,9 +372,7 @@ SysRfoGetFolderCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject     = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty     = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     ULONG                           ulFolderCount = 0;
     ULONG                           i             = 0;
 
@@ -427,9 +419,7 @@ SysRfoGetRecordCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject     = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty     = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     ULONG                           ulRecordCount = 0;
     ULONG                           i             = 0;
 
@@ -652,7 +642,7 @@ SysRfoAddFolder
 
         AnscReleaseLock(&pMyObject->FolderTableLock);
     }
-
+    AnscTrace("%d.\n",returnStatus );
     return  (ANSC_HANDLE)pSubFolder;
 }
 
@@ -843,9 +833,7 @@ SysRfoGetFolderByIndex
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     ULONG                           ulRfoIndex   = ulIndex;
 
@@ -912,9 +900,7 @@ SysRfoGetFolderByName
         char*                       pFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = AnscHashString(pFolderName, AnscSizeOfString(pFolderName), SYS_RFO_RFO_TABLE_SIZE);
@@ -1246,7 +1232,7 @@ SysRfoAddRecord
 
         AnscReleaseLock(&pMyObject->RecordTableLock);
     }
-
+    AnscTrace("%d.\n",returnStatus );
     return  (ANSC_HANDLE)pRepRecord;
 }
 
@@ -1375,7 +1361,7 @@ SysRfoDelRecord
         pRepRecord->Remove((ANSC_HANDLE)pRepRecord);
     }
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }
 
 
@@ -1415,9 +1401,7 @@ SysRfoGetRecordByIndex
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = NULL;
     ULONG                           ulRroIndex   = ulIndex;
 
@@ -1483,9 +1467,7 @@ SysRfoGetRecordByName
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = AnscHashString(pRecordName, AnscSizeOfString(pRecordName), SYS_RFO_RRO_TABLE_SIZE);
@@ -1574,6 +1556,8 @@ SysRfoSetRecord
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(ulRecordType);
+    UNREFERENCED_PARAMETER(hRenderAttr);
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject      = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_FOLDER_PROPERTY pProperty      = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;

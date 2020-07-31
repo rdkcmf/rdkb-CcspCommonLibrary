@@ -125,7 +125,8 @@ TlsEcoSsl2ToSsl3ClientHello
         PULONG                      pulDstMsgSize
     )
 {
-    PTLS_ENV_CONTROLLER_OBJECT      pMyObject          = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulSrcMsgSize);
     PSSL2_RECORD_HEADER             pSsl2RecordHeader  = (PSSL2_RECORD_HEADER         )pSrcMessage;
     PSSL2_HS_CLIENT_HELLO           pSsl2HsClientHello = (PSSL2_HS_CLIENT_HELLO       )Ssl2RecordGetData(pSsl2RecordHeader);
     PTLS_RECORD_HEADER              pTlsRecordHeader   = (PTLS_RECORD_HEADER          )pDstMessage;

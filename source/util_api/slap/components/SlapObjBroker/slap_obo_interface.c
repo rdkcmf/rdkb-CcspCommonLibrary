@@ -117,8 +117,6 @@ SlapCreateObjBroker
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_BROKER_OBJECT         pSlapObjBroker = NULL;
 
     return  SlapOboCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

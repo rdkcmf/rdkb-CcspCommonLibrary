@@ -103,7 +103,6 @@ AnscSctoGetSocketBindToDevice
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->bSocketBindToDevice;
@@ -116,7 +115,6 @@ AnscSctoSetSocketBindToDevice
         BOOL                        bBind
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->bSocketBindToDevice = bBind;
@@ -124,13 +122,12 @@ AnscSctoSetSocketBindToDevice
     return  ANSC_STATUS_SUCCESS;
 }
 
-PUCHAR
+PCHAR
 AnscSctoGetSocketDeviceName
     (
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->SocketDeviceName;
@@ -140,10 +137,9 @@ ANSC_STATUS
 AnscSctoSetSocketDeviceName
     (
         ANSC_HANDLE                 hThisObject,
-        PUCHAR                      pDeviceName
+        PCHAR                      pDeviceName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     AnscCopyString(pMyObject->SocketDeviceName, pDeviceName);
@@ -180,7 +176,6 @@ AnscSctoGetHostAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostAddress.Dot;
@@ -222,7 +217,6 @@ AnscSctoSetHostAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->HostAddress.Value = *(PULONG)address;
@@ -261,7 +255,6 @@ AnscSctoGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostPort;
@@ -303,7 +296,6 @@ AnscSctoSetHostPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->HostPort = usPort;
@@ -342,10 +334,9 @@ AnscSctoGetPeerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
-    return  pMyObject->PeerName;
+    return  (PUCHAR)pMyObject->PeerName;
 }
 
 
@@ -384,10 +375,9 @@ AnscSctoSetPeerName
         PUCHAR                      peername
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
-    AnscCopyString(pMyObject->PeerName, peername);
+    AnscCopyString(pMyObject->PeerName,(char*) peername);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -422,7 +412,6 @@ AnscSctoGetPeerAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->PeerAddress.Dot;
@@ -464,7 +453,6 @@ AnscSctoSetPeerAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->PeerAddress.Value = *(PULONG)address;
@@ -503,7 +491,6 @@ AnscSctoGetPeerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->PeerPort;
@@ -545,7 +532,6 @@ AnscSctoSetPeerPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->PeerPort = usPort;
@@ -584,7 +570,6 @@ AnscSctoGetWorker
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hWorker;
@@ -631,7 +616,6 @@ AnscSctoSetWorker
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->hWorker )
@@ -690,7 +674,6 @@ AnscSctoGetMaxMessageSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MaxMessageSize;
@@ -732,7 +715,6 @@ AnscSctoSetMaxMessageSize
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->bActive )
@@ -784,7 +766,6 @@ AnscSctoGetBufferContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hRecvBufferTag;
@@ -836,7 +817,6 @@ AnscSctoSetBufferContext
         ANSC_HANDLE                 hBufferTag
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     if ( !(pMyObject->Mode & ANSC_SCTO_MODE_FOREIGN_BUFFER) )
@@ -886,7 +866,6 @@ AnscSctoGetMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->Mode;
@@ -928,7 +907,6 @@ AnscSctoSetMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->Mode = ulMode;
@@ -967,7 +945,6 @@ AnscSctoGetTlsScsIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hTlsScsIf;
@@ -1009,7 +986,6 @@ AnscSctoSetTlsScsIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->hTlsScsIf = hInterface;
@@ -1048,7 +1024,6 @@ AnscSctoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
 
     pMyObject->Socket         = ANSC_SOCKET_INVALID_SOCKET;

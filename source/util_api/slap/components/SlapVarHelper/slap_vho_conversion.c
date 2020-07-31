@@ -117,6 +117,7 @@ SlapVhoImcpGetVarSize
         ANSC_HANDLE                 variable
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  slap_var              = (PSLAP_VARIABLE)variable;
     ULONG                           imcp_var_size         = 0;
     ULONG                           ii                    = 0;
@@ -344,6 +345,7 @@ SlapVhoConvFromImcpVar
         ANSC_HANDLE                 slap_variable
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PIMCP_SLAP_VARIABLE             imcp_var     = (PIMCP_SLAP_VARIABLE)imcp_variable;
     PSLAP_VARIABLE                  slap_var     = (PSLAP_VARIABLE     )slap_variable;
     PIMCP_SLAP_VAR_OBJECT           imcp_var_obj = NULL;
@@ -423,7 +425,7 @@ SlapVhoConvFromImcpVar
                 else
                 {
                     slap_var->Variant.varString =
-                        (SLAP_STRING)AnscCloneString(imcp_var->Data);
+                        (SLAP_STRING)AnscCloneString((char *)imcp_var->Data);
                 };
 
                 break;
@@ -572,6 +574,7 @@ SlapVhoConvToImcpVar
         ANSC_HANDLE                 imcp_variable
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  slap_var              = (PSLAP_VARIABLE     )slap_variable;
     PIMCP_SLAP_VARIABLE             imcp_var              = (PIMCP_SLAP_VARIABLE)imcp_variable;
     ULONG                           ii                    = 0;
@@ -863,6 +866,7 @@ SlapVhoConvFromSysRecordType
         ULONG                       record_type
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           slap_syntax = SLAP_VAR_SYNTAX_other;
 
     switch ( record_type )
@@ -956,6 +960,7 @@ SlapVhoConvToSysRecordType
         ULONG                       slap_syntax
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           record_type = SYS_REP_RECORD_TYPE_ASTR;
 
     switch ( slap_syntax )

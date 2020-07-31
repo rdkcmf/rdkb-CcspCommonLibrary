@@ -112,7 +112,6 @@ SlapOboGetObjBroker
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject     = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pSonObjBroker = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -189,10 +188,8 @@ SlapOboAddObjBroker
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject     = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pSonObjBroker = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulHashIndex   = 0;
 
     pSonObjBroker =
@@ -280,10 +277,8 @@ SlapOboDelObjBroker
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject     = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pSonObjBroker = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulHashIndex   = 0;
 
     pSonObjBroker =
@@ -342,7 +337,6 @@ SlapOboDelAllObjBrokers
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject     = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pSonObjBroker = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;

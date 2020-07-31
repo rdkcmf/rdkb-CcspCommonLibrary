@@ -87,7 +87,6 @@ Bmc2ComeoGetBmc2EnvController
     )
 {
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject   = (PBMC2_COM_EXECUTOR_OBJECT  )hThisObject;
-    PBMC2_COM_EXECUTOR_PROPERTY     pPropery    = &pMyObject->Property;
 
     return pMyObject->hBmc2EnvController;
 }
@@ -101,7 +100,6 @@ Bmc2ComeoSetBmc2EnvController
     )
 {
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject   = (PBMC2_COM_EXECUTOR_OBJECT  )hThisObject;
-    PBMC2_COM_EXECUTOR_PROPERTY     pPropery    = &pMyObject->Property;
 
     pMyObject->hBmc2EnvController   = hContext;
 
@@ -155,9 +153,7 @@ Bmc2ComeoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    PBMC2_COM_EXECUTOR_OBJECT       pMyObject   = (PBMC2_COM_EXECUTOR_OBJECT  )hThisObject;
-    PBMC2_COM_EXECUTOR_PROPERTY     pProperty   = &pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -168,9 +164,7 @@ Bmc2ComeoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    PBMC2_COM_EXECUTOR_OBJECT       pMyObject   = (PBMC2_COM_EXECUTOR_OBJECT  )hThisObject;
-    PBMC2_COM_EXECUTOR_PROPERTY     pProperty   = &pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_SUCCESS;
 }
 

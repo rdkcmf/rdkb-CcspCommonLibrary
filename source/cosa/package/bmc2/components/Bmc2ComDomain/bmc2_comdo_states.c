@@ -112,7 +112,6 @@ Bmc2ComdoGetBmc2ComTerminal
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2ComTerminal;
@@ -154,7 +153,6 @@ Bmc2ComdoSetBmc2ComTerminal
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     pMyObject->hBmc2ComTerminal = hInterface;
@@ -193,7 +191,6 @@ Bmc2ComdoGetBmc2EnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2EnvController;
@@ -235,7 +232,6 @@ Bmc2ComdoSetBmc2EnvController
         ANSC_HANDLE                 hEnvController
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     pMyObject->hBmc2EnvController = hEnvController;
@@ -274,7 +270,6 @@ Bmc2ComdoGetBmc2ReqController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2ReqController;
@@ -316,7 +311,6 @@ Bmc2ComdoSetBmc2ReqController
         ANSC_HANDLE                 hReqController
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     pMyObject->hBmc2ReqController = hReqController;
@@ -355,7 +349,6 @@ Bmc2ComdoGetDomainTitle
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     return  pMyObject->DomainTitle;
@@ -397,7 +390,6 @@ Bmc2ComdoSetDomainTitle
         char*                       pDomainTitle
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     if ( pMyObject->DomainTitle )
@@ -443,7 +435,6 @@ Bmc2ComdoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     pMyObject->DelAllCommandProperties((ANSC_HANDLE)pMyObject);

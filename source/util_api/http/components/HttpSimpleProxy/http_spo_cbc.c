@@ -115,11 +115,9 @@ HttpSpoCbcReplyHeaders
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = (PHTTP_SIMPLE_PROXY_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty    = (PHTTP_SIMPLE_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_PROXY_SESSION_OBJECT      pSession     = (PHTTP_PROXY_SESSION_OBJECT )hSession;
-    PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT       )hMessage;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
+    UNREFERENCED_PARAMETER(hMessage);
 
     return  HTTP_CBC_PMODE_RELAY2;
 }
@@ -165,11 +163,9 @@ HttpSpoCbcReplyBody
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = (PHTTP_SIMPLE_PROXY_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty    = (PHTTP_SIMPLE_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_PROXY_SESSION_OBJECT      pSession     = (PHTTP_PROXY_SESSION_OBJECT )hSession;
-    PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT       )hMessage;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
+    UNREFERENCED_PARAMETER(hMessage);
 
     return  HTTP_CBC_PMODE_RELAY2;
 }

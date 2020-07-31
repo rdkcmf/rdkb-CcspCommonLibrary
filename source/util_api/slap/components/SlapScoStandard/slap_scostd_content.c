@@ -111,10 +111,8 @@ SlapScoStdImportMe
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf   = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(param_list);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -155,10 +153,7 @@ SlapScoStdExportMe
         SLAP_PARAMETER_LIST**       param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf   = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     *param_list = NULL;
 
     return  ANSC_STATUS_UNAPPLICABLE;

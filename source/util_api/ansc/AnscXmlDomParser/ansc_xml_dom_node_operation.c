@@ -107,10 +107,7 @@ AnscXmlDomNodeGetStatus
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
-    PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  0;
 }
 
@@ -145,7 +142,6 @@ AnscXmlDomNodeGetEncodedSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     ULONG                           ulEncodedSize = 0;
@@ -337,10 +333,6 @@ AnscXmlDomNodeEncode
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
-    PVOID                           pChildBuffer  = buffer;
-    ULONG                           ulEncodedSize = 0;
-    ULONG                           ulBufferSize  = *pulSize;
-    ULONG                           ulLeftSize    = ulBufferSize;
     PUCHAR                          pBuf          = (PUCHAR)buffer;
     ULONG                           ulCopied      = 0;
     ULONG                           ulContent     = 0;
@@ -778,10 +770,7 @@ AnscXmlDomNodeDecode
      * pointer to the start point of the Attributes
      */
     PCHAR                           pBackupContent     = *ppContent;
-    PCHAR                           pAttributesOfNode  = *ppContent;
-    PCHAR                           pPreviousAttribute = *ppContent;
     PCHAR                           pNodesOfNode       = *ppContent;
-    PCHAR                           pPreviousNode      = *ppContent;
     PCHAR                           pStartOfAttribute  = NULL;
     PCHAR                           pEndOfAttribute    = NULL;
     PCHAR                           pStartOfAttrValue  = NULL;

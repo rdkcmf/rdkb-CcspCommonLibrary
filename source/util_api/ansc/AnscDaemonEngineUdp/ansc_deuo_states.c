@@ -114,7 +114,6 @@ AnscDeuoGetDaemonServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     return  pMyObject->hDaemonServer;
@@ -156,7 +155,6 @@ AnscDeuoSetDaemonServer
         ANSC_HANDLE                 hDaemonServer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->hDaemonServer = hDaemonServer;
@@ -195,7 +193,6 @@ AnscDeuoGetMaxSocketCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     return  pMyObject->MaxSocketCount;
@@ -237,7 +234,6 @@ AnscDeuoSetMaxSocketCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->MaxSocketCount = (ulCount < ANSC_DEUO_MAX_SOCKET_COUNT)? ulCount : ANSC_DEUO_MAX_SOCKET_COUNT;
@@ -276,7 +272,6 @@ AnscDeuoGetSocketTimeOut
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     return  pMyObject->SocketTimeOut;
@@ -318,7 +313,6 @@ AnscDeuoSetSocketTimeOut
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->SocketTimeOut = ulSeconds;
@@ -357,7 +351,6 @@ AnscDeuoGetPacketTimeOut
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     return  pMyObject->PacketTimeOut;
@@ -399,7 +392,6 @@ AnscDeuoSetPacketTimeOut
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->PacketTimeOut = ulSeconds;
@@ -438,7 +430,6 @@ AnscDeuoGetControlFlags
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     return  pMyObject->ControlFlags;
@@ -480,7 +471,6 @@ AnscDeuoSetControlFlags
         ULONG                       ulFlags
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->ControlFlags = ulFlags;
@@ -519,7 +509,6 @@ AnscDeuoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     pMyObject->DelAllPackets((ANSC_HANDLE)pMyObject);

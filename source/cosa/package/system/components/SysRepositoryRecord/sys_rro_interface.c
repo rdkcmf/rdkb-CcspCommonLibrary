@@ -117,8 +117,6 @@ SysCreateRepositoryRecord
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_RECORD_OBJECT   pSysRepositoryRecord = NULL;
 
     return  SysRroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

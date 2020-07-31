@@ -109,9 +109,7 @@ HttpMboChkGetEntitySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;
@@ -178,9 +176,7 @@ HttpMboChkGetArrivedSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject     = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulArrivedSize = 0;
@@ -254,9 +250,7 @@ HttpMboChkAppendBodyBdo
         ANSC_HANDLE                 hBdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = (PANSC_BUFFER_DESCRIPTOR )hBdo;
 
     pMyObject->TransferSize += AnscBdoGetBlockSize(pBodyBdo);
@@ -317,9 +311,7 @@ HttpMboChkGetExpectedSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject      = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_CHUNK_INFO                pChunkInfo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
     ULONG                           ulExpectedSize = 0;
@@ -385,7 +377,6 @@ HttpMboChkAppendChunkData
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = (PANSC_BUFFER_DESCRIPTOR )hBdo;
     PANSC_BUFFER_DESCRIPTOR         pCrlfBdo     = NULL;
 
@@ -510,9 +501,7 @@ HttpMboChkCopyBodyFrom
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;

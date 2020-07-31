@@ -105,8 +105,6 @@ AnscCreateObjectDescriptor
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = NULL;
 
     return  AnscOdoCreate(hOwnerContext);
 }

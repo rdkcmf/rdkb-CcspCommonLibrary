@@ -119,9 +119,9 @@
 ***********************************************************/
 
 #define  ANSC_TRACE_PLATFORM_CUSTOM_ID_NAMES                    \
-            {ANSC_TRACE_ID_LINUX_L2Hook,    "LinuxL2Hook"   },  \
-            {ANSC_TRACE_ID_LINUX_NetFilter, "LinuxNetFilter"},  \
-            {ANSC_TRACE_ID_LINUX_Ip4sTlr,   "LinuxIp4sTlr"  }
+            {{ANSC_TRACE_ID_LINUX_L2Hook},    "LinuxL2Hook"   },  \
+            {{ANSC_TRACE_ID_LINUX_NetFilter}, "LinuxNetFilter"},  \
+            {{ANSC_TRACE_ID_LINUX_Ip4sTlr},   "LinuxIp4sTlr"  }
 
 
 
@@ -157,12 +157,12 @@
 ***********************************************************/
 
 #define  ANSC_TRACE_MODEL_CUSTOM_ID_NAMES                       \
-            {ANSC_TRACE_ID_DSLG,         "Dslg"          },     \
-            {ANSC_TRACE_ID_DSLH,         "Dslh"          },     \
-            {ANSC_TRACE_ID_DSLH_ObjCtrl, "Dslh Obj Ctrl" },     \
-            {ANSC_TRACE_ID_DSLM,         "Dslm"          },     \
-            {ANSC_TRACE_ID_BOND,         "Bond"          },     \
-            {ANSC_TRACE_ID_CBHM,         "CableHome"     }
+            {{ANSC_TRACE_ID_DSLG},         "Dslg"          },     \
+            {{ANSC_TRACE_ID_DSLH},         "Dslh"          },     \
+            {{ANSC_TRACE_ID_DSLH_ObjCtrl}, "Dslh Obj Ctrl" },     \
+            {{ANSC_TRACE_ID_DSLM},         "Dslm"          },     \
+            {{ANSC_TRACE_ID_BOND},         "Bond"          },     \
+            {{ANSC_TRACE_ID_CBHM},         "CableHome"     }
 
 
 /***********************************************************

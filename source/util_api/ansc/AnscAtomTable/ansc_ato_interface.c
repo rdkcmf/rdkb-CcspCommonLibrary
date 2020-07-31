@@ -116,8 +116,6 @@ AnscCreateAtomTable
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_ATOM_TABLE_OBJECT         pAtomTable = NULL;
 
     return  AnscAtoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

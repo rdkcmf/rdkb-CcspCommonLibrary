@@ -281,6 +281,45 @@ ANSC_FILE_PROPERTY,  *PANSC_FILE_PROPERTY;
  * file. In order to describe the requested entity, server needs to construct a "Content-Type" HTTP
  * header field along with the file content.
  */
-
-
+#ifndef   _ANSC_KERNEL
+int
+user_rename_file(char* old_file_name, char* new_file_name);
+int
+user_create_directory(char* dir_name);
+int
+user_get_file_stat(char* file_name, void* h_file_property);
+int
+user_move_file(char* srcFile, char* dstFile);
+int
+user_copy_directory(char* srcDir, char* dstDir);
+int
+user_delete_directory(char* dir);
+int
+user_delete_file(char *filename);
+int
+user_get_file_size(PVOID h);
+#ifdef  _ANSC_FILE_SEARCH_
+void
+user_find_close
+    (
+        void*                      h_find_context
+    );
+int
+user_find_first_file
+    (
+        char*                       dir_name,
+        char*                       tar_file_name,
+        void**                      ph_find_context,
+        char*                       pb_directory,    /* 0 file, !0 dir */
+        char*                       first_file_name
+    );
+int
+user_find_next_file
+    (
+        void*                       h_find_context,
+        char*                       pb_directory,
+        char*                       next_file_name
+    );
+#endif
+#endif
 #endif

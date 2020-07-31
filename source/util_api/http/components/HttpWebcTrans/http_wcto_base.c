@@ -119,7 +119,7 @@ HttpWctoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpWctoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
     PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE    )pMyObject->hTmhIf;
 
@@ -235,7 +234,6 @@ HttpWctoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
     PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE      )pMyObject->hTmhIf;
 
@@ -297,7 +295,6 @@ HttpWctoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     /*

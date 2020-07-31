@@ -117,8 +117,6 @@ WebCreateVirtualHost
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pWebVirtualHost = NULL;
 
     return  WebVhoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

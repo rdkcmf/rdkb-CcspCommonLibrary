@@ -105,21 +105,21 @@ SlapAmoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
+#ifdef  _ANSC_SLAP_LPC_
+    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT   )pMyObject->hAnscLpcConnector;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
     PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT   )pMyObject->hAnscLpcConnector;
-#ifdef   _SLAP_IPC_USE_TCP_SOCKET
-    PANSC_LPCCO_TCP_OBJECT          pAnscLpccoTcp      = (PANSC_LPCCO_TCP_OBJECT       )pAnscLpcConnector;
-#else
-    PANSC_LPCCO_UDP_OBJECT          pAnscLpccoUdp      = (PANSC_LPCCO_UDP_OBJECT       )pAnscLpcConnector;
-#endif
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     char                            lpcPartyName[64];
+    #ifdef _SLAP_IPC_USE_TCP_SOCKET
+        PANSC_LPCCO_TCP_OBJECT          pAnscLpccoTcp      = (PANSC_LPCCO_TCP_OBJECT       )pAnscLpcConnector;
+    #else
+        PANSC_LPCCO_UDP_OBJECT          pAnscLpccoUdp      = (PANSC_LPCCO_UDP_OBJECT       )pAnscLpcConnector;
+    #endif
+#endif
 
     if ( pMyObject->bActive )
     {
@@ -327,14 +327,13 @@ SlapAmoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
+#ifdef  _ANSC_SLAP_LPC_
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
     PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT   )pMyObject->hAnscLpcConnector;
+#endif
 
     if ( !pMyObject->bActive )
     {

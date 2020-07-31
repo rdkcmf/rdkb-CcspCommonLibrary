@@ -117,8 +117,6 @@ DslhCreateVarEntity
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PDSLH_VAR_ENTITY_OBJECT         pDslhVarEntity = NULL;
 
     return  DslhVareoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

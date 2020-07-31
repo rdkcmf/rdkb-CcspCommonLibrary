@@ -119,7 +119,7 @@ SlapOwoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapOwoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ SlapOwoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ SlapOwoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
 
     /*

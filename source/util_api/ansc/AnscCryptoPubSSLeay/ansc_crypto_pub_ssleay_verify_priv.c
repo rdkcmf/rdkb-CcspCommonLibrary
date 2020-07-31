@@ -120,6 +120,11 @@ AnscCryptoPubSSLeayDSAVerify
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToVerify);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(ulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -180,6 +185,12 @@ AnscCryptoPubSSLeayRSAVerifyWithType
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToVerify);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(ulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_SUCCESS;
 }
 

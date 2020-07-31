@@ -119,7 +119,7 @@ SysRroEnumCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSYS_RRO_ENUM_OBJECT            pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SysRroEnumRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ENUM_OBJECT            pMyObject    = (PSYS_RRO_ENUM_OBJECT)hThisObject;
 
     SysRroRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SysRroEnumEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ENUM_OBJECT            pMyObject    = (PSYS_RRO_ENUM_OBJECT)hThisObject;
 
     SysRroEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SysRroEnumInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ENUM_OBJECT            pMyObject    = (PSYS_RRO_ENUM_OBJECT)hThisObject;
 
     /*

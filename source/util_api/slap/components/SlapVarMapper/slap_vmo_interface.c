@@ -186,8 +186,6 @@ SlapCreateVarMapper
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper = NULL;
 
     return  SlapVmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -224,9 +222,7 @@ SlapVmoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapVmo;
 }
 
@@ -262,8 +258,6 @@ SlapVmoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapVmo;
 }

@@ -109,9 +109,7 @@ Bmc2ComtoAcqAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     AnscAcquireLock(&pMyObject->AccessLock);
 
@@ -149,9 +147,7 @@ Bmc2ComtoRelAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     AnscReleaseLock(&pMyObject->AccessLock);
 
@@ -191,7 +187,6 @@ Bmc2ComtoEngage
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     if ( pMyObject->bActive )
     {
@@ -241,9 +236,7 @@ Bmc2ComtoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     if ( !pMyObject->bActive )
     {
@@ -290,9 +283,7 @@ Bmc2ComtoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject          = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty          = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor     = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
@@ -388,31 +379,26 @@ Bmc2ComtoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject          = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty          = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor     = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
 
     if ( pMyObject->hSlapBmc2Terminal )
     {
-        returnStatus =
-            pSlapGoaIf->DeleteObject
-                (
-                    pSlapGoaIf->hOwnerContext,
-                    pMyObject->hSlapBmc2Terminal
-                );
+        pSlapGoaIf->DeleteObject
+            (
+                pSlapGoaIf->hOwnerContext,
+                pMyObject->hSlapBmc2Terminal
+            );
     }
 
     if ( TRUE )
     {
-        returnStatus =
-            pSlapGoaIf->DeleteContainer
-                (
-                    pSlapGoaIf->hOwnerContext,
-                    pMyObject->hSlapContainerTerminal
-                );
+        pSlapGoaIf->DeleteContainer
+            (
+                pSlapGoaIf->hOwnerContext,
+                pMyObject->hSlapContainerTerminal
+            );
     }
 
     return  ANSC_STATUS_SUCCESS;

@@ -195,7 +195,6 @@ DslhVarroIsValidIpAddList
     PANSC_TOKEN_CHAIN               pAddrListTokenChain = (PANSC_TOKEN_CHAIN         )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
     BOOL                            bIsValid            = TRUE;
-    ULONG                           i                   = 0;
 
     if( !pAddList || AnscSizeOfString(pAddList) == 0)
     {
@@ -204,9 +203,9 @@ DslhVarroIsValidIpAddList
 
     if ( DslhVarroDelSpaceInCommaSeparator((PCHAR)pAddList) )
     {
-        if ( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) )
+        if (( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) ))
         {
-            while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+            while (( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ))
             {
                 if( ! AnscIsValidIpString((PCHAR)pAddrStringToken->Name))
                 {
@@ -275,7 +274,6 @@ DslhVarroIsValidIpAddRangeList
     PANSC_STRING_TOKEN              pAddrStringToken1    = (PANSC_STRING_TOKEN        )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken2    = (PANSC_STRING_TOKEN        )NULL;
     BOOL                            bIsValid             = TRUE;
-    ULONG                           i                    = 0;
 
     if( !pAddRangeList || AnscSizeOfString(pAddRangeList) == 0)
     {
@@ -286,9 +284,9 @@ DslhVarroIsValidIpAddRangeList
     {
         if ( (AnscSizeOfString(pAddRangeList) != 0) && (pAddrRangeTokenChain = AnscTcAllocate( pAddRangeList, "," )) )
         {
-            while ( pAddrStringToken = AnscTcUnlinkToken(pAddrRangeTokenChain) )
+            while (( pAddrStringToken = AnscTcUnlinkToken(pAddrRangeTokenChain) ))
             {
-                if ( pAddrTokenChain = AnscTcAllocate(pAddrStringToken->Name, "-") )
+                if (( pAddrTokenChain = AnscTcAllocate(pAddrStringToken->Name, "-") ))
                 {
 
                     pAddrStringToken1 = AnscTcUnlinkToken(pAddrTokenChain);
@@ -406,7 +404,6 @@ DslhVarroIsValidMacAddList
     PANSC_TOKEN_CHAIN               pAddrListTokenChain = (PANSC_TOKEN_CHAIN         )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
     BOOL                            bIsValid            = TRUE;
-    ULONG                           i                   = 0;
 
     if( !pAddList || AnscSizeOfString(pAddList) == 0)
     {
@@ -415,9 +412,9 @@ DslhVarroIsValidMacAddList
 
     if ( DslhVarroDelSpaceInCommaSeparator((PCHAR)pAddList) )
     {
-        if ( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) )
+        if (( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) ))
         {
-            while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+            while (( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ))
             {
                 if( ! DslhVarroIsValidMacAddress((PCHAR)pAddrStringToken->Name))
                 {
@@ -701,7 +698,7 @@ DslhVarroIsValidBase64String
     pNewBuf =
         AnscBase64Decode
             (
-                (PCHAR)pString,
+                (PUCHAR)pString,
                 &length
             );
 
@@ -768,7 +765,7 @@ DslhVarroIsValidUrlString
         {
             pHostString += AnscSizeOfString("://");
 
-            if ( pPortString = _ansc_strstr(pHostString, ":") )
+            if (( pPortString = _ansc_strstr(pHostString, ":") ))
             {
                 pPortString = pPortString + 1;
 
@@ -840,14 +837,14 @@ DslhVarroIsValidMaskString
         return TRUE;
     }
 
-    if ( pAddrListTokenChain = AnscTcAllocate(pStringValue, ".") )
+    if (( pAddrListTokenChain = AnscTcAllocate(pStringValue, ".") ))
     {
         if (pAddrListTokenChain->TokensQueue.Depth != 0x4)
         {
             goto EXIT;
         }
 
-        while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+        while (( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ))
         {
             ulMaskValue = (ulMaskValue<<0x8) + AnscGetStringUlong(pAddrStringToken->Name);
 
@@ -873,7 +870,7 @@ DslhVarroIsValidMaskString
 
         else if ( (!i && !(~(0x0 ^ ulMaskValue)))           /* 255.255.255.255 */
                   ||
-                  ! (~( ( (~0x0<<(32-i))) ^ ulMaskValue ))  /* Other subnet masks */
+                  ! (~( ( (((ULONG)~0x0)<<(32-i))) ^ ulMaskValue ))  /* Other subnet masks */
                 )
         {
             bIsValid = TRUE;
@@ -1059,7 +1056,6 @@ DslhVarroIsValidIp6AddList
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
 	BOOL							bIsValid			= TRUE;
     ULONG                           uLength             = 0;
-	ULONG							i					= 0;
 
 	if( !pAddList || AnscSizeOfString(pAddList) == 0)
 	{
@@ -1082,9 +1078,9 @@ DslhVarroIsValidIp6AddList
 
 	if ( DslhVarroDelSpaceInCommaSeparator((PCHAR)pAddList) )
 	{
-		if ( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) )
+		if (( pAddrListTokenChain = AnscTcAllocate( pAddList, "," ) ))
 		{
-			while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+			while (( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ))
 			{
 				if( ! AnscIsValidIp6String((PCHAR)pAddrStringToken->Name))
 				{

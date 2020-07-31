@@ -79,7 +79,7 @@
 
 
 #include "dslh_varro_global.h"
-
+#include "slap_vco_internal_api.h"
 
 /**********************************************************************
 
@@ -111,26 +111,17 @@ DslhVarroGetValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity           = (PDSLH_OBJ_ENTITY_OBJECT    )pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
     /*PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoParameter = (PPOAM_IREP_FOLDER_OBJECT   )pMyObject->hIrepFoParameter;*/
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController   = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase     = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
-    PDSLH_VAREO_TOKEN_VALUE         pVareoTokenValue     = (PDSLH_VAREO_TOKEN_VALUE    )NULL;
     PSLAP_VARIABLE                  pSlapVariable        = (PSLAP_VARIABLE             )NULL;
     void*                           pfnGetValueMethod    = (void*                      )NULL;
-    SLAP_UCHAR_ARRAY*               pUcharArray          = (SLAP_UCHAR_ARRAY*          )NULL;
-    PANSC_UNIVERSAL_TIME            pUniversalTime       = (PANSC_UNIVERSAL_TIME       )NULL;
-    ULONG                           uLength              = 0;
 
     /*ULONG                           permission              = SYS_RRO_ACCESS_MODE_ALL;*/
-    ULONG                           contentType             = 0;
     /*SYS_RRO_RENDER_ATTR             renderAttr              = { 0 };*/
-    ULONG                           recordType              = 0;
 
 
     /*renderAttr.ContentType = SYS_RECORD_CONTENT_DEFAULT;*/
@@ -384,14 +375,11 @@ DslhVarroTstValue
         SLAP_VARIABLE*              pNewValue
     )
 {
-    ANSC_STATUS                     returnStatus            = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject               = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity              = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord              = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity              = (PDSLH_OBJ_ENTITY_OBJECT    )pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController          = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController      = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase        = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_VAREO_TOKEN_VALUE         pVareoTokenValue        = (PDSLH_VAREO_TOKEN_VALUE    )NULL;
     void*                           pfnTstValueMethod       = (void*                      )NULL;
     SLAP_UINT32                     ulIp4Addr               = (ULONG                      )0;
@@ -403,7 +391,6 @@ DslhVarroTstValue
     PANSC_UNIVERSAL_TIME            pUniversalTime          = (PANSC_UNIVERSAL_TIME       )NULL;
     BOOL                            bTestResult             = FALSE;
     BOOL                            bTestBypass             = FALSE;
-    ULONG                           uTickCount              = 0;
 
     /*
      * The parameters defined in TR-069 make use of a limited subset of the default SOAP data types.
@@ -1242,8 +1229,6 @@ DslhVarroSetValue
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord              =  (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity              = (PDSLH_OBJ_ENTITY_OBJECT    )pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController          = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController      = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase        = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_VAREO_TOKEN_VALUE         pVareoTokenValue        = (PDSLH_VAREO_TOKEN_VALUE    )NULL;
     void*                           pfnSetValueMethod       = (void*                      )NULL;
     SLAP_UINT32                     ulIp4Addr               = (ULONG                      )0;
@@ -1253,7 +1238,6 @@ DslhVarroSetValue
     SLAP_UCHAR_ARRAY*               pUcharArrayIp6Addr      = (SLAP_UCHAR_ARRAY*          )NULL;
     SLAP_UCHAR_ARRAY*               pUcharArrayIp6AddrList  = (SLAP_UCHAR_ARRAY*          )NULL;
     PANSC_UNIVERSAL_TIME            pUniversalTime          = (PANSC_UNIVERSAL_TIME       )NULL;
-    ULONG                           uTickCount              = 0;
 
 
     if ( TRUE /* pVarEntity->CallEntry_SetValue == 0 */)
@@ -1756,16 +1740,14 @@ DslhVarroSynValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
-    PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
+    UNREFERENCED_PARAMETER(hThisObject);
+    /*PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;*/
+    /*PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;*/
+    /*PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;*/
     /*PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoDatabase  = (PPOAM_IREP_FOLDER_OBJECT   )pObjRecord->hIrepFoWmpDatabase;*/
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
     /*PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoParameter = (PPOAM_IREP_FOLDER_OBJECT   )pMyObject->hIrepFoParameter;*/
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController   = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
-    PSLAP_VARIABLE                  pSlapVariable        = (PSLAP_VARIABLE             )NULL;
-    PCHAR                           pFullName            = NULL;
+    /*PSLAP_VARIABLE                  pSlapVariable        = (PSLAP_VARIABLE             )NULL;*/
+    /*PCHAR                           pFullName            = NULL;*/
 
 /*
     if ( !pVarEntity->ParamDescr->bPersistent )
@@ -1896,23 +1878,18 @@ DslhVarroCommitChange
         BOOL                        bFromAcs
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
-    PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
+    /*PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;*/
     /*PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoDatabase  = (PPOAM_IREP_FOLDER_OBJECT   )pObjRecord->hIrepFoWmpDatabase;*/
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
     /*PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoParameter = (PPOAM_IREP_FOLDER_OBJECT   )pMyObject->hIrepFoParameter;*/
-    PSLAP_VARIABLE                  pTempParamValue      = (PSLAP_VARIABLE             )pMyObject->TempParamValue;
     /*ULONG                           ulSysRepRecordType   = (ULONG                      )SYS_REP_RECORD_TYPE_ASTR;*/
-    PCHAR                           pFullName            = NULL;
 
     /* Send parameter value change signal here */
     if ( FALSE ) /* Bin added here to prevent double ValueChange notification */
     {
         if ( !bFromAcs && pMyObject->Notification != DSLH_CWMP_NOTIFICATION_off )
         {
-            returnStatus = pMyObject->NotifyValueChanged((ANSC_HANDLE)pMyObject);
+            pMyObject->NotifyValueChanged((ANSC_HANDLE)pMyObject);
         }
     }
 
@@ -2020,11 +1997,7 @@ DslhVarroCancelChange
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
-    PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
 
     if ( pMyObject->TempParamValue )
     {

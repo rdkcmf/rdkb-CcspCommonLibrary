@@ -119,7 +119,7 @@ SysIroCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SysIroRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
     PSYS_IRA_INTERFACE              pIraIf       = (PSYS_IRA_INTERFACE           )pMyObject->hIraIf;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
@@ -245,7 +244,6 @@ SysIroEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
     PSYS_IRA_INTERFACE              pIraIf       = (PSYS_IRA_INTERFACE           )pMyObject->hIraIf;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
@@ -396,7 +394,6 @@ SysIroInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT)hThisObject;
 
     /*

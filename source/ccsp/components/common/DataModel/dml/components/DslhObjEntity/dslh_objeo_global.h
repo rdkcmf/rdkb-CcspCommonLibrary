@@ -103,4 +103,10 @@
 #include "sys_rfo_exported_api.h"
 */
 
+ANSC_STATUS
+DslhVareoReset
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
 #endif

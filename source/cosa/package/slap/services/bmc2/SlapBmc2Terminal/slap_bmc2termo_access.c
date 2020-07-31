@@ -107,13 +107,10 @@ SlapBmc2TermoTerminate
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComTerminal->hBmc2EnvController;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)pBmc2ComDomain? pBmc2ComDomain->hBmc2ReqController : NULL;
-    PBMC2_COMMAND_REQUEST           pBmc2CommandReq    = (PBMC2_COMMAND_REQUEST      )NULL;
     PBMC2_COMMAND_REPLY             pBmc2CommandRep    = (PBMC2_COMMAND_REPLY        )NULL;
 
     if ( !pBmc2ReqController )
@@ -122,7 +119,6 @@ SlapBmc2TermoTerminate
     }
     else
     {
-        pBmc2CommandReq = (PBMC2_COMMAND_REQUEST)pBmc2ReqController->hCommandRequest;
         pBmc2CommandRep = (PBMC2_COMMAND_REPLY  )pBmc2ReqController->hCommandReply;
     }
 
@@ -175,13 +171,11 @@ SlapBmc2TermoEnterDomain
         char*                       pDomainName
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComTerminal->hBmc2EnvController;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)pBmc2ComDomain? pBmc2ComDomain->hBmc2ReqController : NULL;
-    PBMC2_COMMAND_REQUEST           pBmc2CommandReq    = (PBMC2_COMMAND_REQUEST      )NULL;
     PBMC2_COMMAND_REPLY             pBmc2CommandRep    = (PBMC2_COMMAND_REPLY        )NULL;
 
     if ( !pDomainName )
@@ -194,7 +188,6 @@ SlapBmc2TermoEnterDomain
     }
     else
     {
-        pBmc2CommandReq = (PBMC2_COMMAND_REQUEST)pBmc2ReqController->hCommandRequest;
         pBmc2CommandRep = (PBMC2_COMMAND_REPLY  )pBmc2ReqController->hCommandReply;
     }
 
@@ -240,7 +233,6 @@ SlapBmc2TermoEnterDomain
     {
         pBmc2ReqController->DelObjReference((ANSC_HANDLE)pBmc2ReqController, "Domain");
 
-        returnStatus =
             pBmc2ReqController->AddObjReference2
                 (
                     (ANSC_HANDLE)pBmc2ReqController,
@@ -255,7 +247,6 @@ SlapBmc2TermoEnterDomain
     {
         pBmc2ReqController->DelObjReference((ANSC_HANDLE)pBmc2ReqController, "Services.Bmc2.Domain");
 
-        returnStatus =
             pBmc2ReqController->AddObjReference2
                 (
                     (ANSC_HANDLE)pBmc2ReqController,
@@ -301,7 +292,6 @@ SlapBmc2TermoGetUsername
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
 
@@ -345,7 +335,6 @@ SlapBmc2TermoSetUsername
         char*                       pUsername
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
 

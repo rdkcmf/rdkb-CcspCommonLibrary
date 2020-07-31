@@ -115,7 +115,6 @@ BwrmPmoGetCacheEnabled
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -158,7 +157,6 @@ BwrmPmoSetCacheEnabled
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -198,7 +196,6 @@ BwrmPmoGetCacheEntryCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -241,7 +238,6 @@ BwrmPmoSetCacheEntryCount
         ULONG                       count
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -281,7 +277,6 @@ BwrmPmoGetCacheMemorySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -324,7 +319,6 @@ BwrmPmoSetCacheMemorySize
         ULONG                       memory_size
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -364,7 +358,6 @@ BwrmPmoGetCacheTimeout
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -407,7 +400,6 @@ BwrmPmoSetCacheTimeout
         ULONG                       timeout
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -452,7 +444,6 @@ BwrmPmoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -497,7 +488,6 @@ BwrmPmoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -537,7 +527,6 @@ BwrmPmoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -582,9 +571,7 @@ BwrmPmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty    = (PBWRM_PAGE_MANAGER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

@@ -132,5 +132,11 @@ TlsCpoCompress
         PULONG                      o_comp_size
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(compress_algorithm);
+    UNREFERENCED_PARAMETER(i_data);
+    UNREFERENCED_PARAMETER(i_data_size);
+    UNREFERENCED_PARAMETER(o_comp);
+    UNREFERENCED_PARAMETER(o_comp_size);
     return  0;
 }

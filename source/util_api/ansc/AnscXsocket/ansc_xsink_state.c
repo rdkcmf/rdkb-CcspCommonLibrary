@@ -107,10 +107,7 @@ AnscXsinkGetXsocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
-    PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
-    PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
 
     return  pMyObject->hXsocketObject;
 }
@@ -151,10 +148,7 @@ AnscXsinkSetXsocket
         ANSC_HANDLE                 hXsocket
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
-    PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
-    PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
 
     pMyObject->hXsocketObject = hXsocket;
 
@@ -197,11 +191,8 @@ AnscXsinkAttach
         ANSC_HANDLE                 hXsocket
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
-    PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
-    PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hXsocket);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -236,10 +227,6 @@ AnscXsinkDetach
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
-    PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
-    PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

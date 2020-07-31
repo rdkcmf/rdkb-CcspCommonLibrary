@@ -112,7 +112,6 @@ SlapOwoSetObjName
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
 
     if ( pMyObject->ObjName )
@@ -166,7 +165,6 @@ SlapOwoSetLpcPartyAddr
         ANSC_HANDLE                 party_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR    )pMyObject->LpcPartyAddr;
 
@@ -222,7 +220,6 @@ SlapOwoSetLpcPartyName
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
 
     if ( pMyObject->LpcPartyName )
@@ -271,7 +268,6 @@ SlapOwoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_WRAPPER_OBJECT        pMyObject    = (PSLAP_OBJ_WRAPPER_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR    )pMyObject->LpcPartyAddr;
 

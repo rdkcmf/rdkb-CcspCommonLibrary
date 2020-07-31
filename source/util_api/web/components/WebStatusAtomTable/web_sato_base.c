@@ -119,7 +119,7 @@ WebSatoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebSatoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject    = (PWEB_STATUS_ATOM_TABLE_OBJECT)hThisObject;
 
     AnscAtoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ WebSatoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject    = (PWEB_STATUS_ATOM_TABLE_OBJECT)hThisObject;
 
     AnscAtoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ WebSatoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject    = (PWEB_STATUS_ATOM_TABLE_OBJECT)hThisObject;
 
     /*

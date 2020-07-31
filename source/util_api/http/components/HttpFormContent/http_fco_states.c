@@ -106,7 +106,6 @@ HttpFcoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -148,7 +147,6 @@ HttpFcoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -187,7 +185,6 @@ HttpFcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
     PHTTP_FORM_INPUT                pUriParams   = (PHTTP_FORM_INPUT         )pMyObject->hUriParams;
     PHTTP_FORM_INPUT                pFormInput   = (PHTTP_FORM_INPUT         )pMyObject->hFormInput;

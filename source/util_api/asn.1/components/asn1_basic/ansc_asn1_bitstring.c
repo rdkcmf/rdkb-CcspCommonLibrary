@@ -1303,7 +1303,6 @@ AnscAsn1BitStringDumpObject
 
 #ifndef _PKI_KERNEL
 
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_BITSTRING            pMyObject       = (PANSC_ASN1_BITSTRING)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -1365,7 +1364,7 @@ AnscAsn1BitStringDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->uUnusedBit
+                    (int)pMyObject->uUnusedBit
                 );
     }
     else
@@ -1380,8 +1379,8 @@ AnscAsn1BitStringDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->uUnusedBit,
-                    pMyObject->uLength,
+                    (int)pMyObject->uUnusedBit,
+                    (int)pMyObject->uLength,
                     pValueBuf
                 );
     }

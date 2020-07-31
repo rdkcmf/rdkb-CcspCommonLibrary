@@ -443,7 +443,7 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
 
   if ( !pNewAttribute )
   {
-      AnscFreeMemory(pNewAttributeName);
+      AnscFreeMemory((PVOID)pNewAttributeName);
       AnscTrace("Failed to allocate attribute structure for - '%s'\n", pNode->Name);
 
       return ANSC_STATUS_XML_RESOURCES;
@@ -453,7 +453,7 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
   pNewAttribute->hParentNode   = (ANSC_HANDLE)pNode;
   pNewAttribute->hXMLContext   = pNode->hXMLContext;
 
-  AnscCopyString(pNewAttribute->Name, pNewAttributeName);
+  AnscCopyString(pNewAttribute->Name, (char *)pNewAttributeName);
 
   pNewAttribute->DataSize      = dataSize;
   pNewAttribute->StringData    = AnscAllocateMemory( pNewAttribute->DataSize + 1);
@@ -465,7 +465,7 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
       return ANSC_STATUS_XML_RESOURCES;
   }
   AnscZeroMemory(pNewAttribute->StringData, pNewAttribute->DataSize + 1);
-  AnscCopyMemory(pNewAttribute->StringData, pNewAttributeData, pNewAttribute->DataSize);
+  AnscCopyMemory(pNewAttribute->StringData, (PVOID)pNewAttributeData, pNewAttribute->DataSize);
 
   AnscQueuePushEntry(&pNode->AttributesList, &pNewAttribute->Linkage);
 

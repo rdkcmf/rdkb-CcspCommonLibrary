@@ -104,10 +104,7 @@ AnscTsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject        = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pTimerDescriptor = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry      = NULL;
 
     AnscAcquireSpinLock      (&pMyObject->TdoQueueSpinLock);
     AnscQueueInitializeHeader(&pMyObject->TdoQueue        );

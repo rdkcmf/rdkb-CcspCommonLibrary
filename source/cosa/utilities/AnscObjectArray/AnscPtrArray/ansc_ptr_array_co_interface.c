@@ -116,8 +116,6 @@ AnscCreatePtrArrayComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_PTR_ARRAY_OBJECT          pObjectArray    = NULL;
 
     return  AnscPtrArrayCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

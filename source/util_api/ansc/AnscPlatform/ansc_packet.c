@@ -237,7 +237,6 @@ AnscAcquirePdo
         void
     )
 {
-    PANSC_PACKET_DESCRIPTOR         pPdo        = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry = NULL;
 
     if ( g_bPdoPoolingEnabled )
@@ -366,7 +365,6 @@ AnscAllocatePdo2
         void
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = NULL;
 
 #ifdef _ANSC_TRACE_PACKET_
@@ -410,7 +408,6 @@ AnscCopyPdo
         ANSC_HANDLE                 hPdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pSrcPdo      = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_PACKET_DESCRIPTOR         pDstPdo      = (PANSC_PACKET_DESCRIPTOR)AnscAllocatePdo();
     PANSC_BUFFER_DESCRIPTOR         pDstBdo      = NULL;
@@ -489,11 +486,8 @@ AnscTransferPdo
         ANSC_HANDLE                 hPdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pSrcPdo      = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_PACKET_DESCRIPTOR         pDstPdo      = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pDstBdo      = NULL;
-    ULONG                           ulPacketSize = AnscPdoGetPacketSize((ANSC_HANDLE)pSrcPdo);
 
     if ( pSrcPdo->bSyncOnly )
     {
@@ -551,7 +545,6 @@ AnscClonePdo
         ANSC_HANDLE                 hPdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pSrcPdo      = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_PACKET_DESCRIPTOR         pDstPdo      = NULL;
 
@@ -636,7 +629,6 @@ AnscFreePdo2Trace
     )
 #endif
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
 
 #ifndef _ANSC_TRACE_PACKET_
@@ -793,7 +785,6 @@ AnscPdoGetPacketSize
         ANSC_HANDLE                 hPdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -820,7 +811,6 @@ AnscPdoGetBdoByOffset
         ULONG                       ulOffset
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -862,7 +852,6 @@ AnscPdoGetBufferByOffset
         ULONG                       ulOffset
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -906,7 +895,6 @@ AnscPdoCopyFrom
         ULONG                       ulOffset
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo           = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo           = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
@@ -981,7 +969,6 @@ AnscPdoGetPackingNumber
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo            = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo            = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -1096,7 +1083,6 @@ AnscPdoCalChecksum
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo           = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo           = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
@@ -1173,7 +1159,6 @@ AnscPdoConcatenate
         ANSC_HANDLE                 hPdo2
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo1        = (PANSC_PACKET_DESCRIPTOR)hPdo1;
     PANSC_PACKET_DESCRIPTOR         pPdo2        = (PANSC_PACKET_DESCRIPTOR)hPdo2;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
@@ -1215,7 +1200,6 @@ AnscPdoShrinkLeftTrace
     )
 #endif
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -1286,7 +1270,6 @@ AnscPdoShrinkRightTrace
     )
 #endif
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo         = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -1350,7 +1333,6 @@ AnscPdoBreakAtTrace
     )
 #endif
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo            = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pParentBdo      = (PANSC_BUFFER_DESCRIPTOR)AnscPdoGetBdoByOffset((ANSC_HANDLE)pPdo, ulOffset);
     PANSC_BUFFER_DESCRIPTOR         pSonBdo1        = NULL;
@@ -1451,7 +1433,6 @@ AnscPdoBreakAt2Trace
     )
 #endif 
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo            = (PANSC_PACKET_DESCRIPTOR)hPdo;
     PANSC_BUFFER_DESCRIPTOR         pParentBdo      = (PANSC_BUFFER_DESCRIPTOR)AnscPdoGetBdoByOffset((ANSC_HANDLE)pPdo, ulOffset);
     PANSC_BUFFER_DESCRIPTOR         pGranmaBdo      = (PANSC_BUFFER_DESCRIPTOR)NULL;
@@ -1580,7 +1561,6 @@ AnscPdoSplitAtTrace
 #endif
 
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_PACKET_DESCRIPTOR         pPdo1        = (PANSC_PACKET_DESCRIPTOR)hPdo1;
     PANSC_PACKET_DESCRIPTOR         pPdo2        = (PANSC_PACKET_DESCRIPTOR)hPdo2;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
@@ -1684,7 +1664,6 @@ AnscAcquireBdo
         void
     )
 {
-    PANSC_BUFFER_DESCRIPTOR         pBdo        = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry = NULL;
 
     if ( g_bBdoPoolingEnabled )
@@ -1805,7 +1784,6 @@ AnscAllocateBdoTrace
 #endif
 
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
 
     pBdo = (PANSC_BUFFER_DESCRIPTOR)AnscAcquireBdo();
@@ -1879,7 +1857,6 @@ AnscAllocateBdoWithMmap
         ULONG                       ulBlockSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
 
     pBdo = (PANSC_BUFFER_DESCRIPTOR)AnscAcquireBdo();
@@ -1924,7 +1901,6 @@ AnscAllocateBdo2
         ULONG                       ulBlockSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = NULL;
 
 #ifdef _ANSC_TRACE_PACKET_
@@ -1990,7 +1966,6 @@ AnscCopyBdoTrace
     )
 #endif
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pSrcBdo      = (PANSC_BUFFER_DESCRIPTOR)hBdo;
 #ifndef _ANSC_TRACE_PACKET_
     PANSC_BUFFER_DESCRIPTOR         pDstBdo      = (PANSC_BUFFER_DESCRIPTOR)AnscAllocateBdo(0, 0, 0);
@@ -2225,10 +2200,6 @@ AnscBdoClean
     )
 {
     PANSC_BUFFER_DESCRIPTOR         pBdo       = (PANSC_BUFFER_DESCRIPTOR)hBdo;
-    ULONG                           ulBdoSize  = sizeof(ANSC_BUFFER_DESCRIPTOR);
-    ULONG*                          pTempUlong = (ULONG*)pBdo;
-    UCHAR*                          pTempUchar = (UCHAR*)pBdo;
-    ULONG                           i          = 0;
 
     /*
     for ( i = 0; i < ulBdoSize / 4; i++ )
@@ -2283,7 +2254,6 @@ AnscBdoCopyFrom
         ULONG                       ulOffset
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pBdo         = (PANSC_BUFFER_DESCRIPTOR)hBdo;
     ULONG                           ulTbcSize    = *pulCopySize;
 
@@ -2335,7 +2305,6 @@ AnscBdoBreakAtTrace
 #endif
     
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_BUFFER_DESCRIPTOR         pParentBdo      = (PANSC_BUFFER_DESCRIPTOR)hBdo;
     PANSC_BUFFER_DESCRIPTOR         pHeadBdo        = NULL;
     PANSC_BUFFER_DESCRIPTOR         pTailBdo        = NULL;

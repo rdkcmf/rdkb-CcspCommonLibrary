@@ -280,7 +280,6 @@ AnscXmlFromASCIIToBinary
     /*
      * status of operation
      */
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
     /*
      * temporary counters
@@ -440,6 +439,7 @@ AnscXmlIsValidAttributeValue
         PCHAR                       pAttributeValue
     )
 {
+    UNREFERENCED_PARAMETER(pAttributeValue);
     /* will be escaped, doesn't have to validate */
 
 #if 0
@@ -507,7 +507,6 @@ AnscXmlFromBinaryToASCII
     /*
      * status of operation
      */
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
     /*
      * temporary counters
@@ -519,7 +518,6 @@ AnscXmlFromBinaryToASCII
      */
     PUCHAR                          pASCIIData = NULL;
     ULONG                           ulDataSize = *pulSize * 2;
-    UCHAR                           tempChar   = 0;
 
     PCHAR                           pBuffer    = (PCHAR)pBinaryData;
 
@@ -580,6 +578,7 @@ AnscXmlIsValidNodeText
         PCHAR                       pTextValue
     )
 {
+    UNREFERENCED_PARAMETER(pTextValue);
     /* will be escaped, doesn't have to validate */
 
 #if 0
@@ -756,20 +755,16 @@ AnscXmlFindNode
     /*
      * status of operation
      */
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
     /*
      * pointer to the start point of the Attributes
      */
     PCHAR                           pNameOfNodeStart = NULL;
-    PCHAR                           pNameOfNodeEnd   = NULL;
     PCHAR                           pBackContent     = *ppContent;
 
     /*
      * pointer to the node name extracted from the first available node if any
      */
-    PCHAR                           pName      = NULL;
-    ULONG                           ulNameSize = 0;
     ULONG                           i, ulWrongStringSize ;
 
 
@@ -946,7 +941,6 @@ AnscXmlFindNode
 
     if( pNameOfNodeStart != pBackContent)
     {
-        returnStatus = ANSC_STATUS_SUCCESS;
     }
 
     return  ANSC_STATUS_SUCCESS;
@@ -1011,10 +1005,7 @@ AnscXmlFillContentOfNode
      * pointer to the start point of the Attributes
      */
     PCHAR                           pBackupContent     = *ppContent;
-    PCHAR                           pAttributesOfNode  = *ppContent;
-    PCHAR                           pPreviousAttribute = *ppContent;
     PCHAR                           pNodesOfNode       = *ppContent;
-    PCHAR                           pPreviousNode      = *ppContent;
     PCHAR                           pStartOfAttribute  = NULL;
     PCHAR                           pEndOfAttribute    = NULL;
     PCHAR                           pStartOfAttrValue  = NULL;
@@ -2238,10 +2229,6 @@ AnscXmlRemoveControlChars
     ULONG                           i, ulStringLen, ulNewStringLen = 0;
     BOOL                            bPosChanged = FALSE;
     UCHAR                           uChar;
-	PCHAR							pTemp = pString;
-    int                             index;
-    int                             nChar = 0;
-	ULONG                           posSemicolon;
 
     if (!pString || !pStringLen)
     {
@@ -2253,7 +2240,6 @@ AnscXmlRemoveControlChars
 
     while (i < ulStringLen)
     {
-		pTemp = (PCHAR)(pString + i);
         uChar = pString[i];
 
 		i ++;
@@ -2322,7 +2308,6 @@ AnscXmlRemoveCharReference
     UCHAR                           uChar;
 	PCHAR							pTemp = pString;
     int                             index;
-    int                             nChar = 0;
 	ULONG                           posSemicolon;
 
     if (!pString || !pStringLen)

@@ -120,9 +120,8 @@ HttpMboExamine
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(buffer);
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject           = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE      )pMyObject->hBccIf;
     ULONG                           ulTestMboState      = HTTP_MBO_STATE_EMPTY;
     ULONG                           ulPredictedBodySize = 0;
@@ -227,7 +226,7 @@ HttpMboProcess
                     PHTTP_FUM_INTERFACE         pFumIf       = (PHTTP_FUM_INTERFACE )pMyObject->hFumIf;
                     PHTTP_BMO_REQ_OBJECT        pBmoRequest  = (PHTTP_BMO_REQ_OBJECT)pBmo;
                     PHTTP_RCP_INTERFACE         pRcpIf       = (PHTTP_RCP_INTERFACE          )pBmoRequest->hRcpIf;
-                    PUCHAR                      pReqUri      = pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
+                    PUCHAR                      pReqUri      = (PUCHAR)pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
                     PHTTP_MDH_INTERFACE         pMdhIf       = (PHTTP_MDH_INTERFACE )pFumIf->GetMdhIf(pFumIf->hOwnerContext, pReqUri);
 
                     if ( pMdhIf )
@@ -257,7 +256,7 @@ HttpMboProcess
 
                             if ( pBoundaryStr )
                             {
-                                pMyObject->pBoundaryStr = (PUCHAR)AnscAllocateMemory(2 + AnscSizeOfString(pBoundaryStr) + 1);
+                                pMyObject->pBoundaryStr = (PUCHAR)AnscAllocateMemory(2 + AnscSizeOfString((const char*)pBoundaryStr) + 1);
                                 if ( !pMyObject->pBoundaryStr )
                                 {
                                     returnStatus = ANSC_STATUS_RESOURCES;
@@ -267,7 +266,7 @@ HttpMboProcess
                                     pMyObject->SetMode((ANSC_HANDLE)pMyObject, HTTP_MBO_MODE_STORE_EXTERNAL);
 
                                     pMyObject->pBoundaryStr[0] = pMyObject->pBoundaryStr[1] = '-';
-                                    AnscCopyString(pMyObject->pBoundaryStr + 2, pBoundaryStr);
+                                    AnscCopyString((char*)(pMyObject->pBoundaryStr + 2), (char*)pBoundaryStr);
 
                                     returnStatus = pMdhIf->Begin((ANSC_HANDLE)pMdhIf, pBmo->GetWebSessionId((ANSC_HANDLE)pBmo));
                                 }
@@ -452,15 +451,10 @@ HttpMboCloseUp
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject           = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf              = (PHTTP_BCC_INTERFACE      )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp         = (PANSC_BUFFER_DESCRIPTOR  )hBdo;
     PANSC_BUFFER_DESCRIPTOR         pNewBodyBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo           = NULL;
-    ULONG                           ulPredictedBodySize = 0;
-    ULONG                           ulArrivedBodySize   = 0;
-    ULONG                           ulTotalPackedSize   = 0;
-
+    
     switch ( pMyObject->State )
     {
         case    HTTP_MBO_STATE_EMPTY :
@@ -573,15 +567,11 @@ HttpMboOutput
         ANSC_HANDLE                 hSerializeContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject         = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf            = (PHTTP_BCC_INTERFACE      )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo          = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = NULL;
-    PVOID                           pSerializedBuffer = NULL;
-    ULONG                           ulSerializedSize  = 0;
-
+    
     AnscAcquireLock(&pMyObject->BdoQueueLock);
 
     pSLinkEntry = AnscQueueGetFirstEntry(&pMyObject->BdoQueue);
@@ -591,8 +581,7 @@ HttpMboOutput
         pBodyBdo    = ACCESS_ANSC_BUFFER_DESCRIPTOR(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        returnStatus =
-            pBccIf->Serialize
+        pBccIf->Serialize
                 (
                     pBccIf->hOwnerContext,
                     AnscBdoGetBlock    (pBodyBdo),
@@ -638,10 +627,7 @@ HttpMboRemoveCoding
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
-    PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE      )pMyObject->hBccIf;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

@@ -114,9 +114,7 @@ WebSsoGetSiteManager
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hWebSiteManager;
 }
@@ -152,9 +150,7 @@ WebSsoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hHfpIf;
 }
@@ -195,7 +191,6 @@ WebSsoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject         = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty         = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
@@ -252,12 +247,7 @@ WebSsoGetFumIf
         ANSC_HANDLE                 hInterface*/
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject         = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty         = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-    PHTTP_SIMPLE_SERVER_OBJECT      pHttpSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT )NULL;
-    PWEB_SITE_MANAGER_OBJECT        pWebSiteManager   = (PWEB_SITE_MANAGER_OBJECT   )pMyObject->hWebSiteManager;
-    ULONG                           i                 = 0;
 
     return pMyObject->hFumIf;
 }
@@ -293,9 +283,7 @@ WebSsoGetCspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hCspIf;
 }
@@ -331,9 +319,7 @@ WebSsoGetServerMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->ServerMode;
 }
@@ -374,9 +360,7 @@ WebSsoSetServerMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     pMyObject->ServerMode = ulMode;
 
@@ -419,7 +403,6 @@ WebSsoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -464,7 +447,6 @@ WebSsoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -504,7 +486,6 @@ WebSsoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -547,9 +528,6 @@ WebSsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

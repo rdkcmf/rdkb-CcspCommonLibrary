@@ -84,6 +84,7 @@
 #include "user_base.h"
 #include "ansc_wrapper_base.h"
 #include "ansc_common_structures.h"
+#include "slap_vho_exported_api.h"
 
 /*
  * All network protocol messages must be defined without any packing. While most protocols were
@@ -576,7 +577,7 @@ SLAP_VARIABLE,  *PSLAP_VARIABLE;
 #define  SlapMib2ConvertMibValue                    SlapMib2DboConvertMibValue
 
 #define  SlapResolveInvokeParam(method_descr, input_param_list, index)                      \
-         (method_descr->ParamListI->ParamArray[index].Syntax == SLAP_VAR_SYNTAX_variable)? &input_param_list->ParamArray[index] : (void*)(&(input_param_list->ParamArray[index].Variant.varBool))
+         (method_descr->ParamListI->ParamArray[index].Syntax == SLAP_VAR_SYNTAX_variable)? &input_param_list->ParamArray[index] : (void *)input_param_list->ParamArray[index].Variant.varBool
 
 #define  SlapImcpGetVarSize(slap_var, imcp_var_size)                                        \
          {                                                                                  \
@@ -721,7 +722,8 @@ SLAP_PARAMETER_LIST,  *PSLAP_PARAMETER_LIST;
 
 #define  SlapCloneParamList(src_list, dst_list)                                             \
          {                                                                                  \
-            SlapVhoCloneParamList((ANSC_HANDLE)NULL, src_list, &dst_list);                  \
+            ANSC_HANDLE dst_param_list = (ANSC_HANDLE)dst_list;                             \
+            SlapVhoCloneParamList((ANSC_HANDLE)NULL, src_list, &dst_param_list);            \
          }
 
 #define  SlapCleanParamList(tbc_list)                                                       \

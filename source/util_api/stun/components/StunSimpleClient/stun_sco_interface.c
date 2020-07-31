@@ -116,8 +116,6 @@ StunCreateSimpleClient
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSTUN_SIMPLE_CLIENT_OBJECT      pStunSimpleClient = NULL;
 
     return  StunScoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

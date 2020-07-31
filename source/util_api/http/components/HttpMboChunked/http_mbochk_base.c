@@ -119,7 +119,7 @@ HttpMboChkCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpMboChkRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject         = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
 
     pMyObject->ClearChunkInfos((ANSC_HANDLE)pMyObject);
@@ -229,7 +228,6 @@ HttpMboChkEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
 
     HttpMboEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,7 +269,6 @@ HttpMboChkInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
 
     /*

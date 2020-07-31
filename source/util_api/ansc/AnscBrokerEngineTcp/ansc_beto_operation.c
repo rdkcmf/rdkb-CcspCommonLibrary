@@ -107,7 +107,6 @@ AnscBetoStart
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->bStarted )
@@ -125,7 +124,6 @@ AnscBetoStart
     if ( TRUE )
     {
         AnscResetEvent(&pMyObject->RecvEvent);
-        returnStatus =
             AnscSpawnTask
                 (
                     (void*)pMyObject->RecvTask,
@@ -137,7 +135,6 @@ AnscBetoStart
     if ( pMyObject->ControlFlags & ANSC_BETO_FLAG_ASYNC_SEND )
     {
         AnscResetEvent(&pMyObject->SendEvent);
-        returnStatus =
             AnscSpawnTask
                 (
                     (void*)pMyObject->SendTask,
@@ -180,7 +177,6 @@ AnscBetoStop
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
 
     if ( !pMyObject->bStarted )
@@ -236,7 +232,6 @@ AnscBetoCancel
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BSTO_WORKER_OBJECT        pWorker      = (PANSC_BSTO_WORKER_OBJECT      )pServer->hWorker;
@@ -265,7 +260,6 @@ AnscBetoCancel
 
         AnscQueuePopEntryByLink(&pMyObject->PacketQueue, &pPacket->Linkage);
 
-        returnStatus =
             pWorker->SendComplete
                 (
                     pWorker->hWorkerContext,
@@ -279,7 +273,7 @@ AnscBetoCancel
 
     AnscReleaseLock(&pMyObject->PacketQueueLock);
 
-    return  ANSC_STATUS_SUCCESS;
+    return ANSC_STATUS_SUCCESS; 
 }
 
 
@@ -325,7 +319,7 @@ AnscBetoClean
 
     if ( !pMyObject->bStarted )
     {
-        return  ANSC_STATUS_SUCCESS;
+        return  returnStatus;
     }
     /*
     else if ( pMyObject->ControlFlags & ANSC_BETO_FLAG_NO_TIMEOUT )
@@ -372,7 +366,6 @@ AnscBetoClean
 
         if ( bSocketFound )
         {
-            returnStatus =
                 pWorker->Notify
                     (
                         pWorker->hWorkerContext,
@@ -381,7 +374,6 @@ AnscBetoClean
                         (ANSC_HANDLE)NULL
                     );
 
-            returnStatus =
                 pMyObject->DelSocket
                     (
                         (ANSC_HANDLE)pMyObject,

@@ -105,15 +105,12 @@ AnscScuoRecvTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
     PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
     char*                           recv_buffer  = NULL;
     ULONG                           ulBufferSize = 0;
     int                             recv_size    = 0;
     int                             s_result     = 0;
-    int                             s_error      = 0;
-    int                             i            = 0;
     ansc_fd_set                     ansc_read_fd_set;
     ansc_timeval                    ansc_timeval;
     ansc_socket_addr_in             ansc_peer_addr;
@@ -179,11 +176,9 @@ AnscScuoRecvTask
         else if ( ( (pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET) && (s_result == XSKT_SOCKET_ERROR)) ||
                   (!(pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET) && (s_result == ANSC_SOCKET_ERROR)) )
         {
-            s_error = (pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET)? _xskt_get_last_error() : _ansc_get_last_error();
 
             if ( pMyObject->bActive )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -213,7 +208,6 @@ AnscScuoRecvTask
 
         if ( !recv_buffer )
         {
-            returnStatus =
                 pWorker->Notify
                     (
                         pWorker->hWorkerContext,
@@ -235,7 +229,7 @@ AnscScuoRecvTask
             xskt_peer_addr.sin_port                                     = _xskt_htons(pMyObject->PeerPort);
             addrlen                                                     = sizeof(xskt_peer_addr);
 
-            s_result = _xskt_recvfrom((XSKT_SOCKET)pMyObject->Socket, recv_buffer, recv_size, 0, (xskt_socket_addr*)&xskt_peer_addr, &addrlen);
+            s_result = _xskt_recvfrom((XSKT_SOCKET)pMyObject->Socket, recv_buffer, recv_size, 0, (xskt_socket_addr*)&xskt_peer_addr, (socklen_t *)&addrlen);
         }
         else
         {
@@ -244,13 +238,12 @@ AnscScuoRecvTask
             ansc_peer_addr.sin_port        = _ansc_htons(pMyObject->PeerPort);
             addrlen                        = sizeof(ansc_peer_addr);
 
-            s_result = _ansc_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (ansc_socket_addr*)&ansc_peer_addr, &addrlen);
+            s_result = _ansc_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (ansc_socket_addr*)&ansc_peer_addr, (socklen_t *)&addrlen);
         }
 
         if ( ( (pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET) && (s_result == XSKT_SOCKET_ERROR)) ||
              (!(pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET) && (s_result == ANSC_SOCKET_ERROR)) )
         {
-            s_error = (pMyObject->Mode & ANSC_SCUO_MODE_XSOCKET)? _xskt_get_last_error() : _ansc_get_last_error();
 
             /*
             if ( pMyObject->bActive )
@@ -320,7 +313,6 @@ AnscScuoRecvTask
          * owener though may not use up the whole buffer. Now is time to notify our loyal socket
          * owner about this exciting event.
          */
-        returnStatus =
             pMyObject->Recv
                 (
                     (ANSC_HANDLE)pMyObject,

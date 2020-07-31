@@ -169,12 +169,6 @@ ScliShoIceReadInput
         char**                      pTextInput
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_SESSION_EXEC        pSession        = (PSCLI_SHELL_SESSION_EXEC )hThisObject;
-    PSCLI_SHELL_EXEC_ENV            pScliExecEnv    = (PSCLI_SHELL_EXEC_ENV     )pSession->hCeeExecEnv;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv        = (PTELNET_CMD_EXECUTION_ENV)pScliExecEnv->hTelnetEnv;
-    PTELNET_TSC_INTERFACE           pTscIf          = (PTELNET_TSC_INTERFACE    )pExecEnv->hTscIf;
-    PSCLI_SHELL_OBJECT              pScliShellObj   = (PSCLI_SHELL_OBJECT       )pSession->hScliShellObj;
 
     return ScliShoIceReadInput2(hThisObject, (ANSC_HANDLE)NULL, pTextInput);
 }
@@ -243,17 +237,14 @@ ScliShoIceReadInput2
 
     if ( pTextBoxInfo && pTextBoxInfo->Width != 0 )
     {
-        PUCHAR                      pDefValue       = pTextBoxInfo->DefaultValue;
-        ULONG                       ulDefValueLen   = pDefValue ? AnscSizeOfString(pDefValue) : 0;
-        ULONG                       ulSpaceNum;
-        ULONG                       ulBackCount     = 1 + pTextBoxInfo->Width;
+        PUCHAR                      pDefValue       = (PUCHAR)pTextBoxInfo->DefaultValue;
+        ULONG                       ulDefValueLen   = pDefValue ? AnscSizeOfString((const char *)pDefValue) : 0;
 
         if ( ulDefValueLen > pTextBoxInfo->Width )
         {
             ulDefValueLen   = pTextBoxInfo->Width;
         }
 
-        ulSpaceNum  = pTextBoxInfo->Width - ulDefValueLen;
 
         returnStatus =
             pTscIf->Output
@@ -344,8 +335,8 @@ ScliShoIceReadInput2
         {
             pSession->bWaitInput    = TRUE;
 
-            AnscWaitEvent(&pSession->InputEvent, 0xFFFFFFFF);
-            AnscResetEvent(&pSession->InputEvent);
+            AnscWaitEvent((PSEM_EVENT *)&pSession->InputEvent, 0xFFFFFFFF);
+            AnscResetEvent((PSEM_EVENT *)&pSession->InputEvent);
 
             returnStatus = 
                 pScliShellObj->GetBufferedCmd
@@ -388,7 +379,7 @@ ScliShoIceReadInput2
 
     if ( pTextInput )
     {
-        *pTextInput = pCmd;
+        *pTextInput = (char *)pCmd;
     }
     else
     {
@@ -439,7 +430,6 @@ ScliShoIceClearScreen
     PSCLI_SHELL_SESSION_EXEC        pSession        = (PSCLI_SHELL_SESSION_EXEC )hThisObject;
     PSCLI_SHELL_EXEC_ENV            pScliExecEnv    = (PSCLI_SHELL_EXEC_ENV     )pSession->hCeeExecEnv;
     PTELNET_CMD_EXECUTION_ENV       pExecEnv        = (PTELNET_CMD_EXECUTION_ENV)pScliExecEnv->hTelnetEnv;
-    PTELNET_TSC_INTERFACE           pTscIf          = (PTELNET_TSC_INTERFACE    )pExecEnv->hTscIf;
     PSCLI_SHELL_OBJECT              pScliShellObj   = (PSCLI_SHELL_OBJECT       )pSession->hScliShellObj;
 
     returnStatus =

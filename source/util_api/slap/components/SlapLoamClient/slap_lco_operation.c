@@ -196,11 +196,9 @@ SlapLcoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT     )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY   )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT   )pMyObject->hAnscLpcConnector;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pPatrolTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hPatrolTimerObj;
 
     if ( !pMyObject->bActive )
@@ -219,7 +217,7 @@ SlapLcoCancel
 
     if ( TRUE )
     {
-        returnStatus = pMyObject->CloseEnv((ANSC_HANDLE)pMyObject);
+        pMyObject->CloseEnv((ANSC_HANDLE)pMyObject);
     }
 
     if ( pProperty->bMobilityOn )
@@ -267,11 +265,9 @@ SlapLcoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
 
     if ( pProperty->bMobilityOn && pSlapEnvController )
@@ -326,19 +322,16 @@ SlapLcoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
 
     if ( pProperty->bMobilityOn && pSlapEnvController )
     {
         pSlapUoaIf = (PSLAP_UOA_INTERFACE)pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
 
-        returnStatus =
-            pSlapUoaIf->DeleteContainer
+        pSlapUoaIf->DeleteContainer
                 (
                     pSlapUoaIf->hOwnerContext,
                     pMyObject->hMobileContainer
@@ -379,9 +372,7 @@ SlapLcoPatrolTimerInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject         = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_LOA_OBJECT_STUB           pObjectStub       = (PSLAP_LOA_OBJECT_STUB     )NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr        = (PANSC_LPC_PARTY_ADDR      )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY        )NULL;
@@ -415,8 +406,7 @@ SlapLcoPatrolTimerInvoke
 
                 if ( pPartyAddr )
                 {
-                    returnStatus =
-                        pMyObject->LoaRelObjectAccess2
+                    pMyObject->LoaRelObjectAccess2
                             (
                                 (ANSC_HANDLE)pMyObject,
                                 pObjectStub->hLpcPartyAddr,

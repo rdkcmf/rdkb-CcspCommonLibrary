@@ -83,7 +83,7 @@ _ansc_socket_fd_get
     {
 	    /*UserTrace("%X\n", pSet->set.fds_bits[iArrayIndex]);*/
 
-        for ( iBitIndex = 0; iBitIndex < NFDBITS; iBitIndex ++ )
+        for ( iBitIndex = 0; (unsigned int)iBitIndex < NFDBITS; iBitIndex ++ )
         {
 #ifdef __USE_XOPEN
             if( pSet->set.fds_bits[iArrayIndex] & (1 << iBitIndex) )
@@ -124,7 +124,7 @@ _ansc_socket_fd_get
 int
 send_all (int fd, char *buf, int bufsize, int c)
 {
-  int res;
+  int res =0;
   while (bufsize > 0)
   {
 	  do

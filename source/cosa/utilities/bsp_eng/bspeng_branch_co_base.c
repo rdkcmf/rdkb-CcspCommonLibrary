@@ -117,6 +117,9 @@ BspTemplateBranchCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_BRANCH_OBJECT     pMyObject    = NULL;
 
     /*
@@ -192,6 +195,10 @@ BspTemplateBranchCORemove
 
         switch (type)
         {
+        case BspBranch_eEmpty:
+        case BspBranch_eNumber:
+        case BspBranch_eReal:
+        case BspBranch_eVar:
         case BspBranch_eBranch:
             pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)pBrObject->right.Value.b;
             if (pBr)
@@ -234,6 +241,10 @@ BspTemplateBranchCORemove
 
         switch (type)
         {
+        case BspBranch_eEmpty:
+        case BspBranch_eNumber:
+        case BspBranch_eReal:
+        case BspBranch_eVar:
         case BspBranch_eBranch:
             pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)pBrObject->left.Value.b;
             if (pBr)

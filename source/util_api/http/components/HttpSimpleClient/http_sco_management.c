@@ -87,7 +87,7 @@
 
 
 #include "http_sco_global.h"
-
+#include "ansc_crypto_external_api.h"
 
 /**********************************************************************
 
@@ -119,9 +119,7 @@ HttpScoAcquireWcso
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -194,9 +192,7 @@ HttpScoReleaseWcso
         ANSC_HANDLE                 hWcso
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = (PHTTP_WEBC_SESSION_OBJECT   )hWcso;
 
     pWebcSession->AcquireAccess((ANSC_HANDLE)pWebcSession);
@@ -251,9 +247,7 @@ HttpScoManufactureWcsoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = NULL;
     ULONG                           i            = 0;
 
@@ -320,9 +314,7 @@ HttpScoDestroyWcsoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -374,9 +366,7 @@ HttpScoAcquireWcto
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -447,9 +437,7 @@ HttpScoReleaseWcto
         ANSC_HANDLE                 hWcto
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = (PHTTP_WEBC_TRANS_OBJECT     )hWcto;
 
     pWebcTrans->Reset((ANSC_HANDLE)pWebcTrans);
@@ -500,9 +488,7 @@ HttpScoManufactureWctoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     ULONG                           i            = 0;
 
@@ -569,9 +555,7 @@ HttpScoDestroyWctoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -623,9 +607,7 @@ HttpScoAcquireBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -699,9 +681,7 @@ HttpScoReleaseBmoReq
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
 
     pBmoReq->Reset((ANSC_HANDLE)pBmoReq);
@@ -752,9 +732,7 @@ HttpScoManufactureBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     ULONG                           i            = 0;
@@ -824,9 +802,7 @@ HttpScoDestroyBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -878,9 +854,7 @@ HttpScoAcquireBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -954,9 +928,7 @@ HttpScoReleaseBmoRep
         ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
 
     pBmoRep->Reset((ANSC_HANDLE)pBmoRep);
@@ -1007,9 +979,7 @@ HttpScoManufactureBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     ULONG                           i            = 0;
@@ -1079,9 +1049,7 @@ HttpScoDestroyBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -1144,9 +1112,8 @@ HttpScoSetPeerAddresses
         PBOOL                       pbSameAsCurrent
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    ANSC_STATUS returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_SCO_HOST_ADDRESSES        pCurAddr     = (PHTTP_SCO_HOST_ADDRESSES    )&pMyObject->PeerAddresses;
     PHTTP_SCO_HOST_ADDRESSES        pNewAddr     = (PHTTP_SCO_HOST_ADDRESSES    )hPeerAddresses;
     BOOL                            bSame        = TRUE;
@@ -1247,10 +1214,7 @@ HttpScoGetNextPeerAddr
     ULONG                           SPMode       = pProperty->SPMode;
     ULONG                           ulPeers      = pCurAddr->NumPeers;
     ULONG                           ulLastPicked = pMyObject->LastPicked;
-    ULONG                           ulPeerAddr   = 0;
-
-    *pPeerAddr  = 0;
-
+    
     switch ( SPMode )
     {
         default:
@@ -1370,7 +1334,6 @@ HttpScoGetCurPeerAddr
     )
 {
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_SCO_HOST_ADDRESSES        pCurAddr     = (PHTTP_SCO_HOST_ADDRESSES    )&pMyObject->PeerAddresses;
     ULONG                           ulPeers      = pCurAddr->NumPeers;
     ULONG                           ulLastPicked = pMyObject->LastPicked;
@@ -1424,7 +1387,6 @@ HttpScoResetPeerAddrPick
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_SCO_HOST_ADDRESSES        pCurAddr     = (PHTTP_SCO_HOST_ADDRESSES    )&pMyObject->PeerAddresses;
     ULONG                           i, ulIndex   = (ULONG)-1;
 

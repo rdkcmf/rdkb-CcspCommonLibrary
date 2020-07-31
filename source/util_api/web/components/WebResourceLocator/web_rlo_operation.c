@@ -107,7 +107,6 @@ WebRloEngage
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
     if ( pMyObject->bActive )
     {
@@ -154,7 +153,6 @@ WebRloCancel
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
     if ( !pMyObject->bActive )
     {

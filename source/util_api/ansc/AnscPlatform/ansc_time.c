@@ -111,7 +111,7 @@ g_usDaysOfYearInMonth[2][13] =
 };
 
 #define  ANSC_TIME_YEAR_1970                        1970
-#define  ANSC_TIME_SECONDS_FROM_1900_TO_1970        2208988800 
+#define  ANSC_TIME_SECONDS_FROM_1900_TO_1970        2208988800LL
 #define  ANSC_TIME_SECONDS_IN_DAY                   86400
 #define  ANSC_TIME_SECONDS_IN_HOUR                  3600
 #define	 ANSC_TIME_HOURS_IN_DAY	                    24
@@ -150,13 +150,7 @@ AnscCalendarToSecondFromEpoch
         ANSC_HANDLE                 hCalendar
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_UNIVERSAL_TIME            pCalendar      = (PANSC_UNIVERSAL_TIME)hCalendar;
-    INT                             bIsInDST       = FALSE;
-    LONG                            lDSTOffset     = 0;
-    INT                             iShiftMonth    = 0;
-    INT                             iYear          = pCalendar->Year;
-    ULONG                           ulOverflowNum  = 0;
     ULONG                           ulNewTime      = 0;
     ULONG                           ulLeapsToDate  = 0;
     ULONG                           ulYDay         = 0;

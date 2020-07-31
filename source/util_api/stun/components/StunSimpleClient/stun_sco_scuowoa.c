@@ -117,7 +117,8 @@ StunScoScuowoAQuery
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT)hThisObject;
 
     if ( !pMyObject->bActive )
@@ -172,11 +173,7 @@ StunScoScuowoAProcess
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
-    PSTUN_BSM_INTERFACE             pStunBsmIf        = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader       = (PSTUN_HEADER                  )buffer;
-    PUCHAR                          pMsgFirstByte     = (PUCHAR                        )buffer;
 
     if ( !pMyObject->bActive )
     {
@@ -263,11 +260,9 @@ StunScoScuowoANotify
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
-    PSTUN_BSM_INTERFACE             pStunBsmIf        = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulEvent);
+    UNREFERENCED_PARAMETER(hReserved);
 
     return  ANSC_STATUS_SUCCESS;
 }

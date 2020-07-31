@@ -105,7 +105,6 @@ AnscDetoSendTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     ansc_fd_set*                    pSendSet1    = (ansc_fd_set*                  )pMyObject->SendSocketSet;
     xskt_fd_set*                    pSendSet2    = (xskt_fd_set*                  )pMyObject->SendSocketSet;
@@ -116,7 +115,6 @@ AnscDetoSendTask
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     BOOL                            bSendable    = FALSE;
     int                             s_result     = 0;
-    int                             s_error      = 0;
 
     AnscTrace("AnscDetoSendTask is activated ...!\n");
 
@@ -150,7 +148,6 @@ AnscDetoSendTask
 
         if ( !bSendable )
         {
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,
@@ -180,11 +177,11 @@ AnscDetoSendTask
                         s_result = -1; /*XSKT_SOCKET_ERROR == ANSC_SOCKET_ERROR == -1*/
                         break;
                     }
-                    s_result = openssl_write (pSocket->Socket, buffer, size, pSocket->hTlsConnection);
+                    s_result = openssl_write (pSocket->Socket, (char *)buffer, size, pSocket->hTlsConnection);
                 }
                 else
                 {
-                    s_result = _ansc_send (pSocket->Socket, buffer, size, 0);
+                    s_result = _ansc_send (pSocket->Socket, (char *)buffer, size, 0);
                 }
 
                 if (s_result <= 0)
@@ -211,9 +208,7 @@ AnscDetoSendTask
         if ( ((s_result == XSKT_SOCKET_ERROR) &&  (pServer->Mode & ANSC_DSTO_MODE_XSOCKET)) ||
              ((s_result == ANSC_SOCKET_ERROR) && !(pServer->Mode & ANSC_DSTO_MODE_XSOCKET)) )
         {
-            s_error = (pServer->Mode & ANSC_DSTO_MODE_XSOCKET)? _xskt_get_last_error() : _ansc_get_last_error();
 
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,
@@ -226,7 +221,6 @@ AnscDetoSendTask
         }
         else
         {
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,

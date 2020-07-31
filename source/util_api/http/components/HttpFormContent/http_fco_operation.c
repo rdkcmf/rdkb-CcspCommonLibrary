@@ -105,7 +105,6 @@ HttpFcoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject     = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_FORM_INPUT                pUriParams    = (PHTTP_FORM_INPUT         )pMyObject->hUriParams;
@@ -136,7 +135,7 @@ HttpFcoEngage
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
 
     pQueryString = pReqInfo->RequestUri.QueryParams;
-    pRawFormData = HttpBmoReqCgiGetFormContent(pBmoReq);
+    pRawFormData = (char*)HttpBmoReqCgiGetFormContent(pBmoReq);
 
     if ( !pQueryString && !pRawFormData )
     {
@@ -151,8 +150,7 @@ HttpFcoEngage
     else if ( pBmoReq->GetMethod((ANSC_HANDLE)pBmoReq) == HTTP_METHOD_CODE_POST )
     {
         ulEncType1   = HTTP_HFP_FORM_ENCTYPE_URLENCODED;
-        returnStatus =
-        	HttpBmoReqCgiGetContentType((ANSC_HANDLE)pBmoReq, &ulMediaType, &ulSubType);
+           	HttpBmoReqCgiGetContentType((ANSC_HANDLE)pBmoReq, &ulMediaType, &ulSubType);
 
         if ( (ulMediaType == IANA_MEDIA_TYPE_CODE_APPLICATION       ) &&
              (ulSubType   == IANA_MT_AP_STYPE_CODE_X_FORM_URLENCODED) )
@@ -216,7 +214,7 @@ HttpFcoEngage
 
             case    HTTP_HFP_FORM_ENCTYPE_MULTIPART :
 
-                    pBoundaryStr = HttpBmoReqCgiGetBoundaryDelimiter((ANSC_HANDLE)pBmoReq);
+                    pBoundaryStr = (char*)HttpBmoReqCgiGetBoundaryDelimiter((ANSC_HANDLE)pBmoReq);
 
                     if ( pBoundaryStr )
                     {
@@ -261,7 +259,7 @@ HttpFcoEngage
         for ( i = 0; i < pUriParams->ElementCount; i++ )
         {
             pFormElement = &pUriParams->ElementArray[i];
-            returnStatus = pMyObject->AddFormElement((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pFormElement);
+            pMyObject->AddFormElement((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pFormElement);
         }
     }
 
@@ -270,7 +268,7 @@ HttpFcoEngage
         for ( i = 0; i < pFormInput->ElementCount; i++ )
         {
             pFormElement = &pFormInput->ElementArray[i];
-            returnStatus = pMyObject->AddFormElement((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pFormElement);
+            pMyObject->AddFormElement((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pFormElement);
         }
     }
 #endif

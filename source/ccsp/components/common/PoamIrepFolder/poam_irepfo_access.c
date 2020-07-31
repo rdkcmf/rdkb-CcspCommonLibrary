@@ -128,7 +128,6 @@ PoamIrepFoGetFolderName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject        = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     PCHAR                           pName            = NULL;
     PCHAR                           pName2           = NULL;
@@ -138,11 +137,11 @@ PoamIrepFoGetFolderName
     {
         /* get C from A.B.C. */
         
-        pName = &pMyObject->Name[ AnscSizeOfString(pMyObject->Name) - 1 ];
+        pName = (PCHAR)&pMyObject->Name[ AnscSizeOfString((const char *)pMyObject->Name) - 1 ];
         pName2 = pName;
         
         pName--; /* skip last '.' */
-        while( ( *pName != '.' ) && ( pName != &pMyObject->Name[0] ) ) pName--;
+        while( ( *pName != '.' ) && ( pName != (CHAR*)&pMyObject->Name[0] ) ) pName--;
         if ( *pName == '.' )
         {
             pName++;
@@ -254,7 +253,6 @@ PoamIrepFoGetFolderByIndex
         SLAP_UINT32                 ulIndex
     )
 {
-    INT                             ret                                 = CCSP_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
     PCHAR                           pName                               = NULL;
@@ -326,6 +324,7 @@ PoamIrepFoAddFolder
         SLAP_UINT32                 ulReserved
     )
 {
+    UNREFERENCED_PARAMETER(ulReserved);
     return PoamIrepFoGetFolder( hThisObject, pSubFolderName);
 }
 
@@ -413,8 +412,6 @@ PoamIrepFoGetFolderCount
 {
     INT                             ret                                 = CCSP_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
-    CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PCCSP_BASE_RECORD               pRecordArray                        = NULL;
     UINT                            NumOfRecord                         = 0;
     UINT                            Count                               = 0;
@@ -425,7 +422,7 @@ PoamIrepFoGetFolderCount
             (
                 hIrep,
                 g_SubSysPrefix_Irep,
-                pMyObject->Name,
+                (const char * const)pMyObject->Name,
                 1,
                 &NumOfRecord,
                 &pRecordArray
@@ -494,7 +491,6 @@ PoamIrepFoEnumFolder
 {
     INT                             ret                                 = CCSP_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PCCSP_BASE_RECORD               pRecordArray                        = NULL;
     UINT                            NumOfRecord                         = 0;
@@ -507,7 +503,7 @@ PoamIrepFoEnumFolder
             (
                 hIrep,
                 g_SubSysPrefix_Irep,
-                pMyObject->Name,
+                (const char * const)pMyObject->Name,
                 1,
                 &NumOfRecord,
                 &pRecordArray
@@ -594,6 +590,9 @@ PoamIrepFoSortFolder
         BOOL                        bAscending
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulSortingType);
+    UNREFERENCED_PARAMETER(bAscending);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -638,6 +637,7 @@ PoamIrepFoGetRecord
         SLAP_UINT32*                pulRecordType
     )
 {
+    UNREFERENCED_PARAMETER(pulRecordType);
     INT                             ret                                 = CCSP_SUCCESS;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
@@ -715,6 +715,9 @@ PoamIrepFoGetRecordByIndex
         SLAP_UINT32*                pulRecordType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(pulRecordType);
     return NULL;
 }
 
@@ -763,6 +766,10 @@ PoamIrepFoGetRecordByIndex2
         char**                      ppRecordName
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(pulRecordType);
+    UNREFERENCED_PARAMETER(ppRecordName);
     return NULL;
 }
 
@@ -823,7 +830,7 @@ PoamIrepFoSetRecord
                 ulRecordType, 
                 ulContentType, 
                 pRecordVar,
-                NULL
+                (intptr_t)NULL
              );
 }
 
@@ -882,13 +889,12 @@ PoamIrepFoAddRecord
         ULONG                       ulReserved
     )
 {
+    UNREFERENCED_PARAMETER(ulContentType);
+    UNREFERENCED_PARAMETER(ulReserved);
     ANSC_STATUS                     returnStatus                        = ANSC_STATUS_SUCCESS;
     INT                             ret                                 = CCSP_SUCCESS;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    UINT                            Type                                = 0;
-    SLAP_VARIABLE                   Value                               = {0};
-    INT                             psmType                             = 0;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
     
     /* Get the full name */
@@ -996,6 +1002,7 @@ PoamIrepFoGetRecordCount
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return 0;
 }
 
@@ -1029,6 +1036,7 @@ PoamIrepFoGetRecordArray
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return NULL;
 }
 
@@ -1078,6 +1086,10 @@ PoamIrepFoEnumRecord
         SLAP_UINT32*                pulRecordSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(pulRecordType);
+    UNREFERENCED_PARAMETER(pulRecordSize);
     return NULL;
 }
 
@@ -1121,6 +1133,9 @@ PoamIrepFoSortRecord
         BOOL                        bAscending
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulSortingType);
+    UNREFERENCED_PARAMETER(bAscending);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -1155,7 +1170,6 @@ PoamIrepFoClear
     )
 {
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    ANSC_STATUS                     returnStatus                        = ANSC_STATUS_SUCCESS;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
 
@@ -1168,7 +1182,7 @@ PoamIrepFoClear
     
     PSM_Del_Record( hIrep, g_SubSysPrefix_Irep, fullName );
 
-    return returnStatus;
+    return ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1202,6 +1216,7 @@ PoamIrepFoClose
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -1241,9 +1256,10 @@ PoamIrepFoEnableFileSync
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus                        = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(bEnabled);
 
-    return returnStatus;
+    return ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1286,7 +1302,6 @@ PoamIrepFoDelRecordRecursive
     ANSC_STATUS                     returnStatus                        = ANSC_STATUS_SUCCESS;
     INT                             ret                                 = CCSP_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PCCSP_BASE_RECORD               pRecordArray                        = NULL;
     UINT                            NumOfRecord                         = 0;

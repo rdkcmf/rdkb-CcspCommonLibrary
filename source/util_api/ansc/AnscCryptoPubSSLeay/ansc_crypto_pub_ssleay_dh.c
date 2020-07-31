@@ -76,6 +76,7 @@ AnscCryptoPubSSLeayGenDHKeyPairRandomly
         PANSC_CRYPTO_DH_PARAMETERS  pDH
     )
 {
+    UNREFERENCED_PARAMETER(pDH);
 	return ANSC_STATUS_SUCCESS;
 }
 
@@ -111,6 +112,7 @@ AnscCryptoPubSSLeayAgreeDHSharedSecret
         PANSC_CRYPTO_DH_PARAMETERS  pDH
     )
 {
+    UNREFERENCED_PARAMETER(pDH);
     return  ANSC_STATUS_SUCCESS;
 }
 

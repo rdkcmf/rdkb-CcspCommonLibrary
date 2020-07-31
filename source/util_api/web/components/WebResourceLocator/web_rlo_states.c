@@ -108,9 +108,7 @@ WebRloGetRootUriPath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hRootUriPath;
 }
@@ -151,7 +149,6 @@ WebRloGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
     PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
@@ -196,7 +193,6 @@ WebRloSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
     PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
@@ -236,7 +232,6 @@ WebRloResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
     PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
 
@@ -276,9 +271,7 @@ WebRloReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty    = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
     PWEB_URI_PATH_OBJECT            pRootUriPath = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
 
     pRootUriPath->Reset((ANSC_HANDLE)pRootUriPath);

@@ -116,7 +116,6 @@ AnscLpccoGetPartyCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     ULONG                           ulPartyCount = 0;
     ULONG                           i            = 0;
@@ -174,7 +173,6 @@ AnscLpccoGetPartyArray
         PULONG                      pulCount
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject       = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddrArray = (PANSC_LPC_PARTY_ADDR      )NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr      = (PANSC_LPC_PARTY_ADDR      )NULL;
@@ -277,7 +275,6 @@ AnscLpccoGetPartyAddr
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -348,7 +345,6 @@ AnscLpccoGetPartyAddr2
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -419,7 +415,6 @@ AnscLpccoAddPartyAddr
         ANSC_HANDLE                 party_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )party_addr;
     char*                           pPartyName   = (char*                     )pPartyAddr->PartyName;
@@ -499,7 +494,6 @@ AnscLpccoDelPartyAddr
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -565,7 +559,6 @@ AnscLpccoDelAllPartyAddrs
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -632,7 +625,6 @@ AnscLpccoGetPendingCall
         ULONG                       seq_number
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -716,7 +708,6 @@ AnscLpccoPopPendingCall
         ANSC_HANDLE                 output_bdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -808,7 +799,6 @@ AnscLpccoAddPendingCall
         ANSC_HANDLE                 hPendingCall
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )hPendingCall;
 
@@ -860,7 +850,6 @@ AnscLpccoDelPendingCall
         ULONG                       seq_number
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -927,7 +916,6 @@ AnscLpccoPopAllPendingCalls
         ULONG                       error_code
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;
@@ -986,7 +974,6 @@ AnscLpccoDelAllPendingCalls
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPCCO_PENDING_CALL        pPendingCall = (PANSC_LPCCO_PENDING_CALL  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY        )NULL;

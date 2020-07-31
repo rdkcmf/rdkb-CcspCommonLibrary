@@ -117,8 +117,6 @@ AnscCreateDaemonSocketUdp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_SOCKET_UDP_OBJECT  pDaemonSocketUdp = NULL;
 
     return  AnscDkuoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -108,9 +108,7 @@ SlapOmoGetRootObjBroker
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty    = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hRootObjBroker;
 }
@@ -151,7 +149,6 @@ SlapOmoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
     PSLAP_OBJ_MAPPER_PROPERTY       pProperty    = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
 
@@ -196,7 +193,6 @@ SlapOmoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
     PSLAP_OBJ_MAPPER_PROPERTY       pProperty    = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
 
@@ -236,7 +232,6 @@ SlapOmoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
     PSLAP_OBJ_MAPPER_PROPERTY       pProperty    = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
 
@@ -276,10 +271,6 @@ SlapOmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty      = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

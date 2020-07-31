@@ -117,8 +117,5 @@ TlsCreateSessionEntry
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PTLS_SESSION_ENTRY_OBJECT       pTlsSessionEntry = NULL;
-
     return  TlsSeoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

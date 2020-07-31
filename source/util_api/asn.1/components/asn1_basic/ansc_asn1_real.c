@@ -368,6 +368,7 @@ AnscAsn1RealEqualsTo
         BOOLEAN                     bValueOnly
     )
 {
+    UNREFERENCED_PARAMETER(bValueOnly);
     PANSC_ASN1_REAL                 pMyObject  = (PANSC_ASN1_REAL)hThisObject;
     PANSC_ASN1_REAL                 pNewObject = (PANSC_ASN1_REAL)hOtherObject;
 
@@ -692,8 +693,7 @@ AnscAsn1RealEncodingData
      * shortcut pointer to a char array
      */
     PUCHAR                          pCharData       = (PUCHAR)*ppEncoding;
-    PUCHAR                          pBackData       = pCharData;
-
+    
     /*
      * If it's optional, don't need encode
      */
@@ -822,7 +822,7 @@ AnscAsn1RealDumpObject
         BOOLEAN                     bShowValue
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_REAL                 pMyObject       = (PANSC_ASN1_REAL)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -916,7 +916,8 @@ AnscAsn1RealTraceObject
         BOOLEAN                     bRecursive
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_REAL                 pMyObject        = (PANSC_ASN1_REAL)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;

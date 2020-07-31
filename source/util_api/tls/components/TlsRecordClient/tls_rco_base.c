@@ -119,6 +119,7 @@ TlsRcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_RECORD_CLIENT_OBJECT       pMyObject    = NULL;
 

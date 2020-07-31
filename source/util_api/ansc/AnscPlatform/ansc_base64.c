@@ -138,13 +138,13 @@ AnscBase64DecodeLine
         if (length > 0)
         {
             int                     count   = 0, rem = 0;
-            const char*             tmp     = pString;
+            const char*             tmp     = (char *)pString;
 
             while (length > 0)
             {
                 int                 skip;
                 
-                skip    = _ansc_strspn((PUCHAR)tmp, (PUCHAR)ANSC_BASE64_CODES);
+                skip    = _ansc_strspn(tmp, (const char*)ANSC_BASE64_CODES);
                 count   += skip;
                 length  -= skip;
                 tmp     += skip;
@@ -153,7 +153,7 @@ AnscBase64DecodeLine
                 {
                     int             i, vrfy;
                     
-                    vrfy    = _ansc_strcspn((PUCHAR)tmp, (PUCHAR)ANSC_BASE64_CODES);
+                    vrfy    = _ansc_strcspn(tmp, (const char*)ANSC_BASE64_CODES);
 
                     for (i = 0; i < vrfy; i++)
                     {
@@ -201,7 +201,7 @@ NEXT:
             {
                 int                 i, qw = 0, tw = 0;
 
-                tmp     = pString;
+                tmp     = (char *)pString;
                 length  = ((pulSize == NULL) ? 0 : (*pulSize)); /*RDKB-6183, CID-24152, null check before use*/
 
                 for (i = 0; i < length; i++)
@@ -331,7 +331,7 @@ AnscBase64Decode
     pBuf            = pEncode;
 
     /* allocate big enough memory to avoid memory reallocation */
-    ulEncodedSize   = AnscSizeOfString(pEncode);
+    ulEncodedSize   = AnscSizeOfString((const char*)pEncode);
     pDecode         = (PUCHAR)AnscAllocateMemory(ulEncodedSize);
     AnscZeroMemory(pDecode, ulEncodedSize);
 

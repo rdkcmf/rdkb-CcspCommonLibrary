@@ -125,7 +125,6 @@ SysRfoRcmNotify
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_RCM_INTERFACE              pOpenRcmIf   = (PSYS_RCM_INTERFACE             )pMyObject->hOpenRcmIf;
 
     if ( pOpenRcmIf )
@@ -183,7 +182,6 @@ SysRfoRcmInit
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_RCM_INTERFACE              pOpenRcmIf   = (PSYS_RCM_INTERFACE             )pMyObject->hOpenRcmIf;
 
     if ( pOpenRcmIf )
@@ -239,7 +237,6 @@ SysRfoRcmStop
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_RCM_INTERFACE              pOpenRcmIf   = (PSYS_RCM_INTERFACE             )pMyObject->hOpenRcmIf;
 
     if ( pOpenRcmIf )

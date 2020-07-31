@@ -89,7 +89,11 @@ AnscCryptoPubRequest
      * provides a real public key algorithm, no matter
      * it's software algorithm or hardware implementation.
      */
-
+    UNREFERENCED_PARAMETER(Algorithm);
+    UNREFERENCED_PARAMETER(Operation);
+    UNREFERENCED_PARAMETER(hParams);
+    UNREFERENCED_PARAMETER(FinishCB);
+    UNREFERENCED_PARAMETER(hFinishCBParam);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -103,6 +107,10 @@ AnscCryptoPubKeyPairMatch
         ANSC_HANDLE                 hPrivateKey
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(KeyType);
+    UNREFERENCED_PARAMETER(hPublicKey);
+    UNREFERENCED_PARAMETER(hPrivateKey);
     return FALSE;
 }
 
@@ -118,6 +126,12 @@ AnscCryptoPubKeyRSASign
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToSign);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(pulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -132,6 +146,12 @@ AnscCryptoPubKeyRSAVerify
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToVerify);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(ulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -147,6 +167,12 @@ AnscCryptoPubKeyDSASign
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToSign);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(pulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -162,6 +188,12 @@ AnscCryptoPubKeyDSAVerify
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToVerify);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(ulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 

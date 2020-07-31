@@ -113,7 +113,6 @@ AnscAsn1CreateName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_NAME                 pThisObject  = NULL;
     PANSC_ASN1_RDNSEQUENCE          pRDN         = NULL;
 
@@ -217,6 +216,7 @@ AnscAsn1NameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case NAME_MASK_RDNSEQUENCE:
@@ -236,6 +236,8 @@ AnscAsn1NameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -251,6 +253,10 @@ AnscAsn1NameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(uIndex);
+    UNREFERENCED_PARAMETER(pAttr);
+    UNREFERENCED_PARAMETER(pTagValue);
     return FALSE;
 
 }
@@ -287,7 +293,7 @@ addSingleAttribute
     pPrintable->SetStringValue
         (
             pPrintable, 
-            pValue,
+            (PUCHAR)pValue,
             AnscSizeOfString(pValue)
         );
 
@@ -309,7 +315,7 @@ addRDNAttribute
         PCHAR                       pAttrTypeOID
     )
 {
-    PANSC_ASN1_NAME                 pThisObject  = (PANSC_ASN1_NAME)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     CHAR                            pTempBuffer[128]    = { 0 };
     PCHAR                           pBack, pBuffer;
     ULONG                           uLength;
@@ -464,7 +470,7 @@ AnscAsn1NameInitAttribute
         pIA5String->SetStringValue
             (
                 pIA5String, 
-                pValue,
+                (PUCHAR)pValue,
                 AnscSizeOfString(pValue)
             );
 
@@ -492,7 +498,7 @@ AnscAsn1NameInitAttribute
         pPrintable->SetStringValue
             (
                 pPrintable, 
-                pValue,
+                (PUCHAR)pValue,
                 AnscSizeOfString(pValue)
             );
 
@@ -520,7 +526,7 @@ AnscAsn1NameInitAttribute
         pIA5String->SetStringValue
             (
                 pIA5String, 
-                pValue,
+                (PUCHAR)pValue,
                 AnscSizeOfString(pValue)
             );
 
@@ -701,15 +707,11 @@ AnscAsn1NameGetNameByOID
                                     pTypeAndValue;
     PANSC_ASN1_RELATIVEDISTINGUISHEDNAME
                                     pRelative;
-    CHAR                            pOneName[128]= { 0 };
-    ULONG                           oneLength    = 128;
-    ULONG                           length       = 0;
     ULONG                           i,j;
     PANSC_ASN1_OIDEN                pOIDObject;
     PANSC_ASN1_OBJECT               pStrObject;
     PANSC_ASN1_ATTRIBUTEVALUE       pAttrValue;
     CHAR                            pOID[64]     = { 0 };
-    ULONG                           oidLength    = 0;
     PANSC_ASN1_STRING               pValueObj;
 
     if( hThisObject == NULL || pLength == NULL || pString  == NULL || pOIDString == NULL)
@@ -853,7 +855,6 @@ AnscAsn1CreateRDNSequence
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_RDNSEQUENCE          pThisObject  = NULL;
 
     /*
@@ -921,6 +922,7 @@ AnscAsn1RDNSequenceIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -954,7 +956,6 @@ AnscAsn1CreateAttribute
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTE            pThisObject  = NULL;
 
     /*
@@ -1057,6 +1058,8 @@ AnscAsn1AttributeCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1070,6 +1073,7 @@ AnscAsn1AttributeGetChildName
         ULONG                       index
     )
 {   
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1150,7 +1154,7 @@ AnscAsn1AttributeSetTypeAndStringValue
 
         if( pStringObject != NULL)
         {
-            pStringObject->SetStringValue(pStringObject, pValue, ulOfValue);
+            pStringObject->SetStringValue(pStringObject, (PUCHAR)pValue, ulOfValue);
         }
     }
 
@@ -1229,7 +1233,6 @@ AnscAsn1CreateRelativeDistinguishedName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_RELATIVEDISTINGUISHEDNAME 
                                     pThisObject  = NULL;
 
@@ -1298,6 +1301,7 @@ AnscAsn1RelativeDistinguishedNameIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -1331,7 +1335,6 @@ AnscAsn1CreateAttributeTypeAndValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTETYPEANDVALUE 
                                     pThisObject  = NULL;
 
@@ -1436,6 +1439,8 @@ AnscAsn1AttributeTypeAndValueCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1449,7 +1454,7 @@ AnscAsn1AttributeTypeAndValueGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( index )
     {
         case 0:
@@ -1523,7 +1528,7 @@ AnscAsn1AttrTypeAndValueSetTypeAndStringValue
 
         if( pStringObject != NULL)
         {
-            pStringObject->SetStringValue(pStringObject, pValue, ulOfValue);
+            pStringObject->SetStringValue(pStringObject, (PUCHAR)pValue, ulOfValue);
         }
     }
 
@@ -1713,7 +1718,6 @@ AnscAsn1CreateAttributeValues
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTEVALUES      pThisObject  = NULL;
 
     /*
@@ -1781,6 +1785,7 @@ AnscAsn1AttributeValuesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -1835,7 +1840,6 @@ AnscAsn1CreateAttributeValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTEVALUE       pThisObject  = NULL;
 
     /*
@@ -2177,7 +2181,7 @@ AnscAsn1AttributeValueGetSelectionName
 {
 
 #ifndef _PKI_KERNEL
-    
+    UNREFERENCED_PARAMETER(hThisObject);    
     switch ( selType )
     {
         case ATTRIBUTEVALUE_MASK_X520DNQUALIFIER:
@@ -2286,6 +2290,8 @@ AnscAsn1AttributeValueCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2299,6 +2305,7 @@ AnscAsn1AttributeValueGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"2.5.4.41",FALSE))
@@ -2489,6 +2496,7 @@ AnscAsn1AttributeValueGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case ATTRIBUTEVALUE_MASK_X520NAME:
@@ -2730,7 +2738,6 @@ AnscAsn1CreateX520name
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_X520NAME             pThisObject  = NULL;
 
     /*
@@ -2873,6 +2880,7 @@ AnscAsn1X520nameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case X520NAME_MASK_TELETEXSTRING:
@@ -2911,6 +2919,8 @@ AnscAsn1X520nameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2926,6 +2936,7 @@ AnscAsn1X520nameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -3000,7 +3011,6 @@ AnscAsn1CreateUnstructuredName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_UNSTRUCTUREDNAME     pThisObject  = NULL;
 
     /*
@@ -3107,7 +3117,8 @@ AnscAsn1UnstructuredNameGetSelectionName
         ULONG                       selType
     )
 {
-    switch ( selType )
+    UNREFERENCED_PARAMETER(hThisObject);
+     switch ( selType )
     {
         case UNSTRUCTUREDNAME_MASK_IA5STRING:
 
@@ -3133,6 +3144,8 @@ AnscAsn1UnstructuredNameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3148,7 +3161,8 @@ AnscAsn1UnstructuredNameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
-   if( pAttr == NULL || pTagValue == NULL)
+    UNREFERENCED_PARAMETER(hThisObject);
+    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
     }
@@ -3203,7 +3217,6 @@ AnscAsn1CreateDirectoryString
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DIRECTORYSTRING      pThisObject  = NULL;
 
     /*
@@ -3334,6 +3347,7 @@ AnscAsn1DirectoryStringGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case DIRECTORYSTRING_MASK_TELETEXSTRING:
@@ -3368,6 +3382,8 @@ AnscAsn1DirectoryStringCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3383,6 +3399,7 @@ AnscAsn1DirectoryStringGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -3445,7 +3462,6 @@ AnscAsn1CreateMessageDigest
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_MESSAGEDIGEST        pThisObject  = NULL;
 
     /*
@@ -3498,7 +3514,6 @@ AnscAsn1CreateSigningTime
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SIGNINGTIME          pThisObject  = NULL;
 
     /*
@@ -3556,7 +3571,6 @@ AnscAsn1CreateChllengePassword
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CHLLENGEPASSWORD     pThisObject  = NULL;
 
     /*
@@ -3663,6 +3677,7 @@ AnscAsn1ChllengePasswordGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case CHLLENGEPASSWORD_MASK_PRINTABLESTRING:
@@ -3690,6 +3705,8 @@ AnscAsn1ChllengePasswordCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3705,6 +3722,7 @@ AnscAsn1ChllengePasswordGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -3758,7 +3776,6 @@ AnscAsn1CreateUnstructuredAddress
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_UNSTRUCTUREDADDRESS  pThisObject  = NULL;
 
     /*
@@ -3865,6 +3882,7 @@ AnscAsn1UnstructuredAddressGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case UNSTRUCTUREDADDRESS_MASK_PRINTABLESTRING:
@@ -3892,6 +3910,8 @@ AnscAsn1UnstructuredAddressCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3907,6 +3927,7 @@ AnscAsn1UnstructuredAddressGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -3955,7 +3976,6 @@ AnscAsn1CreateContentType
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CONTENTTYPE          pThisObject  = NULL;
 
     /*
@@ -4004,7 +4024,6 @@ AnscAsn1CreateX520CommonName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_X520COMMONNAME       pThisObject  = NULL;
 
     /*
@@ -4124,6 +4143,7 @@ AnscAsn1X520CommonNameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case X520COMMONNAME_MASK_TELETEXSTRING:
@@ -4158,6 +4178,8 @@ AnscAsn1X520CommonNameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -4173,6 +4195,7 @@ AnscAsn1X520CommonNameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -4242,7 +4265,6 @@ AnscAsn1CreateX520LocalityName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_X520LOCALITYNAME     pThisObject  = NULL;
 
     /*
@@ -4362,6 +4384,7 @@ AnscAsn1X520LocalityNameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case X520LOCALITYNAME_MASK_TELETEXSTRING:
@@ -4397,6 +4420,8 @@ AnscAsn1X520LocalityNameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -4412,6 +4437,7 @@ AnscAsn1X520LocalityNameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;

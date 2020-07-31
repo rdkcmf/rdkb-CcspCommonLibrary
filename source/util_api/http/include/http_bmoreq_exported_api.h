@@ -117,5 +117,24 @@ HttpBmoReqInitialize
         ANSC_HANDLE                 hThisObject
     );
 
+char*
+HttpBmoReqCgiGetFormContent
+    (
+        ANSC_HANDLE                 hThisObject
+    );
+
+ANSC_STATUS
+HttpBmoReqCgiGetContentType
+    (
+        ANSC_HANDLE                 hThisObject,
+        PULONG                      pulMediaType,
+        PULONG                      pulSubType
+    );
+
+char*
+HttpBmoReqCgiGetBoundaryDelimiter
+    (
+        ANSC_HANDLE                 hThisObject
+    );
 
 #endif

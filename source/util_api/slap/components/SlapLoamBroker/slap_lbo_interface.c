@@ -117,8 +117,6 @@ SlapCreateLoamBroker
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pSlapLoamBroker = NULL;
 
     return  SlapLboCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

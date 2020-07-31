@@ -122,7 +122,6 @@ WebGsoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -164,7 +163,6 @@ WebGsoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -203,7 +201,6 @@ WebGsoGetActiveSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hActiveSocket;
@@ -245,7 +242,6 @@ WebGsoSetActiveSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->hActiveSocket = hSocket;
@@ -284,7 +280,6 @@ WebGsoGetSessionId
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->SessionId;
@@ -326,7 +321,6 @@ WebGsoSetSessionId
         ULONG                       ulSessionId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->SessionId = ulSessionId;
@@ -365,7 +359,6 @@ WebGsoGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->ClientAddr.Dot;
@@ -407,7 +400,6 @@ WebGsoSetClientAddr
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->ClientAddr.Value = *(PULONG)address;
@@ -446,7 +438,6 @@ WebGsoGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->ClientPort;
@@ -488,7 +479,6 @@ WebGsoSetClientPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->ClientPort = port;
@@ -527,7 +517,6 @@ WebGsoGetLsmContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hLsmContext;
@@ -569,7 +558,6 @@ WebGsoSetLsmContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->hLsmContext = hContext;
@@ -608,7 +596,6 @@ WebGsoGetLsmIdentifier
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->LsmIdentifier;
@@ -650,7 +637,6 @@ WebGsoSetLsmIdentifier
         char*                       identifier
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     /*
@@ -699,7 +685,6 @@ WebGsoGetLsmMaxAge
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->LsmMaxAge;
@@ -741,7 +726,6 @@ WebGsoSetLsmMaxAge
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->LsmMaxAge = ulSeconds;
@@ -780,7 +764,6 @@ WebGsoGetLsmExpire
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->LsmExpire;
@@ -822,7 +805,6 @@ WebGsoSetLsmExpire
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->LsmExpire = ulSeconds;
@@ -861,7 +843,6 @@ WebGsoGetMaxLifespan
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->MaxLifespan;
@@ -903,7 +884,6 @@ WebGsoSetMaxLifespan
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->MaxLifespan = ulSeconds;
@@ -942,7 +922,6 @@ WebGsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->SessionId      = 0;

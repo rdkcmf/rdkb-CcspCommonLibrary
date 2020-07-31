@@ -108,7 +108,6 @@ HttpAtoMethodCreateCodeTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
 
     pMyObject->AddAtomByName
@@ -210,7 +209,6 @@ HttpAtoMethodCreateNameTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
 
     pMyObject->AddAtomById
@@ -317,7 +315,6 @@ HttpAtoMethodGetAtomCode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject       = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -373,7 +370,6 @@ HttpAtoMethodGetAtomName
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject       = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

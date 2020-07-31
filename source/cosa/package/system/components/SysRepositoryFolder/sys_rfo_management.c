@@ -111,9 +111,7 @@ SysRfoDelAllFolders
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;
@@ -173,9 +171,7 @@ SysRfoDelAllRecords
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;
@@ -239,9 +235,7 @@ SysRfoAddRfoIntoArray
         ANSC_HANDLE                 hSubFolder
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )hSubFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pTmpFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )NULL;
     ANSC_HANDLE*                    pNewFolderArray = NULL;
@@ -377,9 +371,7 @@ SysRfoDelRfoFromArray
         ANSC_HANDLE                 hSubFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = (PSYS_REPOSITORY_FOLDER_OBJECT  )hSubFolder;
     ULONG                           i            = 0;
     ULONG                           j            = 0;
@@ -449,9 +441,7 @@ SysRfoCleanUpRfoArray
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
 
     if ( !pMyObject->FolderArray )
     {
@@ -502,9 +492,7 @@ SysRfoAddRroIntoArray
         ANSC_HANDLE                 hRecord
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )hRecord;
     PSYS_REPOSITORY_RECORD_OBJECT   pTmpRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )NULL;
     ANSC_HANDLE*                    pNewRecordArray = NULL;
@@ -640,9 +628,7 @@ SysRfoDelRroFromArray
         ANSC_HANDLE                 hRecord
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = (PSYS_REPOSITORY_RECORD_OBJECT  )hRecord;
     ULONG                           i            = 0;
     ULONG                           j            = 0;
@@ -712,9 +698,7 @@ SysRfoCleanUpRroArray
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
 
     if ( !pMyObject->RecordArray )
     {

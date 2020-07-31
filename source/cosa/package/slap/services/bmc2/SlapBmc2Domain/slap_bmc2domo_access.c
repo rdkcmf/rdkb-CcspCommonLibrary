@@ -113,11 +113,8 @@ SlapBmc2DomoGetDomainName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
 
     return  AnscCloneString(pBmc2ComDomain->DomainTitle);
 }
@@ -612,11 +609,9 @@ SlapBmc2DomoIsCommandValid
         char*                       pCommand
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_COMMAND_PROPERTY          pCommandPropertyD  = (PBMC2_COMMAND_PROPERTY     )NULL;
 
     pCommandPropertyD =
@@ -671,11 +666,9 @@ SlapBmc2DomoIsCommandAuthorized
         char*                       pCommand
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_COMMAND_PROPERTY          pCommandPropertyD  = (PBMC2_COMMAND_PROPERTY     )NULL;
 
     pCommandPropertyD =
@@ -724,13 +717,9 @@ SlapBmc2DomoExit
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2ReqController;
-    PBMC2_COMMAND_REQUEST           pBmc2CommandReq    = (PBMC2_COMMAND_REQUEST      )pBmc2ReqController->hCommandRequest;
     PBMC2_COMMAND_REPLY             pBmc2CommandRep    = (PBMC2_COMMAND_REPLY        )pBmc2ReqController->hCommandReply;
 
     if ( !pBmc2CommandRep )
@@ -779,13 +768,9 @@ SlapBmc2DomoExitToRoot
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2ReqController;
-    PBMC2_COMMAND_REQUEST           pBmc2CommandReq    = (PBMC2_COMMAND_REQUEST      )pBmc2ReqController->hCommandRequest;
     PBMC2_COMMAND_REPLY             pBmc2CommandRep    = (PBMC2_COMMAND_REPLY        )pBmc2ReqController->hCommandReply;
 
     if ( !pBmc2CommandRep )

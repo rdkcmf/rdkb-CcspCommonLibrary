@@ -117,8 +117,6 @@ BwrmCreateCookedPage
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBWRM_COOKED_PAGE_OBJECT        pBwrmCookedPage = NULL;
 
     return  BwrmCpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

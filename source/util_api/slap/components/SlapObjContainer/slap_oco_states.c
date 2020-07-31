@@ -114,7 +114,6 @@ SlapOcoGetSlapUoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapUoaIf;
@@ -156,7 +155,6 @@ SlapOcoSetSlapUoaIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->hSlapUoaIf = hInterface;
@@ -195,7 +193,6 @@ SlapOcoGetSlapBssIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapBssIf;
@@ -237,7 +234,6 @@ SlapOcoSetSlapBssIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->hSlapBssIf = hInterface;
@@ -276,7 +272,6 @@ SlapOcoGetSlapObjMapper
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapObjMapper;
@@ -318,7 +313,6 @@ SlapOcoSetSlapObjMapper
         ANSC_HANDLE                 hObjMapper
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->hSlapObjMapper = hObjMapper;
@@ -357,7 +351,6 @@ SlapOcoGetContainerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->ContainerName;
@@ -399,7 +392,6 @@ SlapOcoSetContainerName
         char*                       container_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     if ( pMyObject->ContainerName )
@@ -445,7 +437,6 @@ SlapOcoGetContainerType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->ContainerType;
@@ -487,7 +478,6 @@ SlapOcoSetContainerType
         ULONG                       container_type
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->ContainerType = container_type;
@@ -526,7 +516,6 @@ SlapOcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     if ( pMyObject->ContainerName )

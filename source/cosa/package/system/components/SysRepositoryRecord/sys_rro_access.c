@@ -112,7 +112,6 @@ SysRroGrantAccess
         ULONG                       ulAccessMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
     ULONG                           ulTmpMode    = ulAccessMode;
 
@@ -158,7 +157,6 @@ SysRroGetRecordSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->RecordSize;
@@ -205,9 +203,9 @@ SysRroGetRecordData
         PULONG                      pulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(pulDataSize);
+    UNREFERENCED_PARAMETER(pDataBuffer);
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -252,8 +250,8 @@ SysRroSetRecordData
         ULONG                       ulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pDataBuffer);
+    UNREFERENCED_PARAMETER(ulDataSize);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

@@ -119,7 +119,7 @@ SlapVmoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapVmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject       = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoSyntax      = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoSyntax;
     PANSC_ATOM_TABLE_OBJECT         pAtoContentType = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoContentType;
@@ -236,7 +235,6 @@ SlapVmoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject       = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoSyntax      = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoSyntax;
     PANSC_ATOM_TABLE_OBJECT         pAtoContentType = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoContentType;
@@ -320,7 +318,6 @@ SlapVmoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
 
     /*

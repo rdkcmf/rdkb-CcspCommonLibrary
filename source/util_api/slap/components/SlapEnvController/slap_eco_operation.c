@@ -108,8 +108,6 @@ SlapEcoEngage
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject      = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty      = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf     = (PSLAP_UOA_INTERFACE          )pMyObject->hSlapUoaIf;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
 
     if ( pMyObject->bActive )
@@ -167,9 +165,7 @@ SlapEcoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject      = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty      = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
 
     if ( !pMyObject->bActive )
@@ -222,12 +218,10 @@ SlapEcoSetupEnv
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject      = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf     = (PSLAP_UOA_INTERFACE        )pMyObject->hSlapUoaIf;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     ANSC_HANDLE                     hSysSlapOcoCtl = (ANSC_HANDLE                )NULL;
     ANSC_HANDLE                     hSysSlapOcoUtl = (ANSC_HANDLE                )NULL;
     ANSC_HANDLE                     hSysSlapOcoCfg = (ANSC_HANDLE                )NULL;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
-    ANSC_HANDLE                     hSysSlapObject = (ANSC_HANDLE                )NULL;
 
     hSysSlapOcoCtl = pSlapUoaIf->CreateContainer(pSlapUoaIf->hOwnerContext, SLAP_SYS_CONTAINER_CONTROL,       SLAP_CONTAINER_TYPE_SYSTEM);
     hSysSlapOcoUtl = pSlapUoaIf->CreateContainer(pSlapUoaIf->hOwnerContext, SLAP_SYS_CONTAINER_UTILITY,       SLAP_CONTAINER_TYPE_SYSTEM);
@@ -269,8 +263,7 @@ SlapEcoSetupEnv
             return  returnStatus;
         }
 
-        hSysSlapObject =
-            pSlapUoaIf->CreateObject
+        pSlapUoaIf->CreateObject
                 (
                     pSlapUoaIf->hOwnerContext,
                     hSysSlapOcoUtl,
@@ -294,8 +287,7 @@ SlapEcoSetupEnv
             return  returnStatus;
         }
 
-        hSysSlapObject =
-            pSlapUoaIf->CreateObject
+        pSlapUoaIf->CreateObject
                 (
                     pSlapUoaIf->hOwnerContext,
                     hSysSlapOcoUtl,

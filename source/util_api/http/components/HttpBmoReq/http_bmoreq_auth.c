@@ -172,7 +172,7 @@ HttpBmoReqGetAuthUser
         pAuthInfo   = (PHTTP_AUTHO_INFO)pMyObject->hAuthInfo;
     }
 
-    return pAuthInfo ? pAuthInfo->pUserName : NULL;
+    return pAuthInfo ? (char*)pAuthInfo->pUserName : NULL;
 }
 
 
@@ -259,7 +259,7 @@ HttpBmoReqGetAuthRealm
         pAuthInfo   = (PHTTP_AUTHO_INFO)pMyObject->hAuthInfo;
     }
 
-    return pAuthInfo ? pAuthInfo->pRealm : NULL;
+    return pAuthInfo ? (char*)pAuthInfo->pRealm : NULL;
 }
 
 
@@ -302,7 +302,7 @@ HttpBmoReqGetAuthDigestUri
         pAuthInfo   = (PHTTP_AUTHO_INFO)pMyObject->hAuthInfo;
     }
 
-    return (pAuthInfo && pAuthInfo->pDigest) ? pAuthInfo->pDigest->pDigestUri : NULL;
+    return (pAuthInfo && pAuthInfo->pDigest) ? (char*)pAuthInfo->pDigest->pDigestUri : NULL;
 }
 
 

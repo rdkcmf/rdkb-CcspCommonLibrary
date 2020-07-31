@@ -119,7 +119,7 @@ HttpAuthcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved); 
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAuthcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -229,7 +228,6 @@ HttpAuthcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject       = (PHTTP_AUTH_CLIENT_OBJECT  )hThisObject;
 
     HttpAuthoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,8 +269,7 @@ HttpAuthcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
+     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

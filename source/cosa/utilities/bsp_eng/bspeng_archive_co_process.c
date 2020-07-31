@@ -227,12 +227,12 @@ BspTemplateArchiveWriteDouble
     char                            buf[32];
 
 #ifdef   _BSPENG_NO_DOUBLE
-    BSP_TEMPLATE_DOUBLE_TO_STRING(buf, Value);
+    BSP_TEMPLATE_DOUBLE_TO_STRING(buf, (int)Value);
 #else
     _ansc_sprintf(buf, "%f", Value);
 #endif
 
-    return pArchive->WriteString(hThisObject, buf);
+    return pArchive->WriteString(hThisObject, (PUCHAR)buf);
 }
 
 
@@ -409,7 +409,7 @@ BspTemplateArchiveWriteString
     int                             nStrLen;
     BOOL                            bSucc;
 
-    nStrLen = AnscSizeOfString(Value);
+    nStrLen = AnscSizeOfString((const char *)Value);
 
     /* write the length of the string first */
     bSucc = pArchive->WriteWord(hThisObject, nStrLen);
@@ -520,7 +520,7 @@ BspTemplateArchiveReadInteger
     if (pArchive->GetRemainSize(hThisObject) < sizeof(int))
         return FALSE;
 
-    for (i = 0; i < sizeof(int); i ++)
+    for (i = 0; i < (int)sizeof(int); i ++)
     {
         Val <<= 8;
         Val += pArchive->pStorage[pArchive->CurPos ++];
@@ -619,10 +619,11 @@ BspTemplateArchiveReadDouble
     if (bSucc)
     {
 #ifdef   _BSPENG_NO_DOUBLE
-        char                        *pEnd;
-        BOOL                        bHasFrac;
-
-        STRING_TO_BSP_TEMPLATE_DOUBLE(buf, pValue, &pEnd, &bHasFrac);
+        char                        *pEnd = NULL;
+        BOOL                        bHasFrac = FALSE;
+        BOOL                        *pHasFrac    = &bHasFrac;
+       char                         **ppEnd = &pEnd;
+        STRING_TO_BSP_TEMPLATE_DOUBLE(buf, pValue, ppEnd, pHasFrac);
 #else
         *pValue = (DOUBLE)_ansc_atof(buf);
 #endif
@@ -1232,7 +1233,6 @@ BspTemplateArchiveSaveToFile
 #ifdef   _BSP_TEMPLATE_ENGINE_USING_EXTERNAL_FILE
     PBSP_TEMPLATE_ARCHIVE_OBJECT    pArchive    = (PBSP_TEMPLATE_ARCHIVE_OBJECT)hThisObject;
     ANSC_HANDLE                     hFile;
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     ULONG                           ulFileMode, ulFileType;
 
     ulFileMode  = ANSC_FILE_MODE_CREATE | ANSC_FILE_MODE_WRITE | ANSC_FILE_MODE_TRUNC;
@@ -1277,9 +1277,10 @@ BspTemplateArchiveSaveToFile
                         _ansc_sprintf
                             (
                                 buf, "%d,%s", 
-                                pArchive->pStorage[total++], 
+                                pArchive->pStorage[total], 
                                 (total % 40 == 0 && total != 0)?"\n":""
                             );
+		    total++;
                     ulSize  = size;
                     AnscWriteFile(hFile, buf, &ulSize);
                 }

@@ -119,7 +119,7 @@ Bmc2EnvcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ Bmc2EnvcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject          = (PBMC2_ENV_CONTROLLER_OBJECT)hThisObject;
     PBMC2_SCC_INTERFACE             pBmc2SccIf         = (PBMC2_SCC_INTERFACE        )pMyObject->hBmc2SccIf;
     PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pMyObject->hBmc2ComExecutor;
@@ -261,7 +260,6 @@ Bmc2EnvcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject          = (PBMC2_ENV_CONTROLLER_OBJECT)hThisObject;
     PBMC2_SCC_INTERFACE             pBmc2SccIf         = (PBMC2_SCC_INTERFACE        )pMyObject->hBmc2SccIf;
     PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pMyObject->hBmc2ComExecutor;
@@ -378,7 +376,6 @@ Bmc2EnvcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = (PBMC2_ENV_CONTROLLER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

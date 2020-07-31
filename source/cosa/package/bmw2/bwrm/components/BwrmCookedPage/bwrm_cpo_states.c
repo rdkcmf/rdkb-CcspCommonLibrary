@@ -117,7 +117,6 @@ BwrmCpoGetRootPath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     return  pMyObject->RootPath;
@@ -159,7 +158,6 @@ BwrmCpoSetRootPath
         char*                       root_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     if ( pMyObject->RootPath )
@@ -208,7 +206,6 @@ BwrmCpoGetPagePath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     return  pMyObject->PagePath;
@@ -250,7 +247,6 @@ BwrmCpoSetPagePath
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     if ( pMyObject->PagePath )
@@ -299,7 +295,6 @@ BwrmCpoGetOwnerReserved
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     return  pMyObject->hOwnerReserved;
@@ -341,7 +336,6 @@ BwrmCpoSetOwnerReserved
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     pMyObject->hOwnerReserved = hReserved;
@@ -380,7 +374,6 @@ BwrmCpoGetPageContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     return  pMyObject->hPageContext;
@@ -422,7 +415,6 @@ BwrmCpoSetPageContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     pMyObject->hPageContext = hContext;
@@ -461,7 +453,6 @@ BwrmCpoGetTimestamp
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     return  pMyObject->Timestamp;
@@ -503,7 +494,6 @@ BwrmCpoSetTimestamp
         ULONG                       timestamp
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     pMyObject->Timestamp = timestamp;
@@ -542,7 +532,6 @@ BwrmCpoIncRefCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     AnscAcquireLock(&pMyObject->AccessLock);
@@ -585,7 +574,6 @@ BwrmCpoDecRefCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     AnscAcquireLock(&pMyObject->AccessLock);
@@ -631,7 +619,6 @@ BwrmCpoGetRefCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
     ULONG                           ulRefCount;
 
@@ -675,7 +662,6 @@ BwrmCpoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     if ( pMyObject->RootPath )

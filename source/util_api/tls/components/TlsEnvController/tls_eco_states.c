@@ -195,7 +195,6 @@ TlsEcoResetProperty
     )
 {
     PTLS_ENV_CONTROLLER_OBJECT      pMyObject     = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PTLS_ENV_CONTROLLER_PROPERTY    pProperty     = (PTLS_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PTLS_MODULE_PARAMS              pModuleParams = (PTLS_MODULE_PARAMS          )&pMyObject->ModuleParams;
 
     TlsInitModuleParams(pModuleParams);
@@ -235,7 +234,6 @@ TlsEcoReset
     )
 {
     PTLS_ENV_CONTROLLER_OBJECT      pMyObject     = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PTLS_ENV_CONTROLLER_PROPERTY    pProperty     = (PTLS_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PTLS_MODULE_PARAMS              pModuleParams = (PTLS_MODULE_PARAMS          )&pMyObject->ModuleParams;
 
     TlsCleanModuleParams(pModuleParams);

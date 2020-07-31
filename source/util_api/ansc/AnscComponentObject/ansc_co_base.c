@@ -125,7 +125,7 @@ AnscCoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
 
     /*
@@ -188,7 +188,6 @@ AnscCoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     if ( pBaseObject )
@@ -229,9 +228,7 @@ AnscCoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -266,7 +263,6 @@ AnscCoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     pBaseObject->Rid           = (ULONG)pBaseObject;
@@ -313,7 +309,6 @@ AnscCoGetOwner
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     return  pBaseObject->hOwnerContext;
@@ -355,7 +350,6 @@ AnscCoSetOwner
         ANSC_HANDLE                 hOwner
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     pBaseObject->hOwnerContext = hOwner;
@@ -394,9 +388,7 @@ AnscCoGetName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     /*
      * We simply return the object name pointing to our internal buffer; if the caller wants to do
      * anything about it, he has to duplicate the string.
@@ -435,7 +427,6 @@ AnscCoGetOid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     return  pBaseObject->Oid;
@@ -472,7 +463,6 @@ AnscCoGetRid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
 
     return  pBaseObject->Rid;
@@ -514,8 +504,7 @@ AnscCoDispatchEvent
         ANSC_HANDLE                 hEvent
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_COMPONENT_OBJECT          pBaseObject  = (PANSC_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hEvent);
     return  ANSC_STATUS_SUCCESS;
 }

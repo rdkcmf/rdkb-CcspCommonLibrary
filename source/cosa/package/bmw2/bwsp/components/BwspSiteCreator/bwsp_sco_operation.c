@@ -105,9 +105,7 @@ BwspScoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT  )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY)&pMyObject->Property;
     PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE         )pMyObject->hWebHemIf;
 
     if ( pMyObject->bActive )
@@ -157,10 +155,7 @@ BwspScoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT  )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY)&pMyObject->Property;
-    PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE         )pMyObject->hWebHemIf;
 
     if ( !pMyObject->bActive )
     {

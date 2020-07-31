@@ -158,7 +158,6 @@ Bmc2ComdoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     if ( !pMyObject->bActive )
@@ -206,7 +205,6 @@ Bmc2ComdoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject          = (PBMC2_COM_DOMAIN_OBJECT    )hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
@@ -275,11 +273,9 @@ Bmc2ComdoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject          = (PBMC2_COM_DOMAIN_OBJECT    )hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor     = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
 
 /*
     if ( pMyObject->hSlapBmc2Domain )
@@ -295,12 +291,11 @@ Bmc2ComdoCloseEnv
 
     if ( TRUE )
     {
-        returnStatus =
-            pSlapGoaIf->DeleteContainer
-                (
-                    pSlapGoaIf->hOwnerContext,
-                    pMyObject->hSlapContainerDomain
-                );
+        pSlapGoaIf->DeleteContainer
+            (
+                pSlapGoaIf->hOwnerContext,
+                pMyObject->hSlapContainerDomain
+            );
     }
 
     return  ANSC_STATUS_SUCCESS;

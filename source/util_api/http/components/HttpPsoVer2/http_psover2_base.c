@@ -119,7 +119,7 @@ HttpPsoVer2Create
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpPsoVer2Remove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -230,7 +229,6 @@ HttpPsoVer2EnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -272,7 +270,6 @@ HttpPsoVer2Initialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     /*

@@ -114,10 +114,8 @@ HttpBmoBccGetHeaderField
         ULONG                       ulHeaderId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-
+    
     return  pMyObject->GetHeaderField((ANSC_HANDLE)pMyObject, ulHeaderId);
 }
 
@@ -158,10 +156,8 @@ HttpBmoBccAddHeaderField
         ANSC_HANDLE                 hHfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-
+    
     return  pMyObject->AddHeaderField((ANSC_HANDLE)pMyObject, hHfo);
 }
 
@@ -197,10 +193,8 @@ HttpBmoBccPredictBodySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-
+    
     return  pMyObject->PredictBodySize((ANSC_HANDLE)pMyObject);
 }
 
@@ -248,7 +242,6 @@ HttpBmoBccNotify
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp  = (PANSC_BUFFER_DESCRIPTOR   )hReserved;
 
@@ -369,7 +362,6 @@ HttpBmoBccSerialize
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhIf;
 
     returnStatus =

@@ -78,7 +78,7 @@
 
 
 #include "dslh_wmpdo_global.h"
-
+#include <stdint.h>
 #define  DSLH_WMPDO_MAX_OBJ_INARRAY                         32
 #define  DSLH_WMPDO_MAX_VAR_INARRAY                         256
 
@@ -139,10 +139,8 @@ DslhWmpdoParseParamDataType
         char**                      ppEnumTokens
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject            = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty            = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController   = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PANSC_TOKEN_CHAIN               pDataTypeTokenChain  = (PANSC_TOKEN_CHAIN          )NULL;
     PANSC_STRING_TOKEN              pDataTypeToken       = (PANSC_STRING_TOKEN         )NULL;
     PANSC_TOKEN_CHAIN               pFormatValueChain    = (PANSC_TOKEN_CHAIN          )NULL;
@@ -299,8 +297,8 @@ DslhWmpdoParseParamDataType
     {
    
         *pulDataType     = DSLH_CWMP_DATA_TYPE_int;
-        *pulFormatValue1 = (ULONG)(0 - 2147483648);
-        *pulFormatValue2 = (ULONG)(0 + 2147483647);
+        *pulFormatValue1 = (ULONG)(0 + INT_MIN);
+        *pulFormatValue2 = (ULONG)(0 + INT_MAX);
 
         pFormatValueChain =
             AnscTcAllocate2
@@ -524,10 +522,7 @@ DslhWmpdoParseParamSyntax
         PULONG                      pulContentType
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject             = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty             = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_TOKEN_CHAIN               pTokenChainSyntaxDesp = NULL;
     PANSC_STRING_TOKEN              pTokenSyntax          = NULL;
     PANSC_STRING_TOKEN              pTokenContentType     = NULL;
@@ -686,9 +681,7 @@ DslhWmpdoParseParamEnumTokens
         char*                       pEnumTokens
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty        = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity       = (PDSLH_VAR_ENTITY_OBJECT    )hVarEntity;
     PANSC_TOKEN_CHAIN               pTokenChainEnums = NULL;
     PANSC_STRING_TOKEN              pTokenEnumString = NULL;
@@ -747,13 +740,12 @@ DslhWmpdoParseParamEnumTokens
             ulCharOffset++;
         }
 
-        returnStatus =
-        	DslhVareoAddTokenValue
-                (
-                    (ANSC_HANDLE)pVarEntity,
-                    &pTokenEnumString->Name[ulCharOffset],
-                    _ansc_atoi(pTokenEnumCode->Name)
-                );
+        DslhVareoAddTokenValue
+            (
+                (ANSC_HANDLE)pVarEntity,
+                &pTokenEnumString->Name[ulCharOffset],
+                _ansc_atoi(pTokenEnumCode->Name)
+            );
 
         AnscFreeMemory(pTokenEnumString);
         AnscFreeMemory(pTokenEnumCode  );
@@ -1027,7 +1019,6 @@ DslhWmpdoFlushDynObjVar
     PDSLH_VAR_RECORD_OBJECT         pVarRecord         = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord         = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pParentObjRecord   = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
-    PDSLH_OBJ_RECORD_OBJECT         pDynTableObjRec    = (PDSLH_OBJ_RECORD_OBJECT    )hDynObjRecord;
     ULONG                           ulParameterCount   = (ULONG                      )pMyObject->ulVarRecordCount;
     ULONG                           ulObjectCount      = (ULONG                      )pMyObject->ulObjRecordCount;
     ULONG                           i                  = 0;

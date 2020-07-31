@@ -37,8 +37,11 @@
 #include <ccsp_message_bus.h>
 #include <ccsp_base_api.h>
 #include "ccsp_trace.h"
+#include "ansc_platform.h"
 
-#define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+    #define _GNU_SOURCE
+#endif
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <sys/user.h>
@@ -73,12 +76,14 @@
 
 #define SHM_FILE "/var/ccsp_shm_file"
 
-#define PAGE_SIZE ((getpagesize()))
+#ifndef PAGE_SIZE
+    #define PAGE_SIZE ((getpagesize()))
+#endif
 
 static char * CreateShm(int size)
 {
     int		shmid;
-    char	*ptr, *shmptr;
+    char	 *shmptr;
     key_t       key;
     FILE        * fp = NULL;
     
@@ -185,13 +190,19 @@ static char * GetShm(int * pShmid, int shmSize)
     key = ftok(SHM_FILE, 1);
 
     if (key  ==-1)
+    {
         return NULL;
+    }
 
-	if ((*pShmid = shmget(key, shmSize, 0600)) < 0)
+    if ((*pShmid = shmget(key, shmSize, 0600)) < 0)
+    {
         return NULL;
+    }
 
-	if ((shmptr = shmat(*pShmid, 0, 0)) == (void *)-1)
+    if ((shmptr = shmat(*pShmid, 0, 0)) == (void *)-1)
+    {
         return NULL;
+    }
 
     return shmptr;
 }
@@ -211,7 +222,7 @@ static char * _CloneString(char * src, CCSP_MESSAGE_BUS_MALLOC mallocfunc)
 static int ParseShm(char * shmPtr, parameterValStruct_t *** pValStructs, int * pCount, int shmid, CCSP_MESSAGE_BUS_INFO * bus_info) 
 {
     char * p = shmPtr;
-    int result =0, size = 0, i = 0, type = 0;
+    int size = 0, i = 0, type = 0;
 
     /*shared memory map: parameterValStruct_t array size(4B) + parameterValStruct_t array (type, name, value) content*/
     size = *(int *)p;
@@ -280,7 +291,6 @@ int CcspBaseIf_getParameterValues_Shm (
 )
 {
     int ret = CCSP_SUCCESS;
-    int fd;
     char * shmPtr = NULL;
     int shmid = 0;
 
@@ -303,6 +313,7 @@ int CcspBaseIf_base_path_message_write_shm (
     int * shmSize
     )
 {
+    UNREFERENCED_PARAMETER(bus_handle);
     char * shmPtr = NULL;
     char * p;
     int totalSize = 0;

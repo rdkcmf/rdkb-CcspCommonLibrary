@@ -124,7 +124,6 @@ HttpWcsoGetPeerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -167,7 +166,6 @@ HttpWcsoSetPeerName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pScto        = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
@@ -211,7 +209,6 @@ HttpWcsoGetPeerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -254,7 +251,6 @@ HttpWcsoSetPeerPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -294,7 +290,6 @@ HttpWcsoGetHostAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -337,7 +332,6 @@ HttpWcsoSetHostAddr
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -377,7 +371,6 @@ HttpWcsoGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -420,7 +413,6 @@ HttpWcsoSetHostPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -460,7 +452,6 @@ HttpWcsoGetSessionFlags
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -503,7 +494,6 @@ HttpWcsoSetSessionFlags
         ULONG                       ulFlags
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -543,7 +533,6 @@ HttpWcsoGetBspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hBspIf;
@@ -585,7 +574,6 @@ HttpWcsoSetBspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     pMyObject->hBspIf = hInterface;
@@ -624,7 +612,6 @@ HttpWcsoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -666,7 +653,6 @@ HttpWcsoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -705,7 +691,6 @@ HttpWcsoGetSessionState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->SessionState;
@@ -747,7 +732,6 @@ HttpWcsoSetSessionState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
 
     pMyObject->SessionState = ulState;
@@ -791,7 +775,6 @@ HttpWcsoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -836,7 +819,6 @@ HttpWcsoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -876,7 +858,6 @@ HttpWcsoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -922,10 +903,8 @@ HttpWcsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject     = (PHTTP_WEBC_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-
+    
     pMyObject->SessionState     = HTTP_WCSO_STATE_INITIALIZED;
     pMyObject->RetryPeerAddr    = 0;
 

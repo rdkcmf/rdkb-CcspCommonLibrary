@@ -236,7 +236,6 @@ HttpScoRequest2
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHttpHfpIf   = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pHttpReqInfo = (PHTTP_REQUEST_INFO          )NULL;
     char*                           pStdReqLine  = (char*                       )AnscAllocateMemory(AnscSizeOfString(request_line) + 2);
@@ -503,7 +502,6 @@ HttpScoDoOptions
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -570,7 +568,6 @@ HttpScoDoGet
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -637,7 +634,6 @@ HttpScoDoHead
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -704,7 +700,6 @@ HttpScoDoPost
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -771,7 +766,6 @@ HttpScoDoPut
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -838,7 +832,6 @@ HttpScoDoDelete
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -905,7 +898,6 @@ HttpScoDoTrace
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =
@@ -972,7 +964,6 @@ HttpScoDoConnect
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI           )hReqUri;
 
     returnStatus =

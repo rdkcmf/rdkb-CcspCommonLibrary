@@ -119,7 +119,7 @@ WebGsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebGsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     pMyObject->Cancel((ANSC_HANDLE)pMyObject);
@@ -230,7 +229,6 @@ WebGsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -272,7 +270,6 @@ WebGsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_GENERAL_SESSION_OBJECT     pMyObject    = (PWEB_GENERAL_SESSION_OBJECT)hThisObject;
 
     /*

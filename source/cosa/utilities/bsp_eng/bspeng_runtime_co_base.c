@@ -117,6 +117,9 @@ BspTemplateRuntimeCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_RUNTIME_OBJECT    pMyObject    = NULL;
 
     /*

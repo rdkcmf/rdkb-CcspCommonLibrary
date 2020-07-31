@@ -119,7 +119,7 @@ SysRroBoolCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SysRroBoolRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     SysRroRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SysRroBoolEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     SysRroEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SysRroBoolInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     /*

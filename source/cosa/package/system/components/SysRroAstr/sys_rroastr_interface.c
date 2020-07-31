@@ -116,8 +116,6 @@ SysCreateRroAstr
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_ASTR_OBJECT            pSysRroAstr  = NULL;
 
     return  SysRroAstrCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -106,7 +106,6 @@ WebMcoEnrollFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject             = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT  )pMyObject->hInternalObjectMapper;
 
@@ -120,8 +119,7 @@ WebMcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Service Provider Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 WEB_SIMPLE_SERVER_NAME,
@@ -168,7 +166,6 @@ WebMcoManufactureFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT )hThisObject;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hHttpHco;
     PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT    )pMyObject->hWebSso;
@@ -249,7 +246,6 @@ WebMcoDestroyFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT )hThisObject;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hHttpHco;
     PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT    )pMyObject->hWebSso;

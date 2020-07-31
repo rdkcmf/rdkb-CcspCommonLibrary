@@ -159,7 +159,6 @@ Bmc2ReqcoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     if ( !pMyObject->bActive )
@@ -207,7 +206,6 @@ Bmc2ReqcoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus           = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject              = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController     = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain         = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
@@ -216,7 +214,6 @@ Bmc2ReqcoSetupEnv
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor         = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
     ANSC_HANDLE                     hSlapContainerApp      = (ANSC_HANDLE                )pBmc2EnvController->hSlapContainerApp;
     ANSC_HANDLE                     hSlapContainerServer   = (ANSC_HANDLE                )pBmc2EnvController->hSlapContainerApp;
-    ANSC_HANDLE                     hSlapContainerServices = (ANSC_HANDLE                )pBmc2EnvController->hSlapContainerServices;
     ANSC_HANDLE                     hSlapContainerTerminal = (ANSC_HANDLE                )pBmc2ComTerminal->hSlapContainerTerminal;
     ANSC_HANDLE                     hSlapContainerDomain   = (ANSC_HANDLE                )pBmc2ComDomain->hSlapContainerDomain;
     ANSC_HANDLE                     hSlapContainerReq      = (ANSC_HANDLE                )pMyObject->hSlapContainerReq;
@@ -381,22 +378,19 @@ Bmc2ReqcoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor     = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
 
     pMyObject->ClearOroTable((ANSC_HANDLE)pMyObject);
 
     if ( TRUE )
     {
-        returnStatus =
-            pSlapGoaIf->DeleteContainer
-                (
-                    pSlapGoaIf->hOwnerContext,
-                    pMyObject->hSlapContainerReq
-                );
+        pSlapGoaIf->DeleteContainer
+            (
+                pSlapGoaIf->hOwnerContext,
+                pMyObject->hSlapContainerReq
+            );
     }
 
     if ( TRUE )
@@ -444,8 +438,6 @@ Bmc2ReqcoAsyncJobTask
     PANSC_EVENT                     pAsyncEvent        = (PANSC_EVENT                )pAsyncJob->hAsyncEvent;
     PBMC2_COMMAND_REPLY             pBmc2CommandRep    = (PBMC2_COMMAND_REPLY        )pMyObject->hCommandReply;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pBmc2EnvController->hBmc2ComExecutor;
     PBWRM_ENV_CONTROLLER_OBJECT     pBwrmEnvController = (PBWRM_ENV_CONTROLLER_OBJECT)pBmc2EnvController->hBwrmEnvController;
     PBWRM_RAM_INTERFACE             pBwrmRamIf         = (PBWRM_RAM_INTERFACE        )pBwrmEnvController->GetBwrmRamIf((ANSC_HANDLE)pBwrmEnvController);
@@ -490,7 +482,7 @@ Bmc2ReqcoAsyncJobTask
                             pBwrmRamIf->hOwnerContext,
                             pRootPath,
                             pPagePath,
-                            &pBwrmCookedPage
+                            (ANSC_HANDLE)&pBwrmCookedPage
                         );
 
                 if ( returnStatus != ANSC_STATUS_SUCCESS )

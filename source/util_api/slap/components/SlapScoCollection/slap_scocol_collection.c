@@ -109,10 +109,7 @@ SlapScoColGetCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_COLLECTION_OBJECT     pMyObject    = (PSLAP_SCO_COLLECTION_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf   = (PSLAP_OLA_INTERFACE        )pMyObject->hSlapOlaIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  0;
 }
 
@@ -153,7 +150,6 @@ SlapScoColGetItem
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_COLLECTION_OBJECT     pMyObject        = (PSLAP_SCO_COLLECTION_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE        )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY      )NULL;
@@ -180,8 +176,7 @@ SlapScoColGetItem
         return  NULL;
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->GetMethodName,
@@ -235,7 +230,6 @@ SlapScoColSetItem
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_COLLECTION_OBJECT     pMyObject        = (PSLAP_SCO_COLLECTION_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE        )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY      )NULL;
@@ -262,8 +256,7 @@ SlapScoColSetItem
         return  NULL;
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->SetMethodName,
@@ -317,7 +310,6 @@ SlapScoColGetItemByIndex
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_COLLECTION_OBJECT     pMyObject        = (PSLAP_SCO_COLLECTION_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE        )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY      )NULL;
@@ -344,8 +336,7 @@ SlapScoColGetItemByIndex
         return  NULL;
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->GetMethodName,
@@ -399,7 +390,6 @@ SlapScoColSetItemByIndex
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_COLLECTION_OBJECT     pMyObject        = (PSLAP_SCO_COLLECTION_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE        )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY      )NULL;
@@ -426,8 +416,7 @@ SlapScoColSetItemByIndex
         return  NULL;
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->SetMethodName,

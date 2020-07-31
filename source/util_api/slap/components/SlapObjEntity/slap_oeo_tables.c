@@ -107,7 +107,6 @@ SlapOeoSetupOpoTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject    = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     ULONG                           i            = 0;
 
@@ -164,7 +163,6 @@ SlapOeoSetupMdoTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject    = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

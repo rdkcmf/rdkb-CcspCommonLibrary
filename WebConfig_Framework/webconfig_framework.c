@@ -753,7 +753,7 @@ int checkNewVersionUpdateRequired(char *subdoc_name,uint32_t version,int *queueI
 	{
 	        if ( strcmp(blobCheckVersion->subdoc_name,subdoc_name) == 0)
 	        {
-	        	if ( blobCheckVersion->version == version )
+			if ( (uint32_t)blobCheckVersion->version == version )
 	        	{
 	        		pthread_mutex_unlock(&reg_subdoc);
 
@@ -827,7 +827,6 @@ void PushBlobRequest (execData *exec_data )
 	unsigned long timeout = 0;
 	unsigned long timeout_to_webconfig = 0 ;
     	mqd_t mq;
-    	struct mq_attr attr;
 
 
     	/* open the message queue */

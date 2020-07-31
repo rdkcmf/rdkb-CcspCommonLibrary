@@ -117,8 +117,6 @@ SlapCreateLoamServer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer = NULL;
 
     return  SlapLsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

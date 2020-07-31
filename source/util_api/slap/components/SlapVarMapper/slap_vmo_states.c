@@ -104,7 +104,6 @@ SlapVmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
 
     SlapScoStdReset((ANSC_HANDLE)pMyObject);

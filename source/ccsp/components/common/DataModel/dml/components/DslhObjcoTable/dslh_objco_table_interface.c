@@ -117,8 +117,6 @@ DslhCreateObjcoTable
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PDSLH_OBJCO_TABLE_OBJECT        pDslhObjcoTable = NULL;
 
     return  DslhObjcoTableCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

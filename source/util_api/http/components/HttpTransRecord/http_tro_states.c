@@ -139,7 +139,6 @@ HttpTroGetWamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hWamIf;
@@ -181,7 +180,6 @@ HttpTroSetWamIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hWamIf = hInterface;
@@ -220,7 +218,6 @@ HttpTroGetSbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hSbcIf;
@@ -262,7 +259,6 @@ HttpTroSetSbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hSbcIf = hInterface;
@@ -301,7 +297,6 @@ HttpTroGetCbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hCbcIf;
@@ -343,7 +338,6 @@ HttpTroSetCbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hCbcIf = hInterface;
@@ -382,7 +376,6 @@ HttpTroGetPbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hPbcIf;
@@ -424,7 +417,6 @@ HttpTroSetPbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hPbcIf = hInterface;
@@ -463,7 +455,6 @@ HttpTroGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -505,7 +496,6 @@ HttpTroSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -544,7 +534,6 @@ HttpTroGetBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hBmoReq;
@@ -586,7 +575,6 @@ HttpTroSetBmoReq
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hBmoReq = hMessage;
@@ -625,7 +613,6 @@ HttpTroGetBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hBmoRep;
@@ -667,7 +654,6 @@ HttpTroSetBmoRep
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hBmoRep = hMessage;
@@ -706,7 +692,6 @@ HttpTroGetClientSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hClientSocket;
@@ -748,7 +733,6 @@ HttpTroSetClientSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hClientSocket = hSocket;
@@ -787,7 +771,6 @@ HttpTroGetServerSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hServerSocket;
@@ -829,7 +812,6 @@ HttpTroSetServerSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hServerSocket = hSocket;
@@ -868,7 +850,6 @@ HttpTroGetSbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hSbcContext;
@@ -910,7 +891,6 @@ HttpTroSetSbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hSbcContext = hContext;
@@ -949,7 +929,6 @@ HttpTroGetCbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hCbcContext;
@@ -991,7 +970,6 @@ HttpTroSetCbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hCbcContext = hContext;
@@ -1030,11 +1008,8 @@ HttpTroGetServerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject     = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerName;
 }
 
@@ -1074,7 +1049,6 @@ HttpTroSetServerName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     AnscZeroMemory(pMyObject->ServerName, ANSC_DOMAIN_NAME_SIZE);
@@ -1114,11 +1088,9 @@ HttpTroGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject     = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     if ( !pClientSocket )
     {
         return  NULL;
@@ -1158,11 +1130,8 @@ HttpTroGetServerAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject     = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerAddr.Dot;
 }
 
@@ -1197,12 +1166,10 @@ HttpTroGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject     = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
-    if ( !pClientSocket )
+    
+   if ( !pClientSocket )
     {
         return  0;
     }
@@ -1241,11 +1208,8 @@ HttpTroGetServerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject     = (PHTTP_TRANS_RECORD_OBJECT     )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerPort;
 }
 
@@ -1280,7 +1244,6 @@ HttpTroGetSbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->SbcPmode;
@@ -1322,7 +1285,6 @@ HttpTroSetSbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->SbcPmode = ulPmode;
@@ -1361,7 +1323,6 @@ HttpTroGetCbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->CbcPmode;
@@ -1403,7 +1364,6 @@ HttpTroSetCbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->CbcPmode = ulPmode;
@@ -1442,7 +1402,6 @@ HttpTroGetTransState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->TransState;
@@ -1484,7 +1443,6 @@ HttpTroSetTransState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->TransState = ulState;
@@ -1569,7 +1527,6 @@ HttpTroReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     pMyObject->hClientSocket    = (ANSC_HANDLE)NULL;

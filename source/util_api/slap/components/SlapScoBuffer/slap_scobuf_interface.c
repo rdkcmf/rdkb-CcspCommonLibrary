@@ -117,8 +117,6 @@ SlapCreateScoBuffer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_BUFFER_OBJECT         pSlapScoBuffer = NULL;
 
     return  SlapScoBufCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

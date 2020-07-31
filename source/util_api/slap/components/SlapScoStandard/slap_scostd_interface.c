@@ -117,8 +117,6 @@ SlapCreateScoStandard
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_STANDARD_OBJECT       pSlapScoStandard = NULL;
 
     return  SlapScoStdCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

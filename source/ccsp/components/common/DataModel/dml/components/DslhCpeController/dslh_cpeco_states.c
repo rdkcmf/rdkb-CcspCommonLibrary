@@ -275,10 +275,10 @@ DslhCpecoReset
     )
 {
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject    = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CWMP_OBJECT_DESCR         pObjectDescr = (PDSLH_CWMP_OBJECT_DESCR      )NULL;
-    ULONG                           i            = 0;
 
 #if 0 /* the objdesp is already released in another place */
+    PDSLH_CWMP_OBJECT_DESCR         pObjectDescr = (PDSLH_CWMP_OBJECT_DESCR      )NULL;
+    ULONG                           i            = 0;
     for( i = 0; i < pMyObject->uObjCount; i ++)
     {
         pObjectDescr = (PDSLH_CWMP_OBJECT_DESCR)pMyObject->hObjDespArray[i];

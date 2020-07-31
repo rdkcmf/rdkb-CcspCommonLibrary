@@ -114,7 +114,6 @@ BwrmCpoMatchPath
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     if ( !root_path || !page_path )

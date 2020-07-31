@@ -119,7 +119,7 @@ SlapBmc2TermoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapBmc2TermoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject    = (PSLAP_BMC2_TERMINAL_OBJECT)hThisObject;
 
     SlapScoGalRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SlapBmc2TermoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject    = (PSLAP_BMC2_TERMINAL_OBJECT)hThisObject;
 
     SlapScoGalEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SlapBmc2TermoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject    = (PSLAP_BMC2_TERMINAL_OBJECT)hThisObject;
 
     /*

@@ -195,7 +195,6 @@ TlsRkoResetProperty
     )
 {
     PTLS_RECORD_KEEPER_OBJECT       pMyObject     = (PTLS_RECORD_KEEPER_OBJECT  )hThisObject;
-    PTLS_RECORD_KEEPER_PROPERTY     pProperty     = (PTLS_RECORD_KEEPER_PROPERTY)&pMyObject->Property;
     PTLS_RECORD_STATE               pRecordStateW = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_RECORD_STATE               pRecordStateR = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
 

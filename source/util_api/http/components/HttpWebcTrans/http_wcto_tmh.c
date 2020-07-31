@@ -550,9 +550,9 @@ HttpWctoTmhSerialize
         ANSC_HANDLE                 hSerializeContext
     )
 {
+    UNREFERENCED_PARAMETER(hMessage);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject        = (PHTTP_WEBC_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient    = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
 
     if ( hSerializeContext == (ANSC_HANDLE)pTcpSimpleClient )

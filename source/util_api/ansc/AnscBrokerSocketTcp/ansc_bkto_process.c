@@ -112,10 +112,7 @@ AnscBktoGetRecvBuffer
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
 
     if ( pMyObject->bClosed )
     {
@@ -175,8 +172,6 @@ AnscBktoRecv
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject     = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer       = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine       = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
-    PANSC_BSTO_WORKER_OBJECT        pWorker       = (PANSC_BSTO_WORKER_OBJECT      )pServer->hWorker;
     ANSC_HANDLE                     hQueryContext = (ANSC_HANDLE)NULL;
     ULONG                           ulPmode       = ANSC_BSTOWO_PMODE_DISCARD;
     ULONG                           ulPacketSize  = pMyObject->RecvPacketSize;
@@ -348,7 +343,6 @@ AnscBktoSend
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
 
     if ( pMyObject->bClosed || pMyObject->bBroken )

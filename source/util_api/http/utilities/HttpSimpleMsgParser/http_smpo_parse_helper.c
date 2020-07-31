@@ -120,21 +120,22 @@ HttpSmpoUtilParseRequestLineVersion
         PULONG                      pMinorVersion
     )
 {
+    UNREFERENCED_PARAMETER(ulVersionLen);
     PUCHAR                          pMajor, pMinor;
 
-    pMajor  = _ansc_strchr(pVersion, '/');
+    pMajor  = (PUCHAR)_ansc_strchr((const char *)pVersion, '/');
     if (!pMajor)
         return FALSE;
 
     pMajor ++;
-    *pMajorVersion  = (ULONG)AnscString2Int(pMajor);
+    *pMajorVersion  = (ULONG)AnscString2Int((const char *)pMajor);
 
-    pMinor  = _ansc_strchr(pMajor, '.');
+    pMinor  = (PUCHAR)_ansc_strchr((const char *)pMajor, '.');
     if (!pMinor)
         return FALSE;
 
     pMinor ++;
-    *pMinorVersion  = (ULONG)AnscString2Int(pMinor);
+    *pMinorVersion  = (ULONG)AnscString2Int((const char *)pMinor);
 
     return TRUE;
 }
@@ -189,7 +190,7 @@ HttpSmpoUtilParseRquestLineUri
     PHTTP_REQUEST_URI               pUri    = (PHTTP_REQUEST_URI)hUri;
     BOOL                            bSucc   = TRUE;
 
-    if (AnscEqualString(pBuf, "*", TRUE))
+    if (AnscEqualString((char *)pBuf, "*", TRUE))
     {
         pUri->Type  = HTTP_URI_TYPE_ASTERISK;
     }
@@ -441,7 +442,6 @@ HttpSmpoUtilParseHttpDate
         ULONG                       ulSize
     )
 {
-    PHTTP_DATE                      pDate       = (PHTTP_DATE)hDate;
     BOOL                            bSucc       = FALSE;
     PUCHAR                          pNext;
     ULONG                           ulDateFmt   = 0;
@@ -718,7 +718,7 @@ HttpSmpoUtilParseAsciiTimeDate
 
     /* year */
     pToken  = HttpSmpoUtilLinearWhiteSpace(pToken, pLast - pToken + 1);
-    pDate->Year = _ansc_atoi(pToken);
+    pDate->Year = _ansc_atoi((const char *)pToken);
 
     return bSucc;
 }
@@ -762,22 +762,22 @@ HttpSmpoUtilGetDayOfWeek
 
     if (ulSize == 3)
     {
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_MON, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_MON, ulSize, FALSE))
             usDayOfWeek = 1;
         else
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_TUE, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_TUE, ulSize, FALSE))
             usDayOfWeek = 2;
         else
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_WED, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_WED, ulSize, FALSE))
             usDayOfWeek = 3;
         else
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_THU, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_THU, ulSize, FALSE))
             usDayOfWeek = 4;
         else
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_FRI, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_FRI, ulSize, FALSE))
             usDayOfWeek = 5;
         else
-        if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WKDAY_SAT, ulSize, FALSE))
+        if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WKDAY_SAT, ulSize, FALSE))
             usDayOfWeek = 6;
     }
     else
@@ -786,10 +786,10 @@ HttpSmpoUtilGetDayOfWeek
         {
             case    6:
 
-                if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WEEKDAY_MONDAY, ulSize, FALSE))
+                if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WEEKDAY_MONDAY, ulSize, FALSE))
                     usDayOfWeek = 1;
                 else
-                if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WEEKDAY_FRIDAY, ulSize, FALSE))
+                if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WEEKDAY_FRIDAY, ulSize, FALSE))
                     usDayOfWeek = 5;
 
                 break;
@@ -802,10 +802,10 @@ HttpSmpoUtilGetDayOfWeek
 
             case    8:
 
-                if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WEEKDAY_THURSDAY, ulSize, FALSE))
+                if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WEEKDAY_THURSDAY, ulSize, FALSE))
                     usDayOfWeek = 4;
                 else
-                if (AnscEqualString2(pDayOfWeek, HTTP_SMPO_WEEKDAY_SATURDAY, ulSize, FALSE))
+                if (AnscEqualString2((char *)pDayOfWeek, HTTP_SMPO_WEEKDAY_SATURDAY, ulSize, FALSE))
                     usDayOfWeek = 6;
 
                 break;
@@ -851,7 +851,7 @@ HttpSmpoUtilGetWeekDayName
         USHORT                      usWkDay
     )
 {
-    PUCHAR                          pSrc    = HTTP_SMPO_WKDAY_SUN;
+    char*                          pSrc    = HTTP_SMPO_WKDAY_SUN;
 
     switch (usWkDay)
     {
@@ -880,7 +880,7 @@ HttpSmpoUtilGetWeekDayName
         break;
     }
 
-    return pSrc;
+    return (PUCHAR)pSrc;
 }
 
 
@@ -922,37 +922,37 @@ HttpSmpoUtilGetMonth
 
     if (ulSize == 3)
     {
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_FEB, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_FEB, ulSize, FALSE))
             usMonth = 2;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_MAR, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_MAR, ulSize, FALSE))
             usMonth = 3;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_APR, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_APR, ulSize, FALSE))
             usMonth = 4;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_MAY, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_MAY, ulSize, FALSE))
             usMonth = 5;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_JUN, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_JUN, ulSize, FALSE))
             usMonth = 6;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_JUL, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_JUL, ulSize, FALSE))
             usMonth = 7;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_AUG, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_AUG, ulSize, FALSE))
             usMonth = 8;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_SEP, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_SEP, ulSize, FALSE))
             usMonth = 9;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_OCT, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_OCT, ulSize, FALSE))
             usMonth = 10;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_NOV, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_NOV, ulSize, FALSE))
             usMonth = 11;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_DEC, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_DEC, ulSize, FALSE))
             usMonth = 12;
     }
 
@@ -989,7 +989,7 @@ HttpSmpoUtilGetMonthName
         USHORT                      usMonth
     )
 {
-    PUCHAR                          pSrc    = HTTP_SMPO_MONTH_JAN;
+    char*                         pSrc    = HTTP_SMPO_MONTH_JAN;
 
     switch (usMonth)
     {
@@ -1038,7 +1038,7 @@ HttpSmpoUtilGetMonthName
         break;
     }
 
-    return pSrc;
+    return (PUCHAR)pSrc;
 }
 
 
@@ -1082,7 +1082,6 @@ HttpSmpoUtilParseDate1
     )
 {
     PHTTP_DATE                      pDate   = (PHTTP_DATE)hDate;
-    BOOL                            bSucc   = TRUE;
     PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
@@ -1090,7 +1089,7 @@ HttpSmpoUtilParseDate1
     /* date1 = 2DIGIT SP month SP 4DIGIT  ; day month year (e.g., 02 Jun 1982) */
     
     pToken  = pBuf;
-    pDate->DayOfMonth   = _ansc_atoi(pToken);
+    pDate->DayOfMonth   = _ansc_atoi((const char *)pToken);
 
     pToken  = _ansc_memchr(pToken, HTTP_SMPO_CHAR_SPACE, pLast - pToken + 1);
 
@@ -1111,7 +1110,7 @@ HttpSmpoUtilParseDate1
     pDate->Month    = HttpSmpoUtilGetMonth(pToken, ulTokenSize);
 
     pToken  = pNext + 1;
-    pDate->Year = _ansc_atoi(pToken);
+    pDate->Year = _ansc_atoi((const char *)pToken);
     
     pNext   = pToken;
 
@@ -1169,7 +1168,6 @@ HttpSmpoUtilParseDate2
     )
 {
     PHTTP_DATE                      pDate   = (PHTTP_DATE)hDate;
-    BOOL                            bSucc   = TRUE;
     PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
@@ -1177,7 +1175,7 @@ HttpSmpoUtilParseDate2
     /* date2 = 2DIGIT "-" month "-" 2DIGIT  ; day-month-year (e.g., 02-Jun-82) */
     
     pToken  = pBuf;
-    pDate->DayOfMonth   = _ansc_atoi(pToken);
+    pDate->DayOfMonth   = _ansc_atoi((const char *)pToken);
 
     pToken  = _ansc_memchr(pToken, HTTP_SMPO_CHAR_HYPHEN, pLast - pToken + 1);
 
@@ -1198,7 +1196,7 @@ HttpSmpoUtilParseDate2
     pDate->Month    = HttpSmpoUtilGetMonth(pToken, ulTokenSize);
 
     pToken  = pNext + 1;
-    pDate->Year = _ansc_atoi(pToken);
+    pDate->Year = _ansc_atoi((const char *)pToken);
 
     pNext   = pToken;
 
@@ -1256,7 +1254,6 @@ HttpSmpoUtilParseDate3
     )
 {
     PHTTP_DATE                      pDate   = (PHTTP_DATE)hDate;
-    BOOL                            bSucc   = TRUE;
     PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
@@ -1278,7 +1275,7 @@ HttpSmpoUtilParseDate3
     pToken  = pNext + 1;
     pToken  = HttpSmpoUtilLinearWhiteSpace(pToken, pLast - pToken + 1);
 
-    pDate->DayOfMonth   = _ansc_atoi(pToken);
+    pDate->DayOfMonth   = _ansc_atoi((const char *)pToken);
 
     pNext   = pToken;
 
@@ -1336,14 +1333,13 @@ HttpSmpoUtilParseTime
     )
 {
     PHTTP_DATE                      pDate   = (PHTTP_DATE)hDate;
-    BOOL                            bSucc   = TRUE;
     PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
 
     /* time = 2DIGIT ":" 2DIGIT ":" 2DIGIT  ; 00:00:00 - 23:59:59 */
     
     pToken  = pBuf;
-    pDate->Hour     = _ansc_atoi(pToken);
+    pDate->Hour     = _ansc_atoi((const char *)pToken);
 
     pToken  = _ansc_memchr(pToken, HTTP_SMPO_CHAR_COLON, pLast - pToken + 1);
 
@@ -1353,7 +1349,7 @@ HttpSmpoUtilParseTime
     }
 
     pToken ++;
-    pDate->Minute   = _ansc_atoi(pToken);
+    pDate->Minute   = _ansc_atoi((const char *)pToken);
 
     pToken   = _ansc_memchr(pToken, HTTP_SMPO_CHAR_COLON, pLast - pToken + 1);
     if (!pToken)
@@ -1362,7 +1358,7 @@ HttpSmpoUtilParseTime
     }
 
     pToken ++;
-    pDate->Second   = _ansc_atoi(pToken);
+    pDate->Second   = _ansc_atoi((const char *)pToken);
 
     pDate->MilliSecond  = 0;
 
@@ -1482,7 +1478,7 @@ HttpSmpoUtilParseMediaRange
 
         HttpSmpoUtilCopyHeaderString(pToken, ulTokenSize, pMediaRange->Parameters, HTTP_MAX_HEADER_PARAM_SIZE);
 
-        pNext   = _ansc_strstr(pMediaRange->Parameters, HTTP_SMPO_STRING_QUALITY);
+        pNext   = (PUCHAR)_ansc_strstr(pMediaRange->Parameters, HTTP_SMPO_STRING_QUALITY);
 
         if (pNext)
         {
@@ -1540,35 +1536,35 @@ HttpSmpoUtilGetMediaType
     }
 
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_TEXT) == ulTypeSize && 
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_TEXT, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_TEXT, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_TEXT;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MULTIPART) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MULTIPART, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MULTIPART, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MULTIPART;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MESSAGE) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MESSAGE, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MESSAGE, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MESSAGE;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_APPLICATION) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_APPLICATION, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_APPLICATION, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_APPLICATION;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_IMAGE) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_IMAGE, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_IMAGE, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_IMAGE;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_AUDIO) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_AUDIO, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_AUDIO, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_AUDIO;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_VIDEO) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_VIDEO, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_VIDEO, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_VIDEO;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MODEL) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MODEL, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MODEL, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MODEL;
 
     return ulMediaType;
@@ -1615,8 +1611,7 @@ HttpSmpoUtilGetMediaSubType
         ULONG                       ulSubTypeSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pHttpSmpo   = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
-
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     return 
         AnscGetIanaMediaSubtypeByName2
             (
@@ -1661,7 +1656,6 @@ HttpSmpoUtilGetQuality
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulInt, ulFrac;
 
@@ -1670,11 +1664,11 @@ HttpSmpoUtilGetQuality
     pToken  = pBuf;
     pNext   = _ansc_memchr(pToken, HTTP_SMPO_CHAR_DOT, ulSize);
 
-    ulInt   = _ansc_atoi(pToken);
+    ulInt   = _ansc_atoi((const char *)pToken);
 
     if (pNext)
     {
-        ulFrac  = _ansc_atoi(pNext + 1);
+        ulFrac  = _ansc_atoi((const char *)pNext + 1);
 
         if (ulFrac <= 9)
         {
@@ -1728,43 +1722,43 @@ HttpSmpoUtilGetCharsetType
     ULONG                           ulType  = IANA_CHARSET_CODE_RESERVED;
 
     if (AnscSizeOfString(IANA_CHARSET_TEXT_US_ASCII) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_US_ASCII, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_US_ASCII, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_US_ASCII;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_1) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_1, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_1, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_1;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_2) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_2, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_2, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_2;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_3) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_3, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_3, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_3;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_4) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_4, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_4, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_4;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_5) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_5, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_5, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_5;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_6) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_6, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_6, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_6;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_7) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_7, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_7, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_7;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_8) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_8, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_8, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_8;
     else
     if (AnscSizeOfString(IANA_CHARSET_TEXT_ISO_8859_9) == ulSize &&
-        AnscEqualString2(pCharsetName, IANA_CHARSET_TEXT_ISO_8859_9, ulSize, FALSE))
+        AnscEqualString2((char *)pCharsetName, IANA_CHARSET_TEXT_ISO_8859_9, ulSize, FALSE))
         ulType  = IANA_CHARSET_CODE_ISO_8859_9;
 
     return ulType;
@@ -1808,19 +1802,19 @@ HttpSmpoUtilGetEncodingType
     ULONG                           ulType  = IANA_CCODING_CODE_RESERVED;
 
     if (AnscSizeOfString(IANA_CCODING_TEXT_GZIP) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_GZIP, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_GZIP, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_GZIP;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_COMPRESS) == ulSize && 
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_COMPRESS, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_COMPRESS, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_COMPRESS;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_DEFLATE) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_DEFLATE, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_DEFLATE, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_DEFLATE;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_IDENTITY) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_IDENTITY, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_IDENTITY, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_IDENTITY;
 
     return ulType;
@@ -1864,59 +1858,59 @@ HttpSmpoUtilGetMethodId
     ULONG                           ulMethod    = HTTP_METHOD_RESERVED;
 
     if (AnscSizeOfString(HTTP_METHOD_NAME_GET) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_GET, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_GET, ulSize, FALSE))
         ulMethod = HTTP_METHOD_GET;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_POST) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_POST, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_POST, ulSize, FALSE))
         ulMethod = HTTP_METHOD_POST;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_OPTIONS) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_OPTIONS, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_OPTIONS, ulSize, FALSE))
         ulMethod = HTTP_METHOD_OPTIONS;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_HEAD) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_HEAD, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_HEAD, ulSize, FALSE))
         ulMethod = HTTP_METHOD_HEAD;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_PUT) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_PUT, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_PUT, ulSize, FALSE))
         ulMethod = HTTP_METHOD_PUT;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_DELETE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_DELETE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_DELETE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_DELETE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_CONNECT) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_CONNECT, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_CONNECT, ulSize, FALSE))
         ulMethod = HTTP_METHOD_CONNECT;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_TRACE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_TRACE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_TRACE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_TRACE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_NOTIFY) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_NOTIFY, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_NOTIFY, ulSize, FALSE))
         ulMethod = HTTP_METHOD_NOTIFY;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_SEARCH) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_SEARCH, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_SEARCH, ulSize, FALSE))
         ulMethod = HTTP_METHOD_SEARCH;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_M_SEARCH) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_M_SEARCH, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_M_SEARCH, ulSize, FALSE))
         ulMethod = HTTP_METHOD_M_SEARCH;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_M_POST) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_M_POST, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_M_POST, ulSize, FALSE))
         ulMethod = HTTP_METHOD_M_POST;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_SUBSCRIBE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_SUBSCRIBE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_SUBSCRIBE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_SUBSCRIBE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_UNSUBSCRIBE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_UNSUBSCRIBE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_UNSUBSCRIBE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_UNSUBSCRIBE;
 
     return ulMethod;
@@ -1992,13 +1986,13 @@ HttpSmpoUtilParseCredentials
     pNext ++;
 
     if (AnscSizeOfString(HTTP_AUTH_TEXT_NONE) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_NONE, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_NONE, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_NONE;
     }
     else
     if (AnscSizeOfString(HTTP_AUTH_TEXT_BASIC) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_BASIC, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_BASIC, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_BASIC;
 
@@ -2006,7 +2000,7 @@ HttpSmpoUtilParseCredentials
     }
     else
     if (AnscSizeOfString(HTTP_AUTH_TEXT_DIGEST) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_DIGEST, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_DIGEST, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_DIGEST;
 
@@ -2065,12 +2059,11 @@ HttpSmpoUtilParseBasicCredentials
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* basic-credentials = "Basic" SP basic-cookie */
 
     PHTTP_AUTH_CREDENTIAL           pCredentials    = (PHTTP_AUTH_CREDENTIAL)hCredentials;
     PHTTP_CREDENTIAL_BASIC          pBasicCookie    = &pCredentials->Credential.Basic;
-    PUCHAR                          pToken          = pBuf;
-    BOOL                            bSucc           = TRUE;
     PUCHAR                          pDecodedString;
     PUCHAR                          pString         = NULL;
     ULONG                           ulDecodedStringLen;
@@ -2113,7 +2106,7 @@ HttpSmpoUtilParseBasicCredentials
             *pPos   = 0;
             pUser   = pDecodedString;
 
-            ulUser  = AnscSizeOfString(pUser);
+            ulUser  = AnscSizeOfString((const char *)pUser);
             ulPass  = ulDecodedStringLen - ulUser - 1;
 
             ulCopySize  = ulUser;
@@ -2184,6 +2177,7 @@ HttpSmpoUtilParseDigestCredentials
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* auth-scheme = token */
     /* auth-param = token "=" quoted-string */
 
@@ -2247,7 +2241,6 @@ HttpSmpoUtilParseMailBox
     /* local-part  =  word *("." word) */
     /* domain      =  sub-domain *("." sub-domain) */
     
-    PANSC_RFC822_MAILBOX            pMailBox    = (PANSC_RFC822_MAILBOX)hMailBox;
     BOOL                            bSucc       = TRUE;
     PUCHAR                          pToken      = pBuf;
     PUCHAR                          pLast       = pToken + ulSize - 1;
@@ -2337,6 +2330,7 @@ HttpSmpoUtilParseAddrSpec
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* addr-spec   =  local-part "@" domain */
     /* local-part  =  word *("." word) */
     /* domain      =  sub-domain *("." sub-domain) */
@@ -2409,6 +2403,7 @@ HttpSmpoUtilParseChallenge
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* challenge = auth-scheme 1*SP realm *( "," auth-param ) */
 
     PHTTP_AUTH_CHALLENGE            pChallenge  = (PHTTP_AUTH_CHALLENGE)hChallenge;
@@ -2427,13 +2422,13 @@ HttpSmpoUtilParseChallenge
     ulLen   = pRealm - pScheme;
 
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_NONE) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_NONE, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_NONE, (char *)pScheme, ulLen, FALSE))
     {
         pChallenge->AuthType    = HTTP_AUTH_TYPE_NONE;
     }
     else
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_BASIC) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_BASIC, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_BASIC, (char *)pScheme, ulLen, FALSE))
     {
         PHTTP_CHALLENGE_BASIC       pBasicChallenge = &pChallenge->Challenge.Basic;
 
@@ -2444,7 +2439,7 @@ HttpSmpoUtilParseChallenge
     }
     else
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_DIGEST) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_DIGEST, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_DIGEST, (char *)pScheme, ulLen, FALSE))
     {
         PHTTP_CHALLENGE_DIGEST      pDigestChallenge = &pChallenge->Challenge.Digest;
 
@@ -2499,27 +2494,27 @@ HttpSmpoUtilGetTransferEncoding
     ULONG                           ulEncoding  = IANA_TCODING_CODE_RESERVED;
 
     if (AnscSizeOfString(IANA_TCODING_TEXT_GZIP) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_GZIP, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_GZIP, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_GZIP;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_COMPRESS) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_COMPRESS, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_COMPRESS, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_COMPRESS;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_DEFLATE) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_DEFLATE, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_DEFLATE, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_DEFLATE;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_IDENTITY) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_IDENTITY, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_IDENTITY, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_IDENTITY;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_CHUNKED) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_CHUNKED, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_CHUNKED, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_CHUNKED;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_TRAILERS) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_TRAILERS, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_TRAILERS, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_TRAILERS;
 
     return ulEncoding;
@@ -2633,6 +2628,7 @@ HttpSmpoUtilParseAuthorityServer
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* authority-server = [ [ userinfo "@" ] hostport ] */
     /* hostport = host [ ":" port ] */
 
@@ -2657,7 +2653,7 @@ HttpSmpoUtilParseAuthorityServer
 
         HttpSmpoUtilCopyHeaderString(pToken, pNext - pToken, pUri->HostName, ANSC_DOMAIN_NAME_SIZE);
 
-        pUri->HostPort  = (USHORT)_ansc_atoi(pNext + 1);
+        pUri->HostPort  = (USHORT)_ansc_atoi((const char *)pNext + 1);
     }
     else
     {
@@ -2714,6 +2710,7 @@ HttpSmpoUtilParseRegName
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_REQUEST_URI               pUri    = (PHTTP_REQUEST_URI)hUri;
     PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken  = pBuf;
@@ -2812,9 +2809,9 @@ HttpSmpoUtilGetNextCookieNameValuePair
             return pNext;
         }
 
-        if ( AnscEqualString2(pToken, HTTP_SMPO_STRING_SCOOKIE_EXPIRES, ulNameLen, FALSE) )
+        if ( AnscEqualString2((char *)pToken, HTTP_SMPO_STRING_SCOOKIE_EXPIRES, ulNameLen, FALSE) )
         {
-            pNext = _ansc_strstr(pNext, "GMT");
+            pNext = (PUCHAR)_ansc_strstr((const char *)pNext, "GMT");
 
             if ( pNext )
             {

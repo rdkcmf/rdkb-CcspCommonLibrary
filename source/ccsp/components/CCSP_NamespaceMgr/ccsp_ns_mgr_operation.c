@@ -267,7 +267,7 @@ CcspNsMgrRegisterNamespaces
             /* check whether the comp name is the same */
             pNSComp = (PCCSP_NAMESPACE_COMP_OBJECT)pAtomItem->hContext;
 
-            if (pNSComp && !AnscEqualString(pNSComp->pCompName, pCompName, TRUE))
+            if (pNSComp && !AnscEqualString(pNSComp->pCompName, (char*)pCompName, TRUE))
             {
                 AnscTrace("The namespace '%s' is already registered.\n", pString);
  
@@ -820,7 +820,7 @@ CcspNsMgrDiscoverNamespace
                 if(i>0)
                 {
 
-                    for(--i; i>=0;--i)
+                    for(--i; (int)i>=0;--i)
                     {
                         pCompStruct = (componentStruct_t*)pCompArray[i];
 

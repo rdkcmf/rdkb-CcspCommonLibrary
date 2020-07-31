@@ -119,7 +119,7 @@ HttpAuthoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_AUTH_OBJECT               pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAuthoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT)hThisObject;
 
     AnscCoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpAuthoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject       = (PHTTP_AUTH_OBJECT  )hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ HttpAuthoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT)hThisObject;
 
     /*

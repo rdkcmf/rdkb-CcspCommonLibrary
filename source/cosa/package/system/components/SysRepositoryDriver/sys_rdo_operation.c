@@ -105,7 +105,6 @@ SysRdoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
@@ -162,9 +161,7 @@ SysRdoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
 
     if ( !pMyObject->bActive )

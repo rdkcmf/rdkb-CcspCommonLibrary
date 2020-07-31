@@ -117,8 +117,6 @@ BwspCreateSiteCreator
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PBWSP_SITE_CREATOR_OBJECT       pBwspSiteCreator = NULL;
 
     return  BwspScoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

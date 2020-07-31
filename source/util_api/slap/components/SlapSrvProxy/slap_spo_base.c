@@ -119,7 +119,7 @@ SlapSpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapSpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf   = (PSLAP_GOA_INTERFACE   )pMyObject->hSlapGoaIf;
 
@@ -198,8 +197,7 @@ SlapSpoRemove
 
                 if ( pMyObject->hSlapGoaObj )
                 {
-                    returnStatus =
-                        pSlapGoaIf->RelObjectAccess
+                    pSlapGoaIf->RelObjectAccess
                             (
                                 pSlapGoaIf->hOwnerContext,
                                 pMyObject->hSlapGoaObj
@@ -216,8 +214,7 @@ SlapSpoRemove
 
                 if ( pMyObject->hSlapGoaObj )
                 {
-                    returnStatus =
-                        pSlapGoaIf->DeleteObject
+                    pSlapGoaIf->DeleteObject
                             (
                                 pSlapGoaIf->hOwnerContext,
                                 pMyObject->hSlapGoaObj
@@ -274,7 +271,6 @@ SlapSpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -316,7 +312,6 @@ SlapSpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     /*

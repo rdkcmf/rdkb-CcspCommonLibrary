@@ -121,8 +121,7 @@ AnscAsn1AttrCreate
     )
 {
     PANSC_ATTR_OBJECT               pBaseObject  = NULL;
-    ULONG                           ulSize       = 0;
-
+    
     /*
      * We create object by first allocating memory for holding the variables and member functions.
      */
@@ -185,7 +184,6 @@ AnscAsn1AttrParsingData
         PUCHAR                      pData
     )
 {
-    PANSC_ATTR_OBJECT               pBaseObject  = NULL;
     ASN_OBJECT_FORM_TYPE            formType     = EMPTY_FORM;
     UCHAR                           uChar;
     ULONG                           ulClass      = 0;
@@ -764,7 +762,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[APP %d IMP]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             else
@@ -774,7 +772,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[APP %d]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             break;
@@ -787,7 +785,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[CON %d IMP]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             else
@@ -797,7 +795,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[CON %d]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             break;
@@ -810,7 +808,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[PRI %d IMP]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             else
@@ -820,7 +818,7 @@ AnscAsn1AttrDump
                         (
                             pBuffer,
                             "[PRI %d]", 
-                            pMyObject->ulClassNumber
+                            (int)pMyObject->ulClassNumber
                         );
             }
             break;

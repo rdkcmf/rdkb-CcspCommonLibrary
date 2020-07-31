@@ -148,11 +148,6 @@ ALCertInitialize
     ***********************************************************/
 
     /*
-     * status of operation
-     */
-    AL_STATUS                   returnStatus = AL_STATUS_SUCCESS;
-
-    /*
      * pointer to the registry structure filled by CERT user
      */
     PCERT_USER_CHARACTERISTICS  pUserChar = (PCERT_USER_CHARACTERISTICS)hUserContext;
@@ -161,12 +156,6 @@ ALCertInitialize
      * pointer to the current PKI context
      */
     PALCERT_CONTEXT             pPKICertContext;
-
-    /*
-     * temporary counters
-     */
-    ULONG                       i = 0;
-
 
     /***********************************************************
                      PROCESS USER'S REGISTRATION
@@ -237,11 +226,6 @@ ALCertUnload
     /***********************************************************
                     DEFINITION OF LOCAL VARIABLES
     ***********************************************************/
-
-    /*
-     * status of operation
-     */
-    AL_STATUS                   returnStatus    = AL_STATUS_SUCCESS;
 
     /*
      * pointer to the current PKI client context
@@ -861,6 +845,7 @@ ALCertAcquireCertInformation
         PAL_INTERNAL_PKI_INFO       pInternalPKIInfo
     )
 {
+    UNREFERENCED_PARAMETER(hCertContext);
     PANSC_ASN1_CERTIFICATE          pCert;
     PANSC_ASN1_NAME                 pName;
     PANSC_ASN1_GENERALNAMES         pAltNames;
@@ -1286,6 +1271,7 @@ ALCertAcquireCertificationPath
         BOOLEAN                     bIncludeRootCA
     )
 {
+    UNREFERENCED_PARAMETER(ucCertEncoding);
     PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hCertContext;
     PPKI_CLIENT_ENTITY              pEntity       = NULL;
     ULONG                           length;
@@ -1756,17 +1742,19 @@ ALCertAcquireIDByHandle
         /*
          *  DH  AL_CERT user requires keys in host order
          */
-        AnscMemoryFromNToH(inPublicKey->Key.RSAPublicKey.Modulus.Data,                  inPublicKey->Key.RSAPublicKey.Modulus.Length);
-        AnscMemoryFromNToH(inPublicKey->Key.RSAPublicKey.PublicExponent.Data.ucData,    inPublicKey->Key.RSAPublicKey.PublicExponent.Length);
+#if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
+        AnscMemoryFromNToH((char*)inPublicKey->Key.RSAPublicKey.Modulus.Data,                  inPublicKey->Key.RSAPublicKey.Modulus.Length);
+        AnscMemoryFromNToH((char*)inPublicKey->Key.RSAPublicKey.PublicExponent.Data.ucData,    inPublicKey->Key.RSAPublicKey.PublicExponent.Length);
 
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.Modulus.Data,                inPrivateKey->Key.RSAPrivateKey.Modulus.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.PublicExponent.Data.ucData,  inPrivateKey->Key.RSAPrivateKey.PublicExponent.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.PrivateExponent.Data.ucData, inPrivateKey->Key.RSAPrivateKey.PrivateExponent.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.Prime1.Data,                 inPrivateKey->Key.RSAPrivateKey.Prime1.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.Prime2.Data,                 inPrivateKey->Key.RSAPrivateKey.Prime2.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.Exponent1.Data.ucData,       inPrivateKey->Key.RSAPrivateKey.Exponent1.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.Exponent2.Data.ucData,       inPrivateKey->Key.RSAPrivateKey.Exponent2.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.RSAPrivateKey.CoEfficient.Data.ucData,     inPrivateKey->Key.RSAPrivateKey.CoEfficient.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.Modulus.Data,                inPrivateKey->Key.RSAPrivateKey.Modulus.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.PublicExponent.Data.ucData,  inPrivateKey->Key.RSAPrivateKey.PublicExponent.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.PrivateExponent.Data.ucData, inPrivateKey->Key.RSAPrivateKey.PrivateExponent.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.Prime1.Data,                 inPrivateKey->Key.RSAPrivateKey.Prime1.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.Prime2.Data,                 inPrivateKey->Key.RSAPrivateKey.Prime2.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.Exponent1.Data.ucData,       inPrivateKey->Key.RSAPrivateKey.Exponent1.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.Exponent2.Data.ucData,       inPrivateKey->Key.RSAPrivateKey.Exponent2.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.RSAPrivateKey.CoEfficient.Data.ucData,     inPrivateKey->Key.RSAPrivateKey.CoEfficient.Length);
+#endif
     }
     else /* DSA */
     {
@@ -1793,16 +1781,18 @@ ALCertAcquireIDByHandle
         /*
          *  DH  AL_CERT user requires keys in host order
          */
-        AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamP.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamP.Length);
-        AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamQ.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamQ.Length);
-        AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamG.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamG.Length);
-        AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamY.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamY.Length);
+#if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
+        AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamP.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamP.Length);
+        AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamQ.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamQ.Length);
+        AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamG.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamG.Length);
+        AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamY.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamY.Length);
 
-        AnscMemoryFromNToH(inPrivateKey->Key.DSAPrivateKey.ParamP.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamP.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.DSAPrivateKey.ParamQ.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamQ.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.DSAPrivateKey.ParamG.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamG.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.DSAPrivateKey.ParamY.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamY.Length);
-        AnscMemoryFromNToH(inPrivateKey->Key.DSAPrivateKey.ParamX.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamX.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.DSAPrivateKey.ParamP.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamP.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.DSAPrivateKey.ParamQ.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamQ.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.DSAPrivateKey.ParamG.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamG.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.DSAPrivateKey.ParamY.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamY.Length);
+        AnscMemoryFromNToH((char*)inPrivateKey->Key.DSAPrivateKey.ParamX.Data.ucData,  inPrivateKey->Key.DSAPrivateKey.ParamX.Length);
+#endif
     }
 
     pSubjectID->Attribute.AttributesMask |= CERTIFICATE_FLAG;
@@ -1866,8 +1856,6 @@ ALCertAcquireCANameByHandle
     /***********************************************************
                     DEFINITION OF LOCAL VARIABLES
     ***********************************************************/
-    AL_STATUS                       returnStatus = AL_STATUS_SUCCESS;
-
     /*
      * pointer to the matched subject information
      */
@@ -1928,6 +1916,9 @@ ALCertAddPKIServer
         PAL_HANDLE                  phServerHandle
     )
 {
+    UNREFERENCED_PARAMETER(hCertContext);
+    UNREFERENCED_PARAMETER(pPKIServerInfo);
+    UNREFERENCED_PARAMETER(phServerHandle);
     return AL_STATUS_CERT_NOT_SUPPORTED;
 }
 
@@ -1942,6 +1933,12 @@ ALCertImportPKIServer
         PAL_HANDLE                  phServerHandle
     )
 {
+    UNREFERENCED_PARAMETER(hCertContext);
+    UNREFERENCED_PARAMETER(pCertEncoding);
+    UNREFERENCED_PARAMETER(ulEncodingSize);
+    UNREFERENCED_PARAMETER(pPrivateKeyEncoding);
+    UNREFERENCED_PARAMETER(ulKeyEncodingSize);
+    UNREFERENCED_PARAMETER(phServerHandle);
     return AL_STATUS_CERT_NOT_SUPPORTED;
 }
 
@@ -1951,6 +1948,7 @@ ALCertRemovePKIServer
         AL_HANDLE                   hServerHandle
     )
 {
+    UNREFERENCED_PARAMETER(hServerHandle);
     return AL_STATUS_CERT_NOT_SUPPORTED;
 }
 
@@ -1964,6 +1962,11 @@ ALCertRetrievePKIServerCert
         PULONG                      pulKeySize
     )
 {
+    UNREFERENCED_PARAMETER(hServerHandle);
+    UNREFERENCED_PARAMETER(pCertEncoding);
+    UNREFERENCED_PARAMETER(pulEncodingSize);
+    UNREFERENCED_PARAMETER(pPrivateKeyEncoding);
+    UNREFERENCED_PARAMETER(pulKeySize);
     return AL_STATUS_CERT_NOT_SUPPORTED;
 }
 
@@ -1978,6 +1981,12 @@ ALCertSignPKIClient
         PULONG                      pulKeyEncodingSize
     )
 {
+    UNREFERENCED_PARAMETER(hServerHandle);
+    UNREFERENCED_PARAMETER(pPKIClientInfo);
+    UNREFERENCED_PARAMETER(pCertEncoding);
+    UNREFERENCED_PARAMETER(pulEncodingSize);
+    UNREFERENCED_PARAMETER(pPrivateKeyEncoding);
+    UNREFERENCED_PARAMETER(pulKeyEncodingSize);
     return AL_STATUS_CERT_NOT_SUPPORTED;
 }
 
@@ -2251,7 +2260,9 @@ ALCertIsKeyMatchable
         ULONG                       uRequestSize
     )
 {
-    PALCERT_CONTEXT                 pPKICertContext = (PALCERT_CONTEXT)hCertContext;
+    UNREFERENCED_PARAMETER(ulCertSize);
+    UNREFERENCED_PARAMETER(uRequestSize);
+    UNREFERENCED_PARAMETER(hCertContext);
     PANSC_ASN1_CERTIFICATE          pCertificate    = NULL;
     PANSC_ASN1_CERTIFICATEREQUEST   pCertRequest    = NULL;
     BOOLEAN                         bMatched        = FALSE;
@@ -2262,9 +2273,8 @@ ALCertIsKeyMatchable
     PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo2 = NULL;
     PUCHAR                          pPubEncode1     = NULL;
     PUCHAR                          pPubEncode2     = NULL;
-    ULONG                           uPubEncode1     = 0;
-    ULONG                           uPubEncode2     = 0;
-    ANSC_CRYPTO_PUB_KEY_GEN_PARAMS  keyParams       = { 0 };
+    ANSC_CRYPTO_PUB_KEY_GEN_PARAMS  keyParams;
+    memset(&keyParams, 0, sizeof(ANSC_CRYPTO_PUB_KEY_GEN_PARAMS));
 
     if( pCertEncoding == NULL || pRequestEncoding == NULL)
     {
@@ -2716,6 +2726,7 @@ ALCertMime64Decoding
     PULONG                              pSizeOfOutputData
 )
 {
+    UNREFERENCED_PARAMETER(ulSizeOfInputData);
     ULONG                               length;
     PUCHAR                              pOutput;
 

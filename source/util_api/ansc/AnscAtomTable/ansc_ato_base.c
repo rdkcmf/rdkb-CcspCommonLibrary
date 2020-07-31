@@ -119,7 +119,7 @@ AnscAtoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ AnscAtoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -241,9 +240,7 @@ AnscAtoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -281,7 +278,6 @@ AnscAtoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     /*

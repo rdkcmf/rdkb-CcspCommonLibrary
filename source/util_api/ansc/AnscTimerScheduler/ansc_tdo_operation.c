@@ -110,8 +110,6 @@ AnscTdoAcquireAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
-    PANSC_OBJECT_CONTAINER_OBJECT   pContainer   = (PANSC_OBJECT_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PANSC_TIMER_SCHEDULER_OBJECT    pScheduler   = (PANSC_TIMER_SCHEDULER_OBJECT )pMyObject->hScheduler;
 
     AnscAcquireSpinLock(&pMyObject->AccessSpinLock);
 
@@ -151,8 +149,6 @@ AnscTdoReleaseAccess
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
-    PANSC_OBJECT_CONTAINER_OBJECT   pContainer   = (PANSC_OBJECT_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PANSC_TIMER_SCHEDULER_OBJECT    pScheduler   = (PANSC_TIMER_SCHEDULER_OBJECT )pMyObject->hScheduler;
 
     AnscReleaseSpinLock(&pMyObject->AccessSpinLock);
 
@@ -314,7 +310,6 @@ AnscTdoInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
     PANSC_TDO_CLIENT_OBJECT         pClient      = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hClient;
 

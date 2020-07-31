@@ -44,6 +44,7 @@
 #include "ccsp_trace.h"
 #include <fcntl.h>
 #include <rbus_message_bus.h>
+#include "ansc_platform.h"
 
 #ifndef WIN32 
 #include <sys/time.h>
@@ -109,11 +110,11 @@ inline static int                           CcspMsgQueueInit(CCSP_MSG_QUEUE *Que
 inline static int                           CcspMsgQueuePushEntry(CCSP_MSG_QUEUE *Queue, CCSP_MSG_SINGLE_LINK_ENTRY *Entry);
 inline static PCCSP_MSG_SINGLE_LINK_ENTRY   CcspMsgQueuePopEntry(CCSP_MSG_QUEUE *Queue); 
 
-static dbus_bool_t       connection_watch_callback(DBusWatch*, unsigned int, void*);
+/*static dbus_bool_t       connection_watch_callback(DBusWatch*, unsigned int, void*);*/
 static dbus_bool_t       add_watch(DBusWatch*, void*);
 static void              remove_watch(DBusWatch*, void*);
 static void              toggle_watch(DBusWatch*, void*);
-static void              connection_timeout_callback(DBusTimeout*, void*);
+/*static void              connection_timeout_callback(DBusTimeout*, void*);*/
 static dbus_bool_t       add_timeout(DBusTimeout*, void*);
 static void              remove_timeout(DBusTimeout*, void*);
 static CData*            cdata_new(DBusLoop*, DBusConnection*);
@@ -136,10 +137,10 @@ static int               CCSP_Message_Bus_Register_Path_Priv(void*, const char*,
 static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_callback_t, void*);
 static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out, const rtMessageHeader* hdr);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
+static DBusWakeupMainFunction wake_mainloop(void *);
 static int webcfg_signal_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
 static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
 static int cr_isSystemReady_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
-static void wake_mainloop(void *);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
 int rbus_enabled = 0;
 
@@ -294,7 +295,8 @@ CcspMsgQueuePopEntry
     return head;
 }
 
-
+//unused function
+#if 0
 static dbus_bool_t 
 connection_watch_callback 
 (
@@ -303,8 +305,10 @@ connection_watch_callback
     void          *data
 )
 {
+    UNREFERENCED_PARAMETER(data);
     return dbus_watch_handle (watch, condition);
 }
+#endif
 
 static dbus_bool_t 
 add_watch
@@ -353,7 +357,8 @@ toggle_watch
              watch
          );
 }
-
+//unused function
+#if 0
 static void 
 connection_timeout_callback 
 (
@@ -361,9 +366,11 @@ connection_timeout_callback
     void          *data
 )
 {
+    UNREFERENCED_PARAMETER(data);
     /* Can return FALSE on OOM but we just let it fire again later */
     dbus_timeout_handle (timeout);
 }
+#endif
 
 static dbus_bool_t 
 add_timeout 
@@ -452,6 +459,8 @@ path_unregistered_func
     void            *user_data
 )
 {
+    UNREFERENCED_PARAMETER(connection);
+    UNREFERENCED_PARAMETER(user_data);
     /* connection was finalized */
 }
 
@@ -463,6 +472,7 @@ dispatch_status_func
     void              *data
 )
 {
+    UNREFERENCED_PARAMETER(conn);
     CCSP_MESSAGE_BUS_CONNECTION *connection = (CCSP_MESSAGE_BUS_CONNECTION *)data;
 
     if (new_status != DBUS_DISPATCH_COMPLETE)
@@ -675,8 +685,8 @@ NO_MEM:
 
     // set everything to NULL
     dbus_connection_set_dispatch_status_function (connection->conn, NULL, NULL, NULL);
-    dbus_connection_set_watch_functions (connection, NULL, NULL, NULL, NULL, NULL);
-    dbus_connection_set_timeout_functions (connection, NULL, NULL, NULL, NULL, NULL);
+    dbus_connection_set_watch_functions (connection->conn, NULL, NULL, NULL, NULL, NULL);
+    dbus_connection_set_timeout_functions (connection->conn, NULL, NULL, NULL, NULL, NULL);
 
     return FALSE;
 }
@@ -688,6 +698,7 @@ ccsp_msg_check_resp_sync
     void *user_data
 )
 {
+    UNREFERENCED_PARAMETER(pcall);
     CCSP_MESSAGE_BUS_CB_DATA *cb_data = (CCSP_MESSAGE_BUS_CB_DATA *)user_data;
 
     pthread_mutex_lock(&cb_data->count_mutex);
@@ -1048,7 +1059,7 @@ ccsp_rbus_logHandler
     char* message
 )
 {
-
+    UNREFERENCED_PARAMETER(threadId);
     switch (level)
     {
         case RT_LOG_FATAL:
@@ -1192,7 +1203,7 @@ CCSP_Message_Bus_Init
                                                               {METHOD_REGISTERCAPABILITIES, (void*)bus_info, cr_registerCaps_rbus},
                                                               {METHOD_ISSYSTEMREADY, (void*)bus_info, cr_isSystemReady_rbus},
                                                              };
-                        if( err = rbus_registerMethodTable(component_id, table, 2) != RTMESSAGE_BUS_SUCCESS )
+                        if(( err = rbus_registerMethodTable(component_id, table, 2) != RTMESSAGE_BUS_SUCCESS ))
                         {
                             RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                         }
@@ -1213,7 +1224,7 @@ CCSP_Message_Bus_Init
                     rbus_method_table_entry_t table[1] = {
                                                             {"webconfigSignal", (void*)bus_info, webcfg_signal_rbus},
                                                          };
-                    if( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS )
+                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -1223,7 +1234,7 @@ CCSP_Message_Bus_Init
                      rbus_method_table_entry_t table[1] = {
                                 {CCSP_TELEMETRY_DATA_SIGNAL, (void*)bus_info, telemetry_send_signal_rbus}, 
                                         };
-                    if( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS )
+                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -1381,7 +1392,7 @@ CCSP_Message_Bus_Init
             dbus_connection_set_wakeup_main_function
                 (
                     bus_info->connection[count].conn,
-                    wake_mainloop,
+                    (void *)&wake_mainloop,
                     (void *)(&bus_info->connection[count]),
                     NULL
                 );
@@ -1435,7 +1446,7 @@ CCSP_Message_Bus_Init
     DBus needs a way to wake up the main loop that is polling waiting for input
     in case there is output queued to send, in case shutdown is needed, etc. 
 */
-static void
+static DBusWakeupMainFunction
 wake_mainloop(
 void *data
 )
@@ -1443,7 +1454,6 @@ void *data
     int old_errno;
 
     CCSP_MESSAGE_BUS_CONNECTION *connection = (CCSP_MESSAGE_BUS_CONNECTION *) data;
-    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *) connection->bus_info_ptr;
 
     if (connection->loop)
     {
@@ -1452,6 +1462,7 @@ void *data
             CCSP_Msg_SleepInMilliSeconds(CCSP_MESSAGE_MAINLOOP_WAKE_RETRY_MS);
         errno = old_errno;
     }
+    return NULL;
 }
 
 void 
@@ -1462,7 +1473,6 @@ CCSP_Message_Bus_Exit
 {
     int i;
     int ret = 0;
-    char end = '\0';
 
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     struct timespec timeout = { 0, 0 };
@@ -2010,9 +2020,9 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         case RBUS_DATATYPE_DATETIME:
         {
-            rbusDateTime_t rbus_time = {0};
+            rbusDateTime_t rbus_time = {{0},{0}};
             char tmpBuff[40] = {0};
-            rbus_PopBinaryData(msg, &pValue, &length);
+            rbus_PopBinaryData(msg, &pValue, (unsigned int *)&length);
             memcpy(&rbus_time,pValue,sizeof(rbusDateTime_t));
             if(0 == rbus_time.m_time.tm_year) {
                 sprintf(tmpBuff, "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year,
@@ -2043,7 +2053,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         case RBUS_DATATYPE_BOOLEAN:
         {
-            rbus_PopBinaryData(msg, &pValue, &length);
+            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
             unsigned char boolValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "false") + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2054,7 +2064,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
         case RBUS_DATATYPE_CHAR:
         case RBUS_DATATYPE_INT8:
         {
-            rbus_PopBinaryData(msg, &pValue, &length);
+            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
             signed char tmpValue = *(signed char*)pValue;
             n = snprintf(pTmp, 0, "%d", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2065,7 +2075,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
         case RBUS_DATATYPE_UINT8:
         case RBUS_DATATYPE_BYTE:
         {
-            rbus_PopBinaryData(msg, &pValue, &length);
+            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
             unsigned char tmpValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "%u", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2074,7 +2084,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         }
         case RBUS_DATATYPE_STRING:
-            rbus_PopBinaryData(msg, &pValue, &length);
+            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
             n = length + 1;
             *pStringValue = bus_info->mallocfunc(n);
             strcpy (*pStringValue, pValue);
@@ -2086,7 +2096,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             unsigned char* pVar = NULL;
             char* pStrVar = NULL;
             unsigned char tmp = 0;
-            rbus_PopBinaryData(msg, (const void **)&pVar, &length);
+            rbus_PopBinaryData(msg, (const void **)&pVar, (unsigned int *)&length);
 
             n = (2 * length) + 1;
             *pType = ccsp_byte;
@@ -2113,8 +2123,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
 
 static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    UNREFERENCED_PARAMETER(destination);
     (void)hdr;
-    rtError err = RT_OK;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)user_data;
 
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
@@ -2126,10 +2136,9 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int result = 0, i =0, size =0;
             unsigned int writeID = 0;
             int32_t param_size = 1, tmp = 0;
-            char **parameterNames = 0, names = 0;
+            char **parameterNames = 0;
             parameterValStruct_t **val = 0;
 
-            rtError err = RT_OK;
             rbus_PopInt32(request, (int32_t*)&writeID);
             rbus_PopInt32(request, &param_size);
 
@@ -2142,7 +2151,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterNames[i] = NULL;
-                rbus_PopString(request, &parameterNames[i]);
+                rbus_PopString(request, (const char**)&parameterNames[i]);
                 RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
             }
 
@@ -2185,7 +2194,6 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             char *invalidParameterName = 0;
             int32_t dataType = 0;
 
-            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
             rbus_PopInt32(request, &sessionId);
             rbus_PopInt32(request, (int32_t*)&writeID);
             rbus_PopInt32(request, (int32_t*)&param_size);
@@ -2198,13 +2206,13 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterVal[i].parameterName = NULL;
-                rbus_PopString(request, &parameterVal[i].parameterName);
+                rbus_PopString(request, (const char**)&parameterVal[i].parameterName);
                 rbus_PopInt32(request, &dataType);
                 if (dataType < RBUS_DATATYPE_BOOLEAN)
                 {
                     parameterVal[i].type = dataType;
                     parameterVal[i].parameterValue = NULL;
-                    rbus_PopString(request, &parameterVal[i].parameterValue);
+                    rbus_PopString(request, (const char**)&parameterVal[i].parameterValue);
                 }
                 else
                 {
@@ -2212,7 +2220,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 }
             }
             char *str = NULL;
-            rbus_PopString(request, &str); //commit
+            rbus_PopString(request, (const char**)&str); //commit
             commit = (str && strcasecmp(str, "TRUE") == 0)?1:0;
             result = func->setParameterValues(sessionId, writeID, parameterVal, param_size, commit,&invalidParameterName, func->setParameterValues_data);
             RBUS_LOG("%s :setParameterValues result %d\n", __FUNCTION__, result);
@@ -2232,9 +2240,9 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
         else if(!strncmp(method, METHOD_GETPARAMETERATTRIBUTES, MAX_METHOD_NAME_LENGTH) && func->getParameterAttributes)
         {
-            char **parameterNames = 0, **names = 0;
+            char **parameterNames = 0;
             parameterAttributeStruct_t **val = 0;
-            int size = 0, result = 0, i = 0, ret = 0, param_size = 0;
+            int size = 0, result = 0, i = 0, param_size = 0;
             int32_t tmp = 0;
             rbus_PopInt32(request, &param_size);
 
@@ -2247,7 +2255,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterNames[i] = NULL;
-                rbus_PopString(request, &parameterNames[i]);
+                rbus_PopString(request, (const char**)&parameterNames[i]);
                 RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
             }
 
@@ -2259,7 +2267,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rbus_AppendInt32(*response, tmp);
             if( tmp == CCSP_SUCCESS )
             {
-                rbus_AppendInt32(*response, size);
+                rbus_AppendInt32(*response, (int32_t)size);
 
                 for(i = 0; i < size; i++)
                 {
@@ -2289,10 +2297,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
         else if(!strncmp(method, METHOD_SETPARAMETERATTRIBUTES, MAX_METHOD_NAME_LENGTH) && func->setParameterAttributes)
         {
-            char ** names = 0;
             parameterAttributeStruct_t * parameterAttribute = 0;
             int i = 0, sessionId = 0, param_size = 0, result = 0, tmp = 0;
-            int32_t temp = 0;
             rbus_PopInt32(request, &sessionId);
             rbus_PopInt32(request, &param_size);
             if(param_size > 0)
@@ -2302,12 +2308,12 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             }
             for(i = 0; i < param_size; i++)
             {
-                rbus_PopString(request, &parameterAttribute[i].parameterName);
-                rbus_PopInt32(request, &parameterAttribute[i].notificationChanged);
-                rbus_PopInt32(request, &parameterAttribute[i].notification);
-                rbus_PopInt32(request, &parameterAttribute[i].access);
-                rbus_PopInt32(request, &parameterAttribute[i].accessControlChanged);
-                rbus_PopInt32(request, &parameterAttribute[i].accessControlBitmask);
+                rbus_PopString(request, (const char**)&parameterAttribute[i].parameterName);
+                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].notificationChanged);
+                rbus_PopInt32(request, (int32_t*)&parameterAttribute[i].notification);
+                rbus_PopInt32(request, (int32_t*)&parameterAttribute[i].access);
+                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].accessControlChanged);
+                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].accessControlBitmask);
                 rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].RequesterID);
             }
             result = func->setParameterAttributes(sessionId, parameterAttribute, param_size, func->setParameterAttributes_data);
@@ -2319,11 +2325,11 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
         else if(!strncmp(method, METHOD_GETPARAMETERNAMES, MAX_METHOD_NAME_LENGTH) && func->getParameterNames)
         {
-            int ret = 0 ,i = 0,size = 0;
+            int i = 0,size = 0;
             int32_t btmp = 0 ,result = 0, tmp = 0;
             char * parameterName = 0;
             parameterInfoStruct_t **val = 0;
-            rbus_PopString(request, &parameterName);
+            rbus_PopString(request, (const char**)&parameterName);
             rbus_PopInt32(request, &btmp); //next level
             result = func->getParameterNames(parameterName,btmp, &size, &val, func->getParameterNames_data );
             rtMessage_Create(response);
@@ -2348,8 +2354,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t tmp = 0, sessionId = 0;
             char *str = 0, *inst_str = 0;
             rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
-            rbus_PopInt32(request, &sessionId);
-            rbus_PopString(request, &str); //object name
+            rbus_PopInt32(request, (int32_t*)&sessionId);
+            rbus_PopString(request, (const char**)&str); //object name
             result = func->AddTblRow(sessionId, str, &instanceNumber , func->AddTblRow_data);
             if (result == CCSP_SUCCESS)
             {
@@ -2369,12 +2375,12 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
         else if (!strncmp(method, METHOD_DELETETBLROW, MAX_METHOD_NAME_LENGTH) && func->DeleteTblRow)
         {
-            int instanceNumber = 0, result = 0;
+            int result = 0;
             int32_t tmp = 0, sessionId = 0;
             char * str = 0;
             rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
-            rbus_PopInt32(request, &sessionId);
-            rbus_PopString(request, &str); //obj name
+            rbus_PopInt32(request, (int32_t*)&sessionId);
+            rbus_PopString(request, (const char**)&str); //obj name
             result = func->DeleteTblRow(sessionId, str , func->DeleteTblRow_data);
             if (result == CCSP_SUCCESS)
             {
@@ -2421,17 +2427,17 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
 
 static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    UNREFERENCED_PARAMETER(response);
     (void) destination;
     (void) method;
     (void) hdr;
     int err = CCSP_Message_Bus_OK;
-    char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
     if (func->registerCaps)
     {
         char* pCompName = NULL;
-        rbus_PopString(request, &pCompName);
+        rbus_PopString(request, (char const**)&pCompName);
         func->registerCaps(pCompName, func->registerCaps_data);
     }
     return err;
@@ -2439,11 +2445,11 @@ static int cr_registerCaps_rbus(const char * destination, const char * method, r
 
 static int cr_isSystemReady_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    UNREFERENCED_PARAMETER(request);
     (void) destination;
     (void) method;
     (void) hdr;
     int err = CCSP_Message_Bus_OK;
-    char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
     if (func->isSystemReady)
@@ -2458,6 +2464,7 @@ static int cr_isSystemReady_rbus (const char * destination, const char * method,
 
 static int webcfg_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    UNREFERENCED_PARAMETER(response);
     (void) destination;
     (void) method;
     (void) hdr;
@@ -2470,7 +2477,7 @@ static int webcfg_signal_rbus(const char * destination, const char * method, rtM
     {
         char* webconfig_data = 0;
         RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
-        rbus_PopString(request, &webconfig_data);
+        rbus_PopString(request, (char const**)&webconfig_data);
         func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
     }
     return err;
@@ -2478,6 +2485,7 @@ static int webcfg_signal_rbus(const char * destination, const char * method, rtM
 
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
 {
+    UNREFERENCED_PARAMETER(response);
     (void) destination;
     (void) method;
     (void) hdr;
@@ -2485,7 +2493,7 @@ static int telemetry_send_signal_rbus(const char * destination, const char * met
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    err = rbus_GetString(request, MESSAGE_FIELD_PAYLOAD, &telemetry_data);
+    err = rbus_GetString(request, MESSAGE_FIELD_PAYLOAD, (const char**)&telemetry_data);
     func->telemetryDataSignal(telemetry_data,func->telemetryDataSignal_data);
     return err;
 }
@@ -2497,6 +2505,7 @@ CCSP_Message_Bus_Register_Path_Priv_rbus
  void * user_data
 )
 {
+    UNREFERENCED_PARAMETER(user_data);
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     bus_info->rbus_callback = (void *)funcptr;
     return CCSP_Message_Bus_OK;
@@ -2511,6 +2520,7 @@ CCSP_Message_Bus_Register_Path2
     void * user_data
 )
 {
+    UNREFERENCED_PARAMETER(user_data);
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 
     pthread_mutex_lock(&bus_info->info_mutex);
@@ -2583,7 +2593,6 @@ CCSP_Message_Bus_Send_Str
 
     int ret = CCSP_Message_Bus_ERROR;
     //    static int ct = 0;
-    int type = 0;
 
     // construct base message
     message = dbus_message_new_method_call
@@ -2874,4 +2883,3 @@ CCSP_Message_Bus_Send_Msg_Block
 
     return ret;
 }
-

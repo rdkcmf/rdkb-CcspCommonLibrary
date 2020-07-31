@@ -119,7 +119,7 @@ HttpFcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpFcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -229,7 +228,6 @@ HttpFcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,7 +269,6 @@ HttpFcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

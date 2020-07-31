@@ -119,7 +119,7 @@ BwrmPmoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BwrmPmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PANSC_TDO_CLIENT_OBJECT         pCacheTimerClient = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hCacheTimerClient;
@@ -246,7 +245,6 @@ BwrmPmoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PANSC_TDO_CLIENT_OBJECT         pCacheTimerClient = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hCacheTimerClient;
@@ -332,7 +330,6 @@ BwrmPmoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject    = (PBWRM_PAGE_MANAGER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

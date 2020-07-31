@@ -116,8 +116,6 @@ HttpSmpoUtilParseRequestLine
         ULONG                       ulSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject = NULL;
-    ANSC_HANDLE                     hResult = NULL;
     ULONG                           i;
     PHTTP_REQUEST_INFO              pRequestInfo = NULL;
     PUCHAR                          pMethod, pUri, pVersion;
@@ -125,8 +123,6 @@ HttpSmpoUtilParseRequestLine
     PUCHAR                          pBuf = NULL;
     PUCHAR                          pMsg = NULL;
 
-    pMyObject           = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
-    hResult             = (ANSC_HANDLE)NULL;
     pMethod             = NULL;
     pUri                = NULL;
     pVersion            = NULL;
@@ -153,7 +149,7 @@ HttpSmpoUtilParseRequestLine
         return (ANSC_HANDLE)NULL;
     }
 
-    pMsg    = _ansc_strchr(pMethod, ' ');
+    pMsg    = (PUCHAR)_ansc_strchr((const char *)pMethod, ' ');
 
     if (!pMsg)
     {
@@ -174,7 +170,7 @@ HttpSmpoUtilParseRequestLine
         return (ANSC_HANDLE)NULL;
     }
 
-    pMsg    = _ansc_strchr(pUri, ' ');
+    pMsg    = (PUCHAR)_ansc_strchr((const char *)pUri, ' ');
 
     if (!pMsg)
         return (ANSC_HANDLE)NULL;
@@ -273,7 +269,7 @@ HttpSmpoUtilParseStatusLine
         ULONG                       ulSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject         = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pLast           = ((PUCHAR)buffer) + ulSize - 1;
     PHTTP_RESPONSE_INFO             pResponseInfo   = NULL;
     ULONG                           ulMajor, ulMinor;
@@ -302,7 +298,7 @@ HttpSmpoUtilParseStatusLine
 
     /* status code */
     pBuf    = pNext + 1;
-    ulStatusCode    = _ansc_atoi(pBuf);
+    ulStatusCode    = _ansc_atoi((const char *)pBuf);
 
     pNext   = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_SPACE, pLast - pBuf + 1);
     if (!pNext)
@@ -502,14 +498,13 @@ HttpSmpoUtilParseChunkedLine
         ULONG                       ulSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject   = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PHTTP_CHUNK_INFO                pChunkInfo  = NULL;
     PUCHAR                          pBuf        = (PUCHAR)buffer;
     PUCHAR                          pLast       = pBuf + ulSize - 1;
     PUCHAR                          pExt        = NULL;
     PUCHAR                          pNext = NULL, pCRLF = NULL;
     ULONG                           ulChunkSize = 0;
-    ULONG                           i;
     UCHAR                           uc;
     ULONG                           ulValue;
 
@@ -548,7 +543,6 @@ HttpSmpoUtilParseChunkedLine
 
     pExt    = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_SEMICOLON, pCRLF - pBuf);
 
-    i = 0;
     pNext   = pBuf;
     while (pNext)
     {
@@ -666,7 +660,6 @@ HttpSmpoParseUrl
         ULONG                       ulSize
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject   = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
     PHTTP_REQUEST_URI               pRequestUri;
     BOOL                            bSucc;
 
@@ -753,7 +746,6 @@ HttpSmpoParseUrlList
         PANSC_HANDLE                phUrlArray
     )
 {
-    PHTTP_SIMPLE_MSG_PARSER         pMyObject   = (PHTTP_SIMPLE_MSG_PARSER)hHttpSmpo;
     PHTTP_REQUEST_URI               *pUrlArray  = (PHTTP_REQUEST_URI *)phUrlArray;
     PHTTP_REQUEST_URI               pRequestUri;
     PUCHAR                          pUri        = buffer;

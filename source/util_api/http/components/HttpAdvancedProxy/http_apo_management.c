@@ -119,9 +119,7 @@ HttpApoAcquirePso
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_PSO_VER2_OBJECT           pPsoVer2     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -194,9 +192,7 @@ HttpApoReleasePso
         ANSC_HANDLE                 hPso
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_PSO_VER2_OBJECT           pPsoVer2     = (PHTTP_PSO_VER2_OBJECT )hPso;
 
     pPsoVer2->Reset((ANSC_HANDLE)pPsoVer2);
@@ -247,9 +243,7 @@ HttpApoManufacturePsoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_PSO_VER2_OBJECT           pPsoVer2     = NULL;
     ULONG                           i            = 0;
 
@@ -318,9 +312,7 @@ HttpApoDestroyPsoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_PSO_VER2_OBJECT           pPsoVer2     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -372,9 +364,7 @@ HttpApoAcquireTro
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -448,9 +438,7 @@ HttpApoReleaseTro
         ANSC_HANDLE                 hTro
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord = (PHTTP_TRANS_RECORD_OBJECT    )hTro;
 
     pTransRecord->Reset((ANSC_HANDLE)pTransRecord);
@@ -501,9 +489,7 @@ HttpApoManufactureTroPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord = NULL;
     ULONG                           i            = 0;
 
@@ -573,9 +559,7 @@ HttpApoDestroyTroPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -627,9 +611,7 @@ HttpApoAcquireBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -703,9 +685,7 @@ HttpApoReleaseBmoReq
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
 
     pBmoReq->Reset((ANSC_HANDLE)pBmoReq);
@@ -756,9 +736,7 @@ HttpApoManufactureBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     ULONG                           i            = 0;
@@ -828,9 +806,7 @@ HttpApoDestroyBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -882,9 +858,7 @@ HttpApoAcquireBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -958,9 +932,7 @@ HttpApoReleaseBmoRep
         ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
 
     pBmoRep->Reset((ANSC_HANDLE)pBmoRep);
@@ -1011,9 +983,7 @@ HttpApoManufactureBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     ULONG                           i            = 0;
@@ -1083,9 +1053,7 @@ HttpApoDestroyBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 

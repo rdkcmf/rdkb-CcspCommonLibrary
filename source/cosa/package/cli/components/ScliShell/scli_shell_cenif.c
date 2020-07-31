@@ -231,8 +231,7 @@ ScliShoCenSetShellPrompt
         PUCHAR                      pPrompt
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSCLI_SHELL_EXEC_ENV            pScliExecEnv    = (PSCLI_SHELL_EXEC_ENV     )hExecEnv;
     PTELNET_CMD_EXECUTION_ENV       pTelnetEnv   = (PTELNET_CMD_EXECUTION_ENV)pScliExecEnv->hTelnetEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pTelnetEnv->hTscIf;

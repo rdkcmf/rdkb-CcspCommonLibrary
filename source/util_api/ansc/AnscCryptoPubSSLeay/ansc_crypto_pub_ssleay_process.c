@@ -87,6 +87,8 @@ AnscCryptoPubSSLeayRequest
         ANSC_HANDLE                 hFinishCBParam
     )
 {
+    UNREFERENCED_PARAMETER(FinishCB);
+    UNREFERENCED_PARAMETER(hFinishCBParam);
     /* 
      * There is no implementation in this base object.
      * This object should not be used until someone
@@ -441,6 +443,8 @@ AnscCryptoPubSSLeayKeyPairMatch
                     );
 
             break;
+        default:
+            break;
         }
 
     }
@@ -563,6 +567,7 @@ AnscCryptoPubSSLeayDSASignAPI
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
     PANSC_CRYPTO_OBJECT             pCrypto;
     ANSC_CRYPTO_HASH                hash;
     ULONG                           ulHashSize;
@@ -607,6 +612,7 @@ AnscCryptoPubSSLeayDSAVerifyAPI
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
     PANSC_CRYPTO_OBJECT             pCrypto;
     ANSC_CRYPTO_HASH                hash;
     ULONG                           ulHashSize;

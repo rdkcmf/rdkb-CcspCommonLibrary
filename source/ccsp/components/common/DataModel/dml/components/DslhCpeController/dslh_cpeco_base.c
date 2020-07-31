@@ -122,7 +122,7 @@ DslhCpecoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -193,7 +193,6 @@ DslhCpecoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT)hThisObject;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT  )pMyObject->hDslhWmpDatabase;
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent= (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
@@ -251,7 +250,6 @@ DslhCpecoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject           = (PDSLH_CPE_CONTROLLER_OBJECT)hThisObject;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase    = (PDSLH_WMP_DATABASE_OBJECT  )pMyObject->hDslhWmpDatabase;
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
@@ -328,7 +326,6 @@ DslhCpecoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject    = (PDSLH_CPE_CONTROLLER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

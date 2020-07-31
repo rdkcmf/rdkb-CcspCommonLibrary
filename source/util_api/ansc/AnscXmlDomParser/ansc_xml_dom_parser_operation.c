@@ -120,10 +120,9 @@ AnscXmlDomParserIsQualified
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
-    PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  FALSE;
 }
 
@@ -169,10 +168,9 @@ AnscXmlDomParserIsCompleted
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
-    PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  FALSE;
 }
 
@@ -207,7 +205,6 @@ AnscXmlDomParserGetEncodedSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
     ULONG                           ulEncodedSize = 0;
@@ -338,7 +335,7 @@ AnscXmlDomParserDecode
 
         returnStatus = AnscXmlFindNode
                           (
-                              &pBuf,
+                              (CHAR**)&pBuf,
                               Length,
                               0
                           );

@@ -237,7 +237,7 @@ AnscMemoryGetComponentID
 
     while ( pSLinkEntry )
     {
-        pMemoryComponentItem = ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
+        pMemoryComponentItem = (ANSC_MEMORY_COMPONENT_ITEM*)ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
         pSLinkEntry          = AnscSListGetNextEntry(pSLinkEntry);
         if ( AnscEqualString1(pMemoryComponentItem->ComponentName, pComponentName, TRUE) )
         {
@@ -285,7 +285,7 @@ AnscMemoryCountSize
 
     while ( pSLinkEntry )
     {
-        pMemoryComponentItem = ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
+        pMemoryComponentItem = (ANSC_MEMORY_COMPONENT_ITEM*)ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
         pSLinkEntry          = AnscSListGetNextEntry(pSLinkEntry);
         if ( AnscEqualString1(pMemoryComponentItem->ComponentName, pComponentName, TRUE) )
         {
@@ -337,7 +337,6 @@ AnscAllocateMemoryCountSize
         ULONG                       ulMemorySize
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     void*                           pMemoryPointer = NULL;
 
     if ( !g_bCountSizeInitialized )
@@ -436,6 +435,7 @@ AnscGetMemorySizeCountSize
         PVOID                       pMemoryBlock
     )
 {
+    UNREFERENCED_PARAMETER(pComponentName);
     if ( !pMemoryBlock )
     {
         return 0;
@@ -476,7 +476,7 @@ LONG AnscGetComponentMemorySize
 
     while ( pSLinkEntry )
     {
-        pMemoryComponentItem = ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
+        pMemoryComponentItem = (ANSC_MEMORY_COMPONENT_ITEM*)ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
         pSLinkEntry          = AnscSListGetNextEntry(pSLinkEntry);
         if ( AnscEqualString1(pMemoryComponentItem->ComponentName, pComponentName, TRUE) )
         {
@@ -511,7 +511,7 @@ LONG AnscGetComponentMaxMemorySize
 
     while ( pSLinkEntry )
     {
-        pMemoryComponentItem = ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
+        pMemoryComponentItem = (ANSC_MEMORY_COMPONENT_ITEM*)ACCESS_ANSC_MEMORY_ALLOC_ITEM(pSLinkEntry);
         pSLinkEntry          = AnscSListGetNextEntry(pSLinkEntry);
         if ( AnscEqualString1(pMemoryComponentItem->ComponentName, pComponentName, TRUE) )
         {
@@ -886,7 +886,7 @@ void AnscPrintFileLineMemoryTable
                 AnscCopyString( owner_desp,                               pFileNameChar);
                 AnscCopyString(&owner_desp[AnscSizeOfString(owner_desp)], ": "         );
                 //_ansc_sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%d", ulLineNumber);
-                sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%d", ulLineNumber);
+                sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%lu", ulLineNumber);
             }
             else
             {
@@ -931,6 +931,7 @@ AnscTraceMemoryTable2
         PULONG                      pulBlockCount
     )
 {
+    UNREFERENCED_PARAMETER(ulTraceMask);
     char**                          pTraceMsgArray   = NULL;
     char*                           pTraceMessage    = NULL;
     ULONG                           ulTotalBlocks    = 0;
@@ -999,9 +1000,9 @@ AnscTraceMemoryTable2
                 (
                     pTraceMessage,
                     " *** mem_block = 0x%8X, size = %9d bytes, id = %6d, %s ***",
-                    pMemoryAllocItem->MemoryPointer,
-                    pMemoryAllocItem->MemorySize,
-                    pMemoryAllocItem->AllocId,
+                    (UINT)pMemoryAllocItem->MemoryPointer,
+                    (int)pMemoryAllocItem->MemorySize,
+                    (int)pMemoryAllocItem->AllocId,
                     pMemoryAllocItem->OwnerDesp
                 );
 
@@ -1028,7 +1029,6 @@ AnscAllocateMemoryRecordDetail
         ULONG                       ulLineNumber
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     void*                           pMemoryPointer = NULL;
     PUCHAR                          pMemoryArray1  = NULL;
     PUCHAR                          pMemoryArray2  = NULL;
@@ -1134,7 +1134,7 @@ AnscAllocateMemoryRecordDetail
                 AnscCopyString( owner_desp,                               pFileNameChar);
                 AnscCopyString(&owner_desp[AnscSizeOfString(owner_desp)], ": "         );
                 //_ansc_sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%d", ulLineNumber);
-                sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%d", ulLineNumber);
+                sprintf (&owner_desp[AnscSizeOfString(owner_desp)], "%lu", ulLineNumber);
             }
             else
             {
@@ -1198,7 +1198,6 @@ AnscFreeMemoryRecordDetail
         PVOID                       pMemoryBlock
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = NULL;
     PUCHAR                          pMemoryPointer   = NULL;
     PUCHAR                          pMemoryArray1    = NULL;
@@ -1361,7 +1360,7 @@ AnscGetMemorySizeRecordDetail
         PVOID                       pMemoryBlock
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(pComponentName);
     PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = (PANSC_MEMORY_ALLOC_ITEM)AnscGetMemoryAllocItem(pMemoryBlock);
 
     if ( !pMemoryAllocItem )
@@ -1402,7 +1401,6 @@ void AnscLiveMemoryInspectRecordDetail
     void
 )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = NULL;
     PUCHAR                          pMemoryPointer   = NULL;
@@ -1417,7 +1415,6 @@ void AnscLiveMemoryInspectRecordDetail
     BOOLEAN                         bTailCorrupted   = FALSE;
     PVOID                           pMemoryBlock     = NULL;
     UCHAR                           uMaxCount        = 10;
-    ULONG                           count            = 1;
 
     AnscAcquireSpinLock(&g_tRecordDetailSpinLock);
     
@@ -1504,7 +1501,7 @@ void AnscLiveMemoryInspectRecordDetail
             
                         pPrevAllocItem = AnscGetPrevMemoryAllocItem(pMemoryBlock);
 
-                        printf("found %x\n",pPrevAllocItem);
+                        printf("found %x\n",(UINT)pPrevAllocItem);
                         
                         if ( !pPrevAllocItem )
                         {

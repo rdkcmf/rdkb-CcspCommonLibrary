@@ -116,8 +116,6 @@ SysCreateRroBool
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_BOOL_OBJECT            pSysRroBool  = NULL;
 
     return  SysRroBoolCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

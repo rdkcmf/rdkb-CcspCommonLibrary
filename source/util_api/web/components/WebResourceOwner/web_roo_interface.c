@@ -117,8 +117,6 @@ WebCreateResourceOwner
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pWebResourceOwner = NULL;
 
     return  WebRooCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

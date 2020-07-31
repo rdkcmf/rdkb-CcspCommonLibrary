@@ -123,7 +123,6 @@ AnscTdoGetScheduler
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->hScheduler;
@@ -165,7 +164,6 @@ AnscTdoSetScheduler
         ANSC_HANDLE                 hScheduler
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->hScheduler = hScheduler;
@@ -204,7 +202,6 @@ AnscTdoGetClient
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->hClient;
@@ -246,7 +243,6 @@ AnscTdoSetClient
         ANSC_HANDLE                 hClient
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->hClient = hClient;
@@ -285,7 +281,6 @@ AnscTdoGetStartTime
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->StartTime;
@@ -327,7 +322,6 @@ AnscTdoSetStartTime
         ULONG                       ulTime
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->StartTime = ulTime;
@@ -366,7 +360,6 @@ AnscTdoGetTimestamp
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->Timestamp;
@@ -408,7 +401,6 @@ AnscTdoSetTimestamp
         ULONG                       ulTime
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->Timestamp = ulTime;
@@ -447,7 +439,6 @@ AnscTdoGetTimerType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->TimerType;
@@ -489,7 +480,6 @@ AnscTdoSetTimerType
         ULONG                       ulTimerType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->TimerType = ulTimerType;
@@ -528,7 +518,6 @@ AnscTdoGetTimerMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->TimerMode;
@@ -570,7 +559,6 @@ AnscTdoSetTimerMode
         ULONG                       ulTimerMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->TimerMode = ulTimerMode;
@@ -609,7 +597,6 @@ AnscTdoGetInterval
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->Interval;
@@ -651,7 +638,6 @@ AnscTdoSetInterval
         ULONG                       ulInterval
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->Interval = ulInterval;
@@ -690,7 +676,6 @@ AnscTdoGetTimeToFire
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->TimeToFire;
@@ -732,7 +717,6 @@ AnscTdoSetTimeToFire
         ULONG                       ulTime
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->TimeToFire = ulTime;
@@ -771,7 +755,6 @@ AnscTdoGetCallCounter
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->CallCounter;
@@ -813,7 +796,6 @@ AnscTdoSetCallCounter
         ULONG                       ulCounter
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->CallCounter = ulCounter;
@@ -852,7 +834,6 @@ AnscTdoGetState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pMyObject->bScheduled;
@@ -894,7 +875,6 @@ AnscTdoSetState
         BOOL                        bScheduled
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     pMyObject->bScheduled = bScheduled;

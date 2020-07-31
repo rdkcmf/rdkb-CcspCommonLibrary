@@ -305,6 +305,8 @@ AnscDetoRecv2
         ANSC_HANDLE                 hSocket
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
 #ifndef _ANSC_USE_OPENSSL_
@@ -559,10 +561,7 @@ AnscDetoSend
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_BUFFER_DESCRIPTOR         pBufferDesp  = NULL;
 
     if ( pSocket->bClosed || pSocket->bBroken )
     {

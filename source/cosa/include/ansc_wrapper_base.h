@@ -117,7 +117,7 @@
  */
 
 #undef  UNREFERENCED_PARAMETER
-#define UNREFERENCED_PARAMETER(_p_)         (_p_)
+#define UNREFERENCED_PARAMETER(_p_)         (void)(_p_)
 
 
 /***********************************************************

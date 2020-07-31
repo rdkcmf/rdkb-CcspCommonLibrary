@@ -104,8 +104,6 @@ AnscCreateCryptoPub
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_PUB_OBJECT         pCrypto      = NULL;
 
     return  AnscCryptoPubCreate(hOwnerContext);
 }

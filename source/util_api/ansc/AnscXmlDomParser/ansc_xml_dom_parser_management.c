@@ -115,7 +115,6 @@ AnscXmlDomParserGetRootNode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
 
@@ -158,7 +157,6 @@ AnscXmlDomParserSetRootNode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
 

@@ -341,9 +341,9 @@ AnscStringArraySetAt
         pStorage    = (PUCHAR *)pStringArray->hStorage;
 
         pData       = (PUCHAR)Data;
-        ulStrLen    = AnscSizeOfString(pData);
+        ulStrLen    = AnscSizeOfString((const char *)pData);
         pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
-        AnscCopyString(pStr, pData);
+        AnscCopyString((char *)pStr, (char *)pData);
 
         pStorage[ulIndex]   = pStr;
     }
@@ -430,9 +430,9 @@ AnscStringArrayInsertAt
         for (i = 0; i < ulCount; i ++)
         {
             pData       = (PUCHAR)Data;
-            ulStrLen    = AnscSizeOfString(pData);
+            ulStrLen    = AnscSizeOfString((const char *)pData);
             pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
-            AnscCopyString(pStr, pData);
+            AnscCopyString((char *)pStr, (char *)pData);
 
             pStorage[i + ulIndex]   = pStr;
         }
@@ -480,6 +480,7 @@ AnscStringArrayRemoveAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(ulCount);
     PANSC_STRING_ARRAY_OBJECT       pStringArray  = (PANSC_STRING_ARRAY_OBJECT)hThisObject;
 
     if (!pStringArray || ulIndex >= pStringArray->ulItemCount)
@@ -554,12 +555,12 @@ AnscStringArrayAdd
             ULONG                   ulStrLen;
 
             pData       = (PUCHAR)Data;
-            ulStrLen    = AnscSizeOfString(pData);
+            ulStrLen    = AnscSizeOfString((const char *)pData);
 
             pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
             if (pStr)
             {
-                AnscCopyString(pStr, pData);
+                AnscCopyString((char *)pStr, (char *)pData);
 
                 pStorage = (PUCHAR *)pStringArray->hStorage;
                 pStorage[pStringArray->ulItemCount ++] = pStr;
@@ -697,7 +698,6 @@ AnscStringArrayFind
     PANSC_STRING_ARRAY_OBJECT       pStringArray  = (PANSC_STRING_ARRAY_OBJECT)hThisObject;
     LONG                            Count       = pStringArray->ulItemCount;
     LONG                            i;
-    PUINT                           pStorage    = (PUINT)pStringArray->hStorage;
     PANSC_STRING_ARRAY_FIND_DATA    pFindData   = (PANSC_STRING_ARRAY_FIND_DATA)Data;
     PUCHAR                          *pStrArray;
     PUCHAR                          pStrFind;
@@ -716,7 +716,7 @@ AnscStringArrayFind
         pStr        = pStrArray[i];
         if (pStr)
         {
-            ulStrLen    = AnscSizeOfString(pStr);
+            ulStrLen    = AnscSizeOfString((const char *)pStr);
 
             if (ulStrLen == ulStrFindLen)
             {

@@ -117,8 +117,5 @@ HttpCreateWebcSession
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_SESSION_OBJECT       pHttpWebcSession = NULL;
-
     return  HttpWcsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

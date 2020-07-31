@@ -109,7 +109,6 @@ AnscDetoStart
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->bStarted )
@@ -127,7 +126,6 @@ AnscDetoStart
     if ( TRUE )
     {
         AnscResetEvent(&pMyObject->RecvEvent);
-        returnStatus =
             AnscSpawnTask3
                 (
                     (void*)pMyObject->RecvTask,
@@ -141,7 +139,6 @@ AnscDetoStart
     if ( pMyObject->ControlFlags & ANSC_DETO_FLAG_ASYNC_SEND )
     {
         AnscResetEvent(&pMyObject->SendEvent);
-        returnStatus =
             AnscSpawnTask
                 (
                     (void*)pMyObject->SendTask,
@@ -184,7 +181,6 @@ AnscDetoStop
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     if ( !pMyObject->bStarted )
@@ -240,7 +236,6 @@ AnscDetoCancel
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
@@ -269,7 +264,6 @@ AnscDetoCancel
 
         AnscQueuePopEntryByLink(&pMyObject->PacketQueue, &pPacket->Linkage);
 
-        returnStatus =
             pWorker->SendComplete
                 (
                     pWorker->hWorkerContext,
@@ -319,7 +313,6 @@ AnscDetoClean
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
@@ -400,7 +393,6 @@ AnscDetoClean
             if ( !pSocket->bTlsEnabled ||
                  (pSocket->bTlsEnabled && pSocket->bTlsConnected) )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -410,7 +402,6 @@ AnscDetoClean
                         );
             }
 
-            returnStatus =
                 pMyObject->DelSocket
                     (
                         (ANSC_HANDLE)pMyObject,
@@ -465,7 +456,6 @@ AnscDetoSnapshot
         ANSC_HANDLE                 hForm
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject     = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     ansc_fd_set*                    pRecvSet      = (ansc_fd_set*                  )pMyObject->RecvSocketSet;
     ansc_fd_set*                    pSendSet      = (ansc_fd_set*                  )pMyObject->SendSocketSet;
@@ -536,7 +526,6 @@ AnscDetoCloseUp
         ANSC_HANDLE                 hForm
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DSTO_CLOSE_UP_FORM        pCloseUpForm = (PANSC_DSTO_CLOSE_UP_FORM      )hForm;
     PANSC_DSTO_SOCKET_INFO          pSocketInfo  = NULL;

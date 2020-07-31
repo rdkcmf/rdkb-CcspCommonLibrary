@@ -109,7 +109,6 @@ SlapOaoSetObjName
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_AGENT_OBJECT          pMyObject    = (PSLAP_OBJ_AGENT_OBJECT)hThisObject;
 
     if ( pMyObject->ObjName )

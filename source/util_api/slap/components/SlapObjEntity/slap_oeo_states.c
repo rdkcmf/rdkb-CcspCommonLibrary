@@ -110,7 +110,6 @@ SlapOeoSetObjDescriptor
         ANSC_HANDLE                 hObjDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject          = (PSLAP_OBJ_ENTITY_OBJECT  )hThisObject;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor     = (PSLAP_OBJECT_DESCRIPTOR  )pMyObject->hObjDescriptor;
     PSLAP_STD_CALL_DESCRIPTOR       pStdCallDescriptor = (PSLAP_STD_CALL_DESCRIPTOR)NULL;
@@ -155,8 +154,7 @@ SlapOeoSetObjDescriptor
     {
         while ( pStdCallDescriptor[ulCallCount].CallName )
         {
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&pStdCallDescriptor[ulCallCount]
@@ -179,8 +177,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "string";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -198,8 +195,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32/mapped";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -220,8 +216,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "object";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -239,8 +234,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "object";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -258,8 +252,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -277,8 +270,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "object";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -296,8 +288,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "string";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -315,8 +306,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -334,8 +324,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -353,8 +342,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -372,8 +360,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -394,8 +381,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -413,8 +399,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -432,8 +417,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -451,8 +435,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -470,8 +453,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -492,8 +474,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = NULL;
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -511,8 +492,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -530,8 +510,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -549,8 +528,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -568,8 +546,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -590,8 +567,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "uint32";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -609,8 +585,7 @@ SlapOeoSetObjDescriptor
             internalCallDesp.CallDescrO   = NULL;
             internalCallDesp.CallDescrR   = "ucharArray";
 
-            returnStatus =
-                pMyObject->RegisterCall
+            pMyObject->RegisterCall
                     (
                         (ANSC_HANDLE)pMyObject,
                         (ANSC_HANDLE)&internalCallDesp
@@ -652,7 +627,6 @@ SlapOeoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject      = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR)pMyObject->hObjDescriptor;
 

@@ -213,7 +213,7 @@ BspTemplateStackGetAt
 
     pVars = (PBSP_TEMPLATE_VAR_OBJECT *)pMyObject->hVars;
 
-    if (ulIndex < 0 || ulIndex >= pMyObject->Top)
+    if ((int)ulIndex < 0 || ulIndex >= pMyObject->Top)
         return NULL;
 
     return pVars[ulIndex];
@@ -513,7 +513,7 @@ BspTemplateStackGetBufferAt
     PBSP_TEMPLATE_STACK_OBJECT      pMyObject = (PBSP_TEMPLATE_STACK_OBJECT)hThisObject;
     PBSP_TEMPLATE_VAR_OBJECT        *pVars;
 
-    if (ulIndex < 0 || ulIndex >= pMyObject->Top)
+    if ((int)ulIndex < 0 || ulIndex >= pMyObject->Top)
         return NULL;
 
     pVars   = (PBSP_TEMPLATE_VAR_OBJECT *)pMyObject->hVars;

@@ -119,7 +119,7 @@ BreeSpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBREE_SPO_OBJECT                pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BreeSpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SPO_OBJECT                pMyObject    = (PBREE_SPO_OBJECT)hThisObject;
     PSINGLE_LINK_ENTRY              pSListEntry;
     PBREE_SPO_RES_FILTER            pFilter;
@@ -309,7 +308,6 @@ BreeSpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SPO_OBJECT                pMyObject    = (PBREE_SPO_OBJECT)hThisObject;
     PBSPENG_SOA_INTERFACE           pBreeSoaIf   = (PBSPENG_SOA_INTERFACE)pMyObject->hBreeSoaIf;
 
@@ -403,9 +401,7 @@ BreeSpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SPO_OBJECT                pMyObject    = (PBREE_SPO_OBJECT)hThisObject;
-    ULONG                           i            = 0;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

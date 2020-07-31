@@ -304,6 +304,7 @@ HttpSmpoParseQueryString
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PHTTP_FORM_INPUT                pFormInput  = NULL;
     ULONG                           ulCount;
     ULONG                           ulBufSize;
@@ -419,7 +420,7 @@ HttpSmpoParseQueryString
             }
 
             /* decode query name */
-            HttpSmpoDecodeUrlEncode(pElement->Name, ulNameLen, pElement->Name, &ulNameLen);
+            HttpSmpoDecodeUrlEncode((PUCHAR)pElement->Name, ulNameLen, (PUCHAR)pElement->Name, &ulNameLen);
         }
     }
 
@@ -506,7 +507,7 @@ HttpSmpoParseMultipart
             break;
         }
 
-        status  = HttpSmpoGetMultipartPart(hThisObject, pData, ulDataLen, pBoundary, pPart, &pNextPart);
+        status  = HttpSmpoGetMultipartPart(hThisObject, pData, ulDataLen, (PUCHAR)pBoundary, pPart, &pNextPart);
 
         if (status != ANSC_STATUS_SUCCESS)
         {
@@ -716,6 +717,7 @@ HttpSmpoSaveFormPartAsFile
         BOOL                        bFlushBody
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo    = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
 
@@ -812,12 +814,10 @@ HttpSmpoGetFormDataNoFile
         PULONG                      pulFormLen
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
     ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
-    PANSC_BUFFER_DESCRIPTOR         pBodyBdo        = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
-    ULONG                           ulBlockSize     = 0;
     PANSC_BUFFER_DESCRIPTOR         pCurBdo, pNextBdo;
     ULONG                           ulCurOffset, ulNextOffset;
     BOOL                            bFound;
@@ -864,7 +864,7 @@ HttpSmpoGetFormDataNoFile
             HttpSmpoCopyFormData2
                 (
                     hHttpMbo,
-                    &pFormData, 
+                    (PUCHAR*)&pFormData, 
                     &ulFormBufSize, 
                     &ulFormDataLen, 
                     pBoundary,
@@ -944,7 +944,8 @@ HttpSmpoGetHeaderParam
         char*                       name
     )
 {
-    PUCHAR                          pLast   = parameters + AnscSizeOfString(parameters) - 1;
+    UNREFERENCED_PARAMETER(hThisObject);
+    PUCHAR                          pLast   = (PUCHAR)parameters + AnscSizeOfString(parameters) - 1;
     PUCHAR                          pName;
     PUCHAR                          pValue;
     ULONG                           ulValue;
@@ -952,7 +953,7 @@ HttpSmpoGetHeaderParam
     PUCHAR                          pCur, pNext;
     ULONG                           ulLen;
 
-    pCur    = parameters;
+    pCur    = (PUCHAR)parameters;
 
     while (pCur)
     {
@@ -970,7 +971,7 @@ HttpSmpoGetHeaderParam
             ulLen   = pLast - pCur + 1;
         }
 
-        pName   = _ansc_strstr(pCur, name);
+        pName   = (PUCHAR)_ansc_strstr((const char *)pCur, name);
 
         if (pName && pName <= pCur + ulLen)
         {
@@ -1008,7 +1009,7 @@ HttpSmpoGetHeaderParam
 
                         if (pParamValue)
                         {
-                            HttpSmpoUtilCopyHeaderString(pValue, ulValue, pParamValue, ulValue + 1);
+                            HttpSmpoUtilCopyHeaderString(pValue, ulValue,(char *) pParamValue, ulValue + 1);
                         }
 
                         return (char *)pParamValue;
@@ -1206,6 +1207,7 @@ HttpSmpoBuildHeader
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return HttpSmpoUtilBuildHeader(hHttpHfo, buffer, ulSize);
 }
 
@@ -1259,6 +1261,7 @@ HttpSmpoBuildRequestLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return HttpSmpoUtilBuildRequestLine(hHttpHfo, buffer, ulSize);
 }
 
@@ -1312,6 +1315,7 @@ HttpSmpoBuildStatusLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return HttpSmpoUtilBuildStatusLine(hHttpHfo, buffer, ulSize);
 }
 
@@ -1412,11 +1416,11 @@ HttpSmpoRegisterHeaderXInfo
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscCopyString(pXinfo->Name, pName);
+    AnscCopyString((char *)pXinfo->Name, (char *)pName);
     pXinfo->xFunc       = xFunc;
     pXinfo->HeaderId    = ulHeaderId;
 
-    ulHashIndex = AnscHashString(pName, AnscSizeOfString(pName), HTTP_SMPO_HEADER_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pName, AnscSizeOfString((const char *)pName), HTTP_SMPO_HEADER_TABLE_SIZE);
 
     AnscSListPushEntry(&pMyObject->HeaderXList[ulHashIndex], &pXinfo->Linkage);
 
@@ -1513,7 +1517,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ACCEPT,
+            (PUCHAR)HTTP_HEADER_NAME_ACCEPT,
             HTTP_HEADER_ID_ACCEPT,
             HttpSmpoParseAccept
         );
@@ -1521,7 +1525,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ACCEPT_CHARSET,
+            (PUCHAR)HTTP_HEADER_NAME_ACCEPT_CHARSET,
             HTTP_HEADER_ID_ACCEPT_CHARSET,
             HttpSmpoParseAcceptCharset
         );
@@ -1529,7 +1533,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ACCEPT_ENCODING,
+            (PUCHAR)HTTP_HEADER_NAME_ACCEPT_ENCODING,
             HTTP_HEADER_ID_ACCEPT_ENCODING,
             HttpSmpoParseAcceptEncoding
         );
@@ -1537,7 +1541,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ACCEPT_LANGUAGE,
+            (PUCHAR)HTTP_HEADER_NAME_ACCEPT_LANGUAGE,
             HTTP_HEADER_ID_ACCEPT_LANGUAGE,
             HttpSmpoParseAcceptLanguage
         );
@@ -1545,7 +1549,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ACCEPT_RANGES,
+            (PUCHAR)HTTP_HEADER_NAME_ACCEPT_RANGES,
             HTTP_HEADER_ID_ACCEPT_RANGES,
             HttpSmpoParseAcceptRanges
         );
@@ -1553,7 +1557,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_AGE,
+            (PUCHAR)HTTP_HEADER_NAME_AGE,
             HTTP_HEADER_ID_AGE,
             HttpSmpoParseAge
         );
@@ -1561,7 +1565,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ALLOW,
+            (PUCHAR)HTTP_HEADER_NAME_ALLOW,
             HTTP_HEADER_ID_ALLOW,
             HttpSmpoParseAllow
         );
@@ -1569,7 +1573,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_AUTHORIZATION,
+            (PUCHAR)HTTP_HEADER_NAME_AUTHORIZATION,
             HTTP_HEADER_ID_AUTHORIZATION,
             HttpSmpoParseAuthorization
         );
@@ -1577,7 +1581,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CACHE_CONTROL,
+            (PUCHAR)HTTP_HEADER_NAME_CACHE_CONTROL,
             HTTP_HEADER_ID_CACHE_CONTROL,
             HttpSmpoParseCacheControl
         );
@@ -1585,7 +1589,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONNECTION,
+            (PUCHAR)HTTP_HEADER_NAME_CONNECTION,
             HTTP_HEADER_ID_CONNECTION,
             HttpSmpoParseConnection
         );
@@ -1593,7 +1597,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_ENCODING,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_ENCODING,
             HTTP_HEADER_ID_CONTENT_ENCODING,
             HttpSmpoParseContentEncoding
         );
@@ -1601,7 +1605,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_LANGUAGE,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_LANGUAGE,
             HTTP_HEADER_ID_CONTENT_LANGUAGE,
             HttpSmpoParseContentLanguage
         );
@@ -1609,7 +1613,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_LENGTH,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_LENGTH,
             HTTP_HEADER_ID_CONTENT_LENGTH,
             HttpSmpoParseContentLength
         );
@@ -1617,7 +1621,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_LOCATION,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_LOCATION,
             HTTP_HEADER_ID_CONTENT_LOCATION,
             HttpSmpoParseContentLocation
         );
@@ -1625,7 +1629,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_MD5,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_MD5,
             HTTP_HEADER_ID_CONTENT_MD5,
             HttpSmpoParseContentMD5
         );
@@ -1633,7 +1637,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_RANGE,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_RANGE,
             HTTP_HEADER_ID_CONTENT_RANGE,
             HttpSmpoParseContentRange
         );
@@ -1641,7 +1645,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_CONTENT_TYPE,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_TYPE,
             HTTP_HEADER_ID_CONTENT_TYPE,
             HttpSmpoParseContentType
         );
@@ -1649,7 +1653,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_DATE,
+            (PUCHAR)HTTP_HEADER_NAME_DATE,
             HTTP_HEADER_ID_DATE,
             HttpSmpoParseDate
         );
@@ -1657,7 +1661,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_ETAG,
+            (PUCHAR)HTTP_HEADER_NAME_ETAG,
             HTTP_HEADER_ID_ETAG,
             HttpSmpoParseETag
         );
@@ -1665,7 +1669,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_EXPECT,
+            (PUCHAR)HTTP_HEADER_NAME_EXPECT,
             HTTP_HEADER_ID_EXPECT,
             HttpSmpoParseExpect
         );
@@ -1673,7 +1677,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_EXPIRES,
+            (PUCHAR)HTTP_HEADER_NAME_EXPIRES,
             HTTP_HEADER_ID_EXPIRES,
             HttpSmpoParseExpires
         );
@@ -1681,7 +1685,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_FROM,
+            (PUCHAR)HTTP_HEADER_NAME_FROM,
             HTTP_HEADER_ID_FROM,
             HttpSmpoParseFrom
         );
@@ -1689,7 +1693,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_HOST,
+            (PUCHAR)HTTP_HEADER_NAME_HOST,
             HTTP_HEADER_ID_HOST,
             HttpSmpoParseHost
         );
@@ -1697,7 +1701,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_IF_MATCH,
+            (PUCHAR)HTTP_HEADER_NAME_IF_MATCH,
             HTTP_HEADER_ID_IF_MATCH,
             HttpSmpoParseIfMatch
         );
@@ -1705,7 +1709,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_IF_MODIFIED_SINCE,
+            (PUCHAR)HTTP_HEADER_NAME_IF_MODIFIED_SINCE,
             HTTP_HEADER_ID_IF_MODIFIED_SINCE,
             HttpSmpoParseIfModifiedSince
         );
@@ -1713,7 +1717,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_IF_NONE_MATCH,
+            (PUCHAR)HTTP_HEADER_NAME_IF_NONE_MATCH,
             HTTP_HEADER_ID_IF_NONE_MATCH,
             HttpSmpoParseIfNoneMatch
         );
@@ -1721,7 +1725,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_IF_RANGE,
+            (PUCHAR)HTTP_HEADER_NAME_IF_RANGE,
             HTTP_HEADER_ID_IF_RANGE,
             HttpSmpoParseIfRange
         );
@@ -1729,7 +1733,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_IF_UNMODIFIED_SINCE,
+            (PUCHAR)HTTP_HEADER_NAME_IF_UNMODIFIED_SINCE,
             HTTP_HEADER_ID_IF_UNMODIFIED_SINCE,
             HttpSmpoParseIfUnmodifiedSince
         );
@@ -1737,7 +1741,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_LAST_MODIFIED,
+            (PUCHAR)HTTP_HEADER_NAME_LAST_MODIFIED,
             HTTP_HEADER_ID_LAST_MODIFIED,
             HttpSmpoParseLastModified
         );
@@ -1745,7 +1749,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_LOCATION,
+            (PUCHAR)HTTP_HEADER_NAME_LOCATION,
             HTTP_HEADER_ID_LOCATION,
             HttpSmpoParseLocation
         );
@@ -1753,7 +1757,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_MAX_FORWARDS,
+            (PUCHAR)HTTP_HEADER_NAME_MAX_FORWARDS,
             HTTP_HEADER_ID_MAX_FORWARDS,
             HttpSmpoParseMaxForwards
         );
@@ -1761,7 +1765,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_PRAGMA,
+            (PUCHAR)HTTP_HEADER_NAME_PRAGMA,
             HTTP_HEADER_ID_PRAGMA,
             HttpSmpoParsePragma
         );
@@ -1769,7 +1773,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_PROXY_AUTHENTICATE,
+            (PUCHAR)HTTP_HEADER_NAME_PROXY_AUTHENTICATE,
             HTTP_HEADER_ID_PROXY_AUTHENTICATE,
             HttpSmpoParseProxyAuthenticate
         );
@@ -1777,7 +1781,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_PROXY_AUTHORIZATION,
+            (PUCHAR)HTTP_HEADER_NAME_PROXY_AUTHORIZATION,
             HTTP_HEADER_ID_PROXY_AUTHORIZATION,
             HttpSmpoParseProxyAuthorization
         );
@@ -1785,7 +1789,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_RANGE,
+            (PUCHAR)HTTP_HEADER_NAME_RANGE,
             HTTP_HEADER_ID_RANGE,
             HttpSmpoParseRange
         );
@@ -1793,7 +1797,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_REFERER,
+            (PUCHAR)HTTP_HEADER_NAME_REFERER,
             HTTP_HEADER_ID_REFERER,
             HttpSmpoParseReferer
         );
@@ -1801,7 +1805,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_RETRY_AFTER,
+            (PUCHAR)HTTP_HEADER_NAME_RETRY_AFTER,
             HTTP_HEADER_ID_RETRY_AFTER,
             HttpSmpoParseRetryAfter
         );
@@ -1809,7 +1813,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_SERVER,
+            (PUCHAR)HTTP_HEADER_NAME_SERVER,
             HTTP_HEADER_ID_SERVER,
             HttpSmpoParseServer
         );
@@ -1817,7 +1821,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_TE,
+            (PUCHAR)HTTP_HEADER_NAME_TE,
             HTTP_HEADER_ID_TE,
             HttpSmpoParseTE
         );
@@ -1825,7 +1829,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_TRAILER,
+            (PUCHAR)HTTP_HEADER_NAME_TRAILER,
             HTTP_HEADER_ID_TRAILER,
             HttpSmpoParseTrailer
         );
@@ -1833,7 +1837,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_TRANSFER_ENCODING,
+            (PUCHAR)HTTP_HEADER_NAME_TRANSFER_ENCODING,
             HTTP_HEADER_ID_TRANSFER_ENCODING,
             HttpSmpoParseTransferEncoding
         );
@@ -1841,7 +1845,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_UPGRADE,
+            (PUCHAR)HTTP_HEADER_NAME_UPGRADE,
             HTTP_HEADER_ID_UPGRADE,
             HttpSmpoParseUpgrade
         );
@@ -1849,7 +1853,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_USER_AGENT,
+            (PUCHAR)HTTP_HEADER_NAME_USER_AGENT,
             HTTP_HEADER_ID_USER_AGENT,
             HttpSmpoParseUserAgent
         );
@@ -1857,7 +1861,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_VARY,
+            (PUCHAR)HTTP_HEADER_NAME_VARY,
             HTTP_HEADER_ID_VARY,
             HttpSmpoParseVary
         );
@@ -1865,7 +1869,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_VIA,
+            (PUCHAR)HTTP_HEADER_NAME_VIA,
             HTTP_HEADER_ID_VIA,
             HttpSmpoParseVia
         );
@@ -1873,7 +1877,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_WARNING,
+            (PUCHAR)HTTP_HEADER_NAME_WARNING,
             HTTP_HEADER_ID_WARNING,
             HttpSmpoParseWarning
         );
@@ -1881,7 +1885,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_WWW_AUTHENTICATE,
+            (PUCHAR)HTTP_HEADER_NAME_WWW_AUTHENTICATE,
             HTTP_HEADER_ID_WWW_AUTHENTICATE,
             HttpSmpoParseWwwAuthenticate
         );
@@ -1889,7 +1893,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_PROXY_CONNECTION,
+            (PUCHAR)HTTP_HEADER_NAME_PROXY_CONNECTION,
             HTTP_HEADER_ID_PROXY_CONNECTION,
             HttpSmpoParseProxyConnection
         );
@@ -1897,7 +1901,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_COOKIE,
+            (PUCHAR)HTTP_HEADER_NAME_COOKIE,
             HTTP_HEADER_ID_COOKIE,
             HttpSmpoParseCookie
         );
@@ -1905,7 +1909,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_SET_COOKIE,
+            (PUCHAR)HTTP_HEADER_NAME_SET_COOKIE,
             HTTP_HEADER_ID_SET_COOKIE,
             HttpSmpoParseSetCookie
         );
@@ -1913,7 +1917,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_COOKIE2,
+            (PUCHAR)HTTP_HEADER_NAME_COOKIE2,
             HTTP_HEADER_ID_COOKIE2,
             HttpSmpoParseCookie2
         );
@@ -1921,7 +1925,7 @@ HttpSmpoRegisterAllHeadersXInfo
     pMyObject->RegisterHeaderXInfo
         (
             (ANSC_HANDLE)pMyObject,
-            HTTP_HEADER_NAME_SET_COOKIE2,
+            (PUCHAR)HTTP_HEADER_NAME_SET_COOKIE2,
             HTTP_HEADER_ID_SET_COOKIE2,
             HttpSmpoParseSetCookie2
         );
@@ -1974,16 +1978,16 @@ HttpSmpoGetHeaderXInfo
     PSINGLE_LINK_ENTRY              pEntry;
     ULONG                           ulHashIndex;
 
-    ulHashIndex = AnscHashString(pName, ulSize, HTTP_SMPO_HEADER_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pName, ulSize, HTTP_SMPO_HEADER_TABLE_SIZE);
     pEntry      = AnscSListGetFirstEntry(&pMyObject->HeaderXList[ulHashIndex]);
 
     while (pEntry)
     {
         pXinfo  = ACCESS_HTTP_SMPO_HEADER_XINFO_OBJECT(pEntry);
 
-        if (ulSize == AnscSizeOfString(pXinfo->Name))
+        if (ulSize == AnscSizeOfString((char *)pXinfo->Name))
         {
-            if (AnscEqualString2(pXinfo->Name, pName, ulSize, FALSE))
+            if (AnscEqualString2((char *)pXinfo->Name, (char *)pName, ulSize, FALSE))
             {
                 return (ANSC_HANDLE)pXinfo;
             }

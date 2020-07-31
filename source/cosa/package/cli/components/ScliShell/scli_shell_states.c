@@ -113,9 +113,7 @@ ScliShoGetTspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT                pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY              pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hTspIf;
 }
@@ -156,9 +154,7 @@ ScliShoSetTspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT   )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY )&pMyObject->Property;
     PTELNET_TSP_INTERFACE           pTspIf       = (PTELNET_TSP_INTERFACE)pMyObject->hTspIf;
 
     *(PTELNET_TSP_INTERFACE)pTspIf = *(PTELNET_TSP_INTERFACE)hInterface;
@@ -197,9 +193,7 @@ ScliShoGetBmc2SccIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBmc2SccIf;
 }
@@ -240,10 +234,7 @@ ScliShoSetBmc2SccIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE )pMyObject->hBmc2SccIf;
 
     pMyObject->hBmc2SccIf   = hInterface;
 
@@ -286,10 +277,7 @@ ScliShoSetAuthIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE )pMyObject->hBmc2SccIf;
 
     pMyObject->hAuthIf      = hInterface;
 
@@ -332,10 +320,7 @@ ScliShoSetTscIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE )pMyObject->hBmc2SccIf;
 
     pMyObject->hTscIf   = hInterface;
 
@@ -378,7 +363,6 @@ ScliShoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
 
@@ -423,7 +407,6 @@ ScliShoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
 
@@ -480,13 +463,12 @@ ScliShoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
 
     pProperty->bUserAuth        = TRUE;
     pProperty->CmdCacheMaxCount = SCLI_SHELL_CACHED_CMD_DEF_COUNT;
-    AnscCopyString(pProperty->Greeting, SCLI_SHELL_DEF_GREETING_MSG);
+    AnscCopyString((char *)pProperty->Greeting, SCLI_SHELL_DEF_GREETING_MSG);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -522,10 +504,7 @@ ScliShoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -572,9 +551,9 @@ ScliShoShellPromptChanged
         PUCHAR                      pMenuTitle
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     PSCLI_SHELL_OBJECT              pMyObject       = (PSCLI_SHELL_OBJECT       )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty       = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv        = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf          = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
 
@@ -588,18 +567,18 @@ ScliShoShellPromptChanged
 
         if ( pMenuTitle )
         {
-            ulPromptLen  = AnscSizeOfString(pMenuTitle);
+            ulPromptLen  = AnscSizeOfString((const char *)pMenuTitle);
         }
 
-        ulPromptLen += AnscSizeOfString(pProperty->ShellPrompt) + 1;
+        ulPromptLen += AnscSizeOfString((const char *)pProperty->ShellPrompt) + 1;
         
         if ( ulPromptLen + 5 > TELNET_SSO_SHELL_PROMPT_LEN )
         {
             ulPromptLen = TELNET_SSO_SHELL_PROMPT_LEN - 5;
 
-            ulMaxMenuLen = ulPromptLen - 1 - AnscSizeOfString(pProperty->ShellPrompt);
+            ulMaxMenuLen = ulPromptLen - 1 - AnscSizeOfString((const char *)pProperty->ShellPrompt);
 
-            _ansc_memmove(pMenuTitle, pMenuTitle + AnscSizeOfString(pMenuTitle) - ulMaxMenuLen, ulMaxMenuLen);
+            _ansc_memmove(pMenuTitle, pMenuTitle + AnscSizeOfString((const char *)pMenuTitle) - ulMaxMenuLen, ulMaxMenuLen);
             pMenuTitle[ulMaxMenuLen]    = 0;
         }
 
@@ -611,7 +590,7 @@ ScliShoShellPromptChanged
             {
                 _ansc_sprintf
                     (
-                        pPrompt,
+                        (char *)pPrompt,
                         "%s (%s) %c ",
                         pProperty->ShellPrompt,
                         pMenuTitle,
@@ -624,7 +603,7 @@ ScliShoShellPromptChanged
             {
                 _ansc_sprintf
                     (
-                        pPrompt,
+                        (char *)pPrompt,
                         "%s %c ",
                         pProperty->ShellPrompt,
                         pSession->bPrivileged ? 
@@ -639,7 +618,7 @@ ScliShoShellPromptChanged
                 AnscFreeMemory(pMyObject->ShellPrompt);
             }
 
-            pMyObject->ShellPrompt = AnscCloneString(pPrompt);
+            pMyObject->ShellPrompt = AnscCloneString((char *)pPrompt);
 #endif
 
             pTscIf->SetShellPrompt

@@ -104,7 +104,6 @@ DslhObjcoTableReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject    = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
 
     DslhObjcoReset((ANSC_HANDLE)pMyObject);

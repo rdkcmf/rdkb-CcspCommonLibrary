@@ -111,9 +111,7 @@ SlapOeoOlaGetObjectProperty
         char*                       property_name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject       = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
-    PSLAP_OBJECT_PROPERTY           pObjectProperty = (PSLAP_OBJECT_PROPERTY  )NULL;
 
     return  pMyObject->GetObjectProperty((ANSC_HANDLE)pMyObject, property_name);
 }
@@ -160,9 +158,7 @@ SlapOeoOlaGetMethodDescriptor
         SLAP_PARAMETER_LIST*        param_list_input
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
-    PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)NULL;
 
     return  pMyObject->GetMethodDescriptor2((ANSC_HANDLE)pMyObject, method_name, param_list_input);
 }

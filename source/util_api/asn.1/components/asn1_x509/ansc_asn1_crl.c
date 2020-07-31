@@ -103,7 +103,7 @@ AnscAsn1CreateCRL
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_CRL                  pThisObject  = NULL;
 
     /*
@@ -273,6 +273,7 @@ AnscAsn1CRLGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -479,7 +480,7 @@ AnscAsn1CRLVerify
     PANSC_ASN1_CRL                  pThisObject     = (PANSC_ASN1_CRL)hThisObject;
     PANSC_ASN1_RSAPUBLICKEY         pRSAKey         = NULL;
     PANSC_ASN1_PUBLICKEY            pPublicKey      = NULL;
-    PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo;
+    PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo  = NULL;
     PANSC_ASN1_OBJECT               pKeyObject;
     PANSC_ASN1_OBJECT               pSelection;
     PANSC_ASN1_BITSTRING            pBitString;
@@ -799,7 +800,7 @@ AnscAsn1CreateTBSCertList
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_TBSCERTLIST          pThisObject  = NULL;
 
     /*
@@ -955,6 +956,7 @@ AnscAsn1TBSCertListCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -993,7 +995,7 @@ AnscAsn1TBSCertListGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1050,7 +1052,7 @@ AnscAsn1CreateRevokedCertificate
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_REVOKEDCERTIFICATE   pThisObject  = NULL;
 
     /*
@@ -1151,6 +1153,7 @@ AnscAsn1RevokedCertificateGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1185,7 +1188,6 @@ AnscAsn1CreateRevokedCertificates
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_REVOKEDCERTIFICATES  pThisObject  = NULL;
 
     /*
@@ -1242,6 +1244,7 @@ AnscAsn1RevokedCertificatesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -1271,7 +1274,6 @@ AnscAsn1CreateSignature
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SIGNATURE            pThisObject  = NULL;
 
     /*
@@ -1313,7 +1315,6 @@ AnscAsn1CreateCertificateList
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTIFICATELIST      pThisObject  = NULL;
 
     /*

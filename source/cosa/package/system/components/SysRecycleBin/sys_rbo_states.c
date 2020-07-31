@@ -111,9 +111,7 @@ SysRboGetServedFolder
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hServedFolder;
 }
@@ -154,9 +152,7 @@ SysRboSetServedFolder
         ANSC_HANDLE                 hFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
     pMyObject->hServedFolder = hFolder;
 
@@ -194,9 +190,7 @@ SysRboGetUserContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hUserContext;
 }
@@ -237,9 +231,7 @@ SysRboSetUserContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
     pMyObject->hUserContext = hContext;
 
@@ -282,7 +274,6 @@ SysRboGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
     PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
@@ -327,7 +318,6 @@ SysRboSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
     PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
@@ -367,10 +357,7 @@ SysRboResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -405,9 +392,7 @@ SysRboReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllFolders((ANSC_HANDLE)pMyObject);
     pMyObject->DelAllRecords((ANSC_HANDLE)pMyObject);

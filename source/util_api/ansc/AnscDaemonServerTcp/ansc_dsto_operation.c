@@ -472,7 +472,6 @@ AnscDstoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hWorker;
 
@@ -580,7 +579,6 @@ AnscDstoStartEngines
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           ulFlags      = 0;
@@ -646,7 +644,6 @@ AnscDstoStopEngines
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;

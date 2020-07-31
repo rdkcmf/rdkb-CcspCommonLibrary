@@ -546,7 +546,7 @@ ANSC_STATUS
 BspTemplateRuntimeSetSlapParamRef
     (
         ANSC_HANDLE                 hThisObject,
-        ANSC_HANDLE                 hParamRef,
+        ANSC_HANDLE*                hParamRef,
         ULONG                       ulParamCount
     )
 {

@@ -120,7 +120,6 @@ AnscBetoRecvTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject     = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer       = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     ansc_fd_set*                    pRecvSet1     = (ansc_fd_set*                  )pMyObject->RecvSocketSet;
@@ -129,8 +128,6 @@ AnscBetoRecvTask
     ULONG                           ulLastCleanAt = AnscGetTickInSeconds();
     ANSC_SOCKET                     s_socket      = ANSC_SOCKET_INVALID_SOCKET;
     int                             s_result      = 0;
-    int                             s_result_excp = 0;
-    int                             s_error       = 0;
     int                             i             = 0;
     uni_fd_set                      read_fd_set;
     /*uni_fd_set                      excp_fd_set;*/
@@ -204,7 +201,6 @@ AnscBetoRecvTask
 
             if ( s_result == XSKT_SOCKET_ERROR )
             {
-                s_error = _xskt_get_last_error();
                 pMyObject->Reset((ANSC_HANDLE)pMyObject);
                 continue;
             }
@@ -245,7 +241,6 @@ AnscBetoRecvTask
 
             if ( s_result == ANSC_SOCKET_ERROR )
             {
-                s_error = _ansc_get_last_error();
                 pMyObject->Reset((ANSC_HANDLE)pMyObject);
                 continue;
             }
@@ -363,7 +358,6 @@ AnscBetoRecvTask
             }
             */
 
-            returnStatus = 
                 pMyObject->Recv
                     (
                         (ANSC_HANDLE)pMyObject,

@@ -105,18 +105,11 @@ AnscBstoAcceptTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject     = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
-    PANSC_BSTO_WORKER_OBJECT        pWorker       = (PANSC_BSTO_WORKER_OBJECT      )pMyObject->hWorker;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pCurEngine    = NULL;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pNewSocket    = NULL;
-    ULONG                           ulRetryCount  = 0;
     ULONG                           ulMccCount    = 0;
     ULONG                           ulMrcCount    = 0;
     ULONG                           ulMscCount    = 0;
     ULONG                           ulMwtPrevious = AnscGetTickInSeconds();
-    int                             s_result      = 0;
-    int                             s_error       = 0;
 
     AnscTrace("AnscBstoAcceptTask is activated ...!\n");
 

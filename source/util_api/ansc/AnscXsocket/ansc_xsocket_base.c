@@ -123,7 +123,7 @@ AnscXsocketCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_XSOCKET_OBJECT            pMyObject    = NULL;
 
@@ -191,12 +191,10 @@ AnscXsocketRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject           = (PANSC_XSOCKET_OBJECT)hThisObject;
     xskt_addrinfo*                  pxskt_ori_addrinfo  = (xskt_addrinfo*      )pMyObject->pOriPeerAddrInfo;
     xskt_addrinfo*                  pxskt_peer_addrinfo = (xskt_addrinfo*      )pMyObject->pPeerAddrInfo;
     xskt_addrinfo*                  pxskt_host_addrinfo = (xskt_addrinfo*      )pMyObject->pHostAddrInfo;
-    PANSC_XSINK_OBJECT              pXsinkHolder        = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     PANSC_XSINK_OBJECT              pXsinkObject        = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->Close((ANSC_HANDLE)pMyObject);
@@ -265,7 +263,6 @@ AnscXsocketEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
     PANSC_XSINK_OBJECT              pXsinkHolder = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
 
@@ -428,10 +425,8 @@ AnscXsocketShutdown
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
     PANSC_XSINK_OBJECT              pXsinkHolder = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     if ( pXsinkHolder )
     {

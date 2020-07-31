@@ -107,7 +107,6 @@ AnscXmlDomParserCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT         pXmlParser    = NULL;
 
     pXmlParser = (PANSC_XML_DOM_PARSER_OBJECT)AnscAllocateMemory(sizeof(ANSC_XML_DOM_PARSER_OBJECT));
@@ -166,9 +165,7 @@ AnscXmlDomParserRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
-    PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
 
     pXmlParser->Reset((ANSC_HANDLE)pXmlParser);
     AnscFreeMemory(pXmlParser);
@@ -207,7 +204,6 @@ AnscXmlDomParserReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = (PANSC_XML_DOM_PARSER_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode     = (PANSC_XML_DOM_NODE_OBJECT)pXmlParser->hRootNode;
 

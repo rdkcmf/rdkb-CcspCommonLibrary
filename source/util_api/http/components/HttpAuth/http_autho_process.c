@@ -76,7 +76,7 @@
 
 
 #include "http_autho_global.h"
-
+#include "ansc_crypto_internal_api.h"
 
 static const char                   g_httpAuthMsgBody[] =
 "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">"
@@ -180,7 +180,7 @@ HttpAuthoCalcDigResponse
 {
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
-    PUCHAR                          pBuf         = NULL;
+    PCHAR                           pBuf         = NULL;
     ULONG                           ulSize       = 0;
     PUCHAR                          pDigRep      = NULL;
     ANSC_CRYPTO_HASH                MD5Hash;
@@ -243,13 +243,13 @@ HttpAuthoCalcDigResponse
     AnscTrace("pHA2 = %s\n", pHA2);
 #endif
 
-    ulSize  = ANSC_MD5_OUTPUT_SIZE * 2 + 1 + AnscSizeOfString(pNonce) + 1;
+    ulSize  = ANSC_MD5_OUTPUT_SIZE * 2 + 1 + AnscSizeOfString((const char*)pNonce) + 1;
     if ( pQop )
     {
         ulSize  +=
             8 + 1 +                                             /* Nonce Count */
-            AnscSizeOfString(pCNonce) + 1 +
-            AnscSizeOfString(pQop)   + 1;
+            AnscSizeOfString((const char*)pCNonce) + 1 +
+            AnscSizeOfString((const char*)pQop)   + 1;
     }
     ulSize  += ANSC_MD5_OUTPUT_SIZE * 2;
 
@@ -265,12 +265,12 @@ HttpAuthoCalcDigResponse
 
         if ( pQop )
         {
-            _ansc_sprintf(pBuf + AnscSizeOfString(pBuf), "%s:%s:%s:", pNC,  pCNonce, pQop);
+            _ansc_sprintf(pBuf + AnscSizeOfString((const char*)pBuf), "%s:%s:%s:", pNC,  pCNonce, pQop);
         }
 
-        _ansc_sprintf(pBuf + AnscSizeOfString(pBuf), "%s", pHA2);
+        _ansc_sprintf(pBuf + AnscSizeOfString((const char*)pBuf), "%s", pHA2);
 
-        AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString(pBuf), &MD5Hash);
+        AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
 
         AnscFreeMemory(pBuf);
     }
@@ -376,28 +376,29 @@ HttpAuthoCalcDigestHA1
         PUCHAR                      pHA1
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hRequest);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT)hThisObject;
-    PUCHAR                          pBuf         = NULL;
+    PCHAR                           pBuf         = NULL;
     ULONG                           ulSize       = 0;
     ANSC_CRYPTO_HASH                MD5Hash;
 
     ulSize  =
-        AnscSizeOfString(pUserName) + 1 +
-        AnscSizeOfString(pRealm)    + 1 +
-        (pPassword?AnscSizeOfString(pPassword):0);
+        AnscSizeOfString((const char*)pUserName) + 1 +
+        AnscSizeOfString((const char*)pRealm)    + 1 +
+        (pPassword?AnscSizeOfString((const char*)pPassword):0);
 
-    if ( pAlgorithm && AnscEqualString(pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
+    if ( pAlgorithm && AnscEqualString((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
     {
         if ( ulSize < ANSC_MD5_OUTPUT_SIZE * 2 )
         {
             ulSize  = ANSC_MD5_OUTPUT_SIZE * 2;
         }
 
-        ulSize    += 1 + AnscSizeOfString(pNonce) + 1;
+        ulSize    += 1 + AnscSizeOfString((const char*)pNonce) + 1;
         if ( pCNonce )
         {
-            ulSize  += AnscSizeOfString(pCNonce);
+            ulSize  += AnscSizeOfString((const char*)pCNonce);
         }
     }
 
@@ -440,16 +441,16 @@ HttpAuthoCalcDigestHA1
     */
     else
     {
-        _ansc_sprintf(pBuf, "%s:%s:%s", pUserName, pRealm, pPassword?pPassword:"");
+        _ansc_sprintf(pBuf, "%s:%s:%s", pUserName, pRealm, pPassword?pPassword:(PUCHAR)"");
 
-        AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString(pBuf), &MD5Hash);
+        AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
         HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pHA1);
 
-        if ( pAlgorithm && AnscEqualString(pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
+        if ( pAlgorithm && AnscEqualString((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
         {
             _ansc_sprintf(pBuf, "%s:%s:%s", pHA1, pNonce, pCNonce);
 
-            AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString(pBuf), &MD5Hash);
+            AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
             HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pHA1);
         }
 
@@ -516,16 +517,14 @@ HttpAuthoCalcDigestHA2
         PUCHAR                      pHA2
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT)hThisObject;
     PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT    )hRequest;
-    PUCHAR                          pMethodName  = (PUCHAR                  )pRequest->GetMethodName((ANSC_HANDLE)pRequest);
-    PUCHAR                          pBuf         = NULL;
+    PCHAR                           pMethodName  = (PCHAR                  )pRequest->GetMethodName((ANSC_HANDLE)pRequest);
+    PCHAR                           pBuf         = NULL;
     ULONG                           ulSize       = 0;
     BOOL                            bAuthInt     = FALSE;
-    PUCHAR                          pHostName    = NULL;
     PUCHAR                          pUriPath     = NULL;
-    USHORT                          HostPort     = 0;
     ANSC_CRYPTO_HASH                MD5Hash = {0}; /*RDKB-6235, CID-24777, initialize before use*/
 
     if ( !pMethodName || *pMethodName == '\0' )
@@ -633,12 +632,12 @@ HttpAuthoCalcDigestHA2
 
     pUriPath = pDigestUri;
 
-    ulSize  = AnscSizeOfString(pMethodName) + 1 + AnscSizeOfString(pUriPath);
+    ulSize  = AnscSizeOfString((const char*)pMethodName) + 1 + AnscSizeOfString((const char*)pUriPath);
 
-    if ( pQop && AnscEqualString(pQop, HTTP_AUTH_NAME_auth_int, FALSE) )
+    if ( pQop && AnscEqualString((char*)pQop, HTTP_AUTH_NAME_auth_int, FALSE) )
     {
         bAuthInt    = TRUE;
-        ulSize     += 1 + AnscSizeOfString(pEntityDigest);
+        ulSize     += 1 + AnscSizeOfString((const char*)pEntityDigest);
     }
 
     pBuf    = (char *)AnscAllocateMemory(ulSize + 16);
@@ -654,7 +653,7 @@ HttpAuthoCalcDigestHA2
         {
             _ansc_sprintf
                 (
-                    pBuf + AnscSizeOfString(pBuf),
+                    pBuf + AnscSizeOfString((const char*)pBuf),
                     ":%s",
                     pEntityDigest
                 );
@@ -662,7 +661,7 @@ HttpAuthoCalcDigestHA2
 
         if ( status == ANSC_STATUS_SUCCESS )
         {
-        	AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString(pBuf), &MD5Hash);
+        	AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
         }
 
         AnscFreeMemory(pBuf);
@@ -739,8 +738,8 @@ HttpAuthoGetRequestHostUri
         PUCHAR                      *ppUriPath
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT   )hThisObject;
     PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT)hRequest;
     PHTTP_HFO_HOST                  pHfoHost     = NULL;
     PHTTP_REQUEST_INFO              pReqInfo     = NULL;
@@ -754,7 +753,7 @@ HttpAuthoGetRequestHostUri
 
     if ( pHfoHost && pHfoHost->HostName[0] != '\0' )
     {
-        *ppHostName      = AnscCloneString(pHfoHost->HostName);
+        *ppHostName      = (PUCHAR)AnscCloneString(pHfoHost->HostName);
         *pHostPort      = pHfoHost->HostPort;
     }
 
@@ -767,14 +766,13 @@ HttpAuthoGetRequestHostUri
 
         if ( *ppHostName == NULL )
         {
-            *ppHostName    = AnscCloneString(pReqUri->HostName);
+            *ppHostName    = (PUCHAR)AnscCloneString(pReqUri->HostName);
         }
 
         if ( *pHostPort == 0 )
         {
             *pHostPort     = pReqUri->HostPort;
         }
-
         for ( i = 0; i < pReqUri->PathLevel; i ++ )
         {
             ulPathLen   += AnscSizeOfString(pReqUri->PathArray[i]) + 1;
@@ -802,14 +800,14 @@ HttpAuthoGetRequestHostUri
             {
                 for ( i = 1; i < pReqUri->PathLevel; i ++ )
                 {
-                    AnscCopyString(pPath + AnscSizeOfString(pPath), "/");
+                    AnscCopyString((char*)pPath + AnscSizeOfString((const char*)pPath), "/");
 
                     if ( AnscEqualString(pReqUri->PathArray[i], "/", TRUE) )
                     {
                         continue;
                     }
 
-                    AnscCopyString(pPath + AnscSizeOfString(pPath), pReqUri->PathArray[i]);
+                    AnscCopyString((char*)(pPath + AnscSizeOfString((const char*)pPath)), (char*)pReqUri->PathArray[i]);
                 }
             }
 
@@ -857,7 +855,6 @@ HttpAuthoGetAuthInfo
         ANSC_HANDLE                 hRequest
     )
 {
-    ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT   )hThisObject;
     PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT)hRequest;
     PHTTP_HFO_AUTHORIZATION         pHfoAuth     = (PHTTP_HFO_AUTHORIZATION)NULL;
@@ -924,8 +921,8 @@ HttpAuthoGetAuthInfo
     {
         PHTTP_CREDENTIAL_BASIC      pBasicCred  = &pCredential->Credential.Basic;
 
-        pAuthInfo->pUserName    = AnscCloneString(pBasicCred->UserName);
-        pAuthInfo->pPassword    = AnscCloneString(pBasicCred->Password);
+        pAuthInfo->pUserName    = (PUCHAR)AnscCloneString(pBasicCred->UserName);
+        pAuthInfo->pPassword    = (PUCHAR)AnscCloneString(pBasicCred->Password);
     }
     else
     {
@@ -986,8 +983,8 @@ HttpAuthoGetDigestAuthInfo
         PUCHAR                      pDigData
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT   )hThisObject;
     PHTTP_AUTHO_INFO                pAuthInfo    = (PHTTP_AUTHO_INFO    )hAuthInfo;
     PUCHAR                          pChal        = pDigData;
     PUCHAR                          pNext, pValue, pValueLast;
@@ -1005,13 +1002,13 @@ HttpAuthoGetDigestAuthInfo
             break;
         }
 
-        pNext       = (PUCHAR)_ansc_strchr(pChal, ',');
-        ulLen       = pNext ? pNext - pChal : AnscSizeOfString(pChal);
+        pNext       = (PUCHAR)_ansc_strchr((const char*)pChal, ',');
+        ulLen       = pNext ? (ULONG)(pNext - pChal) : AnscSizeOfString((const char*)pChal);
 
         pValue      = (PUCHAR)_ansc_memchr(pChal, '=', ulLen);
-        ulNameLen   = pValue ? pValue - pChal : AnscSizeOfString(pChal);
+        ulNameLen   = pValue ? (ULONG)(pValue - pChal) : AnscSizeOfString((const char*)pChal);
         pValue ++;
-        pValueLast  = pNext ? pNext - 1 : pChal + AnscSizeOfString(pChal) - 1;
+        pValueLast  = pNext ? pNext - 1 : pChal + AnscSizeOfString((const char*)pChal) - 1;
 
         if ( pValueLast >= pValue && *pValue == '"' )
         {
@@ -1030,57 +1027,57 @@ HttpAuthoGetDigestAuthInfo
         }
 
         if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_realm) &&
-             AnscEqualString2(pChal, HTTP_AUTH_NAME_realm, ulNameLen, FALSE) )
+             AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_realm, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pRealm, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_domain) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_domain, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_domain, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pDomain, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_nonce) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_nonce, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_nonce, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pNonce, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_opaque) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_opaque, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_opaque, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pOpaque, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_algorithm) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_algorithm, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_algorithm, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pAlgorithm, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_qop) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_qop, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_qop, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pQop, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_response) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_response, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_response, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pResponse, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_digest_uri) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_digest_uri, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_digest_uri, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pDigestUri, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_nc) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_nc, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_nc, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pNonceCount, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_cnonce) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_cnonce, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_cnonce, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pDigest->pCNonce, pValue, pValueLast - pValue + 1);
         }
         else if ( ulNameLen == AnscSizeOfString(HTTP_AUTH_NAME_username) &&
-                  AnscEqualString2(pChal, HTTP_AUTH_NAME_username, ulNameLen, FALSE) )
+                  AnscEqualString2((char*)pChal, HTTP_AUTH_NAME_username, ulNameLen, FALSE) )
         {
             HttpAuthCloneMemory(pAuthInfo->pUserName, pValue, pValueLast - pValue + 1);
         }
@@ -1094,7 +1091,7 @@ HttpAuthoGetDigestAuthInfo
         PUCHAR                  pNext;
         ULONG                   ulCount = 0;
 
-        pNext   = _ansc_strchr(pDomain, ' ');
+        pNext   = (PUCHAR)_ansc_strchr((const char*)pDomain, ' ');
 
         if ( pNext )
         {
@@ -1110,7 +1107,7 @@ HttpAuthoGetDigestAuthInfo
                     break;
                 }
 
-                pNext   = _ansc_strchr(pDomain, ' ');
+                pNext   = (PUCHAR)_ansc_strchr((const char*)pDomain, ' ');
 
                 ulCount ++;
 
@@ -1153,8 +1150,8 @@ HttpAuthoGetDigestAuthInfo
                             break;
                         }
 
-                        pNext   = _ansc_strchr(pDomain, ' ');
-                        ulLen   = pNext ? pNext - pDomain : AnscSizeOfString(pDomain);
+                        pNext   = (PUCHAR)_ansc_strchr((const char*)pDomain, ' ');
+                        ulLen   = pNext ? (ULONG)(pNext - pDomain) : AnscSizeOfString((const char*)pDomain);
 
                         HttpAuthCloneMemory(pURIs[ulCount], pDomain, ulLen);
                         ulCount ++;
@@ -1205,9 +1202,9 @@ HttpAuthoGenBasicChallenge
         PUCHAR                      pRealm
     )
 {
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
-    return AnscCloneString(pRealm);
+    return (PUCHAR)AnscCloneString((char*)pRealm);
 }
 
 
@@ -1274,28 +1271,28 @@ HttpAuthoGenDigestChallenge
         BOOL                        bNonceExpired
     )
 {
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pDigChal     = NULL;
     ULONG                           ulSize       = 0;
 
-    ulSize  = AnscSizeOfString(HTTP_AUTH_NAME_realm) + 1 + AnscSizeOfString(pRealm) + 2;
+    ulSize  = AnscSizeOfString(HTTP_AUTH_NAME_realm) + 1 + AnscSizeOfString((const char*)pRealm) + 2;
     ulSize += 2;
 
-    ulSize += AnscSizeOfString(HTTP_AUTH_NAME_nonce) + 1 + AnscSizeOfString(pNonce) + 2;
+    ulSize += AnscSizeOfString(HTTP_AUTH_NAME_nonce) + 1 + AnscSizeOfString((const char*)pNonce) + 2;
     ulSize += 2;
 
-    ulSize += AnscSizeOfString(HTTP_AUTH_NAME_algorithm) + 1 + AnscSizeOfString(pAlgorithm) + 2;
+    ulSize += AnscSizeOfString(HTTP_AUTH_NAME_algorithm) + 1 + AnscSizeOfString((const char*)pAlgorithm) + 2;
     ulSize += 2;
 
     if ( pDomain )
     {
-        ulSize += AnscSizeOfString(HTTP_AUTH_NAME_domain) + 1 + AnscSizeOfString(pDomain) + 2;
+        ulSize += AnscSizeOfString(HTTP_AUTH_NAME_domain) + 1 + AnscSizeOfString((const char*)pDomain) + 2;
         ulSize += 2;
     }
 
     if ( pQop )
     {
-        ulSize += AnscSizeOfString(HTTP_AUTH_NAME_qop) + 1 + AnscSizeOfString(pQop) + 2;
+        ulSize += AnscSizeOfString(HTTP_AUTH_NAME_qop) + 1 + AnscSizeOfString((const char*)pQop) + 2;
         ulSize += 2;
     }
 
@@ -1317,7 +1314,7 @@ HttpAuthoGenDigestChallenge
     /* realm */
     _ansc_sprintf
         (
-            pDigChal,
+            (char*)pDigChal,
             "%s=\"%s\"",
             HTTP_AUTH_NAME_realm,
             pRealm
@@ -1326,7 +1323,7 @@ HttpAuthoGenDigestChallenge
     /* nonce */
     _ansc_sprintf
         (
-            pDigChal + AnscSizeOfString(pDigChal),
+            (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_nonce,
             pNonce
@@ -1335,7 +1332,7 @@ HttpAuthoGenDigestChallenge
     /* algorithm */
     _ansc_sprintf
         (
-            pDigChal + AnscSizeOfString(pDigChal),
+            (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_algorithm,
             pAlgorithm
@@ -1346,7 +1343,7 @@ HttpAuthoGenDigestChallenge
     {
         _ansc_sprintf
             (
-                pDigChal + AnscSizeOfString(pDigChal),
+                (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_domain,
                 pDomain
@@ -1358,7 +1355,7 @@ HttpAuthoGenDigestChallenge
     {
         _ansc_sprintf
             (
-                pDigChal + AnscSizeOfString(pDigChal),
+                (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_qop,
                 pQop
@@ -1370,7 +1367,7 @@ HttpAuthoGenDigestChallenge
     {
         _ansc_sprintf
             (
-                pDigChal + AnscSizeOfString(pDigChal),
+                (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_stale,
                 HTTP_AUTH_NAME_true
@@ -1422,7 +1419,6 @@ HttpAuthoGenBasicResponse
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
     PHTTP_HFO_WWW_AUTHENTICATE      pHfoWwwAuth  = NULL;
     PHTTP_AUTH_CHALLENGE            pAuthChal    = NULL;
-    BOOL                            bBasicAuth   = TRUE;
     PUCHAR                          pChalReq     = NULL;
     PHTTP_CHALLENGE_BASIC           pBasicAuth   = NULL;
 
@@ -1445,7 +1441,7 @@ HttpAuthoGenBasicResponse
 
         pAuthChal->AuthType = HTTP_AUTH_TYPE_BASIC;
         pBasicAuth  = &pAuthChal->Challenge.Basic;
-        AnscCopyString(pBasicAuth->Realm, pChalReq);
+        AnscCopyString(pBasicAuth->Realm, (char*)pChalReq);
 
         status = pMyObject->GenResponse((ANSC_HANDLE)pMyObject, hResponse, (ANSC_HANDLE)pHfoWwwAuth);
     }
@@ -1564,7 +1560,7 @@ HttpAuthoGenDigestResponse
 
         pAuthChal->AuthType = HTTP_AUTH_TYPE_DIGEST;
         pDigestAuth = &pAuthChal->Challenge.Digest;
-        AnscCopyString(pDigestAuth->Realm, pChalReq);
+        AnscCopyString(pDigestAuth->Realm, (char*)pChalReq);
 
         status = pMyObject->GenResponse((ANSC_HANDLE)pMyObject, hResponse, (ANSC_HANDLE)pHfoWwwAuth);
     }
@@ -1618,8 +1614,8 @@ HttpAuthoGenResponse
         ANSC_HANDLE                 hAuthHeader
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
     PHTTP_BMO_REP_OBJECT            pResponse    = (PHTTP_BMO_REP_OBJECT)hResponse;
     PHTTP_HFO_WWW_AUTHENTICATE      pHfoWwwAuth  = (PHTTP_HFO_WWW_AUTHENTICATE)hAuthHeader;
     PHTTP_HFO_CONTENT_TYPE          pHfoConType  = NULL;
@@ -1772,10 +1768,9 @@ HttpAuthoGenNonce
         ULONG                       ulNonceLen
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT  )hThisObject;
     ULONG                           ulTimeNow    = AnscGetTickInMilliSeconds();
-    PUCHAR                          pRandomBytes = NULL;
     ULONG                           ulRandomBytes= 0;
     ANSC_CRYPTO_HASH                MD5Hash;
 
@@ -1801,12 +1796,12 @@ HttpAuthoGenNonce
 
     if ( status != ANSC_STATUS_SUCCESS )
     {
-        _ansc_sprintf(MD5Hash.Value, "%.8X", ulTimeNow);
+        _ansc_sprintf((char*)MD5Hash.Value, "%.8X", (unsigned int)ulTimeNow);
 
         AnscCryptoMd5Digest
             (
                 (PVOID)MD5Hash.Value,
-                AnscSizeOfString(MD5Hash.Value),
+                AnscSizeOfString((const char*)MD5Hash.Value),
                 &MD5Hash
             );
 
@@ -1879,14 +1874,11 @@ HttpAuthoVerify
         ULONG                       ulNonceTimestamp
     )
 {
+    UNREFERENCED_PARAMETER(hRequest);
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_OBJECT               pMyObject    = (PHTTP_AUTH_OBJECT   )hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT)hRequest;
     PHTTP_AUTHO_INFO                pAuthInfo    = (PHTTP_AUTHO_INFO    )hAuthInfo;
-    PUCHAR                          pHostName    = NULL;
-    PUCHAR                          pUriPath     = NULL;
-    USHORT                          HostPort     = 0;
-
+    
     if ( !pAuthInfo )
     {
         pAuthInfo   = (PHTTP_AUTHO_INFO)pMyObject->GetAuthInfo((ANSC_HANDLE)pMyObject, hRequest);
@@ -1918,7 +1910,7 @@ HttpAuthoVerify
         }
         else if ( pPassword && pAuthInfo->pPassword )
         {
-            if ( AnscEqualString(pPassword, pAuthInfo->pPassword, TRUE) )
+            if ( AnscEqualString((char*)pPassword, (char*)pAuthInfo->pPassword, TRUE) )
             {
                 status = ANSC_STATUS_SUCCESS;
             }
@@ -1949,13 +1941,13 @@ HttpAuthoVerify
             goto EXIT;
         }
 
-        if ( !AnscEqualString(pAuthInfo->pRealm, pServerAuthRealm, TRUE) )
+        if ( !AnscEqualString((char*)pAuthInfo->pRealm, (char*)pServerAuthRealm, TRUE) )
         {
             status = ANSC_STATUS_BAD_AUTH_DATA;
             goto EXIT;
         }
 
-        if ( !AnscEqualString(pDigestInfo->pNonce, pServerNonce, TRUE) )
+        if ( !AnscEqualString((char*)pDigestInfo->pNonce, (char*)pServerNonce, TRUE) )
         {
             status = ANSC_STATUS_BAD_AUTH_DATA;
             goto EXIT;
@@ -1984,7 +1976,7 @@ HttpAuthoVerify
         }
         else
         {
-            if ( AnscEqualString(pDigRep, pDigestInfo->pResponse, TRUE) )
+            if ( AnscEqualString((char*)pDigRep, (char*)pDigestInfo->pResponse, TRUE) )
             {
                 status = ANSC_STATUS_SUCCESS;
             }

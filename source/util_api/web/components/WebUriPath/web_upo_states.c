@@ -109,7 +109,6 @@ WebUpoIsRemoveable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject      = (PWEB_URI_PATH_OBJECT      )hThisObject;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner = (PWEB_RESOURCE_OWNER_OBJECT)pMyObject->hResourceOwner;
     ULONG                           ulSonUpoCount  = 0;
@@ -164,7 +163,6 @@ WebUpoGetPathName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
 
     return  pMyObject->PathName;
@@ -206,7 +204,6 @@ WebUpoSetPathName
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
 
     AnscZeroMemory(pMyObject->PathName, WEB_UPO_PATH_NAME_SIZE);
@@ -246,7 +243,6 @@ WebUpoGetResourceOwner
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
 
     return  pMyObject->hResourceOwner;
@@ -288,7 +284,6 @@ WebUpoSetResourceOwner
         ANSC_HANDLE                 hResourceOwner
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
 
     pMyObject->hResourceOwner = hResourceOwner;
@@ -327,7 +322,6 @@ WebUpoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject      = (PWEB_URI_PATH_OBJECT      )hThisObject;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner = (PWEB_RESOURCE_OWNER_OBJECT)pMyObject->hResourceOwner;
 

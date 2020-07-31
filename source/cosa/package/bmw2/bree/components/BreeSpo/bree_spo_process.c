@@ -236,7 +236,7 @@ BreeSpoQualifyPage
         ULONG                       page_type
     )
 {
-    PBREE_SPO_OBJECT                pMyObject   = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char                            *pFileName  = page_path;
     char                            *pExt;
     BOOL                            bQualified  = TRUE;
@@ -345,7 +345,7 @@ BreeSpoConvertPath
     char                            *pFName;
     BOOL                            bPathChanged    = FALSE;
 
-    pFName  = pMyObject->GetFormalPagePath((ANSC_HANDLE)pMyObject, (PUCHAR)org_page_path);
+    pFName  = (char *)pMyObject->GetFormalPagePath((ANSC_HANDLE)pMyObject, (PUCHAR)org_page_path);
 
     if (!pFName)
     {
@@ -363,11 +363,11 @@ BreeSpoConvertPath
     }
 
     /* check the page path against exemption list first */
-    if (pMyObject->IsPagePathInFilterList((ANSC_HANDLE)pMyObject, pFName, TRUE))
+    if (pMyObject->IsPagePathInFilterList((ANSC_HANDLE)pMyObject, (PUCHAR)pFName, TRUE))
     {
         if (FilterMode == BREE_SPO_RES_FILTER_ProtectExcept)
         {
-            *new_page_path  = AnscCloneString(pMyObject->SupervisorPage);
+            *new_page_path  = AnscCloneString((char *)pMyObject->SupervisorPage);
             bPathChanged    = TRUE;
 
             goto DONE;
@@ -382,11 +382,11 @@ BreeSpoConvertPath
     }
 
     /* check the page path against filter list then */
-    if (pMyObject->IsPagePathInFilterList((ANSC_HANDLE)pMyObject, pFName, FALSE))
+    if (pMyObject->IsPagePathInFilterList((ANSC_HANDLE)pMyObject, (PUCHAR)pFName, FALSE))
     {
         if (FilterMode == BREE_SPO_RES_FILTER_ProtectOnly)
         {
-            *new_page_path  = AnscCloneString(pMyObject->SupervisorPage);
+            *new_page_path  = AnscCloneString((char *)pMyObject->SupervisorPage);
             bPathChanged    = TRUE;
 
             goto DONE;
@@ -408,7 +408,7 @@ BreeSpoConvertPath
     }
     else if (FilterMode == BREE_SPO_RES_FILTER_ProtectExcept)
     {
-        *new_page_path  = AnscCloneString(pMyObject->SupervisorPage);
+        *new_page_path  = AnscCloneString((char *)pMyObject->SupervisorPage);
         bPathChanged    = TRUE;
 
         goto DONE;
@@ -460,7 +460,7 @@ BreeSpoConfigResFilter
         }
         else
         {
-            pMyObject->SupervisorPage   = AnscCloneString(pSupervisorPage);
+            pMyObject->SupervisorPage   = (PUCHAR)AnscCloneString((char *)pSupervisorPage);
         }
 
         status                      = ANSC_STATUS_SUCCESS;
@@ -608,9 +608,9 @@ BreeSpoGetFormalPagePath
         PUCHAR                      pPagePath
     )
 {
-    PBREE_SPO_OBJECT                pMyObject   = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pFName      = NULL;
-    ULONG                           ulPathLen   = pPagePath ? AnscSizeOfString(pPagePath) : 0;
+    ULONG                           ulPathLen   = pPagePath ? AnscSizeOfString((const char *)pPagePath) : 0;
     ULONG                           i;
     USHORT                          pathSegPos[BREE_SPO_MAX_PAGE_PATH_SEG];
     USHORT                          pathSegLen[BREE_SPO_MAX_PAGE_PATH_SEG];
@@ -643,12 +643,12 @@ BreeSpoGetFormalPagePath
         return NULL;
     }
 
-    pLast       = pPagePath + AnscSizeOfString(pPagePath) - 1;
+    pLast       = pPagePath + AnscSizeOfString((const char *)pPagePath) - 1;
     pCurPath    = pPagePath;
     
     while (pCurPath && pCurPath <= pLast)
     {
-        pNextSlash  = _ansc_strchr(pCurPath, '/');
+        pNextSlash  = (PUCHAR)_ansc_strchr((const char *)pCurPath, '/');
 
         if (!pNextSlash)
         {
@@ -745,14 +745,14 @@ BreeSpoIsPagePathInFilterList
     PUCHAR                          pNextSlash;
     PUCHAR                          pPathLast;
 
-    pPath   = AnscCloneString(pPagePath);
+    pPath   = (PUCHAR)AnscCloneString((char *)pPagePath);
     if (!pPath)
     {
         return FALSE;
     }
 
     pPath       = AnscStrLower(pPath);
-    pPathLast   = pPath + AnscSizeOfString(pPath) - 1;
+    pPathLast   = pPath + AnscSizeOfString((const char *)pPath) - 1;
 
     pList   = bExemptionList ? &pMyObject->ResFilterListExemption : &pMyObject->ResFilterList;
 
@@ -788,7 +788,7 @@ BreeSpoIsPagePathInFilterList
             }
             else
             {
-                pNextSlash  = _ansc_strchr(pPageSeg, '/');
+                pNextSlash  = (PUCHAR)_ansc_strchr((const char *)pPageSeg, '/');
 
                 if (!pNextSlash)
                 {
@@ -799,7 +799,7 @@ BreeSpoIsPagePathInFilterList
                     ulPageSegLen    = pNextSlash - pPageSeg;
                 }
 
-                if (AnscSizeOfString(pSeg) != ulPageSegLen)
+                if (AnscSizeOfString((const char *)pSeg) != ulPageSegLen)
                 {
                     /* try next filter */
                     break;
@@ -813,7 +813,7 @@ BreeSpoIsPagePathInFilterList
             }
 
             /* get next segment of page path */
-            pNextSlash  = _ansc_strchr(pPageSeg, '/');
+            pNextSlash  = (PUCHAR)_ansc_strchr((const char *)pPageSeg, '/');
             if (!pNextSlash)
             {
                 pPageSeg    = NULL;
@@ -829,7 +829,7 @@ BreeSpoIsPagePathInFilterList
             }
 
             /* get next segment of filter */
-            pSeg    = pSeg + AnscSizeOfString(pSeg) + 1;
+            pSeg    = pSeg + AnscSizeOfString((const char *)pSeg) + 1;
             if (*pSeg == 0)
             {
                 pSeg    = NULL;
@@ -851,13 +851,13 @@ BreeSpoPrepareDFName
         PUCHAR                      pPagePath
     )
 {
-    PBREE_SPO_OBJECT                pMyObject   = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pDFName = NULL;
     ULONG                           ulLen, i;
 
     /* this function assumes there's no double slashes "//" in the page path */
 
-    ulLen   = AnscSizeOfString(pPagePath);
+    ulLen   = AnscSizeOfString((const char *)pPagePath);
     pDFName = (PUCHAR)AnscAllocateMemory(ulLen + 2);
 
     if (pDFName)
@@ -875,7 +875,7 @@ BreeSpoPrepareDFName
         }
         else
         {
-            AnscCopyString(pDFName, pPagePath);
+            AnscCopyString((char*)pDFName,(char*)pPagePath);
         }
 
         AnscStrLower(pDFName);
@@ -905,16 +905,14 @@ BreeSpoEnforceCache
         ULONG                       ulSeconds
     )
 {
-    PBREE_SPO_OBJECT                pMyObject       = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hBeepPecIf;
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     ANSC_HANDLE                     hSlapBeepResp   = NULL;
     SLAP_PARAMETER_LIST             paramList;
     SLAP_PARAMETER_LIST             *outList        = NULL;
     PSLAP_VARIABLE                  pParam;
     PSLAP_VARIABLE                  pRetVal = NULL;
     ULONG                           ulPecStatus;
-    BOOL                            bHttp11         = TRUE;
     char                            value[48];
 
     hSlapBeepResp  = pBeepPecIf->GetResponse(pBeepPecIf->hOwnerContext);
@@ -926,7 +924,7 @@ BreeSpoEnforceCache
 
     if (TRUE)
     {
-        _ansc_sprintf(value, "max-age=%d", ulSeconds);
+        _ansc_sprintf(value, "max-age=%d", (int)ulSeconds);
 
         paramList.ParamCount    = 2;
 
@@ -1157,7 +1155,7 @@ BreeSpoCreateBreeSoaIf
         ANSC_HANDLE                 hBeepPecIf
     )
 {
-    PBREE_SPO_OBJECT                pMyObject    = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSPENG_SOA_INTERFACE           pBreeSoaIf;
 
     pBreeSoaIf = (PBSPENG_SOA_INTERFACE)AnscAllocateMemory(sizeof(BSPENG_SOA_INTERFACE));

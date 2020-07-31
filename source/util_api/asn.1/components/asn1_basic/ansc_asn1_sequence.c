@@ -128,7 +128,7 @@ AnscAsn1SequenceCreate
     /*
      * We create object by first allocating memory for holding the variables and member functions.
      */
-    if( hContainerContext > 0)
+    if( (ULONG)hContainerContext > 0)
     {
         pMyObject = (PANSC_ASN1_SEQUENCE)AnscAllocateMemory((ULONG)hContainerContext);
     }
@@ -1508,6 +1508,7 @@ AnscAsn1SequenceCreateExtraChild
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return NULL;
 }
 
@@ -1611,6 +1612,7 @@ AnscAsn1SequenceGetExtraChildName
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_SEQUENCE_EXTRA_CHILD_NAME;
 }
 
@@ -1880,7 +1882,7 @@ AnscAsn1SequenceTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SEQUENCE             pMyObject           = (PANSC_ASN1_SEQUENCE)hThisObject;
     CHAR                            pAttrBuffer[512]    = { 0 };
     ULONG                           attrLength          = 512;
@@ -2002,8 +2004,7 @@ AnscAsn1SequenceDumpObject
 {
 
 #ifndef _PKI_KERNEL
-
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SEQUENCE             pMyObject       = (PANSC_ASN1_SEQUENCE)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;

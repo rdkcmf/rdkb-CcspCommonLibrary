@@ -110,10 +110,8 @@ WebRooFsmMapDiskFile
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject       = (PWEB_ROO_FSM_OBJECT  )hThisObject;
     PWEB_ROO_FSM_PROPERTY           pProperty       = (PWEB_ROO_FSM_PROPERTY)&pMyObject->Property;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE  )pMyObject->hRcpIf;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN    )hTokenChain;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -210,11 +208,8 @@ WebRooFsmGetMimeType
         PULONG                      pulSubType
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject       = (PWEB_ROO_FSM_OBJECT          )hThisObject;
-    PWEB_ROO_FSM_PROPERTY           pProperty       = (PWEB_ROO_FSM_PROPERTY        )&pMyObject->Property;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     char*                           pFileExtension  = AnscGetFileExt(hFile);
 
     *pulMediaType = IANA_MEDIA_TYPE_CODE_RESERVED;

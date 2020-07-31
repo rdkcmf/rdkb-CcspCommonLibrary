@@ -117,8 +117,5 @@ HttpCreateAtoMethod
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_METHOD_OBJECT         pHttpAtoMethod = NULL;
-
     return  HttpAtoMethodCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

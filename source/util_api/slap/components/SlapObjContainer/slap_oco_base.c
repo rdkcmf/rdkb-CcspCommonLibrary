@@ -119,7 +119,7 @@ SlapOcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapOcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -229,7 +228,6 @@ SlapOcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,7 +269,6 @@ SlapOcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject    = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

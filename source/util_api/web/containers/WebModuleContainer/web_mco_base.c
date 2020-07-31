@@ -119,7 +119,7 @@ WebMcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebMcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
 
     AnscMcoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ WebMcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
 
     AnscMcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ WebMcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject     = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
 
     /*

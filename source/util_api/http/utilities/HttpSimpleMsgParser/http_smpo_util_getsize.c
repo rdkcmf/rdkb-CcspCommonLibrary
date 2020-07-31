@@ -137,7 +137,7 @@ HttpSmpoUtilGetSizeRequestUri
             UCHAR                   pHostPort[8];
             BOOL                    bCountPort;
 
-            AnscInt2String(pUri->HostPort, (PUCHAR)pHostPort, 10);
+            AnscInt2String(pUri->HostPort, (char *)pHostPort, 10);
 
             if (bHttps)
             {
@@ -150,7 +150,7 @@ HttpSmpoUtilGetSizeRequestUri
 
             if (bCountPort)
             {
-                ulHostPort = AnscSizeOfString(pHostPort);
+                ulHostPort = AnscSizeOfString((const char *)pHostPort);
 
                 ulSize  += 1;                   /* ":" */
                 ulSize  += ulHostPort;
@@ -306,7 +306,7 @@ HttpSmpoUtilGetSizeRequestUri
             BOOL                    bCountPort;
 
             ulHostName = AnscSizeOfString(pUri->HostName);
-            AnscInt2String(pUri->HostPort, (PUCHAR)pHostPort, 10);
+            AnscInt2String(pUri->HostPort, (char *)pHostPort, 10);
             ulSize  = ulHostName;
 
             if (bHttps)
@@ -320,7 +320,7 @@ HttpSmpoUtilGetSizeRequestUri
 
             if (bCountPort)
             {
-                ulHostPort = AnscSizeOfString(pHostPort);
+                ulHostPort = AnscSizeOfString((const char *)pHostPort);
 
                 ulSize  += 1;                   /* ":" */
                 ulSize  += ulHostPort;
@@ -433,7 +433,7 @@ HttpSmpoUtilGetMethodLength
     default:
         if (pMethodName)
         {
-            ulLen   = AnscSizeOfString(pMethodName);
+            ulLen   = AnscSizeOfString((const char *)pMethodName);
         }
         break;
     }
@@ -486,13 +486,13 @@ HttpSmpoUtilGetHttpVersionLength
     ulSize  = HTTP_SMPO_NAME_LENGTH;            /* "HTTP" --- protocol name */
     ulSize  += 1;                               /* "/" */
 
-    AnscInt2String(MajorVersion, buf, 10);      
-    ulSize  += AnscSizeOfString(buf);           /* major version number length */
+    AnscInt2String(MajorVersion, (char *)buf, 10);      
+    ulSize  += AnscSizeOfString((const char *)buf);           /* major version number length */
 
     ulSize  += 1;                               /* "." */
 
-    AnscInt2String(MinorVersion, buf, 10);
-    ulSize  += AnscSizeOfString(buf);           /* minor version number length */
+    AnscInt2String(MinorVersion, (char *)buf, 10);
+    ulSize  += AnscSizeOfString((const char *)buf);           /* minor version number length */
 
     return ulSize;
 }
@@ -611,7 +611,7 @@ HttpSmpoUtilGetMediaSubTypeLength
 
     if (pName)
     {
-        ulSize = AnscSizeOfString(pName);
+        ulSize = AnscSizeOfString((const char *)pName);
     }
     else
     {
@@ -863,10 +863,10 @@ HttpSmpoUtilGetQualityLength
         buf[0]      = '0';
         buf[1]      = '.';
 
-        AnscInt2String(ulQuality, &buf[2], 10);
-        ulSize   = AnscSizeOfString(buf);
+        AnscInt2String(ulQuality, (char *)&buf[2], 10);
+        ulSize   = AnscSizeOfString((const char *)buf);
 
-        for (i = ulSize - 1; i >= 0; i --)
+        for (i = ulSize - 1; (int)i >= 0; i --)
         {
             if (buf[i] != '0')
             {
@@ -916,8 +916,8 @@ HttpSmpoUtilGetUlongStringLength
     UCHAR                       buf[16];
     ULONG                       ulSize;
 
-    AnscInt2String(ulValue, buf, 10);
-    ulSize   = AnscSizeOfString(buf);
+    AnscInt2String(ulValue, (char *)buf, 10);
+    ulSize   = AnscSizeOfString((const char *)buf);
 
     return ulSize;
 }
@@ -953,6 +953,7 @@ HttpSmpoUtilGetHttpDateLength
         PHTTP_DATE                  pDate
     )
 {
+    UNREFERENCED_PARAMETER(pDate);
     /* the length is calculated according to RFC 1123 format */
     /*
      *  rfc1123-date = wkday "," SP date1 SP time SP "GMT"
@@ -1299,7 +1300,7 @@ HttpSmpoUtilGetSizeBasicCredential
         ulSize  += HTTP_SMPO_SPACE_LENGTH;
 
         /* basic-cookie */
-        ulSize  += AnscSizeOfString(pEncBuf);
+        ulSize  += AnscSizeOfString((const char *)pEncBuf);
 
         AnscFreeMemory(pEncBuf);
     }
@@ -1393,6 +1394,7 @@ HttpSmpoUtilGetSizeRequestLine
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      * Even the definition of "Request-Line" requires a CRLF at
      * the end, but here we don't count it.
@@ -1408,7 +1410,7 @@ HttpSmpoUtilGetSizeRequestLine
     if (!pRequestInfo)
         return 0;
 
-    ulSize  = HttpSmpoUtilGetMethodLength(pRequestInfo->Method, pRequestInfo->MethodName);
+    ulSize  = HttpSmpoUtilGetMethodLength(pRequestInfo->Method, (PUCHAR)pRequestInfo->MethodName);
     ulSize  += 1;                   /* space */
 
     ulSize  += HttpSmpoUtilGetSizeRequestUri(&pRequestInfo->RequestUri);
@@ -1454,6 +1456,7 @@ HttpSmpoUtilGetSizeStatusLine
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      */
@@ -1469,8 +1472,8 @@ HttpSmpoUtilGetSizeStatusLine
     ulSize  += HttpSmpoUtilGetHttpVersionLength(pResponseInfo->MajorVersion, pResponseInfo->MinorVersion);
     ulSize  += 1;                                   /* space */
 
-    AnscInt2String(pResponseInfo->StatusCode, buf, 10);
-    ulSize  += AnscSizeOfString(buf);               /* status code */
+    AnscInt2String(pResponseInfo->StatusCode, (char *)buf, 10);
+    ulSize  += AnscSizeOfString((const char *)buf);               /* status code */
 
     ulSize  += 1;                                   /* space */
     ulSize  += AnscSizeOfString(pResponseInfo->ReasonPhrase);
@@ -1781,6 +1784,7 @@ HttpSmpoUtilGetSizeAccept
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
 #if 0 
     Accept = "Accept" ":" #( media-range [accept-params] )
     media-range = ( "*/*" | ( type "/" "*" ) | ( type "/" subtype ) ) 
@@ -1866,6 +1870,7 @@ HttpSmpoUtilGetSizeAcceptCharset
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Accept-Charset = "Accept-Charset" ":" 1#( charset [";" "q" "=" qvalue] ) 
      */
@@ -1931,6 +1936,7 @@ HttpSmpoUtilGetSizeAcceptEncoding
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Accept-Encoding = "Accept-Encoding" ":" 1#( codings [ ";" "q" "=" qvalue ] )
      */
@@ -1998,6 +2004,7 @@ HttpSmpoUtilGetSizeAcceptLanguage
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Accept-Language = "Accept-Language" ":" 1#( language-range [";" "q" "=" qvalue] ) 
      */
@@ -2062,6 +2069,7 @@ HttpSmpoUtilGetSizeAcceptRanges
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Accept-Ranges = "Accept-Ranges" ":" acceptable-ranges 
      *  acceptable-ranges = 1#range-unit | "none"
@@ -2123,6 +2131,7 @@ HttpSmpoUtilGetSizeAge
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Age = "Age" ":" age-value 
      */
@@ -2171,6 +2180,7 @@ HttpSmpoUtilGetSizeAllow
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      * Allow = "Allow" ":" 1#Method 
      */
@@ -2228,6 +2238,7 @@ HttpSmpoUtilGetSizeAuthorization
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Authorization = "Authorization" ":" credentials
      */
@@ -2295,6 +2306,7 @@ HttpSmpoUtilGetSizeCacheControl
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Cache-Control = "Cache-Control" ":" 1#cache-directive
      */
@@ -2343,6 +2355,7 @@ HttpSmpoUtilGetSizeConnection
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Connection = Connection-header  ; added to remove orphan Connection-header
      *  Connection-header = "Connection" ":" 1#( connection-token )
@@ -2403,6 +2416,7 @@ HttpSmpoUtilGetSizeContentEncoding
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Encoding = "Content-Encoding" ":" 1#content-coding 
      *  content-coding = token
@@ -2464,6 +2478,7 @@ HttpSmpoUtilGetSizeContentLanguage
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Language = "Content-Language" ":" 1#language-tag
      *  language-tag = primary-tag *( "-" subtag )
@@ -2525,6 +2540,7 @@ HttpSmpoUtilGetSizeContentLength
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Length = "Content-Length" ":" 1*DIGIT 
      */
@@ -2573,6 +2589,7 @@ HttpSmpoUtilGetSizeContentLocation
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Location = "Content-Location" ":" ( absoluteURI | relativeURI )
      */
@@ -2621,6 +2638,7 @@ HttpSmpoUtilGetSizeContentMD5
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-MD5 = "Content-MD5" ":" md5-digest
      *  md5-digest = 16 (OCTET)
@@ -2637,7 +2655,7 @@ HttpSmpoUtilGetSizeContentMD5
     ulEncMD5Len = 0;
     if (pEncMD5)
     {
-        ulEncMD5Len = AnscSizeOfString(pEncMD5);
+        ulEncMD5Len = AnscSizeOfString((const char *)pEncMD5);
         AnscFreeMemory(pEncMD5);
     }
 
@@ -2681,6 +2699,7 @@ HttpSmpoUtilGetSizeContentRange
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Range = "Content-Range" ":" content-range-spec
      *  content-range-spec = byte-content-range-spec
@@ -2738,6 +2757,7 @@ HttpSmpoUtilGetSizeContentType
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Content-Type = "Content-Type" ":" media-type
      *  media-type = type "/" subtype *( ";" parameter )
@@ -2798,6 +2818,7 @@ HttpSmpoUtilGetSizeDate
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Date = "Date" ":" HTTP-date
      *  rfc1123-date = wkday "," SP date1 SP time SP "GMT"
@@ -2848,6 +2869,7 @@ HttpSmpoUtilGetSizeETag
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  ETag = "ETag" ":" entity-tag
      *  entity-tag = [weak] opaque-tag
@@ -2903,6 +2925,7 @@ HttpSmpoUtilGetSizeExpect
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Expect = "Expect" ":" 1#expectation
      *  expectation = "100-continue" | expectation-extension
@@ -2973,6 +2996,7 @@ HttpSmpoUtilGetSizeExpires
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Expires = "Expires" ":" HTTP-date 
      */
@@ -3022,6 +3046,7 @@ HttpSmpoUtilGetSizeFrom
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /* 
      *  From = "From" ":" mailbox 
      *  mailbox =  addr-spec            ; simple address
@@ -3076,6 +3101,7 @@ HttpSmpoUtilGetSizeHost
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Host = "Host" ":" host [":" port]  ; Section 3.2.2  
      */
@@ -3130,6 +3156,7 @@ HttpSmpoUtilGetSizeIfMatch
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  If-Match = "If-Match" ":" ( "*" | 1#entity-tag )
      *  entity-tag = [weak] opaque-tag
@@ -3196,6 +3223,7 @@ HttpSmpoUtilGetSizeIfModifiedSince
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  If-Modified-Since = "If-Modified-Since" ":" HTTP-date 
      */
@@ -3245,6 +3273,7 @@ HttpSmpoUtilGetSizeIfNoneMatch
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  If-None-Match = "If-None-Match" ":" ( "*" | 1#entity-tag )
      *  entity-tag = [weak] opaque-tag
@@ -3311,6 +3340,7 @@ HttpSmpoUtilGetSizeIfRange
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  If-Range = "If-Range" ":" ( entity-tag | HTTP-date )
      *  entity-tag = [weak] opaque-tag
@@ -3373,6 +3403,7 @@ HttpSmpoUtilGetSizeIfUnmodifiedSince
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  If-Unmodified-Since = "If-Unmodified-Since" ":" HTTP-date 
      */
@@ -3422,6 +3453,7 @@ HttpSmpoUtilGetSizeLastModified
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Last-Modified = "Last-Modified" ":" HTTP-date
      */
@@ -3471,6 +3503,7 @@ HttpSmpoUtilGetSizeLocation
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Location = "Location" ":" absoluteURI
      */
@@ -3520,6 +3553,7 @@ HttpSmpoUtilGetSizeMaxForwards
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Max-Forwards = "Max-Forwards" ":" 1*DIGIT 
      */
@@ -3569,6 +3603,7 @@ HttpSmpoUtilGetSizePragma
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Pragma = "Pragma" ":" 1#pragma-directive
      */
@@ -3618,6 +3653,7 @@ HttpSmpoUtilGetSizeProxyAuthenticate
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Proxy-Authenticate = "Proxy-Authenticate" ":" 1#challenge 
      */
@@ -3694,6 +3730,7 @@ HttpSmpoUtilGetSizeProxyAuthorization
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Proxy-Authorization = "Proxy-Authorization" ":" credentials
      */
@@ -3761,6 +3798,7 @@ HttpSmpoUtilGetSizeRange
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Range = "Range" ":" ranges-specifier
      *  ranges-specifier = byte-ranges-specifier
@@ -3826,6 +3864,7 @@ HttpSmpoUtilGetSizeReferer
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Referer = "Referer" ":" ( absoluteURI | relativeURI )
      */
@@ -3874,6 +3913,7 @@ HttpSmpoUtilGetSizeTryAfter
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Retry-After = "Retry-After" ":" ( HTTP-date | delta-seconds ) 
      */
@@ -3926,6 +3966,7 @@ HttpSmpoUtilGetSizeServer
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Server = "Server" ":" 1*( product | comment ) 
      */
@@ -3975,6 +4016,7 @@ HttpSmpoUtilGetSizeTE
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  TE = "TE" ":" #(t-codings)
      *  t-codings = "trailer" | ( transfer-extension [ accept-params ] )
@@ -4044,6 +4086,7 @@ HttpSmpoUtilGetSizeTrailer
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Trailer = "Trailer" ":" 1#field-name
      */
@@ -4101,6 +4144,7 @@ HttpSmpoUtilGetSizeTransferEncoding
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Transfer-Encoding = "Transfer-Encoding" ":" 1#transfer-coding
      *  transfer-coding = "chunked" | transfer-extension
@@ -4163,6 +4207,7 @@ HttpSmpoUtilGetSizeUpgrade
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Upgrade = "Upgrade" ":" 1#product 
      */
@@ -4212,6 +4257,7 @@ HttpSmpoUtilGetSizeUserAgent
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  User-Agent = "User-Agent" ":" 1*( product | comment ) 
      */
@@ -4261,6 +4307,7 @@ HttpSmpoUtilGetSizeVary
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Vary = "Vary" ":" ( "*" | 1#field-name ) 
      */
@@ -4318,6 +4365,7 @@ HttpSmpoUtilGetSizeVia
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Via = "Via" ":" 1#( received-protocol received-by [comment] )
      *  received-protocol = [protocol-name "/"] protocol-version
@@ -4399,6 +4447,7 @@ HttpSmpoUtilGetSizeWarning
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Warning = "Warning" ":" 1#warning-value 
      *  warning-value = warn-code SP warn-agent SP warn-text
@@ -4473,6 +4522,7 @@ HttpSmpoUtilGetSizeWWWAuthenticate
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  WWW-Authenticate = "WWW-Authenticate" ":" 1#challenge 
      */
@@ -4547,6 +4597,7 @@ HttpSmpoUtilGetSizeProxyConnection
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Proxy-Connection        = "Proxy-Connection" ":" 1#(proxy-connection-token)
      *  proxy-connection-token  = token
@@ -4607,6 +4658,7 @@ HttpSmpoUtilGetSizeCookie
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      *  cookie-value = cookie-name "=" value [";" cookie-path] [";" cookie-domain]
@@ -4643,21 +4695,21 @@ HttpSmpoUtilGetSizeCookie
             pCookieContent  = &pCookie->CookieArray[i];
             
             /* name */
-            pValue      = pCookieContent->Name;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Name;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
             ulSize      += ulValueLen;
 
             /* "=" */
             ulSize  ++;
 
             /* value */
-            pValue      = pCookieContent->Value;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Value;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
             ulSize      += ulValueLen;
 
             /* path */
-            pValue      = pCookieContent->Path;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Path;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
 
             if (ulValueLen != 0)
             {
@@ -4666,8 +4718,8 @@ HttpSmpoUtilGetSizeCookie
             }
 
             /* domain */
-            pValue      = pCookieContent->Domain;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Domain;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
 
             if (ulValueLen != 0)
             {
@@ -4715,6 +4767,7 @@ HttpSmpoUtilGetSizeSetCookie
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *      Set-Cookie      =       "Set-Cookie:" 1#Cookie-Entity
      *      Cookie-Entity   =       cookie-name "=" value *(";" cookie-av)
@@ -4746,21 +4799,21 @@ HttpSmpoUtilGetSizeSetCookie
         pCookieContent  = &pSetCookie->CookieArray[i];
 
         /* name */
-        pValue          = pCookieContent->Name;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Name;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* "=" */
         ulSize ++;
 
         /* value */
-        pValue          = pCookieContent->Value;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Value;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* comment */
-        pValue          = pCookieContent->Comment;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Comment;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4771,8 +4824,8 @@ HttpSmpoUtilGetSizeSetCookie
         }
 
         /* path */
-        pValue          = pCookieContent->Path;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Path;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4784,8 +4837,8 @@ HttpSmpoUtilGetSizeSetCookie
         }
 
         /* domain */
-        pValue          = pCookieContent->Domain;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Domain;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4865,11 +4918,12 @@ HttpSmpoUtilGetSizeCookie2
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
+    UNREFERENCED_PARAMETER(hHttpHfo);
     /*
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      *  cookie-value = cookie-name "=" value [";" cookie-path] [";" cookie-domain]
      */
-    PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
     ULONG                           ulSize              = 0;
     
     ulSize  += HTTP_SMPO_COOKIE2_LENGTH;                /* "Cookie" */
@@ -4915,6 +4969,7 @@ HttpSmpoUtilGetSizeSetCookie2
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMP);
     /*
      *   cookie-av       =   "Comment"   "="     comment
      *               |       "Domain"    "="     set-cookie-domain
@@ -4944,21 +4999,21 @@ HttpSmpoUtilGetSizeSetCookie2
         pCookieContent  = &pSetCookie2->CookieArray[i];
 
         /* name */
-        pValue          = pCookieContent->Name;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Name;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* "=" */
         ulSize ++;
 
         /* value */
-        pValue          = pCookieContent->Value;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Value;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* comment */
-        pValue          = pCookieContent->Comment;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Comment;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4969,8 +5024,8 @@ HttpSmpoUtilGetSizeSetCookie2
         }
 
         /* comment URL */
-        pValue          = pCookieContent->CommentUrl;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->CommentUrl;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4981,8 +5036,8 @@ HttpSmpoUtilGetSizeSetCookie2
         }
 
         /* path */
-        pValue          = pCookieContent->Path;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Path;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -4994,8 +5049,8 @@ HttpSmpoUtilGetSizeSetCookie2
         }
 
         /* domain */
-        pValue          = pCookieContent->Domain;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Domain;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -5007,8 +5062,8 @@ HttpSmpoUtilGetSizeSetCookie2
         }
 
         /* Port */
-        pValue          = pCookieContent->Port;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Port;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -5071,7 +5126,7 @@ HttpSmpoUtilGetSizeSetCookie2
 
             _ansc_sprintf
                 (
-                    expires, 
+                    (char *)expires, 
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -5085,7 +5140,7 @@ HttpSmpoUtilGetSizeSetCookie2
             ulSize ++;
             ulSize      += HTTP_SMPO_SET_COOKIE_EXPIRES_LENGTH;
             ulSize ++;
-            ulSize      += AnscSizeOfString(expires);
+            ulSize      += AnscSizeOfString((const char *)expires);
         }
     }
 

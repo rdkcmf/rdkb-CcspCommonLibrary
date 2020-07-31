@@ -110,8 +110,8 @@ AnscDeuoRecv
         ANSC_HANDLE                 hSocket
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_UDP_OBJECT)hSocket;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = (PANSC_DSUO_PACKET_OBJECT      )pSocket->hPacket;
 
@@ -191,7 +191,6 @@ AnscDeuoSend
     PANSC_DSUO_WORKER_OBJECT        pWorker      = (PANSC_DSUO_WORKER_OBJECT      )pServer->hWorker;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_UDP_OBJECT)hSocket;
     int                             s_result     = 0;
-    int                             s_error      = 0;
     ansc_socket_addr_in             to_addr;
     xskt_socket_addr_in             xskt_to_addr;
 
@@ -232,7 +231,7 @@ AnscDeuoSend
 
         if ( s_result == ANSC_SOCKET_ERROR )
         {
-            s_error = _ansc_get_last_error();
+            _ansc_get_last_error();
 
             returnStatus =
                 pWorker->SendComplete

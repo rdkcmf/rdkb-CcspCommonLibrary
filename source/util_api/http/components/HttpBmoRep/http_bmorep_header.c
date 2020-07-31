@@ -106,9 +106,7 @@ HttpBmoRepDelStartLine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO  )pMyObject->hReqInfo;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
@@ -160,7 +158,6 @@ HttpBmoRepParseStartLine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject     = (PHTTP_BMO_REP_OBJECT   )hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE    )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo    = (PANSC_BUFFER_DESCRIPTOR)pMyObject->hHeaderBdo;

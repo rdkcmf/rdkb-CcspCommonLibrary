@@ -112,10 +112,7 @@ AnscDktoGetRecvBuffer
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->hDaemonEngine;
 
     if ( pMyObject->bClosed )
     {
@@ -175,8 +172,6 @@ AnscDktoRecv
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pMyObject     = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer       = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine       = (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->hDaemonEngine;
-    PANSC_DSTO_WORKER_OBJECT        pWorker       = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
     ANSC_HANDLE                     hQueryContext = (ANSC_HANDLE)NULL;
     ULONG                           ulPmode       = ANSC_DSTOWO_PMODE_DISCARD;
     ULONG                           ulPacketSize  = pMyObject->RecvPacketSize;
@@ -348,7 +343,6 @@ AnscDktoSend
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->hDaemonEngine;
 
     if ( pMyObject->bClosed || pMyObject->bBroken )

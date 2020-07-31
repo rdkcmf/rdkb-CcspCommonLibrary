@@ -104,7 +104,6 @@ SlapOwoLoaoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OWO_LOAO_OBJECT           pMyObject    = (PSLAP_OWO_LOAO_OBJECT)hThisObject;
 
     SlapOwoReset((ANSC_HANDLE)pMyObject);

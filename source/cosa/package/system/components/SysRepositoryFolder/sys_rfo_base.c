@@ -119,7 +119,7 @@ SysRfoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SysRfoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT)hThisObject;
     PSYS_RFO_RENDER_ATTR            pRenderAttr  = (PSYS_RFO_RENDER_ATTR         )pMyObject->hRenderAttr;
     PSYS_RCA_INTERFACE              pSelfRcaIf   = (PSYS_RCA_INTERFACE           )pMyObject->hSelfRcaIf;
@@ -260,9 +259,7 @@ SysRfoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT)hThisObject;
-    PSYS_RFO_RENDER_ATTR            pRenderAttr  = (PSYS_RFO_RENDER_ATTR         )pMyObject->hRenderAttr;
     PSYS_RCA_INTERFACE              pSelfRcaIf   = (PSYS_RCA_INTERFACE           )pMyObject->hSelfRcaIf;
     PSYS_RCG_INTERFACE              pSelfRcgIf   = (PSYS_RCG_INTERFACE           )pMyObject->hSelfRcgIf;
     PSYS_RCM_INTERFACE              pSelfRcmIf   = (PSYS_RCM_INTERFACE           )pMyObject->hSelfRcmIf;
@@ -376,7 +373,6 @@ SysRfoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

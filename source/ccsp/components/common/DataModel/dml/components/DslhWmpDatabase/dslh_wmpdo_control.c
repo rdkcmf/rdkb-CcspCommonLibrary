@@ -108,9 +108,7 @@ DslhWmpdoCreateRecordTree
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
 
 
     AnscAcquireTsLock(&pMyObject->AccessTsLock);
@@ -202,11 +200,8 @@ DslhWmpdoEnableMonitor
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT    )hThisObject;
     PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY  )&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT  )pMyObject->hDslhCpeController;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT      )pMyObject->hRootObjEntity;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMonitorTimerObj   = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hMonitorTimerObj;
 
     pProperty->bMonitorEnabled = bEnabled;

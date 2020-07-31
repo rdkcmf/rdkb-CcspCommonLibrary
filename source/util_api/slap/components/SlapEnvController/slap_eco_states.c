@@ -114,9 +114,7 @@ SlapEcoGetSlapUoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapUoaIf;
 }
@@ -152,9 +150,7 @@ SlapEcoGetSlapBssIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapBssIf;
 }
@@ -190,9 +186,7 @@ SlapEcoGetSlapObjMapper
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapObjMapper;
 }
@@ -228,9 +222,7 @@ SlapEcoGetSlapVarConverter
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapVarConverter;
 }
@@ -266,9 +258,7 @@ SlapEcoGetSlapVarMapper
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapVarMapper;
 }
@@ -304,9 +294,7 @@ SlapEcoGetSlapDefContainer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapDefContainer;
 }
@@ -360,7 +348,6 @@ SlapEcoGetPendingCallInfo
         ULONG*                      call_age            /* in number of seconds */
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
 
     *call_name      = AnscCloneString(pMyObject->PendingCallName);
@@ -406,7 +393,6 @@ SlapEcoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -451,7 +437,6 @@ SlapEcoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -491,7 +476,6 @@ SlapEcoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -532,9 +516,7 @@ SlapEcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PSLAP_ENV_CONTROLLER_PROPERTY   pProperty    = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllSlapContainers((ANSC_HANDLE)pMyObject);
 

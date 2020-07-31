@@ -186,6 +186,7 @@ AnscCryptoDesPrepareKey
         PANSC_CRYPTO_KEY            key
     )
 {
+    UNREFERENCED_PARAMETER(key);
 	ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 #ifdef _ANSC_DES_USED_
     ULONG                           i            = 0;
@@ -301,6 +302,8 @@ AnscCryptoMsChap1LmHash
         );
 
 #else
+    UNREFERENCED_PARAMETER(password);
+    UNREFERENCED_PARAMETER(hash);
     AnscTrace("WARNING: MS/CHAP I Hash is disabled!!!\n");
 #endif
 
@@ -722,6 +725,10 @@ AnscCryptoCrypt_rc2_keyschedule
 
     return ANSC_STATUS_SUCCESS;
 #else
+    UNREFERENCED_PARAMETER(xkey);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(len);
+    UNREFERENCED_PARAMETER(bits);
     AnscTrace("WARNING: Key schedule RC2 is disabled!!!\n");
     return ANSC_STATUS_FAILURE;
 #endif

@@ -117,8 +117,6 @@ DslhCreateVarRecord
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PDSLH_VAR_RECORD_OBJECT         pDslhVarRecord = NULL;
 
     return  DslhVarroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

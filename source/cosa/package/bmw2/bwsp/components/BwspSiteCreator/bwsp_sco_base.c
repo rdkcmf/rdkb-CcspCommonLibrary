@@ -119,7 +119,7 @@ BwspScoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BwspScoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT)hThisObject;
     PBWSP_WSR_INTERFACE             pBwspWsrIf   = (PBWSP_WSR_INTERFACE      )pMyObject->hBwspWsrIf;
     PBWSP_CSP_INTERFACE             pBwspCspIf   = (PBWSP_CSP_INTERFACE      )pMyObject->hBwspCspIf;
@@ -241,7 +240,6 @@ BwspScoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT)hThisObject;
     PBWSP_WSR_INTERFACE             pBwspWsrIf   = (PBWSP_WSR_INTERFACE      )pMyObject->hBwspWsrIf;
     PBWSP_CSP_INTERFACE             pBwspCspIf   = (PBWSP_CSP_INTERFACE      )pMyObject->hBwspCspIf;
@@ -332,7 +330,6 @@ BwspScoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT)hThisObject;
 
     /*

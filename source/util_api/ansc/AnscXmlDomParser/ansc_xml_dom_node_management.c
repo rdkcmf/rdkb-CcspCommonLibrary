@@ -132,7 +132,6 @@ AnscXmlDomNodeGetName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     return  pXmlNode->Name;
@@ -174,7 +173,6 @@ AnscXmlDomNodeSetName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     if( name == NULL)
@@ -229,7 +227,6 @@ AnscXmlDomNodeGetParentNode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     return  pXmlNode->hParentNode;
@@ -271,7 +268,6 @@ AnscXmlDomNodeSetParentNode
         ANSC_HANDLE                 hParentNode
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     pXmlNode->hParentNode = hParentNode;
@@ -315,7 +311,6 @@ AnscXmlDomNodeAddChild
         ANSC_HANDLE                 hChildNode
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = (PANSC_XML_DOM_NODE_OBJECT)hChildNode;
 
@@ -366,7 +361,6 @@ AnscXmlDomNodeAddChildByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     BOOL                            bUnique       = FALSE;
@@ -442,7 +436,6 @@ AnscXmlDomNodeDelChild
         ANSC_HANDLE                 hChildNode
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = (PANSC_XML_DOM_NODE_OBJECT)hChildNode;
 
@@ -491,7 +484,6 @@ AnscXmlDomNodeDelChildByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
 
@@ -547,7 +539,6 @@ AnscXmlDomNodeInsertChild
         ANSC_HANDLE                 hAfterChild
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = (PANSC_XML_DOM_NODE_OBJECT)hChildNode;
     PANSC_XML_DOM_NODE_OBJECT       pAfterChild   = (PANSC_XML_DOM_NODE_OBJECT)hAfterChild;
@@ -601,7 +592,6 @@ AnscXmlDomNodeRemoveChild
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -679,16 +669,15 @@ AnscXmlDomNodeGetChildByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
 
-    while ( pChildNode =
+    while (( pChildNode =
                 (PANSC_XML_DOM_NODE_OBJECT)AnscXmlDomNodeGetNextChild
                     (
                         (ANSC_HANDLE)pXmlNode,
                         (ANSC_HANDLE)pChildNode
-                    ) )
+                    )) )
     {
         if ( AnscEqualString(AnscXmlDomNodeGetName((ANSC_HANDLE)pChildNode), name, FALSE) )
         {
@@ -730,7 +719,6 @@ AnscXmlDomNodeGetHeadChild
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -809,7 +797,6 @@ AnscXmlDomNodeGetNextChild
         ANSC_HANDLE                 hThisChild
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     PANSC_XML_DOM_NODE_OBJECT       pThisChild    = (PANSC_XML_DOM_NODE_OBJECT)hThisChild;
@@ -865,7 +852,6 @@ AnscXmlDomNodeGetTailChild
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -925,7 +911,6 @@ AnscXmlDomNodeGetAttr
     /*
      * status of operation
      */
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
 
     /*
      * pointer to the underneath Attributes and nodes
@@ -937,7 +922,6 @@ AnscXmlDomNodeGetAttr
      * pointer to the current parent node
      */
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
-    PANSC_XML_CONTEXT               pXMLContext   = NULL; /*RDKB-6188, CID-24302, initilize*/
 
 
     /***********************************************************
@@ -951,7 +935,6 @@ AnscXmlDomNodeGetAttr
     {
         return  (ANSC_HANDLE)NULL;
     }
-	pXMLContext = (PANSC_XML_CONTEXT)pXmlNode->hXMLContext; /*RDKB-6188, CID-24302, assign after null check*/
 
     AnscAcquireXmlLock(&pXmlNode->AttributesListLock);
     pSLinkEntry = AnscQueueGetFirstEntry(&pXmlNode->AttributesList);
@@ -961,7 +944,7 @@ AnscXmlDomNodeGetAttr
     {
         pSonAttribute    = ACCESS_XML_ATTRIBUTE(pSLinkEntry);
 
-        if ( AnscEqualString(pSonAttribute->Name, pAttrName, TRUE) )
+        if ( AnscEqualString(pSonAttribute->Name, (char *)pAttrName, TRUE) )
         {
             return  (ANSC_HANDLE)pSonAttribute;
         }
@@ -980,8 +963,6 @@ AnscXmlDomNodeCopy
         ANSC_HANDLE                 hNode
     )
 {
-    CHAR                            pNodeName[128]  = { 0 };
-    ULONG                           uNodeLength     = 128;
 
     PANSC_XML_DOM_NODE_OBJECT       pOld            = (PANSC_XML_DOM_NODE_OBJECT)hNode;
     PANSC_XML_DOM_NODE_OBJECT       pCopy           = NULL;
@@ -1143,6 +1124,7 @@ AnscXmlDomNodeGetNextAttr
         ANSC_HANDLE                 hAttribute
     )
 {
+    UNREFERENCED_PARAMETER(hNode);
     /***********************************************************
                     DEFINITION OF LOCAL VARIABLES
     ***********************************************************/

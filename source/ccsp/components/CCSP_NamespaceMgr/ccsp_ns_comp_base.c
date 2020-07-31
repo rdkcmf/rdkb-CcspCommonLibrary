@@ -178,6 +178,7 @@ CcspFreeNamespaceComponent
         ANSC_HANDLE                 hCcspNsComp
     )
 {
+    UNREFERENCED_PARAMETER(pContainerName);
     PCCSP_NAMESPACE_COMP_OBJECT     pThisObject = (PCCSP_NAMESPACE_COMP_OBJECT)hCcspNsComp;
 
     if( pThisObject != NULL)
@@ -263,5 +264,6 @@ CcspNsCompDumpObject
         ANSC_HANDLE                 hCcspNsComp
     )
 {
+    UNREFERENCED_PARAMETER(hCcspNsComp);
     return TRUE;
 }

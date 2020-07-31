@@ -121,7 +121,6 @@ HttpWstoGetWspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hWspIf;
@@ -163,7 +162,6 @@ HttpWstoSetWspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWspIf = hInterface;
@@ -202,7 +200,6 @@ HttpWstoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -244,7 +241,6 @@ HttpWstoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -283,7 +279,6 @@ HttpWstoGetWebsSession
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hWebsSession;
@@ -325,7 +320,6 @@ HttpWstoSetWebsSession
         ANSC_HANDLE                 hWebsSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWebsSession = hWebsSession;
@@ -364,7 +358,6 @@ HttpWstoGetBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hBmoReq;
@@ -406,7 +399,6 @@ HttpWstoSetBmoReq
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hBmoReq = hMessage;
@@ -445,7 +437,6 @@ HttpWstoGetBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hBmoRep;
@@ -487,7 +478,6 @@ HttpWstoSetBmoRep
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hBmoRep = hMessage;
@@ -526,7 +516,6 @@ HttpWstoGetWebSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hWebSocket;
@@ -568,7 +557,6 @@ HttpWstoSetWebSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWebSocket = hSocket;
@@ -607,7 +595,6 @@ HttpWstoGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
 
@@ -650,7 +637,6 @@ HttpWstoGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
 
@@ -693,7 +679,6 @@ HttpWstoGetTransState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->TransState;
@@ -735,7 +720,6 @@ HttpWstoSetTransState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->TransState = ulState;
@@ -820,7 +804,6 @@ HttpWstoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = (PHTTP_WEBS_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWebsSession = (ANSC_HANDLE)NULL;

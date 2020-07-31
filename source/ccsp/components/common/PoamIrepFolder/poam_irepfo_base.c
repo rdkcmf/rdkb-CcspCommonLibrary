@@ -75,7 +75,7 @@
 
 
 #include "poam_irepfo_global.h"
-
+#include "ansc_lco_external_api.h"
 
 /**********************************************************************
 
@@ -119,7 +119,6 @@ PoamIrepFoCreate
         ANSC_HANDLE                 pName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject    = NULL;
 
@@ -138,7 +137,7 @@ PoamIrepFoCreate
     }
 
     /* Copy the name */
-    _ansc_strcpy( pMyObject->Name, (PCHAR)pName );
+    _ansc_strcpy( (char *)pMyObject->Name, (PCHAR)pName );
     
     /*
      * Initialize the common variables and functions for a container object.
@@ -188,7 +187,6 @@ PoamIrepFoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject    = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
 
     pMyObject->Close((ANSC_HANDLE)pMyObject);
@@ -229,7 +227,6 @@ PoamIrepFoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject    = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -270,9 +267,7 @@ PoamIrepFoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject    = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
-    ULONG                           i            = 0;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

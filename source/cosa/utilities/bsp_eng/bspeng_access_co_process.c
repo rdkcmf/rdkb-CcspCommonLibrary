@@ -126,6 +126,11 @@ BspTemplateAccessOutput
         ULONG                       ulArgs
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(hWriter);
+    UNREFERENCED_PARAMETER(hArgs);
+    UNREFERENCED_PARAMETER(ulArgs);
 }
 
 
@@ -179,6 +184,11 @@ BspTemplateAccessMember
         ULONG                       ulArgs
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(hWriter);
+    UNREFERENCED_PARAMETER(hArgs);
+    UNREFERENCED_PARAMETER(ulArgs);
     return NULL;
 }
 
@@ -233,6 +243,11 @@ BspTemplateAccessValue
         ULONG                       ulArgs
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(hWriter);
+    UNREFERENCED_PARAMETER(hArgs);
+    UNREFERENCED_PARAMETER(ulArgs);
     return NULL;
 }
 

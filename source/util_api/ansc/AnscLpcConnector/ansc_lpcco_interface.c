@@ -116,8 +116,6 @@ AnscCreateLpcConnector
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pLpcConnector = NULL;
 
     return  AnscLpccoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

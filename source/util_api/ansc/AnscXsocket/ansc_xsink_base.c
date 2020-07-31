@@ -105,7 +105,6 @@ AnscXsinkCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject    = NULL;
 
     pMyObject = (PANSC_XSINK_OBJECT)AnscAllocateMemory(sizeof(ANSC_XSINK_OBJECT));
@@ -166,7 +165,6 @@ AnscXsinkRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject    = (PANSC_XSINK_OBJECT)hThisObject;
 
     AnscFreeMemory(pMyObject);

@@ -182,7 +182,6 @@ AnscCalculateChecksum
     )
 {
     PUSHORT                         tempUshort       = NULL;
-    PUCHAR                          tempUchar        = NULL;
     USHORT                          UshortForPadding = 0;
     ULONG                           checksum         = 0;
 

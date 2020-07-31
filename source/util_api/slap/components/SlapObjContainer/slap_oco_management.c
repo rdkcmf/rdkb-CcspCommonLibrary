@@ -114,9 +114,7 @@ SlapOcoAssignInstanceId
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject         = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
-    PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;
 
     do
     {
@@ -174,7 +172,6 @@ SlapOcoGetSrvComponent
         ULONG                       instance_id
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject         = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = NULL;
@@ -243,7 +240,6 @@ SlapOcoAddSrvComponent
         ANSC_HANDLE                 hSrvComponent
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject         = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)hSrvComponent;
     char*                           pObjName          = (char*                     )pSlapSrvComponent->ObjName;
@@ -298,7 +294,6 @@ SlapOcoDelSrvComponent
         ANSC_HANDLE                 hSrvComponent
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject         = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)hSrvComponent;
     ULONG                           ulHashIndex       = pSlapSrvComponent->HashIndex;
@@ -341,7 +336,6 @@ SlapOcoDelAllSrvComponents
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_CONTAINER_OBJECT      pMyObject         = (PSLAP_OBJ_CONTAINER_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf        = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;

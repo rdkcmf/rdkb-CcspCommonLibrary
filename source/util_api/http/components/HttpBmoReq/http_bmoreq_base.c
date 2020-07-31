@@ -119,7 +119,7 @@ HttpBmoReqCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpBmoReqRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
     PHTTP_CGI_INTERFACE             pCgiIf       = (PHTTP_CGI_INTERFACE )pMyObject->hCgiIf;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE )pMyObject->hRcpIf;
@@ -245,7 +244,6 @@ HttpBmoReqEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE )pMyObject->hRcpIf;
 
@@ -361,7 +359,6 @@ HttpBmoReqInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     /*

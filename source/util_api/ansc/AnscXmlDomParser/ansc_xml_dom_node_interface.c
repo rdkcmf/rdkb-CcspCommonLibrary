@@ -105,8 +105,6 @@ AnscCreateXmlDomNode
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_PARSER_OBJECT     pXmlParser    = NULL;
 
     return  AnscXmlDomNodeCreate(hOwnerContext);
 }

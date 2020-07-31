@@ -120,9 +120,7 @@ DslhObjroRvqIsParamUpdated
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
 
     pChildVarRecord =
@@ -184,9 +182,7 @@ DslhObjroRvqClearParamUpdated
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
 
     pChildVarRecord =
@@ -242,9 +238,7 @@ DslhObjroRvqGetParamValue
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
 
     pChildVarRecord =
@@ -299,10 +293,7 @@ DslhObjroRvqGetParamValueString
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
-    PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSLAP_VARIABLE                  pParamValue     = (PSLAP_VARIABLE         )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf      = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -358,10 +349,7 @@ DslhObjroRvqGetParamValueInt
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
-    PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSLAP_VARIABLE                  pParamValue     = (PSLAP_VARIABLE         )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf      = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -417,10 +405,7 @@ DslhObjroRvqGetParamValueUint32
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
-    PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSLAP_VARIABLE                  pParamValue     = (PSLAP_VARIABLE         )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf      = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -476,10 +461,7 @@ DslhObjroRvqGetParamValueBool
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
-    PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSLAP_VARIABLE                  pParamValue     = (PSLAP_VARIABLE         )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf      = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -535,11 +517,7 @@ DslhObjroRvqGetParamValueUint32Array
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject          = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PSLAP_VARIABLE                  pParamValue        = (PSLAP_VARIABLE             )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf         = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -595,11 +573,7 @@ DslhObjroRvqGetParamValueUcharArray
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject          = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PSLAP_VARIABLE                  pParamValue        = (PSLAP_VARIABLE             )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf         = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 
@@ -655,11 +629,7 @@ DslhObjroRvqGetParamValueHandle
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject          = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PSLAP_VARIABLE                  pParamValue        = (PSLAP_VARIABLE             )NULL;
 	PDSLH_RVQ_INTERFACE             pDslhRvqIf         = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 

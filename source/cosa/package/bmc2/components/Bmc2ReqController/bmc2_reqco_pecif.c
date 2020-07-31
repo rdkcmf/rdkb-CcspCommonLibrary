@@ -114,7 +114,6 @@ Bmc2ReqcoPecGetCommand
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapBmc2Command;
@@ -151,7 +150,6 @@ Bmc2ReqcoPecGetInput
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapBmc2Input;
@@ -188,7 +186,6 @@ Bmc2ReqcoPecGetOutput
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hSlapBmc2Output;
@@ -225,11 +222,8 @@ Bmc2ReqcoPecGetDomain
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
 
     return  pBmc2ComDomain->hSlapBmc2Domain;
 }
@@ -265,9 +259,7 @@ Bmc2ReqcoPecGetTerminal
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
 
@@ -305,11 +297,8 @@ Bmc2ReqcoPecGetApplication
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
 
     return  pBmc2EnvController->hSlapBmc2App;
 }
@@ -345,11 +334,8 @@ Bmc2ReqcoPecGetServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
 
     return  pBmc2EnvController->hSlapBmc2Server;
 }
@@ -391,11 +377,8 @@ Bmc2ReqcoPecGetBmc2Object
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus           = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject              = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController     = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain         = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal       = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PSLAP_GOA_INTERFACE             pSlapGoaIf             = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
     ANSC_HANDLE                     hSlapContainerServices = (ANSC_HANDLE                )pBmc2EnvController->hSlapContainerServices;
     PBMC2_REQCO_OBJ_REFERENCE       pObjReference          = (PBMC2_REQCO_OBJ_REFERENCE  )NULL;
@@ -423,15 +406,14 @@ Bmc2ReqcoPecGetBmc2Object
 
     if ( hSlapObject )
     {
-        returnStatus =
-            pMyObject->AddObjReference2
-                (
-                    (ANSC_HANDLE)pMyObject,
-                    obj_name,
-                    hSlapContainerServices,
-                    hSlapObject,
-                    1
-                );
+        pMyObject->AddObjReference2
+            (
+                (ANSC_HANDLE)pMyObject,
+                obj_name,
+                hSlapContainerServices,
+                hSlapObject,
+                1
+            );
     }
 
     return  hSlapObject;
@@ -477,8 +459,6 @@ Bmc2ReqcoPecGetCookedPage
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pBmc2EnvController->hBmc2ComExecutor;
     PBWRM_ENV_CONTROLLER_OBJECT     pBwrmEnvController = (PBWRM_ENV_CONTROLLER_OBJECT)pBmc2EnvController->hBwrmEnvController;
     PBWRM_RAM_INTERFACE             pBwrmRamIf         = (PBWRM_RAM_INTERFACE        )pBwrmEnvController->GetBwrmRamIf((ANSC_HANDLE)pBwrmEnvController);
@@ -500,7 +480,7 @@ Bmc2ReqcoPecGetCookedPage
                 pBwrmRamIf->hOwnerContext,
                 pRootPath,
                 page_path,
-                &pBwrmCookedPage
+                (ANSC_HANDLE)&pBwrmCookedPage
             );
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
@@ -596,12 +576,8 @@ Bmc2ReqcoPecRetCookedPage
         ANSC_HANDLE                 hCookedPage
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
-    PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pBmc2EnvController->hBmc2ComExecutor;
     PBWRM_ENV_CONTROLLER_OBJECT     pBwrmEnvController = (PBWRM_ENV_CONTROLLER_OBJECT)pBmc2EnvController->hBwrmEnvController;
     PBWRM_RAM_INTERFACE             pBwrmRamIf         = (PBWRM_RAM_INTERFACE        )pBwrmEnvController->GetBwrmRamIf((ANSC_HANDLE)pBwrmEnvController);
     PBWRM_COOKED_PAGE_OBJECT        pBwrmCookedPage    = (PBWRM_COOKED_PAGE_OBJECT   )hCookedPage;
@@ -685,8 +661,6 @@ Bmc2ReqcoPecInvokeObject
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject          = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hBmc2EnvController;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hBmc2ComDomain;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pBmc2EnvController->GetSlapGoaIf((ANSC_HANDLE)pBmc2EnvController);
 
     *pulPecStatus = BMC2_PEC_STATUS_continue;

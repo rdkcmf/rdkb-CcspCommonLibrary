@@ -119,7 +119,7 @@ SlapEcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapEcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf        = (PSLAP_UOA_INTERFACE        )pMyObject->hSlapUoaIf;
     PSLAP_BSS_INTERFACE             pSlapBssIf        = (PSLAP_BSS_INTERFACE        )pMyObject->hSlapBssIf;
@@ -270,7 +269,6 @@ SlapEcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf        = (PSLAP_UOA_INTERFACE        )pMyObject->hSlapUoaIf;
     PSLAP_BSS_INTERFACE             pSlapBssIf        = (PSLAP_BSS_INTERFACE        )pMyObject->hSlapBssIf;
@@ -448,7 +446,6 @@ SlapEcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

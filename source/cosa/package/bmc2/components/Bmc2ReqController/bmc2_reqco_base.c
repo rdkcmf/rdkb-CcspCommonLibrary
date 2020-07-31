@@ -119,7 +119,7 @@ Bmc2ReqcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ Bmc2ReqcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_PEC_INTERFACE             pBmc2PecIf   = (PBMC2_PEC_INTERFACE        )pMyObject->hBmc2PecIf;
 
@@ -239,7 +238,6 @@ Bmc2ReqcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_PEC_INTERFACE             pBmc2PecIf   = (PBMC2_PEC_INTERFACE        )pMyObject->hBmc2PecIf;
 
@@ -315,7 +313,6 @@ Bmc2ReqcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

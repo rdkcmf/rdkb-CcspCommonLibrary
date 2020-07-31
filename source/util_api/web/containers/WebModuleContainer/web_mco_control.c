@@ -105,23 +105,20 @@ WebMcoRegisterIfs
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
     PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT   )pMyObject->hWebSso;
     PWEB_SITE_MANAGER_OBJECT        pWebSmo      = (PWEB_SITE_MANAGER_OBJECT    )pWebSso->GetSiteManager((ANSC_HANDLE)pWebSso);
     PWEB_CSP_INTERFACE              pWebCspIf    = (PWEB_CSP_INTERFACE          )pWebSso->GetCspIf      ((ANSC_HANDLE)pWebSso);
     PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE          )pWebSmo->GetHemIf      ((ANSC_HANDLE)pWebSmo);
 
-    returnStatus =
-        pMyObject->AddModuleIf
+    pMyObject->AddModuleIf
             (
                 (ANSC_HANDLE)pMyObject,
                 pWebCspIf->Name,
                 (ANSC_HANDLE)pWebCspIf
             );
 
-    returnStatus =
-        pMyObject->AddModuleIf
+    pMyObject->AddModuleIf
             (
                 (ANSC_HANDLE)pMyObject,
                 pWebHemIf->Name,
@@ -167,10 +164,7 @@ WebMcoDispatchIfs
         ANSC_HANDLE                 hIqcIf
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
-    PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT   )pMyObject->hWebSso;
-    PANSC_IQC_INTERFACE             pIqcIf       = (PANSC_IQC_INTERFACE         )hIqcIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hIqcIf);
     return  ANSC_STATUS_SUCCESS;
 }

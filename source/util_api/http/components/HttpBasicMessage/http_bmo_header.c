@@ -122,7 +122,6 @@ HttpBmoGetHeaderValueById
         ULONG                       ulHeaderId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT   )hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
 #ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
@@ -144,8 +143,7 @@ HttpBmoGetHeaderValueById
     }
     else if ( !(pHttpHfo->Flags & HTTP_FIELD_FLAG_LINE_PRESENT) )
     {
-        returnStatus =
-            pHfpIf->BuildHeader
+        pHfpIf->BuildHeader
                 (
                     pHfpIf->hOwnerContext,
                     (ANSC_HANDLE)pHttpHfo,
@@ -200,7 +198,6 @@ HttpBmoGetHeaderValueById2
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT   )hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
 #ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
@@ -223,8 +220,7 @@ HttpBmoGetHeaderValueById2
     }
     else if ( !(pHttpHfo->Flags & HTTP_FIELD_FLAG_LINE_PRESENT) )
     {
-        returnStatus =
-            pHfpIf->BuildHeader
+        pHfpIf->BuildHeader
                 (
                     pHfpIf->hOwnerContext,
                     (ANSC_HANDLE)pHttpHfo,
@@ -274,9 +270,7 @@ HttpBmoGetHeaderValueByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT   )hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
 #ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
 #endif
@@ -397,9 +391,7 @@ HttpBmoGetHeaderValueByName2
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT   )hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
 #ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
 #endif
@@ -608,7 +600,6 @@ HttpBmoSetHeaderValueByName
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
 #endif
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
-    char*                           pHttpHfValue = NULL;
     char*                           pHfLine      = (char*)pMyObject->ScratchPad1;
     ULONG                           ulLineSize   = 0;
 
@@ -688,10 +679,7 @@ HttpBmoDelStartLine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -727,10 +715,7 @@ HttpBmoParseStartLine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -767,9 +752,7 @@ HttpBmoClearHeaders
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
 
     if ( pHeaderBdo )
@@ -959,13 +942,10 @@ HttpBmoCopyStartLineFrom
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject       = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf          = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
     ULONG                           ulStartLineSize = 0;
-    ULONG                           ulCopySize      = 0;
-    ULONG                           ulLeftSize      = *pulSize;
-
+    
     *pulSize = ulStartLineSize;
 
     return  ANSC_STATUS_SUCCESS;
@@ -1169,9 +1149,7 @@ HttpBmoGetHeaderField
         ULONG                       ulHeaderId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = AnscHashUlong(ulHeaderId, HTTP_BMO_HFO_TABLE_SIZE);
@@ -1238,9 +1216,7 @@ HttpBmoGetHeaderField2
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = AnscHashUlong(ulHeaderId, HTTP_BMO_HFO_TABLE_SIZE);
@@ -1310,9 +1286,7 @@ HttpBmoAddHeaderField
         ANSC_HANDLE                 hHfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HEADER_FIELD              pHttpHfo     = (PHTTP_HEADER_FIELD        )hHfo;
     ULONG                           ulHashIndex  = AnscHashUlong(pHttpHfo->HeaderId, HTTP_BMO_HFO_TABLE_SIZE);
 
@@ -1361,9 +1335,7 @@ HttpBmoDelHeaderField
         ULONG                       ulHeaderId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
     ULONG                           ulHashIndex  = AnscHashUlong(ulHeaderId, HTTP_BMO_HFO_TABLE_SIZE);
     ULONG                           ulIndex      = 0;
@@ -1433,9 +1405,7 @@ HttpBmoDelAllHfos
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;

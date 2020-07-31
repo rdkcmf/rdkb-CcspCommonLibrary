@@ -129,8 +129,7 @@ TlsCpoDecapRSAPublicKey
         ANSC_ASN1_INT**             rsa_exponent
     )
 {
-    ANSC_ASN1_INT*                  pRsaModulus  = (ANSC_ASN1_INT*             )NULL;
-    ANSC_ASN1_INT*                  pRsaExponent = (ANSC_ASN1_INT*             )NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_CRYPTO_PUB_KEY_GEN_PARAMS pGenParams;
 
     pGenParams = (PANSC_CRYPTO_PUB_KEY_GEN_PARAMS)rsa_key->KeyData;
@@ -205,6 +204,7 @@ TlsCpoEncapRSAPublicKey
         ANSC_ASN1_INT*              rsa_exponent
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_X509_KEY*                  pRsaPubKey   = (ANSC_X509_KEY*             )NULL;
     PANSC_CRYPTO_PUB_KEY_GEN_PARAMS pGenParams   = NULL;
 

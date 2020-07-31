@@ -117,8 +117,6 @@ AnscCreateDaemonServerUdp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_SERVER_UDP_OBJECT  pDaemonServerUdp = NULL;
 
     return  AnscDsuoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

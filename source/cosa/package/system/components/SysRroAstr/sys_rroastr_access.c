@@ -117,7 +117,6 @@ SysRroAstrGetRecordData
         PULONG                      pulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     if ( *pulDataSize < pMyObject->RecordSize )
@@ -185,7 +184,6 @@ SysRroAstrSetRecordData
         ULONG                       ulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     if ( pMyObject->RecordValue )
@@ -252,7 +250,6 @@ SysRroAstrGetRecordValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     return  pMyObject->RecordValue;
@@ -299,7 +296,6 @@ SysRroAstrSetRecordValue
         ULONG                       size
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     if ( pMyObject->RecordValue )

@@ -108,7 +108,6 @@ HttpAtoCgiEnvCreateCodeTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
 
     pMyObject->AddAtomByName
@@ -666,7 +665,6 @@ HttpAtoCgiEnvCreateNameTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
 
     pMyObject->AddAtomById
@@ -1229,7 +1227,6 @@ HttpAtoCgiEnvGetAtomCode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject       = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -1285,7 +1282,6 @@ HttpAtoCgiEnvGetAtomName
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject       = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

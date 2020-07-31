@@ -113,7 +113,6 @@ HttpWssoGetWspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hWspIf;
@@ -155,7 +154,6 @@ HttpWssoSetWspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     pMyObject->hWspIf = hInterface;
@@ -194,7 +192,6 @@ HttpWssoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -236,7 +233,6 @@ HttpWssoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -275,7 +271,6 @@ HttpWssoGetWebSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hWebSocket;
@@ -317,7 +312,6 @@ HttpWssoSetWebSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     pMyObject->hWebSocket = hSocket;
@@ -356,7 +350,6 @@ HttpWssoGetSessionState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->SessionState;
@@ -398,7 +391,6 @@ HttpWssoSetSessionState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     pMyObject->SessionState = ulState;
@@ -483,10 +475,7 @@ HttpWssoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
     pMyObject->hWebSocket   = (ANSC_HANDLE)NULL;
     pMyObject->SessionState = HTTP_WSSO_STATE_INITIALIZED;
 

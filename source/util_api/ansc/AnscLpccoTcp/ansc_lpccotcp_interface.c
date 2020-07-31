@@ -116,8 +116,6 @@ AnscCreateLpccoTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pLpccoTcp    = NULL;
 
     return  AnscLpccoTcpCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

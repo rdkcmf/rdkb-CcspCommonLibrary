@@ -231,6 +231,7 @@ AnscRemoveALCert
  *  Other APIs
  *
  ***************************************************************/
+#if 0
 static ANSC_STATUS
 removeIssuedCert
     (
@@ -273,7 +274,7 @@ removeIssuedCert
 
     return ANSC_STATUS_SUCCESS;
 }
-
+#endif
 
 ANSC_STATUS
 ALCERTRemoveCAEntity
@@ -283,6 +284,7 @@ ALCERTRemoveCAEntity
         BOOLEAN                     bRovIssuedCert
     )
 {
+    UNREFERENCED_PARAMETER(bRovIssuedCert);
     PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
     PCA_ENTITY                      pEntity       = (PCA_ENTITY)hEntity;
 
@@ -333,6 +335,7 @@ ALCERTRemoveCRL
         ANSC_HANDLE                 hEntity
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PCA_ENTITY                      pEntity       = (PCA_ENTITY)hEntity;
 
     if( hEntity == NULL)
@@ -493,7 +496,7 @@ ALCERTAddSubjectWithCert
 {
     PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
     PPKI_CLIENT_ENTITY              pClientEntity;
-    PANSC_ASN1_CERTIFICATE          pCert;
+    //PANSC_ASN1_CERTIFICATE          pCert;
 
     if( hThisObject == NULL)
     {
@@ -518,12 +521,9 @@ ALCERTAddSubjectWithCert
     }
 
     pClientEntity->SetName(pClientEntity, pName);
-
     /* verify it */
-    pCert = (PANSC_ASN1_CERTIFICATE)pClientEntity->GetEntityCert(pClientEntity);
-
-#if 0
-
+    pClientEntity->GetEntityCert(pClientEntity);
+#if 0   
     if( pCert == NULL ||
         pThisObject->VerifyUserCert
             (
@@ -582,7 +582,6 @@ ALCERTSetSubjectCert
         ULONG                       length
     )
 {
-    PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
     PPKI_CLIENT_ENTITY              pClientEntity = (PPKI_CLIENT_ENTITY)hClientEntity;
 
     if( hThisObject == NULL || hClientEntity == NULL)
@@ -670,7 +669,6 @@ ALCERTAddCRL
         ULONG                       length
     )
 {
-    PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
     PCA_ENTITY                      pCAEntity     = (PCA_ENTITY)hCAEntity;
 
     if( hThisObject == NULL || hCAEntity == NULL || pEncoding == NULL)
@@ -1350,8 +1348,10 @@ ALCERTVerifyCertChain
             /*
              *  DH  AL_CERT user requires keys in host order
              */
-            AnscMemoryFromNToH(inPublicKey->Key.RSAPublicKey.Modulus.Data,                  inPublicKey->Key.RSAPublicKey.Modulus.Length);
-            AnscMemoryFromNToH(inPublicKey->Key.RSAPublicKey.PublicExponent.Data.ucData,    inPublicKey->Key.RSAPublicKey.PublicExponent.Length);
+#if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
+            AnscMemoryFromNToH((char*)inPublicKey->Key.RSAPublicKey.Modulus.Data,                  inPublicKey->Key.RSAPublicKey.Modulus.Length);
+            AnscMemoryFromNToH((char*)inPublicKey->Key.RSAPublicKey.PublicExponent.Data.ucData,    inPublicKey->Key.RSAPublicKey.PublicExponent.Length);
+#endif
         }
         else /* DSA */
         {
@@ -1370,10 +1370,12 @@ ALCERTVerifyCertChain
             /*
              *  DH  AL_CERT user requires keys in host order
              */
-            AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamP.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamP.Length);
-            AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamQ.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamQ.Length);
-            AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamG.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamG.Length);
-            AnscMemoryFromNToH(inPublicKey->Key.DSAPublicKey.ParamY.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamY.Length);
+#if defined(_ANSC_LITTLE_ENDIAN_) && !defined(_COSA_INTEL_XB3_ARM_)
+            AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamP.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamP.Length);
+            AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamQ.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamQ.Length);
+            AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamG.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamG.Length);
+            AnscMemoryFromNToH((char*)inPublicKey->Key.DSAPublicKey.ParamY.Data.ucData,    inPublicKey->Key.DSAPublicKey.ParamY.Length);
+#endif
         }
 
         if( bCheckID)
@@ -1422,7 +1424,12 @@ ALCERTAcquirePath
         BOOLEAN                     bIncludeRootCA
     )
 {
-    PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hClientEntity);
+    UNREFERENCED_PARAMETER(pulCertNumber);
+    UNREFERENCED_PARAMETER(pCertArray);
+    UNREFERENCED_PARAMETER(pulCertSizeArray);
+    UNREFERENCED_PARAMETER(bIncludeRootCA);
 
     return ANSC_STATUS_FAILURE;
 }
@@ -1810,8 +1817,6 @@ ALCERTLoad
         ANSC_HANDLE                 hSysStorage
     )
 {
-    PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
-
     if( hThisObject == NULL || hSysStorage == NULL)
     {
         return ANSC_STATUS_FAILURE;
@@ -1827,8 +1832,7 @@ ALCERTSave
         ANSC_HANDLE                 hSysStorage
     )
 {
-    PALCERT_CONTEXT                 pThisObject   = (PALCERT_CONTEXT)hThisObject;
-
+    
     if( hThisObject == NULL || hSysStorage == NULL)
     {
         return ANSC_STATUS_FAILURE;
@@ -1907,8 +1911,8 @@ ALCERTUpdateCACrl
         ANSC_HANDLE                 hCAHandle
     )
 {
-    PCA_ENTITY                      pEntity     = (PCA_ENTITY)hCAHandle;
-    PCHAR                           pCrlUrl     = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hCAHandle);
 
     return ANSC_STATUS_SUCCESS;
 }

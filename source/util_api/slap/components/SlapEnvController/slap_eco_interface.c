@@ -117,8 +117,6 @@ SlapCreateEnvController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = NULL;
 
     return  SlapEcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -164,7 +164,6 @@ TlsEcoScsCreateConnection
     )
 {
     PTLS_ENV_CONTROLLER_OBJECT      pMyObject          = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PTLS_MODULE_PARAMS              pModuleParams      = (PTLS_MODULE_PARAMS          )&pMyObject->ModuleParams;
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )NULL;
 
     pTlsConnController =
@@ -230,6 +229,7 @@ TlsEcoScsConfigConnection
         ANSC_HANDLE                 hTlsConnParams
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
 
     if ( !pTlsConnController )
@@ -282,6 +282,7 @@ TlsEcoScsRemoveConnection
         ANSC_HANDLE                 hTlsConnection
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
 
     if ( !pTlsConnController )
@@ -334,6 +335,7 @@ TlsEcoScsStartConnection
         ANSC_HANDLE                 hTlsConnection
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
 
     if ( !pTlsConnController )
@@ -384,6 +386,7 @@ TlsEcoScsCloseConnection
         ANSC_HANDLE                 hTlsConnection
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
 
     if ( !pTlsConnController )
@@ -431,6 +434,7 @@ TlsEcoScsQueryConnection
         ANSC_HANDLE                 hTlsConnection
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
 
     if ( !pTlsConnController )
@@ -486,7 +490,6 @@ TlsEcoScsRecvTlsMessage
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_ENV_CONTROLLER_OBJECT      pMyObject          = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PTLS_MODULE_PARAMS              pModuleParams      = (PTLS_MODULE_PARAMS          )&pMyObject->ModuleParams;
     PANSC_PACKET_DESCRIPTOR         pTbpPdo            = (PANSC_PACKET_DESCRIPTOR     )NULL;
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
     PANSC_BUFFER_DESCRIPTOR         pTbpBdo            = (PANSC_BUFFER_DESCRIPTOR     )hMessageBdo;
@@ -796,8 +799,8 @@ TlsEcoScsSendAppMessage
         ANSC_HANDLE                 hMessageBdo
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PTLS_ENV_CONTROLLER_OBJECT      pMyObject          = (PTLS_ENV_CONTROLLER_OBJECT  )hThisObject;
     PTLS_CONN_CONTROLLER_OBJECT     pTlsConnController = (PTLS_CONN_CONTROLLER_OBJECT )hTlsConnection;
     PANSC_BUFFER_DESCRIPTOR         pTbpBdo            = (PANSC_BUFFER_DESCRIPTOR     )hMessageBdo;
 

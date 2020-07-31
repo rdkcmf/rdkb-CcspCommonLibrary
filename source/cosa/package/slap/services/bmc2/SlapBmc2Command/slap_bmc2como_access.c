@@ -108,7 +108,6 @@ SlapBmc2ComoGetCommandName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY     )pBmc2ReqController->hCommandProperty;
@@ -157,10 +156,8 @@ SlapBmc2ComoGetParamByIndex
         SLAP_UINT32                 param_index
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
-    PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY     )pBmc2ReqController->hCommandProperty;
     PSLAP_VARIABLE                  pReturnedVar         = (PSLAP_VARIABLE             )NULL;
 
     if ( param_index >= pBmc2ReqController->CliArgumentCount )
@@ -224,7 +221,6 @@ SlapBmc2ComoRemoveAllParams
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
 
@@ -272,7 +268,6 @@ SlapBmc2ComoSetParamByIndex
         char*                       param_value
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
     ULONG                           ulNewItemCount       = 0;
@@ -336,10 +331,8 @@ SlapBmc2ComoIsAborted
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
-    PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY     )pBmc2ReqController->hCommandProperty;
 
     return  pBmc2ReqController->bAborted;
 }

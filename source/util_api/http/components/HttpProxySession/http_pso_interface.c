@@ -117,8 +117,5 @@ HttpCreateProxySession
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PHTTP_PROXY_SESSION_OBJECT      pHttpProxySession = NULL;
-
     return  HttpPsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

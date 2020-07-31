@@ -58,7 +58,7 @@ int   CcspBaseIf_deadlock_detection_time_normal_seconds = -1; //will be reassign
 int   CcspBaseIf_deadlock_detection_time_getval_seconds = -1; //will be reassigned by dbus initiate function
 
 int deadlock_detection_enable                           = 0;
-CCSP_DEADLOCK_DETECTION_INFO    deadlock_detection_info = {0,0,0,0,0,0};
+CCSP_DEADLOCK_DETECTION_INFO    deadlock_detection_info = {{{0}}, NULL, NULL, 0, 0, 0, 0};;
 DEADLOCK_ARRAY*  deadlock_detection_log                 = NULL; //this variable is protected by mutex lock in deadlock_detection_info
 unsigned int deadlock_detection_log_index               = 0;
 
@@ -810,8 +810,6 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         DBusMessageIter array_iter;
         DBusMessageIter struct_iter;
         dbus_int32_t tmp,count = 0;
-        char ** names;
-        int ret;
         dbus_int32_t result ;
         int param_size;
         char ** parameterNames = 0;
@@ -819,7 +817,6 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         int size = 0;
         parameterValStruct_t **val = 0;
         dbus_uint32_t writeID = 0;
-        dbus_bool commit;
         char bIsWifi = 0;
 
         dbus_message_iter_init (message, &iter);
@@ -877,10 +874,10 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
         dbus_message_iter_init_append (reply, &iter);
 
-        ret = dbus_message_iter_open_container (&iter,
-                                                DBUS_TYPE_ARRAY,
-                                                "(ssi)",
-                                                &array_iter);
+        dbus_message_iter_open_container (&iter,
+                                          DBUS_TYPE_ARRAY,
+                                          "(ssi)",
+                                          &array_iter);
 
         if(result == CCSP_SUCCESS)
         {
@@ -901,7 +898,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                 DBUS_MESSAGE_APPEND_STRING (&struct_iter, val[i]->parameterValue);
 
                 tmp = val[i]->type;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
 
                     dbus_message_iter_close_container (&array_iter, &struct_iter);
                 }
@@ -924,18 +921,18 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
                 DBUS_MESSAGE_APPEND_STRING (&struct_iter, buf);
                 tmp = shmSize;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp); 
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp); 
 
                 dbus_message_iter_close_container (&array_iter, &struct_iter);
             }
         }
 
-        ret = dbus_message_iter_close_container (&iter, &array_iter);
+        dbus_message_iter_close_container (&iter, &array_iter);
 
 
         tmp = result;
         dbus_message_iter_append_basic (&iter, DBUS_TYPE_INT32, &tmp);
-        if (!dbus_connection_send (conn, reply, &tmp))
+        if (!dbus_connection_send (conn, reply, (dbus_uint32_t *)&tmp))
             CcspTraceError(("<%s.%d> No memory\n", __FUNCTION__, getpid()));
 
         if ( dbus_connection_get_outgoing_size(conn) > CCSP_DBUS_LARGE_REPLY_SIZE_MIN && 
@@ -1080,7 +1077,6 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         dbus_uint32_t utmp ;
         dbus_bool_t btmp ;
 	char ** names;
-        int ret;
         dbus_int32_t result ;
         int param_size;
         char ** parameterNames = 0;
@@ -1138,10 +1134,10 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
         dbus_message_iter_init_append (reply, &iter);
 
-        ret = dbus_message_iter_open_container (&iter,
-                                                DBUS_TYPE_ARRAY,
-                                                "(sbbibu)",
-                                                &array_iter);
+        dbus_message_iter_open_container (&iter,
+                                         DBUS_TYPE_ARRAY,
+                                         "(sbbibu)",
+                                         &array_iter);
         if(result == CCSP_SUCCESS)
         {
 
@@ -1156,23 +1152,23 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                 DBUS_MESSAGE_APPEND_STRING (&struct_iter, val[i]->parameterName);
 
                 btmp = val[i]->notificationChanged;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
                 btmp = val[i]->notification;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
 
                 tmp = val[i]->access;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_INT32, &tmp);
                 btmp = val[i]->accessControlChanged;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
                 utmp = val[i]->accessControlBitmask;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
 
                 dbus_message_iter_close_container (&array_iter,
                                                    &struct_iter);
             }
         }
 
-        ret = dbus_message_iter_close_container (&iter,
+        dbus_message_iter_close_container (&iter,
                 &array_iter);
 
 
@@ -1273,7 +1269,6 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         DBusMessageIter struct_iter;
         dbus_int32_t tmp ;
         dbus_bool_t btmp ;
-        int ret;
         dbus_int32_t result ;
         int size = 0;
         char * parameterName = 0;
@@ -1299,10 +1294,10 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
         dbus_message_iter_init_append (reply, &iter);
 
-        ret = dbus_message_iter_open_container (&iter,
-                                                DBUS_TYPE_ARRAY,
-                                                "(sb)",
-                                                &array_iter);
+        dbus_message_iter_open_container (&iter,
+                                          DBUS_TYPE_ARRAY,
+                                          "(sb)",
+                                          &array_iter);
         if(result == CCSP_SUCCESS)
         {
 
@@ -1316,13 +1311,13 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
 
                 DBUS_MESSAGE_APPEND_STRING (&struct_iter, val[i]->parameterName);
                 btmp = val[i]->writable;
-                ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
+                dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &btmp);
                 dbus_message_iter_close_container (&array_iter,
                                                    &struct_iter);
             }
         }
 
-        ret = dbus_message_iter_close_container (&iter,
+        dbus_message_iter_close_container (&iter,
                 &array_iter);
 
 
@@ -1608,6 +1603,7 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
 #ifndef _RBUS_NOT_REQ_
 int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rtMessage message, void * user_data)
 {
+    UNREFERENCED_PARAMETER(object_name);
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
 
@@ -1627,8 +1623,8 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
         for(i = 0; i < param_size; i++)
         {
             rbus_PopString(message, &val[i].parameterName);
-            rbus_PopString(message, &val[i].oldValue);
-            rbus_PopString(message, &val[i].newValue);
+            rbus_PopString(message, (const char**)&val[i].oldValue);
+            rbus_PopString(message, (const char**)&val[i].newValue);
             rbus_PopInt32(message, (int32_t*)&val[i].type);
             rbus_PopString(message, &val[i].subsystem_prefix);
             rbus_PopInt32(message, (int32_t*)&val[i].writeID);
@@ -1643,8 +1639,8 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
         int32_t isAvailable;
         char *component_name = 0;
         char *component_dbus_path = 0;
-        rbus_PopString(message, &component_name);
-        rbus_PopString(message, &component_dbus_path);
+        rbus_PopString(message, (const char**)&component_name);
+        rbus_PopString(message, (const char**)&component_dbus_path);
         rbus_PopInt32(message, &isAvailable);
         func->deviceProfileChangeSignal(component_name,component_dbus_path,isAvailable,func->deviceProfileChangeSignal_data);
     }
@@ -1699,7 +1695,6 @@ void CcspBaseIf_deadlock_detection_log_save
 )
 {
     CCSP_DEADLOCK_DETECTION_INFO* info           = (CCSP_DEADLOCK_DETECTION_INFO*)(&deadlock_detection_info);
-    int                           param_size     = 0; 
     parameterValStruct_t *        parameterVal   = 0;     //setParameterValues
     char *                        parameterName  = 0;     //getParameterNames
     char **                       parameterNames = 0;     //getParameterValues / getParameterAttributes
@@ -1707,7 +1702,7 @@ void CcspBaseIf_deadlock_detection_log_save
     char *                        str            = NULL;  //AddTblRow / DeleteTblRow
     unsigned long                 size           = 0;
     unsigned long                 index          = deadlock_detection_log_index;
-    int                           i              = 0;
+    unsigned int                  i              = 0;
     char                          timestr[128]   = {0};
     time_t                        t1             = GetCurrentTime();
     
@@ -1765,14 +1760,14 @@ void CcspBaseIf_deadlock_detection_log_save
             CCSP_DEADLOCK_INFO_PRINT("%s **Ccsp Dbus call:setParameterAttributes.\n", timestr);
             for ( i = 0; i<size; i++ )
             {
-                CCSP_DEADLOCK_INFO_PRINT("parameters[%d] : %s, NtfChg:%d,Ntf:%d,Acc:%lu,AcCtlChg:%d,AcCtlBitm:%lu\n", \
+                CCSP_DEADLOCK_INFO_PRINT("parameters[%d] : %s, NtfChg:%d,Ntf:%d,Acc:%u,AcCtlChg:%d,AcCtlBitm:%u\n", \
                                      i, \
                                      parameterAttribute[i].parameterName,\
                                      parameterAttribute[i].notificationChanged,\
                                      parameterAttribute[i].notification,\
                                      parameterAttribute[i].access,\
                                      parameterAttribute[i].accessControlChanged,\
-                                     parameterAttribute[i].accessControlBitmask);            
+                                     parameterAttribute[i].accessControlBitmask);
             }
         }
         else if ( strstr("AddTblRow", info->messageType ))
@@ -1852,7 +1847,7 @@ CcspBaseIf_deadlock_detection_log_print
         if ( i >= deadlock_detection_log_linenum )
             i = 0;
 
-        if ( i == deadlock_detection_log_index )
+        if ( (unsigned int)i == deadlock_detection_log_index )
             break;
     }while(1);
 
@@ -1896,6 +1891,7 @@ CcspBaseIf_deadlock_detection_log_print
 
 void sig_empty_handler(int sig)
 {
+    UNREFERENCED_PARAMETER(sig);
     return;
 }
 
@@ -1909,7 +1905,7 @@ CcspBaseIf_Deadlock_Detection_Thread
     void * user_data
 )
 {
-    CCSP_MESSAGE_BUS_INFO *       bus_info       = (CCSP_MESSAGE_BUS_INFO *)user_data;
+    UNREFERENCED_PARAMETER(user_data);
     CCSP_DEADLOCK_DETECTION_INFO* info           = (CCSP_DEADLOCK_DETECTION_INFO*)(&deadlock_detection_info);
     FILE *                        fd             = NULL;
 

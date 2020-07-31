@@ -146,7 +146,7 @@ TlsCpoDecapDHPublicKey
         ANSC_ASN1_INT**             dh_public
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_ASN1_INT*                  pDhPrime     = (ANSC_ASN1_INT*             )NULL;
     ANSC_ASN1_INT*                  pDhGenerator = (ANSC_ASN1_INT*             )NULL;
     ANSC_ASN1_INT*                  pDhPublic    = (ANSC_ASN1_INT*             )NULL;
@@ -250,7 +250,7 @@ TlsCpoEncapDHPublicKey
         ANSC_ASN1_INT*              dh_public
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_X509_KEY*                  pDhPubKey    = (ANSC_X509_KEY*             )NULL;
     PANSC_CRYPTO_DH_PARAMETERS      pDHParam     = NULL;
 

@@ -114,7 +114,6 @@ AnscSstoGetStsIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT         pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
 
@@ -207,7 +206,6 @@ AnscSstoGetLastSecond
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     /*
@@ -248,7 +246,6 @@ AnscSstoGetLastTick
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     /*
@@ -291,7 +288,6 @@ AnscSstoGetiTimeOffset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     /*
@@ -471,7 +467,6 @@ AnscSstoGetCurrSecond
 
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     ULONG                           ulCurrTick        = AnscGetTickInSeconds();
     ULONG                           ulCurrSecond      = 0;

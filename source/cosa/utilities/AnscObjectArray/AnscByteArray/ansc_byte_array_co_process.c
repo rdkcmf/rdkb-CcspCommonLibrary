@@ -275,7 +275,7 @@ AnscByteArrayGetAt
 
         pStorage    = (PBYTE)pByteArray->hStorage;
 
-        return (ANSC_OBJECT_ARRAY_DATA)pStorage[ulIndex];
+        return (ANSC_OBJECT_ARRAY_DATA)(intptr_t)pStorage[ulIndex];
     }
 
     return (ANSC_OBJECT_ARRAY_DATA)NULL;
@@ -331,7 +331,7 @@ AnscByteArraySetAt
         PBYTE                       pStorage;
 
         pStorage            = (PBYTE)pByteArray->hStorage;
-        pStorage[ulIndex]   = (BYTE)Data;
+        pStorage[ulIndex]   = (BYTE)(intptr_t)Data;
     }
 }
 
@@ -412,7 +412,7 @@ AnscByteArrayInsertAt
 
         for (i = 0; i < ulCount; i ++)
         {
-            pStorage[i + ulIndex]   = (BYTE)Data;
+            pStorage[i + ulIndex]   = (BYTE)(intptr_t)Data;
         }
     }
 }
@@ -457,6 +457,7 @@ AnscByteArrayRemoveAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(ulCount);
     PANSC_BYTE_ARRAY_OBJECT         pByteArray  = (PANSC_BYTE_ARRAY_OBJECT)hThisObject;
 
     if (!pByteArray || ulIndex >= pByteArray->ulItemCount)
@@ -526,7 +527,7 @@ AnscByteArrayAdd
             PBYTE                   pStorage;
 
             pStorage = (PBYTE)pByteArray->hStorage;
-            pStorage[pByteArray->ulItemCount ++] = (BYTE)Data;
+            pStorage[pByteArray->ulItemCount ++] = (BYTE)(intptr_t)Data;
 
             return pByteArray->ulItemCount;
         }
@@ -662,7 +663,7 @@ AnscByteArrayFind
     LONG                            Count       = pByteArray->ulItemCount;
     LONG                            i;
     PBYTE                           pStorage    = (PBYTE)pByteArray->hStorage;
-    BYTE                            uSample     = (BYTE)Data;
+    BYTE                            uSample     = (BYTE)(intptr_t)Data;
 
     for (i = 0; i < Count; i ++)
     {

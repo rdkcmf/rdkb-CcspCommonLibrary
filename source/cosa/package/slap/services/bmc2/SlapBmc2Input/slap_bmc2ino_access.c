@@ -105,7 +105,6 @@ SlapBmc2InoRead
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject          = (PSLAP_BMC2_INPUT_OBJECT    )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pBmc2ReqController->hBmc2ComDomain;
@@ -118,12 +117,12 @@ SlapBmc2InoRead
         return  NULL;
     }
 
-    returnStatus =
         pBmc2IceIf->ReadInput
             (
                 pBmc2IceIf->hOwnerContext,
                 &pUserInput
             );
+
 
     return  pUserInput;
 }
@@ -179,7 +178,6 @@ SlapBmc2InoRead2
         SLAP_UINT32                 ulWidth
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject           = (PSLAP_BMC2_INPUT_OBJECT    )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController  = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain      = (PBMC2_COM_DOMAIN_OBJECT    )pBmc2ReqController->hBmc2ComDomain;
@@ -210,7 +208,6 @@ SlapBmc2InoRead2
         pBmc2IceTextboxInfo->Width        = ulWidth;
     }
 
-    returnStatus =
         pBmc2IceIf->ReadInput2
             (
                 pBmc2IceIf->hOwnerContext,

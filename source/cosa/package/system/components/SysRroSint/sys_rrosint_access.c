@@ -117,7 +117,6 @@ SysRroSintGetRecordData
         PULONG                      pulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_SINT_OBJECT            pMyObject    = (PSYS_RRO_SINT_OBJECT)hThisObject;
 
     if ( *pulDataSize < sizeof(long) )
@@ -172,7 +171,6 @@ SysRroSintSetRecordData
         ULONG                       ulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_SINT_OBJECT            pMyObject    = (PSYS_RRO_SINT_OBJECT)hThisObject;
 
     if ( ulDataSize != sizeof(long) )
@@ -216,7 +214,6 @@ SysRroSintGetRecordValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_SINT_OBJECT            pMyObject    = (PSYS_RRO_SINT_OBJECT)hThisObject;
 
     return  pMyObject->RecordValue;
@@ -258,7 +255,6 @@ SysRroSintSetRecordValue
         long                        value
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_SINT_OBJECT            pMyObject    = (PSYS_RRO_SINT_OBJECT)hThisObject;
 
     pMyObject->RecordValue = value;

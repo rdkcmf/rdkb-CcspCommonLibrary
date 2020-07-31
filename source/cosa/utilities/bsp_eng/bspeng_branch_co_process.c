@@ -124,7 +124,7 @@ BspTemplateBranchSetLeft
         switch (pMyObject->left.type        = pLeft->right.type)
         {
         case BspBranch_eString:
-            pMyObject->left.Value.s         = AnscDupString(pLeft->right.Value.s);
+            pMyObject->left.Value.s         = (PCHAR)AnscDupString((PUCHAR)pLeft->right.Value.s);
             break;
 
         case BspBranch_eNumber:
@@ -142,6 +142,12 @@ BspTemplateBranchSetLeft
         case BspBranch_eArrayDim:
             pMyObject->left.Value.a         = pLeft->right.Value.a;
             pLeft->right.Value.a.pBranch    = NULL;
+            break;
+        case BspBranch_eBranch:
+        case BspBranch_eEmpty:
+        case BspBranch_eArrayItem:
+        case BspBranch_eApiParams:
+        default:
             break;
         }
 
@@ -198,7 +204,7 @@ BspTemplateBranchSetRight
         switch (pMyObject->right.type = pRight->right.type)
         {
         case BspBranch_eString:
-            pMyObject->right.Value.s        = AnscDupString(pRight->right.Value.s);
+            pMyObject->right.Value.s        = (PCHAR)AnscDupString((PUCHAR)pRight->right.Value.s);
             break;
 
         case BspBranch_eNumber:
@@ -218,6 +224,11 @@ BspTemplateBranchSetRight
             pMyObject->right.Value.a        = pRight->right.Value.a;
             pRight->right.Value.a.pBranch   = NULL;
             pRight->right.Value.a.Count     = 0;
+            break;
+        case BspBranch_eBranch:
+        case BspBranch_eEmpty:
+        case BspBranch_eArrayItem:
+        default:
             break;
         }
 
@@ -431,14 +442,13 @@ BspTemplateBranchStoreBranchData
         ANSC_HANDLE                 hBranchData
     )
 {
-    PBSP_TEMPLATE_BRANCH_OBJECT     pMyObject = (PBSP_TEMPLATE_BRANCH_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSP_TEMPLATE_ARCHIVE_OBJECT    pArchive  = (PBSP_TEMPLATE_ARCHIVE_OBJECT)hArchive;
     PBSP_TEMPLATE_BRANCH_DATA       pBrData   = (PBSP_TEMPLATE_BRANCH_DATA)hBranchData;
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr, *pBranches;
     BOOL                            bSucc;
     PBSP_TEMPLATE_ARRAY_DATA        pArrayData;
     ULONG                           i, ulCount;
-    PBSP_TEMPLATE_ACV_ITEM          pAcvItem  = NULL;
 
     /* left branch type */
     bSucc = pArchive->WriteByte(hArchive, (UCHAR)pBrData->type);
@@ -461,7 +471,7 @@ BspTemplateBranchStoreBranchData
         break;
 
     case BspBranch_eString:
-        bSucc   = pArchive->WriteString(hArchive, pBrData->Value.s);
+        bSucc   = pArchive->WriteString(hArchive, (PUCHAR)pBrData->Value.s);
         break;
 
     case BspBranch_eNumber:
@@ -655,7 +665,7 @@ BspTemplateBranchLoadBranchData
         ANSC_HANDLE                 hBranchData
     )
 {
-    PBSP_TEMPLATE_BRANCH_OBJECT     pMyObject = (PBSP_TEMPLATE_BRANCH_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSP_TEMPLATE_ARCHIVE_OBJECT    pArchive  = (PBSP_TEMPLATE_ARCHIVE_OBJECT)hArchive;
     PBSP_TEMPLATE_BRANCH_DATA       pBrData   = (PBSP_TEMPLATE_BRANCH_DATA)hBranchData;
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr, *pBranches;

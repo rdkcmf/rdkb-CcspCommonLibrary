@@ -117,8 +117,6 @@ SlapCreateAccessManager
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pSlapAccessManager = NULL;
 
     return  SlapAmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

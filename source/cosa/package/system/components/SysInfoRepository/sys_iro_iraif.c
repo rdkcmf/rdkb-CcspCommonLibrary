@@ -153,12 +153,10 @@ SysIroIraAcqWriteAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    ULONG                           i            = 0;
+    /*ULONG                           i            = 0;
 
-    /*
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     for ( i = 0; i < (SYS_IRO_MAX_REP_ACCESS_COUNT - 1); i++ )
@@ -205,10 +203,7 @@ SysIroIraRelWriteAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    ULONG                           i            = 0;
 
     /*
     AnscReleaseSemaphore(&pMyObject->AccessSemaphore, SYS_IRO_MAX_REP_ACCESS_COUNT - 1);
@@ -281,10 +276,7 @@ SysIroIraAddSysFolder
         char*                       pFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pRfoKey      = NULL;
 
     pRfoKey =
@@ -346,10 +338,7 @@ SysIroIraAddFolder
         char*                       pSubFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pRfoKey      = NULL;
 
     pRfoKey =
@@ -437,9 +426,7 @@ SysIroIraAddFolder2
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
@@ -515,7 +502,6 @@ SysIroIraAddFolder2
 
     if ( pSysRamIf )
     {
-        returnStatus =
             pSysRamIf->Notify
                 (
                     pSysRamIf->hOwnerContext,
@@ -523,7 +509,6 @@ SysIroIraAddFolder2
                     SYS_RAM_EVENT_folderAdded
                 );
     }
-
     return  (ANSC_HANDLE)pSubKey;
 }
 
@@ -578,10 +563,7 @@ SysIroIraDelFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
     returnStatus =
         pMyObject->IraDelFolder2
@@ -655,7 +637,6 @@ SysIroIraDelFolder2
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
@@ -764,13 +745,8 @@ SysIroIraOpenFolder
         char*                       pSubFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     PSYS_RFO_KEY                    pSubKey      = NULL;
 
     pSubKey =
@@ -833,9 +809,7 @@ SysIroIraOpenFolder2
         ULONG                       ulAccessMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -942,8 +916,6 @@ SysIroIraCloseFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
@@ -1014,8 +986,6 @@ SysIroIraClearFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -1091,8 +1061,6 @@ SysIroIraGenerateFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -1168,8 +1136,6 @@ SysIroIraPopulateFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -1279,10 +1245,7 @@ SysIroIraQueryFolder
         PANSC_HANDLE                phRenderAttr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
@@ -1382,10 +1345,7 @@ SysIroIraGetSubFolderCount
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject     = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty     = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver    = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey       = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder    = NULL;
     ULONG                           ulFolderCount = 0;
@@ -1468,12 +1428,9 @@ SysIroIraEnumSubFolder
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
-    PSYS_RFO_KEY                    pSubKey      = NULL;
     char*                           pFolderName  = NULL;
 
     if ( !pMyObject->bActive )
@@ -1539,7 +1496,7 @@ EXIT1:
 
     pMyObject->RelAccess((ANSC_HANDLE)pMyObject, TRUE);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }
 
 
@@ -1590,9 +1547,7 @@ SysIroIraTestSubFolder
         ULONG                       ulAccessMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -1727,11 +1682,7 @@ SysIroIraAddRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
-    PSYS_REPOSITORY_RECORD_OBJECT   pNewRecord   = NULL;
 
     returnStatus =
         pMyObject->IraAddRecord2
@@ -1818,10 +1769,7 @@ SysIroIraAddRecord2
         ULONG                       ulWriteSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -1867,7 +1815,6 @@ SysIroIraAddRecord2
 
     if ( pSysRamIf )
     {
-        returnStatus =
             pSysRamIf->Notify
                 (
                     pSysRamIf->hOwnerContext,
@@ -1925,8 +1872,6 @@ SysIroIraDelRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
@@ -2041,8 +1986,6 @@ SysIroIraGetRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -2125,7 +2068,7 @@ EXIT1:
     return  returnStatus;
 }
 
-ANSC_HANDLE
+ANSC_STATUS
 SysIroIraGetRecordByIndex
     (
         ANSC_HANDLE         hThisObject,
@@ -2140,6 +2083,7 @@ SysIroIraGetRecordByIndex
         ULONG               *pDataSize
     )
 {
+    UNREFERENCED_PARAMETER(ulAccess);
     ANSC_STATUS                     returnStatus= ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject   = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
     PSYS_RFO_KEY                    pCurKey     = (PSYS_RFO_KEY                 )hCurFolder;
@@ -2301,12 +2245,9 @@ SysIroIraSetRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
-    PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
 
     if ( !pMyObject->bActive )
     {
@@ -2430,8 +2371,6 @@ SysIroIraQueryRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -2550,10 +2489,7 @@ SysIroIraGetRecordCount
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject     = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty     = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver    = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey       = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder    = NULL;
     ULONG                           ulRecordCount = 0;
@@ -2645,8 +2581,6 @@ SysIroIraEnumRecord
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject      = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty      = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver     = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey        = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder     = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord     = NULL;
@@ -2776,10 +2710,7 @@ SysIroIraTestRecord
         ULONG                       ulAccessMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -2877,10 +2808,7 @@ SysIroIraGetRfoUserContext
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ANSC_HANDLE                     hUserContext = NULL;
@@ -2950,10 +2878,7 @@ SysIroIraSetRfoUserContext
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
     if ( !pMyObject->bActive )
@@ -3021,10 +2946,7 @@ SysIroIraGetRfoUserReserved
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ULONG                           ulReserved   = 0;
@@ -3094,8 +3016,6 @@ SysIroIraSetRfoUserReserved
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
@@ -3164,10 +3084,7 @@ SysIroIraGetRfoFolderType
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ULONG                           ulFolderType = SYS_REP_FOLDER_TYPE_STORAGE;
@@ -3237,10 +3154,7 @@ SysIroIraSetRfoFolderType
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
     if ( !pMyObject->bActive )
@@ -3308,10 +3222,7 @@ SysIroIraGetRfoPermission
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ULONG                           ulPermission = SYS_RFO_PERMISSION_PROHIBITED;
@@ -3381,10 +3292,7 @@ SysIroIraSetRfoPermission
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
     if ( !pMyObject->bActive )
@@ -3452,10 +3360,7 @@ SysIroIraGetRfoRenderAttr
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ANSC_HANDLE                     hRenderAttr  = NULL;
@@ -3525,10 +3430,7 @@ SysIroIraSetRfoRenderAttr
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
     if ( !pMyObject->bActive )
@@ -3602,10 +3504,7 @@ SysIroIraGetRroUserContext
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -3698,10 +3597,7 @@ SysIroIraSetRroUserContext
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
 
@@ -3790,10 +3686,7 @@ SysIroIraGetRroUserReserved
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -3886,8 +3779,6 @@ SysIroIraSetRroUserReserved
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -3977,10 +3868,7 @@ SysIroIraGetRroPermission
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -4073,10 +3961,7 @@ SysIroIraSetRroPermission
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
 
@@ -4165,10 +4050,7 @@ SysIroIraGetRroRenderAttr
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
@@ -4261,10 +4143,7 @@ SysIroIraSetRroRenderAttr
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
-    PSYS_RAM_INTERFACE              pSysRamIf    = (PSYS_RAM_INTERFACE           )pMyObject->hSysRamIf;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord   = NULL;
 
@@ -4347,10 +4226,7 @@ SysIroIraGetCurRecycleBin
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     ANSC_HANDLE                     hRecycleBin  = NULL;
@@ -4418,10 +4294,7 @@ SysIroIraAttachRecycleBin
         ANSC_HANDLE                 hRecycleBin
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject      = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty      = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver     = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey        = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder     = NULL;
     PSYS_RECYCLE_BIN_OBJECT         pCurRecycleBin = NULL;
@@ -4442,7 +4315,6 @@ SysIroIraAttachRecycleBin
 
     pMyObject->AcqAccess((ANSC_HANDLE)pMyObject, FALSE);
 
-    returnStatus =
         pCurFolder->SetRecycleBin
             (
                 (ANSC_HANDLE)pCurFolder,
@@ -4450,7 +4322,6 @@ SysIroIraAttachRecycleBin
             );
 
     pMyObject->RelAccess((ANSC_HANDLE)pMyObject, FALSE);
-
     return  (ANSC_HANDLE)pCurRecycleBin;
 }
 
@@ -4492,10 +4363,7 @@ SysIroIraDetachRecycleBin
         ANSC_HANDLE                 hCurFolder
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject      = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty      = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver     = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey        = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder     = NULL;
     PSYS_RECYCLE_BIN_OBJECT         pCurRecycleBin = NULL;
@@ -4516,13 +4384,11 @@ SysIroIraDetachRecycleBin
 
     pMyObject->AcqAccess((ANSC_HANDLE)pMyObject, FALSE);
 
-    returnStatus =
         pCurFolder->SetRecycleBin
             (
                 (ANSC_HANDLE)pCurFolder,
                 (ANSC_HANDLE)NULL
             );
-
     pMyObject->RelAccess((ANSC_HANDLE)pMyObject, FALSE);
 
     return  (ANSC_HANDLE)pCurRecycleBin;
@@ -4577,8 +4443,6 @@ SysIroIraSortSubFolders
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
@@ -4682,8 +4546,6 @@ SysIroIraSortRecords
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
-    PSYS_INFO_REPOSITORY_PROPERTY   pProperty    = (PSYS_INFO_REPOSITORY_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
     PSYS_RFO_KEY                    pCurKey      = (PSYS_RFO_KEY                 )hCurFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
 
@@ -4768,7 +4630,6 @@ SysIroIraGetSysRamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
 
     return  pMyObject->hSysRamIf;

@@ -220,10 +220,10 @@ DslhDmagntLoadDataModelXMLInternal
         BOOL                        bPopulateTree
     )
 {
+    UNREFERENCED_PARAMETER(bExternal);
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PDSLH_CPE_CONTROLLER_OBJECT     pCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE        )pCpeController->GetDslhMprIf(pCpeController);
-    PANSC_ATOM_TABLE_OBJECT         pAtomFunctions    = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtomFunctions;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pListNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -231,9 +231,6 @@ DslhDmagntLoadDataModelXMLInternal
     PDSLH_LCB_INTERFACE             pDslhLcbIf        = (PDSLH_LCB_INTERFACE)pMyObject->hDslhLcbIf;
     ANSC_STATUS                     returnStatus      = 0;
     char*                           pRootName         = NULL;
-    char                            buffer[64]        = { 0 };
-    ULONG                           uLength           = 63;
-    FILE*                           debugFile         = NULL;
     
     pRootNode = pXMLNode;
     if( pRootNode == NULL)
@@ -461,7 +458,6 @@ DslhDmagntUnloadDataModelXML
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PDSLH_CPE_CONTROLLER_OBJECT     pCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE        )pCpeController->GetDslhMprIf(pCpeController);
-    PANSC_ATOM_TABLE_OBJECT         pAtomFunctions    = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtomFunctions;
     PANSC_XML_DOM_NODE_OBJECT       pRootNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pListNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -471,7 +467,6 @@ DslhDmagntUnloadDataModelXML
     ANSC_STATUS                     returnStatus      = 0;
     char*                           pRootName         = NULL;
     char                            buffer[1024]      = { 0 };
-    ULONG                           uLength           = 1024;
     
     pRootNode = (PANSC_XML_DOM_NODE_OBJECT)
         AnscXmlDomParseString((ANSC_HANDLE)NULL, (PCHAR*)&pBackBuffer, uXMLLength);
@@ -1054,10 +1049,7 @@ _enum_obj_entities_DT
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT  )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity     = (PDSLH_VAR_ENTITY_OBJECT  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY       )NULL;
-    PDSLH_CWMP_PARAM_DESCR          pParamDescr         = (PDSLH_CWMP_PARAM_DESCR   )NULL;
     PDSLH_CWMP_PARAM_DESCR          pDescr              = (PDSLH_CWMP_PARAM_DESCR   )NULL;
-    char                            pName[128]          = { 0 };
-    int                             i                   = 0;
 
     if( !pObjEntity->ObjDescr)
     {

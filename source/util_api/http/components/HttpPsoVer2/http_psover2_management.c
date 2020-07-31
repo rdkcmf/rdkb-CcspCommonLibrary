@@ -114,9 +114,7 @@ HttpPsoVer2AskTroBySocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
 
@@ -180,9 +178,7 @@ HttpPsoVer2PopTroBySocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
 
@@ -243,18 +239,10 @@ HttpPsoVer2GetLastTro
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_WAM_INTERFACE             pWamIf         = (PHTTP_WAM_INTERFACE        )pMyObject->hWamIf;
-    PHTTP_SBC_INTERFACE             pSbcIf         = (PHTTP_SBC_INTERFACE        )pMyObject->hSbcIf;
-    PHTTP_CBC_INTERFACE             pCbcIf         = (PHTTP_CBC_INTERFACE        )pMyObject->hCbcIf;
-    PHTTP_PBC_INTERFACE             pPbcIf         = (PHTTP_PBC_INTERFACE        )pMyObject->hPbcIf;
-    PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
-    ULONG                           ulTroState     = HTTP_TRO_STATE_INITIALIZED;
-
+    
     AnscAcquireLock(&pMyObject->TroSListLock);
 
     pSLinkEntry = AnscSListGetFirstEntry(&pMyObject->TroSList);
@@ -306,14 +294,7 @@ HttpPsoVer2GetCurTro
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_WAM_INTERFACE             pWamIf         = (PHTTP_WAM_INTERFACE        )pMyObject->hWamIf;
-    PHTTP_SBC_INTERFACE             pSbcIf         = (PHTTP_SBC_INTERFACE        )pMyObject->hSbcIf;
-    PHTTP_CBC_INTERFACE             pCbcIf         = (PHTTP_CBC_INTERFACE        )pMyObject->hCbcIf;
-    PHTTP_PBC_INTERFACE             pPbcIf         = (PHTTP_PBC_INTERFACE        )pMyObject->hPbcIf;
-    PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
     ULONG                           ulTroState     = HTTP_TRO_STATE_INITIALIZED;
@@ -376,7 +357,6 @@ HttpPsoVer2AddNewTro
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT         )hThisObject;
     PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT   )pMyObject->hOwnerContext;
     PHTTP_WAM_INTERFACE             pWamIf         = (PHTTP_WAM_INTERFACE           )pMyObject->hWamIf;
@@ -448,9 +428,7 @@ HttpPsoVer2DelAllTros
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
     PHTTP_WAM_INTERFACE             pWamIf         = (PHTTP_WAM_INTERFACE        )pMyObject->hWamIf;
     PHTTP_TRANS_RECORD_OBJECT       pTransRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
@@ -465,8 +443,7 @@ HttpPsoVer2DelAllTros
         pTransRecord = ACCESS_HTTP_TRANS_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry  = AnscSListPopEntry(&pMyObject->TroSList);
 
-        returnStatus =
-            pWamIf->Close
+        pWamIf->Close
                 (
                     pWamIf->hOwnerContext,
                     (ANSC_HANDLE)pTransRecord

@@ -117,7 +117,6 @@ HttpMboChkAppendTrailer
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp  = NULL;
 
@@ -208,7 +207,6 @@ HttpMboChkParseTrailer
         ULONG                       ulTrailerSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject     = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE     )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf        = (PHTTP_BCC_INTERFACE     )pMyObject->hBccIf;
@@ -270,8 +268,7 @@ HttpMboChkParseTrailer
             }
             else
             {
-                returnStatus =
-                    pBccIf->AddHeaderField
+                pBccIf->AddHeaderField
                         (
                             pBccIf->hOwnerContext,
                             (ANSC_HANDLE)pHttpHfo

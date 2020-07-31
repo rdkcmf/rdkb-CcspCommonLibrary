@@ -332,8 +332,6 @@ AnscTcFree
     )
 {
     PANSC_TOKEN_CHAIN               pTokenChain = (PANSC_TOKEN_CHAIN)hTokenChain;
-    PANSC_STRING_TOKEN              pToken      = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry = NULL;
 
     AnscDelTokenChain((ANSC_HANDLE)pTokenChain);
     AnscFreeMemory   (pTokenChain);
@@ -349,6 +347,7 @@ AnscTcGetLength
         char*                       separator
     )
 {
+    UNREFERENCED_PARAMETER(separator);
     PANSC_TOKEN_CHAIN               pTokenChain = (PANSC_TOKEN_CHAIN)hTokenChain;
     PANSC_STRING_TOKEN              pToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry = NULL;

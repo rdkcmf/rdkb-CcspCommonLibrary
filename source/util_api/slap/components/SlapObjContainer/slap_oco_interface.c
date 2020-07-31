@@ -117,8 +117,6 @@ SlapCreateObjContainer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = NULL;
 
     return  SlapOcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

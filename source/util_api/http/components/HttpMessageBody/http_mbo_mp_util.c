@@ -74,7 +74,7 @@
 #include "http_mbo_global.h"
 
 
-#define  HTTP_MP_DATA_BACKCHECK_SIZE                (AnscSizeOfString(pMyObject->pBoundaryStr) - 1)
+#define  HTTP_MP_DATA_BACKCHECK_SIZE                (AnscSizeOfString((const char*)pMyObject->pBoundaryStr) - 1)
 
 BOOL
 HttpMboFindBoundaryPos
@@ -88,7 +88,7 @@ HttpMboFindBoundaryPos
     BOOL                            bFound          = FALSE;
     PUCHAR                          pOrgData        = pData;
     PUCHAR                          pEnd            = pData + ulDataLen - 1;
-    ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
+    ULONG                           ulBoundaryLen   = AnscSizeOfString((const char*)pBoundary);
     PUCHAR                          pNext;
 
     while ( pData + ulBoundaryLen <= pEnd )
@@ -101,7 +101,7 @@ HttpMboFindBoundaryPos
             break;
         }
 
-        if ( AnscEqualString2(pNext, pBoundary, ulBoundaryLen, TRUE) )
+        if ( AnscEqualString2((char*)pNext, (char*)pBoundary, ulBoundaryLen, TRUE) )
         {
             *pulBoundaryPos = pNext - pOrgData;
             bFound = TRUE;
@@ -124,7 +124,6 @@ HttpMboFindNextBoundary
         PULONG                      pulBoundaryPos
     )
 {
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject   = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
     PANSC_BUFFER_DESCRIPTOR         pBdo        = (PANSC_BUFFER_DESCRIPTOR)hBdo;
     PUCHAR                          pData       = (PUCHAR)AnscBdoGetBuffer(pBdo) + AnscBdoGetOffset(pBdo) + ulStartPos;
@@ -144,7 +143,6 @@ HttpMboFindNextBoundary2
         PULONG                      pulOffset
     )
 {
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject   = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
     PANSC_BUFFER_DESCRIPTOR         pLastBdo    = (PANSC_BUFFER_DESCRIPTOR)hLastBdo;
     PANSC_BUFFER_DESCRIPTOR         pBdo        = (PANSC_BUFFER_DESCRIPTOR)hBdo;
@@ -153,8 +151,7 @@ HttpMboFindNextBoundary2
     ULONG                           ulCurDataLen= AnscBdoGetBlockSize(pLastBdo) - AnscBdoGetOffset(pLastBdo);
     PUCHAR                          pNewData    = (PUCHAR)AnscBdoGetBuffer(pBdo) + AnscBdoGetOffset(pBdo);
     ULONG                           ulNewDataLen= AnscBdoGetBlockSize(pBdo) - AnscBdoGetOffset(pBdo);
-    PUCHAR                          pData       = NULL;
-    ULONG                           ulBoundary  = AnscSizeOfString(pMyObject->pBoundaryStr);
+    ULONG                           ulBoundary  = AnscSizeOfString((const char*)pMyObject->pBoundaryStr);
     ULONG                           ulLen       = 0;
     ULONG                           ulNewFeedLen= ulBoundary - 1;
 
@@ -235,7 +232,7 @@ HttpMboParsePartHeaders
     {
         PUCHAR                      pHdrBuf         = pMyObject->pMPHeadersBuf;
         ULONG                       ulHdrSize       = 0;
-        ULONG                       ulBoundarySize  = AnscSizeOfString(pMyObject->pBoundaryStr);
+        ULONG                       ulBoundarySize  = AnscSizeOfString((const char*)pMyObject->pBoundaryStr);
         PUCHAR                      pData, pCrlf;
         ULONG                       ulDataLen;
 
@@ -284,7 +281,7 @@ HttpMboParsePartHeaders
         pHdrBuf[ulHdrSize] = 0;
 
         /* make sure we got all headers */
-        pCrlf = _ansc_strstr(pData, "\r\n\r\n");
+        pCrlf = (PUCHAR)_ansc_strstr((const char*)pData, "\r\n\r\n");
         if ( !pCrlf )
         {
             status = ANSC_STATUS_MORE_DATA;
@@ -295,7 +292,7 @@ HttpMboParsePartHeaders
         pData = pHdrBuf;
         while ( pData && pData < pHdrBuf + ulHdrSize )
         {
-            pCrlf = _ansc_strstr(pData, "\r\n");
+            pCrlf = (PUCHAR)_ansc_strstr((const char*)pData, "\r\n");
 
             if ( pCrlf == pData )
             {
@@ -315,10 +312,10 @@ HttpMboParsePartHeaders
             {
                 PUCHAR                  pToken;
                 ULONG                   ulLen;
-                PUCHAR                  pContentDisp = "Content-Disposition";
-                PUCHAR                  pContentType = "Content-Type";
-                PUCHAR                  pFieldName   = "name=";
-                PUCHAR                  pFileName    = "filename=";
+                PCHAR                   pContentDisp = "Content-Disposition";
+                PCHAR                   pContentType = "Content-Type";
+                PCHAR                   pFieldName   = "name=";
+                PCHAR                   pFileName    = "filename=";
 
                 pToken = _ansc_memchr(pData, ':', pCrlf - pData);
 
@@ -333,26 +330,26 @@ HttpMboParsePartHeaders
                 /* check header name */
                 ulLen = pToken - pData;
 
-                if ( AnscSizeOfString(pContentType) == ulLen && AnscEqualString2(pData, pContentType, ulLen, FALSE) )
+                if ( AnscSizeOfString(pContentType) == ulLen && AnscEqualString2((char*)pData, pContentType, ulLen, FALSE) )
                 {
                     *pbFileData = TRUE;
                 }
-                else if ( AnscSizeOfString(pContentDisp) == ulLen && AnscEqualString2(pData, pContentDisp, ulLen, FALSE) )
+                else if ( AnscSizeOfString(pContentDisp) == ulLen && AnscEqualString2((char*)pData, pContentDisp, ulLen, FALSE) )
                 {
                     PUCHAR          pNext = NULL;
 
-                    pToken = (PUCHAR)_ansc_strstr(pToken + 1, pFieldName);
+                    pToken = (PUCHAR)_ansc_strstr((const char*)(pToken + 1), (const char*)pFieldName);
 
                     if ( pToken )
                     {
-                        pToken += AnscSizeOfString(pFieldName);
+                        pToken += AnscSizeOfString((const char*)pFieldName);
 
-                        pToken = _ansc_strchr(pToken, '"');
+                        pToken = (PUCHAR)_ansc_strchr((const char*)pToken, '"');
                         if ( pToken )
                         {
                             pToken ++;
 
-                            pNext = _ansc_strchr(pToken, '"');
+                            pNext = (PUCHAR)_ansc_strchr((const char*)pToken, '"');
 
                             if ( pNext )
                             {
@@ -367,18 +364,18 @@ HttpMboParsePartHeaders
                         }
                     }
 
-                    pToken = (PUCHAR)_ansc_strstr(pToken + 1, pFileName);
+                    pToken = (PUCHAR)_ansc_strstr((const char*)(pToken + 1), (const char*)pFileName);
 
                     if ( pToken )
                     {
-                        pToken += AnscSizeOfString(pFileName);
+                        pToken += AnscSizeOfString((const char*)pFileName);
 
-                        pToken = _ansc_strchr(pToken, '"');
+                        pToken = (PUCHAR)_ansc_strchr((const char*)pToken, '"');
                         if ( pToken )
                         {
                             pToken ++;
 
-                            pNext = _ansc_strchr(pToken, '"');
+                            pNext = (PUCHAR)_ansc_strchr((const char*)pToken, '"');
 
                             if ( pNext )
                             {
@@ -531,7 +528,7 @@ HttpMboSaveFileData
     PHTTP_BMO_REQ_OBJECT            pBmoRequest = (PHTTP_BMO_REQ_OBJECT     )pMyObject->hOwnerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pBmoRequest->hRcpIf;
 
-    PUCHAR                          pReqUri     = pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
+    PUCHAR                          pReqUri     = (PUCHAR)pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
 
     pMdhIf = (PHTTP_MDH_INTERFACE)pFumIf->GetMdhIf(pFumIf->hOwnerContext, pReqUri);
 
@@ -632,7 +629,6 @@ HttpMboProcessMPData
     PSINGLE_LINK_ENTRY              pSLinkEntry;
     ULONG                           ulPredictedBodySize = pBccIf->PredictBodySize(pBccIf->hOwnerContext);
     BOOL                            bFoundInLastBdo     = FALSE;
-    ULONG                           ulBoundarySize      = AnscSizeOfString(pMyObject->pBoundaryStr);
     PUCHAR                          pFieldName          = NULL;
     PUCHAR                          pFileName           = NULL;
 
@@ -677,7 +673,6 @@ HttpMboProcessMPData
 
                     if ( status == ANSC_STATUS_MORE_DATA )
                     {
-                        ULONG           ulBdoSize   = AnscBdoGetBlockSize(pBdo);
 
                         if ( !pLastBdo )
                         {

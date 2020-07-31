@@ -132,7 +132,6 @@ HttpSmpoUtilParseAbsoluteURI
     BOOL                            bHttp   = FALSE;
     USHORT                          usPort  = 0;
     PUCHAR                          pHost;
-    PUCHAR                          pLast   = pBuf + ulSize - 1;
 
     pNext   = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_COLON, ulSize);
 
@@ -146,14 +145,14 @@ HttpSmpoUtilParseAbsoluteURI
     ulLen   = pNext - pBuf;
 
     if ( ulLen == HTTP_SMPO_PROTOCOL_HTTPS_LENGTH &&
-        AnscEqualString2(pScheme, HTTP_SMPO_PROTOCOL_HTTPS, HTTP_SMPO_PROTOCOL_HTTPS_LENGTH, FALSE) )
+        AnscEqualString2((char *)pScheme, HTTP_SMPO_PROTOCOL_HTTPS, HTTP_SMPO_PROTOCOL_HTTPS_LENGTH, FALSE) )
     {
         pUri->Flag  |= HTTP_URI_FLAG_HTTPS;
         bHttp       = TRUE;
         usPort      = HTTPS_PORT;
     }
     else 
-        if ( ulLen == 4 && AnscEqualString2(pScheme, "http", 4, FALSE) )
+        if ( ulLen == 4 && AnscEqualString2((char *)pScheme, "http", 4, FALSE) )
         {
             bHttp   = TRUE;
             usPort  = HTTP_PORT;
@@ -227,7 +226,7 @@ HttpSmpoUtilParseAbsoluteURI
 
                 if (pPort)
                 {
-                    pUri->HostPort = _ansc_atoi(pPort + 1);
+                    pUri->HostPort = _ansc_atoi((const char *)pPort + 1);
                 }
                 else
                 {
@@ -512,10 +511,10 @@ HttpSmpoUtilParseRelPath
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     /* rel_path = [path] [";" params] ["?" query] */
 
     PHTTP_REQUEST_URI               pUri        = (PHTTP_REQUEST_URI)hRequestUri;
-    PUCHAR                          pToken      = pBuf;
     PUCHAR                          pLast       = pBuf + ulSize - 1;
     ULONG                           ulLen;
     PUCHAR                          pNext;

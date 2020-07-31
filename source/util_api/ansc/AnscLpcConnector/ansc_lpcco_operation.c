@@ -111,7 +111,6 @@ AnscLpccoAcqAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     AnscAcquireLock(&pMyObject->AccessLock);
@@ -150,7 +149,6 @@ AnscLpccoRelAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     AnscReleaseLock(&pMyObject->AccessLock);
@@ -191,7 +189,6 @@ AnscLpccoEngage
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject     = (PANSC_LPC_CONNECTOR_OBJECT   )hThisObject;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pConnTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hConnTimerObj;
 
     if ( pMyObject->bActive )
     {
@@ -307,9 +304,7 @@ AnscLpccoEnroll
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -345,9 +340,7 @@ AnscLpccoUnbind
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -383,9 +376,7 @@ AnscLpccoConnectToManager
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -420,7 +411,6 @@ AnscLpccoConnTimerInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf   = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
@@ -475,7 +465,6 @@ AnscLpccoConnTimerInvoke
 
             if ( TRUE )
             {
-                returnStatus =
                     pAnscCpcIf->NotifyEvent
                         (
                             pAnscCpcIf->hOwnerContext,
@@ -493,7 +482,7 @@ AnscLpccoConnTimerInvoke
     if ( (pMyObject->LpcOpmode  == ANSC_LPC_OPMODE_CLIENT) &&
          (pMyObject->bConnected == FALSE                 ) )
     {
-        returnStatus = pMyObject->ConnectToManager((ANSC_HANDLE)pMyObject);
+        pMyObject->ConnectToManager((ANSC_HANDLE)pMyObject);
     }
 
     return  ANSC_STATUS_SUCCESS;

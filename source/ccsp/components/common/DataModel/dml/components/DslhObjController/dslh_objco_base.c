@@ -120,7 +120,7 @@ DslhObjcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -186,7 +186,6 @@ DslhObjcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -227,7 +226,6 @@ DslhObjcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -269,7 +267,6 @@ DslhObjcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
 
     /*

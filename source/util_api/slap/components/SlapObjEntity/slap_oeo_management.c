@@ -125,7 +125,6 @@ SlapOeoGetObjectProperty
         char*                       property_name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject       = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OBJECT_PROPERTY           pObjectProperty = (PSLAP_OBJECT_PROPERTY  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
@@ -211,10 +210,8 @@ SlapOeoAddObjectProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject       = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OBJECT_PROPERTY           pObjectProperty = (PSLAP_OBJECT_PROPERTY  )hProperty;
-    PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
     ULONG                           ulHashIndex     = 0;
 
     if ( (pMyObject->OpoTableSize == 0   ) ||
@@ -279,7 +276,6 @@ SlapOeoDelObjectProperty
         char*                       property_name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject       = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OBJECT_PROPERTY           pObjectProperty = (PSLAP_OBJECT_PROPERTY  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
@@ -361,7 +357,6 @@ SlapOeoDelAllObjectProperties
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject       = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OBJECT_PROPERTY           pObjectProperty = (PSLAP_OBJECT_PROPERTY  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
@@ -430,7 +425,6 @@ SlapOeoGetMethodDescriptor1
         char*                       method_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY     )NULL;
@@ -521,7 +515,6 @@ SlapOeoGetMethodDescriptor2
         SLAP_PARAMETER_LIST*        param_list_input
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY     )NULL;
@@ -622,10 +615,8 @@ SlapOeoAddMethodDescriptor
         ANSC_HANDLE                 hDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)hDescriptor;
-    PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY     )NULL;
     ULONG                           ulHashIndex       = 0;
 
     if ( (pMyObject->MdoTableSize == 0   ) ||
@@ -690,7 +681,6 @@ SlapOeoDelMethodDescriptor
         char*                       method_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY     )NULL;
@@ -772,7 +762,6 @@ SlapOeoDelAllMethodDescriptors
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY     )NULL;
@@ -847,11 +836,8 @@ SlapOeoGetObjRecord
         ULONG                       instance_id
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT   )hThisObject;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor    = (PSLAP_OBJECT_DESCRIPTOR   )pMyObject->hObjDescriptor;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)hObjContainer;
-    PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = NULL;
     ULONG                           ulHashIndex       = AnscHashUlong((ULONG)hObjContainer, SLAP_OEO_ORO_TABLE_SIZE);
@@ -927,14 +913,12 @@ SlapOeoNewObjRecord
         ANSC_HANDLE                 hInsContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT   )hThisObject;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor    = (PSLAP_OBJECT_DESCRIPTOR   )pMyObject->hObjDescriptor;
     PFN_ANSCLCO_CREATE              pfnSlapScoCreate  = (PFN_ANSCLCO_CREATE        )NULL;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)hObjContainer;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry       = NULL;
     ULONG                           ulHashIndex       = AnscHashUlong((ULONG)hObjContainer, SLAP_OEO_ORO_TABLE_SIZE);
 
     if ( !pObjDescriptor )
@@ -1111,7 +1095,6 @@ SlapOeoDelObjRecord
         BOOL                        bForceful
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT   )hThisObject;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor    = (PSLAP_OBJECT_DESCRIPTOR   )pMyObject->hObjDescriptor;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)hObjContainer;
@@ -1225,9 +1208,7 @@ SlapOeoDelAllObjRecords
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject         = (PSLAP_OBJ_ENTITY_OBJECT   )hThisObject;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor    = (PSLAP_OBJECT_DESCRIPTOR   )pMyObject->hObjDescriptor;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT   )NULL;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)NULL;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)NULL;
@@ -1298,9 +1279,7 @@ SlapOeoAcqPooledObjRecord
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject      = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR)pMyObject->hObjDescriptor;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
 
@@ -1356,12 +1335,9 @@ SlapOeoRelPooledObjRecord
         ANSC_HANDLE                 hObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject      = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR)pMyObject->hObjDescriptor;
     PSLAP_BSS_INTERFACE             pSlapBssIf     = (PSLAP_BSS_INTERFACE    )pMyObject->hSlapBssIf;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord = (PSLAP_OBJ_RECORD_OBJECT)hObjRecord;
-    PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
 
     if ( AnscSListQueryDepth(&pMyObject->PooledOroSList) >= pSlapBssIf->GetDefPoolSize(pSlapBssIf->hOwnerContext) )
     {
@@ -1408,9 +1384,7 @@ SlapOeoDelAllPooledObjRecords
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject      = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR)pMyObject->hObjDescriptor;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
 

@@ -113,7 +113,6 @@ HttpMboGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -155,7 +154,6 @@ HttpMboSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -194,7 +192,6 @@ HttpMboGetBccIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     return  pMyObject->hBccIf;
@@ -236,7 +233,6 @@ HttpMboSetBccIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     pMyObject->hBccIf = hInterface;
@@ -280,7 +276,6 @@ HttpMboSetFumIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     pMyObject->hFumIf = hInterface;
@@ -319,7 +314,6 @@ HttpMboGetState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     return  pMyObject->State;
@@ -361,7 +355,6 @@ HttpMboSetState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     pMyObject->State = ulState;
@@ -400,7 +393,6 @@ HttpMboGetMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     return  pMyObject->Mode;
@@ -442,7 +434,6 @@ HttpMboSetMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     pMyObject->Mode = ulMode;
@@ -486,7 +477,6 @@ HttpMboReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
 
     if ( pMyObject->Mode == HTTP_MBO_MODE_STORE_EXTERNAL )
@@ -496,13 +486,13 @@ HttpMboReset
 
         if ( pRcpIf )
         {
-            PUCHAR                  pReqUri      = pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
+            PUCHAR                  pReqUri      = (PUCHAR)pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pBmoRequest);
             PHTTP_FUM_INTERFACE     pFumIf       = (PHTTP_FUM_INTERFACE )pMyObject->hFumIf;
             PHTTP_MDH_INTERFACE     pMdhIf       = (PHTTP_MDH_INTERFACE )pFumIf->GetMdhIf(pFumIf->hOwnerContext, pReqUri);
 
             if ( pMdhIf )
             {
-                returnStatus = pMdhIf->Finish((ANSC_HANDLE)pMdhIf, pBmoRequest->GetWebSessionId((ANSC_HANDLE)pBmoRequest));
+                pMdhIf->Finish((ANSC_HANDLE)pMdhIf, pBmoRequest->GetWebSessionId((ANSC_HANDLE)pBmoRequest));
             }
         }
     }

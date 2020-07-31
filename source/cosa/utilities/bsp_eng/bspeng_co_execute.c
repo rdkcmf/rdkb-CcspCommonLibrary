@@ -156,10 +156,10 @@ BspTemplateObjDoExecute
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     PBSP_TEMPLATE_STACK_OBJECT      pStack    = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack(hRuntime);
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr;
     PBSP_TEMPLATE_VAR_OBJECT        aVar;
@@ -3176,11 +3176,10 @@ BspTemplateObjDoDim
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    PBSP_TEMPLATE_STACK_OBJECT      pStack    = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack(hRuntime);
     PBSP_TEMPLATE_VAR_OBJECT        pVal;
     PBSP_TEMPLATE_ARRAY_DATA        pArrayData;
     ULONG                           nItems = 0;
@@ -3188,15 +3187,12 @@ BspTemplateObjDoDim
     PBSP_TEMPLATE_BRANCH_OBJECT     pDim;
     UINT                            ulSize;
     ULONG                           ulVar;
-    ULONG                           ulTop;
     BOOL                            bTerminated = FALSE;
     ULONG                           nLength     = 0;
     ULONG                           Dims[BSP_TEMPLATE_ARRAY_DIMENSION_LIMIT];
     ULONG                           numDims     = 0;
 
     ulVar = iBr->left.Value.n;
-    ulTop = pStack->GetTop((ANSC_HANDLE)pStack);
-
     pArrayData      = &(iBr->right.Value.a);
 
     for (i = 0; i < pArrayData->Count; i ++)
@@ -3402,6 +3398,10 @@ BspTemplateObjDoEnv
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBranch);
+    UNREFERENCED_PARAMETER(hRuntime);
+    UNREFERENCED_PARAMETER(hVar);
 #ifdef   _BSP_RICH_FEATURE_SET
 
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
@@ -3546,18 +3546,14 @@ BspTemplateObjDoObj
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject       = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_LIST_OBJECT       pList           = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
-    PBSPENG_SOA_INTERFACE           pBspSoaIf       = pList->GetBspSoaIf((ANSC_HANDLE)pList);
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr             = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt             = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_VAR_OBJECT        aResult         = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
 	const char                      *aFunc          = NULL;
-    PBSP_TEMPLATE_VAR_OBJECT        *pVars          = NULL;
     BOOL                            bExecContext    = FALSE;
     BOOL                            bLeftOperand    = iBr->bObjSetProperty;
     ANSC_HANDLE                     hSlapVar        = (ANSC_HANDLE)NULL;
     PBSP_TEMPLATE_NAME_PARAM_LIST   pParamList      = NULL;
-    PBSP_TEMPLATE_NAME_PARAM        pParams         = NULL;
     BOOL                            bTerminated     = FALSE;
     PSLAP_VARIABLE                  pReturnVal      = NULL;
     ANSC_HANDLE                     hBeepObj        = (ANSC_HANDLE)NULL;
@@ -3637,6 +3633,7 @@ BspTemplateObjDoObj
          * content type and rendering attribute
          */
         hSlapVar    = pVal ? pVal->Value.obj : (ANSC_HANDLE)NULL;
+	AnscTrace("hSlapVar = %s!\n", (char *)hSlapVar);
         bSimpleVar  = TRUE;
     }
 
@@ -3723,18 +3720,18 @@ BspTemplateObjDoObj
 
                 aBr = aBr->left.Value.b;
 
-                ulNewStrSize    = AnscSizeOfString(pObjName) + 1 + AnscSizeOfString(aFunc) + 1;
+                ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
                 pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
 
                 if (pNewStr)
                 {
-                    AnscCopyString(pNewStr, pObjName);
+                    AnscCopyString(pNewStr, (char*)pObjName);
                     AnscFreeMemory(pObjName);
-                    pObjName        = pNewStr;
+                    pObjName        = (PUCHAR)pNewStr;
 
-                    _ansc_strcat(pObjName, ".");
-                    _ansc_strcat(pObjName, aFunc);
+                    _ansc_strcat((char *)pObjName, ".");
+                    _ansc_strcat((char *)pObjName, aFunc);
                 }
 
                 if (pParamList)
@@ -3753,7 +3750,7 @@ BspTemplateObjDoObj
                         hRuntime,
                         (ANSC_HANDLE)NULL,
                         FALSE,
-                        pObjName,
+                        (const char *)pObjName,
                         &bSimpleVar
                     );
 
@@ -3851,7 +3848,7 @@ ACCESS_NEXT:
                     hRuntime,
                     (ANSC_HANDLE)NULL,
                     FALSE,
-                    pObjName,
+                    (const char *)pObjName,
                     &bSimpleVar
                 );
 
@@ -3863,7 +3860,7 @@ ACCESS_NEXT:
                 pMyObject->FindSymbol
                     (
                         hThisObject,
-                        pObjName, 
+                        (const char *)pObjName, 
                         FALSE
                     );
 
@@ -4025,18 +4022,18 @@ ACCESS_LAST:
 
                 aBr = aBr->left.Value.b;
 
-                ulNewStrSize    = AnscSizeOfString(pObjName) + 1 + AnscSizeOfString(aFunc) + 1;
+                ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
                 pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
 
                 if (pNewStr)
                 {
-                    AnscCopyString(pNewStr, pObjName);
+                    AnscCopyString(pNewStr, (char*)pObjName);
                     AnscFreeMemory(pObjName);
-                    pObjName        = pNewStr;
+                    pObjName        = (PUCHAR)pNewStr;
 
-                    _ansc_strcat(pObjName, ".");
-                    _ansc_strcat(pObjName, aFunc);
+                    _ansc_strcat((char *)pObjName, ".");
+                    _ansc_strcat((char *)pObjName, aFunc);
 
                     hBeepObj    = 
                         pMyObject->GetBeepObject
@@ -4045,7 +4042,7 @@ ACCESS_LAST:
                                 hRuntime,
                                 (ANSC_HANDLE)NULL,
                                 FALSE,
-                                pObjName,
+                                (const char *)pObjName,
                                 &bSimpleVar
                             );
 
@@ -4159,8 +4156,6 @@ BspTemplateObjDoObjProperty
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt             = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_VAR_OBJECT        aResult         = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
 	const char                      *pObjName       = NULL;
-    PBSP_TEMPLATE_VAR_OBJECT        *pVars          = NULL;
-    BOOL                            bExecContext    = FALSE;
     BOOL                            bLeftOperand    = iBr->bObjSetProperty;
     PBSP_TEMPLATE_NAME_PARAM_LIST   pParamList      = NULL;
     char                            *pMethodName    = NULL;
@@ -4317,7 +4312,7 @@ BspTemplateObjDoObjProperty
                         case    SLAP_VAR_SYNTAX_int:
                         case    SLAP_VAR_SYNTAX_uint32:
 
-                                _ansc_sprintf(buf, "0x%.8x, signed=%s", pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                _ansc_sprintf(buf, "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
                                 AnscTrace("        <--- Return numberic value: %s.\n", buf);
 
                                 break;
@@ -4335,9 +4330,9 @@ BspTemplateObjDoObjProperty
                                 }
                                 else
                                 {
-                                    ULONG   i = 0;
+                                    /*ULONG   i = 0;
 
-                                    /*
+                                    
                                     AnscTrace("        <--- Return string value: <");
                                     for ( i = 0; i < AnscSizeOfString(pRetVal->Variant.varString); i ++)
                                     {
@@ -4547,6 +4542,10 @@ BspTemplateObjDoSetoutput
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBranch);
+    UNREFERENCED_PARAMETER(hRuntime);
+    UNREFERENCED_PARAMETER(hVar);
 #ifdef   _BSP_RICH_FEATURE_SET
 
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
@@ -4654,17 +4653,15 @@ BspTemplateObjDoControl
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     PBSP_TEMPLATE_VAR_OBJECT        pVal;
     BOOL                            bTerminated = FALSE;
 
     if (iBr->op == BspOp_Return)
     {
-        PBSP_TEMPLATE_BRANCH_OBJECT pRight;
-        BOOL                        bArrayItem;
 
         pVal = pMyObject->EvalExpression(hThisObject, &iBr->right, hRuntime, &bTerminated);
 
@@ -4740,10 +4737,10 @@ BspTemplateObjDoWhile
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     PBSP_TEMPLATE_VAR_OBJECT        pVal;
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr, pIter;
     long                            lValue;
@@ -4892,10 +4889,10 @@ BspTemplateObjDoSwitch
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     PBSP_TEMPLATE_VAR_OBJECT        pVal, pExp;
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr, pCase;
     BOOL                            bTerminated = FALSE;
@@ -4981,10 +4978,10 @@ BspTemplateObjDoElse
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     PBSP_TEMPLATE_VAR_OBJECT        pVal;
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr, pBr;
     LONG                            lValue;
@@ -5135,10 +5132,10 @@ BspTemplateObjDoTextblock
         ANSC_HANDLE                 hVar
     )
 {
+    UNREFERENCED_PARAMETER(hRuntime);
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
 
     pMyObject->OutputBytes((ANSC_HANDLE)pMyObject, iBr->right.Value.s, iBr->left.Value.n);
 }
@@ -5190,16 +5187,14 @@ BspTemplateObjDoInclude
         BOOL                        *pbTerminated
     )
 {
+    UNREFERENCED_PARAMETER(hVar);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PBSP_TEMPLATE_VAR_OBJECT        aResult   = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pBr;
     PBSP_TEMPLATE_VAR_OBJECT        pValL;
     char                            *pName;
     BOOL                            bTerminated = FALSE;
 
-    pBr     = (PBSP_TEMPLATE_BRANCH_OBJECT)iBr->right.Value.b;
     pValL   = pMyObject->EvalExpression(hThisObject, &iBr->right, hRuntime, &bTerminated);
 
     if (pValL->Type == BspVar_String)
@@ -5208,7 +5203,7 @@ BspTemplateObjDoInclude
 
         if (pName)
         {
-            pMyObject->IncludeTemplate((ANSC_HANDLE)pMyObject, hRuntime, pName, &bTerminated);
+            pMyObject->IncludeTemplate((ANSC_HANDLE)pMyObject, hRuntime, (PUCHAR)pName, &bTerminated);
 
 #ifdef   _DEBUG
             if ( BspEngIsCallFlowTraced() )
@@ -5296,7 +5291,6 @@ BspTemplateEngGetBeepObject
      */
 
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_LIST_OBJECT       pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
     ANSC_HANDLE                     hObj        = (ANSC_HANDLE)NULL;
     PBSPENG_SOA_INTERFACE           pBspSoaIf   = pList->GetBspSoaIf((ANSC_HANDLE)pList);
@@ -5653,7 +5647,7 @@ BspTemplateEngDoObjectAccess
                     hRuntime,
                     &SlapParamList,
                     !bSetProp,
-                    pMethodName,
+                    (PUCHAR)pMethodName,
                     hValueSet
                 );
 
@@ -5729,7 +5723,7 @@ BspTemplateEngDoObjectAccess
                         case    SLAP_VAR_SYNTAX_int:
                         case    SLAP_VAR_SYNTAX_uint32:
 
-                                _ansc_sprintf(buf, "0x%.8x, signed=%s", pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                _ansc_sprintf(buf, "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
                                 AnscTrace("        <--- Return numeric value: %s.\n", buf);
 
                                 break;
@@ -5747,9 +5741,9 @@ BspTemplateEngDoObjectAccess
                                 }
                                 else
                                 {
-                                    ULONG   i = 0;
+                                    /*ULONG   i = 0;
 
-                                    /*
+                                    
                                     AnscTrace("        <--- Return string value: <");
                                     for ( i = 0; i < AnscSizeOfString(pRetVal->Variant.varString); i ++)
                                     {
@@ -6040,9 +6034,9 @@ BspTemplateEngOutputNumber
     char                            buf[32];
 
     if (bSigned)
-        _ansc_sprintf(buf, "%d", (LONG)ulVal);
+        _ansc_sprintf(buf, "%d", (int)ulVal);
     else
-        _ansc_sprintf(buf, "%u", ulVal);
+        _ansc_sprintf(buf, "%u", (UINT)ulVal);
 
     pMyObject->OutputString(hThisObject, (const char *)buf);
 }
@@ -6084,8 +6078,6 @@ BspTemplateEngOutputVar
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_LIST_OBJECT       pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
-    PBSPENG_SOA_INTERFACE           pBspSoaIf   = pList->GetBspSoaIf((ANSC_HANDLE)pList);
     PBSP_TEMPLATE_VAR_OBJECT        pVar        = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
 
     if (!pVar)
@@ -6128,6 +6120,8 @@ BspTemplateEngOutputVar
                 }
             }
 
+            break;
+	default:
             break;
     }
 }
@@ -6192,7 +6186,7 @@ BspTemplateEngGetSlapObjectString
 
             if (pString)
             {
-                _ansc_sprintf(pString, "%.08X", pSlapVar->Variant.varHandle);
+                _ansc_sprintf(pString, "%.08X", (UINT)pSlapVar->Variant.varHandle);
             }
 
             break;
@@ -6355,7 +6349,7 @@ BspTemplateEngGetSlapObjectString
                             (
                                 pString + AnscSizeOfString(pString),
                                 (i == 0)? "%u" : ".%u",
-                                pArray->Array.arrayUint32[i]
+                                (UINT)pArray->Array.arrayUint32[i]
                             );
                     }
                 }
@@ -6386,7 +6380,7 @@ BspTemplateEngGetSlapObjectString
                             (
                                 pString + AnscSizeOfString(pString),
                                 (i == 0)? "%.08X" : ".%.08X",
-                                pArray->Array.arrayHandle[i]
+                                (UINT)pArray->Array.arrayHandle[i]
                             );
                     }
                 }
@@ -6483,7 +6477,7 @@ BspEngGetBeepObjectHandle
 
     if (NULL == hBeepObj)
     {
-        char                        *pName          = AnscDupString(pObjName);
+        char                        *pName          = (char *)AnscDupString((PUCHAR)pObjName);
         char                        *pNameOrg       = pName;
         char                        *pNext          = NULL;
         SLAP_PARAMETER_LIST         SlapParamList;
@@ -6493,7 +6487,7 @@ BspEngGetBeepObjectHandle
         ULONG                       ulBspSoaStatus;
         char                        *pNames[BSPOBJ_NAME_MAX_LEVEL];
         int                         i, j, nNumNames;
-        char                        *pCurName       = AnscDupString(pObjName);
+        char                        *pCurName       = (char *)AnscDupString((PUCHAR)pObjName);
         char                        *pCurNameEnd    = NULL;
 
         SlapInitParamList((&SlapParamList));
@@ -6551,7 +6545,7 @@ BspEngGetBeepObjectHandle
                         hRuntime,
                         &SlapParamList,
                         TRUE,
-                        pNames[j],
+                        (PUCHAR)pNames[j],
                         NULL
                     );
 
@@ -6705,10 +6699,8 @@ BspTemplateEngAccessVarContentType
     PSLAP_VARIABLE                  pParam;
     PSLAP_VARIABLE                  pRetVal     = NULL;
     ULONG                           ulBspSoaStatus;
-    char                            *pMethod    = NULL;
     BOOL                            bSimpleVar  = TRUE;
     ANSC_HANDLE                     hBeepObj    = (ANSC_HANDLE)NULL;
-    ANSC_STATUS                     status;
 
     if (!pVar)
     {
@@ -6767,7 +6759,6 @@ BspTemplateEngAccessVarContentType
                         pParam->Variant.varUint32   = (ULONG)pVar->Value.num;
                     }
 
-                    status  = 
                         pBspSoaIf->InvokeObject
                             (
                                 pBspSoaIf->hOwnerContext,
@@ -6778,7 +6769,6 @@ BspTemplateEngAccessVarContentType
                                 &pRetVal,
                                 &ulBspSoaStatus
                             );
-
                     SlapCleanParamList((&SlapParamList));
                     SlapInitParamList((&SlapParamList));
 
@@ -6813,7 +6803,6 @@ BspTemplateEngAccessVarContentType
             pParam  = &SlapParamList.ParamArray[1];
             SlapCloneVariable(pParam, ((PSLAP_VARIABLE)pVar->Value.obj));
 
-            status  = 
                 pBspSoaIf->InvokeObject
                     (
                         pBspSoaIf->hOwnerContext,
@@ -6824,7 +6813,6 @@ BspTemplateEngAccessVarContentType
                         &pRetVal,
                         &ulBspSoaStatus
                     );
-
             SlapCleanParamList((&SlapParamList));
             SlapInitParamList((&SlapParamList));
 

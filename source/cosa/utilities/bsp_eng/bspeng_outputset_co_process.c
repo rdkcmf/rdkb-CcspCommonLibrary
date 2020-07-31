@@ -126,6 +126,11 @@ BspTemplateOutputSet
         ULONG                       ulArgs
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(hWriter);
+    UNREFERENCED_PARAMETER(hArgs);
+    UNREFERENCED_PARAMETER(ulArgs);
     /*
      * This virtual function shouldn't be called.
      */

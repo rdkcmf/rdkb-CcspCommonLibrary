@@ -117,8 +117,5 @@ HttpCreateWebsSession
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBS_SESSION_OBJECT       pHttpWebsSession = NULL;
-
     return  HttpWssoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

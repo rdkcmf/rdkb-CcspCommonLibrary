@@ -206,6 +206,8 @@ DslhObjcoCheckParamExistence
         PCHAR                       pParamName
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pParamName);
     return TRUE;
 }
 
@@ -247,6 +249,8 @@ DslhObjcoCheckParamWritability
         PCHAR                       pParamName
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pParamName);
     return DSLH_OBJCONTROLLER_PARAM_WRITE_NOTCHANGE;
 }
 
@@ -290,8 +294,11 @@ DslhObjcoValidateHierarchyInterface
         ULONG                       uType
     )
 {
-    PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject			= (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
-	PDSLH_CPE_CONTROLLER_OBJECT		pDslhCpeController	= (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
+    UNREFERENCED_PARAMETER(pHierarchName);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(uType);
+    /*PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject			= (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;*/
+	/*PDSLH_CPE_CONTROLLER_OBJECT		pDslhCpeController	= (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;*/
 
     return TRUE/*pDslhCpeController->ValidateHierarchyInterface(pDslhCpeController, pHierarchName, uType)*/;
 }
@@ -326,7 +333,6 @@ DslhObjcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hParentInsContext = (ANSC_HANDLE)NULL;

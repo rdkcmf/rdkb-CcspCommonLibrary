@@ -116,8 +116,6 @@ SysCreateRroBstr
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_BSTR_OBJECT            pSysRroBstr  = NULL;
 
     return  SysRroBstrCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -117,8 +117,5 @@ HttpCreateHelperContainer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHelperContainer = NULL;
-
     return  HttpHcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -109,7 +109,6 @@ AnscBktoFinish
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
 
     if ( pMyObject->bClosed )
@@ -164,9 +163,7 @@ AnscBktoOpen
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
     int                             s_result     = 0;
-    int                             s_error      = 0;
     int                             addrlen      = 0;
     /*RDKB-6144, CID-24563, 24511, 24697, 24716; init before use*/
     ansc_socket_addr_in             host_addr1 = {0};
@@ -274,13 +271,13 @@ AnscBktoOpen
                     (
                         pMyObject->Socket,
                         (xskt_socket_addr*)&host_addr2,
-                        &addrlen
+                        (unsigned int*)&addrlen
                     ) :
                 _ansc_getsocketname
                     (
                         pMyObject->Socket,
                         (ansc_socket_addr*)&host_addr1,
-                        &addrlen
+                        (unsigned int*)&addrlen
                     );
 
             pMyObject->HostPort = (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)? _xskt_ntohs(host_addr2.sin_port) : _ansc_ntohs(host_addr1.sin_port);
@@ -360,7 +357,6 @@ AnscBktoClose
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SOCKET_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pMyObject->hBrokerEngine;
     PANSC_BSTO_WORKER_OBJECT        pWorker      = (PANSC_BSTO_WORKER_OBJECT      )pServer->hWorker;
 
     if ( ((pMyObject->Socket != (ANSC_SOCKET)XSKT_SOCKET_INVALID_SOCKET) &&  (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)) ||

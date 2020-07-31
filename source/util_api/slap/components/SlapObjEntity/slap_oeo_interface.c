@@ -117,8 +117,6 @@ SlapCreateObjEntity
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity = NULL;
 
     return  SlapOeoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

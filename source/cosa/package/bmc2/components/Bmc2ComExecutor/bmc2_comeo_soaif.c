@@ -101,7 +101,6 @@ Bmc2ComeoSoaGetSlapObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
 
     if ( !pBmc2PecIf )
@@ -125,7 +124,6 @@ Bmc2ComeoSoaGetCookedPage
         char*                       page_path
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
 
     if ( !pBmc2PecIf )
@@ -149,7 +147,6 @@ Bmc2ComeoSoaRetCookedPage
         ANSC_HANDLE                 hCookedPage
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
 
     if ( !pBmc2PecIf )
@@ -175,8 +172,8 @@ Bmc2ComeoSoaGetCookedPageData
         PULONG                      pulStreamSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
     PBREE_COOKED_BSP_PAGE           pCookedPage     = (PBREE_COOKED_BSP_PAGE)hCookedPage;
     PUCHAR                          pData           = NULL;
     ULONG                           ulSize          = 0;
@@ -273,7 +270,7 @@ Bmc2ComeoSoaIsBuiltInObject
         char*                       obj_name
     )
 {
-    PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i;
     ULONG                           ulLen;
     ULONG                           ulObjNameLen    = obj_name ? AnscSizeOfString(obj_name) : 0;
@@ -282,14 +279,14 @@ Bmc2ComeoSoaIsBuiltInObject
     for (i = 0; i < sizeof(s_Bmc2BuiltinObjs)/sizeof(s_Bmc2BuiltinObjs[0]); i ++)
     {
         pObjName        = (PUCHAR)s_Bmc2BuiltinObjs[i];
-        ulLen           = AnscSizeOfString(pObjName);
+        ulLen           = AnscSizeOfString((const char *)pObjName);
 
         if ( ulObjNameLen != ulLen )
         {
             continue;
         }
 
-        if ( AnscEqualString2(obj_name, pObjName, ulLen, TRUE) )
+        if ( AnscEqualString2(obj_name, (char *)pObjName, ulLen, TRUE) )
         {
             return TRUE;
         }
@@ -371,9 +368,9 @@ Bmc2ComeoSoaWriteBString
         ULONG                       ulStrLen
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pBinaryStr);
+    UNREFERENCED_PARAMETER(ulStrLen);
     return ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -384,9 +381,7 @@ Bmc2ComeoSoaIsInterrupted
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PBMC2_PEC_INTERFACE             pBmc2PecIf      = (PBMC2_PEC_INTERFACE)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return FALSE;
 }
 

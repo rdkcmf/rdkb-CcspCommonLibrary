@@ -107,7 +107,6 @@ HttpFcoGetUriParams
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
     PHTTP_FORM_INPUT                pUriParams   = (PHTTP_FORM_INPUT         )pMyObject->hUriParams;
 
@@ -145,7 +144,6 @@ HttpFcoGetFormInput
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
     PHTTP_FORM_INPUT                pFormInput   = (PHTTP_FORM_INPUT         )pMyObject->hFormInput;
 
@@ -188,9 +186,7 @@ HttpFcoGetFormParam
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_FORM_INPUT                pFormInput   = (PHTTP_FORM_INPUT         )pMyObject->hFormInput;
     PHTTP_FORM_ELEMENT              pFormElement = NULL;
 
     pFormElement =
@@ -249,9 +245,7 @@ HttpFcoGetFormParam2
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_FORM_CONTENT_OBJECT       pMyObject    = (PHTTP_FORM_CONTENT_OBJECT)hThisObject;
-    PHTTP_FORM_INPUT                pFormInput   = (PHTTP_FORM_INPUT         )pMyObject->hFormInput;
     PHTTP_FORM_ELEMENT              pFormElement = NULL;
 
     pFormElement =

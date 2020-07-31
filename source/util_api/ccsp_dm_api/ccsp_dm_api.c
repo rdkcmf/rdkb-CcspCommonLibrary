@@ -59,7 +59,7 @@
 #ifdef __CDM_LOCAL_ACCESS
 #include "messagebus_interface_helper.h"
 #endif
-
+#include "ansc_string_util.h"
 #include "ccsp_dm_api.h"
 
 #define CDM_DEF_CR              "com.cisco.spvtg.ccsp.CR"
@@ -154,14 +154,14 @@ static DmParamVal_t *CloneParamVal(const DmParamVal_t *orig)
         new->v_str[orig->len] = '\0';
         break;
     case DM_PT_DATETIME:
-        new->v_datetime = (void *)AnscDupString(orig->v_datetime);
+        new->v_datetime = (void *)AnscDupString((PUCHAR)orig->v_datetime);
         if (new->v_datetime == NULL) {
             AnscFreeMemory(new);
             return NULL;
         }
         break;
     case DM_PT_BASE64:
-        new->v_base64 = (void *)AnscDupString(orig->v_base64);
+        new->v_base64 = (void *)AnscDupString((PUCHAR)orig->v_base64);
         if (new->v_base64 == NULL) {
             AnscFreeMemory(new);
             return NULL;
@@ -258,7 +258,7 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
             return CCSP_ERR_INVALID_PARAMETER_TYPE;
         }
 
-        val->v_raw = (void *)AnscDupString(from->parameterValue);
+        val->v_raw = (void *)AnscDupString((PUCHAR)from->parameterValue);
         if (val->v_raw == NULL) {
             AnscFreeMemory(to->value);
             return CCSP_ERR_MEMORY_ALLOC_FAIL;
@@ -272,7 +272,7 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
     case ccsp_string:
         val->type = DM_PT_STR;
         /* baseif only support ASCII string */
-        val->v_str = (void *)AnscDupString(from->parameterValue);
+        val->v_str = (void *)AnscDupString((PUCHAR)from->parameterValue);
         if (val->v_str == NULL) {
             AnscFreeMemory(to->value);
             return CCSP_ERR_MEMORY_ALLOC_FAIL;
@@ -310,7 +310,7 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
         break;
     case ccsp_dateTime:
         val->type = DM_PT_DATETIME;
-        val->v_datetime = (void *)AnscDupString(from->parameterValue);
+        val->v_datetime = (void *)AnscDupString((PUCHAR)from->parameterValue);
         if (val->v_datetime == NULL) {
             AnscFreeMemory(to->value);
             return CCSP_ERR_MEMORY_ALLOC_FAIL;
@@ -319,7 +319,7 @@ static DmErr_t TransParamStru(const parameterValStruct_t *from, DmParam_t *to, i
         break;
     case ccsp_base64:
         val->type = DM_PT_BASE64;
-        val->v_base64 = (void *)AnscDupString(from->parameterValue);
+        val->v_base64 = (void *)AnscDupString((PUCHAR)from->parameterValue);
         if (val->v_base64 == NULL) {
             AnscFreeMemory(to->value);
             return CCSP_ERR_MEMORY_ALLOC_FAIL;
@@ -359,7 +359,7 @@ static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to, int r
     fVal = from->value;
 
     to->parameterName = to->parameterValue = NULL;
-    to->parameterName = (void *)AnscDupString(from->name);
+    to->parameterName = (void *)AnscDupString((PUCHAR)from->name);
     if (to->parameterName == NULL)
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
 
@@ -403,7 +403,7 @@ static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to, int r
             goto errout;
         }
 
-        to->parameterValue = (void *)AnscDupString(fVal->v_raw);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)fVal->v_raw);
         if (to->parameterValue == NULL)
             goto errout;
 
@@ -413,52 +413,52 @@ static DmErr_t TransParam(const DmParam_t *from, parameterValStruct_t *to, int r
     switch (fVal->type) {
     case DM_PT_STR: 
         to->type = ccsp_string;
-        to->parameterValue = (void *)AnscDupString(fVal->v_str);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)fVal->v_str);
         break;
     case DM_PT_INT: 
         to->type = ccsp_int;
         snprintf(buf, sizeof(buf), "%d", fVal->v_int);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_UINT: 
         to->type = ccsp_unsignedInt;
         snprintf(buf, sizeof(buf), "%u", fVal->v_uint);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_BOOL: 
         to->type = ccsp_boolean;
         if (fVal->v_bool)
-            to->parameterValue = (void *)AnscDupString("true");
+            to->parameterValue = (void *)AnscDupString((PUCHAR)"true");
         else
-            to->parameterValue = (void *)AnscDupString("false");
+            to->parameterValue = (void *)AnscDupString((PUCHAR)"false");
         break;
     case DM_PT_DATETIME:
         to->type = ccsp_dateTime;
-        to->parameterValue = (void *)AnscDupString(fVal->v_datetime);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)fVal->v_datetime);
         break;
     case DM_PT_BASE64:
         to->type = ccsp_base64;
-        to->parameterValue = (void *)AnscDupString(fVal->v_base64);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)fVal->v_base64);
         break;
     case DM_PT_LONG: 
         to->type = ccsp_long;
         snprintf(buf, sizeof(buf), "%ld", fVal->v_long);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_ULONG: 
         to->type = ccsp_unsignedLong;
         snprintf(buf, sizeof(buf), "%lu", fVal->v_ulong);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_FLOAT: 
         to->type = ccsp_float;
         snprintf(buf, sizeof(buf), "%f", fVal->v_float);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_DOUBLE:
         to->type = ccsp_double;
         snprintf(buf, sizeof(buf), "%f", fVal->v_double);
-        to->parameterValue = (void *)AnscDupString(buf);
+        to->parameterValue = (void *)AnscDupString((PUCHAR)buf);
         break;
     case DM_PT_BIN:
         err =  CCSP_ERR_NOT_SUPPORT;
@@ -565,7 +565,7 @@ static DmErr_t LoadCompPathList(const char *paths[], int cnt,
                         goto nomem;
                     comp->paths = ptr;
 
-                    comp->paths[comp->paramCnt] = (void *)AnscDupString(paths[i]);
+                    comp->paths[comp->paramCnt] = (void *)AnscDupString((PUCHAR)paths[i]);
                     if (comp->paths[comp->paramCnt] == NULL)
                         goto nomem;
                     comp->paramCnt++;
@@ -597,11 +597,11 @@ static DmErr_t LoadCompPathList(const char *paths[], int cnt,
                 else
                     comp->isLocal = 0;
 #endif
-                comp->compId = (void *)AnscDupString(compStru[j]->componentName);
-                comp->dbusPath = (void *)AnscDupString(compStru[j]->dbusPath);
+                comp->compId = (void *)AnscDupString((PUCHAR)compStru[j]->componentName);
+                comp->dbusPath = (void *)AnscDupString((PUCHAR)compStru[j]->dbusPath);
                 comp->paths = (void *)AnscAllocateMemory(sizeof(const char *) * 1);
                 if (comp->paths != NULL)
-                    comp->paths[0] = (void *)AnscDupString(paths[i]);
+                    comp->paths[0] = (void *)AnscDupString((PUCHAR)paths[i]);
 
                 if (comp->compId == NULL || comp->dbusPath == NULL
                         || comp->paths == NULL || comp->paths[0] == NULL)
@@ -703,8 +703,8 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
             else
                 comp->isLocal = 0;
 #endif
-            comp->compId = (void *)AnscDupString(compStru[0]->componentName);
-            comp->dbusPath = (void *)AnscDupString(compStru[0]->dbusPath);
+            comp->compId = (void *)AnscDupString((PUCHAR)compStru[0]->componentName);
+            comp->dbusPath = (void *)AnscDupString((PUCHAR)compStru[0]->dbusPath);
             if (comp->compId == NULL || comp->dbusPath == NULL)
                 goto nomem;
             comp->paramVals = (void *)AnscAllocateMemory(sizeof(parameterValStruct_t));
@@ -794,6 +794,7 @@ static unsigned CompIdGetWriteId(const char *compId)
      * we should change the BaseIf_Set API to use compId.
      * moreover, writeId is not passed to DML.
      */
+    UNREFERENCED_PARAMETER(compId);
     return 0;
 }
 
@@ -1574,11 +1575,17 @@ const char *Cdm_StrError(DmErr_t err)
 DmErr_t Cdm_GetParamAsStr(const char *param, char *val, size_t size)
 {
     // TODO:
+    UNREFERENCED_PARAMETER(param);
+    UNREFERENCED_PARAMETER(val);
+    UNREFERENCED_PARAMETER(size);
     return CCSP_ERR_NOT_SUPPORT;
 }
 
 DmErr_t Cdm_SetParamAsStr(const char *param, const char *val, int commit)
 {
     // TODO:
+    UNREFERENCED_PARAMETER(param);
+    UNREFERENCED_PARAMETER(val);
+    UNREFERENCED_PARAMETER(commit);
     return CCSP_ERR_NOT_SUPPORT;
 }

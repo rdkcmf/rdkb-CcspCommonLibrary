@@ -115,9 +115,7 @@ SlapAmoPoaAcqObjectAccess
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
     PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
@@ -151,8 +149,7 @@ SlapAmoPoaAcqObjectAccess
 
     if ( !pSlapSrvProxy )
     {
-        returnStatus =
-            pSlapGoaIf->RelObjectAccess
+        pSlapGoaIf->RelObjectAccess
                 (
                     pSlapGoaIf->hOwnerContext,
                     hSlapGoaObject
@@ -208,13 +205,7 @@ SlapAmoPoaRelObjectAccess
         ANSC_HANDLE                 hSlapObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
-    PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_SRV_PROXY_OBJECT          pSlapSrvProxy      = (PSLAP_SRV_PROXY_OBJECT       )hSlapObject;
 
     if ( !pSlapSrvProxy )
@@ -226,7 +217,7 @@ SlapAmoPoaRelObjectAccess
         pSlapSrvProxy->Remove((ANSC_HANDLE)pSlapSrvProxy);
     }
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -271,9 +262,7 @@ SlapAmoPoaCreateProxyObject
         ANSC_HANDLE                 hSlapGoaObj
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
     PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
@@ -339,11 +328,7 @@ SlapAmoPoaEnrollProxyObject
         ANSC_HANDLE                 hObjDescr
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
-    PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
 
@@ -386,11 +371,7 @@ SlapAmoPoaUnbindProxyObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
-    PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
 
@@ -433,11 +414,7 @@ SlapAmoPoaVerifyProxyObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE          )pMyObject->hSlapGoaIf;
-    PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE          )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
 

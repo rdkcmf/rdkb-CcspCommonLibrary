@@ -119,7 +119,7 @@ SlapOroCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapOroRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject         = (PSLAP_OBJ_RECORD_OBJECT   )hThisObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)pMyObject->hSlapSrvComponent;
 
@@ -233,7 +232,6 @@ SlapOroEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -275,7 +273,6 @@ SlapOroInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     /*

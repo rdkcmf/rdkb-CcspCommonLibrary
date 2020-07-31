@@ -117,8 +117,5 @@ HttpCreateSimpleProxy
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pHttpSimpleProxy = NULL;
-
     return  HttpSpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

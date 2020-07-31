@@ -125,7 +125,6 @@ DslhObjroPopulateObjRecords
     char*                           pChildFullName      = (char*                      )NULL;
     char*                           pChildLastName      = (char*                      )NULL;
     ULONG                           ulFullNameSize      = (ULONG                      )0;
-    ULONG                           ulFolderCount       = (ULONG                      )0;
     ULONG                           ulObjectCount       = (ULONG                      )0;
     ULONG                           ulObjInsNumber      = (ULONG                      )0;
     ULONG                           i                   = 0;
@@ -426,12 +425,7 @@ DslhObjroPopulateObjRecords
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
     ******************************************************************/
 
-EXIT4:
 
-    if ( pChildFullName )
-    {
-        AnscFreeMemory(pChildFullName);
-    }
 
 EXIT3:
 
@@ -487,12 +481,10 @@ DslhObjroPopulateVarRecords
     PDSLH_OBJ_RECORD_OBJECT         pMyObject            = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity           = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
-    PDSLH_OBJCO_TABLE_OBJECT        pObjcoTable          = (PDSLH_OBJCO_TABLE_OBJECT   )pObjController;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord      = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity      = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord      = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY         )NULL;
-    ULONG                           i                    = 0;
 
 
     /*
@@ -606,7 +598,6 @@ DslhObjroParamValueChanged
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject          = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord    = (PDSLH_VAR_RECORD_OBJECT    )NULL;
@@ -726,8 +717,6 @@ DslhObjroChildObjectCreated
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject           = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController      = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
-    PDSLH_OBJCO_TABLE_OBJECT        pObjcoTable         = (PDSLH_OBJCO_TABLE_OBJECT   )pObjController;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase    = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
@@ -887,14 +876,9 @@ DslhObjroChildObjectRemoved
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject           = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController      = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
-    PDSLH_OBJCO_TABLE_OBJECT        pObjcoTable         = (PDSLH_OBJCO_TABLE_OBJECT   )pObjController;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase    = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
-    PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pChildObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY         )NULL;
     BOOL                            bChildObjFound      = FALSE;
     char                            child_name[16];
@@ -1281,9 +1265,7 @@ DslhObjroDeleteObjRecordByName
         char*                       pObjName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;

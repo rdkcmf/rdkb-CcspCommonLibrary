@@ -193,6 +193,7 @@ CcspFreeNamespaceMgr
         ANSC_HANDLE                 hCcspNsMgr
     )
 {
+    UNREFERENCED_PARAMETER(pContainerName);
     PCCSP_NAMESPACE_MGR_OBJECT      pThisObject = (PCCSP_NAMESPACE_MGR_OBJECT)hCcspNsMgr;
 
     if( pThisObject != NULL)
@@ -291,6 +292,7 @@ CcspNsMgrDumpObject
         ANSC_HANDLE                 hCcspNsMgr
     )
 {
+    UNREFERENCED_PARAMETER(hCcspNsMgr);
     return TRUE;
 }
 
@@ -326,6 +328,7 @@ CcspNsMgrCloneString
         char*                       pString
   )
 {
+    UNREFERENCED_PARAMETER(pContainerName);
     char*                       pNewString  = NULL;
 
     if( pString == NULL)
@@ -512,6 +515,7 @@ CcspNsMgrAllocateMemory
         ULONG                       ulSize
   )
 {
+    UNREFERENCED_PARAMETER(pContainerName);
     return (PVOID)AnscAllocateMemory(ulSize);
 }
 
@@ -548,5 +552,6 @@ CcspNsMgrFreeMemory
         PVOID                       pMemory
   )
 {
+    UNREFERENCED_PARAMETER(pContainerName);
     AnscFreeMemory(pMemory);
 }

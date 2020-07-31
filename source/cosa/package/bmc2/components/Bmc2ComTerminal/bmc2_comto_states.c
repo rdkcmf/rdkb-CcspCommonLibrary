@@ -121,9 +121,7 @@ Bmc2ComtoGetBmc2IceIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBmc2IceIf;
 }
@@ -164,9 +162,7 @@ Bmc2ComtoSetBmc2IceIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     pMyObject->hBmc2IceIf = hInterface;
 
@@ -204,9 +200,7 @@ Bmc2ComtoGetBmc2EnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBmc2EnvController;
 }
@@ -247,9 +241,7 @@ Bmc2ComtoSetBmc2EnvController
         ANSC_HANDLE                 hEnvController
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     pMyObject->hBmc2EnvController = hEnvController;
 
@@ -287,7 +279,6 @@ Bmc2ComtoGetUserIdentifier
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -330,7 +321,6 @@ Bmc2ComtoSetUserIdentifier
         char*                       pUserIdentifier
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -380,9 +370,7 @@ Bmc2ComtoSetPseudoTermDevName
         char*                       pPseudoTermDevName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     if ( pMyObject->pPseudoTermDevName )
     {
@@ -425,7 +413,6 @@ Bmc2ComtoGetUserPermission
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -468,7 +455,6 @@ Bmc2ComtoSetUserPermission
         ULONG                       ulPermission
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -508,7 +494,6 @@ Bmc2ComtoGetMaxLineNumber
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -551,7 +536,6 @@ Bmc2ComtoSetMaxLineNumber
         ULONG                       ulLineNumber
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -591,7 +575,6 @@ Bmc2ComtoGetMaxColumnNumber
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -634,7 +617,6 @@ Bmc2ComtoSetMaxColumnNumber
         ULONG                       ulColumnNumber
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -674,7 +656,6 @@ Bmc2ComtoGetReadOnly
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -717,7 +698,6 @@ Bmc2ComtoSetReadOnly
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -762,7 +742,6 @@ Bmc2ComtoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -807,7 +786,6 @@ Bmc2ComtoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -847,7 +825,6 @@ Bmc2ComtoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
@@ -892,9 +869,7 @@ Bmc2ComtoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllComDomains((ANSC_HANDLE)pMyObject);
 

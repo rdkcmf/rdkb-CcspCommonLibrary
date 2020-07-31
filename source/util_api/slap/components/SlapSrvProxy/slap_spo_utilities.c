@@ -231,8 +231,7 @@ SlapSpoPoaToGoaVariable
         SLAP_VARIABLE*              slap_var
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_PROXY_OBJECT          pMyObject     = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_SRV_PROXY_OBJECT          pSlapSrvProxy = (PSLAP_SRV_PROXY_OBJECT)NULL;
     ULONG                           i             = 0;
 

@@ -115,10 +115,8 @@ HttpSsoGetWspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hWspIf;
 }
 
@@ -158,9 +156,7 @@ HttpSsoSetWspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WSP_INTERFACE             pWspIf       = (PHTTP_WSP_INTERFACE         )pMyObject->hWspIf;
 
     *pWspIf = *(PHTTP_WSP_INTERFACE)hInterface;
@@ -199,10 +195,8 @@ HttpSsoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hHfpIf;
 }
 
@@ -242,9 +236,7 @@ HttpSsoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
 
     *pHfpIf = *(PHTTP_HFP_INTERFACE)hInterface;
@@ -283,10 +275,8 @@ HttpSsoGetFumIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hFumIf;
 }
 
@@ -326,10 +316,7 @@ HttpSsoSetFumIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
     pMyObject->hFumIf   = hInterface;
 
     return  ANSC_STATUS_SUCCESS;
@@ -366,10 +353,8 @@ HttpSsoGetServerMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->ServerMode;
 }
 
@@ -409,10 +394,8 @@ HttpSsoSetServerMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    
     pMyObject->ServerMode = ulMode;
 
     return  ANSC_STATUS_SUCCESS;
@@ -454,7 +437,6 @@ HttpSsoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
     PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -499,7 +481,6 @@ HttpSsoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
     PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -539,7 +520,6 @@ HttpSsoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
     PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -584,9 +564,7 @@ HttpSsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
-    return  ANSC_STATUS_SUCCESS;
+   UNREFERENCED_PARAMETER(hThisObject);
+    
+   return  ANSC_STATUS_SUCCESS;
 }

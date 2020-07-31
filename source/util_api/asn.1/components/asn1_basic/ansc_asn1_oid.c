@@ -980,7 +980,7 @@ AnscAsn1OIDDecodingData
                         );
 
 #else
-                  pTmpBuffer = pMyObject->pAdvOID;
+                  pTmpBuffer = (UCHAR*)pMyObject->pAdvOID;
 
                   pMyObject->pAdvOID = 
                     AnscAllocateMemory
@@ -1376,7 +1376,6 @@ AnscAsn1OIDDumpObject
         BOOLEAN                     bShowValue
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_OIDEN                pMyObject       = (PANSC_ASN1_OIDEN)hThisObject;
     CHAR                            pAttrBuf[128]   = { 0 };
     CHAR                            pOIDValue[128]  = { 0 };
@@ -1492,7 +1491,7 @@ AnscAsn1OIDTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_OIDEN                pMyObject    = (PANSC_ASN1_OIDEN)hThisObject;
     CHAR                            pAttrBuf[512]= { 0 };
     ULONG                           attrLength   = 512;
@@ -1584,7 +1583,7 @@ AnscAsn1OIDReadyToEncode
         ANSC_HANDLE                 hThisObject
     )
 {
-    PANSC_ASN1_OIDEN               pMyObject    = (PANSC_ASN1_OIDEN)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return TRUE;
 }
@@ -1702,7 +1701,6 @@ AnscAsn1OIDGetOIDStringValue
         PCHAR                       pBuffer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_OIDEN                pMyObject    = (PANSC_ASN1_OIDEN)hThisObject;
 
     return ExportOIDValueToString
@@ -1752,8 +1750,7 @@ AnscAsn1OIDSetOIDValue
     )
 {
     PANSC_ASN1_OIDEN                pMyObject    = (PANSC_ASN1_OIDEN)hThisObject;
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-
+    
     if( pOIDArray == NULL || uSize == 0)
     {
         pMyObject->uLength          = 0;
@@ -1828,7 +1825,6 @@ AnscAsn1OIDSetStringOIDValue
     )
 {
     PANSC_ASN1_OIDEN                pMyObject    = (PANSC_ASN1_OIDEN)hThisObject;
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ULONG                           uSize        = MAXIMUM_OID_DEPTH;
     PULONG                          pOIDArray;
 
@@ -1973,9 +1969,8 @@ AnscAsn1OIDEqualToOIDString
     )
 {
     PANSC_ASN1_OIDEN                pMyObject         = (PANSC_ASN1_OIDEN)hThisObject;
-    UCHAR                           pValue[128]       = { 0 };
-    ULONG                           length            = 128;
-
+    CHAR                            pValue[128]       = { 0 };
+    
     if( hThisObject == NULL || pOIDString == NULL)
     {
         return FALSE;

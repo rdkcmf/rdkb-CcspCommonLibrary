@@ -112,7 +112,6 @@ DslhDmagntEngage
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject              = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtomFunctions         = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtomFunctions;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController     = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor         = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
     PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoRoot        = (PPOAM_IREP_FOLDER_OBJECT   )NULL;
     PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoProvision   = (PPOAM_IREP_FOLDER_OBJECT   )NULL;
     PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoCOSA        = (PPOAM_IREP_FOLDER_OBJECT   )pMyObject->hIrepFolderCOSA;

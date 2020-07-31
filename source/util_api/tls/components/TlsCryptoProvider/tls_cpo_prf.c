@@ -168,7 +168,6 @@ TlsCpoCompute_PRF30
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
-    PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
     PUCHAR                          pScratchPad1 = (PUCHAR                     )NULL;
     ULONG                           ulPadSize1   = (ULONG                      )0;
     PUCHAR                          pScratchPad2 = (PUCHAR                     )NULL;
@@ -382,7 +381,6 @@ TlsCpoCompute_PRF31
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
-    PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
     PUCHAR                          pScratchPad1 = (PUCHAR                     )NULL;
     ULONG                           ulPadSize1   = (ULONG                      )0;
     PUCHAR                          pScratchPad2 = (PUCHAR                     )NULL;

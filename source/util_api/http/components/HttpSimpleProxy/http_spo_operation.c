@@ -213,7 +213,6 @@ HttpSpoCancel
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY  )&pMyObject->Property;
     PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
 
     if ( !pMyObject->bActive )
@@ -265,10 +264,7 @@ HttpSpoWorkerInit
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -304,10 +300,7 @@ HttpSpoWorkerUnload
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

@@ -137,9 +137,10 @@ AnscLpccoCpcCallDispatch
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
     *pulErrorCode   = ANSC_LPC_ERROR_internalError;
@@ -184,9 +185,8 @@ AnscLpccoCpcFreeOutputBuffer
         void*                       pOutputBuffer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pOutputBuffer);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -232,8 +232,8 @@ AnscLpccoCpcNotifyEvent
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulEvent);
+    UNREFERENCED_PARAMETER(hReserved);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

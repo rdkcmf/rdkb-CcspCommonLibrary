@@ -117,8 +117,5 @@ HttpCreateAutho
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_OBJECT               pHttpAutho   = NULL;
-
     return  HttpAuthoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

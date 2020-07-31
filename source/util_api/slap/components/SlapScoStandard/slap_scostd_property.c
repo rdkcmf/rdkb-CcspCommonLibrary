@@ -111,7 +111,6 @@ SlapScoStdGetProperty
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject        = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY    )NULL;
@@ -156,8 +155,7 @@ SlapScoStdGetProperty
         SlapShiftLeftParamList(param_list, 1);
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->GetMethodName,
@@ -211,7 +209,6 @@ SlapScoStdSetProperty
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject        = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf       = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_OBJECT_PROPERTY           pObjectProperty  = (PSLAP_OBJECT_PROPERTY    )NULL;
@@ -256,8 +253,7 @@ SlapScoStdSetProperty
         SlapShiftLeftParamList(param_list, 1);
     }
 
-    returnStatus =
-        pMyObject->InvokeDispatch
+    pMyObject->InvokeDispatch
             (
                 (ANSC_HANDLE)pMyObject,
                 pObjectProperty->SetMethodName,

@@ -106,7 +106,6 @@ SlapBmc2AppoGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_APPLICATION_OBJECT   pMyObject          = (PSLAP_BMC2_APPLICATION_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT  )pMyObject->hInsContext;
 
@@ -144,7 +143,6 @@ SlapBmc2AppoGetOlmContainer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_APPLICATION_OBJECT   pMyObject          = (PSLAP_BMC2_APPLICATION_OBJECT)hThisObject;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT  )pMyObject->hInsContext;
 
@@ -182,7 +180,6 @@ SlapBmc2AppoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_APPLICATION_OBJECT   pMyObject    = (PSLAP_BMC2_APPLICATION_OBJECT)hThisObject;
 
     SlapScoGalReset((ANSC_HANDLE)pMyObject);

@@ -117,8 +117,8 @@ HttpSmpoTokenIs
     return (
                tokenName                                                  &&               
                httpToken                                                  &&               
-               AnscSizeOfString(tokenName) == AnscSizeOfString(httpToken) &&                                                             \
-               AnscEqualString(tokenName, httpToken, TRUE)    
+               AnscSizeOfString((char *)tokenName) == AnscSizeOfString((char *)httpToken) &&                                                             \
+               AnscEqualString((char *)tokenName, (char *)httpToken, TRUE)    
            );
 }
 
@@ -169,15 +169,8 @@ HttpSmpoMemFindChar
     )
 {
     int                             i;
-    UCHAR                           ch, chPattern;
+    UCHAR                           ch;
 
-    if (!bCaseSensitive)
-        chPattern   = aChar;
-    else
-    {
-        if (aChar >= 'a' && aChar <= 'z')
-            chPattern   = aChar - 'a' + 'A';
-    }
 
     for (i = 0; i < (int)ulBufLen; i ++)
     {
@@ -232,7 +225,7 @@ HttpSmpoHexString2Ulong
 
     if (pHexString)
     {
-        ulLen   = AnscSizeOfString(pHexString);
+        ulLen   = AnscSizeOfString((const char *)pHexString);
 
         for (i = 0; i < ulLen; i ++)
         {
@@ -391,9 +384,9 @@ HttpSmpoMultipartFindBoundary
             {
                 pStr    += HTTP_SMPO_MULTIPART_BOUNDARY_DELI_LENGTH;
 
-                if (AnscEqualString2(pStr, pBoundary, AnscSizeOfString(pBoundary), TRUE))
+                if (AnscEqualString2((char *)pStr, (char *)pBoundary, AnscSizeOfString((const char *)pBoundary), TRUE))
                 {
-                    PUCHAR              pPostfix    = pStr + AnscSizeOfString(pBoundary);
+                    PUCHAR              pPostfix    = pStr + AnscSizeOfString((const char *)pBoundary);
 
                     if (AnscEqualMemory(pPostfix, HTTP_SMPO_MULTIPART_BOUNDARY_DELI, HTTP_SMPO_MULTIPART_BOUNDARY_DELI_LENGTH))
                     {
@@ -459,8 +452,8 @@ HttpSmpoMultipartFieldName
         PULONG                      pulNameLen
     )
 {
+    UNREFERENCED_PARAMETER(ulHeaderLen);
     PUCHAR                          pStr        = NULL, pStrEnd = NULL;
-    PUCHAR                          pLast       = pHeaders + ulHeaderLen - 1;
     PUCHAR                          pLineEnd    = NULL;
 
     pStr    = (PUCHAR)_ansc_strstr((const char *)pHeaders, (const char *)HTTP_SMPO_CONTENT_DISPOSITION);
@@ -559,6 +552,7 @@ AnscAnalyzeMultipartContentType
         PULONG                      pulContentType
     )
 {
+    UNREFERENCED_PARAMETER(hHttpSmpo);
     PUCHAR                          pStr;
     ULONG                           ulContentType   = HTTP_FORM_DATA_TYPE_text;
 
@@ -728,7 +722,7 @@ HttpSmpoGetMultipartPart
         return ANSC_STATUS_FAILURE;
     }
     
-    pStr    += HTTP_SMPO_MULTIPART_BOUNDARY_DELI_LENGTH + AnscSizeOfString(pBoundary);
+    pStr    += HTTP_SMPO_MULTIPART_BOUNDARY_DELI_LENGTH + AnscSizeOfString((const char *)pBoundary);
     /*
     pStr    += HTTP_SMPO_LINE_BREAKER_LENGTH;
     */
@@ -742,7 +736,7 @@ HttpSmpoGetMultipartPart
     pPart->pHeader  = pStr;
 
     /* find content of this part */
-    pStr    = (PUCHAR)_ansc_strstr(pStr, HTTP_SMPO_DOUBLE_LINE_BREAKER);
+    pStr    = (PUCHAR)_ansc_strstr((const char *)pStr, HTTP_SMPO_DOUBLE_LINE_BREAKER);
     if (!pStr)
     {
         return ANSC_STATUS_FAILURE;
@@ -802,16 +796,9 @@ HttpSmpoLocateFieldData
 {
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
-    ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
-    PANSC_BUFFER_DESCRIPTOR         pBodyBdo        = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
-    ULONG                           ulBlockSize     = 0;
     PANSC_BUFFER_DESCRIPTOR         pStartBdo, pEndBdo;
     ULONG                           ulOffset1, ulOffset;
-    ULONG                           ulTotalSize     = 0;
     PUCHAR                          pBuf            = NULL;
-    ULONG                           ulBufSize       = 0;
-    ULONG                           ulLen           = 0;
     BOOL                            bFound;
     ANSC_HANDLE                     hBdo;
     ULONG                           ulDataOffset    = 0;
@@ -1008,7 +995,6 @@ HttpSmpoSaveFieldData
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo;
-    PANSC_BUFFER_DESCRIPTOR         pFieldBdo       = (PANSC_BUFFER_DESCRIPTOR)hStartField;
     PANSC_BUFFER_DESCRIPTOR         pStartBdo       = (PANSC_BUFFER_DESCRIPTOR)hStartBdo;
     PANSC_BUFFER_DESCRIPTOR         pEndBdo         = (PANSC_BUFFER_DESCRIPTOR)hEndBdo;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -1195,7 +1181,6 @@ HttpSmpoFindNextBoundary
         PULONG                      pulOffset
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
     ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo        = NULL;
@@ -1276,7 +1261,7 @@ HttpSmpoFindNextBoundary
                     (
                         pBuf,
                         ulTotalSize,
-                        pBoundary,
+                        (PUCHAR)pBoundary,
                         &bFound
                     );  
 
@@ -1434,7 +1419,6 @@ HttpSmpoGetFormField
         PULONG                      pulOffset
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
     ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo        = NULL;
@@ -1562,7 +1546,7 @@ HttpSmpoGetFormField
                 }
 
                 if (ulNameLen == AnscSizeOfString(pFieldName) && 
-                    AnscEqualString2(pFieldName, pName, ulNameLen, FALSE))
+                    AnscEqualString2(pFieldName, (char *)pName, ulNameLen, FALSE))
                 {
                     bFound  = TRUE;
                 }
@@ -1651,7 +1635,6 @@ HttpSmpoCopyFormData
     )
 {
     PUCHAR                          pBuffer         = pBuf;
-    ULONG                           ulLen           = *pulDataLen;
     ULONG                           ulBufSize       = *pulBufSize;
     ULONG                           ulBufDataLen    = *pulDataLen;
 
@@ -1693,13 +1676,13 @@ HttpSmpoCopyFormData2
         ULONG                       ulEndOffset
     )
 {
+    UNREFERENCED_PARAMETER(hHttpMbo);
+    UNREFERENCED_PARAMETER(pBoundary);
     /* This function only copies non-file form data into the given buffer from ulStartOffset
      * in hStartBdo to (ulEndOffset-1) in hEndBdo. If hEndBdo is NULL, copies the rest of
      * the data from the position in hStartBdo.
      */
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PHTTP_MESSAGE_BODY_OBJECT       pHttpMbo        = (PHTTP_MESSAGE_BODY_OBJECT)hHttpMbo;
-    ULONG                           ulBoundaryLen   = AnscSizeOfString(pBoundary);
     PUCHAR                          pBuf            = *ppBuf;
     ULONG                           ulBufSize       = *pulBufSize;
     ULONG                           ulDataLen       = *pulDataLen;
@@ -1824,7 +1807,7 @@ HttpSmpoCopyFormData2
         PUCHAR                      pHeadersEnd = NULL;
         PUCHAR                      pContentType;
 
-        pHeaders = _ansc_strstr(pHeaders, "\r\n");
+        pHeaders = (PUCHAR)_ansc_strstr((const char *)pHeaders, "\r\n");
 
         if (!pHeaders)
         {
@@ -1833,7 +1816,7 @@ HttpSmpoCopyFormData2
         }
 
         pHeaders += 2;
-        pHeadersEnd = _ansc_strstr(pHeaders, "\r\n\r\n");
+        pHeadersEnd = (PUCHAR)_ansc_strstr((const char *)pHeaders, "\r\n\r\n");
 
         if (!pHeadersEnd)
         {

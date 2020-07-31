@@ -117,8 +117,6 @@ WebCreateUriPath
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_URI_PATH_OBJECT            pWebUriPath  = NULL;
 
     return  WebUpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

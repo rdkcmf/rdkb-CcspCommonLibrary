@@ -105,10 +105,8 @@ AnscDetoRecvTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject     = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer       = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DSTO_WORKER_OBJECT        pWorker       = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
 #if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     ansc_fd_set*                    pRecvSet1     = (ansc_fd_set*                  )pMyObject->RecvSocketSet;
     xskt_fd_set*                    pRecvSet2     = (xskt_fd_set*                  )pMyObject->RecvSocketSet;
@@ -117,8 +115,6 @@ AnscDetoRecvTask
     ULONG                           ulLastCleanAt = AnscGetTickInSecondsAbs();
     ANSC_SOCKET                     s_socket      = ANSC_SOCKET_INVALID_SOCKET;
     int                             s_result      = 0;
-    int                             s_result_excp = 0;
-    int                             s_error       = 0;
     int                             i             = 0;
 #if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     ansc_fd_set*                    read_fd_set1  = NULL;
@@ -289,7 +285,6 @@ AnscDetoRecvTask
         else if ( ( (pServer->Mode & ANSC_DSTO_MODE_XSOCKET) && (s_result == XSKT_SOCKET_ERROR)) ||
                   (!(pServer->Mode & ANSC_DSTO_MODE_XSOCKET) && (s_result == ANSC_SOCKET_ERROR)) )
         {
-            s_error = (pServer->Mode & ANSC_DSTO_MODE_XSOCKET)? _xskt_get_last_error() : _ansc_get_last_error();
 
             /*
              * Previously we simply reset everything when _ansc_select() fails, which is not a good
@@ -344,7 +339,6 @@ AnscDetoRecvTask
 					{
                         pMyObject->bBusy = TRUE;
 
-                        returnStatus =
                             pMyObject->Recv2
                                 (
                                     (ANSC_HANDLE)pMyObject,
@@ -357,7 +351,6 @@ AnscDetoRecvTask
                     {
                         pMyObject->bBusy = TRUE;
 
-						returnStatus =
 							pMyObject->Recv
 								(
 									(ANSC_HANDLE)pMyObject,
@@ -506,7 +499,6 @@ AnscDetoRecvTask
 #ifdef _ANSC_USE_OPENSSL_
                 pMyObject->bBusy = TRUE;
 
-                returnStatus =
                     pMyObject->Recv
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -517,7 +509,6 @@ AnscDetoRecvTask
 #else
                 pMyObject->bBusy = TRUE;
 
-                returnStatus =
                     pMyObject->Recv2
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -531,7 +522,6 @@ AnscDetoRecvTask
             {
                 pMyObject->bBusy = TRUE;
 
-                returnStatus =
                     pMyObject->Recv
                         (
                             (ANSC_HANDLE)pMyObject,

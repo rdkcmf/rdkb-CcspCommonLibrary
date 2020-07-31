@@ -117,8 +117,6 @@ BwspCreatePortalHost
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBWSP_PORTAL_HOST_OBJECT        pBwspPortalHost = NULL;
 
     return  BwspPhoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

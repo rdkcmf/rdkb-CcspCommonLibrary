@@ -115,8 +115,7 @@ AnscCryptoGetRandomUlong
         ULONG                       rand_seed
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char                            hashString[16];
     ANSC_CRYPTO_HASH                hashResult;
 
@@ -169,8 +168,7 @@ AnscCryptoGetRandomUshort
         ULONG                       rand_seed
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char                            hashString[16];
     ANSC_CRYPTO_HASH                hashResult;
 
@@ -233,7 +231,6 @@ AnscCryptoGetRandomOctets
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

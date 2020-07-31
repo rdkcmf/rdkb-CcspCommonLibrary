@@ -122,10 +122,11 @@ DslhObjroCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = NULL;
     PDSLH_RVQ_INTERFACE             pDslhRvqIf   = NULL;
-	ULONG							i			 = 0;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -255,7 +256,6 @@ DslhObjroRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_RVQ_INTERFACE             pDslhRvqIf   = (PDSLH_RVQ_INTERFACE    )pMyObject->hDslhRvqIf;
 

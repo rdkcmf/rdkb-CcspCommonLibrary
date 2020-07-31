@@ -45,8 +45,9 @@ UserCreateTask
 	    void *                      name
     )
 {
+    UNREFERENCED_PARAMETER(name);
+    UNREFERENCED_PARAMETER(priority);
     pthread_t           tid;
-    PANSC_TASK_RECORD   pTaskRecord  = (PANSC_TASK_RECORD)context;
     int rc;
     pthread_attr_t      attr;
 

@@ -117,8 +117,6 @@ WebCreateGeneralSession
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PWEB_GENERAL_SESSION_OBJECT     pWebGeneralSession = NULL;
 
     return  WebGsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

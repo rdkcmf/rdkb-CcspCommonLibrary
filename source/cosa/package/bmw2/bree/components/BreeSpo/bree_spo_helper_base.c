@@ -113,7 +113,9 @@ BreeSpoReaderCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_READER_OBJECT     pBaseObject  = NULL;
     PBREESPO_READER_OBJECT          pMyObject    = NULL;
 
@@ -170,7 +172,6 @@ BreeSpoReaderCORemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREESPO_READER_OBJECT          pMyObject    = (PBREESPO_READER_OBJECT)hThisObject;
 
     pMyObject->Close((ANSC_HANDLE)pMyObject);
@@ -214,7 +215,6 @@ BreeSpoReaderCOInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PBREESPO_READER_OBJECT             pMyObject     = (PBREESPO_READER_OBJECT)hThisObject;
 
     /*

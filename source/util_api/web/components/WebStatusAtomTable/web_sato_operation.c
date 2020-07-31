@@ -105,7 +105,6 @@ WebSatoCreatePhraseTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject    = (PWEB_STATUS_ATOM_TABLE_OBJECT)hThisObject;
 
     pMyObject->AddAtomById
@@ -468,7 +467,6 @@ WebSatoGetReasonPhrase
         ULONG                       ulCode
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_STATUS_ATOM_TABLE_OBJECT   pMyObject       = (PWEB_STATUS_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

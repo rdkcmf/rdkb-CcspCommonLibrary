@@ -874,7 +874,7 @@ int CcspBaseIf_SenddeviceProfileChangeSignal (
     void* bus_handle,
     char *component_name,
     char *component_dbus_path,
-    dbus_bool isAvailable
+    unsigned char isAvailable
 );
 
 int CcspBaseIf_SendcurrentSessionIDSignal (

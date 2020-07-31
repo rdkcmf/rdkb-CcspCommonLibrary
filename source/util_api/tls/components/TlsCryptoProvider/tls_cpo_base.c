@@ -119,6 +119,7 @@ TlsCpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = NULL;
 
@@ -345,8 +346,8 @@ TlsCpoInitialize
     pMyObject->GetCipherBlockSize         = TlsCpoGetCipherBlockSize;
     pMyObject->GetMacAlgorithm            = TlsCpoGetMacAlgorithm;
     pMyObject->GetMacHashSize             = TlsCpoGetMacHashSize;
-    pMyObject->GetExportable              = TlsCpoGetExportable;
-    pMyObject->GetStrongSecurity          = TlsCpoGetStrongSecurity;
+    pMyObject->GetExportable              = (PFN_TLSCPO_GET_BOOL)TlsCpoGetExportable;
+    pMyObject->GetStrongSecurity          = (PFN_TLSCPO_GET_BOOL)TlsCpoGetStrongSecurity;
 
     pMyObject->AuthenticateCertChain      = TlsCpoAuthenticateCertChain;
 

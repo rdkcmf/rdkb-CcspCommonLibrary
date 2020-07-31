@@ -306,6 +306,11 @@ AnscCryptoOutCompress
         ULONG                       flag
     )
 {
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(pOutSize);
+    UNREFERENCED_PARAMETER(mode);
+    UNREFERENCED_PARAMETER(flag);
     return  size;
 }
 
@@ -366,6 +371,11 @@ AnscCryptoDeflateCompress
         ULONG                       flag
     )
 {
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(pOutSize);
+    UNREFERENCED_PARAMETER(mode);
+    UNREFERENCED_PARAMETER(flag);
     return  size;
 }
 
@@ -552,6 +562,11 @@ AnscCryptoV42bisCompress
         ULONG                       flag
     )
 {
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(pOutSize);
+    UNREFERENCED_PARAMETER(mode);
+    UNREFERENCED_PARAMETER(flag);
     return  size;
 }
 
@@ -619,7 +634,10 @@ AnscCryptoZlibCompress
     }
 
 #endif
-
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(pOutSize);
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -691,6 +709,10 @@ AnscCryptoGzipCompress
     *pOutSize = length;
 
 #else
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(compact);
+    UNREFERENCED_PARAMETER(pOutSize);
     AnscTrace("WARNING: GZIP is disabled!!!\n");
 #endif
 

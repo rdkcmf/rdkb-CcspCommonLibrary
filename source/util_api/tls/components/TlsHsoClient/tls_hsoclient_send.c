@@ -148,7 +148,6 @@ TlsHsoClientSendClientHello
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PVOID                           pTlsMsgBuffer      = (PVOID                        )NULL;
@@ -346,15 +345,9 @@ TlsHsoClientSendCertificate
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
     PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     ANSC_X509_CERTIFICATE_CHAIN*    pX509CertChain     = (ANSC_X509_CERTIFICATE_CHAIN* )NULL;
-    ANSC_X509_PROFILE*              pX509Profile       = (ANSC_X509_PROFILE*           )NULL;
-    ULONG                           ulCertConfigBit    = (ULONG                        )0;
     ULONG                           ulCertChainSize    = (ULONG                        )0;
     PVOID                           pTlsMsgBuffer      = (PVOID                        )NULL;
     ULONG                           ulTlsMsgSize       = (ULONG                        )1024;
@@ -563,11 +556,7 @@ TlsHsoClientSendClientKeyExchange
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
-    ANSC_X509_CERTIFICATE*          pPeerCert          = (ANSC_X509_CERTIFICATE*       )NULL;
-    ANSC_X509_KEY*                  pPeerPublicKey     = (ANSC_X509_KEY*               )NULL;
     ANSC_X509_KEY*                  pMyPublicKey       = (ANSC_X509_KEY*               )NULL;
     ANSC_X509_KEY*                  pMyPrivateKey      = (ANSC_X509_KEY*               )NULL;
     ANSC_ASN1_INT*                  pMyDHPrime         = (ANSC_ASN1_INT*               )NULL;
@@ -1099,10 +1088,7 @@ TlsHsoClientSendCertVerify
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
-    ANSC_X509_PROFILE*              pMyProfile         = (ANSC_X509_PROFILE*           )pSecurityParams->MyProfile;
     ANSC_X509_CERTIFICATE*          pMyCert            = (ANSC_X509_CERTIFICATE*       )NULL;
     ANSC_X509_KEY*                  pMyPubKey          = (ANSC_X509_KEY*               )NULL;
     ANSC_X509_KEY*                  pMyPrvKey          = (ANSC_X509_KEY*               )NULL;
@@ -1115,7 +1101,6 @@ TlsHsoClientSendCertVerify
     ULONG                           ulTbhDataSize      = (ULONG                        )0;
     ULONG                           ulSignatureSize    = (ULONG                        )0;
     PVOID                           pScratchPad        = (PVOID                        )NULL;
-    ULONG                           ulScratchPadSize   = (ULONG                        )0;
     ULONG                           i                  = (ULONG                        )0;
     ULONG                           tbs_data_size      = (ULONG                        )0;
     UCHAR                           tbs_data[36];
@@ -1195,7 +1180,6 @@ TlsHsoClientSendCertVerify
         else
         {
             pScratchPad      = (PVOID                )((ULONG)pTlsMsgBuffer + 1024);
-            ulScratchPadSize = (ULONG                )1024;
             pTlsHsHeader     = (PTLS_HANDSHAKE_HEADER)pTlsMsgBuffer;
             pTlsHsCertVerify = (PTLS_HS_CERT_VERIFY  )TlsHandshakeGetBody(pTlsHsHeader);
         }
@@ -1563,7 +1547,6 @@ TlsHsoClientSendFinished
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PVOID                           pTlsMsgBuffer      = (PVOID                        )NULL;
@@ -1574,9 +1557,7 @@ TlsHsoClientSendFinished
     ULONG                           ulHashDataSize     = (ULONG                        )0;
     ULONG                           ulTbhDataSize      = (ULONG                        )0;
     PVOID                           pScratchPad        = (PVOID                        )NULL;
-    ULONG                           ulScratchPadSize   = (ULONG                        )0;
     ULONG                           i                  = (ULONG                        )0;
-    ULONG                           tbs_data_size      = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
     /*
@@ -1601,7 +1582,6 @@ TlsHsoClientSendFinished
         else
         {
             pScratchPad      = (PVOID                )((ULONG)pTlsMsgBuffer + 1024);
-            ulScratchPadSize = (ULONG                )1024;
             pTlsHsHeader     = (PTLS_HANDSHAKE_HEADER)pTlsMsgBuffer;
             pTlsHsFinished   = (PTLS_HS_FINISHED     )TlsHandshakeGetBody(pTlsHsHeader);
         }
@@ -1649,8 +1629,7 @@ TlsHsoClientSendFinished
         UCHAR                       ucSslPad1Octet  = (UCHAR )0x36;
         UCHAR                       ucSslPad2Octet  = (UCHAR )0x5c;
         UCHAR                       senderClient[4] = {0x43, 0x4C, 0x4E, 0x54};
-        UCHAR                       senderServer[4] = {0x53, 0x52, 0x56, 0x52};
-
+        
         /*
          * First Round Hashing:
          *

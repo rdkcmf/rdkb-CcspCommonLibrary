@@ -110,7 +110,6 @@ AnscAtoGetIntAtomCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     ULONG                           i            = 0;
     ULONG                           ulAdoCount   = 0;
@@ -158,7 +157,6 @@ AnscAtoGetStrAtomCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     ULONG                           i            = 0;
     ULONG                           ulAdoCount   = 0;
@@ -206,7 +204,6 @@ AnscAtoGetIntTableSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     return  pMyObject->AdoIntTableSize;
@@ -289,7 +286,6 @@ AnscAtoGetStrTableSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     return  pMyObject->AdoStrTableSize;
@@ -372,7 +368,6 @@ AnscAtoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     pMyObject->DelAllStrAtoms((ANSC_HANDLE)pMyObject);

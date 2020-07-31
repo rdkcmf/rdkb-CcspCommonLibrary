@@ -117,8 +117,6 @@ WebCreateRooFsm
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_ROO_FSM_OBJECT             pWebRooFsm   = NULL;
 
     return  WebRooFsmCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

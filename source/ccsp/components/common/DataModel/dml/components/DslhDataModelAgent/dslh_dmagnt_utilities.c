@@ -155,6 +155,7 @@ DslhDmagntCreatePluginInfo
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PPLUGIN_INFORMATION             pInfo             = (PPLUGIN_INFORMATION)NULL;
 
     pInfo = (PPLUGIN_INFORMATION)AnscAllocateMemory(sizeof(PLUGIN_INFORMATION));
@@ -298,6 +299,7 @@ DslhDmagntParseSourceInfo
         ANSC_HANDLE                 hPluginInfo
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode        = (PANSC_XML_DOM_NODE_OBJECT)hXMLNode;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode      = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pLibNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -651,6 +653,7 @@ DslhDmagntParseSourceName
         char*                       pName
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode        = (PANSC_XML_DOM_NODE_OBJECT)hXMLNode;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode      = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pLibNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -772,7 +775,6 @@ DslhDmagntRegisterDataModelObject
     PDSLH_CPE_CONTROLLER_OBJECT     pCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE)pCpeController->GetDslhMprIf(pCpeController);
     PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
-    PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)pPluginInfo->hAtomFunc;
     PANSC_XML_DOM_NODE_OBJECT       pObjNode          = (PANSC_XML_DOM_NODE_OBJECT)hObjectNode;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pListNode         = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -970,7 +972,7 @@ lookforUnresolvedApiInParamList
             {
                 if( AnscGetProcAddress(hInstance, buffer) == NULL)
                 {
-                    AnscTrace(("Found an unresolved api: %s\n", buffer));
+                    AnscTrace("Found an unresolved api: %s\n", buffer);
 
                     bSuccc = FALSE;
                 }
@@ -979,7 +981,7 @@ lookforUnresolvedApiInParamList
             {
                 if( pAtomFuncs->GetAtomByName(pAtomFuncs, buffer) == NULL)
                 {
-                    AnscTrace(("Found an unresolved api: %s\n", buffer));
+                    AnscTrace("Found an unresolved api: %s\n", buffer);
 
                     bSuccc = FALSE;
                 }
@@ -1091,8 +1093,7 @@ DslhDmagntCheckApiResolved
         ANSC_HANDLE                 hPluginInfo
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
-    PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_XML_DOM_NODE_OBJECT       pRootNode         = (PANSC_XML_DOM_NODE_OBJECT)hXMLNode;
     PANSC_XML_DOM_NODE_OBJECT       pObjectsNode      = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_XML_DOM_NODE_OBJECT       pObjectNode       = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -1275,7 +1276,7 @@ DslhDmagntParseObjFuncInfo
         ANSC_HANDLE                 hPluginInfo
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
     PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)pPluginInfo->hAtomFunc;
     ANSC_HANDLE                     hInstance         = (ANSC_HANDLE)pPluginInfo->hInstance;
@@ -1474,7 +1475,7 @@ DslhDmagntParseRootFuncInfo
         ANSC_HANDLE                 hAtomFunc
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)hAtomFunc;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode          = (PANSC_XML_DOM_NODE_OBJECT)hXMLNode;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
@@ -1672,9 +1673,6 @@ DslhDmagntParseObjectInfo
     PANSC_XML_DOM_NODE_OBJECT       pObjectNode       = (PANSC_XML_DOM_NODE_OBJECT)hObjectNode;
     PDSLH_CWMP_OBJECT_DESCR         pObjectDesp       = (PDSLH_CWMP_OBJECT_DESCR)hObjectDesp;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
-    PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
-    PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)pPluginInfo->hAtomFunc;
-    PANSC_ATOM_DESCRIPTOR           pAtomDescriptor   = NULL;
     char                            pName[512]        = { 0 };
     char                            buffer[1024]      = { 0 };
     char                            buffer2[1024]     = { 0 };
@@ -1737,7 +1735,7 @@ DslhDmagntParseObjectInfo
         if (AnscEqualString(buffer, "Logging", TRUE) ||
             AnscEqualString(buffer, "Memory", TRUE))
         {
-            int _size = _ansc_strlen("com.cisco.spvtg.ccsp.");
+            unsigned int _size = _ansc_strlen("com.cisco.spvtg.ccsp.");
 
             if (_ansc_strlen(pParentObjName) > _size)
             {
@@ -1855,7 +1853,6 @@ DslhDmagntParseParamArray
         ANSC_HANDLE                 hPluginInfo
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pListNode         = (PANSC_XML_DOM_NODE_OBJECT)hXMLNode;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     PANSC_HANDLE                    pParamDescrArray  = NULL;
@@ -1864,7 +1861,6 @@ DslhDmagntParseParamArray
     ULONG                           uCount            = 0;
     ULONG                           i                 = 0;
     PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
-    PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)pPluginInfo->hAtomFunc;
 
     /* get the count of the parameters */
     uCount = AnscQueueQueryDepth(&pListNode->ChildNodeQueue);
@@ -1955,7 +1951,7 @@ DslhDmagntParseParamInfo
         ANSC_HANDLE                 hParamDesp
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PPLUGIN_INFORMATION             pPluginInfo       = (PPLUGIN_INFORMATION)hPluginInfo;
     PANSC_ATOM_TABLE_OBJECT         pAtomFuncs        = (PANSC_ATOM_TABLE_OBJECT)pPluginInfo->hAtomFunc;
     ANSC_HANDLE                     hInstance         = (ANSC_HANDLE)pPluginInfo->hInstance;
@@ -3099,7 +3095,7 @@ CcspComp_SetParamBoolValue
             nsArr = (name_spaceType_t *)cpectl->hParameterArray;
             while (nsCnt < cpectl->uParameterCount && nsArr[nsCnt].name_space)
             {
-                fprintf(stderr, " [%d] %s\n", nsCnt, nsArr[nsCnt].name_space);
+                fprintf(stderr, " [%lu] %s\n", nsCnt, nsArr[nsCnt].name_space);
                 nsCnt++;
             }
 
@@ -3109,7 +3105,7 @@ CcspComp_SetParamBoolValue
                     *cp = '/';
 
             fprintf(stderr, "cpectl->hParameterArray %p\n", cpectl->hParameterArray);
-            fprintf(stderr, "cpectl->uParameterCount %u\n", cpectl->uParameterCount);
+            fprintf(stderr, "cpectl->uParameterCount %lu\n", cpectl->uParameterCount);
             fprintf(stderr, "compPath %s\n", compPath);
 
             if ((err = CcspBaseIf_registerCapabilities(
@@ -3267,6 +3263,9 @@ CcspLog_Validate
         ULONG*                      puLength
     )
 {
+    UNREFERENCED_PARAMETER(hInsContext);
+    UNREFERENCED_PARAMETER(pReturnParamName);
+    UNREFERENCED_PARAMETER(puLength);
     return TRUE;
 }
 
@@ -3294,6 +3293,7 @@ CcspLog_Rollback
         ANSC_HANDLE                 hInsContext
     )
 {
+    UNREFERENCED_PARAMETER(hInsContext);
     return 0;
 }
 

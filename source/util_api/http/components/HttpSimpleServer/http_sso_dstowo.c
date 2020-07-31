@@ -122,10 +122,7 @@ HttpSsoDstowoAccept
         PANSC_HANDLE                phClientContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject      = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty      = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer  = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PHTTP_WSP_INTERFACE             pWspIf         = (PHTTP_WSP_INTERFACE           )pMyObject->hWspIf;
     PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE           )pMyObject->hHfpIf;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket     = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
@@ -241,12 +238,8 @@ HttpSsoDstowoSetOut
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-    PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -288,10 +281,7 @@ HttpSsoDstowoRemove
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
@@ -402,10 +392,7 @@ HttpSsoDstowoQuery
         PANSC_HANDLE                phQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
@@ -522,8 +509,6 @@ HttpSsoDstowoProcessSync
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
@@ -675,13 +660,11 @@ HttpSsoDstowoProcessAsync
         ANSC_HANDLE                 hQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
-    PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(hQueryContext);
 
     return  ANSC_STATUS_UNAPPLICABLE;
 }
@@ -733,13 +716,10 @@ HttpSsoDstowoSendComplete
         ANSC_STATUS                 status
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
-    PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(hReserved);
+    UNREFERENCED_PARAMETER(status);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -791,10 +771,8 @@ HttpSsoDstowoNotify
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hReserved);
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pWebSocket->GetBufferContext((ANSC_HANDLE)pWebSocket);
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession  = NULL;
@@ -842,8 +820,7 @@ HttpSsoDstowoNotify
                 if ( pBufferDesp )
                 {
                     pBufferDesp->BlockSize += pWebSocket->RecvPacketSize;
-                    returnStatus            =
-                        pWebSocket->SetBufferContext
+                    pWebSocket->SetBufferContext
                             (
                                 (ANSC_HANDLE)pWebSocket,
                                 NULL,

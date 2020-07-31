@@ -299,8 +299,6 @@ AnscQueuePushEntryAfter
         PSINGLE_LINK_ENTRY          afterEntry
     )
 {
-    PSINGLE_LINK_ENTRY              LastEntry = NULL;
-    BOOLEAN                         bFound    = FALSE;
 
     if ( !afterEntry )
     {

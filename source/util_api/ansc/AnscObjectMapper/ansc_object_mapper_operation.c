@@ -238,7 +238,6 @@ AnscOmoCreateObjectByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
 
@@ -298,7 +297,6 @@ AnscOmoCreateObjectByOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
 
@@ -363,7 +361,6 @@ AnscOmoCreateObjectByType
         char*                       type
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
 
@@ -420,9 +417,7 @@ AnscOmoGetObjectByRid
         ULONG                       rid
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  (ANSC_HANDLE)rid;
 }
 
@@ -457,10 +452,7 @@ AnscOmoGetObjectsCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper  = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
-    PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor    = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry    = NULL;
     ULONG                           ulObjectsCount = 0;
     ULONG                           i              = 0;
 
@@ -512,7 +504,6 @@ AnscOmoSerialize
         ANSC_HANDLE                 hSerialized
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper   = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_TAG                pObjectTagArray = (PANSC_OBJECT_TAG)hSerialized;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor     = NULL;
@@ -592,7 +583,6 @@ AnscOmoInterpret
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper   = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_TAG                pObjectTagArray = (PANSC_OBJECT_TAG)hSerialized;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor     = NULL;
@@ -632,7 +622,6 @@ AnscOmoInterpret
             pDescriptor->SetBrokerOid       ((ANSC_HANDLE)pDescriptor, pObjectTagArray[i].BrokerOid);
         }
 
-        returnStatus =
             pObjectMapper->AddDescriptor
                 (
                     (ANSC_HANDLE)pObjectMapper,

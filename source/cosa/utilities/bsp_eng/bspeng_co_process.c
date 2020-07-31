@@ -413,7 +413,7 @@ BspTemplateObjStop
         ANSC_HANDLE                 hRuntime
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     
     if (pRt)
@@ -457,7 +457,7 @@ BspTemplateObjTokenize
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     BOOL                            bInText   = TRUE;
-    BOOL                            bAtStart  = TRUE;
+/*    BOOL                            bAtStart  = TRUE;*/
     BOOL                            bAtEnd    = FALSE;
     PBSP_TEMPLATE_TOKEN             pFirst = NULL, pToken = NULL, pPrevToken = NULL, pPrev2Token = NULL;
     char                            ch;
@@ -518,7 +518,8 @@ BspTemplateObjTokenize
                     break;
             }
 
-            bAtStart = bInText = FALSE;
+            /*bAtStart = FALSE;*/
+	    bInText = FALSE;
 
             continue;
         }
@@ -558,6 +559,7 @@ NEXT_LINE:
                     if (pMyObject->ParseComment(hThisObject))
                         continue;
                     else
+                    {
                         if (pMyObject->ParseOp(hThisObject))
                         {
                             pToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
@@ -616,10 +618,12 @@ NEXT_LINE:
 
                         pPrevToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hPrevToken;
 
-/* tokenize everything
+                        /* tokenize everything
                         if (pPrevToken->Type == BspToken_eOp && pPrevToken->Value.op == BspOp_EndProc)
                             bAtEnd  = TRUE;
-*/
+                    
+                        */
+                    }
     }
 
     if (pMyObject->hToken == (ANSC_HANDLE)pFirst)
@@ -686,7 +690,6 @@ BspTemplateObjParseText
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    ULONG                           ulLineNo;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
     ULONG                           ulSize, ulCount;
     char                            ch;
@@ -704,7 +707,6 @@ BspTemplateObjParseText
             pMyObject->ulLineNo ++;
         }
 
-    ulLineNo    = pMyObject->ulLineNo;
     pByteArray  = (PANSC_BYTE_ARRAY_OBJECT)pMyObject->hText;
 
     /* skip leading tabs */
@@ -720,7 +722,7 @@ BspTemplateObjParseText
     {
         if (!bIgnore)
         {
-            pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)*pMyObject->pTmplPtr);
+            pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)(intptr_t)*pMyObject->pTmplPtr);
         }
 
         if (*pMyObject->pTmplPtr++ == '\n')
@@ -734,7 +736,7 @@ BspTemplateObjParseText
     ulCount = pByteArray->GetSize((ANSC_HANDLE)pByteArray);
     while (ulCount != 0)
     {
-        ch = (char)pByteArray->GetAt((ANSC_HANDLE)pByteArray, ulCount - 1);
+        ch = (char)(intptr_t)pByteArray->GetAt((ANSC_HANDLE)pByteArray, ulCount - 1);
         if (ch == '\t')
         {
             pByteArray->RemoveAt((ANSC_HANDLE)pByteArray, ulCount - 1, 1);
@@ -930,7 +932,7 @@ BspTemplateObjParseIdentOrKeyword
             ch = ch - 'A' + 'a';
 #endif
 
-        pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)ch);
+        pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)(intptr_t)ch);
     }
 
     pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)'\0');
@@ -997,7 +999,7 @@ BspTemplateObjParseString
     PBSP_TEMPLATE_TOKEN             pToken    = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     char                            ch;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
-    char                            *pEnd;
+    const char                      *pEnd; 
 
     pByteArray  = (PANSC_BYTE_ARRAY_OBJECT)pMyObject->hText;
 
@@ -1079,7 +1081,7 @@ BspTemplateObjParseString
             }
         }
 
-        pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)ch);
+        pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)(intptr_t)ch);
     }
 
     pByteArray->Add((ANSC_HANDLE)pByteArray, (ANSC_OBJECT_ARRAY_DATA)'\0');
@@ -1121,7 +1123,7 @@ BspTemplateObjParseNumber
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    char                            *pEnd;
+    char                             *pEnd =NULL; 
     LONG                            aLong;
     PBSP_TEMPLATE_TOKEN             pToken    = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
 
@@ -1137,16 +1139,16 @@ BspTemplateObjParseNumber
         {
         case 'X':
         case 'x':
-            aLong   = pMyObject->GetHex(hThisObject, pMyObject->pTmplPtr + 2,  &pEnd);
+            aLong   = pMyObject->GetHex(hThisObject, pMyObject->pTmplPtr + 2,(const char **) &pEnd);
             break;
 
         case 'b':
         case 'B':
-            aLong   = pMyObject->GetBinary(hThisObject, pMyObject->pTmplPtr + 2,  &pEnd);
+            aLong   = pMyObject->GetBinary(hThisObject, pMyObject->pTmplPtr + 2, (const char **)&pEnd);
             break;
 
         default:
-            aLong   = pMyObject->GetOctal(hThisObject, pMyObject->pTmplPtr + 1,  &pEnd);
+            aLong   = pMyObject->GetOctal(hThisObject, pMyObject->pTmplPtr + 1, (const char **)&pEnd);
             break;
         }
 
@@ -1157,8 +1159,10 @@ BspTemplateObjParseNumber
     {
 #ifdef   _BSPENG_NO_DOUBLE
         BOOL                        bHasFrac    = FALSE;
+        BOOL                        *pHasFrac    = &bHasFrac;
+        char                        **ppEnd = &pEnd;
 
-        STRING_TO_BSP_TEMPLATE_DOUBLE((char *)pMyObject->pTmplPtr, &aDouble, &pEnd, &bHasFrac);
+        STRING_TO_BSP_TEMPLATE_DOUBLE((char *)pMyObject->pTmplPtr, &aDouble, ppEnd, pHasFrac);
 
         if (bHasFrac)
         {
@@ -1213,7 +1217,7 @@ BspTemplateObjParseNumber
     }
 
     pToken->LineNo      = pMyObject->ulLineNo;
-    pMyObject->pTmplPtr = pEnd;
+    pMyObject->pTmplPtr = (const char *)pEnd;
 
     return TRUE;
 }
@@ -1318,8 +1322,7 @@ BspTemplateObjIsNameChar
         int                         ch
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if (ch == '_')
         return TRUE;
 
@@ -1374,7 +1377,7 @@ BspTemplateObjGetBinary
         const char                  **pEnd
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 	LONG                            aRet;
 	
     for (aRet = 0; *pSrc == '0' || *pSrc == '1'; pSrc ++)
@@ -1428,9 +1431,9 @@ BspTemplateObjGetOctal
         const char                  **pEnd
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     LONG                            aRet;
-    int                             dig;
+    int                             dig = 0;
     int                             nCount    = 0;
 
     *pEnd   = NULL;
@@ -1510,9 +1513,9 @@ BspTemplateObjGetHex
         const char                  **pEnd
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     LONG                            aRet;
-    int                             dig;
+    int                             dig  = 0;
     int                             nCount    = 0;
 
     *pEnd   = NULL;
@@ -1638,7 +1641,7 @@ BspTemplateObjPrintData
         {
             char                    buf[16];
 
-            BSP_TEMPLATE_DOUBLE_TO_STRING(buf, pBrData->Value.r);
+            BSP_TEMPLATE_DOUBLE_TO_STRING(buf, (int)pBrData->Value.r);
             AnscTrace(buf);
         }
 #else
@@ -1802,6 +1805,7 @@ BspTemplateObjPrintBranch
         BOOL                        bStart
     )
 {
+    UNREFERENCED_PARAMETER(hBranch);
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr = NULL; /*RDKB-6004, CID-24596, Initializing the variable*/
 
@@ -2412,13 +2416,13 @@ BspTemplateObjBuildTree
         }
 
         pStr        = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
-        pMyObject->pName    = AnscDupString(pStr);
+        pMyObject->pName    = (const char *)AnscDupString((PUCHAR)pStr);
 
         if (pMyObject->IsOp(hThisObject, BspOp_ParenL))
         {
             PBSP_TEMPLATE_SYMBOL_PRO        pSymPro;
 
-            while (pToken = pMyObject->IsIdent(hThisObject))
+            while ((pToken = pMyObject->IsIdent(hThisObject)))
             {
                 pSymPro = (PBSP_TEMPLATE_SYMBOL_PRO)AnscAllocateMemory(sizeof(BSP_TEMPLATE_SYMBOL_PRO));
 
@@ -2427,7 +2431,7 @@ BspTemplateObjBuildTree
                     char                *pStr;
 
                     pStr                = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
-                    pSymPro->pName      = AnscDupString(pStr);
+                    pSymPro->pName      = (const char*)AnscDupString((PUCHAR)pStr);
 
                     pMyObject->NewSymbol(hThisObject, pSymPro);
                 }
@@ -2580,7 +2584,7 @@ BspTemplateObjStatementList
     if ( !pTemp )
         return NULL;
 
-    for (pPrev = NULL; pSt = pMyObject->Statement(hThisObject); pPrev = pNext)
+    for (pPrev = NULL; (pSt = pMyObject->Statement(hThisObject)); pPrev = pNext)
     {
         pNext   = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
         if(!pNext) /*RDKB-6004, CID-24418, NULL check before other operation*/
@@ -2676,22 +2680,22 @@ BspTemplateObjStatement
     /* remove empty statements */
     while (pMyObject->IsOp(hThisObject, BspOp_End));
 
-    if (hSt = pMyObject->IncludeStatement(hThisObject))
+    if ((hSt = pMyObject->IncludeStatement(hThisObject)))
         return hSt;
 
-    if (hSt = pMyObject->IfStatement(hThisObject))
+    if ((hSt = pMyObject->IfStatement(hThisObject)))
         return hSt;
 
     if (pMyObject->ulErrLineNo)
         return NULL;
 
-    if (hSt = pMyObject->WhileStatement(hThisObject))
+    if ((hSt = pMyObject->WhileStatement(hThisObject)))
         return hSt;
 
-    if (hSt = pMyObject->SwitchStatement(hThisObject))
+    if ((hSt = pMyObject->SwitchStatement(hThisObject)))
         return hSt;
 
-    if (hSt = pMyObject->ReturnStatement(hThisObject))
+    if ((hSt = pMyObject->ReturnStatement(hThisObject)))
         return hSt;
 
     if (pMyObject->ulErrLineNo)
@@ -2705,13 +2709,13 @@ BspTemplateObjStatement
         return NULL;
 #endif
 
-    if (hSt = pMyObject->ArrayDeclaration(hThisObject))
+    if ((hSt = pMyObject->ArrayDeclaration(hThisObject)))
         return hSt;
 
     if (pMyObject->ulErrLineNo)
         return NULL;
 
-    if (hSt = pMyObject->Expression(hThisObject))
+    if ((hSt = pMyObject->Expression(hThisObject)))
     {
         pSt = (PBSP_TEMPLATE_BRANCH_OBJECT)hSt;
 
@@ -2721,7 +2725,7 @@ BspTemplateObjStatement
         return hSt;
     }
 
-    if (hSt = pMyObject->ApiCall(hThisObject))
+    if ((hSt = pMyObject->ApiCall(hThisObject)))
         return hSt;
 
     if (pMyObject->ulErrLineNo)
@@ -2819,7 +2823,7 @@ BspTemplateObjStatement
 
             pSt->right.type     = BspBranch_eString;
             pBuf                = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
-            pSt->right.Value.s  = AnscDupString(pBuf);
+            pSt->right.Value.s  = (PCHAR)AnscDupString((PUCHAR)pBuf);
 
             pSt->left.type      = BspBranch_eNumber;
             pSt->left.Value.n   = pToken->TextLen;
@@ -3443,7 +3447,7 @@ BspTemplateObjSwitchStatement
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp       = NULL;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pList, pSwitch, pBr, pCaseExp, pCase, pDefault, pElse;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pSwitch, pCaseExp, pCase, pDefault, pElse;
     PBSP_TEMPLATE_BRANCH_OBJECT*    pCases      = NULL;
     ULONG                           ulNumCases  = 0, ulMaxCases = 16;
     PBSP_TEMPLATE_BRANCH_OBJECT*    pElses      = NULL;
@@ -3823,7 +3827,6 @@ BspTemplateObjReturnStatement
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
     PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pReturn;
-    BOOL                            bReturnVal  = FALSE;
 
     if (!pMyObject->IsOp(hThisObject, BspOp_Return))
         return pMyObject->NoMatch(hThisObject, (ANSC_HANDLE)pOrigToken);
@@ -3876,6 +3879,7 @@ BspTemplateObjSetouputStatement
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
 #ifndef  _BSP_RICH_FEATURE_SET
 
     return (ANSC_HANDLE)NULL;
@@ -4042,7 +4046,6 @@ BspTemplateObjArrayDeclaration
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
     PBSP_TEMPLATE_BRANCH_OBJECT     pName, dimBranch[BSP_TEMPLATE_ARRAY_DIMENSION_LIMIT];
     ULONG                           ulDim       = 0;
-    BOOL                            bFirst;
     PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pDim, pRight=NULL, *pBranches =NULL, pBr; /*RDK- , CID-24763, Initializing pBranches to NULL */
     PBSP_TEMPLATE_TOKEN             pEnd;
     ULONG                           i;
@@ -4081,7 +4084,6 @@ BspTemplateObjArrayDeclaration
                                 );
     }
 
-    bFirst  = TRUE;
 
     while (TRUE)
     {
@@ -4120,7 +4122,6 @@ BspTemplateObjArrayDeclaration
                                     );
         }
 
-        bFirst  = FALSE;
 
         ulDim   ++;
 
@@ -4173,7 +4174,7 @@ BspTemplateObjArrayDeclaration
 
             pRight->right.type              = BspBranch_eArrayDim;
             pRight->right.Value.a.Count     = ulDim;
-            pRight->right.Value.a.pBranch   = pBranches;
+            pRight->right.Value.a.pBranch   = (void**)pBranches;
 
             BspTemplateBranchSetRight((ANSC_HANDLE)pDim, (ANSC_HANDLE)pRight);
         }
@@ -4225,7 +4226,7 @@ BspTemplateObjApiCall
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
     ULONG                           ulParams    = 0;
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
-    PBSP_TEMPLATE_TOKEN             aName, pToken;
+    PBSP_TEMPLATE_TOKEN             aName;
     PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pParams[BSP_TEMPLATE_API_PARAM_LIMIT];
     PBSP_TEMPLATE_BRANCH_OBJECT     pApi, pVar, pRight, *pBranches, pBr;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
@@ -4258,7 +4259,6 @@ BspTemplateObjApiCall
 
         pParams[ulParams ++]    = pExp;
 
-        pToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
 
         if (pMyObject->IsOp(hThisObject, BspOp_ParenR))
             break;
@@ -4292,7 +4292,7 @@ BspTemplateObjApiCall
         {
             pVar->right.type    = BspBranch_eString;
             pBuf                = pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, aName->Value.str);
-            pVar->right.Value.s = AnscDupString(pBuf);
+            pVar->right.Value.s = (PCHAR)AnscDupString((PUCHAR)pBuf);
         }
 
         pBranches   = 
@@ -4319,7 +4319,7 @@ BspTemplateObjApiCall
         {
             pRight->right.type              = BspBranch_eApiParams;
             pRight->right.Value.a.Count     = ulParams;
-            pRight->right.Value.a.pBranch   = pBranches;
+            pRight->right.Value.a.pBranch   = (void**)pBranches;
         }
         else /*RDKB-6004, CID-24226, free memory if not used */
         {
@@ -4393,7 +4393,7 @@ BspTemplateObjIsLValue
         ANSC_HANDLE                 hBranch
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSP_TEMPLATE_BRANCH_OBJECT     pBr       = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
 
     /* 
@@ -4801,7 +4801,8 @@ BspTemplateObjBinaryExp
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pRight, pNext;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pExp, pNext;
+    PBSP_TEMPLATE_BRANCH_OBJECT     pRight = NULL;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
     BSP_TEMPLATE_OPERATOR           op;
 
@@ -4809,7 +4810,7 @@ BspTemplateObjBinaryExp
     if (!pExp)
         return NULL;
 
-    while (op = pMyObject->InOpList(hThisObject, pOpList))
+    while ((op = pMyObject->InOpList(hThisObject, pOpList)))
     {
         pRight  = (PBSP_TEMPLATE_BRANCH_OBJECT)(*pFunc)(hThisObject);
         if (!pRight)
@@ -5020,7 +5021,7 @@ BspTemplateObjPostfixExp
         return NULL;
     }
 
-    while (op = pMyObject->InOpList(hThisObject, opList))
+    while ((op = pMyObject->InOpList(hThisObject, opList)))
     {
         if ((op == BspOp_Decr || op == BspOp_Incr) && !pMyObject->IsLValue(hThisObject, pExp))
         {
@@ -5090,7 +5091,7 @@ BspTemplateObjValueExp
     )
 {
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
-    PBSP_TEMPLATE_TOKEN             pToken, pOrigToken;
+    PBSP_TEMPLATE_TOKEN             pToken;
     PBSP_TEMPLATE_BRANCH_OBJECT     pLiteral, pExp;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
@@ -5114,7 +5115,7 @@ BspTemplateObjValueExp
 
                 pLiteral->right.type    = BspBranch_eString;
                 pStr = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
-                pLiteral->right.Value.s = AnscDupString(pStr);
+                pLiteral->right.Value.s = (PCHAR)AnscDupString((PUCHAR)pStr);
             }
             break;
 
@@ -5127,12 +5128,14 @@ BspTemplateObjValueExp
             pLiteral->right.type    = BspBranch_eReal;
             pLiteral->right.Value.r = pToken->Value.real;
             break;
+        default:
+            break;
         }
 
         return pLiteral;
     }
 
-    pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
+    /*pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;*/
 
     if (pMyObject->IsOp(hThisObject, BspOp_ParenL))
     {
@@ -5358,7 +5361,7 @@ BspTemplateObjArrayExpCondition
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp       = NULL;
     PBSP_TEMPLATE_BRANCH_OBJECT     pNameExp;
-    PBSP_TEMPLATE_TOKEN             pLast, pEnd;
+    PBSP_TEMPLATE_TOKEN             pEnd;
     PBSP_TEMPLATE_BRANCH_OBJECT     pExp;
     ULONG                           ulDimCount  = 0;
     PBSP_TEMPLATE_BRANCH_OBJECT     dimBranch[BSP_TEMPLATE_ARRAY_DIMENSION_LIMIT];
@@ -5415,7 +5418,7 @@ BspTemplateObjArrayExpCondition
             return pMyObject->NoMatch(hThisObject, (ANSC_HANDLE)pOrigToken);
         }
 
-        pLast = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
+        /*pLast = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;*/
 
         if (!pMyObject->IsOp(hThisObject, BspOp_ArrayR))
         {
@@ -5472,7 +5475,7 @@ BspTemplateObjArrayExpCondition
                 }
             }
 
-            pRight->right.Value.a.pBranch   = pBranches;
+            pRight->right.Value.a.pBranch   = (void**)pBranches;
             pRight->right.Value.a.Count     = ulDimCount;
             pRight->right.type              = BspBranch_eArrayDim;
 
@@ -5541,7 +5544,7 @@ BspTemplateObjIsExpProcCall
         ANSC_HANDLE                 hNameExp
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject       = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSP_TEMPLATE_BRANCH_OBJECT     pNameExp        = (PBSP_TEMPLATE_BRANCH_OBJECT)hNameExp;
     ULONG                           ulParamGroups   = 0;
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr;
@@ -5679,7 +5682,7 @@ BspTemplateObjObjectExp
     PBSPENG_SOA_INTERFACE           pBspSoaIf   = pList->GetBspSoaIf((ANSC_HANDLE)pList);
     PBSP_TEMPLATE_TOKEN             pOrigToken  = (PBSP_TEMPLATE_TOKEN)pMyObject->hToken;
     PBSP_TEMPLATE_TEMP_OBJECT       pTemp;
-    PBSP_TEMPLATE_BRANCH_OBJECT     pName, pNext, pPrev, pMain  = NULL, pObj=NULL, pObjName; /*RDKB-6004, CID-24633, pObj is used without initializing in conditional code flow*/
+    PBSP_TEMPLATE_BRANCH_OBJECT     pName=NULL, pNext, pPrev, pMain  = NULL, pObj=NULL, pObjName; /*RDKB-6004, CID-24633, pObj is used without initializing in conditional code flow*/
     PBSP_TEMPLATE_TOKEN             pToken;
     PANSC_BYTE_ARRAY_OBJECT         pByteArray;
     PBSP_TEMPLATE_BRANCH_OBJECT     pObjArray   = NULL;
@@ -5808,7 +5811,7 @@ PARSE_PROP:
             ulOpColonCount  ++;
         }
 
-        for (pPrevParam = NULL; pExp = pMyObject->Expression(hThisObject); pPrevParam = pNextParam)
+        for (pPrevParam = NULL; (pExp = pMyObject->Expression(hThisObject)); pPrevParam = pNextParam)
         {
             pNextParam = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
             if ( !pNextParam )
@@ -5887,7 +5890,7 @@ PARSE_PROP:
         }
     }
 
-    for (pPrev = NULL; pName = pMyObject->NameExp(hThisObject, FALSE); pPrev = pNext)
+    for ((pPrev = NULL);( pName = pMyObject->NameExp(hThisObject, FALSE)); pPrev = pNext)
     {
         pNext   = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
         if ( !pNext )
@@ -5947,7 +5950,6 @@ OBJECT_ONLY:
     if (!pObjArray)
     {
         char                        *pStr;
-        ULONG                       ulVar;
         BOOL                        bAddVarIfNotExist   = FALSE;
         BOOL                        bBuiltInObj         = FALSE;
 
@@ -5956,17 +5958,15 @@ OBJECT_ONLY:
         bBuiltInObj         = pBspSoaIf->IsBuiltInObj(pBspSoaIf->hOwnerContext, pStr);
         bAddVarIfNotExist   = !bBuiltInObj && (NULL == pProp);
 
-        ulVar   = 
             pMyObject->FindSymbol
                 (
                     hThisObject, 
                     pStr, 
                     bAddVarIfNotExist
                 );
-
         /* save the name, no matter if the name has been added into symbol table */
         pObjName->left.type        = BspBranch_eString;
-        pObjName->left.Value.s     = AnscDupString(pStr);
+        pObjName->left.Value.s     = (PCHAR)AnscDupString((PUCHAR)pStr);
 
         BspTemplateBranchSetLeft((ANSC_HANDLE)pObj, (ANSC_HANDLE)pObjName);
     }
@@ -6453,7 +6453,7 @@ PARAM_AGAIN:
         if ( !pTemp )
             return NULL;
 
-        for (pPrev = NULL; pExp = pMyObject->Expression(hThisObject); pPrev = pNext)
+        for (pPrev = NULL; (pExp = pMyObject->Expression(hThisObject)); pPrev = pNext)
         {
             pNext   = (PBSP_TEMPLATE_BRANCH_OBJECT)CreateBspEngBranchComponent(NULL, NULL, NULL);
             if ( !pNext )
@@ -6551,7 +6551,7 @@ PARAM_AGAIN:
 
         pNameExp->left.type     = BspBranch_eString;
         pBuf                    = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pIdent->Value.str);
-        pNameExp->left.Value.s  = AnscDupString(pBuf);
+        pNameExp->left.Value.s  = (PCHAR)AnscDupString((PUCHAR)pBuf);
         BspTemplateBranchSetRight((ANSC_HANDLE)pNameExp, (ANSC_HANDLE)pParamList);
     }
 
@@ -7091,7 +7091,7 @@ BspTemplateObjFindSymbol
              * the memory reallocation might change
              * the address of mText buffer.
              */
-            pSymPro->pName  = AnscDupString((char *)pName);
+            pSymPro->pName  = (PCHAR)AnscDupString((PUCHAR)pName);
 
             return pMyObject->NewSymbol(hThisObject, pSymPro);
         }
@@ -7334,6 +7334,7 @@ BspTemplateObjDoStatementList
         BOOL                        *pbTerminated
     )
 {
+    UNREFERENCED_PARAMETER(BIter);
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_LIST_OBJECT       pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
     PBSPENG_SOA_INTERFACE           pBspSoaIf   = pList->GetBspSoaIf((ANSC_HANDLE)pList);
@@ -7436,9 +7437,7 @@ BspTemplateObjDoBranch
 {
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr         = (PBSP_TEMPLATE_BRANCH_OBJECT)hBranch;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_VAR_OBJECT        aResult     = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    PBSP_TEMPLATE_STACK_OBJECT      pStack      = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack(hRuntime);
     BOOL                            bTerminated = FALSE;
 
     if (!iBr)
@@ -7826,15 +7825,17 @@ BspTemplateObjDoApi
             case BspVar_String:
 #ifdef   _BSPENG_NO_DOUBLE
                 {
-                    char            *pEnd;
-                    BOOL            bHasFrac;
+                    char            *pEnd =NULL;
+                    BOOL            bHasFrac =FALSE;
+                    BOOL            *pHasFrac    = &bHasFrac;
+                    char            **ppEnd = &pEnd;
 
                     STRING_TO_BSP_TEMPLATE_DOUBLE
                         (
                             pVar->Value.str, 
                             &pResult->Value.real, 
-                            &pEnd, 
-                            &bHasFrac
+                            ppEnd, 
+                            pHasFrac
                         );
                 }
 #else
@@ -8090,7 +8091,7 @@ BspTemplateObjDoApi
                     case    BspVar_Real:
 
 #ifdef   _BSPENG_NO_DOUBLE
-                            BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, num->Value.real);
+                            BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)num->Value.real);
 #else
                             _ansc_sprintf(pBuf, "%f", num->Value.real);
 #endif
@@ -8549,7 +8550,7 @@ BspTemplateObjDoApi
             BOOL                        bDeleteS2   = TRUE;
             char                        *pStr;
             int                         index       = 0;
-            char                        c;
+            char                        c = '\0';
 
             if (numParams != 3)
             {
@@ -8949,6 +8950,8 @@ BspTemplateObjDoApi
                     nSleepTime  = (int)num->Value.num;
 
                     break;
+        	default:
+            	    break;
             }
 
             if (nSleepTime > 0)
@@ -8962,6 +8965,8 @@ BspTemplateObjDoApi
                 pRt->ReleaseVariable((ANSC_HANDLE)pRt, (ANSC_HANDLE)num);
             }
         }
+        break;
+    default:
         break;
     }
 }
@@ -9002,7 +9007,7 @@ BspTemplateObjGetApiCode
         const char                  *pApiName
     )
 {
-    PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i, apiCount;
 
     apiCount = sizeof(BspTemplateAPINames)/sizeof(BspTemplateAPINames[0]);
@@ -9078,6 +9083,8 @@ BspTemplateObjIsOutputApi
     case BspApi_atoi:
     case BspApi_atof:
         return TRUE;
+    default:
+            break;
     }
 
     return FALSE;
@@ -9134,11 +9141,12 @@ BspTemplateObjEvalExp
     PBSP_TEMPLATE_BRANCH_DATA       pBrData   = (PBSP_TEMPLATE_BRANCH_DATA)hBranchData;
     PBSP_TEMPLATE_VAR_OBJECT        pResult;
     BOOL                            bTerminated = FALSE;
+    int                             type = pBrData->type;
 
     /* pResult = CreateBspEngVarComponent(NULL, NULL, NULL); */
     pResult = (PBSP_TEMPLATE_VAR_OBJECT)pRt->AcquireVariable((ANSC_HANDLE)pRt);
 
-    switch (pBrData->type)
+    switch (type)
     {
     case BspBranch_eBranch:
         pMyObject->DoBranch(hThisObject, pBrData->Value.b, hRuntime, (ANSC_HANDLE)pResult, &bTerminated);
@@ -9149,7 +9157,7 @@ BspTemplateObjEvalExp
         if (pRt->InExecute)
         {
             pResult->Size       = AnscSizeOfString(pBrData->Value.s) + 1;
-            pResult->Value.str  = AnscDupString(pBrData->Value.s);
+            pResult->Value.str  = (PCHAR)AnscDupString((PUCHAR)pBrData->Value.s);
             ACCESS_BSP_TEMPLATE_VAR_CLEAR_TEMP_FLAG(pResult);
         }
         else
@@ -9259,7 +9267,7 @@ BspTemplateObjEvalName
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr;
     PBSP_TEMPLATE_VAR_OBJECT        pVar, pEvalVar;
     PBSP_TEMPLATE_STACK_OBJECT      pStack;
-    PBSP_TEMPLATE_LIST_OBJECT       pList;
+/*    PBSP_TEMPLATE_LIST_OBJECT       pList;*/
     BOOL                            bTerminated = FALSE;
 
     if (pBr->op != BspOp_Name)
@@ -9268,7 +9276,7 @@ BspTemplateObjEvalName
     pBr         = pBr->right.Value.b;
 
     pStack      = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack((ANSC_HANDLE)pRt);
-    pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
+    /*pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;*/
 
     for (aBr = pBr->right.Value.b; aBr; aBr = aBr->left.Value.b)
     {
@@ -9282,9 +9290,9 @@ BspTemplateObjEvalName
         }
         else
         {
-            PBSP_TEMPLATE_BRANCH_OBJECT pRight;
+            /*PBSP_TEMPLATE_BRANCH_OBJECT pRight;
 
-            pRight = (PBSP_TEMPLATE_BRANCH_OBJECT)aBr->right.Value.b;
+            pRight = (PBSP_TEMPLATE_BRANCH_OBJECT)aBr->right.Value.b;*/
 
             pEvalVar = pMyObject->EvalExpression(hThisObject, &aBr->right, hRuntime, &bTerminated);
 
@@ -9376,8 +9384,8 @@ BspTemplateObjEvalName2
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_BRANCH_OBJECT     aBr, bBr;
     PBSP_TEMPLATE_VAR_OBJECT        pVar, pEvalVar=NULL; /*RDKB-6004, CID-24772, initializing pEvalVar*/
-    PBSP_TEMPLATE_STACK_OBJECT      pStack;
-    PBSP_TEMPLATE_LIST_OBJECT       pList;
+/*    PBSP_TEMPLATE_STACK_OBJECT      pStack;
+    PBSP_TEMPLATE_LIST_OBJECT       pList;*/
     ULONG                           i, j, ulCount  = 0;
     PBSP_TEMPLATE_VAR_OBJECT        *pParams    = NULL;
     ULONG                           ulParamList = 0;
@@ -9393,8 +9401,8 @@ BspTemplateObjEvalName2
     if (pBr->op != BspOp_Name)
         return NULL;
 
-    pStack      = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack((ANSC_HANDLE)pRt);
-    pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
+    /*pStack      = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack((ANSC_HANDLE)pRt);
+    pList       = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;*/
 
     /* get number of parameters */
     for (aBr = pBr->right.Value.b; aBr; aBr = aBr->left.Value.b)
@@ -9492,7 +9500,7 @@ BspTemplateObjEvalName2
 
     *ppParamList    = pParamList;
 
-    pRt->SetSlapParamRef((ANSC_HANDLE)pRt, SlapParamRef, SlapParamRefCount);
+    pRt->SetSlapParamRef((ANSC_HANDLE)pRt, (ANSC_HANDLE*)SlapParamRef, SlapParamRefCount);
 
     return (pTopBr->left.type == BspBranch_eString)?pTopBr->left.Value.s : NULL;
 }
@@ -9601,6 +9609,8 @@ BspTemplateObjEvalRef
             }
         }
         break;
+        default:
+            break;
     }
 
     return pRefVar;
@@ -9901,7 +9911,7 @@ BspTemplateObjCopy
     PBSP_TEMPLATE_SYMBOL_PRO        pSymPro, pPro;
     PANSC_PTR_ARRAY_OBJECT          pPtrArray, pMyArray;
 
-    pMyObject->pName        = AnscDupString((char *)pTmpl->pName);
+    pMyObject->pName        = (PCHAR)AnscDupString((PUCHAR)pTmpl->pName);
     pMyObject->hOwnerList   = pTmpl->hOwnerList;
     pMyObject->ulErrLineNo  = 0;
     pMyObject->ulNumParams  = 0;
@@ -9920,7 +9930,7 @@ BspTemplateObjCopy
 
         if (pPro)
         {
-            pPro->pName = AnscDupString((char *)pSymPro->pName);
+            pPro->pName = (PCHAR)AnscDupString((PUCHAR)pSymPro->pName);
             pMyArray->Add((ANSC_HANDLE)pMyArray, pPro);
         }
     }
@@ -9987,7 +9997,7 @@ BspTemplateObjUpdateSymbols
 
             if (pPro)
             {
-                pPro->pName = AnscDupString((char *)pSymPro->pName);
+                pPro->pName = (PCHAR)AnscDupString((PUCHAR)pSymPro->pName);
                 pMyArray->Add((ANSC_HANDLE)pMyArray, pPro);
             }
         }
@@ -10039,7 +10049,6 @@ BspTemplateObjEvalArrayItem
     PBSP_TEMPLATE_BRANCH_DATA       pBrData   = (PBSP_TEMPLATE_BRANCH_DATA)hBranchData;
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
     PBSP_TEMPLATE_BRANCH_OBJECT     iBr;
-    PBSP_TEMPLATE_STACK_OBJECT      pStack    = (PBSP_TEMPLATE_STACK_OBJECT)pRt->GetStack(hRuntime);
     PBSP_TEMPLATE_VAR_OBJECT        pVal, pVar;
     ULONG                           ulVar;
     PBSP_TEMPLATE_ARRAY_DATA        pArrayData;
@@ -10357,7 +10366,7 @@ BspTemplateObjLoad
             if(i)
             {
                 i--;
-                for (; i >= 0; i--)
+                for (; (int)i >= 0; i--)
                 {
                      pSymPro = (PBSP_TEMPLATE_SYMBOL_PRO)pPtrArray->GetAt((ANSC_HANDLE)pPtrArray, i);
                      pPtrArray->RemoveAt((ANSC_HANDLE)pPtrArray, i, 1);
@@ -10429,7 +10438,6 @@ BspEng_CalcPagePath
     )
 {
     int                             i, Len;
-    int                             nParents    = 0;
     char                            *pLoc; 
     char                            *pTail;
 
@@ -10556,11 +10564,8 @@ BspTemplateObjIncludeTemplate
     PBSP_TEMPLATE_LIST_OBJECT       pList           = (PBSP_TEMPLATE_LIST_OBJECT)pMyObject->hOwnerList;
     PBSPENG_SOA_INTERFACE           pBspSoaIf       = pList->GetBspSoaIf((ANSC_HANDLE)pList);
     BOOL                            bTerminated     = FALSE;
-    char                            *pMethodName    = BSP_METHOD_EXECUTE;
-    ANSC_HANDLE                     hBeepObj        = (ANSC_HANDLE)NULL;
     PBSP_TEMPLATE_ARCHIVE_OBJECT    pArchive        = NULL;
     BOOL                            bSucc           = FALSE;
-    PBSP_TEMPLATE_OBJECT            pTmpl           = NULL;
     PBSP_TEMPLATE_LIST_OBJECT       pImportList     = NULL;
     char                            *pPagePath      = NULL;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -10581,7 +10586,7 @@ BspTemplateObjIncludeTemplate
     }
 
     AnscCopyString(pPagePath, (char *)pMyObject->pName);
-    BspEng_CalcPagePath(pPagePath, pName);
+    BspEng_CalcPagePath(pPagePath,(char *) pName);
 
     if (!pList->IsTemplateLoaded((ANSC_HANDLE)pList, pPagePath))
     {
@@ -10749,6 +10754,8 @@ BspTemplateObjKickoutArrayMap
         PBSP_TEMPLATE_STATE         pState
     )
 {
+    UNREFERENCED_PARAMETER(pState);
+    UNREFERENCED_PARAMETER(hThisObject);
 #if 0   /* not used in new version */
     PBSP_TEMPLATE_OBJECT            pMyObject = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PANSC_PTR_ARRAY_OBJECT          pPtrArray;
@@ -10923,5 +10930,3 @@ BspEngIsCharDigit
 {
     return (ch >= '0' && ch <= '9');
 }
-
-

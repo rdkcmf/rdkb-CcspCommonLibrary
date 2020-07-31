@@ -121,7 +121,6 @@ StunScoSendBindingRequest1
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pRetryTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hRetryTimerObj;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1 = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
-    PSTUN_HEADER                    pStunHeader       = (PSTUN_HEADER                  )buffer;
 
     if ( pMyObject->LastSendMsg1 )
     {
@@ -198,7 +197,6 @@ StunScoSendBindingRequestA
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
-    PSTUN_HEADER                    pStunHeader       = (PSTUN_HEADER                  )buffer;
 
     pMyObject->SocketStateA = STUN_SCO_SOCKET_STATE_Requesting;
     returnStatus            =
@@ -260,7 +258,6 @@ StunScoSendBindingRequestB
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpB = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpB;
-    PSTUN_HEADER                    pStunHeader       = (PSTUN_HEADER                  )buffer;
 
     pMyObject->SocketStateB = STUN_SCO_SOCKET_STATE_Requesting;
     returnStatus            =

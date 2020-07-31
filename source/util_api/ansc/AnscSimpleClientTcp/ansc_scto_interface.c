@@ -117,8 +117,6 @@ AnscCreateSimpleClientTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pSimpleClientTcp = NULL;
 
     return  AnscSctoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

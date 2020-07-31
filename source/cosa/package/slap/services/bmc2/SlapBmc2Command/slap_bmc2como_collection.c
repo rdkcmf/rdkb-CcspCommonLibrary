@@ -104,10 +104,8 @@ SlapBmc2ComoGetCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject            = (PSLAP_BMC2_COMMAND_OBJECT  )hThisObject;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController   = (PBMC2_REQ_CONTROLLER_OBJECT)pMyObject->hInsContext;
-    PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY     )pBmc2ReqController->hCommandProperty;
 
     return  pBmc2ReqController->CliArgumentCount;
 }

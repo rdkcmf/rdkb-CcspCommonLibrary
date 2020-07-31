@@ -110,8 +110,7 @@ SlapVcoUint32ArrayToMacAddr
         SLAP_UINT32_ARRAY*          uint32_array
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           i              = 0;
 

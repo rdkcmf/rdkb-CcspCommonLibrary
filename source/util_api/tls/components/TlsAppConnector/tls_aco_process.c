@@ -120,6 +120,7 @@ TlsAcoRecv
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     PTLS_APP_CONNECTOR_OBJECT       pMyObject          = (PTLS_APP_CONNECTOR_OBJECT  )hThisObject;
     PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PANSC_BUFFER_DESCRIPTOR         pTbpBdo            = (PANSC_BUFFER_DESCRIPTOR    )NULL;

@@ -104,8 +104,6 @@ AnscCreateObjectMapper
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = NULL;
 
     return  AnscOmoCreate(hOwnerContext);
 }

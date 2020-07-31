@@ -149,7 +149,6 @@ TlsCpoEncrypt
     )
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
-    PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
 
     switch ( cipher_algorithm )
     {
@@ -324,10 +323,8 @@ TlsCpoEncrypt_DES
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->DesEncrypt
+    
+    pAnscCrypto->DesEncrypt
             (
                 i_data,
                 i_data_size,
@@ -407,10 +404,8 @@ TlsCpoEncrypt_3DES
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->TripleDesEncrypt
+    
+    pAnscCrypto->TripleDesEncrypt
             (
                 i_data,
                 i_data_size,
@@ -490,10 +485,8 @@ TlsCpoEncrypt_IDEA
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->IdeaEncrypt
+    
+    pAnscCrypto->IdeaEncrypt
             (
                 i_data,
                 i_data_size,
@@ -575,10 +568,8 @@ TlsCpoEncrypt_RC2
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->Rc2Encrypt
+    
+    pAnscCrypto->Rc2Encrypt
             (
                 i_data,
                 i_data_size,
@@ -662,10 +653,8 @@ TlsCpoEncrypt_RC4
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->TLSRc4Encrypt
+    
+    pAnscCrypto->TLSRc4Encrypt
             (
                 i_data,
                 i_data_size,
@@ -747,10 +736,8 @@ TlsCpoEncrypt_AES
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
-
-    ulOutputSize =
-        pAnscCrypto->AesEncrypt
+    
+    pAnscCrypto->AesEncrypt
             (
                 i_data,
                 i_data_size,

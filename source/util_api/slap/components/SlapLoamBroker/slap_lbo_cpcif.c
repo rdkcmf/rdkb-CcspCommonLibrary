@@ -139,7 +139,6 @@ SlapLboCpcCallDispatch
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PIMCP_SLAP_CALL                 pImcpSlapCall     = (PIMCP_SLAP_CALL           )pInputBuffer;
 
     *ppOutputBuffer = NULL;
@@ -225,10 +224,7 @@ SlapLboCpcFreeOutputBuffer
         void*                       pOutputBuffer
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     AnscFreeMemory((void*)((ULONG)pOutputBuffer - IMCP_REPLY_BUFFER_OVERHEAD));
 
     return  ANSC_STATUS_SUCCESS;
@@ -276,9 +272,7 @@ SlapLboCpcNotifyEvent
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PANSC_LPC_PARTY_ADDR            pPartyAddr        = (PANSC_LPC_PARTY_ADDR      )hReserved;
 
     switch ( ulEvent )
@@ -287,8 +281,7 @@ SlapLboCpcNotifyEvent
 
                 if ( pPartyAddr )
                 {
-                    returnStatus =
-                        pMyObject->DelObjBinding2
+                    pMyObject->DelObjBinding2
                             (
                                 (ANSC_HANDLE)pMyObject,
                                 pPartyAddr->PartyName

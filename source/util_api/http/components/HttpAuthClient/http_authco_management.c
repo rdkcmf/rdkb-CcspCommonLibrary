@@ -119,10 +119,8 @@ HttpAuthcoAddAuthInfo
 {
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT    )hRequest;
     PHTTP_AUTH_CHALLENGE            pChallenge   = (PHTTP_AUTH_CHALLENGE    )hChallenge;
     PHTTP_AUTHO_INFO                pAuthInfo    = NULL;
-    PHTTP_AUTHO_DIGEST_INFO         pDigestInfo  = NULL;
     PHTTP_ACM_INTERFACE             pHttpAcmIf   = (PHTTP_ACM_INTERFACE     )pMyObject->hAcmIf;
     BOOL                            bDigestAuth  = (pChallenge->AuthType == HTTP_AUTH_TYPE_DIGEST);
     PUCHAR                          pHostName    = NULL;
@@ -200,7 +198,7 @@ HttpAuthcoAddAuthInfo
         /* basic authentication */
         PHTTP_CHALLENGE_BASIC       pBasicChal  = &pChallenge->Challenge.Basic;
 
-        pAuthInfo->pRealm   = AnscCloneString(pBasicChal->Realm);
+        pAuthInfo->pRealm   = (PUCHAR)AnscCloneString(pBasicChal->Realm);
     }
     else
     {
@@ -300,7 +298,6 @@ HttpAuthcoFindAuthInfo
 {
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT    )hRequest;
     PHTTP_AUTHO_INFO                pAuthInfo    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ANSC_HANDLE                     hAuthInfo    = (ANSC_HANDLE)NULL;
@@ -328,18 +325,18 @@ HttpAuthcoFindAuthInfo
             continue;
         }
 
-        if ( !AnscEqualString(pAuthInfo->pHostName, pHostName, FALSE) )
+        if ( !AnscEqualString((char*)pAuthInfo->pHostName, (char*)pHostName, FALSE) )
         {
             continue;
         }
 
-        if ( AnscEqualString(pAuthInfo->pUri, pUriPath, TRUE ) )
+        if ( AnscEqualString((char*)pAuthInfo->pUri, (char*)pUriPath, TRUE ) )
         {
             hAuthInfo   = (ANSC_HANDLE)pAuthInfo;
             break;
         }
 
-        pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pAuthInfo->pUri);
+        pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pAuthInfo->pUri);
         if ( pMatchStr == pUriPath )
         {
             hAuthInfo   = (ANSC_HANDLE)pAuthInfo;
@@ -359,7 +356,7 @@ HttpAuthcoFindAuthInfo
 
                 for ( i = 0; i < ulCount; i ++)
                 {
-                    pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pURIs[i]);
+                    pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pURIs[i]);
                     if ( pMatchStr == pUriPath )
                     {
                         bMatch  = TRUE;
@@ -378,7 +375,7 @@ HttpAuthcoFindAuthInfo
 
                 if ( pDomain )
                 {
-                	pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pDomain);
+                	pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pDomain);
 					if ( pMatchStr == pUriPath )
 					{
 						break;
@@ -459,7 +456,6 @@ HttpAuthcoFindAuthInfo2
 {
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT    )hRequest;
     PHTTP_AUTHO_INFO                pAuthInfo    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ANSC_HANDLE                     hAuthInfo    = (ANSC_HANDLE)NULL;
@@ -489,25 +485,25 @@ HttpAuthcoFindAuthInfo2
             continue;
         }
 
-        if ( !AnscEqualString(pAuthInfo->pHostName, pHostName, FALSE) )
+        if ( !AnscEqualString((char*)pAuthInfo->pHostName, (char*)pHostName, FALSE) )
         {
             continue;
         }
 
-        if ( AnscEqualString(pAuthInfo->pUri, pUriPath, TRUE ) )
+        if ( AnscEqualString((char*)pAuthInfo->pUri, (char*)pUriPath, TRUE ) )
         {
             hAuthInfo       = (ANSC_HANDLE)pAuthInfo;
             break;
         }
 
-        pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pAuthInfo->pUri);
+        pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pAuthInfo->pUri);
         if ( pMatchStr == pUriPath )
         {
             hAuthInfo       = (ANSC_HANDLE)pAuthInfo;
             break;
         }
 
-        pMatchStr   = (PUCHAR)_ansc_strstr(pAuthInfo->pUri, pUriPath);
+        pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pAuthInfo->pUri, (const char*)pUriPath);
         if ( pMatchStr == pAuthInfo->pUri )
         {
             hAuthInfo       = (ANSC_HANDLE)pAuthInfo;
@@ -528,7 +524,7 @@ HttpAuthcoFindAuthInfo2
 
                 for ( i = 0; i < ulCount; i ++)
                 {
-                    pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pURIs[i]);
+                    pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pURIs[i]);
                     if ( pMatchStr == pUriPath )
                     {
                         bMatch  = TRUE;
@@ -546,7 +542,7 @@ HttpAuthcoFindAuthInfo2
             {
                 pDomain = pAuthInfo->pDigest->pDomain;
 
-                pMatchStr   = (PUCHAR)_ansc_strstr(pUriPath, pDomain);
+                pMatchStr   = (PUCHAR)_ansc_strstr((const char*)pUriPath, (const char*)pDomain);
                 if ( pMatchStr == pUriPath )
                 {
                     hAuthInfo   = (ANSC_HANDLE)pAuthInfo;
@@ -622,9 +618,8 @@ HttpAuthcoGetNC
         ANSC_HANDLE                 hAuthInfo
     )
 {
-    ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
-    PHTTP_AUTH_CLIENT_OBJECT        pMyObject    = (PHTTP_AUTH_CLIENT_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT    )hRequest;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hRequest);
     PHTTP_AUTHO_INFO                pAuthInfo    = (PHTTP_AUTHO_INFO       )hAuthInfo;
     ULONG                           ulNC         = 0;
     PULONG                          pulNC        = NULL;

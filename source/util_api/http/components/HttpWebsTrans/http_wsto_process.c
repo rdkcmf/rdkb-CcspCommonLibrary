@@ -122,11 +122,7 @@ HttpWstoQuery
         ANSC_HANDLE                 hBufferContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
-    PHTTP_WSP_INTERFACE             pWspIf        = (PHTTP_WSP_INTERFACE           )pMyObject->hWspIf;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )hBufferContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq       = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
     ULONG                           ulWstoQmode   = HTTP_WSTO_QMODE_COLLECT;
@@ -253,15 +249,13 @@ HttpWstoRecv
         ANSC_HANDLE                 hBufferContext
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
     PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
-    PHTTP_WSP_INTERFACE             pWspIf        = (PHTTP_WSP_INTERFACE           )pMyObject->hWspIf;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )hBufferContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq       = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
-    ULONG                           ulBmoState    = HTTP_BMO_STATE_EMPTY;
-
     pBmoReq->SetFumIf((ANSC_HANDLE)pBmoReq, pSimpleServer->GetFumIf((ANSC_HANDLE)pSimpleServer));
 
     pBmoReq->SetWebSessionId((ANSC_HANDLE)pBmoReq, (ULONG)pMyObject->hWebsSession);
@@ -278,8 +272,6 @@ HttpWstoRecv
      *
      * Guess which one we're using here ...
      */
-    buffer       = AnscBdoGetBlock    (pBufferDesp);
-    ulSize       = AnscBdoGetBlockSize(pBufferDesp);
     returnStatus =
         pBmoReq->Process
             (
@@ -347,9 +339,7 @@ HttpWstoSend
         ULONG                       ulSendFlags
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
     PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT          )hMessage;
     ANSC_HANDLE                     hOrgTmhIf     = pBmoRep->GetTmhIf((ANSC_HANDLE)pBmoRep);
@@ -358,8 +348,7 @@ HttpWstoSend
 
     if ( ulSendFlags & HTTP_WSTO_SFLAG_HEADERS )
     {
-        returnStatus =
-            pBmoRep->OutputHeaders
+        pBmoRep->OutputHeaders
                 (
                     (ANSC_HANDLE)pBmoRep,
                     (ANSC_HANDLE)pWebSocket
@@ -368,8 +357,7 @@ HttpWstoSend
 
     if ( ulSendFlags & HTTP_WSTO_SFLAG_BODY )
     {
-        returnStatus =
-            pBmoRep->OutputBody
+        pBmoRep->OutputBody
                 (
                     (ANSC_HANDLE)pBmoRep,
                     (ANSC_HANDLE)pWebSocket
@@ -434,11 +422,10 @@ HttpWstoFinish
         ANSC_HANDLE                 hBufferContext
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
-    PHTTP_WSP_INTERFACE             pWspIf        = (PHTTP_WSP_INTERFACE           )pMyObject->hWspIf;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
     PHTTP_BMO_REQ_OBJECT            pBmoReq       = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )hBufferContext;
     ULONG                           ulBmoState    = pBmoReq->GetState((ANSC_HANDLE)pBmoReq);
@@ -454,8 +441,6 @@ HttpWstoFinish
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-    buffer       = AnscBdoGetBlock    (pBufferDesp);
-    ulSize       = AnscBdoGetBlockSize(pBufferDesp);
     returnStatus =
         pBmoReq->CloseUp
             (

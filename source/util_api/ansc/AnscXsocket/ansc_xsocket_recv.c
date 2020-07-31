@@ -114,12 +114,10 @@ AnscXsocketRecvTask
     int                             recv_size     = 0;
     ULONG                           ulRetryCounts = 0;
     int                             s_result      = 0;
-    int                             s_error       = 0;
     xskt_fd_set                     read_fd_set;
     xskt_timeval                    timeval;
     /*xskt_socket_addr_in             peer_addr;*/
     xskt_addrinfo*                  pXsktAddrInfo = (xskt_addrinfo*)pMyObject->pPeerAddrInfo;
-    int                             addrlen;
 
     AnscTrace("AnscXsocketRecvTask is activated ...!\n");
 
@@ -168,7 +166,6 @@ AnscXsocketRecvTask
         }
         else if ( s_result == XSKT_SOCKET_ERROR )
         {
-            s_error = _xskt_get_last_error();
 
             if ( pMyObject->bClosed )
             {
@@ -247,7 +244,6 @@ AnscXsocketRecvTask
 
         if ( s_result == XSKT_SOCKET_ERROR )
         {
-            s_error = _xskt_get_last_error();
 
             CcspTraceError(("recvfrom error %s\n", strerror(errno)));
 

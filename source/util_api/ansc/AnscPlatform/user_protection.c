@@ -229,8 +229,8 @@ UserPulseEvent(PUSER_EVENT pEvent)
 VOID
 UserWaitEvent(PUSER_EVENT pEvent, ULONG ulMilliSeconds)
 {
+    UNREFERENCED_PARAMETER(ulMilliSeconds);
     struct sembuf sb;
-    struct timeval tm;
 
     sb.sem_num = 0;
     sb.sem_op = -1;
@@ -273,6 +273,7 @@ UserFreeEvent(PUSER_EVENT pEvent)
 BOOLEAN
 UserInitializeSemaphore(PUSER_SEMAPHORE  pSemaphore, ULONG  ulInitialCount, ULONG  ulMaximumCount)
 {
+    UNREFERENCED_PARAMETER(ulMaximumCount);
     //ULONG ulInitialCount = 0;
     int rc = 0;
     rc = sem_init(pSemaphore, 0, ulInitialCount);
@@ -438,6 +439,7 @@ UserResetSemEvent(PSEM_EVENT *pEvent)
 VOID
 UserPulseSemEvent(PSEM_EVENT *pEvent)
 {
+    UNREFERENCED_PARAMETER(pEvent);
     AnscTrace("PulseSemEvent not supported!\n");
 
     return;

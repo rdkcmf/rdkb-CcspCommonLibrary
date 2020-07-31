@@ -105,12 +105,7 @@ AnscDeuoSendTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
-    PANSC_DAEMON_SERVER_UDP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_UDP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_DSUO_WORKER_OBJECT        pWorker      = (PANSC_DSUO_WORKER_OBJECT      )pServer->hWorker;
-    PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
     AnscTrace("AnscDeuoSendTask is activated ...!\n");
 

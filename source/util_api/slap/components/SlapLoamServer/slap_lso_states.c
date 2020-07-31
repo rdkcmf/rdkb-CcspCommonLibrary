@@ -114,9 +114,7 @@ SlapLsoGetAnscCpcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscCpcIf;
 }
@@ -152,9 +150,7 @@ SlapLsoGetAnscLpcConnector
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscLpcConnector;
 }
@@ -195,9 +191,7 @@ SlapLsoSetAnscLpcConnector
         ANSC_HANDLE                 hLpcConnector
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty         = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
 
     pMyObject->hAnscLpcConnector = hLpcConnector;
@@ -242,9 +236,7 @@ SlapLsoGetSlapUoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapUoaIf;
 }
@@ -285,9 +277,7 @@ SlapLsoSetSlapUoaIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
     pMyObject->hSlapUoaIf = hInterface;
 
@@ -325,7 +315,6 @@ SlapLsoGetMobilityOn
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -368,7 +357,6 @@ SlapLsoSetMobilityOn
         BOOL                        bMobilityOn
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -413,7 +401,6 @@ SlapLsoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -458,7 +445,6 @@ SlapLsoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -498,7 +484,6 @@ SlapLsoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -538,9 +523,6 @@ SlapLsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PSLAP_LOAM_SERVER_PROPERTY      pProperty    = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

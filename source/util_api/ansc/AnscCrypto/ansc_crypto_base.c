@@ -108,7 +108,6 @@ AnscCryptoCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CRYPTO_OBJECT             pMyObject    = NULL;
 
     /*
@@ -285,7 +284,6 @@ AnscCryptoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
 
     AnscFreeMemory(pMyObject);

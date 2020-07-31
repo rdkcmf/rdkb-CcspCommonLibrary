@@ -121,4 +121,11 @@
 
 #include "ccc_ifo_mbi.h"
 
+SLAP_HANDLE
+SlapVcoStringToCalendarTime
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       calendar_time
+    );
+
 #endif

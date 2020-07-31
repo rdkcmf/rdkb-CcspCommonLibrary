@@ -77,6 +77,8 @@ AnscCryptoCreateSSLeayDSA
         BOOL                        bPublicKey
     )
 {
+    UNREFERENCED_PARAMETER(pKey);
+    UNREFERENCED_PARAMETER(bPublicKey);
     return NULL;
 }
 
@@ -88,6 +90,8 @@ AnscCryptCreateSSLeayRSA
         BOOL                        bPublicKey
     )
 {
+    UNREFERENCED_PARAMETER(pKey);
+    UNREFERENCED_PARAMETER(bPublicKey);
     return NULL;
 }
 

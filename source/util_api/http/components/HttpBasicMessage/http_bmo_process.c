@@ -121,9 +121,7 @@ HttpBmoExamine
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject      = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody   = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
     ULONG                           ulTestBmoState = HTTP_BMO_STATE_EMPTY;
     ULONG                           ulTestMboState = HTTP_MBO_STATE_EMPTY;
@@ -617,18 +615,9 @@ HttpBmoCloseUp
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject           = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhIf              = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody        = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp         = (PANSC_BUFFER_DESCRIPTOR   )hBdo;
-    PANSC_BUFFER_DESCRIPTOR         pHeaderBdo          = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pNewBodyBdo         = NULL;
-    PANSC_BUFFER_DESCRIPTOR         pExtraBdo           = NULL;
-    ULONG                           ulHeaderSize        = 0;
-    ULONG                           ulPredictedBodySize = 0;
-    ULONG                           ulArrivedBodySize   = 0;
-    ULONG                           ulTotalPackedSize   = 0;
-
+    
     switch ( pMyObject->State )
     {
         case    HTTP_BMO_STATE_EMPTY :
@@ -748,7 +737,6 @@ HttpBmoProduce
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject     = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     ULONG                           ulMessageSize = pMyObject->GetMessageSize((ANSC_HANDLE)pMyObject);
     ULONG                           ulCopySize    = 0;
     ULONG                           ulLeftSize    = *pulSize;
@@ -833,9 +821,7 @@ HttpBmoOutputHeaders
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject         = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_TMH_INTERFACE             pTmhIf            = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhIf;
-    PHTTP_MESSAGE_BODY_OBJECT       pMessageBody      = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo        = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
     PVOID                           pSerializedBuffer = NULL;
     ULONG                           ulSerializedSize  = 0;
@@ -925,17 +911,13 @@ HttpBmoOutputBody
         ANSC_HANDLE                 hSerializeContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
 
     if ( pMessageBody )
     {
         PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = (PHTTP_WEBS_TRANS_OBJECT       )pMyObject->hHttpWebsTrans;
         PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pWebsTrans?pWebsTrans->GetWebSocket((ANSC_HANDLE)pWebsTrans):NULL;
-        PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE           )pMyObject->hTmhIf;
         PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE           )pMyObject->hBccIf;
         ULONG                           ulBodySize   = pMessageBody->GetBodySize((ANSC_HANDLE)pMessageBody);
         char                            chunkMsg[16];
@@ -943,10 +925,9 @@ HttpBmoOutputBody
 
         if ( bChunkedMode && ulBodySize != 0 )
         {
-            _ansc_sprintf(chunkMsg, "%X   \r\n", ulBodySize);
+            _ansc_sprintf(chunkMsg, "%X   \r\n", (unsigned int)ulBodySize);
 
-            returnStatus =
-                pBccIf->Serialize
+            pBccIf->Serialize
                     (
                         pBccIf->hOwnerContext,
                         (PVOID)chunkMsg,
@@ -955,8 +936,7 @@ HttpBmoOutputBody
                     );
         }
 
-        returnStatus =
-            pMessageBody->Output
+        pMessageBody->Output
                 (
                     (ANSC_HANDLE)pMessageBody,
                     hSerializeContext
@@ -964,8 +944,7 @@ HttpBmoOutputBody
 
         if ( bChunkedMode && ulBodySize != 0 )
         {
-            returnStatus =
-                pBccIf->Serialize
+            pBccIf->Serialize
                     (
                         pBccIf->hOwnerContext,
                         (PVOID)"\r\n",
@@ -1014,11 +993,7 @@ HttpBmoSendComplete
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT    )hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE           )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhIf       = (PHTTP_TMH_INTERFACE           )pMyObject->hTmhIf;
-    PHTTP_MESSAGE_BODY_OBJECT       pMessageBody = (PHTTP_MESSAGE_BODY_OBJECT     )pMyObject->hMessageBody;
     PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = (PHTTP_WEBS_TRANS_OBJECT       )pMyObject->hHttpWebsTrans;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pWebsTrans?pWebsTrans->GetWebSocket((ANSC_HANDLE)pWebsTrans):NULL;
     PHTTP_BCC_INTERFACE             pBccIf       = (PHTTP_BCC_INTERFACE           )pMyObject->hBccIf;
@@ -1026,8 +1001,7 @@ HttpBmoSendComplete
 
     if ( pMyObject->IsChunkedCoding((ANSC_HANDLE)pMyObject) )
     {
-        returnStatus =
-            pBccIf->Serialize
+        pBccIf->Serialize
                 (
                     pBccIf->hOwnerContext,
                     (PVOID)LastChunk,

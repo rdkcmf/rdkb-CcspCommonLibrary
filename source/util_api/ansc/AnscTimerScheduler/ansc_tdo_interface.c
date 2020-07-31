@@ -119,8 +119,6 @@ AnscCreateTimerDescriptor
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pTimerDescriptor = NULL;
 
     return  AnscTdoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

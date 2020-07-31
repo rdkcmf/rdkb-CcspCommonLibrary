@@ -117,8 +117,6 @@ SysCreateRepositoryDriver
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_DRIVER_OBJECT   pSysRepositoryDriver = NULL;
 
     return  SysRdoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -118,6 +118,7 @@ TlsCsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_CIPHER_SWITCH_OBJECT       pMyObject    = NULL;
 

@@ -132,8 +132,8 @@ ScliShoAccept
         ANSC_HANDLE                 hClientInfo
     )
 {
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hClientInfo);
     return TRUE;
 }
 
@@ -197,10 +197,8 @@ ScliShoServe
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
-    ULONG                           SessionState;
     BOOL                            bComplete, bDM;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
@@ -215,7 +213,6 @@ ScliShoServe
         pMyObject->StartTdo((ANSC_HANDLE)pMyObject);
     }
 
-    SessionState = pSession->SessionState;
 
     AnscAcquireLock(&pSession->AccessLock);
 
@@ -238,7 +235,7 @@ ScliShoServe
             bComplete,
             bDM
         );
-
+    UNREFERENCED_PARAMETER(bDM);
     AnscReleaseLock(&pSession->AccessLock);
 
     if ( bComplete )
@@ -399,12 +396,8 @@ ScliShoSignal
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
-    BOOL                            bNotRunning  = FALSE;
     PSCLI_SHELL_SESSION_EXEC        pSession;
-    BOOL                            bServing     = TRUE;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
@@ -525,7 +518,6 @@ ScliShoGetSession
     )
 {
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
     PSINGLE_LINK_ENTRY              pSLinkEntry;
     PSCLI_SHELL_SESSION_EXEC        pSession     = NULL;
     BOOL                            bFound       = FALSE;
@@ -684,7 +676,7 @@ ScliShoCreateSession
                 pIceIf->ClearScreen         = ScliShoIceClearScreen;
             }
 
-            AnscInitializeEvent(&pSession->InputEvent);
+            AnscInitializeEvent((PSEM_EVENT *)&pSession->InputEvent);
 
             /* textbox */
             pSession->hActiveTextBox        = (ANSC_HANDLE)NULL;
@@ -753,7 +745,6 @@ ScliShoRemoveSession
     )
 {
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT      )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY    )&pMyObject->Property;
     PSCLI_SHELL_SESSION_EXEC        pSession     = (PSCLI_SHELL_SESSION_EXEC)hSession;
     PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE     )pMyObject->hBmc2SccIf;
     PBMC2_ICE_INTERFACE             pIceIf       = pSession->hBmc2IceIf;
@@ -818,7 +809,7 @@ ScliShoRemoveSession
             AnscFreeMemory(pSession->hCeeExecEnv);
         }
 
-        AnscFreeEvent(&pSession->InputEvent);
+        AnscFreeEvent((PSEM_EVENT *)&pSession->InputEvent);
 
         AnscFreeMemory(pSession);
     }
@@ -875,8 +866,6 @@ ScliShoStartUserAuth
 {
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
-    BOOL                            bNotRunning  = FALSE;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
 
@@ -889,7 +878,7 @@ ScliShoStartUserAuth
                 pTscIf->hOwnerContext,
                 hSrvSession,
                 pProperty->Greeting,
-                AnscSizeOfString(pProperty->Greeting)
+                AnscSizeOfString((const char *)pProperty->Greeting)
             );
 
         pSession->bGreeting     = FALSE;
@@ -992,16 +981,12 @@ ScliShoProcessCmdData
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           SessionState;
-    BOOL                            bProcSpecial = FALSE;    
     ULONG                           ulLeftSize;
-    ULONG                           ulInputMode;
-    PBMC2_ICE_TEXTBOX_INFO          pActiveTBox  = NULL;
 
 #if 0
 /* debug code */
@@ -1032,14 +1017,11 @@ if ( 1 )
         return ANSC_STATUS_RESOURCES;
     }
 
-    ulInputMode = pSession->InputMode;
-    pActiveTBox = (PBMC2_ICE_TEXTBOX_INFO)pSession->hActiveTextBox;
 
     ulLeftSize  = SCLI_SHELL_MAX_COMMAND_LEN - pSession->CommandLen;
 
     SessionState = pSession->SessionState;
 
-    bProcSpecial = (SessionState == SCLI_SHELL_STATE_LOGGED_IN);
 
     if ( TRUE )
     {
@@ -1543,15 +1525,10 @@ ScliShoProcessCmdChar
         PULONG                      pulEchoSize
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
-    BOOL                            bProcSpecial = FALSE;    
-    ULONG                           ulInputMode;
     PBMC2_ICE_TEXTBOX_INFO          pActiveTBox  = NULL;
     int                             i;
     BOOL                            bCursorAtEnd = FALSE;
@@ -1566,7 +1543,6 @@ ScliShoProcessCmdChar
 
     ulCursorPos = pSession->CursorPos;
 
-    ulInputMode = pSession->InputMode;
     pActiveTBox = (PBMC2_ICE_TEXTBOX_INFO)pSession->hActiveTextBox;
 
     if ( pSession->CommandLen >= (SCLI_SHELL_MAX_COMMAND_LEN-1) ||      /*RDKB-5892 , CID-24188; limiting the length to 511 to avoid overflow*/
@@ -1614,7 +1590,6 @@ INSERT_CHAR:
         if ( bCursorAtEnd )
         {
             /*ULONG                       ulWidth         = pActiveTBox->Width; RDKB-5892, CID-24321, variable not used*/
-            ULONG                       ulCurTBoxPos    = pSession->CursorPos - pSession->ulFirstVisiblePos;
 
             returnStatus =
                 pMyObject->MoveToTextBox
@@ -1727,13 +1702,11 @@ ScliPostUserAuth
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession     = (PSCLI_SHELL_SESSION_EXEC )hShellSession;
     PSCLI_SHELL_EXEC_ENV            pCeeExecEnv  = (PSCLI_SHELL_EXEC_ENV     )pSession->hCeeExecEnv;
-    ULONG                           SessionState;
 
     pCeeExecEnv = (PSCLI_SHELL_EXEC_ENV)pSession->hCeeExecEnv;
 
@@ -1763,7 +1736,7 @@ ScliPostUserAuth
         PUCHAR                      pUserIdentifier = pSession->Username;
         BMC2_TERMINAL_INFO          TermInfo;
 
-        TermInfo.UserIdentifier = pUserIdentifier;
+        TermInfo.UserIdentifier = (char*)pUserIdentifier;
         TermInfo.UserPermission = TermPermission;
         TermInfo.bReadOnly      = FALSE;    /* how to set the value ? */
         TermInfo.MaxLineNumber  = pExecEnv->WindowHeight;
@@ -1792,14 +1765,14 @@ ScliPostUserAuth
     }
     else
     {
-        PUCHAR  pErrMsg = "Internal error occurred!";
+        PCHAR  pErrMsg = "Internal error occurred!";
 
         returnStatus =
             pTscIf->Output
                 (
                     pTscIf->hOwnerContext,
                     hSrvSession,
-                    pErrMsg,
+                    (PUCHAR)pErrMsg,
                     AnscSizeOfString(pErrMsg)
                 );
 
@@ -1828,9 +1801,7 @@ ScliShoRunCmd
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           SessionState;
     ULONG                           TermPermission;
@@ -1869,7 +1840,7 @@ ScliShoRunCmd
                         break;
                     }
 
-                    AnscCopyString(pSession->Username, pCmd);
+                    AnscCopyString((char*)pSession->Username, (char*)pCmd);
 
                     AnscFreeMemory(pCmd);
 
@@ -1894,7 +1865,6 @@ ScliShoRunCmd
                     PUCHAR          pPassword   = NULL;
                     BOOL            bAuthOK     = TRUE;
                     ULONG           ulPerm      = (ULONG)-1;
-                    BOOL            bPrivileged = FALSE;
                    
                     if ( pProperty->bUserAuth )
                     { 
@@ -2013,7 +1983,6 @@ ScliShoRunCmd
                 /* execute command */
                 if ( TRUE )
                 {
-                    ULONG           ulPos = pSession->CommandLen;
                     PUCHAR          pCmd  = pSession->Command;
                     ULONG           CmdCode;
 
@@ -2029,7 +1998,7 @@ ScliShoRunCmd
 #ifdef   _CLI_SYSTEM_CONSOLE_ENABLED
                     if ( pSession->bOsShellActive )
                     {
-                        if ( AnscEqualString(pCmd, "exit", FALSE) )
+                        if ( AnscEqualString((char *)pCmd, "exit", FALSE) )
                         {
                             returnStatus = 
                                 pMyObject->RunBicExit
@@ -2060,7 +2029,7 @@ ScliShoRunCmd
 
                         if ( CmdCode == SCLI_SHELL_BICODE_Unrecognized )
                         {
-                            if ( pCmd && _ansc_strchr(pCmd, SCLI_SHELL_HELP_CHAR) )
+                            if ( pCmd && _ansc_strchr((char *)pCmd, SCLI_SHELL_HELP_CHAR) )
                             {
                                 returnStatus = 
                                     pMyObject->RunBicHelp
@@ -2157,16 +2126,14 @@ ScliShoCacheCmd
         PUCHAR                      pCmd
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT          )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY        )&pMyObject->Property;
     PSCLI_SHELL_SESSION_CMD_CACHE   pCmdCache;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           ulIndex;
     PUCHAR                          pOldCmd;
     ULONG                           ulPrevIndex;
 
-    if ( !pCmd || AnscSizeOfString( pCmd ) == 0 )
+    if ( !pCmd || AnscSizeOfString((const char *) pCmd ) == 0 )
     {
         return ANSC_STATUS_BAD_PARAMETER;
     }
@@ -2193,9 +2160,9 @@ ScliShoCacheCmd
     {
         PUCHAR                      pPrevCmd    = pCmdCache->pCmds[ulPrevIndex];
 
-        if ( pPrevCmd && AnscSizeOfString(pPrevCmd) == AnscSizeOfString(pCmd) )
+        if ( pPrevCmd && AnscSizeOfString((const char *)pPrevCmd) == AnscSizeOfString((const char *)pCmd) )
         {
-            if ( AnscEqualString2(pPrevCmd, pCmd, AnscSizeOfString(pCmd), FALSE) )
+            if ( AnscEqualString2((char *)pPrevCmd, (char *)pCmd, AnscSizeOfString((const char *)pCmd), FALSE) )
             {
                 /* 
                  * don't cache this command since it's exactly the same as previous one,
@@ -2216,7 +2183,7 @@ ScliShoCacheCmd
         AnscFreeMemory(pOldCmd);
     }
 
-    pCmdCache->pCmds[ulIndex]   = AnscCloneString(pCmd);
+    pCmdCache->pCmds[ulIndex]   = (PUCHAR)AnscCloneString((char *)pCmd);
     pCmdCache->Cursor           = (ulIndex + 1) % pCmdCache->CacheSize;
 
     if ( pCmdCache->NumOfCmds >= pCmdCache->CacheSize )
@@ -2281,15 +2248,13 @@ ScliShoIsCmdModified
         PUCHAR                      pCmd
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT          )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY        )&pMyObject->Property;
     PSCLI_SHELL_SESSION_CMD_CACHE   pCmdCache;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           ulHeadIndex, ulTailIndex;
     ULONG                           ulCurIndex;
 
-    if ( !pCmd || AnscSizeOfString(pCmd) == 0 )
+    if ( !pCmd || AnscSizeOfString((const char *)pCmd) == 0 )
     {
         return FALSE;
     }
@@ -2326,12 +2291,12 @@ ScliShoIsCmdModified
         return TRUE;
     }
 
-    if ( AnscSizeOfString(pCmd) != AnscSizeOfString(pCmdCache->pCmds[ulCurIndex]) )
+    if ( AnscSizeOfString((const char *)pCmd) != AnscSizeOfString((const char *)pCmdCache->pCmds[ulCurIndex]) )
     {
         return TRUE;
     }
 
-    if ( AnscEqualString2(pCmdCache->pCmds[ulCurIndex], pCmd, AnscSizeOfString(pCmd), TRUE) )
+    if ( AnscEqualString2((char *)pCmdCache->pCmds[ulCurIndex], (char *)pCmd, AnscSizeOfString((const char *)pCmd), TRUE) )
     {
         return FALSE;
     }
@@ -2388,12 +2353,7 @@ ScliShoRunBuiltInCmd
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_NOT_SPECIFIED;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PSCLI_SHELL_SESSION_EXEC        pSession;
 
-    pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
     switch ( CmdCode )
     {
@@ -2641,7 +2601,7 @@ ScliShoRunNonBuiltInCmd
             SCLI_SHELL_CEN_EVENT_CmdBegin
         );
 
-    if ( !pCmd || AnscSizeOfString(pCmd) == 0 )
+    if ( !pCmd || AnscSizeOfString((const char *)pCmd) == 0 )
     {
         pCenIf->Notify
             (
@@ -2658,7 +2618,7 @@ ScliShoRunNonBuiltInCmd
     {
         BOOL                    bValidCmd, bAuthorized  = FALSE;
         BOOL                    bCanExecCmd     = FALSE;
-        PUCHAR                  pCmdString      = AnscCloneString(pCmd);
+        PUCHAR                  pCmdString      = (PUCHAR)AnscCloneString((char *)pCmd);
         PUCHAR                  pCmdStringOrg   = pCmdString;
         ULONG                   i;
 
@@ -2669,7 +2629,7 @@ ScliShoRunNonBuiltInCmd
 
         SCLI_SHELL_SKIP_SPACE(pCmdString);
 
-        for (i = 0; i < AnscSizeOfString(pCmdString); i ++)
+        for (i = 0; i < AnscSizeOfString((const char *)pCmdString); i ++)
         {
             if ( pCmdString[i] == TELNET_CHAR_SPACE || pCmdString[i] == TELNET_CHAR_HTAB )
             {
@@ -2683,7 +2643,7 @@ ScliShoRunNonBuiltInCmd
                 (
                     pBmc2SccIf->hOwnerContext,
                     pSession->hBmc2Terminal,
-                    pCmdString,
+                    (char *)pCmdString,
                     &bAuthorized
                 );
 
@@ -2754,7 +2714,7 @@ ScliShoRunNonBuiltInCmd
         return ANSC_STATUS_RESOURCES;
     }
 
-    pContext->pCmd              = AnscCloneString(pCmd);
+    pContext->pCmd              = (PUCHAR)AnscCloneString((char *)pCmd);
     pContext->hScliShell        = (ANSC_HANDLE)pMyObject;
     pContext->hSrvSession       = hSrvSession;
     pContext->ExecEnv           = *pExecEnv;
@@ -2828,16 +2788,11 @@ ScliShoValidateCmdArgs
         PUCHAR                      pCmd
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
-    PSCLI_SHELL_CEN_INTERFACE       pCenIf       = (PSCLI_SHELL_CEN_INTERFACE)pMyObject->hCenIf;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
-    ULONG                           ulInputMode;
-    PBMC2_ICE_TEXTBOX_INFO          pActiveTBox  = NULL;
     PSCLI_SHELL_CMD_TLIST           pCmdTokenList= NULL;
     PSCLI_CMD_ARG_MATCH_RESULT      pReqArgM     = NULL;
     ULONG                           ulReqArgMLen = 0;
@@ -2850,8 +2805,6 @@ ScliShoValidateCmdArgs
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
-    ulInputMode = pSession->InputMode;
-    pActiveTBox = (PBMC2_ICE_TEXTBOX_INFO)pSession->hActiveTextBox;
 
     if ( SCLI_SHELL_INPUT_IN_TEXTBOX )
     {
@@ -2865,7 +2818,7 @@ ScliShoValidateCmdArgs
         return  ANSC_STATUS_SUCCESS;
     }
 
-    pCmdTokenList = ScliShoTokenizeCommand(pCmd, SCLI_SHELL_CMD_TOKEN_SEPARATOR);
+    pCmdTokenList = ScliShoTokenizeCommand((char*)pCmd, SCLI_SHELL_CMD_TOKEN_SEPARATOR);
 
     if ( !pCmdTokenList )
     {
@@ -2942,7 +2895,7 @@ ScliShoValidateCmdArgs
                         hThisObject,
                         hSrvSession,
                         SCLI_SHELL_INVALID_ARG,
-                        pCmd,
+                        (char*)pCmd,
                         nErrorPos
                     );
 
@@ -3017,7 +2970,7 @@ ScliShoValidateCmdArgs
                                 hThisObject,
                                 hSrvSession,
                                 SCLI_SHELL_INVALID_ARG,
-                                pCmd,
+                                (char*)pCmd,
                                 nErrorPos
                             );
 
@@ -3051,7 +3004,7 @@ ScliShoValidateCmdArgs
                                 hThisObject,
                                 hSrvSession,
                                 SCLI_SHELL_INVALID_ARG,
-                                pCmd,
+                                (char*)pCmd,
                                 nErrorPos
                             );
 
@@ -3102,7 +3055,7 @@ ScliShoValidateCmdArgs
                                             hThisObject,
                                             hSrvSession,
                                             SCLI_SHELL_INVALID_ARG,
-                                            pCmd,
+                                            (char*)pCmd,
                                             nErrorPos
                                         );
 
@@ -3172,10 +3125,9 @@ ScliShoGetCmdCode
         PUCHAR                      pCmd
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           CmdCode      = SCLI_SHELL_BICODE_Unrecognized;
-    ULONG                           ulCmdLen     = pCmd ? AnscSizeOfString(pCmd) : 0;
+    ULONG                           ulCmdLen     = pCmd ? AnscSizeOfString((const char *)pCmd) : 0;
 
     if ( !pCmd || ulCmdLen == 0 )
     {
@@ -3193,7 +3145,7 @@ ScliShoGetCmdCode
     */
 #ifdef   _CLI_SYSTEM_CONSOLE_ENABLED
     if ( ulCmdLen == AnscSizeOfString(SCLI_SHELL_BICMD_Shell) && 
-         AnscEqualString2(pCmd, SCLI_SHELL_BICMD_Shell, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, SCLI_SHELL_BICMD_Shell, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_Shell;
@@ -3201,35 +3153,35 @@ ScliShoGetCmdCode
     else
 #endif
     if ( ulCmdLen == AnscSizeOfString(SCLI_SHELL_BICMD_Clear) && 
-         AnscEqualString2(pCmd, SCLI_SHELL_BICMD_Clear, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, SCLI_SHELL_BICMD_Clear, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_Clear;
     }
     else
     if ( ulCmdLen == AnscSizeOfString(TELNET_ANSI_TTY_CODE_Cursor_Up) && 
-         AnscEqualString2(pCmd, TELNET_ANSI_TTY_CODE_Cursor_Up, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, TELNET_ANSI_TTY_CODE_Cursor_Up, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_PrevCmd;
     }
     else
     if ( ulCmdLen == AnscSizeOfString(TELNET_ANSI_TTY_CODE_Cursor_Down) && 
-         AnscEqualString2(pCmd, TELNET_ANSI_TTY_CODE_Cursor_Down, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, TELNET_ANSI_TTY_CODE_Cursor_Down, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_NextCmd;
     }
     else
     if ( ulCmdLen == AnscSizeOfString(TELNET_ANSI_TTY_CODE_Cursor_Backward) && 
-         AnscEqualString2(pCmd, TELNET_ANSI_TTY_CODE_Cursor_Backward, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, TELNET_ANSI_TTY_CODE_Cursor_Backward, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_CursorBackward;
     }
     else
     if ( ulCmdLen == AnscSizeOfString(TELNET_ANSI_TTY_CODE_Cursor_Forward) && 
-         AnscEqualString2(pCmd, TELNET_ANSI_TTY_CODE_Cursor_Forward, ulCmdLen, FALSE)
+         AnscEqualString2((char *)pCmd, TELNET_ANSI_TTY_CODE_Cursor_Forward, ulCmdLen, FALSE)
        )
     {
         CmdCode = SCLI_SHELL_BICODE_CursorForward;
@@ -3277,7 +3229,6 @@ ScliShoGetPrevCmd
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT)hThisObject;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     PSCLI_SHELL_SESSION_CMD_CACHE   pCmdCache;
-    ULONG                           ulHeadIndex  = 0;
     ULONG                           ulPrevCmdIndex;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
@@ -3295,7 +3246,6 @@ ScliShoGetPrevCmd
     }
     else
     {
-        ulHeadIndex = pCmdCache->CacheHead;
 
         if ( pCmdCache->Cursor != 0 )
         {
@@ -3583,15 +3533,10 @@ ScliShoGetEscCmdCode
         PULONG                      pulEscCodeLen
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
-    BOOL                            bProcSpecial = FALSE;    
     ULONG                           ulCmdCode    = SCLI_SHELL_BICODE_Unrecognized;
-    ULONG                           ulInputMode;
 
     *pulEscCodeLen  = 1;
 
@@ -3602,7 +3547,6 @@ ScliShoGetEscCmdCode
         return ulCmdCode;
     }
 
-    ulInputMode = pSession->InputMode;
 
     /* check HOME, END,  */
     if ( ulCmdLen >= 4 && ulCmdCode == SCLI_SHELL_BICODE_Unrecognized )
@@ -3879,7 +3823,6 @@ ScliShoGetInputMode
         ANSC_HANDLE                 hSrvSession
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject       = (PSCLI_SHELL_OBJECT)hThisObject;
     PSCLI_SHELL_SESSION_EXEC        pSession;
 
@@ -3939,10 +3882,9 @@ ScliShoRedrawTextBoxInput
         ULONG                       ulCursorTBoxPos
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     PBMC2_ICE_TEXTBOX_INFO          pTextBoxInfo = NULL;    
@@ -3964,7 +3906,7 @@ ScliShoRedrawTextBoxInput
     pLast        = pSession->Command + pSession->CommandLen - 1;
     pTextBoxInfo = (PBMC2_ICE_TEXTBOX_INFO   )pSession->hActiveTextBox;    
     pValue       = pSession->Command + pSession->ulFirstVisiblePos;
-    ulValueLen   = pValue ? AnscSizeOfString(pValue) : 0;
+    ulValueLen   = pValue ? AnscSizeOfString((const char *)pValue) : 0;
 
     if ( pTextBoxInfo )
     {
@@ -4091,10 +4033,9 @@ ScliShoMoveToTextBox
         ANSC_HANDLE                 hExecEnv
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     PBMC2_ICE_TEXTBOX_INFO          pTextBoxInfo = NULL;    
@@ -4347,17 +4288,14 @@ ScliShoRunShellCmd
         PUCHAR                      pCmd
     )
 {
+    UNREFERENCED_PARAMETER(hExecEnv);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_CMD_EXECUTION_ENV       pExecEnv     = (PTELNET_CMD_EXECUTION_ENV)hExecEnv;
     PSCLI_SHELL_CEN_INTERFACE       pCenIf       = (PSCLI_SHELL_CEN_INTERFACE)pMyObject->hCenIf;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PBMC2_SCC_INTERFACE             pBmc2SccIf   = (PBMC2_SCC_INTERFACE      )pMyObject->hBmc2SccIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     char                            sys_cmd[256];
     char                            tmp_fname[64];
-    int                             nRet;
     ULONG                           ulStartTime  = AnscGetTickInSeconds();
     ULONG                           ulTimeNow;
     ANSC_HANDLE                     hFile        = NULL;
@@ -4375,7 +4313,7 @@ ScliShoRunShellCmd
             SCLI_SHELL_CEN_EVENT_CmdBegin
         );
 
-    if ( !pCmd || AnscSizeOfString(pCmd) == 0 )
+    if ( !pCmd || AnscSizeOfString((const char *)pCmd) == 0 )
     {
         pCenIf->Notify
             (
@@ -4387,12 +4325,12 @@ ScliShoRunShellCmd
         return ANSC_STATUS_SUCCESS;
     }
 
-    _ansc_sprintf(tmp_fname, SCLI_LOCAL_TEMP_FILE_TEMPLATE, pSession);
+    _ansc_sprintf(tmp_fname, SCLI_LOCAL_TEMP_FILE_TEMPLATE, (unsigned int)pSession);
     _ansc_sprintf(sys_cmd, "%s > %s", pCmd, tmp_fname);
 
     AnscDeleteFile(tmp_fname);
 
-    nRet = _ansc_system(sys_cmd);
+    _ansc_system(sys_cmd);
 
     ulTimeNow = AnscGetTickInSeconds();
 

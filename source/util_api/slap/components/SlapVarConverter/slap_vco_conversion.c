@@ -114,7 +114,6 @@ SlapVcoConvertVariable
         SLAP_VARIABLE*              tbc_var
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
     int                             iTbcValue    = 0;
     ULONG                           ulTbcValue   = 0;

@@ -109,9 +109,7 @@ Bmc2ComtoGetDomainCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
 
     return  AnscSListQueryDepth(&pMyObject->ComdoSList);
 }
@@ -147,9 +145,7 @@ Bmc2ComtoGetCurComDomain
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject      = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty      = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = (PSINGLE_LINK_ENTRY         )NULL;
 
@@ -201,9 +197,7 @@ Bmc2ComtoAddComDomain
         ANSC_HANDLE                 hComDomain
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject      = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty      = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT    )hComDomain;
 
     AnscAcquireLock   (&pMyObject->ComdoSListLock);
@@ -244,9 +238,7 @@ Bmc2ComtoDelCurComDomain
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject      = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty      = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = (PSINGLE_LINK_ENTRY         )NULL;
 
@@ -301,9 +293,7 @@ Bmc2ComtoDelComDomain
         ANSC_HANDLE                 hComDomain
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject      = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty      = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT    )hComDomain;
 
     AnscAcquireLock(&pMyObject->ComdoSListLock);
@@ -347,9 +337,7 @@ Bmc2ComtoDelAllComDomains
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PBMC2_COM_TERMINAL_OBJECT       pMyObject      = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
-    PBMC2_COM_TERMINAL_PROPERTY     pProperty      = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = (PSINGLE_LINK_ENTRY         )NULL;
 

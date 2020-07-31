@@ -117,8 +117,6 @@ SlapCreateSrvComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = NULL;
 
     return  SlapScoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

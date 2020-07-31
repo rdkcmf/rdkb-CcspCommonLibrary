@@ -108,7 +108,6 @@ HttpBmoRepGetServerAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
 
     return  pMyObject->ServerAddr.Dot;
@@ -150,7 +149,6 @@ HttpBmoRepSetServerAddr
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
 
     pMyObject->ServerAddr.Value = *(PULONG)address;
@@ -189,7 +187,6 @@ HttpBmoRepGetServerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
 
     return  pMyObject->ServerPort;
@@ -231,7 +228,6 @@ HttpBmoRepSetServerPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
 
     pMyObject->ServerPort = port;
@@ -270,7 +266,6 @@ HttpBmoRepReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
 
     HttpBmoReset((ANSC_HANDLE)pMyObject);

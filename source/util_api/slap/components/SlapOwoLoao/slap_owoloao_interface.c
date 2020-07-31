@@ -117,8 +117,6 @@ SlapCreateOwoLoao
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_OWO_LOAO_OBJECT           pSlapOwoLoao = NULL;
 
     return  SlapOwoLoaoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

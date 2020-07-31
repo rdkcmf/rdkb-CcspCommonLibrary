@@ -117,8 +117,6 @@ Bmc2CreateComDomain
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = NULL;
 
     return  Bmc2ComdoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

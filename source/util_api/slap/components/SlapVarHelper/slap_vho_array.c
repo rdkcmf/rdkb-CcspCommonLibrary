@@ -135,6 +135,7 @@ SlapVhoAllocBoolArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_BOOL_ARRAY                slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(SLAP_BOOL);
     ULONG                           total_size = 0;
@@ -206,6 +207,7 @@ SlapVhoAllocBoolArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_BOOL_ARRAY                slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -273,6 +275,7 @@ SlapVhoAllocCharArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_CHAR_ARRAY                slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(SLAP_CHAR);
     ULONG                           total_size = 0;
@@ -343,6 +346,7 @@ SlapVhoAllocCharArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_CHAR_ARRAY                slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(SLAP_CHAR);
     ULONG                           total_size = 0;
@@ -409,6 +413,7 @@ SlapVhoAllocIntArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_INT_ARRAY                 slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(SLAP_INT);
     ULONG                           total_size = 0;
@@ -480,6 +485,7 @@ SlapVhoAllocIntArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_INT_ARRAY                 slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(SLAP_INT);
     ULONG                           total_size = 0;
@@ -547,6 +553,7 @@ SlapVhoAllocStringArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_STRING_ARRAY              slap_array = NULL;
     ULONG                           var_count  = 0;
     ULONG                           total_size = 0;
@@ -620,6 +627,7 @@ SlapVhoAllocStringArray2
         ULONG                       var_count
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_STRING_ARRAY              slap_array = NULL;
     ULONG                           total_size = 0;
     ULONG                           jj         = 0;
@@ -684,6 +692,7 @@ SlapVhoAllocStringArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_STRING_ARRAY              slap_array = NULL;
     ULONG                           var_count  = 0;
     ULONG                           total_size = 0;
@@ -759,6 +768,7 @@ SlapVhoAllocUcharArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_UCHAR_ARRAY               slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(SLAP_UCHAR);
     ULONG                           total_size = 0;
@@ -829,6 +839,7 @@ SlapVhoAllocUcharArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_UCHAR_ARRAY               slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(SLAP_UCHAR);
     ULONG                           total_size = 0;
@@ -895,6 +906,7 @@ SlapVhoAllocUint32Array
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_UINT32_ARRAY              slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -966,6 +978,7 @@ SlapVhoAllocUint32ArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_UINT32_ARRAY              slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1033,6 +1046,7 @@ SlapVhoAllocPtrArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PTR_ARRAY                 slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1104,6 +1118,7 @@ SlapVhoAllocPtrArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PTR_ARRAY                 slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1171,6 +1186,7 @@ SlapVhoAllocHandleArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_HANDLE_ARRAY              slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1242,6 +1258,7 @@ SlapVhoAllocHandleArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_HANDLE_ARRAY              slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1309,6 +1326,7 @@ SlapVhoAllocObjectArray
         ULONG                       var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJECT_ARRAY              slap_array = NULL;
     ULONG                           var_count  = var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1380,6 +1398,7 @@ SlapVhoAllocObjectArrayFromImcpVar
         ULONG                       imcp_var_length
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJECT_ARRAY              slap_array = NULL;
     ULONG                           var_count  = imcp_var_length / sizeof(ULONG);
     ULONG                           total_size = 0;
@@ -1447,6 +1466,7 @@ SlapVhoEqualVarArrays
         ANSC_HANDLE                 slap_array2
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VAR_ARRAY                 array1        = (PSLAP_VAR_ARRAY)slap_array1;
     PSLAP_VAR_ARRAY                 array2        = (PSLAP_VAR_ARRAY)slap_array2;
     BOOL                            b_equal_array = TRUE;
@@ -1614,6 +1634,7 @@ SlapVhoCloneVarArray
         ANSC_HANDLE                 slap_array
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VAR_ARRAY                 src_array = (PSLAP_VAR_ARRAY)slap_array;
     PSLAP_VAR_ARRAY                 dst_array = (PSLAP_VAR_ARRAY)NULL;
     ULONG                           kk        = 0;
@@ -1679,6 +1700,7 @@ SlapVhoCleanVarArray
         ANSC_HANDLE                 slap_array
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VAR_ARRAY                 tbc_array = (PSLAP_VAR_ARRAY)slap_array;
     ULONG                           kk        = 0;
 

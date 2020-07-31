@@ -117,8 +117,6 @@ AnscCreateSimpleSysTime
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_SYS_TIME_OBJECT    pSimpleSysTime    = (PANSC_SIMPLE_SYS_TIME_OBJECT)NULL;
 
 
     return  AnscSstoCreate(hContainerContext, hOwnerContext, hAnscReserved);

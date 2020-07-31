@@ -117,8 +117,6 @@ SlapCreateObjMapper
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = NULL;
 
     return  SlapOmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

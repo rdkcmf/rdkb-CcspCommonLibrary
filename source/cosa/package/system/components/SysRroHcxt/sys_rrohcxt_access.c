@@ -117,7 +117,6 @@ SysRroHcxtGetRecordData
         PULONG                      pulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_HCXT_OBJECT            pMyObject    = (PSYS_RRO_HCXT_OBJECT)hThisObject;
 
     if ( *pulDataSize < sizeof(ANSC_HANDLE) )
@@ -172,7 +171,6 @@ SysRroHcxtSetRecordData
         ULONG                       ulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_HCXT_OBJECT            pMyObject    = (PSYS_RRO_HCXT_OBJECT)hThisObject;
 
     if ( ulDataSize != sizeof(ANSC_HANDLE) )
@@ -216,7 +214,6 @@ SysRroHcxtGetRecordValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_HCXT_OBJECT            pMyObject    = (PSYS_RRO_HCXT_OBJECT)hThisObject;
 
     return  pMyObject->RecordValue;
@@ -258,7 +255,6 @@ SysRroHcxtSetRecordValue
         ANSC_HANDLE                 value
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_HCXT_OBJECT            pMyObject    = (PSYS_RRO_HCXT_OBJECT)hThisObject;
 
     pMyObject->RecordValue = value;

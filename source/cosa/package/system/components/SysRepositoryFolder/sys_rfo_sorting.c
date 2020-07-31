@@ -112,9 +112,7 @@ SysRfoSortFolderByTime
         BOOL                        bAscending
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pTbsFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pTmpFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )NULL;
     ANSC_HANDLE*                    pTmpFolderArray = NULL;
@@ -225,9 +223,7 @@ SysRfoSortFolderByName
         BOOL                        bAscending
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pTbsFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pTmpFolder      = (PSYS_REPOSITORY_FOLDER_OBJECT  )NULL;
     ANSC_HANDLE*                    pTmpFolderArray = NULL;
@@ -342,9 +338,7 @@ SysRfoSortRecordByTime
         BOOL                        bAscending
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pTbsRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pTmpRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )NULL;
     ANSC_HANDLE*                    pTmpRecordArray = NULL;
@@ -455,9 +449,7 @@ SysRfoSortRecordByName
         BOOL                        bAscending
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject       = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty       = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pTbsRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pTmpRecord      = (PSYS_REPOSITORY_RECORD_OBJECT  )NULL;
     ANSC_HANDLE*                    pTmpRecordArray = NULL;

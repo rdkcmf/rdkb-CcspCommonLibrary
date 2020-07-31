@@ -115,9 +115,7 @@ WebRloMakUriPath
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
     PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = (PWEB_URI_PATH_OBJECT          )pRootUriPath;
     PWEB_URI_PATH_OBJECT            pNextUriPath    = (PWEB_URI_PATH_OBJECT          )NULL;
@@ -228,9 +226,7 @@ WebRloGetUriPath
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
     PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = (PWEB_URI_PATH_OBJECT          )pRootUriPath;
     PWEB_URI_PATH_OBJECT            pNextUriPath    = (PWEB_URI_PATH_OBJECT          )NULL;
@@ -312,11 +308,8 @@ WebRloGetResourceOwner1
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
-    PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -392,9 +385,7 @@ WebRloGetResourceOwner2
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
     PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = (PWEB_URI_PATH_OBJECT          )pRootUriPath;
     PWEB_URI_PATH_OBJECT            pNextUriPath    = (PWEB_URI_PATH_OBJECT          )NULL;
@@ -494,12 +485,9 @@ WebRloAddResourceOwner
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
-    PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = (PWEB_RESOURCE_OWNER_OBJECT    )hRoo;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -600,9 +588,6 @@ WebRloPopResourceOwner
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
-    PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
-    PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = NULL;
 
     returnStatus =
         pMyObject->DelResourceOwner
@@ -659,13 +644,11 @@ WebRloDelResourceOwner
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject       = (PWEB_RESOURCE_LOCATOR_OBJECT  )hThisObject;
-    PWEB_RESOURCE_LOCATOR_PROPERTY  pProperty       = (PWEB_RESOURCE_LOCATOR_PROPERTY)&pMyObject->Property;
     PWEB_URI_PATH_OBJECT            pRootUriPath    = (PWEB_URI_PATH_OBJECT          )pMyObject->hRootUriPath;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner  = NULL;
     PWEB_URI_PATH_OBJECT            pThisUriPath    = NULL;
     PWEB_URI_PATH_OBJECT            pNextUriPath    = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 

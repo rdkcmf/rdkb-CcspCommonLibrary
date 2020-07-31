@@ -117,8 +117,6 @@ AnscCreateBrokerServerTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServerTcp = NULL;
 
     return  AnscBstoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

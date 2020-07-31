@@ -119,7 +119,7 @@ SlapOboCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapOboRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject      = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity = (PSLAP_OBJ_ENTITY_OBJECT)pMyObject->hSlapObjEntity;
     PSLAP_OBJ_PROXY_OBJECT          pSlapObjProxy  = (PSLAP_OBJ_PROXY_OBJECT )pMyObject->hSlapObjProxy;
@@ -250,7 +249,6 @@ SlapOboEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject    = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
 
     AnscLcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -292,7 +290,6 @@ SlapOboInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject    = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

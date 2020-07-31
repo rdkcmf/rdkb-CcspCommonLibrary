@@ -101,6 +101,7 @@ AnscCreatePKCS12Utility
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     PPKCS12_UTILITY_INTERFACE       pThisObject = NULL;
     PANSC_CRYPTO_OBJECT             pCrypto;
 
@@ -216,6 +217,7 @@ PKCS12UtilityPasswordToBMPString
         PULONG                      pLength       /*(OUT)*/  
      )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           length;
     ULONG                           i;
 
@@ -298,7 +300,7 @@ PKCS12UtilityConcatenateString
         PULONG                      pLenOfA
     )
 {
-    PPKCS12_UTILITY_INTERFACE       pThisObject = (PPKCS12_UTILITY_INTERFACE)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pTemp       = NULL;    
     ULONG                           lenOfTemp   = lenOfB + lenOfC;
 
@@ -1008,7 +1010,6 @@ PKCS12UtilityGetPKCS5DerivedKey
     )
 {
     PPKCS12_UTILITY_INTERFACE       pThisObject = (PPKCS12_UTILITY_INTERFACE)hThisObject;    
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     ULONG                           lenOfPassword;
     ULONG                           MsgLength;
     PUCHAR                          pCombineData;
@@ -1782,7 +1783,6 @@ PKCS12UtilityRC2CBC
 {
     PPKCS12_UTILITY_INTERFACE       pThisObject = (PPKCS12_UTILITY_INTERFACE)hThisObject;    
     PANSC_CRYPTO_OBJECT             pCrypto     = (PANSC_CRYPTO_OBJECT      )pThisObject->pCryptAPI;
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     USHORT                          xkey[64];
     int                             i, j, total;
     UCHAR    previousCipherBlock[RC2_BLOCK_SIZE]= { 0 };
@@ -1918,7 +1918,6 @@ PKCS12UtilityRC2
 {
     PPKCS12_UTILITY_INTERFACE       pThisObject = (PPKCS12_UTILITY_INTERFACE)hThisObject;    
     PANSC_CRYPTO_OBJECT             pCrypto     = (PANSC_CRYPTO_OBJECT      )pThisObject->pCryptAPI;
-    ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     USHORT                          xkey[64];
     int                             i,total;
 

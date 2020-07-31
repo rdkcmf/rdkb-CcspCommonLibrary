@@ -107,11 +107,9 @@ AnscDsuoAcceptTask
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject     = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
-    PANSC_DSUO_WORKER_OBJECT        pWorker       = (PANSC_DSUO_WORKER_OBJECT      )pMyObject->hWorker;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pCurEngine    = NULL;
     PANSC_DSUO_PACKET_OBJECT        pNewPacket    = NULL;
     int                             s_result      = 0;
-    int                             s_error       = 0;
     char*                           recv_buffer   = NULL;
     int                             recv_size     = 0;
     ansc_fd_set                     read_fd_set;
@@ -171,7 +169,6 @@ AnscDsuoAcceptTask
         }
         else if ( s_result == ANSC_SOCKET_ERROR )
         {
-            s_error = _ansc_get_last_error();
 
             continue;
         }
@@ -204,7 +201,7 @@ AnscDsuoAcceptTask
             ((pansc_socket_addr_in)&client_addr2)->sin_addr.s_addr  = 0;
             client_addr2.sin_port                                   = _xskt_htons(pMyObject->HostPort);
             addrlen                                                 = sizeof(client_addr2);
-            s_result = _xskt_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (xskt_socket_addr*)&client_addr2, &addrlen);
+            s_result = _xskt_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (xskt_socket_addr*)&client_addr2, (socklen_t *)&addrlen);
         }
         else
         {
@@ -212,12 +209,11 @@ AnscDsuoAcceptTask
             client_addr.sin_addr.s_addr = 0;
             client_addr.sin_port        = _ansc_htons(pMyObject->HostPort);
             addrlen                     = sizeof(client_addr);
-            s_result = _ansc_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (ansc_socket_addr*)&client_addr, &addrlen);
+            s_result = _ansc_recvfrom(pMyObject->Socket, recv_buffer, recv_size, 0, (ansc_socket_addr*)&client_addr, (socklen_t *)&addrlen);
         }
 
         if ( s_result == ANSC_SOCKET_ERROR )
         {
-            s_error = _ansc_get_last_error();
 
             returnStatus =
                 pMyObject->ReleasePacket

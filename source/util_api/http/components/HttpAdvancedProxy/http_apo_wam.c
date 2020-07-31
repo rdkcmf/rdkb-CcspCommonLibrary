@@ -111,10 +111,8 @@ HttpApoWamAccept
         ANSC_HANDLE                 hClientInfo
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject      = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty      = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_WAM_CLIENT_INFO           pWamClientInfo = (PHTTP_WAM_CLIENT_INFO        )hClientInfo;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hClientInfo);
 
     return  TRUE;
 }
@@ -155,10 +153,8 @@ HttpApoWamConnect
         ANSC_HANDLE                 hServerInfo
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject      = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty      = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_WAM_SERVER_INFO           pWamServerInfo = (PHTTP_WAM_SERVER_INFO        )hServerInfo;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hServerInfo);
 
     return  HTTP_WAM_PMODE_PASS;
 }
@@ -199,9 +195,8 @@ HttpApoWamClose
         ANSC_HANDLE                 hSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
 
     return  ANSC_STATUS_SUCCESS;
 }

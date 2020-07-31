@@ -106,10 +106,7 @@ SlapScoGalGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_GALLERY_OBJECT        pMyObject    = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
-    PANSC_ATOM_TABLE_OBJECT         pAtoVariable = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  (ANSC_HANDLE)NULL;
 }
 
@@ -144,10 +141,7 @@ SlapScoGalGetOlmContainer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_GALLERY_OBJECT        pMyObject    = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
-    PANSC_ATOM_TABLE_OBJECT         pAtoVariable = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  (ANSC_HANDLE)NULL;
 }
 
@@ -182,7 +176,6 @@ SlapScoGalReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject    = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoVariable = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
 

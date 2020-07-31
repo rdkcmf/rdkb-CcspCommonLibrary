@@ -117,8 +117,6 @@ DslhCreateCpeController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = NULL;
 
     return  DslhCpecoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -116,8 +116,6 @@ SlapCreateSrvProxy
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_PROXY_OBJECT          pSlapSrvProxy = NULL;
 
     return  SlapSpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

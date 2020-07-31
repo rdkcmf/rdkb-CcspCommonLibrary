@@ -311,7 +311,6 @@ AnscOcoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject             = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pExternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hExternalObjectMapper;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
@@ -333,7 +332,7 @@ AnscOcoCancel
      * We have to give the derived Container Objects a chance to cancel some advanced components
      * before destroying all the basic operational objects.
      */
-    returnStatus = pMyObject->SubCancel((ANSC_HANDLE)pMyObject);
+    pMyObject->SubCancel((ANSC_HANDLE)pMyObject);
 
     /*
      * The object mapper object has gone through his wholly useful life, now it's time for him to
@@ -399,9 +398,7 @@ AnscOcoSubEngage
     )
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject        = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-    PANSC_OBJECT_CONTAINER_OBJECT   pParentContainer = (PANSC_OBJECT_CONTAINER_OBJECT)pMyObject->hContainerContext;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  returnStatus;
 }
 
@@ -437,9 +434,7 @@ AnscOcoSubCancel
     )
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject        = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-    PANSC_OBJECT_CONTAINER_OBJECT   pParentContainer = (PANSC_OBJECT_CONTAINER_OBJECT)pMyObject->hContainerContext;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  returnStatus;
 }
 
@@ -474,7 +469,6 @@ AnscOcoEnrollAllObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->EnrollExtensionObjects((ANSC_HANDLE)pMyObject);
@@ -514,7 +508,6 @@ AnscOcoManufactureAllObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->ManufactureExtensionObjects((ANSC_HANDLE)pMyObject);
@@ -554,7 +547,6 @@ AnscOcoDestroyAllObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->DestroyExtensionObjects((ANSC_HANDLE)pMyObject);

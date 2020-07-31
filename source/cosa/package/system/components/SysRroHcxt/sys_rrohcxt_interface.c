@@ -116,8 +116,6 @@ SysCreateRroHcxt
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_HCXT_OBJECT            pSysRroHcxt  = NULL;
 
     return  SysRroHcxtCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -129,9 +129,7 @@ AnscXsocketGetType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->Type;
 }
@@ -172,9 +170,7 @@ AnscXsocketSetType
         ULONG                       type
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->Type = type;
 
@@ -212,9 +208,7 @@ AnscXsocketGetMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->Mode;
 }
@@ -255,9 +249,7 @@ AnscXsocketSetMode
         ULONG                       mode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->Mode = mode;
 
@@ -295,9 +287,7 @@ AnscXsocketGetIpProtocol
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->IpProtocol;
 }
@@ -338,9 +328,7 @@ AnscXsocketSetIpProtocol
         ULONG                       ipprotocol
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->IpProtocol = ipprotocol;
 
@@ -378,9 +366,7 @@ AnscXsocketGetHostAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->HostAddress.Dot;
 }
@@ -421,9 +407,7 @@ AnscXsocketSetHostAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->HostAddress.Value = *(PULONG)address;
 
@@ -461,11 +445,9 @@ AnscXsocketGetHostName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
-    return  pMyObject->HostName;
+    return  (PUCHAR)pMyObject->HostName;
 }
 
 
@@ -504,11 +486,9 @@ AnscXsocketSetHostName
         PUCHAR                      hostname
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
-    AnscCopyString(pMyObject->HostName, hostname);
+    AnscCopyString(pMyObject->HostName, (char *)hostname);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -543,9 +523,7 @@ AnscXsocketGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->HostPort;
 }
@@ -586,9 +564,7 @@ AnscXsocketSetHostPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->HostPort = usPort;
 
@@ -626,9 +602,7 @@ AnscXsocketGetHostAddrInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->pHostAddrInfo;
 }
@@ -669,9 +643,7 @@ AnscXsocketSetHostAddrInfo
         xskt_addrinfo*              pAddrInfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->pHostAddrInfo = pAddrInfo;
 
@@ -709,9 +681,7 @@ AnscXsocketGetPeerAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->PeerAddress.Dot;
 }
@@ -752,9 +722,7 @@ AnscXsocketSetPeerAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->PeerAddress.Value = *(PULONG)address;
 
@@ -792,11 +760,9 @@ AnscXsocketGetPeerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
-    return  pMyObject->PeerName;
+    return  (PUCHAR)pMyObject->PeerName;
 }
 
 
@@ -835,11 +801,9 @@ AnscXsocketSetPeerName
         PUCHAR                      peername
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
-    AnscCopyString(pMyObject->PeerName, peername);
+    AnscCopyString(pMyObject->PeerName, (char *)peername);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -875,9 +839,7 @@ AnscXsocketGetPeerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->PeerPort;
 }
@@ -918,9 +880,7 @@ AnscXsocketSetPeerPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->PeerPort = usPort;
 
@@ -958,9 +918,7 @@ AnscXsocketGetPeerAddrInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->pPeerAddrInfo;
 }
@@ -1001,9 +959,7 @@ AnscXsocketSetPeerAddrInfo
         xskt_addrinfo*              pAddrInfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->pPeerAddrInfo = pAddrInfo;
 
@@ -1041,9 +997,7 @@ AnscXsocketGetTransportType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->TransportType;
 }
@@ -1084,9 +1038,7 @@ AnscXsocketSetTransportType
         UCHAR                       transportType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->TransportType = transportType;
 
@@ -1124,9 +1076,7 @@ AnscXsocketGetXsink
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     return  pMyObject->hXsinkObject;
 }
@@ -1167,9 +1117,7 @@ AnscXsocketSetXsink
         ANSC_HANDLE                 hXsink
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkObject = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkObject;
 
     pMyObject->hXsinkObject = hXsink;
 

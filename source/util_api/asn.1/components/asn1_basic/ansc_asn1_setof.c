@@ -128,7 +128,7 @@ AnscAsn1SetOfCreate
     /*
      * We create object by first allocating memory for holding the variables and member functions.
      */
-    if( hContainerContext > 0)
+    if( (ULONG)hContainerContext > 0)
     {
         pMyObject = (PANSC_ASN1_SETOF)AnscAllocateMemory((ULONG)hContainerContext);
     }
@@ -1187,8 +1187,7 @@ AnscAsn1SetOfDumpObject
         BOOLEAN                     bShowValue
     )
 {
-
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SETOF                pMyObject       = (PANSC_ASN1_SETOF)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -1287,8 +1286,7 @@ AnscAsn1SetOfTraceObject
         BOOLEAN                     bRecursive
     )
 {
-
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SETOF                pMyObject    = (PANSC_ASN1_SETOF)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;
@@ -1722,6 +1720,8 @@ AnscAsn1SetOfIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hChild);
     AnscTrace("Please implement it in your derived class.\n");
 
     return ANSC_ASN1_FORBIDDEN_PLACE;
@@ -1823,6 +1823,8 @@ AnscAsn1SetOfCreateChild
         BOOLEAN                     bAddItIn
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(bAddItIn);
     AnscTrace("Please implement it in your derived class.\n");
 
     return NULL;

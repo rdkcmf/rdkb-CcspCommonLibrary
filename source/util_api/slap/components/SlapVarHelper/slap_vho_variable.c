@@ -116,6 +116,7 @@ SlapVhoEqualVariables
         ANSC_HANDLE                 slap_variable2
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  var1        = (PSLAP_VARIABLE)slap_variable1;
     PSLAP_VARIABLE                  var2        = (PSLAP_VARIABLE)slap_variable2;
     BOOL                            b_equal_var = TRUE;
@@ -350,6 +351,7 @@ SlapVhoCloneVariable
         ANSC_HANDLE                 dst_variable
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  src_var = (PSLAP_VARIABLE)src_variable;
     PSLAP_VARIABLE                  dst_var = (PSLAP_VARIABLE)dst_variable;
 
@@ -612,6 +614,7 @@ SlapVhoCleanVariable
         ANSC_HANDLE                 slap_variable
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  tbc_var = (PSLAP_VARIABLE)slap_variable;
 
     if ( tbc_var->Name )

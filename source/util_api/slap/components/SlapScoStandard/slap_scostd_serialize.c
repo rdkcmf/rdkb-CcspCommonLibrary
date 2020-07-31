@@ -105,9 +105,6 @@ SlapScoStdToString
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf   = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  NULL;
 }

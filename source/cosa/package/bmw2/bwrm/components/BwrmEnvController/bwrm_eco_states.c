@@ -110,9 +110,7 @@ BwrmEcoGetBwrmRamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBwrmRamIf;
 }
@@ -148,9 +146,7 @@ BwrmEcoGetBwrmFileManager
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBwrmFileManager;
 }
@@ -186,9 +182,7 @@ BwrmEcoGetBwrmPageManager
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBwrmPageManager;
 }
@@ -229,7 +223,6 @@ BwrmEcoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -274,7 +267,6 @@ BwrmEcoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -314,7 +306,6 @@ BwrmEcoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -354,9 +345,7 @@ BwrmEcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty    = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

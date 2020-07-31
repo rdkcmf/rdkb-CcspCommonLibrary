@@ -116,8 +116,5 @@ HttpCreateMboFile
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_FILE_OBJECT           pHttpMboFile = NULL;
-
     return  HttpMboFileCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

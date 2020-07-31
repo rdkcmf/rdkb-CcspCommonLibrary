@@ -117,6 +117,8 @@ BspTemplateVarCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_VAR_OBJECT        pMyObject    = NULL;
 
     /*

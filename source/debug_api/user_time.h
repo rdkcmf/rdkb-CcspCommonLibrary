@@ -125,8 +125,6 @@ UserGetTickInMilliSeconds2();
 
 #define UserGetTickInMilliSecondsAbs UserGetTickInMilliSeconds2
 
-__inline void UserSetDelta();
-
 ULONG
 UserGetTickInMicroSeconds();
 VOID

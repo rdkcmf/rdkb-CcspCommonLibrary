@@ -78,6 +78,7 @@
 
 
 #include "stun_sco_global.h"
+#include "ansc_crypto_external_api.h"
 
 
 /**********************************************************************
@@ -125,18 +126,18 @@ StunScoRecvBindingResponse1
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStageTimerObj           = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hStageTimerObj;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pRetryTimerObj           = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hRetryTimerObj;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1        = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_BSM_INTERFACE             pStunBsmIf               = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader              = (PSTUN_HEADER                  )buffer;
     PSTUN_ATTRIBUTE                 pStunAttribute           = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_MAPPED_ADDRESS     pStunAttribMappedAddress = (PSTUN_ATTRIB_MAPPED_ADDRESS   )NULL;
     BOOL                            bBindingChanged          = FALSE;
-    ANSC_IPV4_ADDRESS               MappedIpAddress          = {0};
+    ANSC_IPV4_ADDRESS               MappedIpAddress          ;
     USHORT                          usMappedPort             = 0;
     BOOL                            bXorMappedAddress        = FALSE;
 
     AnscTrace("StunScoRecvBindingResponse1 --- received response, size = %u.\n", ulSize);
 
+    memset(&MappedIpAddress, 0, sizeof(ANSC_IPV4_ADDRESS));
     pRetryTimerObj->Stop((ANSC_HANDLE)pRetryTimerObj);
 
     switch ( pMyObject->ClientState )
@@ -318,19 +319,17 @@ StunScoRecvBindingResponseA
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus             = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject                = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA        = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
-    PSTUN_BSM_INTERFACE             pStunBsmIf               = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader              = (PSTUN_HEADER                  )buffer;
     PSTUN_ATTRIBUTE                 pStunAttribute           = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_MAPPED_ADDRESS     pStunAttribMappedAddress = (PSTUN_ATTRIB_MAPPED_ADDRESS   )NULL;
-    ANSC_IPV4_ADDRESS               MappedIpAddress          = {0};
+    ANSC_IPV4_ADDRESS               MappedIpAddress          ;
     USHORT                          usMappedPort             = 0;
     BOOL                            bXorMappedAddress        = FALSE;
 
     AnscTrace("StunScoRecvBindingResponseA --- received response, size = %u.\n", ulSize);
+
+    memset(&MappedIpAddress, 0, sizeof(ANSC_IPV4_ADDRESS));
 
     if ( pMyObject->SocketStateA != STUN_SCO_SOCKET_STATE_Requesting &&
          pMyObject->SocketStateB != STUN_SCO_SOCKET_STATE_Requesting )
@@ -406,7 +405,7 @@ StunScoRecvBindingResponseA
 
     AnscSetEvent(&pMyObject->SocketEventA);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -450,18 +449,15 @@ StunScoRecvBindingResponseB
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpB = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpB;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
     AnscTrace("StunScoRecvBindingResponseB --- received response, size = %u.\n", ulSize);
 
     /*
      * We shouldn't receive anything on socket B...
      */
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -507,9 +503,7 @@ StunScoRecvBindingErrorResponse1
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject            = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty            = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pRetryTimerObj       = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hRetryTimerObj;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_BSM_INTERFACE             pStunBsmIf           = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader          = (PSTUN_HEADER                  )buffer;
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
@@ -652,9 +646,6 @@ StunScoRecvBindingErrorResponseA
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject            = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty            = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
-    PSTUN_BSM_INTERFACE             pStunBsmIf           = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader          = (PSTUN_HEADER                  )buffer;
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_ERROR_CODE         pStunAttribErrorCode = (PSTUN_ATTRIB_ERROR_CODE       )NULL;
@@ -744,9 +735,6 @@ StunScoRecvBindingErrorResponseB
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject            = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty            = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpB    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpB;
-    PSTUN_BSM_INTERFACE             pStunBsmIf           = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader          = (PSTUN_HEADER                  )buffer;
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_ERROR_CODE         pStunAttribErrorCode = (PSTUN_ATTRIB_ERROR_CODE       )NULL;
@@ -835,7 +823,7 @@ StunScoVerifyMsgIntegrity
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus            = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(ulSize);
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject               = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty               = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
     PSTUN_HEADER                    pStunHeader             = (PSTUN_HEADER                )buffer;

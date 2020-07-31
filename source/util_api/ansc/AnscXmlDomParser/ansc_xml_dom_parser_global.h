@@ -85,9 +85,9 @@
 /*
  *  Actually, we don't need lock for XML Node, just ignore locks here.
  */
-#define  AnscInitializeXmlLock
-#define  AnscFreeXmlLock
-#define  AnscAcquireXmlLock
-#define  AnscReleaseXmlLock
+#define  AnscInitializeXmlLock(_p_) (void)(_p_)
+#define  AnscFreeXmlLock(_p_) (void)(_p_)
+#define  AnscAcquireXmlLock(_p_) (void)(_p_)
+#define  AnscReleaseXmlLock(_p_) (void)(_p_)
 
 #endif

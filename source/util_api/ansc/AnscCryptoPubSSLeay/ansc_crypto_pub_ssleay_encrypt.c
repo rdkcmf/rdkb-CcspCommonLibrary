@@ -121,6 +121,11 @@ AnscCryptoPubSSLeayRSAEncrypt
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToEncrypt);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pCipherData);
+    UNREFERENCED_PARAMETER(pulSizeOfCipher);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -174,6 +179,11 @@ AnscCryptoPubSSLeayRSADecrypt
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToDecrypt);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pClearData);
+    UNREFERENCED_PARAMETER(pulSizeOfClear);
+    UNREFERENCED_PARAMETER(pParams);
     return  ANSC_STATUS_FAILURE;
 }
 
@@ -226,6 +236,11 @@ AnscCryptoPubSSLeayRSAPriEncrypt
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToEncrypt);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pCipherData);
+    UNREFERENCED_PARAMETER(pulSizeOfCipher);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -278,6 +293,11 @@ AnscCryptoPubSSLeayRSAPubDecrypt
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToDecrypt);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pClearData);
+    UNREFERENCED_PARAMETER(pulSizeOfClear);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 

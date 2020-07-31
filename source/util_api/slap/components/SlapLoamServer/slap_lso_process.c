@@ -141,9 +141,9 @@ SlapLsoProcessCallAcqc
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_ACQC_CALL            pImcpSlapAcqcCall   = (PIMCP_SLAP_ACQC_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;
@@ -309,9 +309,9 @@ SlapLsoProcessCallRelc
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_RELC_CALL            pImcpSlapRelcCall   = (PIMCP_SLAP_RELC_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;
@@ -456,6 +456,7 @@ SlapLsoProcessCallLoco
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
@@ -668,9 +669,9 @@ SlapLsoProcessCallDelo
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_DELO_CALL            pImcpSlapDeloCall   = (PIMCP_SLAP_DELO_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;
@@ -815,10 +816,10 @@ SlapLsoProcessCallInvo
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PSLAP_LOAM_SERVER_PROPERTY      pProperty           = (PSLAP_LOAM_SERVER_PROPERTY)&pMyObject->Property;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_INVO_CALL            pImcpSlapInvoCall   = (PIMCP_SLAP_INVO_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;
@@ -1258,9 +1259,9 @@ SlapLsoProcessCallAcqo
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_ACQO_CALL            pImcpSlapAcqoCall   = (PIMCP_SLAP_ACQO_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;
@@ -1429,9 +1430,9 @@ SlapLsoProcessCallRelo
         PULONG                      pulErrorCode
     )
 {
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject           = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE       )pMyObject->hSlapUoaIf;
     PIMCP_SLAP_RELO_CALL            pImcpSlapReloCall   = (PIMCP_SLAP_RELO_CALL      )pInputBuffer;
     void*                           pMessageBuffer      = (void*                     )NULL;

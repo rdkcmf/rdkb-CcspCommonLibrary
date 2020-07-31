@@ -102,6 +102,7 @@
 #include "ansc_external_storage.h"
 #include "ansc_crypto_interface.h"
 #include "ansc_crypto_external_api.h"
+#include "ansc_crypto_internal_api.h"
 
 
 ANSC_HANDLE
@@ -112,9 +113,6 @@ AnscCreateFile
         ULONG                       type
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_FILE_INFO                 pFileInfo    = NULL;
-    int                             iFileHandle  = -1;
 
     if ( !(mode & ANSC_FILE_MODE_CREATE) )
     {
@@ -133,7 +131,6 @@ AnscOpenFile
         ULONG                       type
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = NULL;
     int                             iFileHandle  = -1;
     int                             iFileFlags   = 0;
@@ -221,7 +218,6 @@ AnscCloseFile
         ANSC_HANDLE                 hFile
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
 
     if ( !pFileInfo )
@@ -258,7 +254,7 @@ AnscReadFile
 
     if ( pFileInfo->bZlibCompressed )
     {
-        ULONG                       ulFileSize      = (ULONG              )_ansc_get_file_size(pFileInfo->Handle);
+        ULONG                       ulFileSize      = (ULONG              )_ansc_get_file_size((VOID*)pFileInfo->Handle);
         void*                       pCompressedFile = (void*              )AnscAllocateMemory(ulFileSize);
 
         if ( !pCompressedFile )
@@ -428,7 +424,6 @@ AnscSeekFile
         int                         iPos
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
 
     if ( !pFileInfo )
@@ -496,7 +491,6 @@ AnscGetFileSize
         ANSC_HANDLE                 hFile
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
     ULONG                           ulFileSize   = 0;
 
@@ -507,7 +501,7 @@ AnscGetFileSize
     else if ( pFileInfo->bZlibCompressed )
     {
         int                         iReadSize            = (int                )0;
-        ULONG                       ulCompressedFileSize = (ULONG              )_ansc_get_file_size(pFileInfo->Handle);
+        ULONG                       ulCompressedFileSize = (ULONG              )_ansc_get_file_size((VOID*)pFileInfo->Handle);
         void*                       pCompressedFile      = (void*              )AnscAllocateMemory(ulCompressedFileSize);
 
         if ( !pCompressedFile )
@@ -527,12 +521,10 @@ AnscGetFileSize
 
             if ( (ULONG)iReadSize != ulCompressedFileSize )
             {
-                returnStatus = ANSC_STATUS_FAILURE;
 
                 break;
             }
 
-            returnStatus =
             	AnscCryptoZlibDecompress
                     (
                         pCompressedFile,
@@ -556,7 +548,7 @@ AnscGetFileSize
     }
     else
     {
-        ulFileSize = (ULONG)_ansc_get_file_size(pFileInfo->Handle);
+        ulFileSize = (ULONG)_ansc_get_file_size((VOID*)pFileInfo->Handle);
     }
 
     return  ulFileSize;
@@ -569,7 +561,6 @@ AnscGetFileExt
         ANSC_HANDLE                 hFile
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
     char*                           pTempChar    = NULL;
     ULONG                           ulCharCount  = 0;
@@ -616,7 +607,6 @@ AnscGetFileExt2
         char*                       file_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     char*                           pTempChar    = NULL;
     ULONG                           ulCharCount  = 0;
     ULONG                           ulNameSize   = 0;
@@ -658,7 +648,6 @@ AnscGetFileProperty
         char*                       file_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_FILE_PROPERTY             pAnscFileProperty = (PANSC_FILE_PROPERTY)AnscAllocateMemory(sizeof(ANSC_FILE_PROPERTY));
 
     if ( !pAnscFileProperty )
@@ -687,7 +676,6 @@ AnscGetMimeType
         PULONG                      pulSubType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
     char*                           pFileExt     = NULL;
     ULONG                           i            = 0;
@@ -1027,7 +1015,7 @@ AnscSearchFirstFile
                 dir_name,
                 target_file_name,
                 &hSearchContext,
-                pbDirectory,
+                (char *)pbDirectory,
                 first_file_name
             ) )
     {
@@ -1052,7 +1040,7 @@ AnscSearchNextFile
     if ( _ansc_find_next_file
             (
                 hSearchContext,
-                pbDirectory,
+                (char *)pbDirectory,
                 file_name
             ) )
     {

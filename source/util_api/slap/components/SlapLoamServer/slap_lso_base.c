@@ -119,7 +119,7 @@ SlapLsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapLsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT)hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf   = (PANSC_CPC_INTERFACE     )pMyObject->hAnscCpcIf;
 
@@ -237,7 +236,6 @@ SlapLsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT)hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf   = (PANSC_CPC_INTERFACE     )pMyObject->hAnscCpcIf;
 
@@ -304,9 +302,7 @@ SlapLsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject    = (PSLAP_LOAM_SERVER_OBJECT)hThisObject;
-
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't
      * appreciate all the nice little things come with C++ language and all the dirty works that

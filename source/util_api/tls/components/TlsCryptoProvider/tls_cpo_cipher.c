@@ -133,7 +133,7 @@ TlsCpoGetCipherInfo
         ANSC_HANDLE                 hSecurityParams
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PTLS_SECURITY_PARAMS            pSecurityParams  = (PTLS_SECURITY_PARAMS       )hSecurityParams;
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
@@ -211,7 +211,7 @@ TlsCpoGetCertConfigBit
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -276,7 +276,7 @@ TlsCpoGetClientCertType
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -341,7 +341,7 @@ TlsCpoGetKeAlgorithm
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -406,7 +406,7 @@ TlsCpoGetKeyBlockSize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -470,7 +470,7 @@ TlsCpoGetBulkEncryptionAlgorithm
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -534,7 +534,7 @@ TlsCpoGetCipherType
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -598,7 +598,7 @@ TlsCpoGetCipherKeyNumber
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -662,7 +662,7 @@ TlsCpoGetCipherKeySize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -726,7 +726,7 @@ TlsCpoGetCipherKeyMaterialSize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -790,7 +790,7 @@ TlsCpoGetCipherIVSize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -854,7 +854,7 @@ TlsCpoGetCipherBlockSize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -918,7 +918,7 @@ TlsCpoGetMacAlgorithm
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -982,7 +982,7 @@ TlsCpoGetMacHashSize
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
@@ -1015,7 +1015,7 @@ TlsCpoGetMacHashSize
 
     prototype:
 
-        BOOL
+        ANSC_STATUS
         TlsCpoGetExportable
             (
                 ANSC_HANDLE                 hThisObject,
@@ -1039,25 +1039,25 @@ TlsCpoGetMacHashSize
 
 **********************************************************************/
 
-BOOL
+ANSC_STATUS
 TlsCpoGetExportable
     (
         ANSC_HANDLE                 hThisObject,
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
     if( cipher_suite > TLS_DH_anon_WITH_3DES_EDE_CBC_SHA && cipher_suite < TLS_RSA_WITH_AES_128_CBC_SHA)
     {
-        return  ANSC_STATUS_UNAPPLICABLE;
+        return ANSC_STATUS_UNAPPLICABLE;
     }
 
     if ( cipher_suite > TLS_MAX_ALGORITHM_NUMBER)
     {
-        return  ANSC_STATUS_UNAPPLICABLE;
+        return ANSC_STATUS_UNAPPLICABLE;
     }
     else
     {
@@ -1079,7 +1079,7 @@ TlsCpoGetExportable
 
     prototype:
 
-        BOOL
+        ANSC_STATUS
         TlsCpoGetStrongSecurity
             (
                 ANSC_HANDLE                 hThisObject,
@@ -1103,25 +1103,25 @@ TlsCpoGetExportable
 
 **********************************************************************/
 
-BOOL
+ANSC_STATUS
 TlsCpoGetStrongSecurity
     (
         ANSC_HANDLE                 hThisObject,
         USHORT                      cipher_suite
     )
 {
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject        = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulSuiteIndex     = (ULONG                      )cipher_suite;
     PTLS_CIPHERSUITE_DESCRIPTOR     pCipherSuiteDesp = (PTLS_CIPHERSUITE_DESCRIPTOR)NULL;
 
     if( cipher_suite > TLS_DH_anon_WITH_3DES_EDE_CBC_SHA && cipher_suite < TLS_RSA_WITH_AES_128_CBC_SHA)
     {
-        return  ANSC_STATUS_UNAPPLICABLE;
+        return ANSC_STATUS_UNAPPLICABLE;
     }
 
     if ( cipher_suite > TLS_MAX_ALGORITHM_NUMBER)
     {
-        return  ANSC_STATUS_UNAPPLICABLE;
+        return ANSC_STATUS_UNAPPLICABLE;
     }
     else
     {

@@ -127,7 +127,7 @@ DslhWmpdoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject    = NULL;
 
@@ -195,7 +195,6 @@ DslhWmpdoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject         = (PDSLH_WMP_DATABASE_OBJECT    )hThisObject;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf        = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
@@ -286,7 +285,6 @@ DslhWmpdoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject         = (PDSLH_WMP_DATABASE_OBJECT    )hThisObject;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf        = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
@@ -517,7 +515,6 @@ DslhWmpdoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject    = (PDSLH_WMP_DATABASE_OBJECT)hThisObject;
 
     /*

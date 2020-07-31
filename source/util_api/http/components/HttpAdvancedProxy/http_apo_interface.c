@@ -117,8 +117,5 @@ HttpCreateAdvancedProxy
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pHttpAdvancedProxy = NULL;
-
-    return  HttpApoCreate(hContainerContext, hOwnerContext, hAnscReserved);
+   return  HttpApoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

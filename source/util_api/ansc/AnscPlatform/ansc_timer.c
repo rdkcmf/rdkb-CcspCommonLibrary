@@ -94,7 +94,7 @@ AnscTimerScheduleTask
         void*                       dummy
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(dummy);
     PANSC_TIMER_DESCRIPTOR          pTimerDescriptor = NULL;
     PANSC_TIMER_DESCRIPTOR          pFreshTimer      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = NULL;
@@ -198,7 +198,6 @@ AnscTimerScheduleTask
                     pTimerDescriptor->bScheduled = TRUE;
                     pTimerDescriptor->TimeToFire = ulCurTickInMs + pTimerDescriptor->Interval;
 
-                    returnStatus =
                         AnscScheduleTimer
                             (
                                 (ANSC_HANDLE)pTimerDescriptor
@@ -217,7 +216,7 @@ AnscTimerScheduleTask
                  * cannot understand it completely at the first look, it's OK, doesn't mean you're
                  * stupid or have a lower IQ.
                  */
-               #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+               #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
                 AnscAcquireLock(&g_SyncLock);
                 #endif
 
@@ -231,9 +230,9 @@ AnscTimerScheduleTask
                  * and accommodating multi-tasking programming practice. However, it would be
                  * harder to synchronize and less flexible.
                  */
-                returnStatus = pTimerDescriptor->Invoke(pTimerDescriptor->hInvokeContext);
+                pTimerDescriptor->Invoke(pTimerDescriptor->hInvokeContext);
 
-               #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+               #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
                 AnscReleaseLock(&g_SyncLock);
                 #endif
             }
@@ -352,7 +351,7 @@ AnscCancelTimer
 
     if ( bWaitForInvoke )
     {
-        #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
         AnscAcquireLock(&g_SyncLock);
         AnscReleaseLock(&g_SyncLock);
         #endif

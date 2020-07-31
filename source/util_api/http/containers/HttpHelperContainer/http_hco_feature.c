@@ -106,7 +106,6 @@ HttpHcoEnrollFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject             = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
 
@@ -120,8 +119,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato Status Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_STATUS_NAME,
@@ -139,8 +138,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato Header Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_HEADER_NAME,
@@ -158,8 +157,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato Method Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_METHOD_NAME,
@@ -177,8 +176,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato CgiEnv Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_CGIENV_NAME,
@@ -196,8 +195,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato FxCat1 Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_FXCAT1_NAME,
@@ -215,8 +214,8 @@ HttpHcoEnrollFeatureObjects
      * destroyed by either external modules or the container. The Ato FxCat2 Object is such
      * an object.
      */
-    returnStatus =
-        pInternalObjectMapper->RegisterObject
+    
+    pInternalObjectMapper->RegisterObject
             (
                 (ANSC_HANDLE)pInternalObjectMapper,
                 HTTP_ATO_FXCAT2_NAME,
@@ -263,7 +262,6 @@ HttpHcoManufactureFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_STATUS_OBJECT         pAtoStatus   = (PHTTP_ATO_STATUS_OBJECT      )pMyObject->hAtoStatus;
     PHTTP_ATO_HEADER_OBJECT         pAtoHeader   = (PHTTP_ATO_HEADER_OBJECT      )pMyObject->hAtoHeader;
@@ -271,8 +269,8 @@ HttpHcoManufactureFeatureObjects
     PHTTP_ATO_CGIENV_OBJECT         pAtoCgiEnv   = (PHTTP_ATO_CGIENV_OBJECT      )pMyObject->hAtoCgiEnv;
     PHTTP_ATO_FXCAT1_OBJECT         pAtoFxCat1   = (PHTTP_ATO_FXCAT1_OBJECT      )pMyObject->hAtoFxCat1;
     PHTTP_ATO_FXCAT2_OBJECT         pAtoFxCat2   = (PHTTP_ATO_FXCAT2_OBJECT      )pMyObject->hAtoFxCat2;
-    PANSC_SMART_CLOCK_OBJECT        pSmartClock  = (PANSC_SMART_CLOCK_OBJECT     )pMyObject->hSmartClock;
-
+    //PANSC_SMART_CLOCK_OBJECT        pSmartClock  = (PANSC_SMART_CLOCK_OBJECT     )pMyObject->hSmartClock;
+    
     pAtoStatus =
         (PHTTP_ATO_STATUS_OBJECT)pMyObject->CreateObjectByOid
             (
@@ -376,7 +374,8 @@ HttpHcoManufactureFeatureObjects
     }
 
     // Assume no smart clock support.
-    /*pSmartClock =
+    /*
+    pSmartClock =
         (PANSC_SMART_CLOCK_OBJECT)AnscCreateSmartClock
             (
                 (ANSC_HANDLE)pMyObject,
@@ -429,7 +428,6 @@ HttpHcoDestroyFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_STATUS_OBJECT         pAtoStatus   = (PHTTP_ATO_STATUS_OBJECT      )pMyObject->hAtoStatus;
     PHTTP_ATO_HEADER_OBJECT         pAtoHeader   = (PHTTP_ATO_HEADER_OBJECT      )pMyObject->hAtoHeader;

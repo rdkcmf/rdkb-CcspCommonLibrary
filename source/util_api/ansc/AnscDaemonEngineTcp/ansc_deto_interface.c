@@ -117,8 +117,6 @@ AnscCreateDaemonEngineTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_ENGINE_TCP_OBJECT  pDaemonEngineTcp = NULL;
 
     return  AnscDetoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

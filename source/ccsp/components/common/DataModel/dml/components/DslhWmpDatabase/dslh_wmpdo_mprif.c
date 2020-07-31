@@ -166,13 +166,11 @@ DslhWmpdoMprRegParameter
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject           = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty           = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_CWMP_PARAM_DESCR          pParamDescr         = (PDSLH_CWMP_PARAM_DESCR     )hParamDescr;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity          = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PANSC_TOKEN_CHAIN               pParamPathTokens    = (PANSC_TOKEN_CHAIN          )NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY         )NULL;
     char*                           pParamEnumTokens    = (char*                      )NULL;
     ULONG                           ulParamDataType     = (ULONG                      )0;
     ULONG                           ulParamSyntax       = (ULONG                      )0;
@@ -395,9 +393,8 @@ DslhWmpdoMprRegNotifyParam
         BOOL                        bActiveNotification
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject     = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
+    /*PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;*/
     PDSLH_WMPDO_MONITOR_PARAM       pMonitorParam = (PDSLH_WMPDO_MONITOR_PARAM  )NULL;
     PDSLH_VAR_RECORD_OBJECT         pDslhVarRecord= (PDSLH_VAR_RECORD_OBJECT    )hVarRecord;
 
@@ -480,9 +477,8 @@ DslhWmpdoMprDelNotifyParam
         ANSC_HANDLE                 hVarRecord
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject     = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
+    /*PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;*/
     PDSLH_WMPDO_MONITOR_PARAM       pMonitorParam = (PDSLH_WMPDO_MONITOR_PARAM  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
 
@@ -561,9 +557,7 @@ DslhWmpdoMprModNotifyParam
         ULONG                       ulLimit
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject     = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_WMPDO_MONITOR_PARAM       pMonitorParam = (PDSLH_WMPDO_MONITOR_PARAM  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
     PDSLH_VAR_RECORD_OBJECT         pDslhVarRecord= (PDSLH_VAR_RECORD_OBJECT    )hVarRecord;
@@ -628,9 +622,7 @@ DslhWmpdoMprResetNotifyParam
         ANSC_HANDLE                 hVarRecord
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject     = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty     = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_WMPDO_MONITOR_PARAM       pMonitorParam = (PDSLH_WMPDO_MONITOR_PARAM  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY         )NULL;
 
@@ -698,7 +690,6 @@ DslhWmpdoMprRegObject
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity   = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootbjEntity    = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_CWMP_OBJECT_DESCR         pObjectDescr     = (PDSLH_CWMP_OBJECT_DESCR    )hObjDescr;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity       = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
@@ -915,8 +906,6 @@ DslhWmpdoMprUnregisterObject
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity   = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootbjEntity    = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity       = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf       = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
@@ -1163,7 +1152,6 @@ DslhWmpdoMprGetVarRecord
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord   = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord       = (PDSLH_VAR_RECORD_OBJECT    )NULL;
@@ -1194,7 +1182,6 @@ DslhWmpdoMprGetVarRecord
 
     if ( !pSLinkEntry )
     {
-        returnStatus = ANSC_STATUS_BAD_NAME;
 
         goto  EXIT1;
     }
@@ -1215,7 +1202,6 @@ DslhWmpdoMprGetVarRecord
 
     if ( !pObjRecord )
     {
-        returnStatus = ANSC_STATUS_BAD_NAME;
 
         goto  EXIT2;
     }
@@ -1291,7 +1277,6 @@ DslhWmpdoMprGetVarRecord2
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord   = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord       = (PDSLH_VAR_RECORD_OBJECT    )NULL;
@@ -1324,7 +1309,6 @@ DslhWmpdoMprGetVarRecord2
 
     if ( !pObjRecord )
     {
-        returnStatus = ANSC_STATUS_BAD_NAME;
 
         goto  EXIT1;
     }
@@ -1556,7 +1540,6 @@ DslhWmpdoMprGetParamValue
     )
 {
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord     = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     SLAP_VARIABLE*                  pParamValue    = (SLAP_VARIABLE*             )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
@@ -1636,7 +1619,6 @@ DslhWmpdoMprGetParamValue2
     )
 {
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord     = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE        )pMyObject->hDslhMprIf;
     SLAP_VARIABLE*                  pParamValue    = (SLAP_VARIABLE*             )NULL;
@@ -1722,9 +1704,6 @@ DslhWmpdoMprSetParamValue
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf        = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord         = (PDSLH_VAR_RECORD_OBJECT    )NULL;
@@ -1968,16 +1947,10 @@ DslhWmpdoMprSetParamValue2
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     /*PDSLH_MSO_INTERFACE             pDslhMsoIf         = (PDSLH_MSO_INTERFACE        )pDslhCpeController->GetDslhMsoIf((ANSC_HANDLE)pDslhCpeController);*/
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord         = (PDSLH_VAR_RECORD_OBJECT    )NULL;
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity         = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
-    PDSLH_OBJ_RECORD_OBJECT         pObjRecord         = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
-    char*                           pFaultParamName    = NULL;
 
     if ( !pDslhMpaIf->LockWriteAccess
             (
@@ -2121,16 +2094,10 @@ DslhWmpdoMprSetParamValue3
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     /*PDSLH_MSO_INTERFACE             pDslhMsoIf         = (PDSLH_MSO_INTERFACE        )pDslhCpeController->GetDslhMsoIf((ANSC_HANDLE)pDslhCpeController);*/
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord         = (PDSLH_VAR_RECORD_OBJECT    )NULL;
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity         = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
-    PDSLH_OBJ_RECORD_OBJECT         pObjRecord         = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
-    char*                           pFaultParamName    = NULL;
 
     if ( !pDslhMpaIf->LockWriteAccess
             (
@@ -2274,9 +2241,6 @@ DslhWmpdoMprSetParamValue4
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE          )pMyObject->hDslhMpaIf;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord         = (PDSLH_VAR_RECORD_OBJECT    )NULL;
@@ -2506,7 +2470,6 @@ DslhWmpdoMprGetParamValueString
     )
 {
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     char*                           pParamValue    = (char*                      )NULL;
@@ -2598,7 +2561,6 @@ DslhWmpdoMprSetParamValueString
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
 
@@ -2680,7 +2642,6 @@ DslhWmpdoMprGetParamValueInt
     )
 {
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     int                             iParamValue    = (int                        )0;
@@ -2771,8 +2732,6 @@ DslhWmpdoMprSetParamValueInt
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
 
@@ -2851,10 +2810,7 @@ DslhWmpdoMprGetParamValueUint
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     ULONG                           ulParamValue   = (ULONG                      )0;
@@ -2945,8 +2901,6 @@ DslhWmpdoMprSetParamValueUint
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
@@ -3025,10 +2979,7 @@ DslhWmpdoMprGetParamValueBool
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     BOOL                            bParamValue    = (BOOL                       )FALSE;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
@@ -3118,8 +3069,6 @@ DslhWmpdoMprSetParamValueBool
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     SLAP_VARIABLE*                  pParamVariable = (SLAP_VARIABLE*             )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
@@ -3198,10 +3147,7 @@ DslhWmpdoMprGetParamValueTime
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
     return  pDslhMprIf->GetParamValueString
@@ -3259,10 +3205,7 @@ DslhWmpdoMprSetParamValueTime
         char*                       pParamValue
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
     return  pDslhMprIf->SetParamValueString
@@ -3311,10 +3254,7 @@ DslhWmpdoMprGetParamValueBase64
         char*                       pParamName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
     return  pDslhMprIf->GetParamValueString
@@ -3372,10 +3312,7 @@ DslhWmpdoMprSetParamValueBase64
         char*                       pParamValue
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hRootObjEntity;
     PDSLH_MPR_INTERFACE             pDslhMprIf     = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
 
     return  pDslhMprIf->SetParamValueString
@@ -3425,11 +3362,7 @@ DslhWmpdoMprGetEntryObjectCount
         ANSC_HANDLE                 hTableObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
+    UNREFERENCED_PARAMETER(hThisObject);
     /*PDSLH_MSO_INTERFACE             pDslhMsoIf         = (PDSLH_MSO_INTERFACE        )pDslhCpeController->GetDslhMsoIf((ANSC_HANDLE)pDslhCpeController);*/
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordTable    = (PDSLH_OBJ_RECORD_OBJECT    )hTableObjRecord;
 
@@ -3484,11 +3417,7 @@ DslhWmpdoMprGetEntryObject
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
+    UNREFERENCED_PARAMETER(hThisObject);
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordTable    = (PDSLH_OBJ_RECORD_OBJECT    )hTableObjRecord;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordEntry    = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry        = (PSINGLE_LINK_ENTRY         )NULL;
@@ -3679,6 +3608,7 @@ DslhWmpdoMprApplyEntryChanges
         ANSC_HANDLE                 hEntryObjRecord
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordEntry    = (PDSLH_OBJ_RECORD_OBJECT    )hEntryObjRecord;
 
     return pObjRecordEntry->CommitChanges2((ANSC_HANDLE)pObjRecordEntry);

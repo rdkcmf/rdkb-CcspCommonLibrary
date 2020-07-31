@@ -104,7 +104,6 @@ SlapBmc2ComoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_COMMAND_OBJECT       pMyObject    = (PSLAP_BMC2_COMMAND_OBJECT)hThisObject;
 
     SlapScoStdReset((ANSC_HANDLE)pMyObject);

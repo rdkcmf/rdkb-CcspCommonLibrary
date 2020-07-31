@@ -89,7 +89,7 @@
  * Define some const values that will be used in the object mapper object definition.
  */
 #define  ANSC_SSTO_YEAR_1970                        1970
-#define  ANSC_SSTO_SECONDS_FROM_1900_TO_1970        2208988800 
+#define  ANSC_SSTO_SECONDS_FROM_1900_TO_1970        2208988800LL
 
 #define  ANSC_SSTO_SECONDS_IN_DAY                   86400
 #define  ANSC_SSTO_SECONDS_IN_HOUR                  3600

@@ -117,7 +117,7 @@ BreeSrmoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBREE_SRM_OBJECT                pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ BreeSrmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SRM_OBJECT                pMyObject    = (PBREE_SRM_OBJECT)hThisObject;
     PBREE_SRM_RES_ITEM              pRes;
     ULONG                           i;
@@ -244,7 +243,6 @@ BreeSrmoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SRM_OBJECT                pMyObject    = (PBREE_SRM_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -286,7 +284,6 @@ BreeSrmoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_SRM_OBJECT                pMyObject    = (PBREE_SRM_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

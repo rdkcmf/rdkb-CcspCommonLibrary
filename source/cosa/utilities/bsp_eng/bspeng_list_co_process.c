@@ -135,13 +135,13 @@ BspTemplateListAddItem
             !pTmplName          || 
             AnscEqualString
                 (
-                    pTmplName, 
+                    (char *)pTmplName, 
                     BSP_TEMPLATE_DEFAULT_NAME, 
                     BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE
                 );
 
     /* or there's already a template has the name */
-    if (!bBadTemplate && pMyObject->FindItem(hThisObject, pTmplName))
+    if (!bBadTemplate && pMyObject->FindItem(hThisObject, (const char *)pTmplName))
         bBadTemplate = TRUE;
 
     if (bBadTemplate)
@@ -268,7 +268,7 @@ BspTemplateListFindItem
             pTmplName   = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
 
             if (
-                    AnscEqualString(pTmplName, (char *)pName, BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE)
+                    AnscEqualString((char *)pTmplName, (char *)pName, BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE)
                )
             {
                 return pTemplate;
@@ -343,7 +343,6 @@ BspTemplateListAddGroup
     PUCHAR                          pErrMsg;
     PUCHAR                          pTmplName;
     PANSC_PTR_ARRAY_OBJECT          pLoadedTemplatesList;
-    char                            *pTemplateName  = NULL;
     BOOL                            bLoaded         = FALSE;
     
 #ifdef   _DEBUG
@@ -406,7 +405,7 @@ BspTemplateListAddGroup
         /*
         pName   = AnscDupString(pTemplateName);
         */
-        pName   = AnscDupString((char *)pVirtualName);
+        pName   = (char *)AnscDupString((PUCHAR)pVirtualName);
 
         pLoadedTemplatesList->Add((ANSC_HANDLE)pLoadedTemplatesList, pName);
     }
@@ -427,7 +426,7 @@ BspTemplateListAddGroup
 #endif
 
     /* read whole template script into memory */
-    while (ulRead = pReader->Read((ANSC_HANDLE)pReader, pCur, ulLeft))
+    while ((ulRead = pReader->Read((ANSC_HANDLE)pReader, pCur, ulLeft)))
     {
         pCur    += ulRead;
         ulLeft  -= ulRead;
@@ -477,14 +476,14 @@ BspTemplateListAddGroup
         pTemplate->SetList((ANSC_HANDLE)pTemplate, hThisObject);
 
         /* set virtual name */
-        pTemplate->pName    = AnscDupString((char *)pVirtualName);
+        pTemplate->pName    = (char *)AnscDupString((PUCHAR)pVirtualName);
 
         if (pVirtualName)
         {
             pTemplate->bVirtual = TRUE;
         }
 
-        pCur        = (PUCHAR)pTemplate->Parse((ANSC_HANDLE)pTemplate, pCur, ulLineNo);
+        pCur        = (PUCHAR)pTemplate->Parse((ANSC_HANDLE)pTemplate, (const char *)pCur, ulLineNo);
         ulErrLineNo = pTemplate->GetErrorLineNo((ANSC_HANDLE)pTemplate);
         pTmplName   = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
 
@@ -519,7 +518,7 @@ BspTemplateListAddGroup
         }
         else
         {
-            if (pMyObject->FindItem(hThisObject, pTmplName))
+            if (pMyObject->FindItem(hThisObject, (const char *)pTmplName))
             {
                 AnscTrace
                     (
@@ -866,7 +865,7 @@ BspTemplateListRegisterTemplate
 
     if (pInfo)
     {
-        pInfo->pName    = AnscDupString(pName); /* copy template name */
+        pInfo->pName    = (char *)AnscDupString((PUCHAR)pName); /* copy template name */
         pInfo->pContent = pContent;             /* content must be static */
         pInfo->ulLen    = ulLen;
 
@@ -918,7 +917,6 @@ BspTemplateListGetRegisteredTemplate
     )
 {
     PBSP_TEMPLATE_LIST_OBJECT       pMyObject   = (PBSP_TEMPLATE_LIST_OBJECT)hThisObject;
-    char                            *pContent   = NULL;
     ULONG                           ulHashValue;
     PSINGLE_LINK_ENTRY              pSLinkEntry;
     PBSP_TEMPLATE_REG_PAGE_INFO     pInfo;
@@ -1164,12 +1162,10 @@ BspTemplateListImportTemplates
     )
 {
     PBSP_TEMPLATE_LIST_OBJECT       pMyObject   = (PBSP_TEMPLATE_LIST_OBJECT)hThisObject;
-    PANSC_PTR_ARRAY_OBJECT          pPtrArray   = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hList;
     PBSP_TEMPLATE_LIST_OBJECT       pList       = (PBSP_TEMPLATE_LIST_OBJECT)hImportList;
     PANSC_PTR_ARRAY_OBJECT          pImportList = (PANSC_PTR_ARRAY_OBJECT)pList->hList;
     ULONG                           ulCount, i;
     ANSC_HANDLE                     hTemplate;
-    PBSP_TEMPLATE_OBJECT            pTemplate;
 
     ulCount = pImportList->GetSize((ANSC_HANDLE)pImportList);
 
@@ -1177,12 +1173,11 @@ BspTemplateListImportTemplates
     {
         hTemplate   = (ANSC_HANDLE)pImportList->GetAt((ANSC_HANDLE)pImportList, i);
 
-        pTemplate   = (PBSP_TEMPLATE_OBJECT)hTemplate;
 
         pMyObject->AddTemplate((ANSC_HANDLE)pMyObject, hTemplate);
     }
 
-    pMyObject->SetTemplateLoaded(hThisObject, pTemplateName);
+    pMyObject->SetTemplateLoaded(hThisObject, (char *)pTemplateName);
 }
 
 
@@ -1338,7 +1333,6 @@ BspTemplateListCacheTemplates
     )
 {
     PBSP_TEMPLATE_LIST_OBJECT       pMyObject   = (PBSP_TEMPLATE_LIST_OBJECT)hThisObject;
-    PANSC_PTR_ARRAY_OBJECT          pPtrArray   = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hList;
     PANSC_PTR_ARRAY_OBJECT          pList       = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hList;
     PBSP_TEMPLATE_CACHE_MGR_INTERFACE pCmif     = (PBSP_TEMPLATE_CACHE_MGR_INTERFACE)pMyObject->hCmif;
     PBSP_TEMPLATE_CACHE_ENTRY       pEntry      = NULL;
@@ -1378,10 +1372,10 @@ BspTemplateListCacheTemplates
         }
     }
 
-    pEntry->pName   = (PUCHAR)AnscAllocateMemory(AnscSizeOfString(pTemplateName) + 1);
+    pEntry->pName   = (PUCHAR)AnscAllocateMemory(AnscSizeOfString((const char *)pTemplateName) + 1);
     if (pEntry->pName)
     {
-        AnscCopyString(pEntry->pName, pTemplateName);
+        AnscCopyString((char *)pEntry->pName, (char *)pTemplateName);
     }
     pCmif->AddTemplate(pCmif->hOwnerContext, (ANSC_HANDLE)pEntry);
 
@@ -1425,7 +1419,6 @@ BspTemplateListLoadCacheTemplates
     )
 {
     PBSP_TEMPLATE_LIST_OBJECT       pMyObject   = (PBSP_TEMPLATE_LIST_OBJECT)hThisObject;
-    PANSC_PTR_ARRAY_OBJECT          pPtrArray   = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hList;
     ULONG                           ulCount, i;
     PBSP_TEMPLATE_OBJECT            pTemplate, *pTemplates;
     PBSP_TEMPLATE_CACHE_ENTRY       pCacheEntry = (PBSP_TEMPLATE_CACHE_ENTRY)hCacheEntry;
@@ -1440,7 +1433,7 @@ BspTemplateListLoadCacheTemplates
         pMyObject->AddTemplate((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pTemplate);
     }
 
-    pMyObject->SetTemplateLoaded(hThisObject, pCacheEntry->pName);
+    pMyObject->SetTemplateLoaded(hThisObject, (char *)pCacheEntry->pName);
 
     return ANSC_STATUS_SUCCESS;
 }

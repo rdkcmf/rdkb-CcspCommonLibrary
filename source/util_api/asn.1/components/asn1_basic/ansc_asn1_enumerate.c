@@ -414,6 +414,7 @@ AnscAsn1EnumerateEqualsTo
         BOOLEAN                     bValueOnly
     )
 {
+    UNREFERENCED_PARAMETER(bValueOnly);
     PANSC_ASN1_ENUMERATE            pMyObject  = (PANSC_ASN1_ENUMERATE)hThisObject;
     PANSC_ASN1_ENUMERATE            pNewObject = (PANSC_ASN1_ENUMERATE)hOtherObject;
 
@@ -492,7 +493,6 @@ AnscAsn1EnumerateGetSizeOfEncoded
 {
     PANSC_ASN1_ENUMERATE            pMyObject    = (PANSC_ASN1_ENUMERATE)hThisObject;
     ULONG                           ulSize       = 0;
-    ULONG                           tagSize      = 0;    
 
     /*
      * If it's optional, don't need encode
@@ -510,11 +510,6 @@ AnscAsn1EnumerateGetSizeOfEncoded
     }
 
     ulSize              = pMyObject->uLength;
-
-    /*
-     *  The tag size is 1;
-     */
-    tagSize  = 1;
 
     /*
      *  check the attribute list, from the end of the list;
@@ -942,7 +937,6 @@ AnscAsn1EnumerateDumpObject
 
 #ifndef _PKI_KERNEL
 
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_ENUMERATE            pMyObject    = (PANSC_ASN1_ENUMERATE)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -998,7 +992,7 @@ AnscAsn1EnumerateDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->uValue
+                    (int)pMyObject->uValue
                 );
     }
 
@@ -1052,7 +1046,7 @@ AnscAsn1EnumerateTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_ENUMERATE            pMyObject    = (PANSC_ASN1_ENUMERATE)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;

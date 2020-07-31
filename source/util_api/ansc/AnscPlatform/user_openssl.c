@@ -38,6 +38,7 @@
 #include "openssl/crypto.h"
 #include "openssl/x509v3.h"
 #include "ansc_platform.h"
+#include "ccsp_base_api.h"
 
 #define  USER_OPENSSL_Redirect_AnscTrace            0
 #if USER_OPENSSL_Redirect_AnscTrace
@@ -75,6 +76,8 @@ void initialize_openssl_lib()
 
 static void locking_callback(int mode, int type, const char *file, int line)
 {
+        UNREFERENCED_PARAMETER(file);
+        UNREFERENCED_PARAMETER(line);
         if (mode & CRYPTO_LOCK) {
                 pthread_mutex_lock(&locks[type]);
                 lock_count[type]++;
@@ -104,6 +107,7 @@ static void openssl_thread_setup(void)
         CRYPTO_set_locking_callback(locking_callback);
 }
 
+#if 0
 static void openssl_thread_cleanup(void)
 {
         int i;
@@ -117,6 +121,7 @@ static void openssl_thread_cleanup(void)
         OPENSSL_free(locks);
         OPENSSL_free(lock_count);
 }
+#endif
 static void
 openssl_print_errors (SSL *ssl)
 {
@@ -222,7 +227,6 @@ int openssl_load_ca_certificates(int who_calls)
 
 int openssl_init (int who_calls)
 {
-  int rc = 0;
   SSL_CTX *ssl_ctx = NULL;
   
   if (who_calls != SSL_SERVER_CALLS && who_calls != SSL_CLIENT_CALLS)
@@ -277,6 +281,7 @@ int openssl_init (int who_calls)
 
 int openssl_read (int fd, char *buf, int bufsize, void *ctx)
 {
+    UNREFERENCED_PARAMETER(fd);
   int retval;
   SSL *ssl = (SSL *) ctx;
 
@@ -293,6 +298,7 @@ int openssl_read (int fd, char *buf, int bufsize, void *ctx)
 
 int openssl_write (int fd, char *buf, int bufsize, void *ctx)
 {
+    UNREFERENCED_PARAMETER(fd);
   int retval = 0;
   SSL *ssl = (SSL *) ctx;
   
@@ -469,6 +475,7 @@ error:
 
 int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
 {
+    UNREFERENCED_PARAMETER(fd);
     X509 *cert;
     char common_name[256] = {0};
     
@@ -544,8 +551,7 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
 
     if ( bIsComcastImage() ) {
        //RDKB-9319: Get TLS version and log
-       char* sslVersion = NULL;
-       sslVersion = SSL_get_version(ssl);
+       const char* sslVersion = SSL_get_version(ssl);
        AnscTraceWarning(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
 
        if(!strcmp(sslVersion, "TLSv1.2"))
@@ -566,6 +572,8 @@ no_cert:
 
 int _server_openssl_validate_certificate (int fd, char *data, SSL *ssl)
 {
+    UNREFERENCED_PARAMETER(fd);
+    UNREFERENCED_PARAMETER(data);
 /*server verify client's certificate logic. 
  the logic is different per product, need customization*/
     openssl_print_errors(ssl);

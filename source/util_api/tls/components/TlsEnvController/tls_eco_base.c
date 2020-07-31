@@ -119,6 +119,7 @@ TlsEcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_ENV_CONTROLLER_OBJECT      pMyObject    = NULL;
 

@@ -116,9 +116,7 @@ BwrmEcoRamGetCacheNumber
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     return  pBwrmPageManager->GetCacheEntryCount((ANSC_HANDLE)pBwrmPageManager);
@@ -162,7 +160,6 @@ BwrmEcoRamSetCacheNumber
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     returnStatus =
@@ -206,9 +203,7 @@ BwrmEcoRamGetCacheSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     return  pBwrmPageManager->GetCacheMemorySize((ANSC_HANDLE)pBwrmPageManager);
@@ -252,7 +247,6 @@ BwrmEcoRamSetCacheSize
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     returnStatus =
@@ -296,9 +290,7 @@ BwrmEcoRamGetCacheTimeout
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     return  pBwrmPageManager->GetCacheTimeout((ANSC_HANDLE)pBwrmPageManager);
@@ -342,7 +334,6 @@ BwrmEcoRamSetCacheTimeout
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     returnStatus =
@@ -393,7 +384,6 @@ BwrmEcoRamControlCache
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     switch ( ctrl_code )
@@ -489,7 +479,6 @@ BwrmEcoRamGetRawPage
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_FILE_MANAGER_OBJECT       pBwrmFileManager = (PBWRM_FILE_MANAGER_OBJECT    )pMyObject->hBwrmFileManager;
 
     returnStatus =
@@ -552,9 +541,7 @@ BwrmEcoRamGetCookedPage
         ANSC_HANDLE*                phCookedPage
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     *phCookedPage =
@@ -622,7 +609,6 @@ BwrmEcoRamAddCookedPage
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     returnStatus =
@@ -681,7 +667,6 @@ BwrmEcoRamDelCookedPage
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT    )pMyObject->hBwrmPageManager;
 
     returnStatus =
@@ -732,9 +717,7 @@ BwrmEcoRamIsPageCachedForced
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY         )NULL;
     PBWRM_ENV_CACHE_FORCED_PAGE     pCacheForcedPage = (PBWRM_ENV_CACHE_FORCED_PAGE)NULL;
     BOOL                            bForced          = FALSE;
@@ -805,7 +788,6 @@ BwrmEcoRamForcePageCache
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBWRM_ENV_CONTROLLER_PROPERTY   pProperty        = (PBWRM_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY         )NULL;
     PBWRM_ENV_CACHE_FORCED_PAGE     pCacheForcedPage = (PBWRM_ENV_CACHE_FORCED_PAGE)NULL;
     BOOL                            bFound           = FALSE;

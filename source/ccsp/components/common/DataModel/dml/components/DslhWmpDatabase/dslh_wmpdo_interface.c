@@ -117,8 +117,6 @@ DslhCreateWmpDatabase
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase = NULL;
 
     return  DslhWmpdoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

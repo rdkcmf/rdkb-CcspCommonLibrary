@@ -122,11 +122,9 @@ TlsRkoRecv
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_RECORD_KEEPER_OBJECT       pMyObject          = (PTLS_RECORD_KEEPER_OBJECT  )hThisObject;
-    PTLS_RECORD_KEEPER_PROPERTY     pProperty          = (PTLS_RECORD_KEEPER_PROPERTY)&pMyObject->Property;
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_RECORD_HEADER              pTlsRecordHeader1  = (PTLS_RECORD_HEADER         )buffer;
     PTLS_RECORD_HEADER              pTlsRecordHeader2  = (PTLS_RECORD_HEADER         )NULL;
@@ -147,14 +145,10 @@ TlsRkoRecv
     ULONG                           ulChunkBufSize     = (ULONG                      )0;
     ULONG                           ulChunkSize        = (ULONG                      )TLS_MAX_RECORD_CHUNK_SIZE;
     ULONG                           ulNewChunkSize     = (ULONG                      )TLS_MAX_RECORD_CHUNK_SIZE;
-    ULONG                           ulChunkCount       = (ULONG                      )0;
-    ULONG                           ulChunkOffset      = (ULONG                      )0;
-    void*                           pCurChunk          = (void*                      )buffer;
     ULONG                           ulMacHashSize      = (ULONG                      )0;
     ULONG                           ulPaddingLength    = (ULONG                      )0;
     PUCHAR                          pHashResult        = (PUCHAR                     )NULL;
     PUCHAR                          pPaddings          = (PUCHAR                     )NULL;
-    ULONG                           i                  = 0;
     ULONG                           j                  = 0;
     UCHAR                           temp_buffer[128];
 
@@ -777,7 +771,6 @@ TlsRkoSend
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_RECORD_KEEPER_OBJECT       pMyObject          = (PTLS_RECORD_KEEPER_OBJECT  )hThisObject;
-    PTLS_RECORD_KEEPER_PROPERTY     pProperty          = (PTLS_RECORD_KEEPER_PROPERTY)&pMyObject->Property;
     PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
@@ -798,7 +791,6 @@ TlsRkoSend
     ULONG                           ulChunkBufSize     = (ULONG                      )0;
     ULONG                           ulChunkSize        = (ULONG                      )TLS_MAX_RECORD_CHUNK_SIZE;
     ULONG                           ulChunkCount       = (ULONG                      )0;
-    ULONG                           ulChunkOffset      = (ULONG                      )0;
     void*                           pCurChunk          = (void*                      )buffer;
     ULONG                           ulMacHashSize      = (ULONG                      )0;
     ULONG                           ulPaddingLength    = (ULONG                      )0;
@@ -1083,7 +1075,7 @@ TlsRkoSend
                     ** If pSslMacWriteSecret larger than Chunk size or less than 2(result in wrap around of the variable value, on subtracting 2)
                     ** may leads to out of bound memory access.
                     */
-                    if((ulChunkBufSize > pSslMacWriteSecret) && (pSslMacWriteSecret > 2))
+                    if((ulChunkBufSize > ulSslMacShiftSize) && (ulSslMacShiftSize > 2))
                     {
                         AnscCopyMemory(pRecordChunk,           pSslMacWriteSecret, ulSslMacShiftSize    );
                         AnscCopyMemory(pSslMacWriteSecret + 2, pRecordChunk,       ulSslMacShiftSize - 2);

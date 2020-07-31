@@ -117,8 +117,5 @@ HttpCreateAtoFxCat1
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_FXCAT1_OBJECT         pHttpAtoFxCat1 = NULL;
-
     return  HttpAtoFxCat1Create(hContainerContext, hOwnerContext, hAnscReserved);
 }

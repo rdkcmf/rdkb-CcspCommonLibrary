@@ -106,7 +106,6 @@ SlapBmc2DomoGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
@@ -145,10 +144,8 @@ SlapBmc2DomoGetOlmContainer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject          = (PSLAP_BMC2_DOMAIN_OBJECT   )hThisObject;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT    )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComDomain->hBmc2EnvController;
 
     return  pBmc2ComDomain->hSlapContainerDomain;
 }
@@ -184,9 +181,7 @@ SlapBmc2DomoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject      = (PSLAP_BMC2_DOMAIN_OBJECT)hThisObject;
-    PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain = (PBMC2_COM_DOMAIN_OBJECT )pMyObject->hInsContext;
 
     SlapScoGalReset((ANSC_HANDLE)pMyObject);
 

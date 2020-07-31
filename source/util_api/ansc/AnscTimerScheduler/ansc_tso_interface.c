@@ -117,8 +117,6 @@ AnscCreateTimerScheduler
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_TIMER_SCHEDULER_OBJECT    pTimerScheduler = NULL;
 
     return  AnscTsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
