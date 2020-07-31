@@ -260,6 +260,23 @@ AnscStringUtf8T0Utf16Size
         PUCHAR                      pStr
     );
 
+BOOL
+AnscValidStringCheck
+    (
+        PUCHAR                     pString
+    );
+
+BOOL
+is_IpAddress
+    (
+        PUCHAR                     pString
+    );
+
+BOOL
+is_Ipv6_address
+    (
+        PUCHAR                     pString
+    );
 
 #if ( defined(_ANSC_WINDOWSNT) ||  defined(_ANSC_WINDOWS9X) ) && !defined(_ANSC_KERNEL)
 
