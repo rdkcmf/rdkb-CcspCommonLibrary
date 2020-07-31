@@ -23,6 +23,8 @@
 
 
 char mqEventName[64] = {0};
+
+
 char process_name[64]={0};
 
 int gNumOfSubdocs = 0;
@@ -41,11 +43,41 @@ PblobRegInfo blobData;
 
 queueInfo  queueData;
 
+#ifdef WBCFG_MULTI_COMP_SUPPORT
+
+char multiCompMqEventName[64] = {0} , mCompMqSlaveName[64] = {0};
+
+extern queueInfo  mCompQueueData;
+
+extern pthread_mutex_t mCompQueue_access ;
+
+extern int checkIfVersionExecInMultiCompQueue(uint32_t version,int *queueIndex);
+extern void* messageQueueProcessingMultiComp();
+extern void* messageQueueProcessingMultiCompSlave();
+extern int isMultiCompQueueEmpty();
+extern void initMultiComp();
+#endif
 setVersion updateVersion;
 pErr execReturn = NULL;
 
-/* Function/thread  for debugging purpuse. When FRAMEWORK_DEBUG is created thread logs all the registered sub docs and version 
- and also the requests in queue */
+/*************************************************************************************************************************************
+
+    caller:     register_sub_docs
+
+    prototype:
+
+        void*
+        display_subDocs
+            (
+            );
+
+    description:
+
+        Function/thread  for debugging purpuse. When FRAMEWORK_DEBUG is created thread logs all the registered sub docs and version 
+ 		and also the requests in queue. It runs is infinite loop, when FRAMEWORK_DEBUG file exists thread it logs the queue info 
+ 		in DEFAULT_DEBUG_INTERVAL for DEFAULT_DEBUG_ITER times
+
+**************************************************************************************************************************************/
 void* display_subDocs()
 {
 
@@ -112,6 +144,31 @@ void* display_subDocs()
 
 			  	pthread_mutex_unlock(&queue_access);
 
+			  	#ifdef WBCFG_MULTI_COMP_SUPPORT
+
+				pthread_mutex_lock(&mCompQueue_access);
+
+
+				if (isMultiCompQueueEmpty())
+			  	{		
+					CcspTraceInfo(("%s : MultiCompQueue Empty\n",__FUNCTION__));
+			  	}
+
+			  	else
+			  	{
+			  		for( i = mCompQueueData.front; i!=mCompQueueData.rear; i=(i+1)%QUEUE_SIZE) 
+				    {
+				  		  CcspTraceInfo(("MultiComp TXID %hu version %u timeout %lu state %d \n",mCompQueueData.txid_queue[i],mCompQueueData.version_queue[i],mCompQueueData.timeout_queue[i],mCompQueueData.blob_state_queue[i]));
+
+				    }
+				    CcspTraceInfo(("MultiComp %hu version %u timeout %lu state %d \n",mCompQueueData.txid_queue[i],mCompQueueData.version_queue[i],mCompQueueData.timeout_queue[i],mCompQueueData.blob_state_queue[i]));
+
+
+			  	}
+
+			  	pthread_mutex_unlock(&mCompQueue_access);
+
+			  	#endif
 
 				num_of_dbg_iter--;
 				sleep(interval);
@@ -129,7 +186,42 @@ void* display_subDocs()
 	return NULL;
 }
 
-/* Function registers all the subdocs during component initialization */
+/*************************************************************************************************************************************
+
+    caller:     Component during initialization
+
+    prototype:
+
+        void
+        register_sub_docs
+            (
+            	blobRegInfo *bInfo,
+            	int NumOfSubdocs,
+            	getVersion getv,
+            	setVersion setv
+            );
+
+    description:
+       Component needs to register all the subdoc’s it supports during its initialization. 
+
+    argument:   
+    	blobRegInfo		bInfo,
+	This is reg data , maintains subdoc name and version
+
+        int                    	NumOfSubdocs,
+	This argument expects number of subdocs registered by the component.
+			
+        getVersion              getv,
+        This function pointer expects a handler from component to return the current applied version for subdoc name passed as arg. 
+
+
+        setVersion              setv
+        This function pointer expects a handler from component to set the current version for subdoc name passed as arg. 
+
+
+
+***************************************************************************************************************************************/
+
 void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv , setVersion setv )
 {
 	CcspTraceInfo(("Inside FUNC %s LINE %d\n",__FUNCTION__,__LINE__));
@@ -140,8 +232,18 @@ void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv , se
 
 
 	memset(&queueData, 0, sizeof(queueData));
+
+
 	queueData.front = -1;
 	queueData.rear = -1;
+
+#ifdef WBCFG_MULTI_COMP_SUPPORT
+	
+	memset(&mCompQueueData, 0, sizeof(mCompQueueData));
+
+	mCompQueueData.front = -1;
+	mCompQueueData.rear = -1;
+#endif
 	int i ;
 
 	if ( getv != NULL )
@@ -159,7 +261,7 @@ void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv , se
 
 	// Intialize message queue
 	initMessageQueue();
-
+	
 	pthread_t tid;
 
 	int ret = pthread_create(&tid, NULL, &display_subDocs, NULL); 
@@ -170,7 +272,31 @@ void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv , se
 
 }
 
-/* Function to notify subdoc version to webconfig client */
+/*************************************************************************************************************************************
+
+    caller:    check_component_crash
+
+    prototype:
+
+        void
+        notifyVersion_to_Webconfig
+            (
+            	char* subdoc_name,
+ 				uint32_t version
+            );
+
+    description :
+	 Function to notify subdoc version to webconfig client 
+
+    argument:   
+		char* subdoc_name,	
+		Name of subdoc
+
+ 		uint32_t version
+ 		Version number of of a subdoc
+
+***************************************************************************************************************************************/
+
 void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version,int process_crashed)
 {
 
@@ -187,14 +313,28 @@ void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version,int process_
         	snprintf(data,sizeof(data),"%s,0,%u,%s",subdoc_name,version,COMPONENT_INIT_EVENT);
     	}
 
-	int ret = CcspBaseIf_WebConfigSignal(bus_handle, data);
-
-	if ( ret != CCSP_SUCCESS )
-		CcspTraceError(("%s : CcspBaseIf_WebConfigSignal failed,  ret value is %d\n",__FUNCTION__,ret));
-
+        sendWebConfigSignal(data);
 }
 
-/* Function to check if component is coming after crash , function takes component initialized file as an argument */
+/*************************************************************************************************************************************
+    caller:    Component calls this func during it's initilization
+
+    prototype:
+
+        void
+        check_component_crash
+            (
+				char* init_file
+            );
+
+    description :
+		Component to call this API, framework will notify subdoc versions to WebConfig client if component is coming after crash
+    
+    argument:   
+		char* init_file
+		Init file is the file which RDKB component creates after initialization. 
+
+***************************************************************************************************************************************/
 
 void check_component_crash(char* init_file)
 {
@@ -234,31 +374,105 @@ void check_component_crash(char* init_file)
 	pthread_mutex_unlock(&reg_subdoc);
 }
 
-/* Function available to calculate the timeout if component doesn't provide the timeout function */
+/*************************************************************************************************************************************
+
+    caller:    PushBlobRequest
+
+    prototype:
+
+        size_t
+        defFunc_calculateTimeout
+            (
+				size_t numOfEntries
+            );
+
+    description :
+		
+		Function available to calculate the timeout if component doesn't provide the timeout function    
+    argument:   
+		size_t numOfEntries
+		number of entries in a request.
+		
+	return : timeout value
+
+****************************************************************************************************************************************/
+
 size_t defFunc_calculateTimeout(size_t numOfEntries)
 {
 	// value in seconds
 	return  (DEFAULT_TIMEOUT + (numOfEntries * DEFAULT_TIMEOUT_PER_ENTRY)) ;
 }
 
-/* Function to send NACK to webconfig client */
+/*************************************************************************************************************************************
+
+    caller:    PushBlobRequest, messageQueueProcessing
+
+    prototype:
+
+        void
+        send_NACK
+            (
+		char *subdoc_name, 
+		uint16_t txid, 
+		uint32_t version, 
+		uint16_t ErrCode,
+		char *failureReason
+            );
+
+    description :
+		
+		Function sends NACK to notify webconfig client that  BLOB execution failed.
+
+    argument:   
+		char *subdoc_name --> Name of subdoc
+
+		uint16_t txid    -->  transaction id of the request
+		uint32_t version --> version of the request
+		uint16_t ErrCode --> Err code why execution failed
+		char *failureReason --> Error message why execution failed
+		
+
+****************************************************************************************************************************************/
+
 void send_NACK (char *subdoc_name, uint16_t txid, uint32_t version, uint16_t ErrCode,char *failureReason)  
 {
 		
 	CcspTraceInfo(("%s : doc name %s , doc version %u, txid is %hu, ErrCode is %hu, Failure reason is %s\n",__FUNCTION__,subdoc_name,version,txid,ErrCode,failureReason));
 
 	char data[256]= {0};
-    	snprintf(data,sizeof(data),"%s,%hu,%u,NACK,0,%s,%hu,%s",subdoc_name,txid,version,process_name,ErrCode,failureReason);
+    snprintf(data,sizeof(data),"%s,%hu,%u,NACK,0,%s,%hu,%s",subdoc_name,txid,version,process_name,ErrCode,failureReason);
 
-	int ret = CcspBaseIf_WebConfigSignal(bus_handle, data);
-
-	if ( ret != CCSP_SUCCESS )
-		CcspTraceError(("%s : CcspBaseIf_WebConfigSignal failed,  ret value is %d\n",__FUNCTION__,ret));
+    sendWebConfigSignal(data);
 
 }
 
-/* Function to send ACK to webconfig client */
+/*************************************************************************************************************************************
 
+    caller:    PushBlobRequest, messageQueueProcessing
+
+    prototype:
+
+        void
+        send_ACK
+            (
+		char *subdoc_name, 
+		uint16_t txid, 
+		uint32_t version, 
+		unsigned long timeout,
+            );
+
+    description :
+		
+		Function sends ACK to notify webconfig client that BLOB execution is success or while notifying timeout value.
+
+    argument:   
+		char *subdoc_name --> Name of subdoc
+
+		uint16_t txid    -->  transaction id of the request
+		uint32_t version --> version of the request
+		unsigned long timeout --> Timeout value needed for blob execution
+		
+****************************************************************************************************************************************/
 void send_ACK (char *subdoc_name, uint16_t txid, uint32_t version, unsigned long timeout,char *msg )
 {
 	CcspTraceInfo(("%s : doc name %s , doc version %u, txid is %hu  timeout is %lu\n",__FUNCTION__,subdoc_name,version,txid,timeout));
@@ -276,14 +490,34 @@ void send_ACK (char *subdoc_name, uint16_t txid, uint32_t version, unsigned long
 	
 	}
 
-	int ret = CcspBaseIf_WebConfigSignal(bus_handle, data);
-
-	if ( ret != CCSP_SUCCESS )
-		CcspTraceError(("%s : CcspBaseIf_WebConfigSignal failed,  ret value is %d\n",__FUNCTION__,ret));
+    sendWebConfigSignal(data);
 
 }
 
-/* Function to update subdoc version and state after completion of blob request */
+/*************************************************************************************************************************************
+
+    caller:    messageQueueProcessing
+
+    prototype:
+
+        void
+        updateVersionAndState
+            (
+		uint32_t version,
+		int blob_execution_retValue,
+		PblobRegInfo blobUpdate
+            );
+
+    description :
+		
+		This function update subdoc version and state after completion of blob request 
+
+    argument:   
+		uint32_t version --> Version to be updated
+		int blob_execution_retValue --> if value is BLOB_EXEC_SUCCESS means blob execution is success
+		PblobRegInfo blobUpdate  --> Pointer where version value needs to be updated
+		
+****************************************************************************************************************************************/
 
 void updateVersionAndState(uint32_t version, int blob_execution_retValue,PblobRegInfo blobUpdate)
 {
@@ -311,7 +545,30 @@ void updateVersionAndState(uint32_t version, int blob_execution_retValue,PblobRe
 	pthread_mutex_unlock(&queue_access);
 }
 
-/* Function to get pointer address , required to update the version after successfull completion of blob execution */
+
+/*************************************************************************************************************************************
+
+    caller:    messageQueueProcessing
+
+    prototype:
+
+        blobRegInfo
+        getAddress
+            (
+		char* subdoc_name
+            );
+
+    description :
+		
+		Function to get pointer address , required to update the version after successfull completion of blob execution 
+
+    argument:   
+		char* subdoc_name -- Name of subdoc 
+		
+    return :
+		returns pointer address of the subdoc name , used to update newer version of subdoc
+
+****************************************************************************************************************************************/
 blobRegInfo* getAddress(char* subdoc_name)
 {
 	pthread_mutex_lock(&reg_subdoc);
@@ -334,7 +591,27 @@ blobRegInfo* getAddress(char* subdoc_name)
 	return NULL;
 }
 
-/* Check if queue if full which maintanins the txid, version and timeout of blob requests */
+
+/*************************************************************************************************************************************
+
+    caller:    addEntryToQueue
+
+    prototype:
+
+        int
+        isQueueFull
+            (
+            );
+
+    description :
+		
+		Function to check if Queue is full
+		
+    return :
+		returns 1 if queue is full , otherwise returns 0
+
+****************************************************************************************************************************************/
+
 int isQueueFull() 
 {  
 	if( (queueData.front == queueData.rear + 1) || (queueData.front == 0 && queueData.rear == QUEUE_SIZE-1)) 
@@ -345,7 +622,34 @@ int isQueueFull()
 	return 0;
 } 
 
-/* To Add entry to queue which maintains the txid, version and timeout of blob requests */
+/*************************************************************************************************************************************
+
+    caller:    PushBlobRequest
+
+    prototype:
+
+        int
+        addEntryToQueue
+            (
+		uint32_t version,
+		uint16_t txid, 
+		unsigned long timeout,
+		void *exec_data
+            );
+
+    description :
+		
+		To Add entry to queue which maintains the txid, version and timeout of blob requests
+
+    argument:   
+		uint32_t version --> Version number of the new request
+		uint16_t txid   -->  transaction id of new request
+		unsigned long timeout --> timeout value of new request
+		void *exec_data		 --> exec_data pointer address , which will be used to free the memory after blob exec
+    return :
+		returns 1 if adding entry to queue is success , otherwise returns 0
+
+****************************************************************************************************************************************/
 
 int addEntryToQueue(uint32_t version,uint16_t txid, unsigned long timeout,void *exec_data) 
 { 
@@ -379,8 +683,26 @@ int addEntryToQueue(uint32_t version,uint16_t txid, unsigned long timeout,void *
 
 } 
   
-  /* Check if queue is empty. */
 
+/*************************************************************************************************************************************
+
+    caller:    checkIfVersionExecInQueue,removeEntryFromQueue
+
+    prototype:
+
+        int
+        isQueueEmpty
+            (
+            );
+
+    description :
+		
+  		Function to check if queue is empty. 
+		
+    return :
+		returns 1 if queue is empty , otherwise returns 0
+
+****************************************************************************************************************************************/
 int isQueueEmpty() 
 {  
 	if(queueData.front == -1) 
@@ -392,8 +714,21 @@ int isQueueEmpty()
 
 }
  
- /* To remove entry from rear , required when mq_send call fails */
+/*************************************************************************************************************************************
+    caller:    PushBlobRequest
 
+    prototype:
+
+        void
+        removeEntryfromRearEnd
+            (
+            );
+
+    description :
+		
+		 Function removes entry from rear , required when mq_send call fails 
+
+****************************************************************************************************************************************/
 void removeEntryfromRearEnd()
 {
 	pthread_mutex_lock(&queue_access);
@@ -421,7 +756,22 @@ void removeEntryfromRearEnd()
    	pthread_mutex_unlock(&queue_access);
 }
 
- /* To remove entry after completion of blob request execution */
+/*************************************************************************************************************************************
+
+    caller:    messageQueueProcessing
+
+    prototype:
+
+        void
+        removeEntryFromQueue
+            (
+            );
+
+    description :
+		
+		 Function removes entry from queue after blob execution is complete
+
+****************************************************************************************************************************************/
 
 void removeEntryFromQueue() 
 { 
@@ -457,7 +807,30 @@ void removeEntryFromQueue()
 
 } 
 
-/* timed thread to execute the blob request, */
+/*************************************************************************************************************************************
+
+    caller:    messageQueueProcessing
+
+    prototype:
+
+        void*
+        execute_request
+            (
+		void *arg            
+	    );
+
+    description :
+		
+		timed thread to execute the blob request
+
+    argument:   
+		void *arg  --> The structure which is parsed from the blob. Contains parameters based on feature.
+
+		
+    return :
+		Value returned from blob execution handler in Err struct format
+
+****************************************************************************************************************************************/
 
 void* execute_request(void *arg)
 {
@@ -480,7 +853,30 @@ void* execute_request(void *arg)
    	return NULL;
 }
 
-/* Thread to monitor all blob execution requests (message queue) */
+/*************************************************************************************************************************************
+
+    caller:    initMessageQueue
+
+    prototype:
+
+        void*
+        messageQueueProcessing
+            (
+            );
+
+    description :
+		
+		Thread to monitor all blob execution requests (message queue).
+		After receiving the events this thread will create timed thread for blob execution. 
+		Timeout value is MAX_FUNC_EXEC_TIMEOUT * timeout value returned by calcTimeout. 
+		
+		If execution is completed within the timeout value specified for thread, 
+		messageQueueProcessing will update the version and then call send the ACK with timeout as 0. 
+		If execution returns failure within timeout value, then NACK is sent.
+		If execution fails to complete within timeout, then thread execution is cancelled, and NACK is sent.
+
+		If thread creation for blob execution fails, execution handler is called directly
+****************************************************************************************************************************************/
 
 void* messageQueueProcessing()
 {
@@ -673,13 +1069,31 @@ void* messageQueueProcessing()
 	return NULL;
 }
 
-/* Component call this api in boot up with message queue name , this function creats messageQueueProcessing thread to process blob requets */
+/*************************************************************************************************************************************
+
+    caller:    register_sub_docs
+
+    prototype:
+
+        void
+        initMessageQueue
+            (
+            );
+
+    description :
+		
+		Function creates 1 thread to monitor webconfig requests and in case of multi comp support this function creeats 2 other 
+		message queue monitor threads for master and slave execution
+
+
+****************************************************************************************************************************************/
+
 void initMessageQueue()
 
 {
 	CcspTraceInfo(("Inside FUNC %s LINE %d \n",__FUNCTION__,__LINE__));
 
-	pthread_t tid;
+		pthread_t tid;
 
     	FILE  *pFile      = NULL;
 
@@ -702,16 +1116,43 @@ void initMessageQueue()
 
      	}
 
+     	int ret;
+
      	snprintf(mqEventName,sizeof(mqEventName), "%s-%s",WEBCONFIG_QUEUE_NAME,process_name);
+  
+		ret = pthread_create(&tid, NULL, &messageQueueProcessing, NULL); 
 
-	int ret = pthread_create(&tid, NULL, &messageQueueProcessing, NULL); 
-
-	if ( ret != 0 )
-		CcspTraceError(("%s: messageQueueProcessing pthread_create failed , ERROR : %s \n", __FUNCTION__,strerror(errno)));
+		if ( ret != 0 )
+			CcspTraceError(("%s: messageQueueProcessing pthread_create failed , ERROR : %s \n", __FUNCTION__,strerror(errno)));    
 
 }
 
-/* Function returns if version execution is in queue , if version in queue already then just need to update TX ID . */
+/*************************************************************************************************************************************
+
+    caller:    checkNewVersionUpdateRequired
+
+    prototype:
+
+        int
+        checkIfVersionExecInQueue
+            (
+		uint32_t version,
+		int *queueIndex
+            );
+
+    description :
+		
+		Function returns if version execution is in queue , if version in queue already then just need to update TX ID 
+
+    argument:   
+		uint32_t version --> version number of new request
+		int *queueIndex	 --> function need to fill this data and return to caller, caller will use this index to update the 
+		new transaction id info
+
+    return :
+		returns VERSION_UPDATE_REQUIRED is subdoc has newer version , returns EXECUTION_IN_QUEUE is exec is in queue already
+
+****************************************************************************************************************************************/
 
 int checkIfVersionExecInQueue(uint32_t version,int *queueIndex)
 {
@@ -754,9 +1195,36 @@ int checkIfVersionExecInQueue(uint32_t version,int *queueIndex)
     return VERSION_UPDATE_REQUIRED; 
 }
 
-/* Function to check if version update is required, if version is already exist or request in queue then no need to push the request to message queue */
 
-int checkNewVersionUpdateRequired(char *subdoc_name,uint32_t version,int *queueIndex)
+/*************************************************************************************************************************************
+
+    caller:    PushBlobRequest
+
+    prototype:
+
+        int
+        checkNewVersionUpdateRequired
+            (
+		execData *exec_data,
+		int *queueIndex
+            );
+
+    description :
+		
+		Function to check if version update is required, if version is already exist or request in queue then no need to push the request to message queue 
+
+
+    argument:   
+		execData *exec_data 	--> which struct has version and transaction id details
+		int *queueIndex		--> checkIfVersionExecInQueue function need to fill this data and return to caller, caller will use this index to update the 
+					new transaction id info
+    return :
+		returns VERSION_UPDATE_REQUIRED is subdoc has newer version , returns VERSION_ALREADY_EXIST if exec already exists
+		also returns SUBDOC_NOT_SUPPORTED if subdoc is not supported
+
+****************************************************************************************************************************************/
+
+int checkNewVersionUpdateRequired(execData *exec_data,int *queueIndex)
 {
 	CcspTraceInfo(("Inside FUNC %s LINE %d \n",__FUNCTION__,__LINE__));
 	int i =0 ;
@@ -769,21 +1237,34 @@ int checkNewVersionUpdateRequired(char *subdoc_name,uint32_t version,int *queueI
 
 	for (i=0 ; i < gNumOfSubdocs ; i++)
 	{
-	        if ( strcmp(blobCheckVersion->subdoc_name,subdoc_name) == 0)
+	        if ( strcmp(blobCheckVersion->subdoc_name,exec_data->subdoc_name) == 0)
 	        {
-			if ( (uint32_t)blobCheckVersion->version == version )
+			if ( (uint32_t)blobCheckVersion->version == exec_data->version )
 	        	{
-	        		pthread_mutex_unlock(&reg_subdoc);
-
+                    pthread_mutex_unlock(&reg_subdoc);
+                    if ( ( strcmp (exec_data->subdoc_name,"hotspot") == 0 ) && (access(HOTSPOT_VERSION_IGNORE, F_OK) == 0))
+                    {
+                            unlink(HOTSPOT_VERSION_IGNORE);
+                            return VERSION_UPDATE_REQUIRED ; 
+                    }
 	        		return VERSION_ALREADY_EXIST;
 	        	}
 
 	        	else 
 	        	{	 
 	        		pthread_mutex_unlock(&reg_subdoc);
+	#ifdef WBCFG_MULTI_COMP_SUPPORT
 
-	        		return (checkIfVersionExecInQueue(version,queueIndex) );
+	        		if (exec_data->multiCompRequest == 0 )
 
+	        			return (checkIfVersionExecInQueue(exec_data->version,queueIndex) );
+	        		else
+	        			return (checkIfVersionExecInMultiCompQueue(exec_data->version,queueIndex) );
+	#else
+	        		
+	        		return (checkIfVersionExecInQueue(exec_data->version,queueIndex) );
+	
+	#endif
 	        	}
 
 	        }
@@ -796,7 +1277,30 @@ int checkNewVersionUpdateRequired(char *subdoc_name,uint32_t version,int *queueI
 	return SUBDOC_NOT_SUPPORTED;
 }
 
-/* Function to calculate queue timeout , need to add queuetimeout to subdoc execution time when requests are in queue */
+
+/*************************************************************************************************************************************
+
+    caller:    PushBlobRequest
+
+    prototype:
+
+        size_t
+        getPendingQueueTimeout
+            (
+		uint16_t txid
+            );
+
+    description :
+		
+		Function to calculate queue timeout , need to add all queue timeout to subdoc execution time when requests are in queue 
+
+    argument:   
+		uint16_t txid -->transaction id number
+		
+    return :
+		returns pending timeout value 
+****************************************************************************************************************************************/
+
 size_t getPendingQueueTimeout(uint16_t txid)
 {
 	int queueTimeout = 0;
@@ -836,7 +1340,31 @@ size_t getPendingQueueTimeout(uint16_t txid)
     return queueTimeout; 
 }
 
-/* Function to decide and push the blob execution request to message queue */
+
+
+/*************************************************************************************************************************************
+
+    caller:    componenent calls this function after receivng the blob request(single component)
+
+    prototype:
+
+        void
+        PushBlobRequest
+            (
+		execData *exec_data
+            );
+
+    description :
+		
+		Function to decide and push the blob execution request to message queue 
+
+    argument:   
+		execData *exec_data	--> Component fills this structure , which has all the info needed to execute the blob request
+    return :
+		returns pointer address of the subdoc name , used to update newer version of subdoc
+
+****************************************************************************************************************************************/
+
 void PushBlobRequest (execData *exec_data )  
 {
 
@@ -852,7 +1380,7 @@ void PushBlobRequest (execData *exec_data )
 
     	int queueIndex=0;
 
-	int retVal =  checkNewVersionUpdateRequired(exec_data->subdoc_name,exec_data->version,&queueIndex);
+	int retVal =  checkNewVersionUpdateRequired(exec_data,&queueIndex);
 
 	if ( VERSION_UPDATE_REQUIRED == retVal ) 
 	{
@@ -864,10 +1392,9 @@ void PushBlobRequest (execData *exec_data )
     			CcspTraceError(("%s message queue open failed , ERROR : %s\n",__FUNCTION__,strerror(errno)));
 			send_NACK(exec_data->subdoc_name,exec_data->txid,exec_data->version,MQUEUE_OPEN_FAILED,"MQ OPEN FAILED");  
 	  		
-	  		if ( exec_data->freeResources ) 
-	  			exec_data->freeResources(exec_data);
+               goto EXIT;
 
-	  		return ;
+
 
     		}
 
@@ -906,8 +1433,10 @@ void PushBlobRequest (execData *exec_data )
                  		CcspTraceError(("%s message queue send failed , ERROR is : %s\n",__FUNCTION__,strerror(errno)));
                 		send_NACK(exec_data->subdoc_name,exec_data->txid,exec_data->version,MQUEUE_SEND_FAILED,"MQ SEND FAILED");
                  		removeEntryfromRearEnd();
-
-			}
+                 		if ((0 != mq_close(mq)))
+            				CcspTraceError(("%s message queue close failed , ERROR is : %s\n",__FUNCTION__,strerror(errno)));
+                 		goto EXIT;
+					}
 
 
 			if ((0 != mq_close(mq)))
@@ -968,6 +1497,7 @@ void PushBlobRequest (execData *exec_data )
 		send_NACK(exec_data->subdoc_name,exec_data->txid,exec_data->version,SUBDOC_NOT_SUPPORTED,"INVALID SUBDOC");
 	}
 
+EXIT : 
 	if ( exec_data->freeResources ) 
 		exec_data->freeResources(exec_data);
 }

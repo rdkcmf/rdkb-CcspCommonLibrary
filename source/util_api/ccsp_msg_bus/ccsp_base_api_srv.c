@@ -566,6 +566,29 @@ void CcspBaseIf_SetCallback2
         cb->webconfigSignal = func;
         cb->webconfigSignal_data = user_data;
     }
+        else if(!strcmp("multiCompBroadCastSignal", name))
+        {
+            cb->multiCompBroadCastSignal = func;
+            cb->multiCompBroadCastSignal_data = user_data;
+        }
+
+        else if(!strcmp("multiCompMasterProcessSignal", name))
+        {
+            cb->multiCompMasterProcessSignal = func;
+            cb->multiCompMasterProcessSignal_data = user_data;
+        }
+        
+        else if(!strcmp("multiCompSlaveProcessSignal", name))
+        {
+            cb->multiCompSlaveProcessSignal = func;
+            cb->multiCompSlaveProcessSignal_data = user_data;
+        }
+        else if(!strcmp("TunnelStatus", name))
+        {
+            cb->TunnelStatus = func;
+            cb->TunnelStatus_data = user_data;
+        }
+
 }
 
 #define CCSP_DBUS_LARGE_REPLY_SIZE_MIN 75000  // bytes
@@ -1571,6 +1594,44 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
                                   DBUS_TYPE_INVALID))
            func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
     }
+            if(!strcmp(method,"multiCompBroadCastSignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->multiCompBroadCastSignal)
+            {
+                char* multiCompBroadCastSignal_data = 0;
+                if(dbus_message_get_args (message,
+                                          NULL,
+                                          DBUS_TYPE_STRING, &multiCompBroadCastSignal_data,
+                                          DBUS_TYPE_INVALID))
+                   func->multiCompBroadCastSignal(multiCompBroadCastSignal_data, func->multiCompBroadCastSignal_data);
+            }
+                if(!strcmp(method,"multiCompMasterProcessSignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->multiCompMasterProcessSignal)
+            {
+                char* multiCompMasterProcessSignal_data = 0;
+                if(dbus_message_get_args (message,
+                                          NULL,
+                                          DBUS_TYPE_STRING, &multiCompMasterProcessSignal_data,
+                                          DBUS_TYPE_INVALID))
+                   func->multiCompMasterProcessSignal(multiCompMasterProcessSignal_data, func->multiCompMasterProcessSignal_data);
+            }
+            if(!strcmp(method,"multiCompSlaveProcessSignal") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->multiCompSlaveProcessSignal)
+            {
+                char* multiCompSlaveProcessSignal_data = 0;
+                if(dbus_message_get_args (message,
+                                          NULL,
+                                          DBUS_TYPE_STRING, &multiCompSlaveProcessSignal_data,
+                                          DBUS_TYPE_INVALID))
+                   func->multiCompSlaveProcessSignal(multiCompSlaveProcessSignal_data, func->multiCompSlaveProcessSignal_data);
+            }
+
+            if(!strcmp(method,"TunnelStatus") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->TunnelStatus)
+            {
+                char* TunnelStatus_data = 0;
+                if(dbus_message_get_args (message,
+                                          NULL,
+                                          DBUS_TYPE_STRING, &TunnelStatus_data,
+                                          DBUS_TYPE_INVALID))
+                   func->TunnelStatus(TunnelStatus_data, func->TunnelStatus_data);
+            }
+    
 	if(!strcmp(method,STBSERVICE_CDL_DLC_SIGNAL) && !strcmp(interface, STBSERVICE_CDL_INTERFACE) && func->dlCompleteSignal)
     {
         DBusMessageIter iter = {0};

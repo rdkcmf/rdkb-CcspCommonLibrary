@@ -43,6 +43,9 @@
 #define FILE_OPEN_ERROR                		316
 #define LAN_PARAM_LEASETIME_INVALID    		317
 #define LAN_PARAM_GATEWAY_IP_INVALID    	318
+#define TUNNEL_WIFI_VAP_COUNT_MISMATCH      	319
+#define INVALID_VLANID_RANGE                    320
+#define BLOB_EXEC_FAILURE                       321
 
 
 #define SYSCFG_FAILURE            	    	1001
@@ -66,5 +69,19 @@
 #define MB_ERROR_BANDSTEERING_ENABLED           8004
 #define MB_ERROR_MESH_SERVICE_START_FAIL        8005
 #define MB_ERROR_MESH_SERVICE_STOP_FAIL         8006
+
+
+// multi comp error codes
+#ifdef WBCFG_MULTI_COMP_SUPPORT
+
+#define SLAVE_RESPONSE_TIME_OUT 	    	800
+#define SLAVE_EXEC_TIME_OUT			801
+
+#define SLAVE_EXEC_FAILED			802
+#define SLAVE_NOT_READY          803
+
+#define POST_EXEC_SUCCESS              0
+#endif
+
 
 #endif /* _COSA_WEBCONFIG_ERROR_API_H */

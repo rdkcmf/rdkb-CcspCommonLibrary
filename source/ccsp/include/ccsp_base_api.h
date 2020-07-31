@@ -887,11 +887,6 @@ int CcspBaseIf_WebConfigSignal (
     void* bus_handle,
     char* webconfig
 );
-/*This API returns the telemetry information */
-int CcspBaseIf_SendWebConfigDataSignal (
-    void* bus_handle,
-    char* webconfig_data
-);
 
 
 //server side function
@@ -1032,6 +1027,27 @@ typedef void (*CCSPBASEIF_REGISTERCAPS)(
 );
 
 typedef int (*CCSPBASEIF_GETSYSTEMSTATUS)();
+
+typedef void (*CCSPBASEIF_MULTICOMPBROADCASTSIGNAL )(
+    char* multiCompBroadCastSignal_data,
+    void* user1_data
+);
+
+typedef void (*CCSPBASEIF_MULTICOMPMASTERPROCESSSIGNAL )(
+    char* multiCompMasterProcessSignal_data,
+    void* user1_data
+);
+
+typedef void (*CCSPBASEIF_MULTICOMPSLAVEPROCESSSIGNAL )(
+    char* multiCompSlaveProcessSignal_data,
+    void* user1_data
+);
+
+typedef void (*CCSPBASEIF_TUNNELSTATUS )(
+    char* TunnelStatus_data,
+    void* user1_data
+);
+
 typedef int (*CCSPBASEIF_GETHEEALTH)();
 
 typedef int (*CCSPPAIF_RESTARTBOOTSTRAP)( 
@@ -1122,6 +1138,18 @@ typedef struct _CCSP_Base_Func_CB
 
     CCSPBASEIF_GETSYSTEMSTATUS                     isSystemReady;
     void *                                         isSystemReady_data;
+    
+    CCSPBASEIF_MULTICOMPBROADCASTSIGNAL            multiCompBroadCastSignal;
+    void *                                         multiCompBroadCastSignal_data;
+
+    CCSPBASEIF_MULTICOMPMASTERPROCESSSIGNAL        multiCompMasterProcessSignal;
+    void *                                         multiCompMasterProcessSignal_data;
+
+    CCSPBASEIF_MULTICOMPSLAVEPROCESSSIGNAL         multiCompSlaveProcessSignal;
+    void *                                         multiCompSlaveProcessSignal_data;
+
+    CCSPBASEIF_TUNNELSTATUS                        TunnelStatus;
+    void *                                         TunnelStatus_data;
 } CCSP_Base_Func_CB;
 
 /*
@@ -1251,9 +1279,18 @@ int CcspBaseIf_SendSignal(
     char *event
 );
 
+
+int CcspBaseIf_SendSignal_WithData(
+    void * bus_handle,
+    char *event,
+    char* data
+
+);
+
 int CcspBaseIf_SendSignal_rbus(
     void * bus_handle,
     char *event
+
 );
 
 int CcspBaseIf_GetRemoteParameterValue(
