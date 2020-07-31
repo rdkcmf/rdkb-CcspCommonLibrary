@@ -119,10 +119,8 @@ HttpApoGetWamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hWamIf;
 }
 
@@ -162,9 +160,7 @@ HttpApoSetWamIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_WAM_INTERFACE             pWamIf       = (PHTTP_WAM_INTERFACE          )pMyObject->hWamIf;
 
     *pWamIf = *(PHTTP_WAM_INTERFACE)hInterface;
@@ -203,10 +199,8 @@ HttpApoGetSbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hSbcIf;
 }
 
@@ -246,9 +240,7 @@ HttpApoSetSbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_SBC_INTERFACE             pSbcIf       = (PHTTP_SBC_INTERFACE          )pMyObject->hSbcIf;
 
     *pSbcIf = *(PHTTP_SBC_INTERFACE)hInterface;
@@ -287,10 +279,8 @@ HttpApoGetCbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hCbcIf;
 }
 
@@ -330,9 +320,7 @@ HttpApoSetCbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_CBC_INTERFACE             pCbcIf       = (PHTTP_CBC_INTERFACE          )pMyObject->hCbcIf;
 
     *pCbcIf = *(PHTTP_CBC_INTERFACE)hInterface;
@@ -371,10 +359,8 @@ HttpApoGetPbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hPbcIf;
 }
 
@@ -414,9 +400,7 @@ HttpApoSetPbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_PBC_INTERFACE             pPbcIf       = (PHTTP_PBC_INTERFACE          )pMyObject->hPbcIf;
 
     *pPbcIf = *(PHTTP_PBC_INTERFACE)hInterface;
@@ -455,10 +439,8 @@ HttpApoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->hHfpIf;
 }
 
@@ -498,9 +480,7 @@ HttpApoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
 
     *pHfpIf = *(PHTTP_HFP_INTERFACE)hInterface;
@@ -539,10 +519,8 @@ HttpApoGetProxyMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     return  pMyObject->ProxyMode;
 }
 
@@ -582,10 +560,8 @@ HttpApoSetProxyMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-
+    
     pMyObject->ProxyMode = ulMode;
 
     return  ANSC_STATUS_SUCCESS;
@@ -627,7 +603,6 @@ HttpApoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
     PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
 
@@ -672,7 +647,6 @@ HttpApoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
     PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
 
@@ -712,7 +686,6 @@ HttpApoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
     PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
 
@@ -758,9 +731,7 @@ HttpApoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

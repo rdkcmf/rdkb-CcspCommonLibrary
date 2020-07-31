@@ -127,10 +127,7 @@ SlapLboAsyncCallTaskLoco
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR   )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER         )NULL;
     PIMCP_SLAP_LOCO_ANSWER          pImcpSlapLocoAnswer = (PIMCP_SLAP_LOCO_ANSWER    )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                     )0;
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
-    PIMCP_PARTY_INFO                pRepliedPartyInfo   = (PIMCP_PARTY_INFO          )NULL;
-    ULONG                           ulPartyInfoSize     = (ULONG                     )0;
 
     /* RDKB-6243, CID-24481; null checking on before use 
     ** NULL check of "pAsyncCallInfo" done on "EXIT0" before releasing semaphone
@@ -198,7 +195,7 @@ SlapLboAsyncCallTaskLoco
                 pPartyAddr->PartyName,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -235,7 +232,6 @@ SlapLboAsyncCallTaskLoco
     else
     {
         returnStatus      = (ANSC_STATUS     )ImcpSlapLocoAnswerGetStatusCode(pImcpSlapLocoAnswer);
-        pRepliedPartyInfo = (PIMCP_PARTY_INFO)ImcpSlapLocoAnswerGetPartyInfo (pImcpSlapLocoAnswer);
     }
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
@@ -250,7 +246,6 @@ SlapLboAsyncCallTaskLoco
     }
     else
     {
-        ulPartyInfoSize = ImcpSlapAnswerGetSize(pImcpSlapAnswer) - sizeof(IMCP_SLAP_LOCO_ANSWER);
 
         if ( *pAsyncCallInfo->phDstPartyAddr == (ANSC_HANDLE)NULL )
         {
@@ -355,9 +350,10 @@ SlapLboProcessCallAcqc
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
@@ -428,9 +424,10 @@ SlapLboProcessCallRelc
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
@@ -896,9 +893,10 @@ SlapLboProcessCallDelo
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
@@ -969,9 +967,10 @@ SlapLboProcessCallInvo
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
@@ -1042,9 +1041,10 @@ SlapLboProcessCallAcqo
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;
@@ -1115,9 +1115,10 @@ SlapLboProcessCallRelo
         PULONG                      pulErrorCode
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hLpcPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
 
     *ppOutputBuffer = NULL;
     *pulOutputSize  = 0;

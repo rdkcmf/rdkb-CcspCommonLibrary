@@ -116,8 +116,6 @@ SysCreateRroSint
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_SINT_OBJECT            pSysRroSint  = NULL;
 
     return  SysRroSintCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

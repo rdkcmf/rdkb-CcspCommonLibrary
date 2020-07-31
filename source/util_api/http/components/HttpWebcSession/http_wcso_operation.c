@@ -124,7 +124,6 @@ HttpWcsoMatchServer
         ULONG                       flags
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
@@ -170,9 +169,7 @@ HttpWcsoIsReadyToRequest
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = (PHTTP_WEBC_TRANS_OBJECT    )NULL;
     BOOL                            bReadyToReq  = TRUE;
 
@@ -263,9 +260,7 @@ HttpWcsoOpen
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
-
+    
     if ( pMyObject->SessionState != HTTP_WCSO_STATE_INITIALIZED )
     {
         return  ANSC_STATUS_UNAPPLICABLE;
@@ -307,9 +302,7 @@ HttpWcsoClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp      = (PANSC_BUFFER_DESCRIPTOR       )pTcpSimpleClient->GetBufferContext((ANSC_HANDLE)pTcpSimpleClient);
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans       = (PHTTP_WEBC_TRANS_OBJECT       )NULL;
@@ -333,8 +326,7 @@ HttpWcsoClose
         {
             if ( pWebcTrans->GetTransState((ANSC_HANDLE)pWebcTrans) != HTTP_WCTO_STATE_FINISHED )
             {
-                returnStatus =
-                    pWebcTrans->Abort
+                pWebcTrans->Abort
                         (
                             (ANSC_HANDLE)pWebcTrans,
                             HTTP_BSP_EVENT_TIMEOUT
@@ -388,10 +380,8 @@ HttpWcsoAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
-
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -428,10 +418,8 @@ HttpWcsoReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
-
+    
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

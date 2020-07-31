@@ -170,7 +170,7 @@ AnscCryptoIsDesWeakKey
         ANSC_HANDLE                 hKey
     )
 {
-    PANSC_CRYPTO_OBJECT             pThisObject  = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_CRYPTO_KEY                pKey         = (PANSC_CRYPTO_KEY   )hKey;
     ULONG                           i            = 0;
     PUCHAR                          pWeakKey     = NULL;
@@ -248,8 +248,8 @@ AnscCryptoFixParity
         BOOL                        bOddParity
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
     PANSC_CRYPTO_KEY                pKey         = (PANSC_CRYPTO_KEY)hKey;
     PUCHAR                          pKeyValue    = NULL;
     ULONG                           ulKeyLength  = pKey->Length;
@@ -334,8 +334,7 @@ AnscCryptoCheckParity
         BOOL                        bOddParity
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_CRYPTO_KEY                pKey         = (PANSC_CRYPTO_KEY)hKey;
     PUCHAR                          pKeyValue    = NULL;
     ULONG                           ulKeyLength  = pKey->Length;
@@ -420,8 +419,6 @@ AnscCryptoCorrectDesKey
     PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
     PANSC_CRYPTO_KEY                pKey         = (PANSC_CRYPTO_KEY)hKey;
     PUCHAR                          pKeyValue    = pKey->Value[0];
-    ULONG                           ulKeyLength  = pKey->Length;
-    ULONG                           i            = 0;
     BOOL                            bWeakKey     = FALSE;
 
     returnStatus =
@@ -483,8 +480,7 @@ AnscCryptoReverseByte
         UCHAR                       ucValue
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i            = 0;
     UCHAR                           ucNewValue   = 0;
     UCHAR                           ucMask       = 0;
@@ -539,8 +535,7 @@ AnscCryptoXorByte
         UCHAR                       ucValue2
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject    = (PANSC_CRYPTO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i            = 0;
     UCHAR                           ucNewValue   = 0;
     UCHAR                           ucMask       = 0;
@@ -635,8 +630,6 @@ AnscCryptoMitDesStrToKey
     UCHAR                           ucByte          = 0;
     PUCHAR                          pCurrTemp       = NULL;
     PUCHAR                          pCurrTempKey    = NULL;
-    BOOL                            bLastBitOwn     = 0;
-    BOOL                            bLastBitOther   = 0;
     ANSC_CRYPTO_HASH                HashResult;
     UCHAR                           temp[64];
     UCHAR                           tempKey[64];
@@ -867,8 +860,8 @@ AnscCryptoNFold
         PUCHAR                      pOutString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject       = (PANSC_CRYPTO_OBJECT)hThisObject;
     ULONG                           ulValue1        = 0;
     ULONG                           ulValue2        = 0;
     ULONG                           ulValue3        = 0;
@@ -1055,8 +1048,6 @@ AnscCryptoRandomToKey
     )
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject       = (PANSC_CRYPTO_OBJECT)hThisObject;
-    PANSC_CRYPTO_KEY                pOutKey         = (PANSC_CRYPTO_KEY)hOutKey;
 
 
     switch ( algorithm )
@@ -1174,8 +1165,8 @@ AnscCryptoMapEncTypeToKeySize
         PULONG                      pIvLength
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_CRYPTO_OBJECT             pMyObject       = (PANSC_CRYPTO_OBJECT)hThisObject;
 
     *pulKeySeedSize = 0;
     *pulKeyLength   = 0;
@@ -1510,7 +1501,6 @@ AnscCryptoDeriveKey
     PUCHAR                          pOutBlockData   = NULL;
     PUCHAR                          pTempKey        = NULL;
     ULONG                           ulBitsInByte    = 8;
-    ULONG                           j               = 0;
     ANSC_CRYPTO_IV                  iv;
 
 

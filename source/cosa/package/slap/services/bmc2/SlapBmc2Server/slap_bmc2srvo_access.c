@@ -116,9 +116,8 @@ SlapBmc2SrvoExecute
         char*                       page_path
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_SERVER_OBJECT        pMyObject          = (PSLAP_BMC2_SERVER_OBJECT   )hThisObject;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hInsContext;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)AnscGetTaskStorageUnit("Bmc2ReqController");
     SLAP_PARAMETER_LIST*            pSlapParamList     = (SLAP_PARAMETER_LIST*       )NULL;
 
@@ -199,9 +198,8 @@ SlapBmc2SrvoTransfer
         char*                       page_path
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_SERVER_OBJECT        pMyObject          = (PSLAP_BMC2_SERVER_OBJECT   )hThisObject;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pMyObject->hInsContext;
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT)AnscGetTaskStorageUnit("Bmc2ReqController");
     SLAP_PARAMETER_LIST*            pSlapParamList     = (SLAP_PARAMETER_LIST*       )NULL;
 

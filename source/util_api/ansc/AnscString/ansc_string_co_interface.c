@@ -116,8 +116,6 @@ AnscCreateStringComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_STRING_OBJECT             pString         = NULL;
 
     return  AnscStringCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

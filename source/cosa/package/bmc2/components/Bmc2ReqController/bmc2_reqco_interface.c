@@ -117,8 +117,6 @@ Bmc2CreateReqController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = NULL;
 
     return  Bmc2ReqcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

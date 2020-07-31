@@ -110,7 +110,6 @@ DslhObjeoEnableForbidNotify
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject        = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pParentObjEntity = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hParentObjEntity;
 
@@ -155,13 +154,11 @@ DslhObjeoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject       = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity = (PDSLH_OBJ_ENTITY_OBJECT)NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity = (PDSLH_VAR_ENTITY_OBJECT)NULL;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance  = (PDSLH_OBJEO_INSTANCE   )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
-    ULONG                           i               = 0;
 
     /* reset the child objects/parameters */
     if ( TRUE )

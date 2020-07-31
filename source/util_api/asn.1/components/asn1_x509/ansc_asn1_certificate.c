@@ -388,7 +388,7 @@ AnscAsn1CreateCertificate
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_CERTIFICATE          pThisObject  = NULL;
 
     /*
@@ -620,6 +620,8 @@ AnscAsn1CertificateCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -633,6 +635,7 @@ AnscAsn1CertificateGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1203,7 +1206,6 @@ AnscAsn1CertSetPublicKeyInfo
     )
 {
     PANSC_ASN1_CERTIFICATE          pThisObject     =(PANSC_ASN1_CERTIFICATE)hThisObject;
-    PANSC_ASN1_SUBJECTPUBLICKEYINFO pNewKeyInfo     =(PANSC_ASN1_SUBJECTPUBLICKEYINFO)hKeyHandle;
     PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo  =NULL;
     PANSC_ASN1_TBSCERTIFICATE       pTBSCert;
     PANSC_ASN1_OBJECT               pKeyObj         = (PANSC_ASN1_OBJECT)hKeyHandle;
@@ -1281,7 +1283,7 @@ AnscAsn1CertVerify
     PANSC_ASN1_CERTIFICATE          pThisObject     =(PANSC_ASN1_CERTIFICATE)hThisObject;
     PANSC_ASN1_RSAPUBLICKEY         pRSAKey         = NULL;
     PANSC_ASN1_PUBLICKEY            pPublicKey      = NULL;
-    PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo;
+    PANSC_ASN1_SUBJECTPUBLICKEYINFO pPublicKeyInfo  = NULL;
     PANSC_ASN1_OBJECT               pKeyObject;
     PANSC_ASN1_OBJECT               pSelection;
     PANSC_ASN1_BITSTRING            pBitString;
@@ -1550,8 +1552,8 @@ AnscAsn1CertVerifyChildCert
                     &ulKeyUsage
                 );
 
-            if( ulKeyUsage & KEY_USAGE_KEYCERTSIGN_MASK   == 0        ||
-                ulKeyUsage & KEY_USAGE_DIGITALSIGNATURE_MASK == 0)
+            if( (ulKeyUsage & KEY_USAGE_KEYCERTSIGN_MASK)   == 0        ||
+                (ulKeyUsage & KEY_USAGE_DIGITALSIGNATURE_MASK) == 0)
             {
                 AnscTrace("Failed to check the keyusage.\n");
 
@@ -1616,6 +1618,7 @@ AnscAsn1CertAfterDecodingChild
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_CERTIFICATE          pThisObject  = (PANSC_ASN1_CERTIFICATE)hThisObject;
     PUCHAR                          pEndBuffer   = *ppEncoding;
     PUCHAR                          pBack;
@@ -1655,6 +1658,7 @@ AnscAsn1CertAfterDecoding
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_CERTIFICATE          pThisObject     =(PANSC_ASN1_CERTIFICATE)hThisObject;
 
     if( pThisObject->IsSelfSigned(pThisObject))
@@ -2277,8 +2281,8 @@ AnscAsn1CertGetCDPString
                     /* check it's http or url */
                     if(cdpType == EXTENSION_CDP_LDAP)
                     {
-                        if( AnscStrStr(pValueBuffer, "ldap") == pValueBuffer ||
-                            AnscStrStr(pValueBuffer, "LDAP") == pValueBuffer )
+                        if( AnscStrStr((const char*)pValueBuffer, "ldap") == (char*)pValueBuffer ||
+                            AnscStrStr((const char*)pValueBuffer, "LDAP") == (char*)pValueBuffer )
                         {
                             if( pStrObj->uLength >= *pLength)
                             {
@@ -2300,8 +2304,8 @@ AnscAsn1CertGetCDPString
                     }
                     else /* supposes it's http */
                     {
-                        if( AnscStrStr(pValueBuffer, "http") == pValueBuffer ||
-                            AnscStrStr(pValueBuffer, "HTTP") == pValueBuffer )
+                        if( AnscStrStr((const char*)pValueBuffer, "http") == (char*)pValueBuffer ||
+                            AnscStrStr((const char*)pValueBuffer, "HTTP") == (char*)pValueBuffer )
                         {
 
                             if( pStrObj->uLength >= *pLength)
@@ -2387,7 +2391,6 @@ AnscAsn1CertIsKeyMatching
     )
 {
     PANSC_ASN1_CERTIFICATE          pThisObject     = (PANSC_ASN1_CERTIFICATE)hThisObject;
-    PANSC_CRYPTO_PUB_KEY_GEN_PARAMS pGenParams      = (PANSC_CRYPTO_PUB_KEY_GEN_PARAMS)hKeyHandle;
     PANSC_ASN1_SUBJECTPUBLICKEYINFO pKeyInfo;
 
     if( hThisObject == NULL || hKeyHandle == NULL)
@@ -3255,7 +3258,7 @@ AnscAsn1CreateTBSCertificate
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_TBSCERTIFICATE       pThisObject  = NULL;
     PANSC_ASN1_OBJECT               pChild;
 
@@ -3474,6 +3477,7 @@ AnscAsn1TBSCertificateCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3548,6 +3552,7 @@ AnscAsn1TBSCertificateGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3611,7 +3616,6 @@ AnscAsn1CreateCertificateSerialNumber
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTIFICATESERIALNUMBER 
                                     pThisObject  = NULL;
 
@@ -3658,7 +3662,7 @@ AnscAsn1CreateValidity
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_VALIDITY             pThisObject  = NULL;
 
     /*
@@ -3746,6 +3750,8 @@ AnscAsn1ValidityCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3759,7 +3765,7 @@ AnscAsn1ValidityGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3793,7 +3799,6 @@ AnscAsn1CreateTime
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_TIME                 pThisObject  = NULL;
 
     /*
@@ -3890,6 +3895,7 @@ AnscAsn1TimeGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case TIME_MASK_UTCTIME:
@@ -3913,6 +3919,8 @@ AnscAsn1TimeCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3928,6 +3936,7 @@ AnscAsn1TimeGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -4003,7 +4012,6 @@ AnscAsn1CreateUniqueIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_UNIQUEIDENTIFIER     pThisObject  = NULL;
 
     /*
@@ -4051,7 +4059,7 @@ AnscAsn1CreateSubjectPublicKeyInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_SUBJECTPUBLICKEYINFO pThisObject  = NULL;
 
     /*
@@ -4150,6 +4158,7 @@ AnscAsn1SubjectPublicKeyInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -4171,6 +4180,7 @@ AnscAsn1SubjectPublicKeyInfoCreateExtraChild
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return AnscAsn1CreatePublicKey(NULL);
 
 }
@@ -4181,6 +4191,7 @@ AnscAsn1SubjectPublicKeyInfoGetExtraChildName
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return "publicKey";
 }
 
@@ -4324,7 +4335,7 @@ AnscAsn1SubjectPublicKeyInfoGenerateKey
     PANSC_ASN1_DSAPUBLICKEY         pDSA;
     PANSC_ASN1_DHPUBLICKEY          pDH;
     PANSC_ASN1_SEQUENCE             pDomainParam;
-    CHAR                            pDHQ[512]       = { 0 };
+    UCHAR                           pDHQ[512]       = { 0 };
     ULONG                           qLength         = 512;
     
     if( hThisObject == NULL || hKeyGenHandle == NULL)
@@ -4902,7 +4913,7 @@ AnscAsn1CreateDSASignature
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DSASIGNATURE         pThisObject  = NULL;
 
     /*
@@ -4990,6 +5001,8 @@ AnscAsn1DSASignatureCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -5003,6 +5016,7 @@ AnscAsn1DSASignatureGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -5088,7 +5102,6 @@ AnscAsn1CreateAttributes
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTES           pThisObject  = NULL;
 
     /*
@@ -5145,6 +5158,7 @@ AnscAsn1AttributesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)

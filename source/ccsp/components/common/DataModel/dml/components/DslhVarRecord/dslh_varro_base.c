@@ -121,7 +121,9 @@ DslhVarroCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = NULL;
 
     /*
@@ -209,7 +211,6 @@ DslhVarroRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);

@@ -200,7 +200,6 @@ HttpSmpoUtilBuildRequestUri
      *  Request-URI = "*" | absoluteURI | abs_path | authority
      */
     BOOL                            bCopySucc       = FALSE;
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PUCHAR                          pBuf            = (PUCHAR)buffer;
     ULONG                           ulStart         = *pulBufStart;
     ULONG                           ulSize;
@@ -217,7 +216,7 @@ HttpSmpoUtilBuildRequestUri
                              pBuf,
                              ulDestSize,
                              &ulStart,
-                             HTTP_SMPO_REQUEST_URI_ASTERISK,
+                             (PUCHAR)HTTP_SMPO_REQUEST_URI_ASTERISK,
                              HTTP_SMPO_REQUEST_URI_ASTERISK_LENGTH
                          );
         break;
@@ -234,7 +233,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf, 
                                  ulDestSize, 
                                  &ulStart,
-                                 HTTP_SMPO_SCHEME,
+                                 (PUCHAR)HTTP_SMPO_SCHEME,
                                  HTTP_SMPO_SCHEME_LENGTH
                              );
         }
@@ -245,7 +244,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf, 
                                  ulDestSize, 
                                  &ulStart,
-                                 HTTP_SMPO_SCHEME_HTTPS,
+                                 (PUCHAR)HTTP_SMPO_SCHEME_HTTPS,
                                  HTTP_SMPO_SCHEME_HTTPS_LENGTH
                              );
         }
@@ -259,7 +258,7 @@ HttpSmpoUtilBuildRequestUri
                              pBuf, 
                              ulDestSize, 
                              &ulStart,
-                             pUri->HostName,
+                             (PUCHAR)pUri->HostName,
                              ulSize
                          );
 
@@ -288,7 +287,7 @@ HttpSmpoUtilBuildRequestUri
             if (!bCopySucc)
                 return FALSE;
 
-            _ansc_sprintf(portNum, "%d", pUri->HostPort);
+            _ansc_sprintf((char *)portNum, "%d", pUri->HostPort);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -296,7 +295,7 @@ HttpSmpoUtilBuildRequestUri
                                  ulDestSize, 
                                  &ulStart,
                                  portNum,
-                                 AnscSizeOfString(portNum)
+                                 AnscSizeOfString((const char *)portNum)
                              );
             if (!bCopySucc)
                 return FALSE;
@@ -315,7 +314,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "/",
+                                     (PUCHAR)"/",
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -336,7 +335,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[i],
+                                     (PUCHAR)pUri->PathArray[i],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -351,7 +350,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -360,7 +359,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -372,7 +371,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 "/",
+                                 (PUCHAR)"/",
                                  1
                              );
         }
@@ -400,7 +399,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "/",
+                                     (PUCHAR)"/",
                                      ulSize
                                  );
             }
@@ -414,7 +413,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -435,7 +434,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         pUri->PathArray[i],
+                                         (PUCHAR)pUri->PathArray[i],
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -451,7 +450,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -460,7 +459,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -517,7 +516,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                 }
@@ -527,7 +526,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[0],
+                                     (PUCHAR)pUri->PathArray[0],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -555,7 +554,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -569,7 +568,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[i],
+                                     (PUCHAR)pUri->PathArray[i],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -584,7 +583,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -595,7 +594,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -618,7 +617,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 pUri->HostName,
+                                 (PUCHAR)pUri->HostName,
                                  ulSize
                              );
 
@@ -638,16 +637,16 @@ HttpSmpoUtilBuildRequestUri
             {
                 UCHAR               buf[8];
 
-                AnscInt2String(pUri->HostPort, buf, 10);
+                AnscInt2String(pUri->HostPort, (char *)buf, 10);
 
-                ulSize  = AnscSizeOfString(buf);
+                ulSize  = AnscSizeOfString((const char *)buf);
 
                 bCopySucc   = HttpSmpoUtilCopyString
                                  (
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     ":",
+                                     (PUCHAR)":",
                                      1
                                  );
                 if (!bCopySucc)
@@ -727,7 +726,7 @@ HttpSmpoUtilBuildMethod
 {
     ULONG                           ulLen, ulBufLeft;
     BOOL                            bCopySucc   = TRUE;
-    PUCHAR                          pSrc        = NULL;
+    char*                           pSrc        = NULL;
     ULONG                           ulStart     = *pulStart;
 
     ulLen = 0;
@@ -805,8 +804,8 @@ HttpSmpoUtilBuildMethod
         break;
 
     default:
-        ulLen   = pMethodName ? AnscSizeOfString(pMethodName) : 0;
-        pSrc    = pMethodName;
+        ulLen   = pMethodName ? AnscSizeOfString((const char *)pMethodName) : 0;
+        pSrc    = (char *)pMethodName;
         break;
     }
 
@@ -894,7 +893,7 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         HTTP_SMPO_NAME,
+                         (PUCHAR)HTTP_SMPO_NAME,
                          HTTP_SMPO_NAME_LENGTH
                      );
     if (!bCopySucc)
@@ -905,14 +904,14 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         "/",
+                         (PUCHAR)"/",
                          1
                      );
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(MajorVersion, buf, 10);      
-    ulSize  = AnscSizeOfString(buf);           /* major version number length */
+    AnscInt2String(MajorVersion, (char *)buf, 10);      
+    ulSize  = AnscSizeOfString((const char *)buf);           /* major version number length */
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -930,15 +929,15 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         ".",
+                         (PUCHAR)".",
                          1
                      );
 
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(MinorVersion, buf, 10);
-    ulSize  = AnscSizeOfString(buf);           /* minor version number length */
+    AnscInt2String(MinorVersion, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);           /* minor version number length */
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -1006,7 +1005,7 @@ HttpSmpoUtilBuildMediaType
     ULONG                           ulSize      = 0;
     ULONG                           ulStart     = *pulStart;
     BOOL                            bCopySucc   = TRUE;
-    PUCHAR                          pSrc;
+    char*                           pSrc;
 
     switch (ulMediaType)
     {
@@ -1058,7 +1057,7 @@ HttpSmpoUtilBuildMediaType
                              pBuf,
                              ulDestSize,
                              &ulStart,
-                             pSrc,
+                             (PUCHAR)pSrc,
                              ulSize
                          );
     }
@@ -1128,11 +1127,11 @@ HttpSmpoUtilBuildMediaSubType
     if (!pSrc)
     {
         ulSize  = HTTP_SMPO_MEDIA_SUBTYPE_ANY_LENGTH;
-        pSrc    = HTTP_SMPO_MEDIA_SUBTYPE_ANY;
+        pSrc    = (PUCHAR)HTTP_SMPO_MEDIA_SUBTYPE_ANY;
     }
     else
     {
-        ulSize  = AnscSizeOfString(pSrc);
+        ulSize  = AnscSizeOfString((const char *)pSrc);
     }
 
     if (ulSize != 0)
@@ -1197,7 +1196,7 @@ HttpSmpoUtilBuildCharset
 {
     ULONG                           ulSize      = 0;
     BOOL                            bCopySucc   = TRUE;
-    PUCHAR                          pSrc        = NULL;
+    char*                           pSrc        = NULL;
 
     switch (ulCharset)
     {
@@ -1259,7 +1258,7 @@ HttpSmpoUtilBuildCharset
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             pSrc,
+                             (PUCHAR)pSrc,
                              ulSize
                          );
     }
@@ -1314,7 +1313,7 @@ HttpSmpoUtilBuildContentCoding
     )
 {
     ULONG                           ulSize      = 0;
-    PUCHAR                          pSrc        = NULL;
+    char*                           pSrc        = NULL;
     BOOL                            bCopySucc   = TRUE;
 
     switch (ulCoding)
@@ -1347,7 +1346,7 @@ HttpSmpoUtilBuildContentCoding
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             pSrc,
+                             (PUCHAR)pSrc,
                              ulSize
                          );
     }
@@ -1402,7 +1401,7 @@ HttpSmpoUtilBuildTransferCoding
     )
 {
     ULONG                           ulSize      = 0;
-    PUCHAR                          pSrc        = NULL;
+    char*                           pSrc        = NULL;
     BOOL                            bCopySucc   = TRUE;
 
     switch (ulCoding)
@@ -1446,7 +1445,7 @@ HttpSmpoUtilBuildTransferCoding
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             pSrc,
+                             (PUCHAR)pSrc,
                              ulSize
                          );
     }
@@ -1511,7 +1510,7 @@ HttpSmpoUtilBuildQuality
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "1.0",
+                             (PUCHAR)"1.0",
                              ulSize
                          );
     }
@@ -1524,7 +1523,7 @@ HttpSmpoUtilBuildQuality
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "0",
+                             (PUCHAR)"0",
                              ulSize
                          );
     }
@@ -1536,10 +1535,10 @@ HttpSmpoUtilBuildQuality
         buf[0]      = '0';
         buf[1]      = '.';
 
-        AnscInt2String(ulQuality, &buf[2], 10);
-        ulSize   = AnscSizeOfString(buf);
+        AnscInt2String(ulQuality, (char *)&buf[2], 10);
+        ulSize   = AnscSizeOfString((const char *)buf);
 
-        for (i = ulSize - 1; i >= 0; i --)
+        for (i = ulSize - 1; (int)i >= 0; i --)
         {
             if (buf[i] != '0')
             {
@@ -1551,7 +1550,7 @@ HttpSmpoUtilBuildQuality
             }
         }
 
-        ulSize   = AnscSizeOfString(buf);
+        ulSize   = AnscSizeOfString((const char *)buf);
 
         bCopySucc   = HttpSmpoUtilCopyString
                          (
@@ -1616,8 +1615,8 @@ HttpSmpoUtilBuildUlong
     ULONG                       ulSize;
     BOOL                        bCopySucc = TRUE;
 
-    AnscInt2String(ulValue, buf, 10);
-    ulSize      = AnscSizeOfString(buf);
+    AnscInt2String(ulValue, (char *)buf, 10);
+    ulSize      = AnscSizeOfString((const char *)buf);
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -1687,8 +1686,6 @@ HttpSmpoUtilBuildHttpDate
      *  wkday = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun"
      */
     ULONG                           ulSize      = 0;
-    ULONG                           ulDate1     = 0;
-    ULONG                           ulTime      = 0;
     BOOL                            bCopySucc   = TRUE;
     PUCHAR                          pSrc        = NULL;
     UCHAR                           buf[8];
@@ -1714,12 +1711,12 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         ", ",
+                         (PUCHAR)", ",
                          2
                      );
 
-    AnscInt2String(pDate->DayOfMonth, buf, 10);
-    ulSize  = AnscSizeOfString(buf);
+    AnscInt2String(pDate->DayOfMonth, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);
 
     if (ulSize == 1)
     {
@@ -1729,7 +1726,7 @@ HttpSmpoUtilBuildHttpDate
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "0",
+                             (PUCHAR)"0",
                              1
                          );
         if (!bCopySucc)
@@ -1752,7 +1749,7 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         " ",
+                         (PUCHAR)" ",
                          1
                      );
     if (!bCopySucc)
@@ -1779,14 +1776,14 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         " ",
+                         (PUCHAR)" ",
                          1
                      );
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(pDate->Year, buf, 10);
-    ulSize  = AnscSizeOfString(buf);
+    AnscInt2String(pDate->Year, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -1805,14 +1802,14 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         " ",
+                         (PUCHAR)" ",
                          1
                      );
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(pDate->Hour, buf, 10);
-    ulSize  = AnscSizeOfString(buf);
+    AnscInt2String(pDate->Hour, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);
 
     if (ulSize == 1)
     {
@@ -1822,7 +1819,7 @@ HttpSmpoUtilBuildHttpDate
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "0",
+                             (PUCHAR)"0",
                              1
                          );
         if (!bCopySucc)
@@ -1846,15 +1843,15 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         ":",
+                         (PUCHAR)":",
                          1
                      );
 
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(pDate->Minute, buf, 10);
-    ulSize  = AnscSizeOfString(buf);
+    AnscInt2String(pDate->Minute, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);
 
     if (ulSize == 1)
     {
@@ -1864,7 +1861,7 @@ HttpSmpoUtilBuildHttpDate
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "0",
+                             (PUCHAR)"0",
                              1
                          );
         if (!bCopySucc)
@@ -1889,15 +1886,15 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         ":",
+                         (PUCHAR)":",
                          1
                      );
 
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(pDate->Second, buf, 10);
-    ulSize  = AnscSizeOfString(buf);
+    AnscInt2String(pDate->Second, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((const char *)buf);
 
     if (ulSize == 1)
     {
@@ -1907,7 +1904,7 @@ HttpSmpoUtilBuildHttpDate
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             "0",
+                             (PUCHAR)"0",
                              1
                          );
         if (!bCopySucc)
@@ -1932,7 +1929,7 @@ HttpSmpoUtilBuildHttpDate
                          pBuf,
                          ulDestSize,
                          pulStart,
-                         " GMT",
+                         (PUCHAR)" GMT",
                          4
                      );
 
@@ -1991,7 +1988,7 @@ HttpSmpoUtilBuildField
      * identified by the header id.
      */
     ULONG                           ulSize      = 0;
-    PUCHAR                          pSrc        = NULL;
+    char*                           pSrc        = NULL;
     BOOL                            bCopySucc   = TRUE;
 
     switch (ulHeaderId)
@@ -2239,7 +2236,7 @@ HttpSmpoUtilBuildField
                              pBuf,
                              ulDestSize,
                              pulStart,
-                             pSrc,
+                             (PUCHAR)pSrc,
                              ulSize
                          );
     }
@@ -2316,7 +2313,7 @@ HttpSmpoUtilPrebuildHeader
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_HEADER_SEPARATOR,
+                         (PUCHAR)HTTP_SMPO_HEADER_SEPARATOR,
                          HTTP_SMPO_HEADER_SEPARATOR_LENGTH
                      );
     if (!bCopySucc)
@@ -2408,7 +2405,7 @@ HttpSmpoUtilBuildBasicCredentials
         pEncBuf = AnscBase64Encode(pBuf, ulBufLen - 1);   
         if ( pEncBuf )
         {
-            ULONG                   ulLen   = AnscSizeOfString(pEncBuf);
+            ULONG                   ulLen   = AnscSizeOfString((const char *)pEncBuf);
 
             if ( ulLen >= 2 )
             {
@@ -2431,7 +2428,7 @@ HttpSmpoUtilBuildBasicCredentials
                              buffer,
                              ulBufSize,
                              pulStart,
-                             HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
+                             (PUCHAR)HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
                              HTTP_SMPO_CREDENTIAL_BASIC_SCHEME_LENGTH
                          );
 
@@ -2447,7 +2444,7 @@ HttpSmpoUtilBuildBasicCredentials
                              buffer,
                              ulBufSize,
                              pulStart,
-                             HTTP_SMPO_SPACE,
+                             (PUCHAR)HTTP_SMPO_SPACE,
                              HTTP_SMPO_SPACE_LENGTH
                          );
 
@@ -2464,7 +2461,7 @@ HttpSmpoUtilBuildBasicCredentials
                              ulBufSize,
                              pulStart,
                              pEncBuf,
-                             AnscSizeOfString(pEncBuf)
+                             AnscSizeOfString((const char *)pEncBuf)
                          );
 
         if (!bCopySucc)
@@ -2533,7 +2530,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
+                         (PUCHAR)HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
                          HTTP_SMPO_CREDENTIAL_BASIC_SCHEME_LENGTH
                      );
 
@@ -2546,7 +2543,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_SPACE,
+                         (PUCHAR)HTTP_SMPO_SPACE,
                          HTTP_SMPO_SPACE_LENGTH
                      );
 
@@ -2559,7 +2556,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_REALM,
+                         (PUCHAR)HTTP_SMPO_REALM,
                          HTTP_SMPO_REALM_LENGTH
                      );
 
@@ -2572,7 +2569,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         "=",
+                         (PUCHAR)"=",
                          1
                      );
 
@@ -2585,7 +2582,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         pBasic->Realm,
+                         (PUCHAR)pBasic->Realm,
                          AnscSizeOfString(pBasic->Realm)
                      );
 
@@ -2647,12 +2644,12 @@ HttpSmpoUtilBuildRequestLine
         return ANSC_STATUS_FAILURE;
 
     /* method */
-    bCopySucc   = HttpSmpoUtilBuildMethod(buffer, ulSize, &ulStart, pRequestInfo->Method, pRequestInfo->MethodName);
+    bCopySucc   = HttpSmpoUtilBuildMethod(buffer, ulSize, &ulStart, pRequestInfo->Method, (PUCHAR)pRequestInfo->MethodName);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
     /* space */
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -2662,7 +2659,7 @@ HttpSmpoUtilBuildRequestLine
         return ANSC_STATUS_FAILURE;
 
     /* space */
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -2736,7 +2733,7 @@ HttpSmpoUtilBuildStatusLine
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -2744,7 +2741,7 @@ HttpSmpoUtilBuildStatusLine
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -2753,7 +2750,7 @@ HttpSmpoUtilBuildStatusLine
                          buffer, 
                          ulSize, 
                          &ulStart, 
-                         pResponseInfo->ReasonPhrase, 
+                         (PUCHAR)pResponseInfo->ReasonPhrase, 
                          AnscSizeOfString(pResponseInfo->ReasonPhrase)
                      );
     if (!bCopySucc)
@@ -2830,7 +2827,7 @@ HttpSmpoUtilBuildHeader
                                          buffer, 
                                          ulSize, 
                                          &ulStart, 
-                                         pHeader->HeaderLine, 
+                                         (PUCHAR)pHeader->HeaderLine, 
                                          ulHeaderLineSize
                                      );
 
@@ -3086,21 +3083,7 @@ HttpSmpoUtilBuildHeader
             {
                 ULONG               ulCopySize;
                 BOOL                bTrunked    = FALSE;
-                PUCHAR              pCurHeaderLine  = pHeader->HeaderLine;
-                ULONG               ulCurHeaderLine;
-                PUCHAR              pNewHeaderLine  = (PUCHAR)buffer;
 
-                if (pCurHeaderLine)
-                {
-                    ulCurHeaderLine = AnscSizeOfString(pCurHeaderLine);
-                    if (ulCurHeaderLine != 0)
-                    {
-                        if (ulCurHeaderLine != ulSize)
-                        {
-                            int     a = 0;
-                        }
-                    }
-                }
 
                 ulCopySize  = ulSize;
                 if (ulCopySize >= HTTP_HEADER_LINE_SIZE)
@@ -3187,7 +3170,7 @@ HttpSmpoUtilBuildAccept
                          buffer, 
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ACCEPT,
+                         (PUCHAR)HTTP_SMPO_ACCEPT,
                          HTTP_SMPO_ACCEPT_LENGTH
                      );
     if (!bCopySucc)
@@ -3205,7 +3188,7 @@ HttpSmpoUtilBuildAccept
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
 
@@ -3229,7 +3212,7 @@ HttpSmpoUtilBuildAccept
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             "/",
+                             (PUCHAR)"/",
                              1
                          );
         if (!bCopySucc)
@@ -3254,7 +3237,7 @@ HttpSmpoUtilBuildAccept
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -3266,7 +3249,7 @@ HttpSmpoUtilBuildAccept
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 pRange->Parameters,
+                                 (PUCHAR)pRange->Parameters,
                                  ulParams
                              );
 
@@ -3279,7 +3262,7 @@ HttpSmpoUtilBuildAccept
                              buffer, 
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_QUALITY_PARAMS,
+                             (PUCHAR)HTTP_SMPO_QUALITY_PARAMS,
                              HTTP_SMPO_QUALITY_PARAMS_LENGTH
                          );
         if (!bCopySucc)
@@ -3342,7 +3325,6 @@ HttpSmpoUtilBuildAcceptCharset
     /*
      *  Accept-Charset = "Accept-Charset" ":" 1#( charset [";" "q" "=" qvalue] ) 
      */
-    ULONG                           ulSize          = 0;
     PHTTP_HFO_ACCEPT_CHARSET        pAcceptCharset  = (PHTTP_HFO_ACCEPT_CHARSET)hHttpHfo;
     ULONG                           ulCharsetCount, i;
     PHTTP_CHARSET                   pCharset;
@@ -3356,7 +3338,7 @@ HttpSmpoUtilBuildAcceptCharset
                          buffer, 
                          ulBufSize,
                          &ulStart, 
-                         HTTP_SMPO_ACCEPT_CHARSET,
+                         (PUCHAR)HTTP_SMPO_ACCEPT_CHARSET,
                          HTTP_SMPO_ACCEPT_CHARSET_LENGTH
                      );
     if (!bCopySucc)
@@ -3374,7 +3356,7 @@ HttpSmpoUtilBuildAcceptCharset
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3396,7 +3378,7 @@ HttpSmpoUtilBuildAcceptCharset
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_QUALITY_PARAMS,
+                             (PUCHAR)HTTP_SMPO_QUALITY_PARAMS,
                              HTTP_SMPO_QUALITY_PARAMS_LENGTH
                          );
 
@@ -3461,7 +3443,6 @@ HttpSmpoUtilBuildAcceptEncoding
      *  Accept-Encoding = "Accept-Encoding" ":" 1#( codings [ ";" "q" "=" qvalue ] )
      */
     PHTTP_HFO_ACCEPT_ENCODING       pAcceptEncoding;
-    ULONG                           ulSize = 0;
     ULONG                           ulEncodingCount, i;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulStart = 0;
@@ -3476,7 +3457,7 @@ HttpSmpoUtilBuildAcceptEncoding
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ACCEPT_ENCODING,
+                         (PUCHAR)HTTP_SMPO_ACCEPT_ENCODING,
                          HTTP_SMPO_ACCEPT_ENCODING_LENGTH
                      );
     if (!bCopySucc)
@@ -3495,7 +3476,7 @@ HttpSmpoUtilBuildAcceptEncoding
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3517,7 +3498,7 @@ HttpSmpoUtilBuildAcceptEncoding
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_QUALITY_PARAMS,
+                             (PUCHAR)HTTP_SMPO_QUALITY_PARAMS,
                              HTTP_SMPO_QUALITY_PARAMS_LENGTH
                          );
         if (!bCopySucc)
@@ -3593,7 +3574,7 @@ HttpSmpoUtilBuildAcceptLanguage
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ACCEPT_LANGUAGE,
+                         (PUCHAR)HTTP_SMPO_ACCEPT_LANGUAGE,
                          HTTP_SMPO_ACCEPT_LANGUAGE_LENGTH
                      );
     if (!bCopySucc)
@@ -3611,7 +3592,7 @@ HttpSmpoUtilBuildAcceptLanguage
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3624,7 +3605,7 @@ HttpSmpoUtilBuildAcceptLanguage
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pLanguage->Tag,
+                             (PUCHAR)pLanguage->Tag,
                              ulSize
                          );
         if (!bCopySucc)
@@ -3635,7 +3616,7 @@ HttpSmpoUtilBuildAcceptLanguage
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_QUALITY_PARAMS,
+                             (PUCHAR)HTTP_SMPO_QUALITY_PARAMS,
                              HTTP_SMPO_QUALITY_PARAMS_LENGTH
                          );
         if (!bCopySucc)
@@ -3715,7 +3696,7 @@ HttpSmpoUtilBuildAcceptRanges
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ACCEPT_RANGES,
+                         (PUCHAR)HTTP_SMPO_ACCEPT_RANGES,
                          HTTP_SMPO_ACCEPT_RANGES_LENGTH
                      );
     if (!bCopySucc)
@@ -3732,7 +3713,7 @@ HttpSmpoUtilBuildAcceptRanges
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3746,7 +3727,7 @@ HttpSmpoUtilBuildAcceptRanges
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pAcceptRanges->RangeArray[i].Unit,
+                             (PUCHAR)pAcceptRanges->RangeArray[i].Unit,
                              ulSize
                          );
         if (!bCopySucc)
@@ -3800,7 +3781,6 @@ HttpSmpoUtilBuildAge
      *  Age = "Age" ":" age-value 
      */
     PHTTP_HFO_AGE                   pAge    = (PHTTP_HFO_AGE)hHttpHfo;
-    ULONG                           ulSize  = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -3810,7 +3790,7 @@ HttpSmpoUtilBuildAge
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_AGE,
+                         (PUCHAR)HTTP_SMPO_AGE,
                          HTTP_SMPO_AGE_LENGTH
                      );
     if (!bCopySucc)
@@ -3873,7 +3853,6 @@ HttpSmpoUtilBuildAllow
      * Allow = "Allow" ":" 1#Method 
      */
     PHTTP_HFO_ALLOW                 pAllow  = (PHTTP_HFO_ALLOW)hHttpHfo;
-    ULONG                           ulSize  = 0;
     ULONG                           ulMethodCount, i;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
@@ -3884,7 +3863,7 @@ HttpSmpoUtilBuildAllow
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ALLOW,
+                         (PUCHAR)HTTP_SMPO_ALLOW,
                          HTTP_SMPO_ALLOW_LENGTH
                      );
     if (!bCopySucc)
@@ -3895,13 +3874,12 @@ HttpSmpoUtilBuildAllow
     {
         if (i != 0)
         {
-            ulSize      = HTTP_SMPO_FIELD_SEPARATOR_LENGTH;
             bCopySucc   = HttpSmpoUtilCopyString
                              (
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3978,7 +3956,7 @@ HttpSmpoUtilBuildAuthorization
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_AUTHORIZATION,
+                         (PUCHAR)HTTP_SMPO_AUTHORIZATION,
                          HTTP_SMPO_AUTHORIZATION_LENGTH
                      );
     if (!bCopySucc)
@@ -4015,7 +3993,7 @@ HttpSmpoUtilBuildAuthorization
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
+                                 (PUCHAR)HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
                                  HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME_LENGTH
                              );
 
@@ -4027,7 +4005,7 @@ HttpSmpoUtilBuildAuthorization
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SPACE,
+                                 (PUCHAR)HTTP_SMPO_SPACE,
                                  HTTP_SMPO_SPACE_LENGTH
                              );
 
@@ -4047,7 +4025,7 @@ HttpSmpoUtilBuildAuthorization
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     pDigest->UserName,
+                                     (PUCHAR)pDigest->UserName,
                                      ulSize
                                  );
             }
@@ -4124,7 +4102,7 @@ HttpSmpoUtilBuildCacheControl
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CACHE_CONTROL,
+                         (PUCHAR)HTTP_SMPO_CACHE_CONTROL,
                          HTTP_SMPO_CACHE_CONTROL_LENGTH
                      );
     if (!bCopySucc)
@@ -4136,7 +4114,7 @@ HttpSmpoUtilBuildCacheControl
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pCacheControl->Directives,
+                         (PUCHAR)pCacheControl->Directives,
                          ulSize
                      );
     if (!bCopySucc)
@@ -4202,7 +4180,7 @@ HttpSmpoUtilBuildConnection
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONNECTION,
+                         (PUCHAR)HTTP_SMPO_CONNECTION,
                          HTTP_SMPO_CONNECTION_LENGTH
                      );
     if (!bCopySucc)
@@ -4218,7 +4196,7 @@ HttpSmpoUtilBuildConnection
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -4231,7 +4209,7 @@ HttpSmpoUtilBuildConnection
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pConnection->TokenArray[i].Token,
+                             (PUCHAR)pConnection->TokenArray[i].Token,
                              ulSize
                          );
         if (!bCopySucc)
@@ -4286,7 +4264,6 @@ HttpSmpoUtilBuildContentEncoding
      *  content-coding = token
      */
     PHTTP_HFO_CONTENT_ENCODING      pContentEncoding    = (PHTTP_HFO_CONTENT_ENCODING)hHttpHfo;
-    ULONG                           ulSize              = 0;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulEncodingCount, i;
     BOOL                            bCopySucc;
@@ -4298,7 +4275,7 @@ HttpSmpoUtilBuildContentEncoding
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_ENCODING,
+                         (PUCHAR)HTTP_SMPO_CONTENT_ENCODING,
                          HTTP_SMPO_CONTENT_ENCODING_LENGTH
                      );
     if (!bCopySucc)
@@ -4316,7 +4293,7 @@ HttpSmpoUtilBuildContentEncoding
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -4394,7 +4371,7 @@ HttpSmpoUtilBuildContentLanguage
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_LANGUAGE,
+                         (PUCHAR)HTTP_SMPO_CONTENT_LANGUAGE,
                          HTTP_SMPO_CONTENT_LANGUAGE_LENGTH
                      );
     if (!bCopySucc)
@@ -4412,7 +4389,7 @@ HttpSmpoUtilBuildContentLanguage
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -4425,7 +4402,7 @@ HttpSmpoUtilBuildContentLanguage
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pLanguage->Tag,
+                             (PUCHAR)pLanguage->Tag,
                              ulSize
                          );
         if (!bCopySucc)
@@ -4488,7 +4465,7 @@ HttpSmpoUtilBuildContentLength
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_LENGTH,
+                         (PUCHAR)HTTP_SMPO_CONTENT_LENGTH,
                          HTTP_SMPO_CONTENT_LENGTH_LENGTH
                      );
     if (!bCopySucc)
@@ -4561,7 +4538,7 @@ HttpSmpoUtilBuildContentLocation
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_LOCATION,
+                         (PUCHAR)HTTP_SMPO_CONTENT_LOCATION,
                          HTTP_SMPO_CONTENT_LOCATION_LENGTH
                      );
     if (!bCopySucc)
@@ -4634,7 +4611,7 @@ HttpSmpoUtilBuildContentMD5
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_MD5,
+                         (PUCHAR)HTTP_SMPO_CONTENT_MD5,
                          HTTP_SMPO_CONTENT_MD5_LENGTH
                      );
     if (!bCopySucc)
@@ -4701,7 +4678,6 @@ HttpSmpoUtilBuildContentRange
      *                            last-byte-pos "/" entity-length
      */
     PHTTP_HFO_CONTENT_RANGE         pContentRange   = (PHTTP_HFO_CONTENT_RANGE)hHttpHfo;
-    ULONG                           ulSize          = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -4711,7 +4687,7 @@ HttpSmpoUtilBuildContentRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_RANGE,
+                         (PUCHAR)HTTP_SMPO_CONTENT_RANGE,
                          HTTP_SMPO_CONTENT_RANGE_LENGTH
                      );
     if (!bCopySucc)
@@ -4722,7 +4698,7 @@ HttpSmpoUtilBuildContentRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_BYTES_UNIT,
+                         (PUCHAR)HTTP_SMPO_BYTES_UNIT,
                          HTTP_SMPO_BYTES_UNIT_LENGTH
                      );
     if (!bCopySucc)
@@ -4733,7 +4709,7 @@ HttpSmpoUtilBuildContentRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         " ",
+                         (PUCHAR)" ",
                          1
                      );
     if (!bCopySucc)
@@ -4754,7 +4730,7 @@ HttpSmpoUtilBuildContentRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "-",
+                         (PUCHAR)"-",
                          1
                      );
     if (!bCopySucc)
@@ -4775,7 +4751,7 @@ HttpSmpoUtilBuildContentRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "/",
+                         (PUCHAR)"/",
                          1
                      );
     if (!bCopySucc)
@@ -4839,7 +4815,6 @@ HttpSmpoUtilBuildContentType
      *  media-type = type "/" subtype *( ";" parameter )
      */
     PHTTP_HFO_CONTENT_TYPE          pContentType    = (PHTTP_HFO_CONTENT_TYPE)hHttpHfo;
-    ULONG                           ulSize          = 0;
     ULONG                           ulParams;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
@@ -4850,7 +4825,7 @@ HttpSmpoUtilBuildContentType
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_TYPE,
+                         (PUCHAR)HTTP_SMPO_CONTENT_TYPE,
                          HTTP_SMPO_CONTENT_TYPE_LENGTH
                      );
     if (!bCopySucc)
@@ -4871,7 +4846,7 @@ HttpSmpoUtilBuildContentType
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "/",
+                         (PUCHAR)"/",
                          1
                      );
     if (!bCopySucc)
@@ -4896,7 +4871,7 @@ HttpSmpoUtilBuildContentType
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             ";",
+                             (PUCHAR)";",
                             1
                          );
         if (!bCopySucc)
@@ -4907,7 +4882,7 @@ HttpSmpoUtilBuildContentType
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pContentType->Parameters,
+                             (PUCHAR)pContentType->Parameters,
                              ulParams
                          );
         if (!bCopySucc)
@@ -4971,7 +4946,7 @@ HttpSmpoUtilBuildDate
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_DATE_HEADER,
+                         (PUCHAR)HTTP_SMPO_DATE_HEADER,
                          HTTP_SMPO_DATE_HEADER_LENGTH
                      );
     if (!bCopySucc)
@@ -5047,7 +5022,7 @@ HttpSmpoUtilBuildETag
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_ETAG,
+                         (PUCHAR)HTTP_SMPO_ETAG,
                          HTTP_SMPO_ETAG_LENGTH
                      );
     if (!bCopySucc)
@@ -5060,7 +5035,7 @@ HttpSmpoUtilBuildETag
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_WEAK_VALUE,
+                             (PUCHAR)HTTP_SMPO_WEAK_VALUE,
                              HTTP_SMPO_WEAK_VALUE_LENGTH
                          );
         if (!bCopySucc)
@@ -5073,7 +5048,7 @@ HttpSmpoUtilBuildETag
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pETag->Tag,
+                         (PUCHAR)pETag->Tag,
                          ulSize
                      );
     if (!bCopySucc)
@@ -5141,7 +5116,7 @@ HttpSmpoUtilBuildExpect
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_EXPECT,
+                         (PUCHAR)HTTP_SMPO_EXPECT,
                          HTTP_SMPO_EXPECT_LENGTH
                      );
     if (!bCopySucc)
@@ -5159,7 +5134,7 @@ HttpSmpoUtilBuildExpect
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -5173,7 +5148,7 @@ HttpSmpoUtilBuildExpect
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pExpectToken->Token,
+                             (PUCHAR)pExpectToken->Token,
                              ulSize
                          );
         if (!bCopySucc)
@@ -5187,7 +5162,7 @@ HttpSmpoUtilBuildExpect
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
             if (!bCopySucc)
@@ -5198,7 +5173,7 @@ HttpSmpoUtilBuildExpect
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 pExpectToken->Parameters,
+                                 (PUCHAR)pExpectToken->Parameters,
                                  ulParams
                              );
             if (!bCopySucc)
@@ -5262,7 +5237,7 @@ HttpSmpoUtilBuildExpires
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_EXPIRES,
+                         (PUCHAR)HTTP_SMPO_EXPIRES,
                          HTTP_SMPO_EXPIRES_LENGTH
                      );
     if (!bCopySucc)
@@ -5338,7 +5313,7 @@ HttpSmpoUtilBuildFrom
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_FROM,
+                         (PUCHAR)HTTP_SMPO_FROM,
                          HTTP_SMPO_FROM_LENGTH
                      );
     if (!bCopySucc)
@@ -5350,7 +5325,7 @@ HttpSmpoUtilBuildFrom
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pFrom->MailBox.LocalPart,
+                         (PUCHAR)pFrom->MailBox.LocalPart,
                          ulSize
                      );
     if (!bCopySucc)
@@ -5361,7 +5336,7 @@ HttpSmpoUtilBuildFrom
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "@",
+                         (PUCHAR)"@",
                          1
                      );
     if (!bCopySucc)
@@ -5373,7 +5348,7 @@ HttpSmpoUtilBuildFrom
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pFrom->MailBox.DomainName,
+                         (PUCHAR)pFrom->MailBox.DomainName,
                          ulSize
                      );
     if (!bCopySucc)
@@ -5436,7 +5411,7 @@ HttpSmpoUtilBuildHost
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_HEADER_HOST,
+                         (PUCHAR)HTTP_SMPO_HEADER_HOST,
                          HTTP_SMPO_HEADER_HOST_LENGTH
                      );
     if (!bCopySucc)
@@ -5448,7 +5423,7 @@ HttpSmpoUtilBuildHost
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pHost->HostName,
+                         (PUCHAR)pHost->HostName,
                          ulSize
                      );
     if (!bCopySucc)
@@ -5461,7 +5436,7 @@ HttpSmpoUtilBuildHost
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             ":",
+                             (PUCHAR)":",
                              1
                          );
         if (!bCopySucc)
@@ -5540,7 +5515,7 @@ HttpSmpoUtilBuildIfMatch
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_IF_MATCH,
+                         (PUCHAR)HTTP_SMPO_IF_MATCH,
                          HTTP_SMPO_IF_MATCH_LENGTH
                      );
     if (!bCopySucc)
@@ -5558,7 +5533,7 @@ HttpSmpoUtilBuildIfMatch
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -5572,7 +5547,7 @@ HttpSmpoUtilBuildIfMatch
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_WEAK_VALUE,
+                                 (PUCHAR)HTTP_SMPO_WEAK_VALUE,
                                  HTTP_SMPO_WEAK_VALUE_LENGTH
                              );
             if (!bCopySucc)
@@ -5585,7 +5560,7 @@ HttpSmpoUtilBuildIfMatch
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pTag->Tag,
+                             (PUCHAR)pTag->Tag,
                              ulSize
                          );
         if (!bCopySucc)
@@ -5639,7 +5614,6 @@ HttpSmpoUtilBuildIfModifiedSince
      *  If-Modified-Since = "If-Modified-Since" ":" HTTP-date 
      */
     PHTTP_HFO_IF_MODIFIED_SINCE     pIfModifiedSince    = (PHTTP_HFO_IF_MODIFIED_SINCE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -5649,7 +5623,7 @@ HttpSmpoUtilBuildIfModifiedSince
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_IF_MODIFIED_SINCE,
+                         (PUCHAR)HTTP_SMPO_IF_MODIFIED_SINCE,
                          HTTP_SMPO_IF_MODIFIED_SINCE_LENGTH
                      );
     if (!bCopySucc)
@@ -5727,7 +5701,7 @@ HttpSmpoUtilBuildIfNoneMatch
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_IF_NONE_MATCH,
+                         (PUCHAR)HTTP_SMPO_IF_NONE_MATCH,
                          HTTP_SMPO_IF_NONE_MATCH_LENGTH
                      );
     if (!bCopySucc)
@@ -5745,7 +5719,7 @@ HttpSmpoUtilBuildIfNoneMatch
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -5759,7 +5733,7 @@ HttpSmpoUtilBuildIfNoneMatch
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_WEAK_VALUE,
+                                 (PUCHAR)HTTP_SMPO_WEAK_VALUE,
                                  HTTP_SMPO_WEAK_VALUE_LENGTH
                              );
             if (!bCopySucc)
@@ -5772,7 +5746,7 @@ HttpSmpoUtilBuildIfNoneMatch
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pTag->Tag,
+                             (PUCHAR)pTag->Tag,
                              ulSize
                          );
         if (!bCopySucc)
@@ -5839,7 +5813,7 @@ HttpSmpoUtilBuildIfRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_IF_RANGE,
+                         (PUCHAR)HTTP_SMPO_IF_RANGE,
                          HTTP_SMPO_IF_RANGE_LENGTH
                      );
     if (!bCopySucc)
@@ -5854,7 +5828,7 @@ HttpSmpoUtilBuildIfRange
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_WEAK_VALUE,
+                                 (PUCHAR)HTTP_SMPO_WEAK_VALUE,
                                  HTTP_SMPO_WEAK_VALUE_LENGTH
                              );
             if (!bCopySucc)
@@ -5867,7 +5841,7 @@ HttpSmpoUtilBuildIfRange
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pIfRange->ETag.Tag,
+                             (PUCHAR)pIfRange->ETag.Tag,
                              ulSize
                          );
         if (!bCopySucc)
@@ -5934,7 +5908,6 @@ HttpSmpoUtilBuildIfUnmodifiedSince
      *  If-Unmodified-Since = "If-Unmodified-Since" ":" HTTP-date 
      */
     PHTTP_HFO_IF_UNMODIFIED_SINCE   pIfUnmodifiedSince  = (PHTTP_HFO_IF_UNMODIFIED_SINCE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -5944,7 +5917,7 @@ HttpSmpoUtilBuildIfUnmodifiedSince
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_IF_UNMODIFIED_SINCE,
+                         (PUCHAR)HTTP_SMPO_IF_UNMODIFIED_SINCE,
                          HTTP_SMPO_IF_UNMODIFIED_SINCE_LENGTH
                      );
     if (!bCopySucc)
@@ -6007,7 +5980,6 @@ HttpSmpoUtilBuildLastModified
      *  Last-Modified = "Last-Modified" ":" HTTP-date
      */
     PHTTP_HFO_LAST_MODIFIED         pLastModified    = (PHTTP_HFO_LAST_MODIFIED)hHttpHfo;
-    ULONG                           ulSize           = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6017,7 +5989,7 @@ HttpSmpoUtilBuildLastModified
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_LAST_MODIFIED,
+                         (PUCHAR)HTTP_SMPO_LAST_MODIFIED,
                          HTTP_SMPO_LAST_MODIFIED_LENGTH
                      );
     if (!bCopySucc)
@@ -6080,7 +6052,6 @@ HttpSmpoUtilBuildLocation
      *  Location = "Location" ":" absoluteURI
      */
     PHTTP_HFO_LOCATION              pLocation   = (PHTTP_HFO_LOCATION)hHttpHfo;
-    ULONG                           ulSize      = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6090,7 +6061,7 @@ HttpSmpoUtilBuildLocation
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_LOCATION,
+                         (PUCHAR)HTTP_SMPO_LOCATION,
                          HTTP_SMPO_LOCATION_LENGTH
                      );
     if (!bCopySucc)
@@ -6162,7 +6133,7 @@ HttpSmpoUtilBuildMaxForwards
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_MAX_FORWARDS,
+                         (PUCHAR)HTTP_SMPO_MAX_FORWARDS,
                          HTTP_SMPO_MAX_FORWARDS_LENGTH
                      );
     if (!bCopySucc)
@@ -6235,7 +6206,7 @@ HttpSmpoUtilBuildPragma
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_PRAGMA,
+                         (PUCHAR)HTTP_SMPO_PRAGMA,
                          HTTP_SMPO_PRAGMA_LENGTH
                      );
     if (!bCopySucc)
@@ -6247,7 +6218,7 @@ HttpSmpoUtilBuildPragma
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pPragma->Directives,
+                         (PUCHAR)pPragma->Directives,
                          ulSize
                      );
     if (!bCopySucc)
@@ -6300,7 +6271,6 @@ HttpSmpoUtilBuildProxyAuthenticate
      *  Proxy-Authenticate = "Proxy-Authenticate" ":" 1#challenge 
      */
     PHTTP_HFO_PROXY_AUTHENTICATE    pProxyAuthenticate  = (PHTTP_HFO_PROXY_AUTHENTICATE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     ULONG                           ulChallengeCount, i;
     PHTTP_AUTH_CHALLENGE            pChallenge;
     BOOL                            bCopySucc;
@@ -6312,7 +6282,7 @@ HttpSmpoUtilBuildProxyAuthenticate
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_PROXY_AUTHENTICATE,
+                         (PUCHAR)HTTP_SMPO_PROXY_AUTHENTICATE,
                          HTTP_SMPO_PROXY_AUTHENTICATE_LENGTH
                      );
     if (!bCopySucc)
@@ -6330,7 +6300,7 @@ HttpSmpoUtilBuildProxyAuthenticate
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
 
@@ -6416,7 +6386,6 @@ HttpSmpoUtilBuildProxyAuthorization
      *  Proxy-Authorization = "Proxy-Authorization" ":" credentials
      */
     PHTTP_HFO_PROXY_AUTHORIZATION   pProxyAuthorization = (PHTTP_HFO_PROXY_AUTHORIZATION)hHttpHfo;
-    ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6427,7 +6396,7 @@ HttpSmpoUtilBuildProxyAuthorization
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_PROXY_AUTHORIZATION,
+                         (PUCHAR)HTTP_SMPO_PROXY_AUTHORIZATION,
                          HTTP_SMPO_PROXY_AUTHORIZATION_LENGTH
                      );
     if (!bCopySucc)
@@ -6521,7 +6490,6 @@ HttpSmpoUtilBuildRange
      *  suffix-byte-range-spec = "-" suffix-length
      */
     PHTTP_HFO_RANGE                 pRange  = (PHTTP_HFO_RANGE)hHttpHfo;
-    ULONG                           ulSize  = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6531,7 +6499,7 @@ HttpSmpoUtilBuildRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_RANGE,
+                         (PUCHAR)HTTP_SMPO_RANGE,
                          HTTP_SMPO_RANGE_LENGTH
                      );
     if (!bCopySucc)
@@ -6542,7 +6510,7 @@ HttpSmpoUtilBuildRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_BYTES_UNIT,
+                         (PUCHAR)HTTP_SMPO_BYTES_UNIT,
                          HTTP_SMPO_BYTES_UNIT_LENGTH
                      );
     if (!bCopySucc)
@@ -6553,7 +6521,7 @@ HttpSmpoUtilBuildRange
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "=",
+                         (PUCHAR)"=",
                          1
                      );
     if (!bCopySucc)
@@ -6579,7 +6547,7 @@ HttpSmpoUtilBuildRange
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             "-",
+                             (PUCHAR)"-",
                              1
                          );
         if (!bCopySucc)
@@ -6643,7 +6611,6 @@ HttpSmpoUtilBuildReferer
      *  Referer = "Referer" ":" ( absoluteURI | relativeURI )
      */
     PHTTP_HFO_REFERER               pReferer    = (PHTTP_HFO_REFERER)hHttpHfo;
-    ULONG                           ulSize      = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6653,7 +6620,7 @@ HttpSmpoUtilBuildReferer
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_REFERER,
+                         (PUCHAR)HTTP_SMPO_REFERER,
                          HTTP_SMPO_REFERER_LENGTH
                      );
     if (!bCopySucc)
@@ -6716,7 +6683,6 @@ HttpSmpoUtilBuildTryAfter
      *  Retry-After = "Retry-After" ":" ( HTTP-date | delta-seconds ) 
      */
     PHTTP_HFO_RETRY_AFTER           pRetryAfter = (PHTTP_HFO_RETRY_AFTER)hHttpHfo;
-    ULONG                           ulSize      = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6726,7 +6692,7 @@ HttpSmpoUtilBuildTryAfter
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_RETRY_AFTER,
+                         (PUCHAR)HTTP_SMPO_RETRY_AFTER,
                          HTTP_SMPO_RETRY_AFTER_LENGTH
                      );
     if (!bCopySucc)
@@ -6814,7 +6780,7 @@ HttpSmpoUtilBuildServer
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_SERVER,
+                         (PUCHAR)HTTP_SMPO_SERVER,
                          HTTP_SMPO_SERVER_LENGTH
                      );
     if (!bCopySucc)
@@ -6826,7 +6792,7 @@ HttpSmpoUtilBuildServer
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pServer->ProductToken,
+                         (PUCHAR)pServer->ProductToken,
                          ulSize 
                      );
     if (!bCopySucc)
@@ -6882,7 +6848,6 @@ HttpSmpoUtilBuildTE
      *  accept-params = ";" "q" "=" qvalue *( accept-extension ) 
      */
     PHTTP_HFO_TE                    pTE     = (PHTTP_HFO_TE)hHttpHfo;
-    ULONG                           ulSize  = 0;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulEncodingCount, i;
     BOOL                            bCopySucc;
@@ -6894,7 +6859,7 @@ HttpSmpoUtilBuildTE
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_TE,
+                         (PUCHAR)HTTP_SMPO_TE,
                          HTTP_SMPO_TE_LENGTH
                      );
     if (!bCopySucc)
@@ -6912,7 +6877,7 @@ HttpSmpoUtilBuildTE
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -6934,7 +6899,7 @@ HttpSmpoUtilBuildTE
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_QUALITY_PARAMS,
+                             (PUCHAR)HTTP_SMPO_QUALITY_PARAMS,
                              HTTP_SMPO_QUALITY_PARAMS_LENGTH
                          );
         if (!bCopySucc)
@@ -6998,7 +6963,6 @@ HttpSmpoUtilBuildTrailer
      *  Trailer = "Trailer" ":" 1#field-name
      */
     PHTTP_HFO_TRAILER               pTrailer    = (PHTTP_HFO_TRAILER)hHttpHfo;
-    ULONG                           ulSize      = 0;
     ULONG                           ulFieldCount, i;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
@@ -7009,7 +6973,7 @@ HttpSmpoUtilBuildTrailer
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_TRAILER,
+                         (PUCHAR)HTTP_SMPO_TRAILER,
                          HTTP_SMPO_TRAILER_LENGTH
                      );
     if (!bCopySucc)
@@ -7025,7 +6989,7 @@ HttpSmpoUtilBuildTrailer
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7092,7 +7056,6 @@ HttpSmpoUtilBuildTransferEncoding
      *  transfer-extension = token
      */
     PHTTP_HFO_TRANSFER_ENCODING     pTransferEncoding   = (PHTTP_HFO_TRANSFER_ENCODING)hHttpHfo;
-    ULONG                           ulSize              = 0;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulEncodingCount, i;
     BOOL                            bCopySucc;
@@ -7104,7 +7067,7 @@ HttpSmpoUtilBuildTransferEncoding
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_TRANSFER_ENCODING,
+                         (PUCHAR)HTTP_SMPO_TRANSFER_ENCODING,
                          HTTP_SMPO_TRANSFER_ENCODING_LENGTH
                      );
     if (!bCopySucc)
@@ -7122,7 +7085,7 @@ HttpSmpoUtilBuildTransferEncoding
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7197,7 +7160,7 @@ HttpSmpoUtilBuildUpgrade
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_UPGRADE,
+                         (PUCHAR)HTTP_SMPO_UPGRADE,
                          HTTP_SMPO_UPGRADE_LENGTH
                      );
     if (!bCopySucc)
@@ -7209,7 +7172,7 @@ HttpSmpoUtilBuildUpgrade
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pUpgrade->ProductToken,
+                         (PUCHAR)pUpgrade->ProductToken,
                          ulSize
                      );
     if (!bCopySucc)
@@ -7272,7 +7235,7 @@ HttpSmpoUtilBuildUserAgent
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_USER_AGENT,
+                         (PUCHAR)HTTP_SMPO_USER_AGENT,
                          HTTP_SMPO_USER_AGENT_LENGTH
                      );
     if (!bCopySucc)
@@ -7284,7 +7247,7 @@ HttpSmpoUtilBuildUserAgent
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pUserAgent->ProductToken,
+                         (PUCHAR)pUserAgent->ProductToken,
                          ulSize
                      );
     if (!bCopySucc)
@@ -7347,7 +7310,7 @@ HttpSmpoUtilBuildVary
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_VARY,
+                         (PUCHAR)HTTP_SMPO_VARY,
                          HTTP_SMPO_VARY_LENGTH
                      );
     if (!bCopySucc)
@@ -7363,7 +7326,7 @@ HttpSmpoUtilBuildVary
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7430,7 +7393,6 @@ HttpSmpoUtilBuildVia
      *  received-by = ( host [":" port] ) | pseudonym
      */
     PHTTP_HFO_VIA                   pVia    = (PHTTP_HFO_VIA)hHttpHfo;
-    ULONG                           ulSize  = 0;
     PHTTP_VIA_HOP                   pViaHop;
     ULONG                           ulViaHopCount, i;
     ULONG                           ulProtocolName, ulProtocolVersion;
@@ -7444,7 +7406,7 @@ HttpSmpoUtilBuildVia
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_VIA,
+                         (PUCHAR)HTTP_SMPO_VIA,
                          HTTP_SMPO_VIA_LENGTH
                      );
     if (!bCopySucc)
@@ -7462,7 +7424,7 @@ HttpSmpoUtilBuildVia
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7477,7 +7439,7 @@ HttpSmpoUtilBuildVia
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 pViaHop->Protocol,
+                                 (PUCHAR)pViaHop->Protocol,
                                  ulProtocolName
                              );
             if (!bCopySucc)
@@ -7488,7 +7450,7 @@ HttpSmpoUtilBuildVia
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "/",
+                                 (PUCHAR)"/",
                                  1
                              );
             if (!bCopySucc)
@@ -7501,7 +7463,7 @@ HttpSmpoUtilBuildVia
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pViaHop->Version,
+                             (PUCHAR)pViaHop->Version,
                              ulProtocolVersion
                          );
         if (!bCopySucc)
@@ -7513,7 +7475,7 @@ HttpSmpoUtilBuildVia
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pViaHop->HostName,
+                             (PUCHAR)pViaHop->HostName,
                              ulHost
                          );
         if (!bCopySucc)
@@ -7594,7 +7556,7 @@ HttpSmpoUtilBuildWarning
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_WARNING,
+                         (PUCHAR)HTTP_SMPO_WARNING,
                          HTTP_SMPO_WARNING_LENGTH
                      );
     if (!bCopySucc)
@@ -7612,7 +7574,7 @@ HttpSmpoUtilBuildWarning
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7634,7 +7596,7 @@ HttpSmpoUtilBuildWarning
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             " ",
+                             (PUCHAR)" ",
                             1
                          );
         if (!bCopySucc)
@@ -7646,7 +7608,7 @@ HttpSmpoUtilBuildWarning
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pWarningValue->HostName,
+                             (PUCHAR)pWarningValue->HostName,
                              ulSize
                          );
         if (!bCopySucc)
@@ -7660,7 +7622,7 @@ HttpSmpoUtilBuildWarning
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ":",
+                                 (PUCHAR)":",
                                 1
                              );
             if (!bCopySucc)
@@ -7682,7 +7644,7 @@ HttpSmpoUtilBuildWarning
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             " ",
+                             (PUCHAR)" ",
                             1
                          );
         if (!bCopySucc)
@@ -7694,7 +7656,7 @@ HttpSmpoUtilBuildWarning
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pWarningValue->Text,
+                             (PUCHAR)pWarningValue->Text,
                              ulSize
                          );
         if (!bCopySucc)
@@ -7748,7 +7710,6 @@ HttpSmpoUtilBuildWWWAuthenticate
      *  WWW-Authenticate = "WWW-Authenticate" ":" 1#challenge 
      */
     PHTTP_HFO_WWW_AUTHENTICATE      pWWWAuthenticate    = (PHTTP_HFO_WWW_AUTHENTICATE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     ULONG                           ulChallengeCount, i;
     PHTTP_AUTH_CHALLENGE            pChallenge;
     BOOL                            bCopySucc;
@@ -7760,7 +7721,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_WWW_AUTHENTICATE,
+                         (PUCHAR)HTTP_SMPO_WWW_AUTHENTICATE,
                          HTTP_SMPO_WWW_AUTHENTICATE_LENGTH
                      );
     if (!bCopySucc)
@@ -7777,7 +7738,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7811,7 +7772,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
+                                     (PUCHAR)HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
                                      HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME_LENGTH
                                  );
 
@@ -7824,7 +7785,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     HTTP_SMPO_SPACE,
+                                     (PUCHAR)HTTP_SMPO_SPACE,
                                      HTTP_SMPO_SPACE_LENGTH
                                  );
 
@@ -7837,7 +7798,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     pDigestAuth->Realm,
+                                     (PUCHAR)pDigestAuth->Realm,
                                      AnscSizeOfString(pDigestAuth->Realm)
                                  );
 
@@ -7914,7 +7875,7 @@ HttpSmpoUtilBuildProxyConnection
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_PROXY_CONNECTION,
+                         (PUCHAR)HTTP_SMPO_PROXY_CONNECTION,
                          HTTP_SMPO_PROXY_CONNECTION_LENGTH
                      );
     if (!bCopySucc)
@@ -7931,7 +7892,7 @@ HttpSmpoUtilBuildProxyConnection
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -7944,7 +7905,7 @@ HttpSmpoUtilBuildProxyConnection
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pToken->Token,
+                             (PUCHAR)pToken->Token,
                              ulSize
                          );
         if (!bCopySucc)
@@ -7998,7 +7959,6 @@ HttpSmpoUtilBuildCookie
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      */
     PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -8015,7 +7975,7 @@ HttpSmpoUtilBuildCookie
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE,
+                         (PUCHAR)HTTP_SMPO_COOKIE,
                          HTTP_SMPO_COOKIE_LENGTH
                      );
     if (!bCopySucc)
@@ -8037,8 +7997,8 @@ HttpSmpoUtilBuildCookie
      */
     if (ulVersion != 0)
     {
-        AnscInt2String(ulVersion, buf, 10);
-        bufLen      = AnscSizeOfString(buf);
+        AnscInt2String(ulVersion, (char *)buf, 10);
+        bufLen      = AnscSizeOfString((const char *)buf);
 
         if (bufLen != 0)
         {
@@ -8047,7 +8007,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_ATTR_PREFIX,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_ATTR_PREFIX,
                                  HTTP_SMPO_SET_COOKIE_ATTR_PREFIX_LENGTH
                              );
 
@@ -8059,7 +8019,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -8071,7 +8031,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -8083,7 +8043,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -8106,7 +8066,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -8118,7 +8078,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8137,7 +8097,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -8148,8 +8108,8 @@ HttpSmpoUtilBuildCookie
         pCookieContent  = &pCookie->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8172,7 +8132,7 @@ HttpSmpoUtilBuildCookie
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -8180,8 +8140,8 @@ HttpSmpoUtilBuildCookie
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8199,8 +8159,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8209,7 +8169,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -8221,7 +8181,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_PATH,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH)
                              );
 
@@ -8234,7 +8194,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -8255,8 +8215,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8265,7 +8225,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -8277,7 +8237,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_DOMAIN,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN)
                              );
 
@@ -8289,7 +8249,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -8310,8 +8270,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* port */
-        pValue      = pCookieContent->Port;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Port;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8320,7 +8280,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -8332,7 +8292,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_PORT,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_PORT,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT)
                              );
 
@@ -8344,7 +8304,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -8426,7 +8386,6 @@ HttpSmpoUtilBuildSetCookie
      *
      */
     PHTTP_HFO_SET_COOKIE            pSetCookie      = (PHTTP_HFO_SET_COOKIE)hHttpHfo;
-    ULONG                           ulSize          = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -8443,7 +8402,7 @@ HttpSmpoUtilBuildSetCookie
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_SET_COOKIE,
+                         (PUCHAR)HTTP_SMPO_SET_COOKIE,
                          HTTP_SMPO_SET_COOKIE_LENGTH
                      );
     if (!bCopySucc)
@@ -8459,7 +8418,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -8470,8 +8429,8 @@ HttpSmpoUtilBuildSetCookie
         pCookieContent  = &pSetCookie->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8494,7 +8453,7 @@ HttpSmpoUtilBuildSetCookie
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -8502,8 +8461,8 @@ HttpSmpoUtilBuildSetCookie
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8521,8 +8480,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* comment */
-        pValue      = pCookieContent->Comment;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Comment;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8531,7 +8490,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8543,7 +8502,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_LENGTH
                              );
 
@@ -8556,7 +8515,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -8577,8 +8536,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8587,7 +8546,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8599,7 +8558,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PATH,
                                  HTTP_SMPO_SET_COOKIE_PATH_LENGTH
                              );
 
@@ -8612,7 +8571,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -8633,8 +8592,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -8643,7 +8602,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8655,7 +8614,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DOMAIN,
                                  HTTP_SMPO_SET_COOKIE_DOMAIN_LENGTH
                              );
 
@@ -8668,7 +8627,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -8698,7 +8657,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8710,7 +8669,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -8723,7 +8682,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -8735,15 +8694,15 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->Version, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->Version, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((const char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -8762,7 +8721,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -8784,7 +8743,7 @@ HttpSmpoUtilBuildSetCookie
 
             _ansc_sprintf
                 (
-                    expires, 
+                    (char *)expires, 
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -8801,7 +8760,7 @@ HttpSmpoUtilBuildSetCookie
                                  ulBufSize,
                                  &ulStart,
                                  expires,
-                                 AnscSizeOfString(expires)
+                                 AnscSizeOfString((const char *)expires)
                              );
         }
 
@@ -8815,7 +8774,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8827,7 +8786,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_MAX_AGE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_MAX_AGE,
                                  HTTP_SMPO_SET_COOKIE_MAX_AGE_LENGTH
                              );
 
@@ -8840,15 +8799,15 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->MaxAgeInSeconds, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->MaxAgeInSeconds, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((const char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -8871,7 +8830,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -8883,7 +8842,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_SECURE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_SECURE,
                                  HTTP_SMPO_SET_COOKIE_SECURE_LENGTH
                              );
 
@@ -8935,11 +8894,10 @@ HttpSmpoUtilBuildCookie2
         ULONG                       ulBufSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpHfo);
     /*
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      */
-    PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
-    ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -8949,7 +8907,7 @@ HttpSmpoUtilBuildCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE2,
+                         (PUCHAR)HTTP_SMPO_COOKIE2,
                          HTTP_SMPO_COOKIE2_LENGTH
                      );
     if (!bCopySucc)
@@ -8960,7 +8918,7 @@ HttpSmpoUtilBuildCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE2_CONTENT,
+                         (PUCHAR)HTTP_SMPO_COOKIE2_CONTENT,
                          HTTP_SMPO_COOKIE2_CONTENT_LENGTH
                      );
     
@@ -9023,7 +8981,6 @@ HttpSmpoUtilBuildSetCookie2
      *
      */
     PHTTP_HFO_SET_COOKIE2           pSetCookie2     = (PHTTP_HFO_SET_COOKIE2)hHttpHfo;
-    ULONG                           ulSize          = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -9040,7 +8997,7 @@ HttpSmpoUtilBuildSetCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_SET_COOKIE2,
+                         (PUCHAR)HTTP_SMPO_SET_COOKIE2,
                          HTTP_SMPO_SET_COOKIE2_LENGTH
                      );
     if (!bCopySucc)
@@ -9056,7 +9013,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -9068,8 +9025,8 @@ HttpSmpoUtilBuildSetCookie2
         pCookieContent  = &pSetCookie2->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9092,7 +9049,7 @@ HttpSmpoUtilBuildSetCookie2
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -9100,8 +9057,8 @@ HttpSmpoUtilBuildSetCookie2
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9119,8 +9076,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* comment */
-        pValue      = pCookieContent->Comment;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Comment;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9129,7 +9086,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9141,7 +9098,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_LENGTH
                              );
 
@@ -9154,7 +9111,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9175,8 +9132,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* comment url */
-        pValue      = pCookieContent->CommentUrl;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->CommentUrl;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9185,7 +9142,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9197,7 +9154,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT_URL,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT_URL,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_URL_LENGTH
                              );
 
@@ -9210,7 +9167,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9231,9 +9188,9 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
-
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
+ 
         if (ulValueLen)
         {
             bCopySucc   = HttpSmpoUtilCopyString
@@ -9241,7 +9198,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9253,7 +9210,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PATH,
                                  HTTP_SMPO_SET_COOKIE_PATH_LENGTH
                              );
 
@@ -9266,7 +9223,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9287,8 +9244,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9297,7 +9254,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9309,7 +9266,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DOMAIN,
                                  HTTP_SMPO_SET_COOKIE_DOMAIN_LENGTH
                              );
 
@@ -9322,7 +9279,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9343,8 +9300,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* port */
-        pValue      = pCookieContent->Port;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Port;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -9353,7 +9310,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9365,7 +9322,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PORT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PORT,
                                  HTTP_SMPO_SET_COOKIE_PORT_LENGTH
                              );
 
@@ -9378,7 +9335,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9408,7 +9365,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9420,7 +9377,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -9433,7 +9390,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -9445,15 +9402,15 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->Version, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->Version, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((const char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -9472,7 +9429,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -9494,7 +9451,7 @@ HttpSmpoUtilBuildSetCookie2
 
             _ansc_sprintf
                 (
-                    expires, 
+                    (char *)expires, 
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -9511,7 +9468,7 @@ HttpSmpoUtilBuildSetCookie2
                                  ulBufSize,
                                  &ulStart,
                                  expires,
-                                 AnscSizeOfString(expires)
+                                 AnscSizeOfString((const char *)expires)
                              );
         }
 
@@ -9525,7 +9482,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9537,7 +9494,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_MAX_AGE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_MAX_AGE,
                                  HTTP_SMPO_SET_COOKIE_MAX_AGE_LENGTH
                              );
 
@@ -9550,15 +9507,15 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->MaxAgeInSeconds, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->MaxAgeInSeconds, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((const char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -9581,7 +9538,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9593,7 +9550,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_SECURE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_SECURE,
                                  HTTP_SMPO_SET_COOKIE_SECURE_LENGTH
                              );
 
@@ -9609,7 +9566,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -9621,7 +9578,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DISCARD,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DISCARD,
                                  HTTP_SMPO_SET_COOKIE_DISCARD_LENGTH
                              );
 

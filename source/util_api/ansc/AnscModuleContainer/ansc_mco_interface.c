@@ -116,8 +116,6 @@ AnscCreateModuleContainer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pModuleContainer = NULL;
 
     return  AnscMcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

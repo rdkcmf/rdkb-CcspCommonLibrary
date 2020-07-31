@@ -126,7 +126,6 @@ DslhObjeoGetObjEntity2
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject       = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PANSC_TOKEN_CHAIN               pObjNameTokens  = (PANSC_TOKEN_CHAIN      )hTokenChain;
     PANSC_STRING_TOKEN              pObjNameToken   = (PANSC_STRING_TOKEN     )NULL;
@@ -220,7 +219,6 @@ DslhObjeoGetObjEntity3
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject       = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity = (PDSLH_OBJ_ENTITY_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
@@ -271,7 +269,6 @@ DslhObjeoAddObjEntity
         ANSC_HANDLE                 hObjEntity
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject       = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity = (PDSLH_OBJ_ENTITY_OBJECT)hObjEntity;
 
@@ -375,7 +372,6 @@ DslhObjeoAddVarEntity
         ANSC_HANDLE                 hVarEntity
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject       = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity = (PDSLH_VAR_ENTITY_OBJECT)hVarEntity;
 
@@ -539,12 +535,7 @@ DslhObjeoGetObjRecordCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
-    PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
-    PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
-    PDSLH_VAR_RECORD_OBJECT         pDslhVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry    = (PSINGLE_LINK_ENTRY     )NULL;
 
     return  AnscQueueQueryDepth(&pMyObject->ObjInsQueue);
 }
@@ -586,7 +577,6 @@ DslhObjeoGetObjRecordCount2
         char*                       pPartialPath
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
@@ -656,7 +646,6 @@ DslhObjeoGetObjRecord
         SLAP_VARIABLE*              pParamValue
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
@@ -755,7 +744,6 @@ DslhObjeoGetObjRecord2
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
@@ -826,7 +814,6 @@ DslhObjeoAddObjRecord
         ANSC_HANDLE                 hObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
 
@@ -884,7 +871,6 @@ DslhObjeoDelObjRecord
         ANSC_HANDLE                 hObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry    = (PSINGLE_LINK_ENTRY     )NULL;
@@ -946,7 +932,6 @@ DslhObjeoPopulateObjRecordByName
         char*                       pObjName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
@@ -1000,7 +985,6 @@ DslhObjeoDeleteObjRecordByName
         char*                       pObjName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject      = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
     PDSLH_OBJEO_INSTANCE            pObjeoInstance = (PDSLH_OBJEO_INSTANCE   )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;

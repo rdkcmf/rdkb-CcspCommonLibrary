@@ -117,8 +117,5 @@ HttpCreateSimpleServer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pHttpSimpleServer = NULL;
-
     return  HttpSsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

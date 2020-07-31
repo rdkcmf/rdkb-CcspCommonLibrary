@@ -115,7 +115,7 @@ DslhObjcoTableIsUpdated
 {
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject         = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord        = (PDSLH_OBJ_RECORD_OBJECT )pMyObject->hDslhObjRecord;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity        = (PDSLH_OBJ_ENTITY_OBJECT )pObjRecord->hDslhObjEntity;
+    /*PDSLH_OBJ_ENTITY_OBJECT         pObjEntity        = (PDSLH_OBJ_ENTITY_OBJECT )pObjRecord->hDslhObjEntity;*/
     PDSLH_TR69_INTERFACE            pDslhTr69If       = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_CPE_CONTROLLER_OBJECT     pCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE)pCpeController->GetDslhMprIf(pCpeController);
@@ -197,7 +197,6 @@ DslhObjcoTableSynchronize
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject           = (PDSLH_OBJCO_TABLE_OBJECT   )hThisObject;
     PDSLH_TR69_INTERFACE            pDslhTr69If         = (PDSLH_TR69_INTERFACE       )pMyObject->hDslhTr69If;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord          = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
     /* PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase    = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase; */
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
 
@@ -261,6 +260,7 @@ DslhObjcoTableLock
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -294,6 +294,7 @@ DslhObjcoTableUnlock
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -397,11 +398,9 @@ DslhObjcoTableGetEntryObject
         ULONG*                      pulInsNumber
     )
 {
-    ANSC_STATUS                     returnStatus          = 0;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject             = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
     PDSLH_TR69_INTERFACE            pDslhTr69If           = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_CONTROLLER_OBJECT     pEntryObj             = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord            = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity            = (PDSLH_OBJ_ENTITY_OBJECT)pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity       = (PDSLH_OBJ_ENTITY_OBJECT)NULL;
@@ -514,8 +513,6 @@ DslhObjcoTableNewEntryObject
     )
 {
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject             = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PDSLH_TR69_INTERFACE            pDslhTr69If           = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord            = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity            = (PDSLH_OBJ_ENTITY_OBJECT)pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity       = (PDSLH_OBJ_ENTITY_OBJECT)NULL;
@@ -612,7 +609,6 @@ DslhObjcoTableAddEntryObject
     )
 {
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject             = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_TR69_INTERFACE            pDslhTr69If           = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_CONTROLLER_OBJECT     pEntryObj             = (PDSLH_OBJ_CONTROLLER_OBJECT)hEntryObj;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord        = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
@@ -685,7 +681,6 @@ DslhObjcoTableDelEntryObject
     )
 {
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject             = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController    = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_TR69_INTERFACE            pDslhTr69If           = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_CONTROLLER_OBJECT     pEntryObj             = (PDSLH_OBJ_CONTROLLER_OBJECT)hEntryObj;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord        = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;

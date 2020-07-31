@@ -119,7 +119,7 @@ HttpAtoFxCat2Create
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAtoFxCat2Remove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
 
     AnscAtoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpAtoFxCat2EnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
 
     AnscAtoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ HttpAtoFxCat2Initialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
 
     /*

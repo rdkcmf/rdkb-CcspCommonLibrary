@@ -114,7 +114,6 @@ SlapLboGetObjBinding
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     PSLAP_LBO_OBJECT_BINDING        pObjBinding  = (PSLAP_LBO_OBJECT_BINDING)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY      )NULL;
@@ -188,7 +187,6 @@ SlapLboAddObjBinding
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     PSLAP_LBO_OBJECT_BINDING        pObjBinding  = (PSLAP_LBO_OBJECT_BINDING)NULL;
     ULONG                           ulHashIndex  = AnscHashString(obj_name, AnscSizeOfString(obj_name), SLAP_LBO_OBO_TABLE_SIZE);
@@ -268,7 +266,6 @@ SlapLboDelObjBinding
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     PSLAP_LBO_OBJECT_BINDING        pObjBinding  = (PSLAP_LBO_OBJECT_BINDING)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY      )NULL;
@@ -340,7 +337,6 @@ SlapLboDelObjBinding2
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     PSLAP_LBO_OBJECT_BINDING        pObjBinding  = (PSLAP_LBO_OBJECT_BINDING)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY      )NULL;
@@ -407,7 +403,6 @@ SlapLboDelAllObjBindings
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     PSLAP_LBO_OBJECT_BINDING        pObjBinding  = (PSLAP_LBO_OBJECT_BINDING)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY      )NULL;

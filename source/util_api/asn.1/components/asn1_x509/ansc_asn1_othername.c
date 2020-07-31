@@ -102,7 +102,6 @@ AnscAsn1CreateOtherName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_OTHERNAME            pThisObject  = NULL;
 
     /*
@@ -206,6 +205,7 @@ AnscAsn1OtherNameCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -239,7 +239,7 @@ AnscAsn1OtherNameGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -274,7 +274,6 @@ AnscAsn1CreateOtherString
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_OTHERSTRING          pThisObject  = NULL;
 
     /*
@@ -369,6 +368,7 @@ AnscAsn1OtherStringGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case OTHERSTRING_MASK_KERBEROS:
@@ -388,6 +388,8 @@ AnscAsn1OtherStringCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -403,6 +405,10 @@ AnscAsn1OtherStringGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(uIndex);
+    UNREFERENCED_PARAMETER(pAttr);
+    UNREFERENCED_PARAMETER(pTagValue);
     return FALSE;
 }
 

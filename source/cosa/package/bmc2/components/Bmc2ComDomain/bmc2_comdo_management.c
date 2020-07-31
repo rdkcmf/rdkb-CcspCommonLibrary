@@ -159,7 +159,6 @@ Bmc2ComdoGetCommandsByPrefix
         char*                       pCommandPrefix
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject            = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY     )NULL;
@@ -264,7 +263,6 @@ Bmc2ComdoGetCommandProperty
         char*                       pCommandName
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject            = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY     )NULL;
@@ -337,7 +335,6 @@ Bmc2ComdoAddCommandProperty
         ANSC_HANDLE                 hCommandProperty
     )
 {
-    ANSC_STATUS                     returnStatus            = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject               = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
     PBMC2_COMMAND_PROPERTY          pNewBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )hCommandProperty;
     PBMC2_COMMAND_PROPERTY          pTmpBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )NULL;
@@ -415,7 +412,6 @@ Bmc2ComdoDelCommandProperty
         char*                       pCommandName
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject            = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY     )NULL;
@@ -487,7 +483,6 @@ Bmc2ComdoDelAllCommandProperties
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject            = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY     )NULL;
@@ -694,7 +689,7 @@ Bmc2ComdoGetCmdArgType
         int                         nRet;
         ULONG                       ulArgIndex = 0;
 
-        nRet = _ansc_sscanf(pArgSyntax, BMC2_CMD_ARG_TYPE_NAME_dependent, &ulArgIndex);
+        nRet = _ansc_sscanf(pArgSyntax, BMC2_CMD_ARG_TYPE_NAME_dependent, (PUINT)&ulArgIndex);
 
         if ( (1 == nRet && ulArgIndex != 0)                             ||
              pArgSyntax[1] == BMC2_CMD_ARG_DEP_TYPE_OPTARGN_REQUIRED    ||
@@ -1252,7 +1247,6 @@ Bmc2ComdoParseArgHelpItems
     ulItems = 0;
     while ( pCur )
     {
-        char*                       pItem       = NULL;
         ULONG                       ulItemLen;
         BOOL                        bOK;
 
@@ -1519,7 +1513,6 @@ Bmc2ComdoParseArgValueRange
     PBMC2_CMD_ARG_VRANGE            pArgVrange = NULL;
     char*                           pEnd       = pValue + ulLen;
     char*                           pSep;
-    char**                          pStrArray  = NULL;
 
     *pbSucc = FALSE;
 
@@ -1771,7 +1764,7 @@ Bmc2ComdoParseSimpleArg
 {
     char*                           pCur;
     char*                           pNext;
-    ULONG                           ulLen, ulItems;
+    ULONG                           ulLen;
     BOOL                            bSucc  = FALSE;
 
     pCur = pArgSyntax;
@@ -1899,7 +1892,7 @@ Bmc2ComdoParseSimpleArg
     /* parse value range */
     pCur  = pNext + 1;
     pNext = _ansc_strchr(pCur, BMC2_CMD_ARG_FIELD_SEPARATOR);
-    ulLen = pNext ? pNext - pCur : AnscSizeOfString(pCur);
+    ulLen = pNext ? (ULONG)(pNext - pCur) : AnscSizeOfString(pCur);
 
     if ( ulLen != 0 )
     {

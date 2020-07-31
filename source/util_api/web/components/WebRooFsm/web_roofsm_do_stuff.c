@@ -118,13 +118,9 @@ WebRooFsmDoGet
 {
     ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject             = (PWEB_ROO_FSM_OBJECT        )hThisObject;
-    PWEB_ROO_FSM_PROPERTY           pProperty             = (PWEB_ROO_FSM_PROPERTY      )&pMyObject->Property;
-    PHTTP_RCP_INTERFACE             pRcpIf                = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq               = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep               = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo              = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
     PANSC_TOKEN_CHAIN               pPathTokenChain       = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession              = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     ANSC_HANDLE                     hMappedFile           = (ANSC_HANDLE                )NULL;
     PHTTP_HFO_CONTENT_LENGTH        pHttpHfoContentLength = NULL;
     PHTTP_HFO_CONTENT_TYPE          pHttpHfoContentType   = NULL;
@@ -340,13 +336,8 @@ WebRooFsmDoHead
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject       = (PWEB_ROO_FSM_OBJECT        )hThisObject;
-    PWEB_ROO_FSM_PROPERTY           pProperty       = (PWEB_ROO_FSM_PROPERTY      )&pMyObject->Property;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
 
     returnStatus =
         pMyObject->ReplyReq
@@ -404,13 +395,8 @@ WebRooFsmDoPost
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject       = (PWEB_ROO_FSM_OBJECT        )hThisObject;
-    PWEB_ROO_FSM_PROPERTY           pProperty       = (PWEB_ROO_FSM_PROPERTY      )&pMyObject->Property;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
 
     pHttpHfoAllow = (PHTTP_HFO_ALLOW)AnscAllocateMemory(sizeof(HTTP_HFO_ALLOW));

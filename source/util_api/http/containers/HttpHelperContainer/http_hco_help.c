@@ -118,7 +118,6 @@ HttpHcoGetHeaderId
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_HEADER_OBJECT         pAtoHeader   = (PHTTP_ATO_HEADER_OBJECT      )pMyObject->hAtoHeader;
 
@@ -161,7 +160,6 @@ HttpHcoGetHeaderName
         ULONG                       ulHeaderId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_HEADER_OBJECT         pAtoHeader   = (PHTTP_ATO_HEADER_OBJECT      )pMyObject->hAtoHeader;
 
@@ -204,7 +202,6 @@ HttpHcoGetMethodId
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_METHOD_OBJECT         pAtoMethod   = (PHTTP_ATO_METHOD_OBJECT      )pMyObject->hAtoMethod;
 
@@ -247,7 +244,6 @@ HttpHcoGetMethodName
         ULONG                       ulMethodId
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_METHOD_OBJECT         pAtoMethod   = (PHTTP_ATO_METHOD_OBJECT      )pMyObject->hAtoMethod;
 
@@ -290,7 +286,6 @@ HttpHcoGetCgiEnvId
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_CGIENV_OBJECT         pAtoCgiEnv   = (PHTTP_ATO_CGIENV_OBJECT      )pMyObject->hAtoCgiEnv;
 
@@ -333,7 +328,6 @@ HttpHcoGetReasonPhrase
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_STATUS_OBJECT         pAtoStatus   = (PHTTP_ATO_STATUS_OBJECT      )pMyObject->hAtoStatus;
 
@@ -377,7 +371,6 @@ HttpHcoGetExtMediaType
         char*                       file_ext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_FXCAT1_OBJECT         pAtoFxCat1   = (PHTTP_ATO_FXCAT1_OBJECT      )pMyObject->hAtoFxCat1;
     char                            lcase_str[32];
@@ -425,7 +418,6 @@ HttpHcoGetExtSubType
         char*                       file_ext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_HELPER_CONTAINER_OBJECT   pMyObject    = (PHTTP_HELPER_CONTAINER_OBJECT)hThisObject;
     PHTTP_ATO_FXCAT2_OBJECT         pAtoFxCat2   = (PHTTP_ATO_FXCAT2_OBJECT      )pMyObject->hAtoFxCat2;
     char                            lcase_str[32];

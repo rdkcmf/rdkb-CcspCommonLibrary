@@ -115,10 +115,8 @@ HttpMboGetBodySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
-
+    
     return  pMyObject->GetEntitySize((ANSC_HANDLE)pMyObject);
 }
 
@@ -153,9 +151,7 @@ HttpMboGetBodySize2
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;
@@ -219,9 +215,7 @@ HttpMboGetTransferSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;
@@ -289,10 +283,7 @@ HttpMboGetEntitySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
-
     return  pMyObject->GetTransferSize((ANSC_HANDLE)pMyObject);
 }
 
@@ -327,10 +318,8 @@ HttpMboGetArrivedSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
-
+    
     return  pMyObject->GetEntitySize((ANSC_HANDLE)pMyObject);
 }
 
@@ -373,7 +362,6 @@ HttpMboAppendBodyBdo
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = (PANSC_BUFFER_DESCRIPTOR  )hBdo;
 
     pMyObject->TransferSize += AnscBdoGetBlockSize(pBodyBdo);
@@ -446,9 +434,10 @@ HttpMboAppendBodyFile
         int                         iRangeTo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pFileName);
+    UNREFERENCED_PARAMETER(iRangeFrom);
+    UNREFERENCED_PARAMETER(iRangeTo);
 
     return  ANSC_STATUS_NOT_SUPPORTED;
 }
@@ -484,9 +473,7 @@ HttpMboClearBody
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -556,9 +543,7 @@ HttpMboCopyBodyFrom
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;
@@ -654,9 +639,7 @@ HttpMboCopyBodyInto
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBodySize   = 0;
@@ -751,7 +734,6 @@ HttpMboSaveAsBody
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
 
     pMyObject->ClearBody((ANSC_HANDLE)pMyObject);
@@ -830,7 +812,6 @@ HttpMboSaveBodyAsFile
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MESSAGE_BODY_OBJECT       pMyObject    = (PHTTP_MESSAGE_BODY_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     ANSC_HANDLE                     hTargetFile  = (ANSC_HANDLE              )NULL;
     PANSC_BUFFER_DESCRIPTOR         pBodyBdo     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;

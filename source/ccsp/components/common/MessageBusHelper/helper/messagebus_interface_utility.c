@@ -72,6 +72,7 @@
 
 #include "messagebus_interface_global.h"
 #include "ccc_ifo_mbi.h"
+#include "slap_vco_internal_api.h"
 
 char                     g_SubPrefix[32] = {0 };
 
@@ -152,6 +153,7 @@ mbiIf_SendParameterValueChangeSignal
         char * pAccessList
     )
 {
+    UNREFERENCED_PARAMETER(pAccessList);
     ANSC_STATUS                     returnStatus       = CCSP_SUCCESS;
     parameterSigStruct_t*           pParamSignal       = (parameterSigStruct_t*)NULL;
 
@@ -339,7 +341,7 @@ MsgHelper_CreateCcdMbiIf
 
     if ( !pCccMbiIf )
     {
-        return ANSC_STATUS_RESOURCES;
+        return NULL;
     }
     else
     {

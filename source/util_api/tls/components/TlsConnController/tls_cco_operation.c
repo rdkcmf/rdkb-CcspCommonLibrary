@@ -401,7 +401,6 @@ TlsCcoCancel
     )
 {
     PTLS_CONN_CONTROLLER_OBJECT     pMyObject        = (PTLS_CONN_CONTROLLER_OBJECT  )hThisObject;
-    PTLS_CONNECTION_PARAMS          pConnParams      = (PTLS_CONNECTION_PARAMS       )&pMyObject->ConnectionParams;
     PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_HAND_SHAKER_OBJECT         pTlsHandShaker   = (PTLS_HAND_SHAKER_OBJECT      )pMyObject->hTlsHandShaker;
     PTLS_ALERT_HANDLER_OBJECT       pTlsAlertHandler = (PTLS_ALERT_HANDLER_OBJECT    )pMyObject->hTlsAlertHandler;

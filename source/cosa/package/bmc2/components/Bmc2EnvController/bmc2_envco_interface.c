@@ -117,8 +117,6 @@ Bmc2CreateEnvController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = NULL;
 
     return  Bmc2EnvcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

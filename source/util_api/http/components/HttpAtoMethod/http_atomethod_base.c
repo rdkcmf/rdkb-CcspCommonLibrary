@@ -119,7 +119,7 @@ HttpAtoMethodCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAtoMethodRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
 
     AnscAtoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpAtoMethodEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
 
     AnscAtoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ HttpAtoMethodInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_METHOD_OBJECT         pMyObject    = (PHTTP_ATO_METHOD_OBJECT)hThisObject;
 
     /*

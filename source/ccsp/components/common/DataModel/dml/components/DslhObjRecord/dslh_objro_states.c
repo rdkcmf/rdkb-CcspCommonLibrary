@@ -117,7 +117,6 @@ DslhObjroSetDslhObjEntity
         ANSC_HANDLE                 hObjEntity
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity   = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
 
@@ -166,7 +165,6 @@ DslhObjroSetLastName
         char*                       pName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
 
     if ( pMyObject->LastName )
@@ -216,7 +214,6 @@ DslhObjroSetFullName
         char*                       pName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
 
     if ( pMyObject->FullName )
@@ -326,15 +323,11 @@ DslhObjroReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject         = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity        = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController    = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
-    PDSLH_OBJCO_TABLE_OBJECT        pObjcoTable       = (PDSLH_OBJCO_TABLE_OBJECT   )pObjController;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord   = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord   = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY         )NULL;
-    ULONG                           i                 = 0;
 
     if ( pMyObject->LastName )
     {

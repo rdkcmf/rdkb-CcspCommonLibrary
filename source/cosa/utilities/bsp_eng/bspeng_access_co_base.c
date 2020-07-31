@@ -117,6 +117,10 @@ BspTemplateAccessCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
+
     PBSP_TEMPLATE_ACCESS_OBJECT     pMyObject    = NULL;
 
     /*

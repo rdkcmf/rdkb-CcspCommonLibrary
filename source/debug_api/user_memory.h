@@ -90,6 +90,10 @@
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
 ***********************************************************/
 
+PVOID AnscAllocateMemory(ULONG  ulMemorySize);
+
+VOID AnscFreeMemory(PVOID  pMemoryBlock);
+
 PVOID
 UserAllocateMemory(ULONG  ulMemorySize);
 
@@ -121,9 +125,11 @@ UserMemoryCacheInit
         ULONG                       ulFlags
     )
 {
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(ulFlags);	
     PUSER_MEMORY_CACHE              pMemPool;
 
-    pMemPool = AnscAllocateMemory(sizeof(USER_MEMORY_CACHE));
+    pMemPool = (USER_MEMORY_CACHE*)AnscAllocateMemory(sizeof(USER_MEMORY_CACHE));
 
     if ( pMemPool )
     {
@@ -144,7 +150,8 @@ UserMemoryCacheAlloc
         ULONG                       ulFlags
     )
 {
-    return  AnscAllocateMemory(pMemPool->ulBlockSize);
+    UNREFERENCED_PARAMETER(ulFlags);
+    return  (VOID*)AnscAllocateMemory(pMemPool->ulBlockSize);
 }
 
 
@@ -155,6 +162,7 @@ UserMemoryCacheFree
         PVOID                       pMem
     )
 {
+    UNREFERENCED_PARAMETER(pMemPool);
     AnscFreeMemory(pMem);
 }
 

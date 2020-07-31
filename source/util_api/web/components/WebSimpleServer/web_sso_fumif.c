@@ -123,7 +123,7 @@ WebSsoRegisterMdhIf
 
     if ( (ANSC_HANDLE)NULL == pFumIf->GetMdhIf(pFumIf->hOwnerContext, pRequestUri) )
     {
-        HttpFumEntityAlloc(pEntity, pRequestUri, hMdhIf);
+        HttpFumEntityAlloc(pEntity, (char *)pRequestUri, hMdhIf);
         if ( !pEntity )
         {
             returnStatus = ANSC_STATUS_RESOURCES;
@@ -195,7 +195,7 @@ WebSsoGetMdhIf
         pEntity = ACCESS_HTTP_FUM_ENTITY(pEntry);
         pEntry  = AnscSListGetNextEntry(pEntry);
 
-        if ( AnscEqualString(pEntity->pUri, pRequestUri, FALSE) )
+        if ( AnscEqualString((char *)pEntity->pUri, (char *)pRequestUri, FALSE) )
         {
             hMdhIf = pEntity->hMdhIf;
             break;

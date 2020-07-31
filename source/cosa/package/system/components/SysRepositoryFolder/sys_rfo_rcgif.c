@@ -112,9 +112,7 @@ SysRfoRcgNeedsUpdate
         ANSC_HANDLE                 hFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_RCG_INTERFACE              pOpenRcgIf   = (PSYS_RCG_INTERFACE             )pMyObject->hOpenRcgIf;
     BOOL                            bReturnValue = FALSE;
 
@@ -170,7 +168,6 @@ SysRfoRcgSynchronize
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
     PSYS_RCG_INTERFACE              pOpenRcgIf   = (PSYS_RCG_INTERFACE             )pMyObject->hOpenRcgIf;
 
     if ( pOpenRcgIf )

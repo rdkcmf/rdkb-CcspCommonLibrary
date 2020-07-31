@@ -104,7 +104,6 @@ SlapOwoUoacReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OWO_UOAC_OBJECT           pMyObject    = (PSLAP_OWO_UOAC_OBJECT)hThisObject;
 
     pMyObject->CleanOwoTable((ANSC_HANDLE)pMyObject);

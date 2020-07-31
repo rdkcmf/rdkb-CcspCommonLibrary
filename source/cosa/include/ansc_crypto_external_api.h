@@ -84,5 +84,36 @@ AnscCreateCrypto
         ANSC_HANDLE                 hOwnerContext
     );
 
+ANSC_STATUS
+AnscCryptoRemove
+    (
+        ANSC_HANDLE                 hOwnerContext
+    );
+
+/**********************************************************/
+
+ULONG
+AnscCryptoMd5Digest
+    (
+        PVOID                       buffer,
+        ULONG                       size,
+        PANSC_CRYPTO_HASH           hash
+    );
+
+ULONG
+AnscCryptoHmacSha1Digest
+    (
+        PVOID                       buffer,
+        ULONG                       size,
+        PANSC_CRYPTO_HASH           hash,
+        PANSC_CRYPTO_KEY            key
+    );
+
+ULONG
+AnscCryptoGetRandomUlong
+    (
+        ANSC_HANDLE                 hThisObject,
+        ULONG                       rand_seed
+    );
 
 #endif

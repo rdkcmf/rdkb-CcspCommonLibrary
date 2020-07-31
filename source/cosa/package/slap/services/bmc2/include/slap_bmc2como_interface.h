@@ -137,8 +137,7 @@ typedef  SLAP_VARIABLE*
 typedef  ANSC_STATUS
 (*PFN_BMC2COMO_REMOVE_ALL_PARAMS)
     (
-        ANSC_HANDLE                 hThisObject,
-        SLAP_UINT32                 param_index
+        ANSC_HANDLE                 hThisObject
     );
 
 typedef  ANSC_STATUS

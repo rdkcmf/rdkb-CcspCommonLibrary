@@ -117,8 +117,5 @@ HttpCreateMboIdentity
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_IDENTITY_OBJECT       pHttpMboIdentity = NULL;
-
     return  HttpMboIdtCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

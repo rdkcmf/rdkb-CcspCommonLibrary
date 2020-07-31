@@ -167,7 +167,7 @@ AnscTdoCreate2
     )
 #endif /* defined(_ANSC_SPINLOCK_PROFILING_) || defined(_ANSC_TDO_PROFILING_) */
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = NULL;
 
@@ -247,7 +247,6 @@ AnscTdoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
     PANSC_TIMER_SCHEDULER_OBJECT    pScheduler   = (PANSC_TIMER_SCHEDULER_OBJECT )pMyObject->hScheduler;
 
@@ -301,7 +300,6 @@ AnscTdoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -353,7 +351,6 @@ AnscTdoInitialize2
     )
 #endif /* defined(_ANSC_SPINLOCK_PROFILING_) || defined(_ANSC_TDO_PROFILING_) */
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMyObject    = (PANSC_TIMER_DESCRIPTOR_OBJECT)hThisObject;
     PANSC_TIMER_SCHEDULER_OBJECT    pScheduler   = (PANSC_TIMER_SCHEDULER_OBJECT )pMyObject->hScheduler;
 

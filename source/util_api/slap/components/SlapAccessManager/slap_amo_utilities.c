@@ -119,7 +119,6 @@ SlapAmoGoaToUoaParamList
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     ULONG                           i            = 0;
 
     for ( i = 0; i < param_list->ParamCount; i++ )
@@ -187,7 +186,6 @@ SlapAmoUoaToGoaParamList
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     ULONG                           i            = 0;
 
     for ( i = 0; i < param_list->ParamCount; i++ )
@@ -246,9 +244,7 @@ SlapAmoGoaToUoaVariable
         SLAP_VARIABLE*              slap_var
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pMyObject       = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty       = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
     ULONG                           i               = 0;
 
@@ -340,9 +336,7 @@ SlapAmoUoaToGoaVariable
         ANSC_HANDLE                 hSlapGoaRtc
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
@@ -376,8 +370,7 @@ SlapAmoUoaToGoaVariable
                          * UOA object because we cannot return it the way it is. For SLAP_OBJECT
                          * object, we have to explicitly delete it from UOA.
                          */
-                        returnStatus =
-                            pSlapUoaIf->DeleteObject
+                        pSlapUoaIf->DeleteObject
                                 (
                                     pSlapUoaIf->hOwnerContext,
                                     (ANSC_HANDLE)slap_var->Variant.varObject
@@ -400,8 +393,7 @@ SlapAmoUoaToGoaVariable
                         if (  pSlapObjWrapperC &&
                              (pSlapObjWrapperC->ObjType == SLAP_OWO_OBJ_TYPE_uoaContainer) )
                         {
-                            returnStatus =
-                                pSlapOwoUoac->AttachObjWrapper
+                            pSlapOwoUoac->AttachObjWrapper
                                     (
                                         (ANSC_HANDLE)pSlapOwoUoac,
                                         (ANSC_HANDLE)pSlapObjWrapperO
@@ -437,8 +429,7 @@ SlapAmoUoaToGoaVariable
                                  * ence this UOA object because we cannot return it the way it is.
                                  * For SLAP_OBJECT object, we have to explicitly delete it from UOA.
                                  */
-                                returnStatus =
-                                    pSlapUoaIf->DeleteObject
+                                pSlapUoaIf->DeleteObject
                                         (
                                             pSlapUoaIf->hOwnerContext,
                                             (ANSC_HANDLE)slap_var->Variant.varObjectArray->Array.arrayObject[i]
@@ -461,8 +452,7 @@ SlapAmoUoaToGoaVariable
                                 if (  pSlapObjWrapperC &&
                                      (pSlapObjWrapperC->ObjType == SLAP_OWO_OBJ_TYPE_uoaContainer) )
                                 {
-                                    returnStatus =
-                                        pSlapOwoUoac->AttachObjWrapper
+                                    pSlapOwoUoac->AttachObjWrapper
                                             (
                                                 (ANSC_HANDLE)pSlapOwoUoac,
                                                 (ANSC_HANDLE)pSlapObjWrapperO
@@ -547,7 +537,8 @@ SlapAmoGoaToLoaParamList
     return  returnStatus;
 
     #else
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(param_list);
     return  ANSC_STATUS_SUCCESS;
 
     #endif
@@ -631,7 +622,10 @@ SlapAmoLoaToGoaParamList
     return  returnStatus;
 
     #else
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(lpc_party_addr);
+    UNREFERENCED_PARAMETER(param_list);
+    UNREFERENCED_PARAMETER(hSlapGoaRtc);
     return  ANSC_STATUS_SUCCESS;
 
     #endif
@@ -725,7 +719,8 @@ SlapAmoGoaToLoaVariable
     return  ANSC_STATUS_SUCCESS;
 
     #else
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(slap_var);
     return  ANSC_STATUS_SUCCESS;
 
     #endif
@@ -931,7 +926,10 @@ SlapAmoLoaToGoaVariable
     return  ANSC_STATUS_SUCCESS;
 
     #else
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(lpc_party_addr);
+    UNREFERENCED_PARAMETER(slap_var);
+    UNREFERENCED_PARAMETER(hSlapGoaRtc);
     return  ANSC_STATUS_SUCCESS;
 
     #endif

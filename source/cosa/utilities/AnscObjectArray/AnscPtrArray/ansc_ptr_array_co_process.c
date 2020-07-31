@@ -464,6 +464,7 @@ AnscPtrArrayRemoveAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(ulCount);
     PANSC_PTR_ARRAY_OBJECT          pPtrArray  = (PANSC_PTR_ARRAY_OBJECT)hThisObject;
 
     if (!pPtrArray || ulIndex >= pPtrArray->ulItemCount)

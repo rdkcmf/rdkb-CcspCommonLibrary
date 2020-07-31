@@ -107,8 +107,7 @@ HttpAtoStatusCreateCodeTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -144,7 +143,6 @@ HttpAtoStatusCreateNameTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
 
     pMyObject->AddAtomById
@@ -507,7 +505,6 @@ HttpAtoStatusGetAtomCode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_STATUS_OBJECT         pMyObject       = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -563,7 +560,6 @@ HttpAtoStatusGetAtomName
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_STATUS_OBJECT         pMyObject       = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

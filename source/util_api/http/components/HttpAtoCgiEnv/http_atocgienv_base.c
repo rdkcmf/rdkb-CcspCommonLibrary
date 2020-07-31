@@ -119,7 +119,7 @@ HttpAtoCgiEnvCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAtoCgiEnvRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
 
     AnscAtoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpAtoCgiEnvEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
 
     AnscAtoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ HttpAtoCgiEnvInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_CGIENV_OBJECT         pMyObject    = (PHTTP_ATO_CGIENV_OBJECT)hThisObject;
 
     /*

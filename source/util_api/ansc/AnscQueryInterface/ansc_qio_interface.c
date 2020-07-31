@@ -116,8 +116,6 @@ AnscCreateQueryInterface
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_QUERY_INTERFACE_OBJECT    pQueryInterface = NULL;
 
     return  AnscQioCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

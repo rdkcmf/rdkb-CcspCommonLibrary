@@ -432,8 +432,6 @@ AnscAsn1NULLGetSizeOfEncoded
 {
     PANSC_ASN1_NULL                 pMyObject    = (PANSC_ASN1_NULL)hThisObject;
     ULONG                           ulSize       = 0;
-    ULONG                           i            = 0;
-
     /*
      * If it's optional, don't need encode
      */
@@ -497,7 +495,6 @@ AnscAsn1NULLDecodingData
     PANSC_TAGINFO_OBJECT            pTagInfo     = NULL;
     BOOLEAN                         bTagIncluded = TRUE;
     ULONG                           uLeftSize,uInfiniteTags;
-    PUCHAR                          pEndBuffer   = NULL;
 
     /*
      * pointer to the start of unexamined raw encoding data
@@ -831,7 +828,7 @@ AnscAsn1NULLDumpObject
         BOOLEAN                     bShowValue
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_NULL                 pMyObject    = (PANSC_ASN1_NULL)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -931,7 +928,8 @@ AnscAsn1NULLTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_NULL                 pMyObject        = (PANSC_ASN1_NULL)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;

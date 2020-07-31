@@ -151,12 +151,12 @@
 
     #else
 
-        #define  AnscInitializeEvent                UserInitializeSemEvent
-        #define  AnscFreeEvent                      UserFreeSemEvent
-        #define  AnscSetEvent                       UserSetSemEvent
-        #define  AnscResetEvent                     UserResetSemEvent
-        #define  AnscWaitEvent                      UserWaitSemEvent
-        #define  AnscPulseEvent                     UserPulseSemEvent
+        #define  AnscInitializeEvent(pEvent)                UserInitializeSemEvent((PSEM_EVENT *)pEvent)
+        #define  AnscFreeEvent(pEvent)                      UserFreeSemEvent((PSEM_EVENT *)pEvent)
+        #define  AnscSetEvent(pEvent)                       UserSetSemEvent((PSEM_EVENT *)pEvent)
+        #define  AnscResetEvent(pEvent)                     UserResetSemEvent((PSEM_EVENT *)pEvent)
+        #define  AnscWaitEvent(pEvent, ulMilliSeconds)      UserWaitSemEvent((PSEM_EVENT*)pEvent, (ULONG)ulMilliSeconds)
+        #define  AnscPulseEvent(pEvent)                     UserPulseSemEvent((PSEM_EVENT *)pEvent)
 
     #endif
 

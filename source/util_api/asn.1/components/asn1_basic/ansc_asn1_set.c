@@ -132,16 +132,16 @@ AnscAsn1SetCreate
      * We create object by first allocating memory for holding the variables and member functions.
      * RDKB-6199, CID-24280, do mem reset only for allocated memory.
      */
-    if( hContainerContext > 0)
+    if( (ULONG)hContainerContext > 0)
     {
-        if(pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext))
+        if((pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext)))
         {
             AnscZeroMemory( pMyObject, (ULONG)hContainerContext);
         }
     }
     else
     {
-        if(pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET)))
+        if((pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET))))
         {
             AnscZeroMemory( pMyObject, sizeof(ANSC_ASN1_SET));
         }
@@ -1278,7 +1278,7 @@ AnscAsn1SetDumpObject
     )
 {
 
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SET                  pMyObject       = (PANSC_ASN1_SET)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -1373,7 +1373,7 @@ AnscAsn1SetTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_SET                  pMyObject           = (PANSC_ASN1_SET)hThisObject;
     CHAR                            pAttrBuffer[512]    = { 0 };
     ULONG                           attrLength          = 512;
@@ -1598,6 +1598,8 @@ AnscAsn1SetCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     return NULL;
 }
 
@@ -1635,6 +1637,8 @@ AnscAsn1SetGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     AnscTrace("Please implement it in the derived object.\n");
 
     return "child";
@@ -1949,6 +1953,8 @@ AnscAsn1SetCreateChildObject
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     AnscTrace("Please implement it in the derived object.\n");
 
     return NULL;

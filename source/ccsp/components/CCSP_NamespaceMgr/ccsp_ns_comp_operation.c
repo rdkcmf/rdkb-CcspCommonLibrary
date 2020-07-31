@@ -385,9 +385,7 @@ CcspNsCompBuildFromNamespaceStringArray
     )
 {
     PCCSP_NAMESPACE_COMP_OBJECT     pMyObject       = (PCCSP_NAMESPACE_COMP_OBJECT)hThisObject;
-    PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY)NULL;
     PCCSP_NAMESPACE                 pCcspName       = NULL;
-    ULONG                           uCount          = pMyObject->ParamspaceQueue.Depth;
     ULONG                           i               = 0;
 
     for( i = 0; i < ulSize; i ++)
@@ -448,9 +446,7 @@ CcspNsCompBuildFromNamespaceStructArray
     )
 {
     PCCSP_NAMESPACE_COMP_OBJECT     pMyObject       = (PCCSP_NAMESPACE_COMP_OBJECT)hThisObject;
-    PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY)NULL;
     PCCSP_NAMESPACE                 pCcspName       = NULL;
-    ULONG                           uCount          = pMyObject->ParamspaceQueue.Depth;
     name_spaceType_t**              ppSpaceType     = (name_spaceType_t**)pNamespace;
     ULONG                           i               = 0;
 

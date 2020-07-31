@@ -119,7 +119,7 @@ SlapLcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapLcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject       = (PSLAP_LOAM_CLIENT_OBJECT     )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pPatrolTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hPatrolTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pPatrolTimerIf  = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hPatrolTimerIf;
@@ -250,7 +249,6 @@ SlapLcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject       = (PSLAP_LOAM_CLIENT_OBJECT     )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pPatrolTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hPatrolTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pPatrolTimerIf  = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hPatrolTimerIf;
@@ -372,7 +370,6 @@ SlapLcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

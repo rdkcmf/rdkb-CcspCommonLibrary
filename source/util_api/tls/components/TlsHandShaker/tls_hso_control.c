@@ -145,6 +145,7 @@ TlsHsoStart
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -231,30 +232,25 @@ TlsHsoEstablish
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HAND_SHAKER_OBJECT         pMyObject          = (PTLS_HAND_SHAKER_OBJECT      )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_SESSION_MANAGER_OBJECT     pTlsSessionManager = (PTLS_SESSION_MANAGER_OBJECT  )pTlsMecIf->GetTlsSessionManager(pTlsMecIf->hOwnerContext);
+    pTlsMecIf->GetTlsSessionManager(pTlsMecIf->hOwnerContext);
     PTLS_HSM_INTERFACE              pTlsHsmIf          = (PTLS_HSM_INTERFACE           )pTlsMecIf->GetTlsHsmIf         (pTlsMecIf->hOwnerContext);
     PTLS_MODULE_PARAMS              pModuleParams      = (PTLS_MODULE_PARAMS           )pTlsMecIf->GetModuleParams     (pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
 
     pStateTimerObj->Stop((ANSC_HANDLE)pStateTimerObj);
 
-    returnStatus =
-        pTlsCbcIf->NotifyEvent
-            (
-                pTlsCbcIf->hOwnerContext,
-                TLS_CBC_EVENT_HANDSHAKE_SUCCEEDED,
-                0,
-                (ANSC_HANDLE)pMyObject
-            );
+    pTlsCbcIf->NotifyEvent
+        (
+            pTlsCbcIf->hOwnerContext,
+            TLS_CBC_EVENT_HANDSHAKE_SUCCEEDED,
+            0,
+            (ANSC_HANDLE)pMyObject
+        );
 
     /*
      * If the session is sharable, we can add it to the session pool maintained by the Tls Session
@@ -263,12 +259,11 @@ TlsHsoEstablish
      */
     if ( pModuleParams->bSessionPooling && pConnParams->bSessionSharing && !pConnParams->bQuickHandshake )
     {
-        returnStatus =
-            pTlsHsmIf->AddHandshakeSession
-                (
-                    pTlsHsmIf->hOwnerContext,
-                    (ANSC_HANDLE)pSessionState
-                );
+        pTlsHsmIf->AddHandshakeSession
+            (
+                pTlsHsmIf->hOwnerContext,
+                (ANSC_HANDLE)pSessionState
+            );
     }
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -319,9 +314,7 @@ TlsHsoAgree
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
     PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
 
     if ( pSecurityParams->MajorVersion != 3 )
@@ -480,9 +473,7 @@ TlsHsoCalKeys30
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
     PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
     ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
@@ -843,9 +834,7 @@ TlsHsoCalKeys31
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
     PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
     ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
@@ -1190,11 +1179,7 @@ TlsHsoCalMasterSecret30
     PTLS_HAND_SHAKER_OBJECT         pMyObject          = (PTLS_HAND_SHAKER_OBJECT    )hThisObject;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE         )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
-    PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
-    PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     UCHAR                           random_seed[64];
 
@@ -1263,11 +1248,7 @@ TlsHsoCalMasterSecret31
     PTLS_HAND_SHAKER_OBJECT         pMyObject          = (PTLS_HAND_SHAKER_OBJECT    )hThisObject;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE         )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
-    PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
-    PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     UCHAR                           random_seed[64];
 
@@ -1337,16 +1318,10 @@ TlsHsoChangeCipherW
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HAND_SHAKER_OBJECT         pMyObject          = (PTLS_HAND_SHAKER_OBJECT    )hThisObject;
-    PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE         )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
     PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
-    PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
     PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT  )pMyObject->hTlsRecordKeeper;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
-    PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-
+    
     returnStatus = pTlsCbcIf->ChangeCipherSpec(pTlsCbcIf->hOwnerContext);
     returnStatus =
         pTlsRecordKeeper->ChangeStateW
@@ -1395,16 +1370,9 @@ TlsHsoChangeCipherR
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HAND_SHAKER_OBJECT         pMyObject          = (PTLS_HAND_SHAKER_OBJECT    )hThisObject;
-    PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE         )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
-    PTLS_RECORD_STATE               pRecordStateW      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateW;
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
     PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT  )pMyObject->hTlsRecordKeeper;
-    PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
-    PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-
+    
     returnStatus =
         pTlsRecordKeeper->ChangeStateR
             (

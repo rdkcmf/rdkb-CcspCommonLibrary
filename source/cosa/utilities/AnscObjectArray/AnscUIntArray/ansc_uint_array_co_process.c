@@ -457,6 +457,7 @@ AnscUIntArrayRemoveAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(ulCount);
     PANSC_UINT_ARRAY_OBJECT         pUIntArray  = (PANSC_UINT_ARRAY_OBJECT)hThisObject;
 
     if (!pUIntArray || ulIndex >= pUIntArray->ulItemCount)

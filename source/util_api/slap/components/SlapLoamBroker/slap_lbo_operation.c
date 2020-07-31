@@ -107,7 +107,6 @@ SlapLboAcqAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
 
     AnscAcquireLock(&pMyObject->AccessLock);
@@ -146,7 +145,6 @@ SlapLboRelAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
 
     AnscReleaseLock(&pMyObject->AccessLock);
@@ -266,7 +264,6 @@ SlapLboCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
 

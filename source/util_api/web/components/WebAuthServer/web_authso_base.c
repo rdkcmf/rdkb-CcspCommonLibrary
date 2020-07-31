@@ -119,7 +119,7 @@ WebAuthsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_AUTH_SERVER_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebAuthsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_AUTH_SERVER_OBJECT         pMyObject    = (PWEB_AUTH_SERVER_OBJECT)hThisObject;
 
     HttpAuthoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ WebAuthsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_AUTH_SERVER_OBJECT         pMyObject       = (PWEB_AUTH_SERVER_OBJECT  )hThisObject;
 
     HttpAuthoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ WebAuthsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_AUTH_SERVER_OBJECT         pMyObject    = (PWEB_AUTH_SERVER_OBJECT)hThisObject;
 
     /*

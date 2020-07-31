@@ -118,8 +118,6 @@ BreeCreateSrmo
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBREE_SRM_OBJECT                pBreeSrmo       = NULL;
 
     return  BreeSrmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

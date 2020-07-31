@@ -119,7 +119,7 @@ HttpSsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpSsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSTO_WORKER_OBJECT        pDstoWorker   = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hDstoWorker;
@@ -263,7 +262,6 @@ HttpSsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSTO_WORKER_OBJECT        pDstoWorker   = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hDstoWorker;
@@ -399,7 +397,6 @@ HttpSsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT)hThisObject;
 
     /*

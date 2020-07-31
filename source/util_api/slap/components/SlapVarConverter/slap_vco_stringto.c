@@ -127,9 +127,7 @@ SlapVcoStringToBool
         char*                       var_bool
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if ( AnscEqualString(var_bool, "yes",  FALSE) ||
          AnscEqualString(var_bool, "true", FALSE) ||
          AnscEqualString(var_bool, "1", FALSE))
@@ -176,9 +174,7 @@ SlapVcoStringToInt
         char*                       var_int
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  _ansc_atol(var_int);
 }
 
@@ -218,8 +214,7 @@ SlapVcoStringToUcharArray
         char*                       var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           ulUcharCount   = AnscSizeOfString(var_uchar_array) / 2;
     ULONG                           ulTmpValue     = 0;
@@ -258,7 +253,7 @@ SlapVcoStringToUcharArray
                 (
                     temp_char,
                     "%02X",
-                    &ulTmpValue
+                    (unsigned int *)&ulTmpValue
                 );
         }
 
@@ -304,8 +299,7 @@ SlapVcoBase64StringToUcharArray
         char*                       var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
 
 
@@ -316,12 +310,12 @@ SlapVcoBase64StringToUcharArray
     else
     {
 		ULONG                       count          = AnscSizeOfString(var_uchar_array);
-		char*                       result         = NULL;
+		char*                       result         = "\0";
 
 		result = 
-		AnscBase64Decode
+		(char *)AnscBase64Decode
 			(
-				var_uchar_array,
+				(PUCHAR)var_uchar_array,
 				&count
 			);
 
@@ -384,11 +378,9 @@ SlapVcoStringToUcharArray2
         char*                       var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           ulUcharCount   = AnscSizeOfString(var_uchar_array);
-    ULONG                           i              = 0;
 
     var_ucharArray = (SLAP_UCHAR_ARRAY*)AnscAllocateMemory(sizeof(SLAP_UCHAR_ARRAY) + ulUcharCount);
 
@@ -449,9 +441,7 @@ SlapVcoStringToUint32
         char*                       var_uint32
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if ( !var_uint32 )
     {
         return  0;
@@ -496,9 +486,7 @@ SlapVcoStringToIp4Addr
         char*                       ip4_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if ( !ip4_addr )
     {
         return  0;
@@ -544,8 +532,7 @@ SlapVcoStringToIp4AddrList
         char*                       ip4_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject           = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_TOKEN_CHAIN               pAddrListTokenChain = (PANSC_TOKEN_CHAIN         )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
     SLAP_UINT32_ARRAY*              var_uint32Array     = (SLAP_UINT32_ARRAY*        )NULL;
@@ -579,7 +566,7 @@ SlapVcoStringToIp4AddrList
         goto  EXIT1;
     }
 
-    while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+    while (( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ))
     {
         var_uint32Array->Array.arrayUint32[ulAddrCount++] = _ansc_inet_addr(pAddrStringToken->Name);
 
@@ -637,7 +624,7 @@ SlapVcoStringToIp6Addr
         char*                       ip6_addr
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     UCHAR                           ulTmpValue[16] = { 0 };
 
@@ -700,13 +687,11 @@ SlapVcoStringToIp6AddrList
         char*                       ip6_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject           = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_TOKEN_CHAIN               pAddrListTokenChain = (PANSC_TOKEN_CHAIN         )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
     SLAP_UCHAR_ARRAY*               var_ucharArray      = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           ulAddrCount         = 0;
-    ULONG                           i                   = 0;
 
     if ( !ip6_addr_list )
     {
@@ -736,7 +721,7 @@ SlapVcoStringToIp6AddrList
         goto  EXIT1;
     }
 
-    while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+    while ( ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ) )
     {
         AnscParseIp6Address(pAddrStringToken->Name, &var_ucharArray->Array.arrayUchar[ulAddrCount * 16]);
 
@@ -797,8 +782,7 @@ SlapVcoStringToMacAddr
         char*                       mac_addr
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           i              = 0;
     ULONG                           ulTmpValue[6];
@@ -888,8 +872,7 @@ SlapVcoStringToMacAddrList
         char*                       mac_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject           = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_TOKEN_CHAIN               pAddrListTokenChain = (PANSC_TOKEN_CHAIN         )NULL;
     PANSC_STRING_TOKEN              pAddrStringToken    = (PANSC_STRING_TOKEN        )NULL;
     SLAP_UCHAR_ARRAY*               var_ucharArray      = (SLAP_UCHAR_ARRAY*         )NULL;
@@ -926,7 +909,7 @@ SlapVcoStringToMacAddrList
         goto  EXIT1;
     }
 
-    while ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) )
+    while ( ( pAddrStringToken = AnscTcUnlinkToken(pAddrListTokenChain) ) )
     {
         for ( i = 0; i < 6; i++ )
         {
@@ -1016,8 +999,7 @@ SlapVcoStringToOidList
         char*                       oid_list
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject       = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UINT32_ARRAY*              var_uint32Array = (SLAP_UINT32_ARRAY*        )NULL;
     PANSC_ASN1_OID                  pAsn1Oid        = (PANSC_ASN1_OID            )AnscAsn1ConvOid(oid_list);
 
@@ -1090,8 +1072,7 @@ SlapVcoStringToCalendarTime
         char*                       calendar_time
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_UNIVERSAL_TIME            pUniversalTime = (PANSC_UNIVERSAL_TIME      )NULL;
     ULONG                           ulFieldIndex   = 0;
     char                            temp_char [5];
@@ -1244,8 +1225,7 @@ SlapVcoHexStringToUint32
         char*                       hex_string
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulUcharCount = 0;
     ULONG                           ulTmpValue   = 0;
     ULONG                           i            = 0;
@@ -1281,7 +1261,7 @@ SlapVcoHexStringToUint32
                 (
                     &temp_char[0],
                     "%02X",
-                    &ulTmpValue
+                    (unsigned int *)&ulTmpValue
                 );
         }
 
@@ -1327,8 +1307,7 @@ SlapVcoHexStringToDecimal
         char*                       hex_string
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           ulTmpValue   = 0;
 
     if ( !hex_string )
@@ -1349,7 +1328,7 @@ SlapVcoHexStringToDecimal
             (
                 hex_string,
                 "%X",
-                &ulTmpValue
+                (unsigned int *)&ulTmpValue
             );
     }
 

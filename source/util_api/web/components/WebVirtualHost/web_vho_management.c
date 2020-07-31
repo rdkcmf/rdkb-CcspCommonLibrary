@@ -119,7 +119,6 @@ WebVhoAttachRoo
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT    )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY  )&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf           = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner   = (PWEB_RESOURCE_OWNER_OBJECT  )hRoo;
@@ -179,8 +178,6 @@ WebVhoDetachRoo
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT    )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY  )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf           = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
 
     returnStatus =
@@ -233,8 +230,6 @@ WebVhoDeleteRoo
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT    )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY  )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf           = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
 
     returnStatus =
@@ -285,11 +280,8 @@ WebVhoIdentifyGso
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject      = (PWEB_VIRTUAL_HOST_OBJECT   )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty      = (PWEB_VIRTUAL_HOST_PROPERTY )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf         = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf         = (PWEB_LSM_INTERFACE         )pMyObject->hLsmIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq        = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_HFO_COOKIE                pHttpHfoCookie = (PHTTP_HFO_COOKIE           )NULL;
     PHTTP_COOKIE_CONTENT            pCookieContent = (PHTTP_COOKIE_CONTENT       )NULL;
@@ -332,7 +324,7 @@ WebVhoIdentifyGso
                         TRUE
                     ) )
             {
-                PUCHAR              pCookieValue = pCookieContent->Value;
+                PUCHAR              pCookieValue = (PUCHAR)pCookieContent->Value;
 
                 /* Some clients will use double quote in cookie value
                  * although we don't specify in Set-Cookie.
@@ -342,7 +334,7 @@ WebVhoIdentifyGso
                     pCookieValue ++;
                 }
                 
-                ulSessionId = (ULONG)_ansc_atol(pCookieValue);
+                ulSessionId = (ULONG)_ansc_atol((const char *)pCookieValue);
                 bGotSessionId = TRUE;
             }
             else if ( !bGotLsmId      &&
@@ -425,18 +417,12 @@ WebVhoGetOldestGso
         PULONG                      pulSessionCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(identifier);
+    UNREFERENCED_PARAMETER(ulSessionId);
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_SITE_MANAGER_OBJECT        pSiteManager = (PWEB_SITE_MANAGER_OBJECT  )pMyObject->hOwnerContext;
-    WEB_SITE_MANAGER_PROPERTY       SMProperty;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
     ULONG                           ulClientAddr = 0;
-    USHORT                          usClientPort = 0;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
-    ULONG                           ulHashIndex  = AnscHashUlong(ulSessionId, WEB_VHO_GSO_TABLE_SIZE);
     ULONG                           i;
     ULONG                           ulCSessCount = 0;
     PWEB_GENERAL_SESSION_OBJECT     pOldSession  = NULL;
@@ -449,7 +435,7 @@ WebVhoGetOldestGso
         {
             pSession     = ACCESS_WEB_GENERAL_SESSION_OBJECT(pSLinkEntry);
             ulClientAddr = *(PULONG)pSession->GetClientAddr((ANSC_HANDLE)pSession);
-            usClientPort = pSession->GetClientPort((ANSC_HANDLE)pSession);
+            pSession->GetClientPort((ANSC_HANDLE)pSession);
             pSLinkEntry  = AnscSListGetNextEntry(pSLinkEntry);
 
             if ( pSession->LsmMaxAge != 0 && ulClientAddr == AnscReadUlong(address) )
@@ -530,13 +516,9 @@ WebVhoGetGso
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_SITE_MANAGER_OBJECT        pSiteManager = (PWEB_SITE_MANAGER_OBJECT  )pMyObject->hOwnerContext;
     WEB_SITE_MANAGER_PROPERTY       SMProperty;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
     ULONG                           ulClientAddr = 0;
     USHORT                          usClientPort = 0;
@@ -713,7 +695,6 @@ WebVhoAddGso
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
@@ -756,8 +737,7 @@ WebVhoAddGso
     {
         pSession->SetLsmIdentifier((ANSC_HANDLE)pSession, identifier);
 
-        returnStatus =
-            pLsmIf->ClassifyClient
+        pLsmIf->ClassifyClient
                 (
                     pLsmIf->hOwnerContext,
                     (ANSC_HANDLE)pSession
@@ -765,8 +745,7 @@ WebVhoAddGso
     }
     else
     {
-        returnStatus =
-            pLsmIf->NewContact
+        pLsmIf->NewContact
                 (
                     pLsmIf->hOwnerContext,
                     (ANSC_HANDLE)pSession
@@ -836,10 +815,8 @@ WebVhoDelGso
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(port);
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
     ULONG                           ulClientAddr = 0;
@@ -863,8 +840,7 @@ WebVhoDelGso
 
             pSession->AcquireAccess((ANSC_HANDLE)pSession);
 
-            returnStatus =
-                pLsmIf->EndSession
+            pLsmIf->EndSession
                     (
                         pLsmIf->hOwnerContext,
                         (ANSC_HANDLE)pSession
@@ -912,10 +888,7 @@ WebVhoDelAllGsos
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -934,8 +907,7 @@ WebVhoDelAllGsos
 
             pSession->AcquireAccess((ANSC_HANDLE)pSession);
 
-            returnStatus =
-                pLsmIf->ExpireSession
+            pLsmIf->ExpireSession
                     (
                         pLsmIf->hOwnerContext,
                         (ANSC_HANDLE)pSession

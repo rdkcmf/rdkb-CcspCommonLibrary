@@ -110,7 +110,6 @@ SlapOroGetRef
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->RefCount;
@@ -147,7 +146,6 @@ SlapOroIncRef
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     return  ++pMyObject->RefCount;
@@ -184,7 +182,6 @@ SlapOroDecRef
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     return  --pMyObject->RefCount;
@@ -221,7 +218,6 @@ SlapOroAcqAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     AnscAcquireLock(&pMyObject->AccessLock);
@@ -260,7 +256,6 @@ SlapOroRelAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject    = (PSLAP_OBJ_RECORD_OBJECT)hThisObject;
 
     AnscReleaseLock(&pMyObject->AccessLock);
@@ -313,7 +308,6 @@ SlapOroMatch1
         ULONG                       instance_id
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject         = (PSLAP_OBJ_RECORD_OBJECT   )hThisObject;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)pMyObject->hSlapObjContainer;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)pMyObject->hSlapSrvComponent;
@@ -379,7 +373,6 @@ SlapOroMatch2
         ANSC_HANDLE                 hSrvComponent
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_RECORD_OBJECT         pMyObject         = (PSLAP_OBJ_RECORD_OBJECT   )hThisObject;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT)pMyObject->hSlapObjContainer;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT)pMyObject->hSlapSrvComponent;

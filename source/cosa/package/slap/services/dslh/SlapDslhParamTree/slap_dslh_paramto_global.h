@@ -95,5 +95,25 @@
 #include "ccsp_message_bus.h"
 #include "ccsp_base_api.h"
 
+SLAP_UINT32
+SlapVcoStringToUint32
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       var_uint32
+    );
+
+SLAP_BOOL
+SlapVcoStringToBool
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       var_bool
+    );
+
+SLAP_INT
+SlapVcoStringToInt
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       var_int
+    );
 
 #endif

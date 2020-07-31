@@ -117,8 +117,6 @@ SysCreateInfoRepository
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSYS_INFO_REPOSITORY_OBJECT     pSysInfoRepository = NULL;
 
     return  SysIroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

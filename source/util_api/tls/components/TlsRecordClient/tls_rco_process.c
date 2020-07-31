@@ -116,6 +116,9 @@ TlsRcoAccept
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  TRUE;
 }
 
@@ -165,6 +168,10 @@ TlsRcoRecv
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(hReserved);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -209,5 +216,8 @@ TlsRcoSend
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

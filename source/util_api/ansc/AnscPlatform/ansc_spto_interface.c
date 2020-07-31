@@ -117,8 +117,10 @@ AnscCreateSimpleProxyTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxyTcp = NULL;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
+    return ANSC_STATUS_SUCCESS;
 
     // Assume it is not supported.
     //return  AnscSptoCreate(hContainerContext, hOwnerContext, hAnscReserved);

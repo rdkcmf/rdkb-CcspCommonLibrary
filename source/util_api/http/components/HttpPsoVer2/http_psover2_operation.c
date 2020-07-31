@@ -107,9 +107,7 @@ HttpPsoVer2Open
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -145,10 +143,8 @@ HttpPsoVer2Close
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
+    
     pMyObject->DelAllTros((ANSC_HANDLE)pMyObject);
 
     return  ANSC_STATUS_SUCCESS;
@@ -185,10 +181,7 @@ HttpPsoVer2AcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -225,10 +218,7 @@ HttpPsoVer2ReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

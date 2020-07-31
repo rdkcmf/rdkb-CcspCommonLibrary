@@ -117,8 +117,5 @@ HttpCreateFormContent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_FORM_CONTENT_OBJECT       pHttpFormContent = NULL;
-
     return  HttpFcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

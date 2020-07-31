@@ -130,7 +130,6 @@ AnscBstoGetSocket
         USHORT                      src_port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
@@ -200,7 +199,6 @@ AnscBstoAddSocket
         ANSC_HANDLE                 hClientContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
@@ -268,7 +266,6 @@ AnscBstoDelSocketByAddr
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           ulHashIndex  = AnscHashAddress(dst_addr, pMyObject->EngineCount);
 
@@ -321,8 +318,8 @@ AnscBstoDelSocket
         ANSC_HANDLE                 hSocket
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = (PANSC_BROKER_ENGINE_TCP_OBJECT)pSocket->hBrokerEngine;
 
@@ -367,7 +364,6 @@ AnscBstoDelAllSockets
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           i            = 0;
@@ -417,7 +413,6 @@ AnscBstoAcquireSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -501,7 +496,6 @@ AnscBstoReleaseSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
 
@@ -552,7 +546,6 @@ AnscBstoManufactureSocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     ULONG                           i            = 0;
@@ -625,7 +618,6 @@ AnscBstoDestroySocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -685,7 +677,6 @@ AnscBstoAssignEngine
         PUCHAR                      dst_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           ulHashIndex  = AnscHashAddress(dst_addr, pMyObject->EngineCount);
@@ -726,7 +717,6 @@ AnscBstoManufactureEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           i            = 0;
@@ -788,10 +778,8 @@ AnscBstoDestroyEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pEngine      = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;
 
     AnscAcquireLock(&pMyObject->EngineArrayLock);

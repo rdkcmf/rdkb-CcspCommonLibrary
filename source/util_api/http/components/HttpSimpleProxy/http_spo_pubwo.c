@@ -121,17 +121,9 @@ HttpSpoPubwoAccept
         PANSC_HANDLE                phClientContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject      = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty      = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy   = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
-    PHTTP_WAM_INTERFACE             pWamIf         = (PHTTP_WAM_INTERFACE           )pMyObject->hWamIf;
-    PHTTP_SBC_INTERFACE             pSbcIf         = (PHTTP_SBC_INTERFACE           )pMyObject->hSbcIf;
-    PHTTP_CBC_INTERFACE             pCbcIf         = (PHTTP_CBC_INTERFACE           )pMyObject->hCbcIf;
-    PHTTP_PBC_INTERFACE             pPbcIf         = (PHTTP_PBC_INTERFACE           )pMyObject->hPbcIf;
+    UNREFERENCED_PARAMETER(phClientContext);
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket  = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket  = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
-    PHTTP_PROXY_SESSION_OBJECT      pSession       = NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp    = NULL;
 
     AnscTrace
@@ -203,10 +195,7 @@ HttpSpoPubwoRemove
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pServerSocket->GetBufferContext((ANSC_HANDLE)pServerSocket);
@@ -328,12 +317,8 @@ HttpSpoPubwoQuery
         PANSC_HANDLE                phQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pServerSocket->GetBufferContext((ANSC_HANDLE)pServerSocket);
     PHTTP_PROXY_SESSION_OBJECT      pSession      = NULL;
     ULONG                           ulSptoPmode   = ANSC_SPTOWO_PMODE_PROCESS_SYNC;
@@ -450,8 +435,6 @@ HttpSpoPubwoProcessSync
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pServerSocket->GetBufferContext((ANSC_HANDLE)pServerSocket);
@@ -604,13 +587,11 @@ HttpSpoPubwoProcessAsync
         ANSC_HANDLE                 hQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
-    PHTTP_PROXY_SESSION_OBJECT      pSession      = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(hQueryContext);
 
     return  ANSC_STATUS_UNAPPLICABLE;
 }
@@ -662,13 +643,10 @@ HttpSpoPubwoSendComplete
         ANSC_STATUS                 status
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
-    PHTTP_PROXY_SESSION_OBJECT      pSession      = NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(hReserved);
+    UNREFERENCED_PARAMETER(status);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -720,12 +698,9 @@ HttpSpoPubwoNotify
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hReserved);
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject     = (PHTTP_SIMPLE_PROXY_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_PROXY_PROPERTY     pProperty     = (PHTTP_SIMPLE_PROXY_PROPERTY   )&pMyObject->Property;
-    PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy  = (PANSC_SIMPLE_PROXY_TCP_OBJECT )pMyObject->hSimpleProxy;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pServerSocket->GetBufferContext((ANSC_HANDLE)pServerSocket);
     PHTTP_PROXY_SESSION_OBJECT      pSession      = NULL;
 
@@ -770,8 +745,7 @@ HttpSpoPubwoNotify
                 AnscReleaseLock(&pMyObject->SyncLock);
 
                 pBufferDesp->BlockSize += pServerSocket->RecvPacketSize;
-                returnStatus            =
-                    pServerSocket->SetBufferContext
+                pServerSocket->SetBufferContext
                         (
                             (ANSC_HANDLE)pServerSocket,
                             NULL,
@@ -779,8 +753,7 @@ HttpSpoPubwoNotify
                             (ANSC_HANDLE)NULL
                         );
 
-                returnStatus            =
-                    pSession->FinishedByServer
+                pSession->FinishedByServer
                         (
                             (ANSC_HANDLE)pSession,
                             AnscBdoGetBlock    (pBufferDesp),

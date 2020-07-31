@@ -87,87 +87,87 @@ static const ANSC_UTILBOX_IANA_MEDIA_SUBTYPE        g_IanaTextSubtypes[]        
 {
     {
         IANA_MT_TX_STYPE_CODE_PLAIN,
-        IANA_MT_TX_STYPE_TEXT_PLAIN
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_PLAIN
     },
 
     {
         IANA_MT_TX_STYPE_CODE_RICHTEXT,
-        IANA_MT_TX_STYPE_TEXT_RICHTEXT
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_RICHTEXT
     },
 
     {
         IANA_MT_TX_STYPE_CODE_ENRICHED,
-        IANA_MT_TX_STYPE_TEXT_ENRICHED
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_ENRICHED
     },
 
     {
         IANA_MT_TX_STYPE_CODE_TAB_SEP_VALUES,
-        IANA_MT_TX_STYPE_TEXT_TAB_SEP_VALUES
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_TAB_SEP_VALUES
     },
 
     {
         IANA_MT_TX_STYPE_CODE_HTML,
-        IANA_MT_TX_STYPE_TEXT_HTML
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_HTML
     },
 
     {
         IANA_MT_TX_STYPE_CODE_SGML,
-        IANA_MT_TX_STYPE_TEXT_SGML
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_SGML
     },
 
     {
         IANA_MT_TX_STYPE_CODE_URL_LIST,
-        IANA_MT_TX_STYPE_TEXT_URL_LIST
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_URL_LIST
     },
 
     {
         IANA_MT_TX_STYPE_CODE_RFC822_HEADERS,
-        IANA_MT_TX_STYPE_TEXT_RFC822_HEADERS
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_RFC822_HEADERS
     },
 
     {
         IANA_MT_TX_STYPE_CODE_CSS,
-        IANA_MT_TX_STYPE_TEXT_CSS
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_CSS
     },
 
     {
         IANA_MT_TX_STYPE_CODE_XML,
-        IANA_MT_TX_STYPE_TEXT_XML
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_XML
     },
 
     {
         IANA_MT_TX_STYPE_CODE_XML_EPE,
-        IANA_MT_TX_STYPE_TEXT_XML_EPE
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_XML_EPE
     },
 
     {
         IANA_MT_TX_STYPE_CODE_DIRECTORY,
-        IANA_MT_TX_STYPE_TEXT_DIRECTORY
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_DIRECTORY
     },
 
     {
         IANA_MT_TX_STYPE_CODE_CALENDAR,
-        IANA_MT_TX_STYPE_TEXT_CALENDAR
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_CALENDAR
     },
 
     {
         IANA_MT_TX_STYPE_CODE_T140,
-        IANA_MT_TX_STYPE_TEXT_T140
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_T140
     },
 
     {
         IANA_MT_TX_STYPE_CODE_PARITYFEC,
-        IANA_MT_TX_STYPE_TEXT_PARITYFEC
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_PARITYFEC
     },
 
     {
         IANA_MT_TX_STYPE_CODE_JAVASCRIPT,
-        IANA_MT_TX_STYPE_TEXT_JAVASCRIPT
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_JAVASCRIPT
     },
 
     {
         IANA_MT_TX_STYPE_CODE_X_MSMS_GSINVITE,
-        IANA_MT_TX_STYPE_TEXT_X_MSMS_GSINVITE
+        (PUCHAR)IANA_MT_TX_STYPE_TEXT_X_MSMS_GSINVITE
     },
 
     {
@@ -180,67 +180,67 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaMultipartSubtypes[]   
 {
     {
         IANA_MT_MP_STYPE_CODE_MIXED,
-        IANA_MT_MP_STYPE_TEXT_MIXED
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_MIXED
     },
 
     {
         IANA_MT_MP_STYPE_CODE_ALTERNATIVE,
-        IANA_MT_MP_STYPE_TEXT_ALTERNATIVE
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_ALTERNATIVE
     },
 
     {
         IANA_MT_MP_STYPE_CODE_DIGEST,
-        IANA_MT_MP_STYPE_TEXT_DIGEST
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_DIGEST
     },
 
     {
         IANA_MT_MP_STYPE_CODE_PARALLEL,
-        IANA_MT_MP_STYPE_TEXT_PARALLEL
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_PARALLEL
     },
 
     {
         IANA_MT_MP_STYPE_CODE_APPLEDOUBLE,
-        IANA_MT_MP_STYPE_TEXT_APPLEDOUBLE
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_APPLEDOUBLE
     },
 
     {
         IANA_MT_MP_STYPE_CODE_HEADER_SET,
-        IANA_MT_MP_STYPE_TEXT_HEADER_SET
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_HEADER_SET
     },
 
     {
         IANA_MT_MP_STYPE_CODE_FORM_DATA,
-        IANA_MT_MP_STYPE_TEXT_FORM_DATA
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_FORM_DATA
     },
 
     {
         IANA_MT_MP_STYPE_CODE_RELATED,
-        IANA_MT_MP_STYPE_TEXT_RELATED
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_RELATED
     },
 
     {
         IANA_MT_MP_STYPE_CODE_REPORTED,
-        IANA_MT_MP_STYPE_TEXT_REPORTED
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_REPORTED
     },
 
     {
         IANA_MT_MP_STYPE_CODE_VOICE_MESSAGE,
-        IANA_MT_MP_STYPE_TEXT_VOICE_MESSAGE
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_VOICE_MESSAGE
     },
 
     {
         IANA_MT_MP_STYPE_CODE_SIGNED,
-        IANA_MT_MP_STYPE_TEXT_SIGNED
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_SIGNED
     },
 
     {
         IANA_MT_MP_STYPE_CODE_ENCRYPTED,
-        IANA_MT_MP_STYPE_TEXT_ENCRYPTED
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_ENCRYPTED
     },
 
     {
         IANA_MT_MP_STYPE_CODE_BYTERANGES,
-        IANA_MT_MP_STYPE_TEXT_BYTERANGES
+        (PUCHAR)IANA_MT_MP_STYPE_TEXT_BYTERANGES
     },
 
     {
@@ -253,47 +253,47 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaMessageSubtypes[]     
 {
     {
         IANA_MT_MG_STYPE_CODE_RFC822,
-        IANA_MT_MG_STYPE_TEXT_RFC822
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_RFC822
     },
 
     {
         IANA_MT_MG_STYPE_CODE_PARTIAL,
-        IANA_MT_MG_STYPE_TEXT_PARTIAL
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_PARTIAL
     },
 
     {
         IANA_MT_MG_STYPE_CODE_EXTERNAL_BODY,
-        IANA_MT_MG_STYPE_TEXT_EXTERNAL_BODY
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_EXTERNAL_BODY
     },
 
     {
         IANA_MT_MG_STYPE_CODE_NEWS,
-        IANA_MT_MG_STYPE_TEXT_NEWS
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_NEWS
     },
 
     {
         IANA_MT_MG_STYPE_CODE_HTTP,
-        IANA_MT_MG_STYPE_TEXT_HTTP
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_HTTP
     },
 
     {
         IANA_MT_MG_STYPE_CODE_DELIVERY_STATUS,
-        IANA_MT_MG_STYPE_TEXT_DELIVERY_STATUS
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_DELIVERY_STATUS
     },
 
     {
         IANA_MT_MG_STYPE_CODE_DISPOSITION_NF,
-        IANA_MT_MG_STYPE_TEXT_DISPOSITION_NF
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_DISPOSITION_NF
     },
 
     {
         IANA_MT_MG_STYPE_CODE_S_HTTP,
-        IANA_MT_MG_STYPE_TEXT_S_HTTP
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_S_HTTP
     },
 
     {
         IANA_MT_MG_STYPE_CODE_SIPFRAG,
-        IANA_MT_MG_STYPE_TEXT_SIPFRAG
+        (PUCHAR)IANA_MT_MG_STYPE_TEXT_SIPFRAG
     },
 
     {
@@ -306,317 +306,317 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaApplicationSubtypes[] 
 {
     {
         IANA_MT_AP_STYPE_CODE_OCTET_STREAM,
-        IANA_MT_AP_STYPE_TEXT_OCTET_STREAM
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_OCTET_STREAM
     },
 
     {
         IANA_MT_AP_STYPE_CODE_POSTSCRIPT,
-        IANA_MT_AP_STYPE_TEXT_POSTSCRIPT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_POSTSCRIPT
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ODA,
-        IANA_MT_AP_STYPE_TEXT_ODA
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ODA
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ATOMICMAIL,
-        IANA_MT_AP_STYPE_TEXT_ATOMICMAIL
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ATOMICMAIL
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ANDREW_INSET,
-        IANA_MT_AP_STYPE_TEXT_ANDREW_INSET
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ANDREW_INSET
     },
 
     {
         IANA_MT_AP_STYPE_CODE_SLATE,
-        IANA_MT_AP_STYPE_TEXT_SLATE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_SLATE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_WITA,
-        IANA_MT_AP_STYPE_TEXT_WITA
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_WITA
     },
 
     {
         IANA_MT_AP_STYPE_CODE_DEC_DX,
-        IANA_MT_AP_STYPE_TEXT_DEC_DX
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_DEC_DX
     },
 
     {
         IANA_MT_AP_STYPE_CODE_DCA_RFT,
-        IANA_MT_AP_STYPE_TEXT_DCA_RFT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_DCA_RFT
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ACTIVEMESSAGE,
-        IANA_MT_AP_STYPE_TEXT_ACTIVEMESSAGE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ACTIVEMESSAGE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_RTF,
-        IANA_MT_AP_STYPE_TEXT_RTF
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_RTF
     },
 
     {
         IANA_MT_AP_STYPE_CODE_APPLEFILE,
-        IANA_MT_AP_STYPE_TEXT_APPLEFILE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_APPLEFILE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_MAC_BINHEX40,
-        IANA_MT_AP_STYPE_TEXT_MAC_BINHEX40
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_MAC_BINHEX40
     },
 
     {
         IANA_MT_AP_STYPE_CODE_NEWS_MESSAGE_ID,
-        IANA_MT_AP_STYPE_TEXT_NEWS_MESSAGE_ID
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_NEWS_MESSAGE_ID
     },
 
     {
         IANA_MT_AP_STYPE_CODE_NEWS_TRANSMISSION,
-        IANA_MT_AP_STYPE_TEXT_NEWS_TRANSMISSION
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_NEWS_TRANSMISSION
     },
 
     {
         IANA_MT_AP_STYPE_CODE_WORDPERFECT51,
-        IANA_MT_AP_STYPE_TEXT_WORDPERFECT51
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_WORDPERFECT51
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PDF,
-        IANA_MT_AP_STYPE_TEXT_PDF
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PDF
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ZIP,
-        IANA_MT_AP_STYPE_TEXT_ZIP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ZIP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_MACWRITEII,
-        IANA_MT_AP_STYPE_TEXT_MACWRITEII
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_MACWRITEII
     },
 
     {
         IANA_MT_AP_STYPE_CODE_MSWORD,
-        IANA_MT_AP_STYPE_TEXT_MSWORD
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_MSWORD
     },
 
     {
         IANA_MT_AP_STYPE_CODE_REMOTE_PRINTING,
-        IANA_MT_AP_STYPE_TEXT_REMOTE_PRINTING
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_REMOTE_PRINTING
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ESHOP,
-        IANA_MT_AP_STYPE_TEXT_ESHOP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ESHOP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X400_BP,
-        IANA_MT_AP_STYPE_TEXT_X400_BP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X400_BP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_SGML,
-        IANA_MT_AP_STYPE_TEXT_SGML
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_SGML
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PGP_ENCRYPTED,
-        IANA_MT_AP_STYPE_TEXT_PGP_ENCRYPTED
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PGP_ENCRYPTED
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PGP_SIGNATURE,
-        IANA_MT_AP_STYPE_TEXT_PGP_SIGNATURE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PGP_SIGNATURE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PGP_KEYS,
-        IANA_MT_AP_STYPE_TEXT_PGP_KEYS
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PGP_KEYS
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKCS7_MIME,
-        IANA_MT_AP_STYPE_TEXT_PKCS7_MIME
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKCS7_MIME
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKCS7_SIGNATURE,
-        IANA_MT_AP_STYPE_TEXT_PKCS7_SIGNATURE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKCS7_SIGNATURE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKCS10,
-        IANA_MT_AP_STYPE_TEXT_PKCS10
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKCS10
     },
 
     {
         IANA_MT_AP_STYPE_CODE_EDIFACT,
-        IANA_MT_AP_STYPE_TEXT_EDIFACT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_EDIFACT
     },
 
     {
         IANA_MT_AP_STYPE_CODE_EDI_X12,
-        IANA_MT_AP_STYPE_TEXT_EDI_X12
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_EDI_X12
     },
 
     {
         IANA_MT_AP_STYPE_CODE_EDI_CONSENT,
-        IANA_MT_AP_STYPE_TEXT_EDI_CONSENT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_EDI_CONSENT
     },
 
     {
         IANA_MT_AP_STYPE_CODE_XML,
-        IANA_MT_AP_STYPE_TEXT_XML
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_XML
     },
 
     {
         IANA_MT_AP_STYPE_CODE_XML_EPE,
-        IANA_MT_AP_STYPE_TEXT_XML_EPE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_XML_EPE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_XML_DTD,
-        IANA_MT_AP_STYPE_TEXT_XML_DTD
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_XML_DTD
     },
 
     {
         IANA_MT_AP_STYPE_CODE_BATCH_SMTP,
-        IANA_MT_AP_STYPE_TEXT_BATCH_SMTP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_BATCH_SMTP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKIXCMP,
-        IANA_MT_AP_STYPE_TEXT_PKIXCMP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKIXCMP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_IPP,
-        IANA_MT_AP_STYPE_TEXT_IPP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_IPP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_OCSP_REQUEST,
-        IANA_MT_AP_STYPE_TEXT_OCSP_REQUEST
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_OCSP_REQUEST
     },
 
     {
         IANA_MT_AP_STYPE_CODE_OCSP_RESPONSE,
-        IANA_MT_AP_STYPE_TEXT_OCSP_RESPONSE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_OCSP_RESPONSE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKIX_CERT,
-        IANA_MT_AP_STYPE_TEXT_PKIX_CERT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKIX_CERT
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PKIX_CRL,
-        IANA_MT_AP_STYPE_TEXT_PKIX_CRL
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PKIX_CRL
     },
 
     {
         IANA_MT_AP_STYPE_CODE_HTTP,
-        IANA_MT_AP_STYPE_TEXT_HTTP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_HTTP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_SDP,
-        IANA_MT_AP_STYPE_TEXT_SDP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_SDP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_IOTP,
-        IANA_MT_AP_STYPE_TEXT_IOTP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_IOTP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PARITYFEC,
-        IANA_MT_AP_STYPE_TEXT_PARITYFEC
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PARITYFEC
     },
 
     {
         IANA_MT_AP_STYPE_CODE_ISUP,
-        IANA_MT_AP_STYPE_TEXT_ISUP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_ISUP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_QSIG,
-        IANA_MT_AP_STYPE_TEXT_QSIG
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_QSIG
     },
 
     {
         IANA_MT_AP_STYPE_CODE_TIMESTAMP_QUERY,
-        IANA_MT_AP_STYPE_TEXT_TIMESTAMP_QUERY
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_TIMESTAMP_QUERY
     },
 
     {
         IANA_MT_AP_STYPE_CODE_TIMESTAMP_REPLY,
-        IANA_MT_AP_STYPE_TEXT_TIMESTAMP_REPLY
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_TIMESTAMP_REPLY
     },
 
     {
         IANA_MT_AP_STYPE_CODE_REGINFO_XML,
-        IANA_MT_AP_STYPE_TEXT_REGINFO_XML
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_REGINFO_XML
     },
 
     {
         IANA_MT_AP_STYPE_CODE_SIMPLE_MSG_SUMMARY,
-        IANA_MT_AP_STYPE_TEXT_SIMPLE_MSG_SUMMARY
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_SIMPLE_MSG_SUMMARY
     },
 
     {
         IANA_MT_AP_STYPE_CODE_PIDF_XML,
-        IANA_MT_AP_STYPE_TEXT_PIDF_XML
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_PIDF_XML
     },
 
     {
         IANA_MT_AP_STYPE_CODE_WATCHERINFO_XML,
-        IANA_MT_AP_STYPE_TEXT_WATCHERINFO_XML
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_WATCHERINFO_XML
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_FORM_URLENCODED,
-        IANA_MT_AP_STYPE_TEXT_X_FORM_URLENCODED
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_FORM_URLENCODED
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_GZIP,
-        IANA_MT_AP_STYPE_TEXT_X_GZIP
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_GZIP
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_TAR,
-        IANA_MT_AP_STYPE_TEXT_X_TAR
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_TAR
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_COMPRESSED,
-        IANA_MT_AP_STYPE_TEXT_X_COMPRESSED
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_COMPRESSED
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_JAVA_ARCHIVE,
-        IANA_MT_AP_STYPE_TEXT_X_JAVA_ARCHIVE
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_JAVA_ARCHIVE
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_JAVA_SO,
-        IANA_MT_AP_STYPE_TEXT_X_JAVA_SO
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_JAVA_SO
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_JAVA_VM,
-        IANA_MT_AP_STYPE_TEXT_X_JAVA_VM
+       (PUCHAR) IANA_MT_AP_STYPE_TEXT_X_JAVA_VM
     },
 
     {
         IANA_MT_AP_STYPE_CODE_X_JAVASCRIPT,
-        IANA_MT_AP_STYPE_TEXT_X_JAVASCRIPT
+        (PUCHAR)IANA_MT_AP_STYPE_TEXT_X_JAVASCRIPT
     },
 
     {
@@ -629,47 +629,47 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaImageSubtypes[]       
 {
     {
         IANA_MT_IM_STYPE_CODE_JPEG,
-        IANA_MT_IM_STYPE_TEXT_JPEG
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_JPEG
     },
 
     {
         IANA_MT_IM_STYPE_CODE_GIF,
-        IANA_MT_IM_STYPE_TEXT_GIF
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_GIF
     },
 
     {
         IANA_MT_IM_STYPE_CODE_IEF,
-        IANA_MT_IM_STYPE_TEXT_IEF
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_IEF
     },
 
     {
         IANA_MT_IM_STYPE_CODE_G3FAX,
-        IANA_MT_IM_STYPE_TEXT_G3FAX
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_G3FAX
     },
 
     {
         IANA_MT_IM_STYPE_CODE_TIFF,
-        IANA_MT_IM_STYPE_TEXT_TIFF
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_TIFF
     },
 
     {
         IANA_MT_IM_STYPE_CODE_CGM,
-        IANA_MT_IM_STYPE_TEXT_CGM
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_CGM
     },
 
     {
         IANA_MT_IM_STYPE_CODE_NAPLPS,
-        IANA_MT_IM_STYPE_TEXT_NAPLPS
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_NAPLPS
     },
 
     {
         IANA_MT_IM_STYPE_CODE_PNG,
-        IANA_MT_IM_STYPE_TEXT_PNG
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_PNG
     },
 
     {
         IANA_MT_IM_STYPE_CODE_SVG_XML,
-        IANA_MT_IM_STYPE_TEXT_SVG_XML
+        (PUCHAR)IANA_MT_IM_STYPE_TEXT_SVG_XML
     },
 
     {
@@ -682,67 +682,67 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaAudioSubtypes[]       
 {
     {
         IANA_MT_AD_STYPE_CODE_BASIC,
-        IANA_MT_AD_STYPE_TEXT_BASIC
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_BASIC
     },
 
     {
         IANA_MT_AD_STYPE_CODE_32KADPCM,
-        IANA_MT_AD_STYPE_TEXT_32KADPCM
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_32KADPCM
     },
 
     {
         IANA_MT_AD_STYPE_CODE_L16,
-        IANA_MT_AD_STYPE_TEXT_L16
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_L16
     },
 
     {
         IANA_MT_AD_STYPE_CODE_TELEPHONE_EVENT,
-        IANA_MT_AD_STYPE_TEXT_TELEPHONE_EVENT
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_TELEPHONE_EVENT
     },
 
     {
         IANA_MT_AD_STYPE_CODE_TONE,
-        IANA_MT_AD_STYPE_TEXT_TONE
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_TONE
     },
 
     {
         IANA_MT_AD_STYPE_CODE_MPEG,
-        IANA_MT_AD_STYPE_TEXT_MPEG
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_MPEG
     },
 
     {
         IANA_MT_AD_STYPE_CODE_PARITYFEC,
-        IANA_MT_AD_STYPE_TEXT_PARITYFEC
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_PARITYFEC
     },
 
     {
         IANA_MT_AD_STYPE_CODE_MP4A_LATM,
-        IANA_MT_AD_STYPE_TEXT_MP4A_LATM
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_MP4A_LATM
     },
 
     {
         IANA_MT_AD_STYPE_CODE_G722_1,
-        IANA_MT_AD_STYPE_TEXT_G722_1
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_G722_1
     },
 
     {
         IANA_MT_AD_STYPE_CODE_MPA_ROBUST,
-        IANA_MT_AD_STYPE_TEXT_MPA_ROBUST
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_MPA_ROBUST
     },
 
     {
         IANA_MT_AD_STYPE_CODE_DAT12,
-        IANA_MT_AD_STYPE_TEXT_DAT12
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_DAT12
     },
 
     {
         IANA_MT_AD_STYPE_CODE_L20,
-        IANA_MT_AD_STYPE_TEXT_L20
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_L20
     },
 
     {
         IANA_MT_AD_STYPE_CODE_L24,
-        IANA_MT_AD_STYPE_TEXT_L24
+        (PUCHAR)IANA_MT_AD_STYPE_TEXT_L24
     },
 
     {
@@ -756,27 +756,27 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaVideoSubtypes[]       
 {
     {
         IANA_MT_VD_STYPE_CODE_MPEG,
-        IANA_MT_VD_STYPE_TEXT_MPEG
+        (PUCHAR)IANA_MT_VD_STYPE_TEXT_MPEG
     },
 
     {
         IANA_MT_VD_STYPE_CODE_QUICKTIME,
-        IANA_MT_VD_STYPE_TEXT_QUICKTIME
+        (PUCHAR)IANA_MT_VD_STYPE_TEXT_QUICKTIME
     },
 
     {
         IANA_MT_VD_STYPE_CODE_POINTER,
-        IANA_MT_VD_STYPE_TEXT_POINTER
+        (PUCHAR)IANA_MT_VD_STYPE_TEXT_POINTER
     },
 
     {
         IANA_MT_VD_STYPE_CODE_PARITYFEC,
-        IANA_MT_VD_STYPE_TEXT_PARITYFEC
+        (PUCHAR)IANA_MT_VD_STYPE_TEXT_PARITYFEC
     },
 
     {
         IANA_MT_VD_STYPE_CODE_MP4V_ES,
-        IANA_MT_VD_STYPE_TEXT_MP4V_ES
+        (PUCHAR)IANA_MT_VD_STYPE_TEXT_MP4V_ES
     },
 
     {
@@ -790,17 +790,17 @@ static const ANSC_UTILBOX_IANA_MEDIA                g_IanaModelSubtypes[]       
 {
     {
         IANA_MT_MD_STYPE_CODE_IGES,
-        IANA_MT_MD_STYPE_TEXT_IGES
+        (PUCHAR)IANA_MT_MD_STYPE_TEXT_IGES
     },
 
     {
         IANA_MT_MD_STYPE_CODE_VRML,
-        IANA_MT_MD_STYPE_TEXT_VRML
+        (PUCHAR)IANA_MT_MD_STYPE_TEXT_VRML
     },
 
     {
         IANA_MT_MD_STYPE_CODE_MESH,
-        IANA_MT_MD_STYPE_TEXT_MESH
+        (PUCHAR)IANA_MT_MD_STYPE_TEXT_MESH
     },
 
     {
@@ -1017,6 +1017,7 @@ AnscHttpParseQueryString
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     PHTTP_FORM_INPUT                pFormInput  = NULL;
     ULONG                           ulCount;
     ULONG                           ulBufSize;
@@ -1132,7 +1133,7 @@ AnscHttpParseQueryString
             }
 
             /* decode query name */
-            HttpSmpoDecodeUrlEncode(pElement->Name, ulNameLen, pElement->Name, &ulNameLen);
+            HttpSmpoDecodeUrlEncode((PUCHAR)pElement->Name, ulNameLen, (PUCHAR)pElement->Name, &ulNameLen);
         }
     }
 
@@ -1296,7 +1297,8 @@ AnscHttpGetHeaderParam
         char*                       name
     )
 {
-    PUCHAR                          pLast   = parameters + AnscSizeOfString(parameters) - 1;
+    UNREFERENCED_PARAMETER(unused);
+    PUCHAR                          pLast   = (PUCHAR)(parameters + AnscSizeOfString(parameters) - 1);
     PUCHAR                          pName;
     PUCHAR                          pValue;
     ULONG                           ulValue;
@@ -1304,7 +1306,7 @@ AnscHttpGetHeaderParam
     PUCHAR                          pCur, pNext;
     ULONG                           ulLen;
 
-    pCur    = parameters;
+    pCur    = (PUCHAR)parameters;
 
     while (pCur)
     {
@@ -1322,7 +1324,7 @@ AnscHttpGetHeaderParam
             ulLen   = pLast - pCur + 1;
         }
 
-        pName   = _ansc_strstr(pCur, name);
+        pName   = (PUCHAR)_ansc_strstr((char *)pCur, name);
 
         if (pName && pName <= pCur + ulLen)
         {
@@ -1360,7 +1362,7 @@ AnscHttpGetHeaderParam
 
                         if (pParamValue)
                         {
-                            HttpSmpoUtilCopyHeaderString(pValue, ulValue, pParamValue, ulValue + 1);
+                            HttpSmpoUtilCopyHeaderString(pValue, ulValue,(char *) pParamValue, ulValue + 1);
                         }
 
                         return (char *)pParamValue;
@@ -1434,7 +1436,7 @@ HttpSmpoUtilGetSizeBasicCredential
         ulSize  += HTTP_SMPO_SPACE_LENGTH;
 
         /* basic-cookie */
-        ulSize  += AnscSizeOfString(pEncBuf);
+        ulSize  += AnscSizeOfString((const char *)pEncBuf);
 
         AnscFreeMemory(pEncBuf);
     }
@@ -1587,8 +1589,8 @@ HttpSmpoUtilGetUlongStringLength
     UCHAR                       buf[16];
     ULONG                       ulSize;
 
-    AnscInt2String(ulValue, buf, 10);
-    ulSize   = AnscSizeOfString(buf);
+    AnscInt2String(ulValue, (char *)buf, 10);
+    ulSize   = AnscSizeOfString((const char *)buf);
 
     return ulSize;
 }
@@ -1670,7 +1672,6 @@ AnscGetIanaNameByType
 {
     ULONG                           i;
     PANSC_UTILBOX_IANA_MEDIA        pInfo;
-    PUCHAR                          pName   = NULL;
 
     for (i = 0; i < ulCount; i ++)
     {
@@ -1736,7 +1737,7 @@ HttpSmpoUtilGetMediaSubTypeLength
 
     if (pName)
     {
-        ulSize = AnscSizeOfString(pName);
+        ulSize = AnscSizeOfString((const char *)pName);
     }
     else
     {
@@ -2023,21 +2024,21 @@ HttpSmpoUtilGetSizeCookie
             pCookieContent  = &pCookie->CookieArray[i];
 
             /* name */
-            pValue      = pCookieContent->Name;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Name;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
             ulSize      += ulValueLen;
 
             /* "=" */
             ulSize  ++;
 
             /* value */
-            pValue      = pCookieContent->Value;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Value;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
             ulSize      += ulValueLen;
 
             /* path */
-            pValue      = pCookieContent->Path;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Path;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
 
             if (ulValueLen != 0)
             {
@@ -2046,8 +2047,8 @@ HttpSmpoUtilGetSizeCookie
             }
 
             /* domain */
-            pValue      = pCookieContent->Domain;
-            ulValueLen  = AnscSizeOfString(pValue);
+            pValue      = (PUCHAR)pCookieContent->Domain;
+            ulValueLen  = AnscSizeOfString((const char *)pValue);
 
             if (ulValueLen != 0)
             {
@@ -2097,21 +2098,21 @@ HttpSmpoUtilGetSizeSetCookie
         pCookieContent  = &pSetCookie->CookieArray[i];
 
         /* name */
-        pValue          = pCookieContent->Name;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Name;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* "=" */
         ulSize ++;
 
         /* value */
-        pValue          = pCookieContent->Value;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Value;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
         ulSize          += ulValueLen;
 
         /* comment */
-        pValue          = pCookieContent->Comment;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Comment;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -2122,8 +2123,8 @@ HttpSmpoUtilGetSizeSetCookie
         }
 
         /* path */
-        pValue          = pCookieContent->Path;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Path;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -2135,8 +2136,8 @@ HttpSmpoUtilGetSizeSetCookie
         }
 
         /* domain */
-        pValue          = pCookieContent->Domain;
-        ulValueLen      = AnscSizeOfString(pValue);
+        pValue          = (PUCHAR)pCookieContent->Domain;
+        ulValueLen      = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen != 0)
         {
@@ -2320,6 +2321,7 @@ AnscHttpGetHeaderSize
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /* build header and save it into header structure */
 
     AnscHttpBuildHeader(NULL, hHttpHfo, NULL, 0);
@@ -2401,7 +2403,7 @@ HttpSmpoUtilGetMethodLength
     default:
         if (pMethodName)
         {
-            ulLen   = AnscSizeOfString(pMethodName);
+            ulLen   = AnscSizeOfString((const char *)pMethodName);
         }
         break;
     }
@@ -2449,7 +2451,7 @@ HttpSmpoUtilGetSizeRequestUri
             UCHAR                   pHostPort[8];
             BOOL                    bCountPort;
 
-            AnscInt2String(pUri->HostPort, (PUCHAR)pHostPort, 10);
+            AnscInt2String(pUri->HostPort, (PCHAR)pHostPort, 10);
 
             if (bHttps)
             {
@@ -2462,7 +2464,7 @@ HttpSmpoUtilGetSizeRequestUri
 
             if (bCountPort)
             {
-                ulHostPort = AnscSizeOfString(pHostPort);
+                ulHostPort = AnscSizeOfString((const char *)pHostPort);
 
                 ulSize  += 1;                   /* ":" */
                 ulSize  += ulHostPort;
@@ -2618,7 +2620,7 @@ HttpSmpoUtilGetSizeRequestUri
             BOOL                    bCountPort;
 
             ulHostName = AnscSizeOfString(pUri->HostName);
-            AnscInt2String(pUri->HostPort, (PUCHAR)pHostPort, 10);
+            AnscInt2String(pUri->HostPort, (PCHAR)pHostPort, 10);
             ulSize  = ulHostName;
 
             if (bHttps)
@@ -2632,7 +2634,7 @@ HttpSmpoUtilGetSizeRequestUri
 
             if (bCountPort)
             {
-                ulHostPort = AnscSizeOfString(pHostPort);
+                ulHostPort = AnscSizeOfString((const char *)pHostPort);
 
                 ulSize  += 1;                   /* ":" */
                 ulSize  += ulHostPort;
@@ -2661,13 +2663,13 @@ HttpSmpoUtilGetHttpVersionLength
     ulSize  = HTTP_SMPO_NAME_LENGTH;            /* "HTTP" --- protocol name */
     ulSize  += 1;                               /* "/" */
 
-    _ansc_ultoa(MajorVersion, buf, 10);
-    ulSize  += AnscSizeOfString(buf);           /* major version number length */
+    _ansc_ultoa(MajorVersion, (char *)buf, 10);
+    ulSize  += AnscSizeOfString((const char *)buf);           /* major version number length */
 
     ulSize  += 1;                               /* "." */
 
-    _ansc_ultoa(MinorVersion, buf, 10);
-    ulSize  += AnscSizeOfString(buf);           /* minor version number length */
+    _ansc_ultoa(MinorVersion, (char *)buf, 10);
+    ulSize  += AnscSizeOfString((const char *)buf);           /* minor version number length */
 
     return ulSize;
 }
@@ -2705,6 +2707,7 @@ AnscHttpGetRequestLineSize
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /*
      * Even the definition of "Request-Line" requires a CRLF at
      * the end, but here we don't count it.
@@ -2720,7 +2723,7 @@ AnscHttpGetRequestLineSize
     if (!pRequestInfo)
         return 0;
 
-    ulSize  = HttpSmpoUtilGetMethodLength(pRequestInfo->Method, pRequestInfo->MethodName);
+    ulSize  = HttpSmpoUtilGetMethodLength(pRequestInfo->Method, (PUCHAR)pRequestInfo->MethodName);
     ulSize  += 1;                   /* space */
 
     ulSize  += HttpSmpoUtilGetSizeRequestUri(&pRequestInfo->RequestUri);
@@ -2764,6 +2767,7 @@ AnscHttpGetStatusLineSize
         ANSC_HANDLE                 hHttpHfo
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /*
      * Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
      */
@@ -2779,8 +2783,8 @@ AnscHttpGetStatusLineSize
     ulSize  += HttpSmpoUtilGetHttpVersionLength(pResponseInfo->MajorVersion, pResponseInfo->MinorVersion);
     ulSize  += 1;                                   /* space */
 
-    _ansc_ultoa(pResponseInfo->StatusCode, buf, 10);
-    ulSize  += AnscSizeOfString(buf);               /* status code */
+    _ansc_ultoa(pResponseInfo->StatusCode, (char *)buf, 10);
+    ulSize  += AnscSizeOfString((const char *)buf);               /* status code */
 
     ulSize  += 1;                                   /* space */
     ulSize  += AnscSizeOfString(pResponseInfo->ReasonPhrase);
@@ -2854,7 +2858,7 @@ HttpSmpoUtilPrebuildHeader
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_HEADER_SEPARATOR,
+                         (PUCHAR)HTTP_SMPO_HEADER_SEPARATOR,
                          HTTP_SMPO_HEADER_SEPARATOR_LENGTH
                      );
     if (!bCopySucc)
@@ -2910,7 +2914,7 @@ HttpSmpoUtilBuildBasicCredentials
         pEncBuf = AnscBase64Encode(pBuf, ulBufLen - 1);
         if ( pEncBuf )
         {
-            ULONG                   ulLen   = AnscSizeOfString(pEncBuf);
+            ULONG                   ulLen   = AnscSizeOfString((const char *)pEncBuf);
 
             if ( ulLen >= 2 )
             {
@@ -2933,7 +2937,7 @@ HttpSmpoUtilBuildBasicCredentials
                              buffer,
                              ulBufSize,
                              pulStart,
-                             HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
+                             (PUCHAR)HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
                              HTTP_SMPO_CREDENTIAL_BASIC_SCHEME_LENGTH
                          );
 
@@ -2949,7 +2953,7 @@ HttpSmpoUtilBuildBasicCredentials
                              buffer,
                              ulBufSize,
                              pulStart,
-                             HTTP_SMPO_SPACE,
+                             (PUCHAR)HTTP_SMPO_SPACE,
                              HTTP_SMPO_SPACE_LENGTH
                          );
 
@@ -2966,7 +2970,7 @@ HttpSmpoUtilBuildBasicCredentials
                              ulBufSize,
                              pulStart,
                              pEncBuf,
-                             AnscSizeOfString(pEncBuf)
+                             AnscSizeOfString((const char *)pEncBuf)
                          );
 
         if (!bCopySucc)
@@ -3005,7 +3009,7 @@ HttpSmpoUtilBuildAuthorization
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_AUTHORIZATION,
+                         (PUCHAR)HTTP_SMPO_AUTHORIZATION,
                          HTTP_SMPO_AUTHORIZATION_LENGTH
                      );
     if (!bCopySucc)
@@ -3042,7 +3046,7 @@ HttpSmpoUtilBuildAuthorization
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
+                                 (PUCHAR)HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
                                  HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME_LENGTH
                              );
 
@@ -3054,7 +3058,7 @@ HttpSmpoUtilBuildAuthorization
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SPACE,
+                                 (PUCHAR)HTTP_SMPO_SPACE,
                                  HTTP_SMPO_SPACE_LENGTH
                              );
 
@@ -3074,7 +3078,7 @@ HttpSmpoUtilBuildAuthorization
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     pDigest->UserName,
+                                     (PUCHAR)pDigest->UserName,
                                      ulSize
                                  );
             }
@@ -3123,7 +3127,7 @@ HttpSmpoUtilBuildConnection
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONNECTION,
+                         (PUCHAR)HTTP_SMPO_CONNECTION,
                          HTTP_SMPO_CONNECTION_LENGTH
                      );
     if (!bCopySucc)
@@ -3139,7 +3143,7 @@ HttpSmpoUtilBuildConnection
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3152,7 +3156,7 @@ HttpSmpoUtilBuildConnection
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pConnection->TokenArray[i].Token,
+                             (PUCHAR)pConnection->TokenArray[i].Token,
                              ulSize
                          );
         if (!bCopySucc)
@@ -3180,22 +3184,22 @@ HttpSmpoUtilBuildContentCoding
     {
     case IANA_CCODING_CODE_GZIP:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_GZIP);
-        pSrc    = IANA_CCODING_TEXT_GZIP;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_GZIP;
         break;
 
     case IANA_CCODING_CODE_COMPRESS:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_COMPRESS);
-        pSrc    = IANA_CCODING_TEXT_COMPRESS;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_COMPRESS;
         break;
 
     case IANA_CCODING_CODE_DEFLATE:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_DEFLATE);
-        pSrc    = IANA_CCODING_TEXT_DEFLATE;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_DEFLATE;
         break;
 
     case IANA_CCODING_CODE_IDENTITY:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_IDENTITY);
-        pSrc    = IANA_CCODING_TEXT_IDENTITY;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_IDENTITY;
         break;
     }
 
@@ -3228,7 +3232,7 @@ HttpSmpoUtilBuildContentEncoding
      *  content-coding = token
      */
     PHTTP_HFO_CONTENT_ENCODING      pContentEncoding    = (PHTTP_HFO_CONTENT_ENCODING)hHttpHfo;
-    ULONG                           ulSize              = 0;
+    //ULONG                           ulSize              = 0;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulEncodingCount, i;
     BOOL                            bCopySucc;
@@ -3240,7 +3244,7 @@ HttpSmpoUtilBuildContentEncoding
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_ENCODING,
+                         (PUCHAR)HTTP_SMPO_CONTENT_ENCODING,
                          HTTP_SMPO_CONTENT_ENCODING_LENGTH
                      );
     if (!bCopySucc)
@@ -3258,7 +3262,7 @@ HttpSmpoUtilBuildContentEncoding
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3293,8 +3297,8 @@ HttpSmpoUtilBuildUlong
     ULONG                       ulSize;
     BOOL                        bCopySucc = TRUE;
 
-    AnscInt2String(ulValue, buf, 10);
-    ulSize      = AnscSizeOfString(buf);
+    AnscInt2String(ulValue, (char *)buf, 10);
+    ulSize      = AnscSizeOfString((const char *)buf);
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -3330,7 +3334,7 @@ HttpSmpoUtilBuildContentLength
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_LENGTH,
+                         (PUCHAR)HTTP_SMPO_CONTENT_LENGTH,
                          HTTP_SMPO_CONTENT_LENGTH_LENGTH
                      );
     if (!bCopySucc)
@@ -3369,42 +3373,42 @@ HttpSmpoUtilBuildMediaType
     {
     case IANA_MEDIA_TYPE_CODE_TEXT:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_TEXT);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_TEXT;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_TEXT;
         break;
 
     case IANA_MEDIA_TYPE_CODE_MULTIPART:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MULTIPART);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_MULTIPART;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_MULTIPART;
         break;
 
     case IANA_MEDIA_TYPE_CODE_MESSAGE:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MESSAGE);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_MESSAGE;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_MESSAGE;
         break;
 
     case IANA_MEDIA_TYPE_CODE_APPLICATION:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_APPLICATION);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_APPLICATION;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_APPLICATION;
         break;
 
     case IANA_MEDIA_TYPE_CODE_IMAGE:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_IMAGE);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_IMAGE;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_IMAGE;
         break;
 
     case IANA_MEDIA_TYPE_CODE_AUDIO:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_AUDIO);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_AUDIO;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_AUDIO;
         break;
 
     case IANA_MEDIA_TYPE_CODE_VIDEO:
         ulSize  = AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_VIDEO);
-        pSrc    = IANA_MEDIA_TYPE_TEXT_VIDEO;
+        pSrc    = (PUCHAR)IANA_MEDIA_TYPE_TEXT_VIDEO;
         break;
 
     default:
         ulSize  = HTTP_SMPO_MEDIA_TYPE_ANY_LENGTH;
-        pSrc    = HTTP_SMPO_MEDIA_TYPE_ANY;
+        pSrc    = (PUCHAR)HTTP_SMPO_MEDIA_TYPE_ANY;
         break;
     }
 
@@ -3446,11 +3450,11 @@ HttpSmpoUtilBuildMediaSubType
     if (!pSrc)
     {
         ulSize  = HTTP_SMPO_MEDIA_SUBTYPE_ANY_LENGTH;
-        pSrc    = HTTP_SMPO_MEDIA_SUBTYPE_ANY;
+        pSrc    = (PUCHAR)HTTP_SMPO_MEDIA_SUBTYPE_ANY;
     }
     else
     {
-        ulSize  = AnscSizeOfString(pSrc);
+        ulSize  = AnscSizeOfString((const char *)pSrc);
     }
 
     if (ulSize != 0)
@@ -3482,7 +3486,7 @@ HttpSmpoUtilBuildContentType
      *  media-type = type "/" subtype *( ";" parameter )
      */
     PHTTP_HFO_CONTENT_TYPE          pContentType    = (PHTTP_HFO_CONTENT_TYPE)hHttpHfo;
-    ULONG                           ulSize          = 0;
+    //ULONG                           ulSize          = 0;
     ULONG                           ulParams;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
@@ -3493,7 +3497,7 @@ HttpSmpoUtilBuildContentType
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_CONTENT_TYPE,
+                         (PUCHAR)HTTP_SMPO_CONTENT_TYPE,
                          HTTP_SMPO_CONTENT_TYPE_LENGTH
                      );
     if (!bCopySucc)
@@ -3514,7 +3518,7 @@ HttpSmpoUtilBuildContentType
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         "/",
+                         (PUCHAR)"/",
                          1
                      );
     if (!bCopySucc)
@@ -3539,7 +3543,7 @@ HttpSmpoUtilBuildContentType
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             ";",
+                             (PUCHAR)";",
                             1
                          );
         if (!bCopySucc)
@@ -3550,7 +3554,7 @@ HttpSmpoUtilBuildContentType
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pContentType->Parameters,
+                             (PUCHAR)pContentType->Parameters,
                              ulParams
                          );
         if (!bCopySucc)
@@ -3582,7 +3586,7 @@ HttpSmpoUtilBuildHost
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_HEADER_HOST,
+                        (PUCHAR) HTTP_SMPO_HEADER_HOST,
                          HTTP_SMPO_HEADER_HOST_LENGTH
                      );
     if (!bCopySucc)
@@ -3594,7 +3598,7 @@ HttpSmpoUtilBuildHost
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         pHost->HostName,
+                         (PUCHAR)pHost->HostName,
                          ulSize
                      );
     if (!bCopySucc)
@@ -3607,7 +3611,7 @@ HttpSmpoUtilBuildHost
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             ":",
+                             (PUCHAR)":",
                              1
                          );
         if (!bCopySucc)
@@ -3645,33 +3649,33 @@ HttpSmpoUtilBuildTransferCoding
     {
     case IANA_CCODING_CODE_GZIP:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_GZIP);
-        pSrc    = IANA_CCODING_TEXT_GZIP;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_GZIP;
         break;
 
     case IANA_CCODING_CODE_COMPRESS:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_COMPRESS);
-        pSrc    = IANA_CCODING_TEXT_COMPRESS;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_COMPRESS;
         break;
 
     case IANA_CCODING_CODE_DEFLATE:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_DEFLATE);
-        pSrc    = IANA_CCODING_TEXT_DEFLATE;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_DEFLATE;
         break;
 
     case IANA_CCODING_CODE_IDENTITY:
         ulSize  = AnscSizeOfString(IANA_CCODING_TEXT_IDENTITY);
-        pSrc    = IANA_CCODING_TEXT_IDENTITY;
+        pSrc    = (PUCHAR)IANA_CCODING_TEXT_IDENTITY;
         break;
         break;
 
     case IANA_TCODING_CODE_CHUNKED:
         ulSize  = AnscSizeOfString(IANA_TCODING_TEXT_CHUNKED);
-        pSrc    = IANA_TCODING_TEXT_CHUNKED;
+        pSrc    = (PUCHAR)IANA_TCODING_TEXT_CHUNKED;
         break;
 
     case IANA_TCODING_CODE_TRAILERS:
         ulSize  = AnscSizeOfString(IANA_TCODING_TEXT_TRAILERS);
-        pSrc    = IANA_TCODING_TEXT_TRAILERS;
+        pSrc    = (PUCHAR)IANA_TCODING_TEXT_TRAILERS;
         break;
     }
 
@@ -3705,7 +3709,7 @@ HttpSmpoUtilBuildTransferEncoding
      *  transfer-extension = token
      */
     PHTTP_HFO_TRANSFER_ENCODING     pTransferEncoding   = (PHTTP_HFO_TRANSFER_ENCODING)hHttpHfo;
-    ULONG                           ulSize              = 0;
+    //ULONG                           ulSize              = 0;
     PHTTP_ENCODING                  pEncoding;
     ULONG                           ulEncodingCount, i;
     BOOL                            bCopySucc;
@@ -3717,7 +3721,7 @@ HttpSmpoUtilBuildTransferEncoding
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_TRANSFER_ENCODING,
+                         (PUCHAR)HTTP_SMPO_TRANSFER_ENCODING,
                          HTTP_SMPO_TRANSFER_ENCODING_LENGTH
                      );
     if (!bCopySucc)
@@ -3735,7 +3739,7 @@ HttpSmpoUtilBuildTransferEncoding
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3774,7 +3778,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
+                         (PUCHAR)HTTP_SMPO_CREDENTIAL_BASIC_SCHEME,
                          HTTP_SMPO_CREDENTIAL_BASIC_SCHEME_LENGTH
                      );
 
@@ -3787,7 +3791,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_SPACE,
+                         (PUCHAR)HTTP_SMPO_SPACE,
                          HTTP_SMPO_SPACE_LENGTH
                      );
 
@@ -3800,7 +3804,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         HTTP_SMPO_REALM,
+                         (PUCHAR)HTTP_SMPO_REALM,
                          HTTP_SMPO_REALM_LENGTH
                      );
 
@@ -3813,7 +3817,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         "=",
+                         (PUCHAR)"=",
                          1
                      );
 
@@ -3826,7 +3830,7 @@ HttpSmpoUtilBuildBasicChallenge
                          buffer,
                          ulBufSize,
                          pulStart,
-                         pBasic->Realm,
+                         (PUCHAR)pBasic->Realm,
                          AnscSizeOfString(pBasic->Realm)
                      );
 
@@ -3849,7 +3853,7 @@ HttpSmpoUtilBuildWWWAuthenticate
      *  WWW-Authenticate = "WWW-Authenticate" ":" 1#challenge
      */
     PHTTP_HFO_WWW_AUTHENTICATE      pWWWAuthenticate    = (PHTTP_HFO_WWW_AUTHENTICATE)hHttpHfo;
-    ULONG                           ulSize              = 0;
+    //ULONG                           ulSize              = 0;
     ULONG                           ulChallengeCount, i;
     PHTTP_AUTH_CHALLENGE            pChallenge;
     BOOL                            bCopySucc;
@@ -3861,7 +3865,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_WWW_AUTHENTICATE,
+                         (PUCHAR)HTTP_SMPO_WWW_AUTHENTICATE,
                          HTTP_SMPO_WWW_AUTHENTICATE_LENGTH
                      );
     if (!bCopySucc)
@@ -3878,7 +3882,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -3912,7 +3916,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
+                                     (PUCHAR)HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME,
                                      HTTP_SMPO_CREDENTIAL_DIGEST_SCHEME_LENGTH
                                  );
 
@@ -3925,7 +3929,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     HTTP_SMPO_SPACE,
+                                     (PUCHAR)HTTP_SMPO_SPACE,
                                      HTTP_SMPO_SPACE_LENGTH
                                  );
 
@@ -3938,7 +3942,7 @@ HttpSmpoUtilBuildWWWAuthenticate
                                      buffer,
                                      ulBufSize,
                                      &ulStart,
-                                     pDigestAuth->Realm,
+                                     (PUCHAR)pDigestAuth->Realm,
                                      AnscSizeOfString(pDigestAuth->Realm)
                                  );
 
@@ -3983,7 +3987,7 @@ HttpSmpoUtilBuildProxyConnection
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_PROXY_CONNECTION,
+                         (PUCHAR)HTTP_SMPO_PROXY_CONNECTION,
                          HTTP_SMPO_PROXY_CONNECTION_LENGTH
                      );
     if (!bCopySucc)
@@ -4000,7 +4004,7 @@ HttpSmpoUtilBuildProxyConnection
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_FIELD_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_FIELD_SEPARATOR,
                                  HTTP_SMPO_FIELD_SEPARATOR_LENGTH
                              );
             if (!bCopySucc)
@@ -4013,7 +4017,7 @@ HttpSmpoUtilBuildProxyConnection
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             pToken->Token,
+                             (PUCHAR)pToken->Token,
                              ulSize
                          );
         if (!bCopySucc)
@@ -4035,7 +4039,7 @@ HttpSmpoUtilBuildCookie
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      */
     PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
-    ULONG                           ulSize              = 0;
+    //ULONG                           ulSize              = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -4052,7 +4056,7 @@ HttpSmpoUtilBuildCookie
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE,
+                         (PUCHAR)HTTP_SMPO_COOKIE,
                          HTTP_SMPO_COOKIE_LENGTH
                      );
     if (!bCopySucc)
@@ -4074,8 +4078,8 @@ HttpSmpoUtilBuildCookie
      */
     if (ulVersion != 0)
     {
-        AnscInt2String(ulVersion, buf, 10);
-        bufLen      = AnscSizeOfString(buf);
+        AnscInt2String(ulVersion, (char *)buf, 10);
+        bufLen      = AnscSizeOfString((const char *)buf);
 
         if (bufLen != 0)
         {
@@ -4084,7 +4088,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_ATTR_PREFIX,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_ATTR_PREFIX,
                                  HTTP_SMPO_SET_COOKIE_ATTR_PREFIX_LENGTH
                              );
 
@@ -4096,7 +4100,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -4108,7 +4112,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -4120,7 +4124,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                (PUCHAR) "\"",
                                  1
                              );
 
@@ -4143,7 +4147,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -4155,7 +4159,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4174,7 +4178,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -4185,8 +4189,8 @@ HttpSmpoUtilBuildCookie
         pCookieContent  = &pCookie->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
 
         if (ulValueLen)
         {
@@ -4209,7 +4213,7 @@ HttpSmpoUtilBuildCookie
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -4217,8 +4221,8 @@ HttpSmpoUtilBuildCookie
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4236,8 +4240,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4246,7 +4250,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -4258,7 +4262,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_PATH,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH)
                              );
 
@@ -4271,7 +4275,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -4292,8 +4296,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4302,7 +4306,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -4314,7 +4318,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_DOMAIN,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN)
                              );
 
@@ -4326,7 +4330,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -4347,8 +4351,8 @@ HttpSmpoUtilBuildCookie
         }
 
         /* port */
-        pValue      = pCookieContent->Port;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Port;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4357,7 +4361,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -4369,7 +4373,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_STRING_COOKIE_PORT,
+                                 (PUCHAR)HTTP_SMPO_STRING_COOKIE_PORT,
                                  AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT)
                              );
 
@@ -4381,7 +4385,7 @@ HttpSmpoUtilBuildCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "=",
+                                 (PUCHAR)"=",
                                  1
                              );
 
@@ -4414,32 +4418,32 @@ HttpSmpoUtilGetWeekDayName
         USHORT                      usWkDay
     )
 {
-    PUCHAR                          pSrc    = HTTP_SMPO_WKDAY_SUN;
+    PUCHAR                          pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_SUN;
 
     switch (usWkDay)
     {
     case 1:
-        pSrc    = HTTP_SMPO_WKDAY_MON;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_MON;
         break;
 
     case 2:
-        pSrc    = HTTP_SMPO_WKDAY_TUE;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_TUE;
         break;
 
     case 3:
-        pSrc    = HTTP_SMPO_WKDAY_WED;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_WED;
         break;
 
     case 4:
-        pSrc    = HTTP_SMPO_WKDAY_THU;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_THU;
         break;
 
     case 5:
-        pSrc    = HTTP_SMPO_WKDAY_FRI;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_FRI;
         break;
 
     case 6:
-        pSrc    = HTTP_SMPO_WKDAY_SAT;
+        pSrc    = (PUCHAR)HTTP_SMPO_WKDAY_SAT;
         break;
     }
 
@@ -4452,52 +4456,52 @@ HttpSmpoUtilGetMonthName
         USHORT                      usMonth
     )
 {
-    PUCHAR                          pSrc    = HTTP_SMPO_MONTH_JAN;
+    PUCHAR                          pSrc    = (PUCHAR)HTTP_SMPO_MONTH_JAN;
 
     switch (usMonth)
     {
     case 2:
-        pSrc    = HTTP_SMPO_MONTH_FEB;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_FEB;
         break;
 
     case 3:
-        pSrc    = HTTP_SMPO_MONTH_MAR;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_MAR;
         break;
 
     case 4:
-        pSrc    = HTTP_SMPO_MONTH_APR;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_APR;
         break;
 
     case 5:
-        pSrc    = HTTP_SMPO_MONTH_MAY;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_MAY;
         break;
 
     case 6:
-        pSrc    = HTTP_SMPO_MONTH_JUN;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_JUN;
         break;
 
     case 7:
-        pSrc    = HTTP_SMPO_MONTH_JUL;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_JUL;
         break;
 
     case 8:
-        pSrc    = HTTP_SMPO_MONTH_AUG;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_AUG;
         break;
 
     case 9:
-        pSrc    = HTTP_SMPO_MONTH_SEP;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_SEP;
         break;
 
     case 10:
-        pSrc    = HTTP_SMPO_MONTH_OCT;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_OCT;
         break;
 
     case 11:
-        pSrc    = HTTP_SMPO_MONTH_NOV;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_NOV;
         break;
 
     case 12:
-        pSrc    = HTTP_SMPO_MONTH_DEC;
+        pSrc    = (PUCHAR)HTTP_SMPO_MONTH_DEC;
         break;
     }
 
@@ -4528,7 +4532,7 @@ HttpSmpoUtilBuildSetCookie
      *
      */
     PHTTP_HFO_SET_COOKIE            pSetCookie      = (PHTTP_HFO_SET_COOKIE)hHttpHfo;
-    ULONG                           ulSize          = 0;
+    //ULONG                           ulSize          = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -4545,7 +4549,7 @@ HttpSmpoUtilBuildSetCookie
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_SET_COOKIE,
+                         (PUCHAR)HTTP_SMPO_SET_COOKIE,
                          HTTP_SMPO_SET_COOKIE_LENGTH
                      );
     if (!bCopySucc)
@@ -4561,7 +4565,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -4572,8 +4576,8 @@ HttpSmpoUtilBuildSetCookie
         pCookieContent  = &pSetCookie->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4596,7 +4600,7 @@ HttpSmpoUtilBuildSetCookie
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -4604,8 +4608,8 @@ HttpSmpoUtilBuildSetCookie
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4623,8 +4627,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* comment */
-        pValue      = pCookieContent->Comment;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Comment;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4633,7 +4637,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4645,7 +4649,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_LENGTH
                              );
 
@@ -4658,7 +4662,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -4679,8 +4683,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4689,7 +4693,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4701,7 +4705,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PATH,
                                  HTTP_SMPO_SET_COOKIE_PATH_LENGTH
                              );
 
@@ -4714,7 +4718,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -4735,8 +4739,8 @@ HttpSmpoUtilBuildSetCookie
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -4745,7 +4749,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4757,7 +4761,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DOMAIN,
                                  HTTP_SMPO_SET_COOKIE_DOMAIN_LENGTH
                              );
 
@@ -4770,7 +4774,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -4800,7 +4804,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4812,7 +4816,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -4825,7 +4829,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -4837,15 +4841,15 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->Version, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->Version, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -4864,7 +4868,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -4886,7 +4890,7 @@ HttpSmpoUtilBuildSetCookie
 
             _ansc_sprintf
                 (
-                    expires,
+                    (char *)expires,
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -4903,7 +4907,7 @@ HttpSmpoUtilBuildSetCookie
                                  ulBufSize,
                                  &ulStart,
                                  expires,
-                                 AnscSizeOfString(expires)
+                                 AnscSizeOfString((char *)expires)
                              );
         }
 
@@ -4917,7 +4921,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4929,7 +4933,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_MAX_AGE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_MAX_AGE,
                                  HTTP_SMPO_SET_COOKIE_MAX_AGE_LENGTH
                              );
 
@@ -4942,15 +4946,15 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->MaxAgeInSeconds, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->MaxAgeInSeconds, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -4973,7 +4977,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -4985,7 +4989,7 @@ HttpSmpoUtilBuildSetCookie
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_SECURE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_SECURE,
                                  HTTP_SMPO_SET_COOKIE_SECURE_LENGTH
                              );
 
@@ -5005,11 +5009,11 @@ HttpSmpoUtilBuildCookie2
         ULONG                       ulBufSize
     )
 {
+    UNREFERENCED_PARAMETER(hHttpHfo);
     /*
      *  Cookie = "Cookie" ":" [ cookie-version ] cookie-value *( ( ";" | "," )  cookie-value )
      */
-    PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
-    ULONG                           ulSize              = 0;
+    //PHTTP_HFO_COOKIE                pCookie             = (PHTTP_HFO_COOKIE)hHttpHfo;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -5019,7 +5023,7 @@ HttpSmpoUtilBuildCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE2,
+                         (PUCHAR)HTTP_SMPO_COOKIE2,
                          HTTP_SMPO_COOKIE2_LENGTH
                      );
     if (!bCopySucc)
@@ -5030,7 +5034,7 @@ HttpSmpoUtilBuildCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_COOKIE2_CONTENT,
+                         (PUCHAR)HTTP_SMPO_COOKIE2_CONTENT,
                          HTTP_SMPO_COOKIE2_CONTENT_LENGTH
                      );
 
@@ -5061,7 +5065,7 @@ HttpSmpoUtilBuildSetCookie2
      *
      */
     PHTTP_HFO_SET_COOKIE2           pSetCookie2     = (PHTTP_HFO_SET_COOKIE2)hHttpHfo;
-    ULONG                           ulSize          = 0;
+    //ULONG                           ulSize          = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -5078,7 +5082,7 @@ HttpSmpoUtilBuildSetCookie2
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_SET_COOKIE2,
+                         (PUCHAR)HTTP_SMPO_SET_COOKIE2,
                          HTTP_SMPO_SET_COOKIE2_LENGTH
                      );
     if (!bCopySucc)
@@ -5094,7 +5098,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "; ",
+                                 (PUCHAR)"; ",
                                  2
                              );
 
@@ -5106,8 +5110,8 @@ HttpSmpoUtilBuildSetCookie2
         pCookieContent  = &pSetCookie2->CookieArray[i];
 
         /* name */
-        pValue      = pCookieContent->Name;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Name;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5130,7 +5134,7 @@ HttpSmpoUtilBuildSetCookie2
                              buffer,
                              ulBufSize,
                              &ulStart,
-                             HTTP_SMPO_ATTR_SEPARATOR,
+                             (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                              HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                          );
 
@@ -5138,8 +5142,8 @@ HttpSmpoUtilBuildSetCookie2
             return ANSC_STATUS_FAILURE;
 
         /* value */
-        pValue      = pCookieContent->Value;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Value;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5157,8 +5161,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* comment */
-        pValue      = pCookieContent->Comment;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Comment;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5167,7 +5171,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5179,7 +5183,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_LENGTH
                              );
 
@@ -5192,7 +5196,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5213,8 +5217,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* comment url */
-        pValue      = pCookieContent->CommentUrl;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->CommentUrl;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5223,7 +5227,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5235,7 +5239,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_COMMENT_URL,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_COMMENT_URL,
                                  HTTP_SMPO_SET_COOKIE_COMMENT_URL_LENGTH
                              );
 
@@ -5248,7 +5252,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5269,8 +5273,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* path */
-        pValue      = pCookieContent->Path;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Path;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5279,7 +5283,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5291,7 +5295,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PATH,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PATH,
                                  HTTP_SMPO_SET_COOKIE_PATH_LENGTH
                              );
 
@@ -5304,7 +5308,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5325,8 +5329,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* domain */
-        pValue      = pCookieContent->Domain;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Domain;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5335,7 +5339,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5347,7 +5351,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DOMAIN,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DOMAIN,
                                  HTTP_SMPO_SET_COOKIE_DOMAIN_LENGTH
                              );
 
@@ -5360,7 +5364,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5381,8 +5385,8 @@ HttpSmpoUtilBuildSetCookie2
         }
 
         /* port */
-        pValue      = pCookieContent->Port;
-        ulValueLen  = AnscSizeOfString(pValue);
+        pValue      = (PUCHAR)pCookieContent->Port;
+        ulValueLen  = AnscSizeOfString((char *)pValue);
 
         if (ulValueLen)
         {
@@ -5391,7 +5395,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5403,7 +5407,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_PORT,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_PORT,
                                  HTTP_SMPO_SET_COOKIE_PORT_LENGTH
                              );
 
@@ -5416,7 +5420,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5446,7 +5450,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5458,7 +5462,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_VERSION,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_VERSION,
                                  HTTP_SMPO_SET_COOKIE_VERSION_LENGTH
                              );
 
@@ -5471,7 +5475,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
@@ -5483,15 +5487,15 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->Version, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->Version,(char *) buf, 10);
+            bufLen      = AnscSizeOfString((char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5510,7 +5514,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 "\"",
+                                 (PUCHAR)"\"",
                                  1
                              );
 
@@ -5532,7 +5536,7 @@ HttpSmpoUtilBuildSetCookie2
 
             _ansc_sprintf
                 (
-                    expires,
+                    (char *)expires,
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -5549,7 +5553,7 @@ HttpSmpoUtilBuildSetCookie2
                                  ulBufSize,
                                  &ulStart,
                                  expires,
-                                 AnscSizeOfString(expires)
+                                 AnscSizeOfString((char *)expires)
                              );
         }
 
@@ -5563,7 +5567,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5575,7 +5579,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_MAX_AGE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_MAX_AGE,
                                  HTTP_SMPO_SET_COOKIE_MAX_AGE_LENGTH
                              );
 
@@ -5588,15 +5592,15 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_ATTR_SEPARATOR,
+                                 (PUCHAR)HTTP_SMPO_ATTR_SEPARATOR,
                                  HTTP_SMPO_ATTR_SEPARATOR_LENGTH
                              );
 
             if (!bCopySucc)
                 return ANSC_STATUS_FAILURE;
 
-            AnscInt2String(pCookieContent->MaxAgeInSeconds, buf, 10);
-            bufLen      = AnscSizeOfString(buf);
+            AnscInt2String(pCookieContent->MaxAgeInSeconds, (char *)buf, 10);
+            bufLen      = AnscSizeOfString((char *)buf);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5619,7 +5623,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5631,7 +5635,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_SECURE,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_SECURE,
                                  HTTP_SMPO_SET_COOKIE_SECURE_LENGTH
                              );
 
@@ -5647,7 +5651,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 ";",
+                                 (PUCHAR)";",
                                  1
                              );
 
@@ -5659,7 +5663,7 @@ HttpSmpoUtilBuildSetCookie2
                                  buffer,
                                  ulBufSize,
                                  &ulStart,
-                                 HTTP_SMPO_SET_COOKIE_DISCARD,
+                                 (PUCHAR)HTTP_SMPO_SET_COOKIE_DISCARD,
                                  HTTP_SMPO_SET_COOKIE_DISCARD_LENGTH
                              );
 
@@ -5686,7 +5690,7 @@ HttpSmpoUtilBuildRequestUri
      *  Request-URI = "*" | absoluteURI | abs_path | authority
      */
     BOOL                            bCopySucc       = FALSE;
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
+    //ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PUCHAR                          pBuf            = (PUCHAR)buffer;
     ULONG                           ulStart         = *pulBufStart;
     ULONG                           ulSize;
@@ -5703,7 +5707,7 @@ HttpSmpoUtilBuildRequestUri
                              pBuf,
                              ulDestSize,
                              &ulStart,
-                             HTTP_SMPO_REQUEST_URI_ASTERISK,
+                             (PUCHAR)HTTP_SMPO_REQUEST_URI_ASTERISK,
                              HTTP_SMPO_REQUEST_URI_ASTERISK_LENGTH
                          );
         break;
@@ -5720,7 +5724,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 HTTP_SMPO_SCHEME,
+                                 (PUCHAR)HTTP_SMPO_SCHEME,
                                  HTTP_SMPO_SCHEME_LENGTH
                              );
         }
@@ -5731,7 +5735,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 HTTP_SMPO_SCHEME_HTTPS,
+                                 (PUCHAR)HTTP_SMPO_SCHEME_HTTPS,
                                  HTTP_SMPO_SCHEME_HTTPS_LENGTH
                              );
         }
@@ -5745,7 +5749,7 @@ HttpSmpoUtilBuildRequestUri
                              pBuf,
                              ulDestSize,
                              &ulStart,
-                             pUri->HostName,
+                             (PUCHAR)pUri->HostName,
                              ulSize
                          );
 
@@ -5774,7 +5778,7 @@ HttpSmpoUtilBuildRequestUri
             if (!bCopySucc)
                 return FALSE;
 
-            _ansc_sprintf(portNum, "%d", pUri->HostPort);
+            _ansc_sprintf((char *)portNum, "%d", pUri->HostPort);
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5782,7 +5786,7 @@ HttpSmpoUtilBuildRequestUri
                                  ulDestSize,
                                  &ulStart,
                                  portNum,
-                                 AnscSizeOfString(portNum)
+                                 AnscSizeOfString((char *)portNum)
                              );
             if (!bCopySucc)
                 return FALSE;
@@ -5801,7 +5805,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "/",
+                                     (PUCHAR)"/",
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -5822,7 +5826,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[i],
+                                     (PUCHAR)pUri->PathArray[i],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -5837,7 +5841,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -5846,7 +5850,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -5858,7 +5862,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 "/",
+                                 (PUCHAR)"/",
                                  1
                              );
         }
@@ -5886,7 +5890,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "/",
+                                     (PUCHAR)"/",
                                      ulSize
                                  );
             }
@@ -5900,7 +5904,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -5921,7 +5925,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         pUri->PathArray[i],
+                                         (PUCHAR)pUri->PathArray[i],
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -5937,7 +5941,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -5946,7 +5950,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -6003,7 +6007,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                 }
@@ -6013,7 +6017,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[0],
+                                     (PUCHAR)pUri->PathArray[0],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -6041,7 +6045,7 @@ HttpSmpoUtilBuildRequestUri
                                          pBuf,
                                          ulDestSize,
                                          &ulStart,
-                                         "/",
+                                         (PUCHAR)"/",
                                          ulSize
                                      );
                     if (!bCopySucc)
@@ -6055,7 +6059,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->PathArray[i],
+                                     (PUCHAR)pUri->PathArray[i],
                                      ulSize
                                  );
                 if (!bCopySucc)
@@ -6070,7 +6074,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     "?",
+                                     (PUCHAR)"?",
                                      1
                                  );
 
@@ -6081,7 +6085,7 @@ HttpSmpoUtilBuildRequestUri
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     pUri->QueryParams,
+                                     (PUCHAR)pUri->QueryParams,
                                      ulSize
                                  );
             }
@@ -6104,7 +6108,7 @@ HttpSmpoUtilBuildRequestUri
                                  pBuf,
                                  ulDestSize,
                                  &ulStart,
-                                 pUri->HostName,
+                                 (PUCHAR)pUri->HostName,
                                  ulSize
                              );
 
@@ -6124,16 +6128,16 @@ HttpSmpoUtilBuildRequestUri
             {
                 UCHAR               buf[8];
 
-                AnscInt2String(pUri->HostPort, buf, 10);
+                AnscInt2String(pUri->HostPort, (PCHAR)buf, 10);
 
-                ulSize  = AnscSizeOfString(buf);
+                ulSize  = AnscSizeOfString((PCHAR)buf);
 
                 bCopySucc   = HttpSmpoUtilCopyString
                                  (
                                      pBuf,
                                      ulDestSize,
                                      &ulStart,
-                                     ":",
+                                     (PUCHAR)":",
                                      1
                                  );
                 if (!bCopySucc)
@@ -6173,7 +6177,6 @@ HttpSmpoUtilBuildLocation
      *  Location = "Location" ":" absoluteURI
      */
     PHTTP_HFO_LOCATION              pLocation   = (PHTTP_HFO_LOCATION)hHttpHfo;
-    ULONG                           ulSize      = 0;
     BOOL                            bCopySucc;
     ULONG                           ulStart         = 0;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
@@ -6183,7 +6186,7 @@ HttpSmpoUtilBuildLocation
                          buffer,
                          ulBufSize,
                          &ulStart,
-                         HTTP_SMPO_LOCATION,
+                         (PUCHAR)HTTP_SMPO_LOCATION,
                          HTTP_SMPO_LOCATION_LENGTH
                      );
     if (!bCopySucc)
@@ -6248,6 +6251,7 @@ AnscHttpBuildHeader
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /*
      * This function is responsible to call corresponding
      * "GetSize" function to a specific header which is
@@ -6276,7 +6280,7 @@ AnscHttpBuildHeader
                                          buffer,
                                          ulSize,
                                          &ulStart,
-                                         pHeader->HeaderLine,
+                                         (PUCHAR)pHeader->HeaderLine,
                                          ulHeaderLineSize
                                      );
 
@@ -6377,18 +6381,16 @@ AnscHttpBuildHeader
             {
                 ULONG               ulCopySize;
                 BOOL                bTrunked    = FALSE;
-                PUCHAR              pCurHeaderLine  = pHeader->HeaderLine;
+                PUCHAR              pCurHeaderLine  = (PUCHAR)pHeader->HeaderLine;
                 ULONG               ulCurHeaderLine;
-                PUCHAR              pNewHeaderLine  = (PUCHAR)buffer;
 
                 if (pCurHeaderLine)
                 {
-                    ulCurHeaderLine = AnscSizeOfString(pCurHeaderLine);
+                    ulCurHeaderLine = AnscSizeOfString((char *)pCurHeaderLine);
                     if (ulCurHeaderLine != 0)
                     {
                         if (ulCurHeaderLine != ulSize)
                         {
-                            int     a = 0;
                         }
                     }
                 }
@@ -6450,76 +6452,76 @@ HttpSmpoUtilBuildMethod
     {
     case HTTP_METHOD_OPTIONS:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_OPTIONS);
-        pSrc    = HTTP_METHOD_NAME_OPTIONS;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_OPTIONS;
         break;
 
     case HTTP_METHOD_GET:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_GET);
-        pSrc    = HTTP_METHOD_NAME_GET;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_GET;
         break;
 
     case HTTP_METHOD_HEAD:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_HEAD);
-        pSrc    = HTTP_METHOD_NAME_HEAD;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_HEAD;
         break;
 
     case HTTP_METHOD_POST:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_POST);
-        pSrc    = HTTP_METHOD_NAME_POST;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_POST;
         break;
 
     case HTTP_METHOD_PUT:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_PUT);
-        pSrc    = HTTP_METHOD_NAME_PUT;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_PUT;
         break;
 
     case HTTP_METHOD_DELETE:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_DELETE);
-        pSrc    = HTTP_METHOD_NAME_DELETE;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_DELETE;
         break;
 
     case HTTP_METHOD_TRACE:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_TRACE);
-        pSrc    = HTTP_METHOD_NAME_TRACE;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_TRACE;
         break;
 
     case HTTP_METHOD_CONNECT:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_CONNECT);
-        pSrc    = HTTP_METHOD_NAME_CONNECT;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_CONNECT;
         break;
 
     case HTTP_METHOD_NOTIFY:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_NOTIFY);
-        pSrc    = HTTP_METHOD_NAME_NOTIFY;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_NOTIFY;
         break;
 
     case HTTP_METHOD_SEARCH:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_SEARCH);
-        pSrc    = HTTP_METHOD_NAME_SEARCH;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_SEARCH;
         break;
 
     case HTTP_METHOD_M_SEARCH:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_M_SEARCH);
-        pSrc    = HTTP_METHOD_NAME_M_SEARCH;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_M_SEARCH;
         break;
 
     case HTTP_METHOD_M_POST:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_M_POST);
-        pSrc    = HTTP_METHOD_NAME_M_POST;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_M_POST;
         break;
 
     case HTTP_METHOD_SUBSCRIBE:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_SUBSCRIBE);
-        pSrc    = HTTP_METHOD_NAME_SUBSCRIBE;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_SUBSCRIBE;
         break;
 
     case HTTP_METHOD_UNSUBSCRIBE:
         ulLen   = AnscSizeOfString(HTTP_METHOD_NAME_UNSUBSCRIBE);
-        pSrc    = HTTP_METHOD_NAME_UNSUBSCRIBE;
+        pSrc    = (PUCHAR)HTTP_METHOD_NAME_UNSUBSCRIBE;
         break;
 
     default:
-        ulLen   = pMethodName ? AnscSizeOfString(pMethodName) : 0;
+        ulLen   = pMethodName ? AnscSizeOfString((char *)pMethodName) : 0;
         pSrc    = pMethodName;
         break;
     }
@@ -6568,7 +6570,7 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         HTTP_SMPO_NAME,
+                         (PUCHAR)HTTP_SMPO_NAME,
                          HTTP_SMPO_NAME_LENGTH
                      );
     if (!bCopySucc)
@@ -6579,14 +6581,14 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         "/",
+                         (PUCHAR)"/",
                          1
                      );
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(MajorVersion, buf, 10);
-    ulSize  = AnscSizeOfString(buf);           /* major version number length */
+    AnscInt2String(MajorVersion, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((char *)buf);           /* major version number length */
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -6604,15 +6606,15 @@ HttpSmpoUtilBuildHttpVersion
                          pBuf,
                          ulDestSize,
                          &ulStart,
-                         ".",
+                         (PUCHAR)".",
                          1
                      );
 
     if (!bCopySucc)
         return FALSE;
 
-    AnscInt2String(MinorVersion, buf, 10);
-    ulSize  = AnscSizeOfString(buf);           /* minor version number length */
+    AnscInt2String(MinorVersion, (char *)buf, 10);
+    ulSize  = AnscSizeOfString((char *)buf);           /* minor version number length */
 
     bCopySucc   = HttpSmpoUtilCopyString
                      (
@@ -6678,6 +6680,7 @@ AnscHttpBuildRequestLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /*
      *  Request-Line = Method SP Request-URI SP HTTP-Version
      */
@@ -6690,12 +6693,12 @@ AnscHttpBuildRequestLine
         return ANSC_STATUS_FAILURE;
 
     /* method */
-    bCopySucc   = HttpSmpoUtilBuildMethod(buffer, ulSize, &ulStart, pRequestInfo->Method, pRequestInfo->MethodName);
+    bCopySucc   = HttpSmpoUtilBuildMethod(buffer, ulSize, &ulStart, pRequestInfo->Method, (PUCHAR)pRequestInfo->MethodName);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
     /* space */
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -6705,7 +6708,7 @@ AnscHttpBuildRequestLine
         return ANSC_STATUS_FAILURE;
 
     /* space */
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -6763,6 +6766,7 @@ AnscHttpBuildStatusLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     /*
      *  Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase
      */
@@ -6785,7 +6789,7 @@ AnscHttpBuildStatusLine
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -6793,7 +6797,7 @@ AnscHttpBuildStatusLine
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
-    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, " ", 1);
+    bCopySucc   = HttpSmpoUtilCopyString(buffer, ulSize, &ulStart, (PUCHAR)" ", 1);
     if (!bCopySucc)
         return ANSC_STATUS_FAILURE;
 
@@ -6802,7 +6806,7 @@ AnscHttpBuildStatusLine
                          buffer,
                          ulSize,
                          &ulStart,
-                         pResponseInfo->ReasonPhrase,
+                         (PUCHAR)pResponseInfo->ReasonPhrase,
                          AnscSizeOfString(pResponseInfo->ReasonPhrase)
                      );
     if (!bCopySucc)
@@ -6865,11 +6869,11 @@ HttpSmpoRegisterHeaderXInfo2
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscCopyString(pXinfo->Name, pName);
+    AnscCopyString((char *)pXinfo->Name, (char *)pName);
     pXinfo->xFunc       = xFunc;
     pXinfo->HeaderId    = ulHeaderId;
 
-    ulHashIndex = AnscHashString(pName, AnscSizeOfString(pName), HTTP_SMPO_HEADER_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pName, AnscSizeOfString((char *)pName), HTTP_SMPO_HEADER_TABLE_SIZE);
 
     AnscSListPushEntry(&HeaderXList[ulHashIndex], &pXinfo->Linkage);
 
@@ -6907,8 +6911,6 @@ HttpSmpoUtilParseBasicCredentials
 
     PHTTP_AUTH_CREDENTIAL           pCredentials    = (PHTTP_AUTH_CREDENTIAL)hCredentials;
     PHTTP_CREDENTIAL_BASIC          pBasicCookie    = &pCredentials->Credential.Basic;
-    PUCHAR                          pToken          = pBuf;
-    BOOL                            bSucc           = TRUE;
     PUCHAR                          pDecodedString;
     PUCHAR                          pString         = NULL;
     ULONG                           ulDecodedStringLen;
@@ -6951,7 +6953,7 @@ HttpSmpoUtilParseBasicCredentials
             *pPos   = 0;
             pUser   = pDecodedString;
 
-            ulUser  = AnscSizeOfString(pUser);
+            ulUser  = AnscSizeOfString((char *)pUser);
             ulPass  = ulDecodedStringLen - ulUser - 1;
 
             ulCopySize  = ulUser;
@@ -7011,13 +7013,13 @@ HttpSmpoUtilParseCredentials
     pNext ++;
 
     if (AnscSizeOfString(HTTP_AUTH_TEXT_NONE) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_NONE, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_NONE, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_NONE;
     }
     else
     if (AnscSizeOfString(HTTP_AUTH_TEXT_BASIC) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_BASIC, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_BASIC, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_BASIC;
 
@@ -7025,7 +7027,7 @@ HttpSmpoUtilParseCredentials
     }
     else
     if (AnscSizeOfString(HTTP_AUTH_TEXT_DIGEST) == ulTokenSize &&
-        AnscEqualString2(pToken, HTTP_AUTH_TEXT_DIGEST, ulTokenSize, FALSE))
+        AnscEqualString2((char *)pToken, HTTP_AUTH_TEXT_DIGEST, ulTokenSize, FALSE))
     {
         pCredentials->AuthType  = HTTP_AUTH_TYPE_DIGEST;
 
@@ -7077,7 +7079,7 @@ HttpSmpoParseConnection
     PUCHAR                          pLast           = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex    = 0;
+    //ULONG                           ulTokenIndex    = 0;
     PHTTP_CONNECTION_TOKEN          pConnToken;
     ULONG                           ulTokenType;
 
@@ -7122,12 +7124,12 @@ HttpSmpoParseConnection
 
             ulTokenType = IANA_CONNECTION_CODE_RESERVED;
 
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_CLOSE;
             }
             else
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_KEEP_ALIVE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_KEEP_ALIVE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_KEEP_ALIVE;
             }
@@ -7159,19 +7161,19 @@ HttpSmpoUtilGetEncodingType
     ULONG                           ulType  = IANA_CCODING_CODE_RESERVED;
 
     if (AnscSizeOfString(IANA_CCODING_TEXT_GZIP) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_GZIP, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_GZIP, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_GZIP;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_COMPRESS) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_COMPRESS, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_COMPRESS, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_COMPRESS;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_DEFLATE) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_DEFLATE, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_DEFLATE, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_DEFLATE;
     else
     if (AnscSizeOfString(IANA_CCODING_TEXT_IDENTITY) == ulSize &&
-        AnscEqualString2(pEncType, IANA_CCODING_TEXT_IDENTITY, ulSize, FALSE))
+        AnscEqualString2((char *)pEncType, IANA_CCODING_TEXT_IDENTITY, ulSize, FALSE))
         ulType = IANA_CCODING_CODE_IDENTITY;
 
     return ulType;
@@ -7184,7 +7186,6 @@ HttpSmpoUtilGetQuality
         ULONG                       ulSize
     )
 {
-    PUCHAR                          pLast   = pBuf + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulInt, ulFrac;
 
@@ -7193,11 +7194,11 @@ HttpSmpoUtilGetQuality
     pToken  = pBuf;
     pNext   = _ansc_memchr(pToken, HTTP_SMPO_CHAR_DOT, ulSize);
 
-    ulInt   = _ansc_atoi(pToken);
+    ulInt   = _ansc_atoi((char *)pToken);
 
     if (pNext)
     {
-        ulFrac  = _ansc_atoi(pNext + 1);
+        ulFrac  = _ansc_atoi((char *)(pNext + 1));
 
         if (ulFrac <= 9)
         {
@@ -7275,7 +7276,7 @@ HttpSmpoParseContentEncoding
 
             pEncoding->Type  = HttpSmpoUtilGetEncodingType(pToken, ulLen);
 
-            pQuality    = _ansc_strstr(pToken, HTTP_SMPO_STRING_QUALITY);
+            pQuality    = (PUCHAR)_ansc_strstr((char *)pToken, HTTP_SMPO_STRING_QUALITY);
             ulQuality   = HTTP_ENCODING_QUALITY_BEST;
             if (pQuality >= pToken + ulTokenSize)
             {
@@ -7323,7 +7324,7 @@ HttpSmpoParseContentLength
 {
     /* Content-Length = "Content-Length" ":" 1*DIGIT */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(ulSize);
     PHTTP_HFO_CONTENT_LENGTH        pHfoContentLength   = NULL;
 
     pHfoContentLength  = (PHTTP_HFO_CONTENT_LENGTH)AnscAllocateMemory(sizeof(HTTP_HFO_CONTENT_LENGTH));
@@ -7353,35 +7354,35 @@ HttpSmpoUtilGetMediaType
     }
 
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_TEXT) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_TEXT, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_TEXT, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_TEXT;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MULTIPART) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MULTIPART, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MULTIPART, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MULTIPART;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MESSAGE) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MESSAGE, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MESSAGE, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MESSAGE;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_APPLICATION) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_APPLICATION, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_APPLICATION, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_APPLICATION;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_IMAGE) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_IMAGE, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_IMAGE, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_IMAGE;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_AUDIO) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_AUDIO, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_AUDIO, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_AUDIO;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_VIDEO) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_VIDEO, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_VIDEO, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_VIDEO;
     else
     if (AnscSizeOfString(IANA_MEDIA_TYPE_TEXT_MODEL) == ulTypeSize &&
-        AnscEqualString2(pType, IANA_MEDIA_TYPE_TEXT_MODEL, ulTypeSize, FALSE))
+        AnscEqualString2((char *)pType, IANA_MEDIA_TYPE_TEXT_MODEL, ulTypeSize, FALSE))
         ulMediaType = IANA_MEDIA_TYPE_CODE_MODEL;
 
     return ulMediaType;
@@ -7397,7 +7398,6 @@ AnscGetIanaTypeByName
         ULONG                       ulNameLen
     )
 {
-    ULONG                           Type    = 0;
     ULONG                           i;
     PANSC_UTILBOX_IANA_MEDIA        pInfo;
 
@@ -7411,8 +7411,8 @@ AnscGetIanaTypeByName
         pInfo   = (PANSC_UTILBOX_IANA_MEDIA)&pSet[i];
 
         if ( pInfo->Name == NULL ||
-                (ulNameLen == AnscSizeOfString(pInfo->Name) &&
-                AnscEqualString2(pName, pInfo->Name, ulNameLen, FALSE)) )
+                (ulNameLen == AnscSizeOfString((const char *)pInfo->Name) &&
+                AnscEqualString2((char *)pName, (char *)pInfo->Name, ulNameLen, FALSE)) )
         {
             return pInfo->Type;
         }
@@ -7551,9 +7551,7 @@ HttpSmpoParseHost
 
     PUCHAR                          pMsg        = (PUCHAR)pBuf;
     PHTTP_HFO_HOST                  pHfoHost    = NULL;
-    BOOL                            bSucc       = TRUE;
     PUCHAR                          pToken      = pMsg;
-    PUCHAR                          pLast       = pMsg + ulSize - 1;
     PUCHAR                          pPort;
     ULONG                           ulTokenSize;
 
@@ -7583,7 +7581,7 @@ HttpSmpoParseHost
         else
         {
             pPort ++;
-            pHfoHost->HostPort  = _ansc_atoi(pPort);
+            pHfoHost->HostPort  = _ansc_atoi((char *)pPort);
         }
     }
 
@@ -7600,27 +7598,27 @@ HttpSmpoUtilGetTransferEncoding
     ULONG                           ulEncoding  = IANA_TCODING_CODE_RESERVED;
 
     if (AnscSizeOfString(IANA_TCODING_TEXT_GZIP) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_GZIP, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_GZIP, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_GZIP;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_COMPRESS) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_COMPRESS, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_COMPRESS, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_COMPRESS;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_DEFLATE) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_DEFLATE, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_DEFLATE, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_DEFLATE;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_IDENTITY) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_IDENTITY, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_IDENTITY, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_IDENTITY;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_CHUNKED) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_CHUNKED, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_CHUNKED, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_CHUNKED;
     else
     if (AnscSizeOfString(IANA_TCODING_TEXT_TRAILERS) == ulSize &&
-        AnscEqualString2(pTEncoding, IANA_TCODING_TEXT_TRAILERS, ulSize, FALSE))
+        AnscEqualString2((char *)pTEncoding, IANA_TCODING_TEXT_TRAILERS, ulSize, FALSE))
         ulEncoding = IANA_TCODING_CODE_TRAILERS;
 
     return ulEncoding;
@@ -7712,13 +7710,13 @@ HttpSmpoUtilParseChallenge
     ulLen   = pRealm - pScheme;
 
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_NONE) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_NONE, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_NONE, (char *)pScheme, ulLen, FALSE))
     {
         pChallenge->AuthType    = HTTP_AUTH_TYPE_NONE;
     }
     else
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_BASIC) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_BASIC, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_BASIC, (char *)pScheme, ulLen, FALSE))
     {
         PHTTP_CHALLENGE_BASIC       pBasicChallenge = &pChallenge->Challenge.Basic;
 
@@ -7729,7 +7727,7 @@ HttpSmpoUtilParseChallenge
     }
     else
     if (ulLen == AnscSizeOfString(HTTP_AUTH_TEXT_DIGEST) &&
-        AnscEqualString2(HTTP_AUTH_TEXT_DIGEST, pScheme, ulLen, FALSE))
+        AnscEqualString2(HTTP_AUTH_TEXT_DIGEST, (char *)pScheme, ulLen, FALSE))
     {
         PHTTP_CHALLENGE_DIGEST      pDigestChallenge = &pChallenge->Challenge.Digest;
 
@@ -7824,7 +7822,7 @@ HttpSmpoParseProxyConnection
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
+    //ULONG                           ulTokenIndex        = 0;
     PHTTP_CONNECTION_TOKEN          pConnToken;
     ULONG                           ulTokenType;
 
@@ -7869,12 +7867,12 @@ HttpSmpoParseProxyConnection
 
             ulTokenType = IANA_CONNECTION_CODE_RESERVED;
 
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_CLOSE;
             }
             else
-            if (AnscEqualString2(pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
+            if (AnscEqualString2((char *)pToken, IANA_CONNECTION_TEXT_CLOSE, ulTokenSize, FALSE))
             {
                 ulTokenType = IANA_CONNECTION_CODE_KEEP_ALIVE;
             }
@@ -7955,9 +7953,9 @@ HttpSmpoUtilGetNextCookieNameValuePair
             return pNext;
         }
 
-        if ( AnscEqualString2(pToken, HTTP_SMPO_STRING_SCOOKIE_EXPIRES, ulNameLen, FALSE) )
+        if ( AnscEqualString2((char *)pToken, HTTP_SMPO_STRING_SCOOKIE_EXPIRES, ulNameLen, FALSE) )
         {
-            pNext = _ansc_strstr(pNext, "GMT");
+            pNext = (PUCHAR)_ansc_strstr((const char *)pNext, "GMT");
 
             if ( pNext )
             {
@@ -8006,7 +8004,7 @@ HttpSmpoParseCookie
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
+    //ULONG                           ulTokenIndex        = 0;
     PHTTP_COOKIE_CONTENT            pCookieContent;
     ULONG                           ulCount             = 0;
     PUCHAR                          pValue;
@@ -8073,25 +8071,25 @@ HttpSmpoParseCookie
 
         /* check the name */
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_VERSION) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, (char *)pName, ulLen, FALSE))
         {
             bVersionPresent = TRUE;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
@@ -8160,27 +8158,27 @@ HttpSmpoParseCookie
             bPort       = FALSE;
 
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_VERSION) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_VERSION, (char *)pName, ulLen, FALSE))
             {
                 bVersion = TRUE;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PATH) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PATH, (char *)pName, ulLen, FALSE))
             {
                 bPath   = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_DOMAIN) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
             {
                 bDomain = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_COOKIE_PORT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_COOKIE_PORT, (char *)pName, ulLen, FALSE))
             {
                 bPort   = TRUE;
                 ulIndex --;
@@ -8216,7 +8214,7 @@ HttpSmpoParseCookie
                     {
                         pValue ++;
                     }
-                    pHfoCookie->CookieArray[0].Version = _ansc_atoi(pValue);
+                    pHfoCookie->CookieArray[0].Version = _ansc_atoi((char *)pValue);
                 }
             }
             else
@@ -8317,37 +8315,37 @@ HttpSmpoUtilGetMonth
 
     if (ulSize == 3)
     {
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_FEB, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_FEB, ulSize, FALSE))
             usMonth = 2;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_MAR, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_MAR, ulSize, FALSE))
             usMonth = 3;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_APR, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_APR, ulSize, FALSE))
             usMonth = 4;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_MAY, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_MAY, ulSize, FALSE))
             usMonth = 5;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_JUN, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_JUN, ulSize, FALSE))
             usMonth = 6;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_JUL, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_JUL, ulSize, FALSE))
             usMonth = 7;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_AUG, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_AUG, ulSize, FALSE))
             usMonth = 8;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_SEP, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_SEP, ulSize, FALSE))
             usMonth = 9;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_OCT, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_OCT, ulSize, FALSE))
             usMonth = 10;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_NOV, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_NOV, ulSize, FALSE))
             usMonth = 11;
         else
-        if (AnscEqualString2(pMonth, HTTP_SMPO_MONTH_DEC, ulSize, FALSE))
+        if (AnscEqualString2((char *)pMonth, HTTP_SMPO_MONTH_DEC, ulSize, FALSE))
             usMonth = 12;
     }
 
@@ -8381,7 +8379,7 @@ HttpSmpoParseSetCookie
     PUCHAR                          pLast               = pMsg + ulSize - 1;
     PUCHAR                          pToken, pNext;
     ULONG                           ulTokenSize;
-    ULONG                           ulTokenIndex        = 0;
+    //ULONG                           ulTokenIndex        = 0;
     PHTTP_COOKIE_CONTENT            pCookieContent;
     ULONG                           ulCount             = 0;
     PUCHAR                          pValue;
@@ -8449,61 +8447,61 @@ HttpSmpoParseSetCookie
 
         /* check the name */
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_COMMENT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL,(char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_DOMAIN) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_PORT) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT,(char *) pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_PATH) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_SECURE) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_DISCARD) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_VERSION) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
         else
         if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_EXPIRES) &&
-            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, pName, ulLen, FALSE))
+            AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, (char *)pName, ulLen, FALSE))
         {
             ulCount --;
         }
@@ -8584,70 +8582,70 @@ HttpSmpoParseSetCookie
             bVersion    = FALSE;
 
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_COMMENT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_COMMENT, (char *)pName, ulLen, FALSE))
             {
                 bComment    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_COMMENT_URL, (char *)pName, ulLen, FALSE))
             {
                 bCommentUrl = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_DOMAIN) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_DOMAIN, (char *)pName, ulLen, FALSE))
             {
                 bDomain     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_PORT) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_PORT, (char *)pName, ulLen, FALSE))
             {
                 bPort       = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_MAX_AGE, (char *)pName, ulLen, FALSE))
             {
                 bMaxAge     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_PATH) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_PATH, (char *)pName, ulLen, FALSE))
             {
                 bPath       = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_SECURE) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_SECURE, (char *)pName, ulLen, FALSE))
             {
                 bSecure     = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE2_DISCARD) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE2_DISCARD, (char *)pName, ulLen, FALSE))
             {
                 bDiscard    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_VERSION) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_VERSION, (char *)pName, ulLen, FALSE))
             {
                 bVersion    = TRUE;
                 ulIndex --;
             }
             else
             if (ulLen == AnscSizeOfString(HTTP_SMPO_STRING_SCOOKIE_EXPIRES) &&
-                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, pName, ulLen, FALSE))
+                AnscEqualString2(HTTP_SMPO_STRING_SCOOKIE_EXPIRES, (char *)pName, ulLen, FALSE))
             {
                 bExpires    = TRUE;
                 ulIndex --;
@@ -8746,7 +8744,7 @@ HttpSmpoParseSetCookie
             {
                 pValue ++;
 
-                pCookieContent->MaxAgeInSeconds = _ansc_atoi(pValue);
+                pCookieContent->MaxAgeInSeconds = _ansc_atoi((char *)pValue);
             }
             else
             if (bVersion)
@@ -8758,7 +8756,7 @@ HttpSmpoParseSetCookie
                     pValue ++;
                 }
 
-                pCookieContent->Version = _ansc_atoi(pValue);
+                pCookieContent->Version = _ansc_atoi((char *)pValue);
             }
             else
             if (bSecure)
@@ -8812,18 +8810,18 @@ HttpSmpoParseSetCookie
                         (
                             pDate,
                             "%d-%3c-%d %d:%d:%d GMT",
-                            &pTime->DayOfMonth,
+                            (int *)&pTime->DayOfMonth,
                             mon,
-                            &pTime->Year,
-                            &pTime->Hour,
-                            &pTime->Minute,
-                            &pTime->Second
+                            (int *)&pTime->Year,
+                           (int *)&pTime->Hour,
+                            (int *)&pTime->Minute,
+                            (int *)&pTime->Second
                         );
 
                     pCookieContent->bPermanent = TRUE;
                 }
 
-                pTime->Month = HttpSmpoUtilGetMonth(mon, 3);
+                pTime->Month = HttpSmpoUtilGetMonth((PUCHAR)mon, 3);
 
                 if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SUNDAY, FALSE))
                     pTime->DayOfWeek = 0;
@@ -8884,8 +8882,8 @@ HttpSmpoParseCookie2
     )
 {
     /* Cookie2: $Version="1" */
-
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
+    UNREFERENCED_PARAMETER(pBuf);
+    UNREFERENCED_PARAMETER(ulSize);
     PHTTP_HFO_COOKIE2               pHfoCookie2         = (PHTTP_HFO_COOKIE2)NULL;
 
     pHfoCookie2 = (PHTTP_HFO_COOKIE2)AnscAllocateMemory(sizeof(HTTP_HFO_COOKIE2));
@@ -8929,7 +8927,6 @@ HttpSmpoUtilParseRelPath
     /* rel_path = [path] [";" params] ["?" query] */
 
     PHTTP_REQUEST_URI               pUri        = (PHTTP_REQUEST_URI)hRequestUri;
-    PUCHAR                          pToken      = pBuf;
     PUCHAR                          pLast       = pBuf + ulSize - 1;
     ULONG                           ulLen;
     PUCHAR                          pNext;
@@ -9081,7 +9078,6 @@ HttpSmpoUtilParseAbsoluteURI
     BOOL                            bHttp   = FALSE;
     USHORT                          usPort  = 0;
     PUCHAR                          pHost;
-    PUCHAR                          pLast   = pBuf + ulSize - 1;
 
     pNext   = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_COLON, ulSize);
 
@@ -9095,14 +9091,14 @@ HttpSmpoUtilParseAbsoluteURI
     ulLen   = pNext - pBuf;
 
     if ( ulLen == HTTP_SMPO_PROTOCOL_HTTPS_LENGTH &&
-        AnscEqualString2(pScheme, HTTP_SMPO_PROTOCOL_HTTPS, HTTP_SMPO_PROTOCOL_HTTPS_LENGTH, FALSE) )
+        AnscEqualString2((char *)pScheme, HTTP_SMPO_PROTOCOL_HTTPS, HTTP_SMPO_PROTOCOL_HTTPS_LENGTH, FALSE) )
     {
         pUri->Flag  |= HTTP_URI_FLAG_HTTPS;
         bHttp       = TRUE;
         usPort      = HTTPS_PORT;
     }
     else
-        if ( ulLen == 4 && AnscEqualString2(pScheme, "http", 4, FALSE) )
+        if ( ulLen == 4 && AnscEqualString2((char *)pScheme, "http", 4, FALSE) )
         {
             bHttp   = TRUE;
             usPort  = HTTP_PORT;
@@ -9187,7 +9183,7 @@ HttpSmpoUtilParseAbsoluteURI
 
                 if (pPort)
                 {
-                    pUri->HostPort = _ansc_atoi(pPort + 1);
+                    pUri->HostPort = _ansc_atoi((char *)pPort + 1);
                 }
                 else
                 {
@@ -9231,7 +9227,6 @@ HttpSmpoParseLocation
 {
     /* Location = "Location" ":" absoluteURI */
 
-    PUCHAR                          pMsg                = (PUCHAR)pBuf;
     PHTTP_HFO_LOCATION              pHfoLocation        = NULL;
     BOOL                            bSucc               = TRUE;
 
@@ -9304,98 +9299,98 @@ AnscHttpRegisterAllHeadersXInfo
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_AUTHORIZATION,
+            (PUCHAR)HTTP_HEADER_NAME_AUTHORIZATION,
             HTTP_HEADER_ID_AUTHORIZATION,
             HttpSmpoParseAuthorization
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_CONNECTION,
+            (PUCHAR)HTTP_HEADER_NAME_CONNECTION,
             HTTP_HEADER_ID_CONNECTION,
             HttpSmpoParseConnection
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_CONTENT_ENCODING,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_ENCODING,
             HTTP_HEADER_ID_CONTENT_ENCODING,
             HttpSmpoParseContentEncoding
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_CONTENT_LENGTH,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_LENGTH,
             HTTP_HEADER_ID_CONTENT_LENGTH,
             HttpSmpoParseContentLength
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_CONTENT_TYPE,
+            (PUCHAR)HTTP_HEADER_NAME_CONTENT_TYPE,
             HTTP_HEADER_ID_CONTENT_TYPE,
             HttpSmpoParseContentType
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_HOST,
+            (PUCHAR)HTTP_HEADER_NAME_HOST,
             HTTP_HEADER_ID_HOST,
             HttpSmpoParseHost
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_LOCATION,
+            (PUCHAR)HTTP_HEADER_NAME_LOCATION,
             HTTP_HEADER_ID_LOCATION,
             HttpSmpoParseLocation
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_TRANSFER_ENCODING,
+            (PUCHAR)HTTP_HEADER_NAME_TRANSFER_ENCODING,
             HTTP_HEADER_ID_TRANSFER_ENCODING,
             HttpSmpoParseTransferEncoding
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_WWW_AUTHENTICATE,
+            (PUCHAR)HTTP_HEADER_NAME_WWW_AUTHENTICATE,
             HTTP_HEADER_ID_WWW_AUTHENTICATE,
             HttpSmpoParseWwwAuthenticate
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_PROXY_CONNECTION,
+            (PUCHAR)HTTP_HEADER_NAME_PROXY_CONNECTION,
             HTTP_HEADER_ID_PROXY_CONNECTION,
             HttpSmpoParseProxyConnection
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_COOKIE,
+            (PUCHAR)HTTP_HEADER_NAME_COOKIE,
             HTTP_HEADER_ID_COOKIE,
             HttpSmpoParseCookie
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_SET_COOKIE,
+            (PUCHAR)HTTP_HEADER_NAME_SET_COOKIE,
             HTTP_HEADER_ID_SET_COOKIE,
             HttpSmpoParseSetCookie
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_COOKIE2,
+            (PUCHAR)HTTP_HEADER_NAME_COOKIE2,
             HTTP_HEADER_ID_COOKIE2,
             HttpSmpoParseCookie2
         );
 
     HttpSmpoRegisterHeaderXInfo2
         (
-            HTTP_HEADER_NAME_SET_COOKIE2,
+            (PUCHAR)HTTP_HEADER_NAME_SET_COOKIE2,
             HTTP_HEADER_ID_SET_COOKIE2,
             HttpSmpoParseSetCookie2
         );
@@ -9445,16 +9440,16 @@ AnscHttpGetHeaderXInfo
     PSINGLE_LINK_ENTRY              pEntry;
     ULONG                           ulHashIndex;
 
-    ulHashIndex = AnscHashString(pName, ulSize, HTTP_SMPO_HEADER_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pName, ulSize, HTTP_SMPO_HEADER_TABLE_SIZE);
     pEntry      = AnscSListGetFirstEntry(&HeaderXList[ulHashIndex]);
 
     while (pEntry)
     {
         pXinfo  = ACCESS_HTTP_SMPO_HEADER_XINFO1_OBJECT(pEntry);
 
-        if (ulSize == AnscSizeOfString(pXinfo->Name))
+        if (ulSize == AnscSizeOfString((char *)pXinfo->Name))
         {
-            if (AnscEqualString2(pXinfo->Name, pName, ulSize, FALSE))
+            if (AnscEqualString2((char *)pXinfo->Name, (char *)pName, ulSize, FALSE))
             {
                 return (ANSC_HANDLE)pXinfo;
             }
@@ -9485,9 +9480,9 @@ AnscHttpGetHeaderCode
     {
         pXinfo  = ACCESS_HTTP_SMPO_HEADER_XINFO1_OBJECT(pEntry);
 
-		if (AnscEqualString1(pXinfo->Name, name, FALSE))
+		if (AnscEqualString1((char *)pXinfo->Name, name, FALSE))
 		{
-			return (ANSC_HANDLE)pXinfo->HeaderId;
+			return pXinfo->HeaderId;
 		}
 
         pEntry  = AnscSListGetNextEntry(pEntry);
@@ -9508,59 +9503,59 @@ HttpSmpoUtilGetMethodId
     ULONG                           ulMethod    = HTTP_METHOD_RESERVED;
 
     if (AnscSizeOfString(HTTP_METHOD_NAME_GET) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_GET, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_GET, ulSize, FALSE))
         ulMethod = HTTP_METHOD_GET;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_POST) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_POST, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_POST, ulSize, FALSE))
         ulMethod = HTTP_METHOD_POST;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_OPTIONS) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_OPTIONS, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_OPTIONS, ulSize, FALSE))
         ulMethod = HTTP_METHOD_OPTIONS;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_HEAD) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_HEAD, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_HEAD, ulSize, FALSE))
         ulMethod = HTTP_METHOD_HEAD;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_PUT) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_PUT, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_PUT, ulSize, FALSE))
         ulMethod = HTTP_METHOD_PUT;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_DELETE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_DELETE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_DELETE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_DELETE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_CONNECT) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_CONNECT, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_CONNECT, ulSize, FALSE))
         ulMethod = HTTP_METHOD_CONNECT;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_TRACE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_TRACE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_TRACE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_TRACE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_NOTIFY) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_NOTIFY, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_NOTIFY, ulSize, FALSE))
         ulMethod = HTTP_METHOD_NOTIFY;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_SEARCH) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_SEARCH, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_SEARCH, ulSize, FALSE))
         ulMethod = HTTP_METHOD_SEARCH;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_M_SEARCH) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_M_SEARCH, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_M_SEARCH, ulSize, FALSE))
         ulMethod = HTTP_METHOD_M_SEARCH;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_M_POST) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_M_POST, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_M_POST, ulSize, FALSE))
         ulMethod = HTTP_METHOD_M_POST;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_SUBSCRIBE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_SUBSCRIBE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_SUBSCRIBE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_SUBSCRIBE;
     else
     if (AnscSizeOfString(HTTP_METHOD_NAME_UNSUBSCRIBE) == ulSize &&
-        AnscEqualString2(pMethod, HTTP_METHOD_NAME_UNSUBSCRIBE, ulSize, FALSE))
+        AnscEqualString2((char *)pMethod, HTTP_METHOD_NAME_UNSUBSCRIBE, ulSize, FALSE))
         ulMethod = HTTP_METHOD_UNSUBSCRIBE;
 
     return ulMethod;
@@ -9575,21 +9570,22 @@ HttpSmpoUtilParseRequestLineVersion
         PULONG                      pMinorVersion
     )
 {
+    UNREFERENCED_PARAMETER(ulVersionLen);
     PUCHAR                          pMajor, pMinor;
 
-    pMajor  = _ansc_strchr(pVersion, '/');
+    pMajor  = (PUCHAR)_ansc_strchr((char *)pVersion, '/');
     if (!pMajor)
         return FALSE;
 
     pMajor ++;
-    *pMajorVersion  = (ULONG)_ansc_atoi(pMajor);
+    *pMajorVersion  = (ULONG)_ansc_atoi((char *)pMajor);
 
-    pMinor  = _ansc_strchr(pMajor, '.');
+    pMinor  = (PUCHAR)_ansc_strchr((char *)pMajor, '.');
     if (!pMinor)
         return FALSE;
 
     pMinor ++;
-    *pMinorVersion  = (ULONG)_ansc_atoi(pMinor);
+    *pMinorVersion  = (ULONG)_ansc_atoi((char *)pMinor);
 
     return TRUE;
 }
@@ -9627,7 +9623,7 @@ HttpSmpoUtilParseAuthorityServer
 
         HttpSmpoUtilCopyHeaderString(pToken, pNext - pToken, pUri->HostName, ANSC_DOMAIN_NAME_SIZE);
 
-        pUri->HostPort  = (USHORT)_ansc_atoi(pNext + 1);
+        pUri->HostPort  = (USHORT)_ansc_atoi((char *)pNext + 1);
     }
     else
     {
@@ -9698,7 +9694,7 @@ HttpSmpoUtilParseRquestLineUri
     PHTTP_REQUEST_URI               pUri    = (PHTTP_REQUEST_URI)hUri;
     BOOL                            bSucc   = TRUE;
 
-    if (AnscEqualString(pBuf, "*", TRUE))
+    if (AnscEqualString((char *)pBuf, "*", TRUE))
     {
         pUri->Type  = HTTP_URI_TYPE_ASTERISK;
     }
@@ -9852,7 +9848,7 @@ AnscHttpParseRequestLine
         ULONG                       ulSize
     )
 {
-    ANSC_HANDLE                     hResult;
+    UNREFERENCED_PARAMETER(unused);
     ULONG                           i;
     PHTTP_REQUEST_INFO              pRequestInfo = NULL;
     PUCHAR                          pMethod, pUri, pVersion;
@@ -9860,7 +9856,6 @@ AnscHttpParseRequestLine
     PUCHAR                          pBuf;
     PUCHAR                          pMsg;
 
-    hResult             = (ANSC_HANDLE)NULL;
     pMethod             = NULL;
     pUri                = NULL;
     pVersion            = NULL;
@@ -9881,7 +9876,7 @@ AnscHttpParseRequestLine
         return (ANSC_HANDLE)NULL;
     }
 
-    pMsg    = _ansc_strchr(pMethod, ' ');
+    pMsg    = (PUCHAR)_ansc_strchr((char *)pMethod, ' ');
 
     if (!pMsg)
     {
@@ -9902,7 +9897,7 @@ AnscHttpParseRequestLine
     if (!pUri)
         return (ANSC_HANDLE)NULL;
 
-    pMsg    = _ansc_strchr(pUri, ' ');
+    pMsg    = (PUCHAR)_ansc_strchr((char *)pUri, ' ');
 
     if (!pMsg)
         return (ANSC_HANDLE)NULL;
@@ -9998,6 +9993,7 @@ AnscHttpParseStatusLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     PUCHAR                          pLast           = ((PUCHAR)buffer) + ulSize - 1;
     PHTTP_RESPONSE_INFO             pResponseInfo   = NULL;
     ULONG                           ulMajor, ulMinor;
@@ -10026,7 +10022,7 @@ AnscHttpParseStatusLine
 
     /* status code */
     pBuf    = pNext + 1;
-    ulStatusCode    = _ansc_atoi(pBuf);
+    ulStatusCode    = _ansc_atoi((char *)pBuf);
 
     pNext   = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_SPACE, pLast - pBuf + 1);
     if (!pNext)
@@ -10102,6 +10098,7 @@ AnscHttpParseHeader
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     PUCHAR                          pLast       = ((PUCHAR)buffer) + ulSize - 1;
     ANSC_HANDLE                     hHeader     = (ANSC_HANDLE)NULL;
     PUCHAR                          pHeader;
@@ -10226,13 +10223,14 @@ AnscHttpParseChunkedLine
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     PHTTP_CHUNK_INFO                pChunkInfo  = NULL;
     PUCHAR                          pBuf        = (PUCHAR)buffer;
     PUCHAR                          pLast       = pBuf + ulSize - 1;
     PUCHAR                          pExt        = NULL;
-    PUCHAR                          pNext, pCRLF;
+    PUCHAR                          pNext = NULL;
+    PUCHAR                          pCRLF = NULL;
     ULONG                           ulChunkSize = 0;
-    ULONG                           i;
     UCHAR                           uc;
     ULONG                           ulValue;
 
@@ -10271,7 +10269,6 @@ AnscHttpParseChunkedLine
 
     pExt    = _ansc_memchr(pBuf, HTTP_SMPO_CHAR_SEMICOLON, pCRLF - pBuf);
 
-    i = 0;
     pNext   = pBuf;
     while (pNext)
     {
@@ -10386,6 +10383,7 @@ AnscHttpParseUrl
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(unused);
     PHTTP_REQUEST_URI               pRequestUri;
     BOOL                            bSucc;
 

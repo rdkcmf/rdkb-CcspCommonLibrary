@@ -114,12 +114,10 @@ AnscXsocketResolveAddr
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject           = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkHolder        = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     xskt_addrinfo                   xskt_hints          = {0};
     USHORT                          usPort              = 0;
     char                            port[6]             = {0};
     xskt_addrinfo*                  pxskt_peer_addrinfo = NULL;
-    xskt_addrinfo*                  pxskt_host_addrinfo = NULL;
     char*                           pPort;
 
     if ( TRUE )
@@ -147,14 +145,14 @@ AnscXsocketResolveAddr
 
         if ( _xskt_getaddrinfo
                 (
-                    pMyObject->GetPeerName((ANSC_HANDLE)pMyObject),
+                    (const char *)pMyObject->GetPeerName((ANSC_HANDLE)pMyObject),
                     pPort,
                     &xskt_hints,
                     &pMyObject->pPeerAddrInfo
                 ) ||
              _xskt_getaddrinfo
                 (
-                    pMyObject->GetHostName((ANSC_HANDLE)pMyObject),
+                    (const char *)pMyObject->GetHostName((ANSC_HANDLE)pMyObject),
                     NULL,
                     &xskt_hints,
                     &pMyObject->pHostAddrInfo
@@ -177,7 +175,7 @@ AnscXsocketResolveAddr
         {
             if (_xskt_getaddrinfo
                 (
-                    pMyObject->GetPeerName((ANSC_HANDLE)pMyObject),
+                   (const char *) pMyObject->GetPeerName((ANSC_HANDLE)pMyObject),
                     pPort,
                     &xskt_hints,
                     &pMyObject->pOriPeerAddrInfo
@@ -188,7 +186,6 @@ AnscXsocketResolveAddr
             }
 
             pxskt_peer_addrinfo = pMyObject->pPeerAddrInfo;
-            pxskt_host_addrinfo = pMyObject->pHostAddrInfo;
 
             if ( pxskt_peer_addrinfo->ai_family == XSKT_SOCKET_AF_INET6 )
             {
@@ -243,7 +240,6 @@ AnscXsocketApplyDSCP
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject           = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkHolder        = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     int                             tos                 = 0;
 
     /* 6-bit DSCP, 2-bit ENC */
@@ -425,7 +421,6 @@ AnscXsocketConnect
     PANSC_XSOCKET_OBJECT            pMyObject           = (PANSC_XSOCKET_OBJECT)hThisObject;
     PANSC_XSINK_OBJECT              pXsinkHolder        = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     xskt_addrinfo*                  pxskt_peer_addrinfo = (xskt_addrinfo*      )pMyObject->pPeerAddrInfo;
-    xskt_addrinfo*                  pxskt_host_addrinfo = (xskt_addrinfo*      )pMyObject->pHostAddrInfo;
     /*xskt_socket_addr_in             server_addr;*/
 /*
     server_addr.sin_family      = XSKT_SOCKET_AF_INET;
@@ -589,9 +584,7 @@ AnscXsocketSend
         ANSC_HANDLE                 hAddress
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject       = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkHolder    = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     PANSC_SOCKET_ADDRESS            pXsocketAddress = (PANSC_SOCKET_ADDRESS)hAddress;
     xskt_socket_addr_in             to_addr;
 
@@ -681,9 +674,7 @@ AnscXsocketSend2
         ANSC_HANDLE                 hAddress
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject       = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkHolder    = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     xskt_addrinfo*                  pXsktAddrInfo   = (xskt_addrinfo*      )hAddress;
     int                             iSent           = 0;
     /*xskt_socket_addr_in             to_addr;*/
@@ -771,7 +762,6 @@ AnscXsocketOpen
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
-    PANSC_XSINK_OBJECT              pXsinkHolder = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
 
     /*
      * There's actually no corresponding bsd xsocket api function for this. This member function
@@ -826,10 +816,8 @@ AnscXsocketClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
     PANSC_XSINK_OBJECT              pXsinkHolder = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
-    BOOL                            bClosed      = FALSE;
 
     if ( pMyObject->bClosed )
     {

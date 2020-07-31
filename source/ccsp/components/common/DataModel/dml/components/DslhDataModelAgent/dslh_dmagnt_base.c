@@ -120,7 +120,7 @@ DslhDmagntCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject    = NULL;
 
@@ -193,8 +193,6 @@ DslhDmagntRemove
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PDSLH_MWS_INTERFACE             pDslhMwsIf        = (PDSLH_MWS_INTERFACE        )pMyObject->hDslhMwsIf;
     PANSC_ATOM_TABLE_OBJECT         pAtomFunctions    = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtomFunctions;
-    PSINGLE_LINK_ENTRY              pSListEntry       = NULL;
-    PPLUGIN_INFORMATION             pInfo             = NULL;
 
     if( pDslhMwsIf)
     {

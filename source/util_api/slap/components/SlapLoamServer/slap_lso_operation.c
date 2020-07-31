@@ -170,7 +170,6 @@ SlapLsoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
 
@@ -222,9 +221,6 @@ SlapLsoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

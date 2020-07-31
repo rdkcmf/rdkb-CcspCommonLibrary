@@ -120,7 +120,8 @@ anscGetCertHandle
 
     return (ANSC_HANDLE)pAsnCert;
 }
-    
+
+#if 0
 static void
 anscFreeCertHandle
     (
@@ -134,6 +135,7 @@ anscFreeCertHandle
         pThisObject->AsnFree(pThisObject);
     }
 }
+#endif
 
 /**********************************************************************
 
@@ -171,14 +173,12 @@ TlsCpoAuthenticateCertChain
         ANSC_HANDLE                 cert_chain
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_X509_CERTIFICATE_CHAIN*    pCertChain   = (ANSC_X509_CERTIFICATE_CHAIN*)cert_chain;
     PANSC_ASN1_CERTIFICATE          pUserCert    = NULL;
     PANSC_ASN1_CERTIFICATE          pCACert      = NULL;
     PANSC_X509_CERTIFICATE          pX509Cert    = NULL;
     BOOL                            bVerified    = FALSE;
-    ULONG                           certPath     = 0;
     LONG                            i;
 
     if( pCertChain->Depth < 1 )
@@ -292,5 +292,3 @@ EXIT:
 
     return  bVerified;
 }
-
-

@@ -135,9 +135,7 @@ SlapEcoUoaCreateContainer
         ULONG                       container_type
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
 
     if ( !container_name )
@@ -213,9 +211,7 @@ SlapEcoUoaDeleteContainer
         ANSC_HANDLE                 hSlapContainer
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )hSlapContainer;
 
     if ( !pSlapObjContainer )
@@ -268,9 +264,7 @@ SlapEcoUoaAcqContainerAccess
         char*                       container_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
 
     if ( !container_name )
@@ -333,11 +327,8 @@ SlapEcoUoaRelContainerAccess
         ANSC_HANDLE                 hSlapContainer
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )hSlapContainer;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSlapContainer);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -389,7 +380,6 @@ SlapEcoUoaCreateObject
         ANSC_HANDLE                 hInsContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )hSlapContainer;
@@ -482,9 +472,8 @@ SlapEcoUoaDeleteObject
         ANSC_HANDLE                 hSlapObject
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity    = (PSLAP_OBJ_ENTITY_OBJECT    )NULL;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
@@ -566,9 +555,8 @@ SlapEcoUoaDeleteObject2
         ANSC_HANDLE                 hSlapObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity    = (PSLAP_OBJ_ENTITY_OBJECT    )NULL;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
@@ -666,9 +654,6 @@ SlapEcoUoaInvokeObject
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
-    PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity    = (PSLAP_OBJ_ENTITY_OBJECT    )NULL;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT )pSlapObjRecord->hSlapSrvComponent;
     ULONG                           ulObjType         = (ULONG                      )0;
@@ -774,10 +759,7 @@ SlapEcoUoaGetObjInsContext
         ANSC_HANDLE                 hSlapObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT )pSlapObjRecord->hSlapSrvComponent;
 
@@ -827,10 +809,7 @@ SlapEcoUoaSetObjInsContext
         ANSC_HANDLE                 hInsContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT )pSlapObjRecord->hSlapSrvComponent;
 
@@ -887,12 +866,9 @@ SlapEcoUoaGetObjCallOption
         SLAP_PARAMETER_LIST*        params_in
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity    = (PSLAP_OBJ_ENTITY_OBJECT    )pSlapObjRecord->hSlapObjEntity;
-    PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT )pSlapObjRecord->hSlapSrvComponent;
 
     if ( !pSlapObjEntity )
     {
@@ -950,7 +926,6 @@ SlapEcoUoaAcqObjectAccess
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )hSlapContainer;
@@ -1044,10 +1019,7 @@ SlapEcoUoaRelObjectAccess
         ANSC_HANDLE                 hSlapObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
 
     pSlapObjRecord->AcqAccess((ANSC_HANDLE)pSlapObjRecord);
@@ -1222,7 +1194,6 @@ SlapEcoUoaVerifyObjDescriptor
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject      = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity = (PSLAP_OBJ_ENTITY_OBJECT    )NULL;
@@ -1290,10 +1261,9 @@ SlapEcoUoaCreateProxyObject
         ANSC_HANDLE                 hSlapGoaObj
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hSlapContainer);
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )hSlapContainer;
     PSLAP_OBJ_PROXY_OBJECT          pSlapObjProxy     = (PSLAP_OBJ_PROXY_OBJECT     )NULL;
     PSLAP_SRV_PROXY_OBJECT          pSlapSrvProxy     = (PSLAP_SRV_PROXY_OBJECT     )NULL;
 
@@ -1495,7 +1465,6 @@ SlapEcoUoaVerifyProxyObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject      = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_OBJ_PROXY_OBJECT          pSlapObjProxy  = (PSLAP_OBJ_PROXY_OBJECT     )NULL;

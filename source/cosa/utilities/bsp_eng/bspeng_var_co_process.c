@@ -304,7 +304,7 @@ BspTemplateVarAssign
 {
     PBSP_TEMPLATE_VAR_OBJECT        pMyObject = (PBSP_TEMPLATE_VAR_OBJECT)hThisObject;
     PBSP_TEMPLATE_VAR_OBJECT        pVar      = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;
+    /*PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;*/
     BOOL                            bOK       = TRUE;
 
     if (!pVar)
@@ -428,7 +428,7 @@ BspTemplateVarAssign
              *  They must have the same dimensions except the first one.
              *  Of course the number of dimensions must also be the same.
              */
-            if (pMyObject->Value.arrayItems.numDims == pVar->Value.arrayItems.numDims);
+            if (pMyObject->Value.arrayItems.numDims == pVar->Value.arrayItems.numDims)
             {
                 bCanAssign  = TRUE;
 
@@ -698,6 +698,8 @@ BspTemplateVarGreater
 #endif
             }
             break;
+        default:
+            break;
         }
         break;
 
@@ -737,6 +739,8 @@ BspTemplateVarGreater
         case BspVar_Object:
             BspEng_GetSlapVarCompareValue((ANSC_HANDLE)pVar->Value.obj, (ANSC_HANDLE)&compVal);
             return (ULONG)pMyObject->Value.num > (ULONG)compVal.value.objValue;
+            break;
+        default:
             break;
         }
         break;
@@ -808,6 +812,8 @@ BspTemplateVarGreater
         case BspVar_Real:
             return pMyObject->Value.real > pVar->Value.real;
             break;
+        default:
+            break;
         }
         break;
     
@@ -836,7 +842,11 @@ BspTemplateVarGreater
                 return comp1 > comp2;
             }
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1020,6 +1030,8 @@ BspTemplateVarEqual
                     (compVal.ulType == BSPENG_SLAP_VAR_COMPARE_VALUE_TYPE_STRING) && 
                     (AnscEqualString(compVal.value.stringValue, pMyObject->Value.str, TRUE));
                 break;
+        default:
+            break;
         }
         break;
 
@@ -1067,6 +1079,8 @@ BspTemplateVarEqual
         case BspVar_Object:
             BspEng_GetSlapVarCompareValue((ANSC_HANDLE)pVar->Value.obj, (ANSC_HANDLE)&compVal);
             return (ULONG)pMyObject->Value.num == (ULONG)compVal.value.objValue;
+            break;
+        default:
             break;
         }
         break;
@@ -1122,6 +1136,8 @@ BspTemplateVarEqual
         case BspVar_Real:
             return pMyObject->Value.real == pVar->Value.real;
             break;
+        default:
+            break;
         }
         break;
 
@@ -1157,7 +1173,11 @@ BspTemplateVarEqual
                 return comp1 == comp2;
             }
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1247,6 +1267,8 @@ BspTemplateVarPlus
 #endif
             return hThisObject;
             break;
+        default:
+            break;
         }
         break;
 
@@ -1288,7 +1310,11 @@ BspTemplateVarPlus
             pMyObject->Value.real   += pVar->Value.real;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1378,6 +1404,8 @@ BspTemplateVarMinus
 #endif
             return hThisObject;
             break;
+        default:
+            break;
         }
         break;
 
@@ -1420,7 +1448,11 @@ BspTemplateVarMinus
             pMyObject->Value.real   -= pVar->Value.real;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1511,6 +1543,8 @@ BspTemplateVarMultiply
 #endif
             return hThisObject;
             break;
+        default:
+            break;
         }
         break;
 
@@ -1557,7 +1591,11 @@ BspTemplateVarMultiply
 #endif
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1657,6 +1695,8 @@ BspTemplateVarDivide
                 AnscTrace("Divide by 0, operation ignored\r\n");
             return hThisObject;
             break;
+        default:
+            break;
         }
         break;
 
@@ -1713,7 +1753,11 @@ BspTemplateVarDivide
                 AnscTrace("Divide by 0, operation ignored\r\n");
             return hThisObject;
             break;
+	default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1819,7 +1863,11 @@ BspTemplateVarMod
                 AnscTrace("Divide by 0, operation ignored\r\n");
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -1927,10 +1975,10 @@ BspTemplateVarStrCat
                     ulLen   = _ansc_sprintf(pBuf, "%ld", pMyObject->Value.num);
                 else
                 if (pMyObject->Type == BspVar_UNumber)
-                    ulLen   = _ansc_sprintf(pBuf, "%u", (ULONG)pMyObject->Value.num);
+                    ulLen   = _ansc_sprintf(pBuf, "%u", (UINT)pMyObject->Value.num);
                 else
 #ifdef   _BSPENG_NO_DOUBLE
-                    ulLen   = BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, pMyObject->Value.real);
+                    ulLen   = BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)pMyObject->Value.real);
 #else
                     ulLen   = _ansc_sprintf(pBuf, "%f", pMyObject->Value.real);
 #endif
@@ -1999,10 +2047,10 @@ BspTemplateVarStrCat
                 ulLen   += _ansc_sprintf(pBuf, "%ld", pVar->Value.num);
             else
             if (pVar->Type == BspVar_UNumber)
-                ulLen   += _ansc_sprintf(pBuf, "%u", (ULONG)pVar->Value.num);
+                ulLen   += _ansc_sprintf(pBuf, "%u", (UINT)pVar->Value.num);
             else
 #ifdef   _BSPENG_NO_DOUBLE
-                ulLen   += BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, pVar->Value.real);
+                ulLen   += BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)pVar->Value.real);
 #else
                 ulLen   += _ansc_sprintf(pBuf, "%f", pVar->Value.real);
 #endif
@@ -2041,7 +2089,7 @@ BspTemplateVarStrCat
     else
         if (!pMyObject->Value.str && pBuf)
         {
-            pMyObject->Value.str    = AnscDupString(pBuf);
+            pMyObject->Value.str    = (PCHAR)AnscDupString((PUCHAR)pBuf);
             pMyObject->Size         = AnscSizeOfString(pMyObject->Value.str);
         }
 
@@ -2106,7 +2154,11 @@ BspTemplateVarBitOr
             pMyObject->Value.num    |= pVar->Value.num;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -2165,7 +2217,11 @@ BspTemplateVarBitAnd
             pMyObject->Value.num    &= pVar->Value.num;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -2224,7 +2280,11 @@ BspTemplateVarBitXor
             pMyObject->Value.num    ^= pVar->Value.num;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -2283,7 +2343,11 @@ BspTemplateVarShiftLeft
             pMyObject->Value.num    <<= pVar->Value.num;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -2342,7 +2406,11 @@ BspTemplateVarShiftRight
             pMyObject->Value.num    >>= pVar->Value.num;
             return hThisObject;
             break;
+        default:
+            break;
         }
+        break;
+    default:
         break;
     }
 
@@ -2572,7 +2640,7 @@ BspTemplateVarReset
     )
 {
     PBSP_TEMPLATE_VAR_OBJECT        pMyObject = (PBSP_TEMPLATE_VAR_OBJECT)hThisObject;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;
+    /*PBSP_TEMPLATE_RUNTIME_OBJECT    pRt       = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;*/
 
     /*
     if (pMyObject->Size && !pMyObject->bTemp)
@@ -3105,6 +3173,8 @@ BspTemplateVarGetBulkDataAt
             }
 
             break;
+        default:
+            break;
     }
 
     return status;
@@ -3147,7 +3217,7 @@ BspTemplateVarSetArraySize
     )
 {
     PBSP_TEMPLATE_VAR_OBJECT        pMyObject   = (PBSP_TEMPLATE_VAR_OBJECT)hThisObject;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;
+    /*PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)pMyObject->hRuntime;*/
     ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     PBSP_TEMPLATE_ARRAY_ITEMS       pArrayItems;
     ULONG                           i;
@@ -3237,6 +3307,8 @@ BspTemplateVarSetArraySize
                 ulNewTotalSize  = ulNewSize * sizeof(SLAP_OBJECT);
 
                 break;
+            default:
+            	break;
         }
 
         pNewArray   = (PVOID)AnscAllocateMemory(ulNewTotalSize);

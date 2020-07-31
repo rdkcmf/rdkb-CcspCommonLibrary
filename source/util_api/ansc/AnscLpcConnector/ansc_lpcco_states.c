@@ -110,7 +110,6 @@ AnscLpccoGetAnscImcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     return  pMyObject->hAnscImcIf;
@@ -147,7 +146,6 @@ AnscLpccoGetAnscCpcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     return  pMyObject->hAnscCpcIf;
@@ -189,7 +187,6 @@ AnscLpccoSetAnscCpcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf   = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
 
@@ -238,9 +235,7 @@ AnscLpccoGetPartyAddrSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  sizeof(ANSC_LPC_PARTY_ADDR);
 }
 
@@ -275,7 +270,6 @@ AnscLpccoGetCallTimeout
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     return  pMyObject->CallTimeout;
@@ -317,7 +311,6 @@ AnscLpccoSetCallTimeout
         ULONG                       timeout
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     pMyObject->CallTimeout = timeout;
@@ -356,7 +349,6 @@ AnscLpccoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     pMyObject->DelAllPartyAddrs  ((ANSC_HANDLE)pMyObject);

@@ -117,8 +117,6 @@ ScliCreateShell
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pScliShell      = NULL;
 
     return  ScliShoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -85,7 +85,6 @@ PKIIsExtensionsObjectValid
         ANSC_HANDLE                 hThisObject
     )
 {
-    PANSC_ASN1_OBJECT               pObject     = (PANSC_ASN1_OBJECT)hThisObject;
     PANSC_ASN1_EXTENSIONS           pThisObject = (PANSC_ASN1_EXTENSIONS)hThisObject;
     PANSC_ASN1_EXTENSION            pChild, pOtherChild;
     CHAR                            pOIDString[256], pOIDOther[256];
@@ -587,7 +586,6 @@ PKIParsingAltName
 {
     PPKI_ALTNAME_PARSER             pThisObject         = NULL;
     CHAR                            pTempBuffer[256]    = { 0 };
-    ULONG                           index               = 0;
     BOOLEAN                         bParsingResult      = TRUE;
     PCHAR                           pBack, pBuffer;
 
@@ -695,7 +693,7 @@ PKIAltNameGetBlockValue
 {
     PPKI_ALTNAME_PARSER             pParser     = (PPKI_ALTNAME_PARSER)hThisObject;
 
-    return pParser->pName[index];
+    return (PUCHAR)pParser->pName[index];
 }
 
 

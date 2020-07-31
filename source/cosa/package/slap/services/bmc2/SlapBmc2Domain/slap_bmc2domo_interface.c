@@ -291,8 +291,6 @@ SlapCreateBmc2Domain
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_DOMAIN_OBJECT        pSlapBmc2Domain = NULL;
 
     return  SlapBmc2DomoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -329,9 +327,7 @@ SlapBmc2DomoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_DOMAIN_OBJECT        pSlapBmc2Domain = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapBmc2Domo;
 }
 
@@ -367,8 +363,6 @@ SlapBmc2DomoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_DOMAIN_OBJECT        pSlapBmc2Domain = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapBmc2Domo;
 }

@@ -124,18 +124,14 @@ WebVhoQuery
         PANSC_HANDLE                phQueryContext
     )
 {
+    UNREFERENCED_PARAMETER(hBmoRep);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject          = (PWEB_VIRTUAL_HOST_OBJECT    )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty          = (PWEB_VIRTUAL_HOST_PROPERTY  )&pMyObject->Property;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator   = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PHTTP_BMO_REQ_OBJECT            pBmoReq            = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep            = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo           = (PHTTP_REQUEST_INFO          )pBmoReq->GetReqInfo((ANSC_HANDLE)pBmoReq);
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner     = NULL;
     ULONG                           ulHttpStatusCode   = HTTP_STATUS_OK;
     PANSC_TOKEN_CHAIN               pUriPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pUriPathToken      = NULL;
-    ULONG                           i                  = 0;
 
     *phQueryContext    = (ANSC_HANDLE)NULL;
     pUriPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
@@ -285,15 +281,11 @@ WebVhoProcess
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject          = (PWEB_VIRTUAL_HOST_OBJECT    )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty          = (PWEB_VIRTUAL_HOST_PROPERTY  )&pMyObject->Property;
-    PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator   = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PHTTP_BMO_REQ_OBJECT            pBmoReq            = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep            = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner     = (PWEB_RESOURCE_OWNER_OBJECT  )hQueryContext;
     PANSC_TOKEN_CHAIN               pUriPathTokenChain = (PANSC_TOKEN_CHAIN           )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
     PWEB_GENERAL_SESSION_OBJECT     pSession           = NULL;
-    BOOL                            bExpired           = FALSE;
-    ULONG                           ulCurTime          = 0;
 
     pSession =
         (PWEB_GENERAL_SESSION_OBJECT)pMyObject->IdentifyGso
@@ -444,9 +436,8 @@ WebVhoNotify
         ULONG                       ulEvent
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(ulEvent);
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT      )hBmoReq;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = NULL;
 
@@ -513,11 +504,10 @@ WebVhoConstructResponse
         ULONG                       ulStatusCode
     )
 {
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY   )&pMyObject->Property;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
     PHTTP_RESPONSE_INFO             pRepInfo     = NULL;
     char*                           pRepPhrase   = pHttpHco->GetReasonPhrase((ANSC_HANDLE)pHttpHco, ulStatusCode);
@@ -590,7 +580,6 @@ WebVhoAddHttpRepHeaders
         ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject         = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty         = (PWEB_VIRTUAL_HOST_PROPERTY   )&pMyObject->Property;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco          = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
@@ -614,8 +603,7 @@ WebVhoAddHttpRepHeaders
     }
     else
     {
-        returnStatus =
-            pHttpHco->GetClockTime
+        pHttpHco->GetClockTime
                 (
                     (ANSC_HANDLE)pHttpHco,
                     (ANSC_HANDLE)&curCalendarTime
@@ -756,8 +744,7 @@ WebVhoAddHttpRepHeaders
         }
     }
 
-    returnStatus =
-        pBmoRep->AddHeaderField
+    pBmoRep->AddHeaderField
             (
                 (ANSC_HANDLE)pBmoRep,
                 (ANSC_HANDLE)pHttpHfoSetCookie1
@@ -765,8 +752,7 @@ WebVhoAddHttpRepHeaders
 
     if ( pLsmId )
     {
-        returnStatus =
-            pBmoRep->AddHeaderField
+        pBmoRep->AddHeaderField
                 (
                     (ANSC_HANDLE)pBmoRep,
                     (ANSC_HANDLE)pHttpHfoSetCookie2
@@ -824,9 +810,7 @@ WebVhoGetResourcePath
         BOOL                        bReferred
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pMyObject          = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty          = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PHTTP_BMO_REQ_OBJECT            pBmoReq            = (PHTTP_BMO_REQ_OBJECT      )hBmoReq;
     PHTTP_REQUEST_INFO              pReqInfo           = (PHTTP_REQUEST_INFO        )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
     PHTTP_HFO_REFERER               pHttpHfoReferer    = (PHTTP_HFO_REFERER         )pBmoReq->GetHeaderField((ANSC_HANDLE)pBmoReq, HTTP_HEADER_ID_REFERER);

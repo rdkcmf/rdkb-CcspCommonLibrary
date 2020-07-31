@@ -217,7 +217,6 @@ WebSsoCancel
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject         = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty         = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-    PWEB_HTTP_DAEMON_INFO           pHttpDaemonInfo   = (PWEB_HTTP_DAEMON_INFO      )NULL;
     PHTTP_SIMPLE_SERVER_OBJECT      pHttpSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT )NULL;
     PWEB_SITE_MANAGER_OBJECT        pWebSiteManager   = (PWEB_SITE_MANAGER_OBJECT   )pMyObject->hWebSiteManager;
     ULONG                           i                 = 0;
@@ -233,7 +232,6 @@ WebSsoCancel
 
     for ( i = 0; i < pProperty->HttpDaemonCount; i++ )
     {
-        pHttpDaemonInfo   = (PWEB_HTTP_DAEMON_INFO     )&pProperty->HttpDaemonArray[i];
         pHttpSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hHttpSsoArray[i];
 
         if ( pHttpSimpleServer )

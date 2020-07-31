@@ -117,9 +117,7 @@ Bmc2EnvcoGetComTerminal
         char*                       pUserIdentifier
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY           )NULL;
 
@@ -186,9 +184,7 @@ Bmc2EnvcoAddComTerminal
         ANSC_HANDLE                 hComTerminal
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )hComTerminal;
 
     AnscAcquireLock   (&pMyObject->ComtoQueueLock);
@@ -234,9 +230,7 @@ Bmc2EnvcoDelComTerminal
         ANSC_HANDLE                 hComTerminal
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )hComTerminal;
 
     AnscAcquireLock        (&pMyObject->ComtoQueueLock);
@@ -280,9 +274,7 @@ Bmc2EnvcoDelAllComTerminals
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry      = (PSINGLE_LINK_ENTRY           )NULL;
 
@@ -377,9 +369,7 @@ Bmc2EnvcoGetCommandProperty
         char*                       pDomainName
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           ulHashIndex          = AnscHashString(pCommandName, AnscSizeOfString(pCommandName), BMC2_ENVCO_COMPO_TABLE_SIZE);
@@ -426,7 +416,6 @@ Bmc2EnvcoGetCommandProperty
                 {
                     PANSC_TOKEN_CHAIN   pTokenChain  = (PANSC_TOKEN_CHAIN)NULL;
                     PANSC_STRING_TOKEN  pStringToken = (PANSC_STRING_TOKEN)NULL;
-                    ULONG               ulCurPos     = 0;
                     char*               pCurDomain   = pDomainName;
                     char*               pSubStr      = NULL;
                     
@@ -442,7 +431,7 @@ Bmc2EnvcoGetCommandProperty
                     if(pTokenChain) /*RDKB-5887 , CID-24415, null check before use*/
                     {
 
-                        while ( pStringToken = AnscTcUnlinkToken(pTokenChain) )
+                        while (( pStringToken = AnscTcUnlinkToken(pTokenChain) ))
                         {
                             pSubStr = Bmc2EnvcoFindSubStrNoCase(pCurDomain, pStringToken->Name);
 
@@ -535,9 +524,7 @@ Bmc2EnvcoAddCommandProperty
         ANSC_HANDLE                 hCommandInsertBefore
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )hCommandProperty;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandPropRef  = (PBMC2_COMMAND_PROPERTY       )hCommandInsertBefore;
     ULONG                           ulHashIndex          = AnscHashString(pBmc2CommandProperty->CommandName, AnscSizeOfString(pBmc2CommandProperty->CommandName), BMC2_ENVCO_COMPO_TABLE_SIZE);
@@ -602,9 +589,7 @@ Bmc2EnvcoDelCommandProperty
         char*                       pDomainNamePattern
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           ulHashIndex          = AnscHashString(pCommandName, AnscSizeOfString(pCommandName), BMC2_ENVCO_COMPO_TABLE_SIZE);
@@ -735,9 +720,7 @@ Bmc2EnvcoDelAllCommandProperties
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry          = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           i                    = 0;

@@ -105,9 +105,7 @@ SysRboDelAllFolders
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -161,9 +159,7 @@ SysRboDelAllRecords
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 

@@ -112,7 +112,6 @@ SlapOwoUoacAttachObjWrapper
         ANSC_HANDLE                 hObjWrapper
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OWO_UOAC_OBJECT           pMyObject    = (PSLAP_OWO_UOAC_OBJECT   )hThisObject;
     PSLAP_OBJ_WRAPPER_OBJECT        pObjWrapper  = (PSLAP_OBJ_WRAPPER_OBJECT)hObjWrapper;
     ULONG                           ulHashIndex  = AnscHashUlong((ULONG)pObjWrapper, SLAP_OWOUOAC_OWO_TABLE_SIZE);
@@ -162,7 +161,6 @@ SlapOwoUoacDetachObjWrapper
         ANSC_HANDLE                 hObjWrapper
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OWO_UOAC_OBJECT           pMyObject    = (PSLAP_OWO_UOAC_OBJECT   )hThisObject;
     PSLAP_OBJ_WRAPPER_OBJECT        pObjWrapper  = (PSLAP_OBJ_WRAPPER_OBJECT)hObjWrapper;
     ULONG                           ulHashIndex  = AnscHashUlong((ULONG)pObjWrapper, SLAP_OWOUOAC_OWO_TABLE_SIZE);
@@ -319,7 +317,6 @@ SlapOwoUoacCleanOwoTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OWO_UOAC_OBJECT           pMyObject    = (PSLAP_OWO_UOAC_OBJECT   )hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf   = (PSLAP_GOA_INTERFACE     )pMyObject->hSlapGoaIf;
     PSLAP_OBJ_WRAPPER_OBJECT        pObjWrapper  = (PSLAP_OBJ_WRAPPER_OBJECT)NULL;
@@ -345,8 +342,7 @@ SlapOwoUoacCleanOwoTable
 
                         if ( pSlapGoaIf )
                         {
-                            returnStatus =
-                                pSlapGoaIf->RelObjectAccess
+                            pSlapGoaIf->RelObjectAccess
                                     (
                                         pSlapGoaIf->hOwnerContext,
                                         (ANSC_HANDLE)pObjWrapper
@@ -363,8 +359,7 @@ SlapOwoUoacCleanOwoTable
 
                         if ( pSlapGoaIf )
                         {
-                            returnStatus =
-                                pSlapGoaIf->DeleteObject
+                            pSlapGoaIf->DeleteObject
                                     (
                                         pSlapGoaIf->hOwnerContext,
                                         (ANSC_HANDLE)pObjWrapper

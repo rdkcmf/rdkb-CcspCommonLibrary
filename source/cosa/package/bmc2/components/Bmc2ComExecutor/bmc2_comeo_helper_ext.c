@@ -116,8 +116,6 @@ CreateBmc2ComeoReaderComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBMC2_COMEO_READER_OBJECT       pReader         = NULL;
 
     return  Bmc2ComeoReaderCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

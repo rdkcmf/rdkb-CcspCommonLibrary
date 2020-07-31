@@ -119,7 +119,7 @@ AnscQioCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ AnscQioRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject    = (PANSC_QUERY_INTERFACE_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoIf       = (PANSC_ATOM_TABLE_OBJECT     )pMyObject->hAtoIf;
 
@@ -232,7 +231,6 @@ AnscQioEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject    = (PANSC_QUERY_INTERFACE_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoIf       = (PANSC_ATOM_TABLE_OBJECT     )pMyObject->hAtoIf;
 
@@ -295,7 +293,6 @@ AnscQioInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject    = (PANSC_QUERY_INTERFACE_OBJECT)hThisObject;
 
     /*

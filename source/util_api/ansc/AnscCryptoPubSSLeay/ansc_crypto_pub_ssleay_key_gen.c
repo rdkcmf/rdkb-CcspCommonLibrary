@@ -101,6 +101,11 @@
 
 **********************************************************************/
 
+DSA *DSA_generate_parameters(int bits,
+                             unsigned char *seed, int seed_len,
+                             int *counter_ret, unsigned long *h_ret, void
+                              (*callback) (int, int, void *), void *cb_arg);
+
 static unsigned char DSA_key_seed[20]={
 	0xd5,0x01,0x4e,0x4b,0x60,0xef,0x2b,0xa8,
     0xb6,0x21,0x1b,0x40,0x62,0xba,0x32,0x24,
@@ -115,6 +120,8 @@ AnscCryptoPubSSLeayGenKeyPairRandomly
         ULONG                           ulKeyOctets
     )
 {
+    UNREFERENCED_PARAMETER(ulKeyOctets);
+    UNREFERENCED_PARAMETER(pParams);
     /***********************************************************
                     DEFINITION OF LOCAL VARIABLES
     ***********************************************************/
@@ -178,6 +185,9 @@ AnscCryptoPubSSLeayGenRSAKeyPairRandomly
         ULONG                       ulKeyOctets
     )
 {
+    UNREFERENCED_PARAMETER(pPublicKey);
+    UNREFERENCED_PARAMETER(pPrivateKey);
+    UNREFERENCED_PARAMETER(ulKeyOctets);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -217,12 +227,13 @@ AnscCryptoPubSSLeayGenDSAKeyPairRandomly
         ULONG                       ulKeyOctets
     )
 {
+    UNREFERENCED_PARAMETER(pPublicKey);
+    UNREFERENCED_PARAMETER(pPrivateKey);
     DSA                             *pDSA;
     int                             nCounter;
     unsigned long                   ulRet;
-    ANSC_STATUS                       returnStatus;
 
-    pDSA = DSA_generate_parameters
+    pDSA = (DSA*)DSA_generate_parameters
               (
                   ulKeyOctets * 8, 
                   DSA_key_seed, 

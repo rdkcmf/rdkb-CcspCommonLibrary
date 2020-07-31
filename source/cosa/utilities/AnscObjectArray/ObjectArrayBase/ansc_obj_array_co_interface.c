@@ -116,8 +116,6 @@ AnscCreateObjectArrayComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_ARRAY_OBJECT       pObjectArray    = NULL;
 
     return  AnscObjectArrayCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

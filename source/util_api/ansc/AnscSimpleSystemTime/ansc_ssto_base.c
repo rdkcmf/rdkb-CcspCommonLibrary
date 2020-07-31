@@ -121,7 +121,7 @@ AnscSstoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = NULL;
 
@@ -189,7 +189,6 @@ AnscSstoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     PANSC_STS_INTERFACE             pStsIf       = (PANSC_STS_INTERFACE)pMyObject->hStsIf;
 
@@ -236,7 +235,6 @@ AnscSstoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                    returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT   pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     PANSC_STS_INTERFACE            pStsIf       = (PANSC_STS_INTERFACE)pMyObject->hStsIf;
 
@@ -311,7 +309,6 @@ AnscSstoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject     = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
 

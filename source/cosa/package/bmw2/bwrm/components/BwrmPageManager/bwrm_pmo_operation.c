@@ -106,10 +106,7 @@ BwrmPmoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
 
     if ( pMyObject->bActive )
     {
@@ -154,9 +151,7 @@ BwrmPmoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
 
     if ( !pMyObject->bActive )
@@ -206,10 +201,8 @@ BwrmPmoCacheTimerInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     ULONG                           ulCurTime         = AnscGetTickInSeconds();
 
     if ( (ulCurTime - pMyObject->Timestamp) > pProperty->CacheTimeout )

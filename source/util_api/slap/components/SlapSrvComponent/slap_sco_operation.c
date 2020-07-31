@@ -108,9 +108,7 @@ SlapScoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_COMPONENT_OBJECT      pMyObject    = (PSLAP_SRV_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -145,9 +143,7 @@ SlapScoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_COMPONENT_OBJECT      pMyObject    = (PSLAP_SRV_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -193,7 +189,6 @@ SlapScoMatch1
         ULONG                       instance_id
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_COMPONENT_OBJECT      pMyObject    = (PSLAP_SRV_COMPONENT_OBJECT)hThisObject;
 
     if ( !obj_name || !pMyObject->ObjName )
@@ -271,9 +266,11 @@ SlapScoInvokeDispatch
         SLAP_VARIABLE**             return_var
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_COMPONENT_OBJECT      pMyObject    = (PSLAP_SRV_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(method_name);
+    UNREFERENCED_PARAMETER(params_in);
+    UNREFERENCED_PARAMETER(params_out);
+    UNREFERENCED_PARAMETER(return_var);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 

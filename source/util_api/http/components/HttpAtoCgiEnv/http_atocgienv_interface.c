@@ -117,8 +117,5 @@ HttpCreateAtoCgiEnv
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_CGIENV_OBJECT         pHttpAtoCgiEnv = NULL;
-
     return  HttpAtoCgiEnvCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

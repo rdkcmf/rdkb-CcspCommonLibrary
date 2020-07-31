@@ -631,7 +631,7 @@ CcspLog_SetBulkParamValues
         FUNCTIONS IMPLEMENTED IN DSLH_DMAGNT_EXPORTED.C
 ***********************************************************/
 
-BOOL
+ANSC_STATUS
 COSANotifyValueChange
     (
         void*                       hDmlAgent,

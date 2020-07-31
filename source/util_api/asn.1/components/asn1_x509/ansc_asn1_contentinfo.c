@@ -121,7 +121,7 @@ AnscAsn1CreateContentInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_CONTENTINFO          pThisObject  = NULL;
 
     /*
@@ -215,6 +215,7 @@ AnscAsn1ContentInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -248,6 +249,7 @@ AnscAsn1ContentInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -356,7 +358,6 @@ AnscAsn1CreateData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DATA                 pThisObject  = NULL;
 
     /*
@@ -406,7 +407,7 @@ AnscAsn1CreateSignedData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_SIGNEDDATA           pThisObject  = NULL;
 
     /*
@@ -575,6 +576,7 @@ AnscAsn1SignedDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -623,6 +625,7 @@ AnscAsn1SignedDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -960,7 +963,6 @@ AnscAsn1SignedDataAddCertificate
     )
 {
     PANSC_ASN1_SIGNEDDATA           pThisObject  = (PANSC_ASN1_SIGNEDDATA)hThisObject;
-    PANSC_ASN1_CERTIFICATE          pCertificate = (PANSC_ASN1_CERTIFICATE)hCertificate;
     ANSC_STATUS                     retStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_CERTIFICATES         pCerts;
     PANSC_ASN1_SETOF                pSignerInfos;
@@ -1960,7 +1962,6 @@ AnscAsn1CreateDigestAlgorithmIdentifiers
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DIGESTALGORITHMIDENTIFIERS 
                                     pThisObject  = NULL;
 
@@ -2018,6 +2019,7 @@ AnscAsn1DigestAlgorithmIdentifiersIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2047,7 +2049,6 @@ AnscAsn1CreateCertificates
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTIFICATES         pThisObject  = NULL;
 
     /*
@@ -2104,6 +2105,7 @@ AnscAsn1CertificatesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2133,7 +2135,6 @@ AnscAsn1CreateCertificateRevocationLists
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTIFICATEREVOCATIONLISTS 
                                     pThisObject  = NULL;
 
@@ -2191,6 +2192,7 @@ AnscAsn1CertificateRevocationListsIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2220,7 +2222,6 @@ AnscAsn1CreateSignerInfos
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SIGNERINFOS          pThisObject  = NULL;
 
     /*
@@ -2277,6 +2278,7 @@ AnscAsn1SignerInfosIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2315,7 +2317,7 @@ AnscAsn1CreateSignerInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_SIGNERINFO           pThisObject  = NULL;
     PANSC_ASN1_OBJECT               pChild;
 
@@ -2479,6 +2481,7 @@ AnscAsn1SignerInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -2531,6 +2534,7 @@ AnscAsn1SignerInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2586,7 +2590,7 @@ AnscAsn1CreateIssuerAndSerialNumber
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ISSUERANDSERIALNUMBER 
                                     pThisObject  = NULL;
 
@@ -2675,6 +2679,8 @@ AnscAsn1IssuerAndSerialNumberCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2688,6 +2694,7 @@ AnscAsn1IssuerAndSerialNumberGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2718,7 +2725,6 @@ AnscAsn1CreateDigestEncryptionAlgorithmIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DIGESTENCRYPTIONALGORITHMIDENTIFIER 
                                     pThisObject  = NULL;
 
@@ -2761,7 +2767,6 @@ AnscAsn1CreateEncryptedDigest
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ENCRYPTEDDIGEST      pThisObject  = NULL;
 
     /*
@@ -2807,7 +2812,7 @@ AnscAsn1CreateDigestInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DIGESTINFO           pThisObject  = NULL;
 
     /*
@@ -2895,6 +2900,8 @@ AnscAsn1DigestInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2908,6 +2915,7 @@ AnscAsn1DigestInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2943,7 +2951,7 @@ AnscAsn1CreateEnvelopedData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ENVELOPEDDATA        pThisObject  = NULL;
 
     /*
@@ -3045,6 +3053,8 @@ AnscAsn1EnvelopedDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3058,6 +3068,7 @@ AnscAsn1EnvelopedDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3092,7 +3103,6 @@ AnscAsn1CreateRecipientInfos
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_RECIPIENTINFOS       pThisObject  = NULL;
 
     /*
@@ -3149,6 +3159,7 @@ AnscAsn1RecipientInfosIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -3183,7 +3194,7 @@ AnscAsn1CreateEncryptedContentInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ENCRYPTEDCONTENTINFO pThisObject  = NULL;
 
     /*
@@ -3285,6 +3296,7 @@ AnscAsn1EncryptedContentInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3319,6 +3331,7 @@ AnscAsn1EncryptedContentInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3359,7 +3372,7 @@ AnscAsn1CreateRecipientInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_RECIPIENTINFO        pThisObject  = NULL;
 
     /*
@@ -3473,6 +3486,8 @@ AnscAsn1RecipientInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3486,6 +3501,7 @@ AnscAsn1RecipientInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3524,7 +3540,6 @@ AnscAsn1CreateEncryptedContent
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ENCRYPTEDCONTENT     pThisObject  = NULL;
 
     /*
@@ -3566,7 +3581,6 @@ AnscAsn1CreatePKCS7EncryptedKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PKCS7ENCRYPTEDKEY    pThisObject  = NULL;
 
     /*
@@ -3617,7 +3631,7 @@ AnscAsn1CreateSignedAndEnvelopedData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_SIGNEDANDENVELOPEDDATA 
                                     pThisObject  = NULL;
 
@@ -3772,6 +3786,7 @@ AnscAsn1SignedAndEnvelopedDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3824,6 +3839,7 @@ AnscAsn1SignedAndEnvelopedDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3880,7 +3896,7 @@ AnscAsn1CreateDigestedData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DIGESTEDDATA         pThisObject  = NULL;
 
     /*
@@ -3994,6 +4010,8 @@ AnscAsn1DigestedDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -4007,6 +4025,7 @@ AnscAsn1DigestedDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -4046,7 +4065,6 @@ AnscAsn1CreateDigest
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DIGEST               pThisObject  = NULL;
 
     /*
@@ -4092,7 +4110,7 @@ AnscAsn1CreateEncryptedData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ENCRYPTEDDATA        pThisObject  = NULL;
 
     /*
@@ -4180,6 +4198,8 @@ AnscAsn1EncryptedDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
 
@@ -4194,6 +4214,7 @@ AnscAsn1EncryptedDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -4235,7 +4256,6 @@ AnscAsn1CreateContentData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CONTENTDATA          pThisObject  = NULL;
 
     /*
@@ -4369,6 +4389,7 @@ AnscAsn1ContentDataGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case CONTENTDATA_MASK_DATA:
@@ -4419,6 +4440,8 @@ AnscAsn1ContentDataCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -4432,6 +4455,7 @@ AnscAsn1ContentDataGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.2.840.113549.1.7.1",FALSE))
@@ -4482,6 +4506,7 @@ AnscAsn1ContentDataGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case CONTENTDATA_MASK_DATA:

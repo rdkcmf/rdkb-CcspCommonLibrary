@@ -121,7 +121,6 @@ SysRroGetBirthTime
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->BirthTime;
@@ -163,7 +162,6 @@ SysRroSetBirthTime
         ULONG                       ulTime
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     pMyObject->BirthTime = ulTime;
@@ -202,7 +200,6 @@ SysRroGetRenderAttr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hRenderAttr;
@@ -244,7 +241,6 @@ SysRroSetRenderAttr
         ANSC_HANDLE                 hRenderAttr
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject      = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
     PSYS_RRO_RENDER_ATTR            pDstRenderAttr = (PSYS_RRO_RENDER_ATTR         )pMyObject->hRenderAttr;
     PSYS_RRO_RENDER_ATTR            pSrcRenderAttr = (PSYS_RRO_RENDER_ATTR         )hRenderAttr;
@@ -312,7 +308,6 @@ SysRroGetParentFolder
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hParentFolder;
@@ -354,7 +349,6 @@ SysRroSetParentFolder
         ANSC_HANDLE                 hFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     pMyObject->hParentFolder = hFolder;
@@ -393,7 +387,6 @@ SysRroGetUserContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hUserContext;
@@ -435,7 +428,6 @@ SysRroSetUserContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     pMyObject->hUserContext = hContext;
@@ -474,7 +466,6 @@ SysRroGetUserReserved
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->UserReserved;
@@ -516,7 +507,6 @@ SysRroSetUserReserved
         ULONG                       reserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     pMyObject->UserReserved = reserved;
@@ -555,7 +545,6 @@ SysRroGetRecordName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->RecordName;
@@ -597,7 +586,6 @@ SysRroSetRecordName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     if ( pMyObject->RecordName )
@@ -655,7 +643,6 @@ SysRroGetRecordType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->RecordType;
@@ -697,9 +684,8 @@ SysRroSetRecordType
         ULONG                       ulType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulType);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -734,7 +720,6 @@ SysRroGetPermission
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->Permission;
@@ -776,7 +761,6 @@ SysRroSetPermission
         ULONG                       permission
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
 
     pMyObject->Permission = permission;
@@ -815,7 +799,6 @@ SysRroGetContentType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
     PSYS_RRO_RENDER_ATTR            pRenderAttr  = (PSYS_RRO_RENDER_ATTR         )pMyObject->hRenderAttr;
 
@@ -863,8 +846,7 @@ SysRroSetContentType
         ULONG                       ulType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulType);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

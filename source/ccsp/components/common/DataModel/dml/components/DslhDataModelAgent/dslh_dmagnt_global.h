@@ -145,4 +145,11 @@
 
 /*extern  PBBHM_MONO_CONTAINER_OBJECT    pBbhmMonoContainer; */
 
+SLAP_INT
+SlapVcoStringToInt
+    (
+        ANSC_HANDLE                 hThisObject,
+        char*                       var_int
+    );
+
 #endif

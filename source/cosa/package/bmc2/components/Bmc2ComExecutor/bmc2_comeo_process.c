@@ -272,7 +272,6 @@ Bmc2ComeoExecutePage
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject       = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBREE_COOKED_BSP_PAGE           pCookedPage     = (PBREE_COOKED_BSP_PAGE)hBwrmCookedPage;
-    BOOL                            bSucc           = FALSE;
     char                            *pTemplateName  = NULL;
     PBMC2_COMEO_READER_OBJECT       pReader         = NULL;
     BOOL                            bReaderOK       = FALSE;
@@ -351,7 +350,7 @@ Bmc2ComeoExecutePage
             );
 
         /* load "compiled" template into list object */
-        bSucc = pList->Load((ANSC_HANDLE)pList, (ANSC_HANDLE)pArchive);
+        pList->Load((ANSC_HANDLE)pList, (ANSC_HANDLE)pArchive);
         pArchive->Remove((ANSC_HANDLE)pArchive);
 
         pTmpl = pList->FindItem((ANSC_HANDLE)pList, pCookedPage->PagePath);
@@ -442,7 +441,7 @@ Bmc2ComeoCreateBmc2SoaIf
         ANSC_HANDLE                 hBmc2PecIf
     )
 {
-    PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBSPENG_SOA_INTERFACE           pBmc2SoaIf;
 
     pBmc2SoaIf = (PBSPENG_SOA_INTERFACE)AnscAllocateMemory(sizeof(BSPENG_SOA_INTERFACE));

@@ -207,7 +207,6 @@ AnscBetoGetSocketByOsocket
         ANSC_SOCKET                 socket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -383,7 +382,7 @@ AnscBetoAddSocket
 
     ulHashIndexAddr = AnscHashUlong
         (
-            GetAddrHashValue(&(pSocket->PeerAddress.Value), pSocket->PeerPort, pSocket->HostPort), 
+            GetAddrHashValue((UCHAR*)&(pSocket->PeerAddress.Value), pSocket->PeerPort, pSocket->HostPort), 
             ANSC_BETO_SOCKET_TABLE_SIZE
         );
 
@@ -452,7 +451,6 @@ AnscBetoDelSocketByAddr
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
 
     pSocket =
@@ -514,7 +512,6 @@ AnscBetoDelSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     ULONG                           ulHashIndex  = pSocket->HashIndex;
@@ -523,7 +520,7 @@ AnscBetoDelSocket
 
     ulHashIndexAddr = AnscHashUlong
         (
-            GetAddrHashValue(&(pSocket->PeerAddress.Value), pSocket->PeerPort, pSocket->HostPort), 
+            GetAddrHashValue((UCHAR*)&(pSocket->PeerAddress.Value), pSocket->PeerPort, pSocket->HostPort), 
             ANSC_BETO_SOCKET_TABLE_SIZE
         );
 
@@ -588,7 +585,6 @@ AnscBetoDelAllSockets
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -664,7 +660,6 @@ AnscBetoEnableRecv
         BOOL                        bEnable
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
@@ -762,7 +757,6 @@ AnscBetoEnableSend
         BOOL                        bEnable
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_BROKER_SERVER_TCP_OBJECT  pServer      = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pSocket      = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;

@@ -117,8 +117,6 @@ SlapCreateObjRecord
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord = NULL;
 
     return  SlapOroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

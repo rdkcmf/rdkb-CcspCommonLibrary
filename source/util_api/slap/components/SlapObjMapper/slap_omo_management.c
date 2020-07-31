@@ -120,9 +120,7 @@ SlapOmoMakObjBroker
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
@@ -233,9 +231,7 @@ SlapOmoGetObjBroker
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
@@ -317,11 +313,8 @@ SlapOmoGetObjEntity1
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_ENTITY_OBJECT         pObjEntity      = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -397,9 +390,7 @@ SlapOmoGetObjEntity2
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
@@ -503,12 +494,9 @@ SlapOmoAddObjEntity
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_ENTITY_OBJECT         pObjEntity      = (PSLAP_OBJ_ENTITY_OBJECT  )hObjEntity;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -604,9 +592,6 @@ SlapOmoPopObjEntity
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty      = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
-    PSLAP_OBJ_ENTITY_OBJECT         pObjEntity     = NULL;
 
     returnStatus =
         pMyObject->DelObjEntity
@@ -663,13 +648,11 @@ SlapOmoDelObjEntity
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_ENTITY_OBJECT         pObjEntity      = NULL;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = NULL;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -790,11 +773,8 @@ SlapOmoGetObjProxy1
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_PROXY_OBJECT          pObjProxy       = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -870,9 +850,7 @@ SlapOmoGetObjProxy2
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pRootObjBroker;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )NULL;
@@ -976,12 +954,9 @@ SlapOmoAddObjProxy
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_PROXY_OBJECT          pObjProxy       = (PSLAP_OBJ_PROXY_OBJECT   )hObjProxy;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 
@@ -1077,9 +1052,6 @@ SlapOmoPopObjProxy
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty      = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
-    PSLAP_OBJ_PROXY_OBJECT          pObjProxy      = NULL;
 
     returnStatus =
         pMyObject->DelObjProxy
@@ -1136,13 +1108,11 @@ SlapOmoDelObjProxy
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject       = (PSLAP_OBJ_MAPPER_OBJECT  )hThisObject;
-    PSLAP_OBJ_MAPPER_PROPERTY       pProperty       = (PSLAP_OBJ_MAPPER_PROPERTY)&pMyObject->Property;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker  = (PSLAP_OBJ_BROKER_OBJECT  )pMyObject->hRootObjBroker;
     PSLAP_OBJ_PROXY_OBJECT          pObjProxy       = NULL;
     PSLAP_OBJ_BROKER_OBJECT         pThisObjBroker  = NULL;
     PSLAP_OBJ_BROKER_OBJECT         pNextObjBroker  = NULL;
     PANSC_TOKEN_CHAIN               pPathTokenChain = NULL;
-    PANSC_STRING_TOKEN              pPathToken      = NULL;
 
     pPathTokenChain = (PANSC_TOKEN_CHAIN)AnscAllocateMemory(sizeof(ANSC_TOKEN_CHAIN));
 

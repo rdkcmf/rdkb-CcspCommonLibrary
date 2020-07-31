@@ -117,8 +117,6 @@ BwrmCreatePageManager
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = NULL;
 
     return  BwrmPmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

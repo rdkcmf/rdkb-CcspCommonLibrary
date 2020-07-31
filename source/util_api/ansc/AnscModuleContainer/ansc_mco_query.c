@@ -217,7 +217,6 @@ AnscMcoQueryModuleIf
         char*                       pIfName
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_MODULE_CONTAINER_OBJECT   pMyObject      = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
     PANSC_QUERY_INTERFACE_OBJECT    pQueryIfObject = (PANSC_QUERY_INTERFACE_OBJECT )pMyObject->hQueryIfObject;
     ANSC_HANDLE                     hInterface     = (ANSC_HANDLE                  )NULL;

@@ -98,7 +98,6 @@ AnscAsn1CreateDHKeyAgreement
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DHKEYAGREEMENT       pThisObject  = NULL;
 
     /*
@@ -217,6 +216,7 @@ AnscAsn1DHKeyAgreementCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -246,6 +246,7 @@ AnscAsn1DHKeyAgreementGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:

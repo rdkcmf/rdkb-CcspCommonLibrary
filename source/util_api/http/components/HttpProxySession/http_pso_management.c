@@ -113,16 +113,10 @@ HttpPsoGetLastBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
-    ULONG                           ulBmoState   = HTTP_BMO_STATE_EMPTY;
-
+    
     AnscAcquireLock(&pMyObject->BmoReqSListLock);
     pSLinkEntry = AnscSListGetFirstEntry(&pMyObject->BmoReqSList);
     AnscReleaseLock(&pMyObject->BmoReqSListLock);
@@ -166,16 +160,10 @@ HttpPsoGetLastBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
-    ULONG                           ulBmoState   = HTTP_BMO_STATE_EMPTY;
-
+    
     AnscAcquireLock(&pMyObject->BmoRepSListLock);
     pSLinkEntry = AnscSListGetFirstEntry(&pMyObject->BmoRepSList);
     AnscReleaseLock(&pMyObject->BmoRepSListLock);
@@ -219,12 +207,7 @@ HttpPsoGetCurBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBmoState   = HTTP_BMO_STATE_EMPTY;
@@ -281,12 +264,7 @@ HttpPsoGetCurBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulBmoState   = HTTP_BMO_STATE_EMPTY;
@@ -349,12 +327,7 @@ HttpPsoGetBmoReqByTid
         ULONG                       id
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -417,12 +390,7 @@ HttpPsoGetBmoRepByTid
         ULONG                       id
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -479,12 +447,10 @@ HttpPsoAddNewBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
     PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
 
     pBmoReq = (PHTTP_BMO_REQ_OBJECT)pSimpleProxy->AcquireBmoReq((ANSC_HANDLE)pSimpleProxy);
@@ -538,11 +504,9 @@ HttpPsoAddNewBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
     PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
     PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
@@ -579,8 +543,7 @@ HttpPsoAddNewBmoRep
         if ( pHttpReqInfo )
         {
             *pHttpReqInfo = *(PHTTP_REQUEST_INFO)pBmoReq->GetReqInfo((ANSC_HANDLE)pBmoReq);
-            returnStatus  =
-                pBmoRep->SetReqInfo
+             pBmoRep->SetReqInfo
                     (
                         (ANSC_HANDLE)pBmoRep,
                         (ANSC_HANDLE)pHttpReqInfo
@@ -622,10 +585,8 @@ HttpPsoDelAllBmoReqs
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
     PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -638,8 +599,7 @@ HttpPsoDelAllBmoReqs
         pBmoReq      = ACCESS_HTTP_BMO_REQ_OBJECT(pSLinkEntry);
         pSLinkEntry  = AnscSListPopEntry(&pMyObject->BmoReqSList);
 
-        returnStatus =
-            pSimpleProxy->ReleaseBmoReq
+        pSimpleProxy->ReleaseBmoReq
                 (
                     (ANSC_HANDLE)pSimpleProxy,
                     (ANSC_HANDLE)pBmoReq
@@ -682,10 +642,8 @@ HttpPsoDelAllBmoReps
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
     PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -698,8 +656,7 @@ HttpPsoDelAllBmoReps
         pBmoRep      = ACCESS_HTTP_BMO_REP_OBJECT(pSLinkEntry);
         pSLinkEntry  = AnscSListPopEntry(&pMyObject->BmoRepSList);
 
-        returnStatus =
-            pSimpleProxy->ReleaseBmoRep
+        pSimpleProxy->ReleaseBmoRep
                 (
                     (ANSC_HANDLE)pSimpleProxy,
                     (ANSC_HANDLE)pBmoRep

@@ -105,13 +105,11 @@ AnscDeuoRecvTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject     = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pServer       = (PANSC_DAEMON_SERVER_UDP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSUO_WORKER_OBJECT        pWorker       = (PANSC_DSUO_WORKER_OBJECT      )pServer->hWorker;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket       = NULL;
     PANSC_DSUO_PACKET_OBJECT        pPacket       = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulLastCleanAt = AnscGetTickInSeconds();
 
     AnscTrace("AnscDeuoRecvTask is activated ...!\n");
@@ -175,15 +173,14 @@ AnscDeuoRecvTask
          * them equally among engines. To obey the first-come-first-serve rule, we pop packet out
          * of the waiting queue from the head and associate it with a socket object.
          */
-        while ( pPacket =
+        while (( pPacket =
                     (PANSC_DSUO_PACKET_OBJECT)pMyObject->GetPacket
                         (
                             (ANSC_HANDLE)pMyObject
-                        ) )
+                        )) )
         {
             if ( (AnscGetTickInSeconds() - pPacket->RecvAt) > pMyObject->PacketTimeOut )
             {
-                returnStatus =
                     pServer->ReleasePacket
                         (
                             (ANSC_HANDLE)pServer,
@@ -211,7 +208,6 @@ AnscDeuoRecvTask
 
                 if ( !pSocket )
                 {
-                    returnStatus =
                         pServer->ReleasePacket
                             (
                                 (ANSC_HANDLE)pServer,
@@ -249,7 +245,6 @@ AnscDeuoRecvTask
                     pSocket->Close ((ANSC_HANDLE)pSocket);
                     pSocket->Return((ANSC_HANDLE)pSocket);
 
-                    returnStatus =
                         pServer->ReleasePacket
                             (
                                 (ANSC_HANDLE)pServer,
@@ -259,7 +254,6 @@ AnscDeuoRecvTask
                     continue;
                 }
 
-                returnStatus =
                     pMyObject->AddSocket
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -269,14 +263,12 @@ AnscDeuoRecvTask
 
             if ( pSocket->bRecvEnabled )
             {
-                returnStatus =
                     pSocket->SetPacket
                         (
                             (ANSC_HANDLE)pSocket,
                             (ANSC_HANDLE)pPacket
                         );
 
-                returnStatus =
                     pMyObject->Recv
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -285,7 +277,6 @@ AnscDeuoRecvTask
             }
             else
             {
-                returnStatus =
                     pServer->ReleasePacket
                         (
                             (ANSC_HANDLE)pServer,

@@ -430,7 +430,7 @@ BspEng_VC_Slap2Var
                     {
                         pVars[i]->Type          = BspVar_String;
 
-                        pVars[i]->Value.str    = AnscDupString(pStringArray->Array.arrayString[i]);
+                        pVars[i]->Value.str    = (char *)AnscDupString((PUCHAR)pStringArray->Array.arrayString[i]);
                         pVars[i]->Size         = pVars[i]->Value.str ? AnscSizeOfString(pVars[i]->Value.str) : 0;
 
                         ACCESS_BSP_TEMPLATE_VAR_CLEAR_TEMP_FLAG(pVars[i]);
@@ -693,7 +693,6 @@ BspEng_PrepBspArrayVar
     )
 {
     PBSP_TEMPLATE_VAR_OBJECT        pVar        = (PBSP_TEMPLATE_VAR_OBJECT)hArrayVar;
-    PBSP_TEMPLATE_RUNTIME_OBJECT    pRt         = (PBSP_TEMPLATE_RUNTIME_OBJECT)pVar->hRuntime;
     ANSC_STATUS                     status      = ANSC_STATUS_SUCCESS;
     ANSC_HANDLE                     hBulkData   = (ANSC_HANDLE)NULL;
     ULONG                           ulTotalSize = 0;
@@ -708,6 +707,8 @@ BspEng_PrepBspArrayVar
 
             bBulkData   = TRUE;
 
+            break;
+        default:
             break;
     }
 
@@ -730,8 +731,6 @@ BspEng_PrepBspArrayVar
     }
     else
     {
-        PBSP_TEMPLATE_VAR_OBJECT    *pOldVars   = (PBSP_TEMPLATE_VAR_OBJECT *)pVar->Value.arrayItems.hVars;
-        ULONG                       ulOldItems  = pVar->Value.arrayItems.ulSize;
         PBSP_TEMPLATE_VAR_OBJECT    *pVars      = NULL;
         ULONG                       i;
 
@@ -943,7 +942,6 @@ BspEng_PreparePropertyParamList
      * This function is called to prepare input parameter list.
      */
     PBSP_TEMPLATE_RUNTIME_OBJECT    pRt             = (PBSP_TEMPLATE_RUNTIME_OBJECT)hRuntime;
-    PSLAP_PARAMETER_LIST            pSlapParamList  = (PSLAP_PARAMETER_LIST)hSlapParamList;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBSP_TEMPLATE_VAR_OBJECT        pVars[2];
     ULONG                           ulVars          = bGetProperty?1:2;
@@ -963,7 +961,7 @@ BspEng_PreparePropertyParamList
     }
 
     pName->Type         = BspVar_String;
-    pName->Value.str    = pPropertyName;
+    pName->Value.str    = (PCHAR)pPropertyName;
     pName->bTemp        = TRUE;
 
     pVars[0]            = pName;
@@ -1464,6 +1462,8 @@ BspEng_VC_VarArray2Slap
             }
 
             break;
+        default:
+	    break;
     }
 
     return status;
@@ -1887,6 +1887,9 @@ BspEng_VC_GetBulkDataByteSize
 
             ulTotalSize = ulItems * sizeof(SLAP_OBJECT);
 
+            break;
+
+        default:
             break;
     }
 

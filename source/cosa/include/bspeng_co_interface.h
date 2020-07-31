@@ -169,7 +169,7 @@ typedef  LONG                                       BSP_TEMPLATE_DOUBLE, *PBSP_T
         if (pHasFrac)                                                                   \
             *pHasFrac   = FALSE;                                                        \
                                                                                         \
-        pPos    = pBuf;                                                                 \
+        pPos    = (char *)pBuf;                                                                 \
         if (pEnd)                                                                       \
             *pEnd   = pPos;                                                             \
                                                                                         \

@@ -127,7 +127,6 @@ HttpPsoVer2GetWamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hWamIf;
@@ -169,7 +168,6 @@ HttpPsoVer2SetWamIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hWamIf = hInterface;
@@ -208,7 +206,6 @@ HttpPsoVer2GetSbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hSbcIf;
@@ -250,7 +247,6 @@ HttpPsoVer2SetSbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hSbcIf = hInterface;
@@ -289,7 +285,6 @@ HttpPsoVer2GetCbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hCbcIf;
@@ -331,7 +326,6 @@ HttpPsoVer2SetCbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hCbcIf = hInterface;
@@ -370,7 +364,6 @@ HttpPsoVer2GetPbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hPbcIf;
@@ -412,7 +405,6 @@ HttpPsoVer2SetPbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hPbcIf = hInterface;
@@ -451,7 +443,6 @@ HttpPsoVer2GetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -493,7 +484,6 @@ HttpPsoVer2SetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -532,7 +522,6 @@ HttpPsoVer2GetClientSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hClientSocket;
@@ -574,7 +563,6 @@ HttpPsoVer2SetClientSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hClientSocket = hSocket;
@@ -613,7 +601,6 @@ HttpPsoVer2GetSbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hSbcContext;
@@ -655,7 +642,6 @@ HttpPsoVer2SetSbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hSbcContext = hContext;
@@ -694,7 +680,6 @@ HttpPsoVer2GetCbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->hCbcContext;
@@ -736,7 +721,6 @@ HttpPsoVer2SetCbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->hCbcContext = hContext;
@@ -775,7 +759,6 @@ HttpPsoVer2GetSbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->SbcPmode;
@@ -817,7 +800,6 @@ HttpPsoVer2SetSbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->SbcPmode = ulPmode;
@@ -856,7 +838,6 @@ HttpPsoVer2GetCbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->CbcPmode;
@@ -898,7 +879,6 @@ HttpPsoVer2SetCbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->CbcPmode = ulPmode;
@@ -937,7 +917,6 @@ HttpPsoVer2GetSessionState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     return  pMyObject->SessionState;
@@ -979,7 +958,6 @@ HttpPsoVer2SetSessionState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject    = (PHTTP_PSO_VER2_OBJECT)hThisObject;
 
     pMyObject->SessionState = ulState;
@@ -1064,10 +1042,8 @@ HttpPsoVer2Reset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PSO_VER2_OBJECT           pMyObject      = (PHTTP_PSO_VER2_OBJECT      )hThisObject;
-    PHTTP_ADVANCED_PROXY_OBJECT     pAdvancedProxy = (PHTTP_ADVANCED_PROXY_OBJECT)pMyObject->hOwnerContext;
-
+    
     pMyObject->hClientSocket = (ANSC_HANDLE)NULL;
     pMyObject->hSbcContext   = (ANSC_HANDLE)NULL;
     pMyObject->hCbcContext   = (ANSC_HANDLE)NULL;

@@ -186,8 +186,6 @@ SlapCreateBmc2Input
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_INPUT_OBJECT         pSlapBmc2Input = NULL;
 
     return  SlapBmc2InoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -224,9 +222,7 @@ SlapBmc2InoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_INPUT_OBJECT         pSlapBmc2Input = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapBmc2Ino;
 }
 
@@ -262,8 +258,6 @@ SlapBmc2InoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_INPUT_OBJECT         pSlapBmc2Input = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapBmc2Ino;
 }

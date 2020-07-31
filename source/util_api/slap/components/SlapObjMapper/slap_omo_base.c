@@ -119,7 +119,7 @@ SlapOmoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapOmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pMyObject->hRootObjBroker;
 
@@ -237,7 +236,6 @@ SlapOmoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT)hThisObject;
     PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pMyObject->hRootObjBroker;
 
@@ -300,7 +298,6 @@ SlapOmoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject    = (PSLAP_OBJ_MAPPER_OBJECT)hThisObject;
 
     /*

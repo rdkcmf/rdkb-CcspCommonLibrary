@@ -128,9 +128,7 @@ SlapVcoBoolToString
         SLAP_BOOL                   var_bool
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if ( var_bool == 0 )
     {
         return  AnscCloneString("false");
@@ -179,8 +177,7 @@ SlapVcoIntToString
         SLAP_INT                    var_int
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -231,8 +228,7 @@ SlapVcoUcharArrayToString
         SLAP_UCHAR_ARRAY*           var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = NULL;
     ULONG                           i            = 0;
 
@@ -300,8 +296,7 @@ SlapVcoUcharArrayToBase64String
         SLAP_UCHAR_ARRAY*           var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i            = 0;
 
     if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
@@ -313,7 +308,7 @@ SlapVcoUcharArrayToBase64String
         i = var_uchar_array->VarCount; /*RDKB-6307, CID-24317, use after NULL check*/
 
         return 
-        AnscBase64Encode
+        (char*)AnscBase64Encode
             (
                 (const PUCHAR)var_uchar_array->Array.arrayUchar,
                 i
@@ -357,10 +352,8 @@ SlapVcoUcharArrayToString2
         SLAP_UCHAR_ARRAY*           var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = NULL;
-    ULONG                           i            = 0;
 
     /*RDKB-6307, CID-24230, Null check before use*/
     if ( !var_uchar_array || (var_uchar_array->VarCount == 0) )
@@ -423,8 +416,7 @@ SlapVcoUint32ToString
         SLAP_UINT32                 var_uint32
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -475,8 +467,7 @@ SlapVcoIp4AddrToString
         SLAP_UINT32                 ip4_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -530,8 +521,7 @@ SlapVcoIp4AddrToString2
         SLAP_UINT32                 ip4_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -587,8 +577,7 @@ SlapVcoIp4AddrListToString
         SLAP_UINT32_ARRAY*          ip4_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(ip4_addr_list? AnscAllocateMemory(32 * ip4_addr_list->VarCount + 1) : NULL);
     ULONG                           i            = 0;
     ANSC_IPV4_ADDRESS               temp_addr;
@@ -674,6 +663,7 @@ SlapVcoIp6AddrToString
         SLAP_UCHAR_ARRAY*           ip6_addr
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( ip6_addr == NULL)
     {
         return AnscCloneString("::");
@@ -719,8 +709,7 @@ SlapVcoIp6AddrListToString
         SLAP_UCHAR_ARRAY*           ip6_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(ip6_addr_list? AnscAllocateMemory(ip6_addr_list->VarCount * 4 + 1) : NULL);
     ULONG                           i            = 0;
     char*                           pTempString  = NULL;
@@ -798,8 +787,7 @@ SlapVcoMacAddrToString
         SLAP_UCHAR_ARRAY*           mac_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -861,8 +849,7 @@ SlapVcoMacAddrToString2
         SLAP_UCHAR_ARRAY*           mac_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -932,8 +919,7 @@ SlapVcoMacAddrListToString
         SLAP_UCHAR_ARRAY*           mac_addr_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(mac_addr_list? AnscAllocateMemory(mac_addr_list->VarCount * 24 / 6 + 1) : NULL);
     ULONG                           i            = 0;
 
@@ -1005,8 +991,7 @@ SlapVcoOidListToString
         SLAP_UINT32_ARRAY*          oid_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(oid_list? AnscAllocateMemory(oid_list->VarCount * 16 + 1) : NULL);
     ULONG                           i            = 0;
 
@@ -1026,7 +1011,7 @@ SlapVcoOidListToString
                 (
                     &var_string[AnscSizeOfString(var_string)],
                     "%d.",
-                    oid_list->Array.arrayUint32[i]
+                    (int)oid_list->Array.arrayUint32[i]
                 );
         }
 
@@ -1073,8 +1058,7 @@ SlapVcoCalendarTimeToString
         SLAP_HANDLE                 calendar_time
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_UNIVERSAL_TIME            pUniversalTime = (PANSC_UNIVERSAL_TIME      )calendar_time;
     char*                           var_string     = (char*                     )AnscAllocateMemory(32);
 
@@ -1134,8 +1118,7 @@ SlapVcoUint32ToHexString
         SLAP_UINT32                 var_uint32
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
 
     if ( !var_string )
@@ -1149,7 +1132,7 @@ SlapVcoUint32ToHexString
             (
                 var_string,
                 "%X",
-                var_uint32
+                (unsigned int)var_uint32
             );
     }
 

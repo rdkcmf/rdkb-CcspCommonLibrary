@@ -117,8 +117,8 @@ HttpBmoReqRcpGetDocumentRoot
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  HTTP_ROOT_URI_PATH;
 }
@@ -159,7 +159,7 @@ HttpBmoReqRcpGetPathInfo
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     char*                           pPathInfo    = (char*                        )pMyObject->RcpMpad;
@@ -222,7 +222,7 @@ HttpBmoReqRcpGetPathTranslated
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     char*                           pPathInfo    = (char*                        )pMyObject->RcpBpad;
@@ -281,9 +281,9 @@ HttpBmoReqRcpGetRemoteUser
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+ 
     return  NULL;
 }
 
@@ -323,8 +323,8 @@ HttpBmoReqRcpGetScriptName
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  NULL;
 }
@@ -365,7 +365,7 @@ HttpBmoReqRcpGetServerName
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
 
     return  pMyObject->GetServerName((ANSC_HANDLE)pMyObject);
@@ -407,7 +407,7 @@ HttpBmoReqRcpGetServerPort
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
 
     /*return  pMyObject->GetServerPort((ANSC_HANDLE)pMyObject);*/
@@ -450,8 +450,8 @@ HttpBmoReqRcpGetServerProtocol
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  HTTP_CURRENT_VERSION;
 }
@@ -492,8 +492,8 @@ HttpBmoReqRcpGetServerSoftware
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  HTTP_SERVER_PRODUCT_NAME;
 }

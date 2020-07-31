@@ -119,7 +119,7 @@ HttpAtoStatusCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_ATO_STATUS_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpAtoStatusRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
 
     AnscAtoRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpAtoStatusEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
 
     AnscAtoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,8 +266,7 @@ HttpAtoStatusInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
+     PHTTP_ATO_STATUS_OBJECT         pMyObject    = (PHTTP_ATO_STATUS_OBJECT)hThisObject;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

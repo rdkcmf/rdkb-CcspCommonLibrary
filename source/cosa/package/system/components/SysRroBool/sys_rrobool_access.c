@@ -117,7 +117,6 @@ SysRroBoolGetRecordData
         PULONG                      pulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     if ( *pulDataSize < sizeof(BOOL) )
@@ -172,7 +171,6 @@ SysRroBoolSetRecordData
         ULONG                       ulDataSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     if ( ulDataSize != sizeof(BOOL) )
@@ -216,7 +214,6 @@ SysRroBoolGetRecordValue
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     return  pMyObject->RecordValue;
@@ -258,7 +255,6 @@ SysRroBoolSetRecordValue
         BOOL                        value
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_BOOL_OBJECT            pMyObject    = (PSYS_RRO_BOOL_OBJECT)hThisObject;
 
     pMyObject->RecordValue = value;

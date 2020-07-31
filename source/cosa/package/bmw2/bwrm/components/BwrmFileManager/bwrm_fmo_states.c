@@ -112,7 +112,6 @@ BwrmFmoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
     PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -157,7 +156,6 @@ BwrmFmoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
     PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -197,7 +195,6 @@ BwrmFmoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
     PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -237,9 +234,7 @@ BwrmFmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

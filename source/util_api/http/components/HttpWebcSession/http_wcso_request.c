@@ -82,7 +82,7 @@
 
 
 #include "http_wcso_global.h"
-
+#include "ansc_xsocket_external_api.h"
 
 /**********************************************************************
 
@@ -119,14 +119,11 @@ HttpWcsoConnect
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
     PHTTP_BSP_INTERFACE             pBspIf           = (PHTTP_BSP_INTERFACE           )pMyObject->hBspIf;
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_SIMPLE_CLIENT_OBJECT      pHttpSco         = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
-    ULONG                           ulSctoMode       = ANSC_SCTO_MODE_FOREIGN_BUFFER;
-    PANSC_BUFFER_DESCRIPTOR         pBufferDesp      = NULL;
     HTTP_SCO_HOST_ADDRESSES         PeerAddr;
     BOOL                            bSameAddresses   = FALSE;
-    ANSC_IPV4_ADDRESS               ipAddr           = {1,1,1,1};
-
+    ANSC_IPV4_ADDRESS               ipAddr;
+    memset(&ipAddr, 1, sizeof(ANSC_IPV4_ADDRESS));
     AnscStartupXsocketWrapper((ANSC_HANDLE)pMyObject);
 
     AnscZeroMemory(&PeerAddr, sizeof(HTTP_SCO_HOST_ADDRESSES));
@@ -238,8 +235,6 @@ HttpWcsoRequest
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
-    PHTTP_BSP_INTERFACE             pBspIf       = (PHTTP_BSP_INTERFACE        )pMyObject->hBspIf;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     PHTTP_REQUEST_URI               pHttpReqUri  = NULL;
@@ -344,7 +339,6 @@ HttpWcsoDoOptions
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -404,7 +398,6 @@ HttpWcsoDoGet
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -464,7 +457,6 @@ HttpWcsoDoHead
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -524,7 +516,6 @@ HttpWcsoDoPost
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -584,7 +575,6 @@ HttpWcsoDoPut
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -644,7 +634,6 @@ HttpWcsoDoDelete
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -704,7 +693,6 @@ HttpWcsoDoTrace
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -764,7 +752,6 @@ HttpWcsoDoConnect
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
     PHTTP_REQUEST_URI               pReqUri      = (PHTTP_REQUEST_URI          )hReqUri;
 
     returnStatus =
@@ -819,7 +806,6 @@ HttpWcsoConnectPeer
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
-    PHTTP_BSP_INTERFACE             pBspIf           = (PHTTP_BSP_INTERFACE           )pMyObject->hBspIf;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_SIMPLE_CLIENT_OBJECT      pHttpSco         = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
     ULONG                           ulSctoMode       = ANSC_SCTO_MODE_FOREIGN_BUFFER;
@@ -860,7 +846,7 @@ TRY_NEXT:
 
     pTcpSimpleClient->SetHostAddress   ((ANSC_HANDLE)pTcpSimpleClient, pProperty->HostAddr.Dot   );
     pTcpSimpleClient->SetHostPort      ((ANSC_HANDLE)pTcpSimpleClient, pProperty->HostPort       );
-    pTcpSimpleClient->SetPeerName      ((ANSC_HANDLE)pTcpSimpleClient, pProperty->PeerName       );
+    pTcpSimpleClient->SetPeerName      ((ANSC_HANDLE)pTcpSimpleClient, (PUCHAR)pProperty->PeerName       );
     pTcpSimpleClient->SetPeerAddress   ((ANSC_HANDLE)pTcpSimpleClient, PeerAddr.Dot              );
     pTcpSimpleClient->SetPeerPort      ((ANSC_HANDLE)pTcpSimpleClient, pProperty->PeerPort       );
     pTcpSimpleClient->SetMaxMessageSize((ANSC_HANDLE)pTcpSimpleClient, HTTP_WCSO_MAX_MESSAGE_SIZE);
@@ -958,9 +944,7 @@ HttpWcsoConnectionFailed
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
     PHTTP_BSP_INTERFACE             pBspIf           = (PHTTP_BSP_INTERFACE           )pMyObject->hBspIf;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
 
@@ -970,8 +954,7 @@ HttpWcsoConnectionFailed
         {
             case    ANSC_SCTOWO_EVENT_TLS_TIMEOUT :
 
-                    returnStatus =
-                        pBspIf->Notify
+                    pBspIf->Notify
                             (
                                 pBspIf->hOwnerContext,
                                 HTTP_BSP_EVENT_TLS_TIMEOUT,
@@ -985,8 +968,7 @@ HttpWcsoConnectionFailed
 
             case    ANSC_SCTOWO_EVENT_TLS_ERROR :
 
-                    returnStatus =
-                        pBspIf->Notify
+                    pBspIf->Notify
                             (
                                 pBspIf->hOwnerContext,
                                 HTTP_BSP_EVENT_TLS_ERROR,
@@ -1000,8 +982,7 @@ HttpWcsoConnectionFailed
 
             default :
 
-                    returnStatus =
-                        pBspIf->Notify
+                    pBspIf->Notify
                             (
                                 pBspIf->hOwnerContext,
                                 HTTP_BSP_EVENT_SERVER_UNAVAILABLE,

@@ -181,14 +181,14 @@ TlsCpoGetMacHashSize
         USHORT                      cipher_suite
     );
 
-BOOL
+ANSC_STATUS
 TlsCpoGetExportable
     (
         ANSC_HANDLE                 hThisObject,
         USHORT                      cipher_suite
     );
 
-BOOL
+ANSC_STATUS
 TlsCpoGetStrongSecurity
     (
         ANSC_HANDLE                 hThisObject,

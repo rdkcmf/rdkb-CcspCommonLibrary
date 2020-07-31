@@ -117,8 +117,5 @@ DslhCreateObjEntity
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PDSLH_OBJ_ENTITY_OBJECT         pDslhObjEntity = NULL;
-
     return  DslhObjeoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

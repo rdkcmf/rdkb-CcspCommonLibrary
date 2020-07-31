@@ -120,7 +120,7 @@ AnscLcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
 
     /*
@@ -181,7 +181,6 @@ AnscLcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = (PANSC_LIGHT_COMPONENT_OBJECT)hThisObject;
 
     AnscFreeMemory(pBaseObject);
@@ -221,9 +220,7 @@ AnscLcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = (PANSC_LIGHT_COMPONENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -258,7 +255,6 @@ AnscLcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = (PANSC_LIGHT_COMPONENT_OBJECT)hThisObject;
 
     pBaseObject->GetOid = AnscLcoGetOid;
@@ -297,7 +293,6 @@ AnscLcoGetOid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = (PANSC_LIGHT_COMPONENT_OBJECT)hThisObject;
 
     return  pBaseObject->Oid;

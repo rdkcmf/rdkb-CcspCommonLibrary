@@ -108,7 +108,6 @@ AnscMcoSubEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_MODULE_CONTAINER_OBJECT   pMyObject      = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
     PANSC_QUERY_INTERFACE_OBJECT    pQueryIfObject = (PANSC_QUERY_INTERFACE_OBJECT )pMyObject->hQueryIfObject;
 
@@ -212,9 +211,7 @@ AnscMcoIgnite
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pMyObject    = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -250,9 +247,7 @@ AnscMcoPutOut
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pMyObject    = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -292,8 +287,7 @@ AnscMcoSwitch
         BOOL                        bSwitchOn
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pMyObject    = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(bSwitchOn);
     return  ANSC_STATUS_SUCCESS;
 }

@@ -120,7 +120,7 @@ Bmc2ComeoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = NULL;
 
@@ -188,7 +188,6 @@ Bmc2ComeoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
     PBSPENG_SOA_INTERFACE           pBmc2SoaIf   = (PBSPENG_SOA_INTERFACE)pMyObject->hBmc2SoaIf;
 
@@ -253,7 +252,6 @@ Bmc2ComeoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
     PBSPENG_SOA_INTERFACE           pBmc2SoaIf   = (PBSPENG_SOA_INTERFACE)pMyObject->hBmc2SoaIf;
 
@@ -347,9 +345,7 @@ Bmc2ComeoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
-    ULONG                           i            = 0;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

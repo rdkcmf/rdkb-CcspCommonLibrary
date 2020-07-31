@@ -645,7 +645,6 @@ AnscAsn1TimeGetSizeOfEncoded
 {
     PANSC_ASN1_ALTIME               pMyObject    = (PANSC_ASN1_ALTIME)hThisObject;
     ULONG                           ulSize       = 0;
-    ULONG                           tagSize      = 0;    
 
     /*
      * If it's optional, don't need encode
@@ -671,10 +670,6 @@ AnscAsn1TimeGetSizeOfEncoded
         ulSize          = GEN_TIME_ENCODING_LENGTH;
     }
 
-    /*
-     *  The tag size is 1;
-     */
-    tagSize  = 1;
 
     /*
      *  check the attribute list, from the end of the list;
@@ -1326,8 +1321,6 @@ AnscAsn1TimeDumpObject
         BOOLEAN                     bShowValue
     )
 {
-
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_ALTIME               pMyObject    = (PANSC_ASN1_ALTIME)hThisObject;
     CHAR                            pAttrBuf[512]= { 0 };
     ULONG                           attrLength   = 512;
@@ -1445,7 +1438,7 @@ AnscAsn1TimeTraceObject
     )
 {
 
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_ALTIME               pMyObject    = (PANSC_ASN1_ALTIME)hThisObject;
     CHAR                            pAttrBuf[512]= { 0 };
     ULONG                           attrLength   = 512;

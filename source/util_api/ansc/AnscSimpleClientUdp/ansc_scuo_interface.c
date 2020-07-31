@@ -117,8 +117,6 @@ AnscCreateSimpleClientUdp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp = NULL;
 
     return  AnscScuoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

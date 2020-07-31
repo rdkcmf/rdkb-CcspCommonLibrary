@@ -117,7 +117,8 @@ StunScoScuowo1Query
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT)hThisObject;
 
     if ( !pMyObject->bActive )
@@ -172,8 +173,6 @@ StunScoScuowo1Process
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1 = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_BSM_INTERFACE             pStunBsmIf        = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
     PSTUN_HEADER                    pStunHeader       = (PSTUN_HEADER                  )buffer;
     PUCHAR                          pMsgFirstByte     = (PUCHAR                        )buffer;
@@ -287,16 +286,14 @@ StunScoScuowo1Notify
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(ulEvent);
+    UNREFERENCED_PARAMETER(hReserved);
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1 = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_BSM_INTERFACE             pStunBsmIf        = (PSTUN_BSM_INTERFACE           )pMyObject->hStunBsmIf;
 
     if ( pStunBsmIf )
     {
-        returnStatus =
-            pStunBsmIf->Notify
+        pStunBsmIf->Notify
                 (
                     pStunBsmIf->hOwnerContext,
                     STUN_BSM_EVENT_serverUnreachable,

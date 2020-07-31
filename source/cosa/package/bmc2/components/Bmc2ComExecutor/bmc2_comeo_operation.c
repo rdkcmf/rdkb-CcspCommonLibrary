@@ -184,8 +184,7 @@ Bmc2ComeoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    PBMC2_COM_EXECUTOR_OBJECT       pMyObject       = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -218,8 +217,7 @@ Bmc2ComeoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    PBMC2_COM_EXECUTOR_OBJECT       pMyObject       = (PBMC2_COM_EXECUTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_SUCCESS;
 }
 

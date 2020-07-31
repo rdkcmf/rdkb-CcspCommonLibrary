@@ -112,10 +112,7 @@ DslhObjroGetObjRecordCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
-    PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
 
     return  AnscQueueQueryDepth(&pMyObject->ObjroQueue);
 }
@@ -157,9 +154,7 @@ DslhObjroGetObjRecord
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
 
@@ -222,7 +217,6 @@ DslhObjroGetObjRecord2
         ANSC_HANDLE                 hTokenChain
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject           = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
     PANSC_TOKEN_CHAIN               pObjNameTokens      = (PANSC_TOKEN_CHAIN          )hTokenChain;
     PANSC_STRING_TOKEN              pObjNameToken       = (PANSC_STRING_TOKEN         )NULL;
@@ -369,7 +363,6 @@ DslhObjroAddObjRecord
         ANSC_HANDLE                 hObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT)hObjRecord;
@@ -437,9 +430,7 @@ DslhObjroDelAllObjRecords
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
 
@@ -495,9 +486,7 @@ DslhObjroGetVarRecordCount
         BOOL                        bExcludeHidden
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject        = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity       = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord  = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity = (PDSLH_VAR_ENTITY_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
@@ -566,9 +555,7 @@ DslhObjroGetVarRecord
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
 
@@ -630,7 +617,6 @@ DslhObjroAddVarRecord
     )
 {
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)hVarRecord;
 
     AnscQueuePushEntry(&pMyObject->VarroTable, &pChildVarRecord->Linkage);

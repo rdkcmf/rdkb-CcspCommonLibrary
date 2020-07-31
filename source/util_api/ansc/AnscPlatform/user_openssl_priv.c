@@ -46,6 +46,7 @@ void openssl_priv_verify(SSL_CTX *ssl_ctx)
 
 void openssl_priv_validate_hostname(char *common_name)
 {
+        UNREFERENCED_PARAMETER(common_name);
 	return;
 }
 

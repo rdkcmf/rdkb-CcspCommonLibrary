@@ -117,8 +117,6 @@ AnscCreateDaemonSocketTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocketTcp = NULL;
 
     return  AnscDktoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

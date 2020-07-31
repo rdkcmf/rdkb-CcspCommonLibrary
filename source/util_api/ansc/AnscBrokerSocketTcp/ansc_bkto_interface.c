@@ -117,8 +117,6 @@ AnscCreateBrokerSocketTcp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocketTcp = NULL;
 
     return  AnscBktoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

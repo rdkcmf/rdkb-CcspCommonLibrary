@@ -102,9 +102,10 @@
 #include "ansc_global.h"
 #include "bss_ifo_bsd.h"
 
-
+#ifdef _ANSC_SOCKET_LIBRARY_
 static  ANSC_HANDLE                 g_hBssBsdIf      = (ANSC_HANDLE)NULL;
 static  BOOL                        g_bBssBsdStarted = FALSE;
+#endif
 static  ANSC_HANDLE                 g_hTlsScsIf      = (ANSC_HANDLE)NULL;
 static  BOOL                        g_bTlsScsStarted = FALSE;
 

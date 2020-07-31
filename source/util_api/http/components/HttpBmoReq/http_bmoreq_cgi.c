@@ -147,7 +147,6 @@ HttpBmoReqCgiGetEnvVariableByName
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     ULONG                           ulCgiEnvId   = 0;
 
     ulCgiEnvId =
@@ -222,8 +221,6 @@ HttpBmoReqCgiGetEnvVariableById
     PHTTP_RCP_INTERFACE             pRcpIf                = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_REQUEST_INFO              pReqInfo              = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     PHTTP_HFO_AUTHORIZATION         pHttpHfoAuthorization = NULL;
-    PHTTP_HFO_CONTENT_LENGTH        pHttpHfoContentLength = NULL;
-    PHTTP_HFO_CONTENT_TYPE          pHttpHfoContentType   = NULL;
     char*                           pHttpHfValue          = NULL;
     char*                           pHttpPath             = NULL;
     char*                           pHttpUser             = NULL;
@@ -653,11 +650,7 @@ HttpBmoReqCgiGetAuthType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject             = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco              = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf                = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_REQUEST_INFO              pReqInfo              = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     PHTTP_HFO_AUTHORIZATION         pHttpHfoAuthorization = NULL;
     ULONG                           ulAuthType            = HTTP_AUTH_TYPE_NONE;
 
@@ -711,11 +704,7 @@ HttpBmoReqCgiGetContentLength
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject             = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco              = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf                = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_REQUEST_INFO              pReqInfo              = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     PHTTP_HFO_CONTENT_LENGTH        pHttpHfoContentLength = NULL;
     ULONG                           ulContentLength       = 0;
 
@@ -779,11 +768,7 @@ HttpBmoReqCgiGetContentType
         PULONG                      pulSubType
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject           = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco            = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf              = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_REQUEST_INFO              pReqInfo            = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     PHTTP_HFO_CONTENT_TYPE          pHttpHfoContentType = NULL;
 
     pHttpHfoContentType =
@@ -837,12 +822,8 @@ HttpBmoReqCgiGetBoundaryDelimiter
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject           = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco            = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_HFP_INTERFACE             pHfpIf              = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
-    PHTTP_RCP_INTERFACE             pRcpIf              = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_REQUEST_INFO              pReqInfo            = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     PHTTP_HFO_CONTENT_TYPE          pHttpHfoContentType = NULL;
 
     pHttpHfoContentType =
@@ -896,9 +877,7 @@ HttpBmoReqCgiGetDocumentRoot
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetDocumentRoot(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -935,9 +914,7 @@ HttpBmoReqCgiGetPathInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetPathInfo(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -974,9 +951,7 @@ HttpBmoReqCgiGetPathTranslated
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetPathTranslated(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1013,13 +988,9 @@ HttpBmoReqCgiGetQueryString
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
-    ULONG                           ulBodySize   = pMyObject->GetBodySize((ANSC_HANDLE)pMyObject);
-
+    
     return  pReqInfo->RequestUri.QueryParams;
 }
 
@@ -1056,8 +1027,6 @@ HttpBmoReqCgiGetFormContent
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
     ULONG                           ulBodySize   = pMyObject->GetBodySize((ANSC_HANDLE)pMyObject);
 
@@ -1177,10 +1146,8 @@ HttpBmoReqCgiGetRemoteAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-
+    
     return  pMyObject->ClientAddr.Dot;
 }
 
@@ -1215,10 +1182,8 @@ HttpBmoReqCgiGetRemoteHost
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-
+    
     AnscZeroMemory     (pMyObject->RcpIpad,        pMyObject->RcpIpadSize);
     AnscGetIpAddrString(pMyObject->ClientAddr.Dot, pMyObject->RcpIpad    );
 
@@ -1256,9 +1221,7 @@ HttpBmoReqCgiGetRemoteUser
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetRemoteUser(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1295,10 +1258,7 @@ HttpBmoReqCgiGetRequestMethod
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
 
     return  pReqInfo->Method;
@@ -1335,9 +1295,7 @@ HttpBmoReqCgiGetScriptName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetScriptName(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1374,9 +1332,7 @@ HttpBmoReqCgiGetServerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetServerName(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1413,9 +1369,7 @@ HttpBmoReqCgiGetServerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetServerPort(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1452,9 +1406,7 @@ HttpBmoReqCgiGetServerProtocol
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetServerProtocol(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1491,9 +1443,7 @@ HttpBmoReqCgiGetServerSoftware
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
 
     return  pRcpIf->GetServerSoftware(pRcpIf->hOwnerContext, (ANSC_HANDLE)pMyObject);
@@ -1530,11 +1480,8 @@ HttpBmoReqCgiGetServerType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO           )pMyObject->hReqInfo;
-
+    
     if ( pMyObject->ServerMode & HTTP_SSO_MODE_TLS_ENABLED )
     {
         return  "https";
@@ -1576,8 +1523,6 @@ HttpBmoReqCgiGetHtmlFormInput
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_FORM_CONTENT_OBJECT       pFormContent = (PHTTP_FORM_CONTENT_OBJECT    )pMyObject->hFormContent;
 
     if ( !pFormContent )
@@ -1632,8 +1577,6 @@ HttpBmoReqCgiGetHtmlFormParam
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_FORM_CONTENT_OBJECT       pFormContent = (PHTTP_FORM_CONTENT_OBJECT    )pMyObject->hFormContent;
 
     if ( !pFormContent )
@@ -1697,8 +1640,6 @@ HttpBmoReqCgiGetHtmlFormParam2
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT         )hThisObject;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_FORM_CONTENT_OBJECT       pFormContent = (PHTTP_FORM_CONTENT_OBJECT    )pMyObject->hFormContent;
 
     if ( !pFormContent )

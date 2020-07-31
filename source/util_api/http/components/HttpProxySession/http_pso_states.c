@@ -135,7 +135,6 @@ HttpPsoGetWamIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hWamIf;
@@ -177,7 +176,6 @@ HttpPsoSetWamIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hWamIf = hInterface;
@@ -216,7 +214,6 @@ HttpPsoGetSbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hSbcIf;
@@ -258,7 +255,6 @@ HttpPsoSetSbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hSbcIf = hInterface;
@@ -297,7 +293,6 @@ HttpPsoGetCbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hCbcIf;
@@ -339,7 +334,6 @@ HttpPsoSetCbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hCbcIf = hInterface;
@@ -378,7 +372,6 @@ HttpPsoGetPbcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hPbcIf;
@@ -420,7 +413,6 @@ HttpPsoSetPbcIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hPbcIf = hInterface;
@@ -459,7 +451,6 @@ HttpPsoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -501,7 +492,6 @@ HttpPsoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -540,7 +530,6 @@ HttpPsoGetClientSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hClientSocket;
@@ -582,7 +571,6 @@ HttpPsoSetClientSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hClientSocket = hSocket;
@@ -621,7 +609,6 @@ HttpPsoGetServerSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hServerSocket;
@@ -663,7 +650,6 @@ HttpPsoSetServerSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hServerSocket = hSocket;
@@ -702,7 +688,6 @@ HttpPsoGetSbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hSbcContext;
@@ -744,7 +729,6 @@ HttpPsoSetSbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hSbcContext = hContext;
@@ -783,7 +767,6 @@ HttpPsoGetCbcContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->hCbcContext;
@@ -825,7 +808,6 @@ HttpPsoSetCbcContext
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hCbcContext = hContext;
@@ -864,11 +846,8 @@ HttpPsoGetServerName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject     = (PHTTP_PROXY_SESSION_OBJECT    )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerName;
 }
 
@@ -908,7 +887,6 @@ HttpPsoSetServerName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     AnscZeroMemory(pMyObject->ServerName, ANSC_DOMAIN_NAME_SIZE);
@@ -948,11 +926,9 @@ HttpPsoGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject     = (PHTTP_PROXY_SESSION_OBJECT    )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     if ( !pClientSocket )
     {
         return  NULL;
@@ -992,11 +968,8 @@ HttpPsoGetServerAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject     = (PHTTP_PROXY_SESSION_OBJECT    )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerAddr.Dot;
 }
 
@@ -1031,11 +1004,9 @@ HttpPsoGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject     = (PHTTP_PROXY_SESSION_OBJECT    )hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     if ( !pClientSocket )
     {
         return  0;
@@ -1075,11 +1046,8 @@ HttpPsoGetServerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject     = (PHTTP_PROXY_SESSION_OBJECT    )hThisObject;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pClientSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hClientSocket;
-    PANSC_BROKER_SOCKET_TCP_OBJECT  pServerSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pMyObject->hServerSocket;
-
+    
     return  pMyObject->ServerPort;
 }
 
@@ -1114,7 +1082,6 @@ HttpPsoGetSbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->SbcPmode;
@@ -1156,7 +1123,6 @@ HttpPsoSetSbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->SbcPmode = ulPmode;
@@ -1195,7 +1161,6 @@ HttpPsoGetCbcPmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->CbcPmode;
@@ -1237,7 +1202,6 @@ HttpPsoSetCbcPmode
         ULONG                       ulPmode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->CbcPmode = ulPmode;
@@ -1276,7 +1240,6 @@ HttpPsoGetSessionState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     return  pMyObject->SessionState;
@@ -1318,7 +1281,6 @@ HttpPsoSetSessionState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->SessionState = ulState;
@@ -1411,7 +1373,6 @@ HttpPsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
 
     pMyObject->hClientSocket = (ANSC_HANDLE)NULL;

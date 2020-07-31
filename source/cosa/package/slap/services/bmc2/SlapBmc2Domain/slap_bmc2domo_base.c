@@ -119,7 +119,7 @@ SlapBmc2DomoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapBmc2DomoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject    = (PSLAP_BMC2_DOMAIN_OBJECT)hThisObject;
 
     SlapScoGalRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SlapBmc2DomoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject    = (PSLAP_BMC2_DOMAIN_OBJECT)hThisObject;
 
     SlapScoGalEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SlapBmc2DomoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_DOMAIN_OBJECT        pMyObject    = (PSLAP_BMC2_DOMAIN_OBJECT)hThisObject;
 
     /*

@@ -117,8 +117,6 @@ BreeCreateSpo
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBREE_SPO_OBJECT                pBreeSpo        = NULL;
 
     return  BreeSpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

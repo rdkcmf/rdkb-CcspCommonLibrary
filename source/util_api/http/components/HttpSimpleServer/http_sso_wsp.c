@@ -110,10 +110,8 @@ HttpSsoWspAccept
         ANSC_HANDLE                 hClientInfo
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject      = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty      = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-    PHTTP_WSP_CLIENT_INFO           pWspClientInfo = (PHTTP_WSP_CLIENT_INFO       )hClientInfo;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hClientInfo);
 
     return  TRUE;
 }
@@ -164,12 +162,10 @@ HttpSsoWspServe
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-    PHTTP_WEBS_SESSION_OBJECT       pWebsSession = (PHTTP_WEBS_SESSION_OBJECT   )hWebsSession;
-    PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = (PHTTP_WEBS_TRANS_OBJECT     )hWebsTrans;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT        )hMessage;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hWebsSession);
+    UNREFERENCED_PARAMETER(hWebsTrans);
+    UNREFERENCED_PARAMETER(hMessage);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }

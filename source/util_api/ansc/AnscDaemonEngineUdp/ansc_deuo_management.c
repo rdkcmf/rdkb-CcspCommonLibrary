@@ -114,7 +114,6 @@ AnscDeuoGetPacket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -282,7 +281,6 @@ AnscDeuoDelAllPackets
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_UDP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = NULL;
@@ -297,7 +295,6 @@ AnscDeuoDelAllPackets
         pPacket     = ACCESS_ANSC_DSUO_PACKET_OBJECT(pSLinkEntry);
         pSLinkEntry = AnscQueuePopEntry(&pMyObject->PacketQueue);
 
-        returnStatus =
             pServer->ReleasePacket
                 (
                     (ANSC_HANDLE)pServer,
@@ -352,7 +349,6 @@ AnscDeuoGetSocket
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -479,7 +475,6 @@ AnscDeuoDelSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_UDP_OBJECT)hSocket;
     ULONG                           ulHashIndex  = AnscHashUlong(pSocket->PeerAddress.Value, ANSC_DEUO_SOCKET_TABLE_SIZE);
@@ -537,7 +532,6 @@ AnscDeuoDelAllSockets
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;

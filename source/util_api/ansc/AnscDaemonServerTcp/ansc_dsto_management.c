@@ -123,7 +123,6 @@ AnscDstoGetSocketByAddress
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = NULL;
@@ -195,7 +194,6 @@ AnscDstoGetSocketByOsocket
         ANSC_SOCKET                 socket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = NULL;
@@ -260,7 +258,6 @@ AnscDstoAcquireSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -344,7 +341,6 @@ AnscDstoReleaseSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
 
@@ -395,7 +391,6 @@ AnscDstoManufactureSocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = NULL;
     ULONG                           i            = 0;
@@ -468,7 +463,6 @@ AnscDstoDestroySocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -522,7 +516,6 @@ AnscDstoAssignEngine
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pNewEngine   = NULL;
@@ -675,7 +668,6 @@ AnscDstoManufactureEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     ULONG                           i            = 0;
@@ -737,7 +729,6 @@ AnscDstoDestroyEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;

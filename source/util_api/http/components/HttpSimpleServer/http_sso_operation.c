@@ -228,7 +228,6 @@ HttpSsoCancel
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
 
     if ( !pMyObject->bActive )
@@ -281,10 +280,7 @@ HttpSsoWorkerInit
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -320,10 +316,7 @@ HttpSsoWorkerUnload
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_SERVER_OBJECT      pMyObject     = (PHTTP_SIMPLE_SERVER_OBJECT    )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty     = (PHTTP_SIMPLE_SERVER_PROPERTY  )&pMyObject->Property;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }

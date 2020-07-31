@@ -113,7 +113,6 @@ SlapScoStdCreateObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf   = (PSLAP_UOA_INTERFACE      )pMyObject->hSlapUoaIf;
     ANSC_HANDLE                     hSlapObject  = (ANSC_HANDLE              )NULL;
@@ -172,7 +171,6 @@ SlapScoStdCreateObject2
         SLAP_HANDLE                 hInsContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf   = (PSLAP_UOA_INTERFACE      )pMyObject->hSlapUoaIf;
     ANSC_HANDLE                     hSlapObject  = (ANSC_HANDLE              )NULL;
@@ -274,7 +272,6 @@ SlapScoStdCloneObject
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject    = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
     PSLAP_UOA_INTERFACE             pSlapUoaIf   = (PSLAP_UOA_INTERFACE      )pMyObject->hSlapUoaIf;
     ANSC_HANDLE                     hSlapObject  = (ANSC_HANDLE              )NULL;

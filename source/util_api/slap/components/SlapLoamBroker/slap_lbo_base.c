@@ -119,7 +119,7 @@ SlapLboCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = NULL;
 
@@ -187,10 +187,11 @@ SlapLboRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
+    #ifdef  _ANSC_SLAP_LPC_
     PANSC_CPC_INTERFACE             pAnscCpcIf        = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    #endif
 
     pMyObject->Cancel((ANSC_HANDLE)pMyObject);
     pMyObject->Reset ((ANSC_HANDLE)pMyObject);
@@ -251,12 +252,12 @@ SlapLboEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject         = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PANSC_CPC_INTERFACE             pAnscCpcIf        = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
 
     #ifdef  _ANSC_SLAP_LPC_
+
+    PANSC_CPC_INTERFACE             pAnscCpcIf        = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
+    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
 
     if ( !pAnscCpcIf )
     {
@@ -354,7 +355,6 @@ SlapLboInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

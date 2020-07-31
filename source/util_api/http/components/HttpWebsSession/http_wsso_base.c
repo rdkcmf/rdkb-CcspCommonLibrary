@@ -119,7 +119,7 @@ HttpWssoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpWssoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);
@@ -231,7 +230,6 @@ HttpWssoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -273,7 +271,6 @@ HttpWssoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject    = (PHTTP_WEBS_SESSION_OBJECT)hThisObject;
 
     /*

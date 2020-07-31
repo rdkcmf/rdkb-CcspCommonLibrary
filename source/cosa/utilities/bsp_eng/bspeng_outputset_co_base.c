@@ -117,6 +117,9 @@ BspTemplateOutputSetCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_OUTPUT_SET_OBJECT pMyObject    = NULL;
 
     /*

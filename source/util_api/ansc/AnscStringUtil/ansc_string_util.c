@@ -139,7 +139,7 @@ AnscStrGetCharNum
     {
         ULONG                       ulStrLen;
 
-        ulStrLen    = AnscSizeOfString(pString);
+        ulStrLen    = AnscSizeOfString((const char *)pString);
 
         ulCount     = AnscStrBufGetCharNum(pString, ulStrLen, uChar);
     }
@@ -180,7 +180,7 @@ AnscStrUpper
     ULONG                           i, ulStrLen;
     UCHAR                           ch;
 
-    ulStrLen    = AnscSizeOfString(pStr);
+    ulStrLen    = AnscSizeOfString((const char *)pStr);
 
     for (i = 0; i < ulStrLen; i ++)
     {
@@ -227,7 +227,7 @@ AnscStrLower
     ULONG                           i, ulStrLen;
     UCHAR                           ch;
 
-    ulStrLen    = AnscSizeOfString(pStr);
+    ulStrLen    = AnscSizeOfString((const char *)pStr);
 
     for (i = 0; i < ulStrLen; i ++)
     {
@@ -279,11 +279,11 @@ AnscDupString
         ULONG                       ulStrLen;
         PUCHAR                      pDupStr;
 
-        ulStrLen    = AnscSizeOfString(pStr);
+        ulStrLen    = AnscSizeOfString((const char *)pStr);
 
         pDupStr     = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
         if (ulStrLen != 0)
-            AnscCopyString(pDupStr, pStr);
+            AnscCopyString((char *)pDupStr, (char *)pStr);
         else
             pDupStr[0]  = 0;
 
@@ -409,7 +409,7 @@ AnscDupIp4Addr
 
         if (pDupStr)
         {
-            _ansc_sprintf(pDupStr, "%d.%d.%d.%d", pStr[0], pStr[1], pStr[2], pStr[3]);
+            _ansc_sprintf((char *)pDupStr, "%d.%d.%d.%d", pStr[0], pStr[1], pStr[2], pStr[3]);
         }
 
         return pDupStr;
@@ -465,7 +465,7 @@ AnscDupMacAddr
         {
             _ansc_sprintf
                 (
-                    pDupStr, 
+                    (char *)pDupStr, 
                     "%.2X-%.2X-%.2X-%.2X-%.2X-%.2X", 
                     pStr[0], 
                     pStr[1], 
@@ -519,7 +519,7 @@ AnscStr2Ip4Addr
     {
         /* we don't valid the format of string format IP4 address */
 
-        *(PULONG)pIp4Addr   = _ansc_inet_addr(pStr);
+        *(PULONG)pIp4Addr   = _ansc_inet_addr((char *)pStr);
     }
 }
 
@@ -741,7 +741,7 @@ AnscUtf16CharToUcs4Code
  * This API convert Ucs4 code into UTF-8 char and put it into given buffer.
  */
 
-const static UCHAR                  s_Utf8BitMasks[6]   = 
+static const UCHAR                  s_Utf8BitMasks[6]   = 
 {
     0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC
 };
@@ -887,7 +887,6 @@ AnscStringUcs2ToUtf8
 {
     ULONG                           ulBufSize   = 0;
     PUCHAR                          pBuf        = NULL;
-    ULONG                           ulCharSize  = 0;
     ULONG                           ulUcs4Code  = 0;
     PUCHAR                          pLast       = pStr + ulStrLen - 1;
     ULONG                           ulSize      = 0;
@@ -964,7 +963,7 @@ AnscStringUcs2ToUtf8Size
         {
             ulSize  += 2;
         }
-        else if (usUcs2Code <= 0xFFFF)
+        else
         {
             ulSize  += 3;
         }
@@ -1102,7 +1101,7 @@ AnscStringUtf8ToUtf16
     ANSC_STATUS                     status          = 0;
     ULONG                           ulUcs4Code      = 0;
     ULONG                           ulUtf16Size     = 0;
-    ULONG                           ulLen           = AnscSizeOfString(pStr);
+    ULONG                           ulLen           = AnscSizeOfString((const char *)pStr);
     PUCHAR                          pUtf16Str       = NULL;
     ULONG                           ulOffset        = 0, ulInc;
     ULONG                           ulUtf16Offset   = 0;
@@ -1163,7 +1162,7 @@ AnscStringUtf8T0Utf16Size
     ANSC_STATUS                     status      = 0;
     ULONG                           ulUcs4Code;
     ULONG                           ulUtf16Size = 0;
-    ULONG                           ulLen   = AnscSizeOfString(pStr);
+    ULONG                           ulLen   = AnscSizeOfString((const char *)pStr);
     ULONG                           i       = 0;
     ULONG                           ulInc;
     UCHAR                           utf16Buf[4];
@@ -1279,8 +1278,8 @@ AnscMemorySearch
             return  NULL;
         }
 
-        if ( pBufEnd - pNext + 1 >= ulPatternLen &&
-             AnscEqualString2(pNext, pPattern, ulPatternLen, bCaseSensitive) )
+        if ( pBufEnd - pNext + 1 >= (int)ulPatternLen &&
+             AnscEqualString2((char *)pNext, (char *)pPattern, ulPatternLen, bCaseSensitive) )
         {
             return  pNext;
         }
@@ -1298,7 +1297,7 @@ is_IpAddress
     )
 {
     struct sockaddr_in sa;
-    if(inet_pton(AF_INET, pString, &(sa.sin_addr))==1)
+    if(inet_pton(AF_INET, (const char *)pString, &(sa.sin_addr))==1)
         return TRUE;
     else
         return FALSE;
@@ -1311,7 +1310,7 @@ is_Ipv6_address
     )
 {
     struct sockaddr_in6 sa;
-    if(inet_pton(AF_INET6, pString, &(sa.sin6_addr))==1)
+    if(inet_pton(AF_INET6, (const char *)pString, &(sa.sin6_addr))==1)
         return TRUE;
     else
         return FALSE;

@@ -109,9 +109,7 @@ BwspScoCspConfigProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT  )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY)&pMyObject->Property;
 
     pMyObject->SetProperty((ANSC_HANDLE)pMyObject, hProperty);
 

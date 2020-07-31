@@ -123,7 +123,6 @@ AnscOdoGetContainerContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->hContainerContext;
@@ -165,7 +164,6 @@ AnscOdoSetContainerContext
         ANSC_HANDLE                 hContainer
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->hContainerContext = hContainer;
@@ -204,7 +202,6 @@ AnscOdoGetMapperReserved
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->hMapperReserved;
@@ -246,7 +243,6 @@ AnscOdoSetMapperReserved
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->hMapperReserved = hReserved;
@@ -285,7 +281,6 @@ AnscOdoGetCreateEntry
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  (ANSC_HANDLE)pObjectDescriptor->pfnObjectCreate;
@@ -327,7 +322,6 @@ AnscOdoSetCreateEntry
         ANSC_HANDLE                 hEntry
         )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->pfnObjectCreate = (PFN_ANSC_OBJECT_CREATE)hEntry;
@@ -366,7 +360,6 @@ AnscOdoGetRemoveEntry
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  (ANSC_HANDLE)pObjectDescriptor->pfnObjectRemove;
@@ -408,7 +401,6 @@ AnscOdoSetRemoveEntry
         ANSC_HANDLE                 hEntry
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->pfnObjectRemove = (PFN_ANSC_OBJECT_REMOVE)hEntry;
@@ -447,7 +439,6 @@ AnscOdoGetName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->Name;
@@ -489,7 +480,6 @@ AnscOdoSetName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     AnscCopyString(pObjectDescriptor->Name, name);
@@ -528,7 +518,6 @@ AnscOdoGetOid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->Oid;
@@ -570,7 +559,6 @@ AnscOdoSetOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->Oid = oid;
@@ -609,7 +597,6 @@ AnscOdoGetBaseName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->BaseName;
@@ -651,7 +638,6 @@ AnscOdoSetBaseName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     AnscCopyString(pObjectDescriptor->BaseName, name);
@@ -690,7 +676,6 @@ AnscOdoGetBaseOid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->BaseOid;
@@ -732,7 +717,6 @@ AnscOdoSetBaseOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->BaseOid = oid;
@@ -771,7 +755,6 @@ AnscOdoGetDerivedType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->DerivedType;
@@ -813,7 +796,6 @@ AnscOdoSetDerivedType
         char*                       type
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     AnscCopyString(pObjectDescriptor->DerivedType, type);
@@ -852,7 +834,6 @@ AnscOdoGetBrokerOid
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     return  pObjectDescriptor->BrokerOid;
@@ -894,7 +875,6 @@ AnscOdoSetBrokerOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->BrokerOid = oid;

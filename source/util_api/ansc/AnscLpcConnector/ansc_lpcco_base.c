@@ -119,7 +119,7 @@ AnscLpccoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ AnscLpccoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject     = (PANSC_LPC_CONNECTOR_OBJECT   )hThisObject;
     PANSC_IMC_INTERFACE             pAnscImcIf    = (PANSC_IMC_INTERFACE          )pMyObject->hAnscImcIf;
     PANSC_CPC_INTERFACE             pAnscCpcIf    = (PANSC_CPC_INTERFACE          )pMyObject->hAnscCpcIf;
@@ -260,7 +259,6 @@ AnscLpccoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject     = (PANSC_LPC_CONNECTOR_OBJECT   )hThisObject;
     PANSC_IMC_INTERFACE             pAnscImcIf    = (PANSC_IMC_INTERFACE          )pMyObject->hAnscImcIf;
     PANSC_CPC_INTERFACE             pAnscCpcIf    = (PANSC_CPC_INTERFACE          )pMyObject->hAnscCpcIf;
@@ -404,7 +402,6 @@ AnscLpccoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

@@ -120,7 +120,6 @@ WebAuthsoAuthenticateReq
     ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PWEB_AUTH_SERVER_OBJECT         pMyObject    = (PWEB_AUTH_SERVER_OBJECT)hThisObject;
     PWEB_AUTH_SESSION_INFO          pSessInfo    = (PWEB_AUTH_SESSION_INFO )NULL;
-    PHTTP_BMO_REQ_OBJECT            pRequest     = (PHTTP_BMO_REQ_OBJECT   )hRequest;
     PHTTP_BMO_REP_OBJECT            pResponse    = (PHTTP_BMO_REP_OBJECT   )hResponse;
     PWEB_AUTH_SERVER_PROPERTY       pProperty    = &pMyObject->Property;
     PWEB_GENERAL_SESSION_OBJECT     pWebGso      = NULL;
@@ -195,8 +194,8 @@ WebAuthsoAuthenticateReq
                         hResponse,
                         pProperty->Realm,
                         ( pProperty->Domain[0] == 0 ) ? NULL : pProperty->Domain,
-                        ( pProperty->Algorithm == WEB_AUTH_ALGORITHM_MD5_SESS ) ? HTTP_AUTH_NAME_md5_sess : HTTP_AUTH_NAME_md5,
-                        pProperty->bNoQop ? NULL : HTTP_AUTH_NAME_auth,
+                        (PUCHAR)(( pProperty->Algorithm == WEB_AUTH_ALGORITHM_MD5_SESS ) ? HTTP_AUTH_NAME_md5_sess : HTTP_AUTH_NAME_md5),
+                        (PUCHAR)(pProperty->bNoQop ? NULL : HTTP_AUTH_NAME_auth),
                         pSessInfo->Nonce,
                         bNonceExpired
                     );

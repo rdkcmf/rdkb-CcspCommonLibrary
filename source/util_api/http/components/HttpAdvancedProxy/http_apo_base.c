@@ -119,7 +119,7 @@ HttpApoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);    
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpApoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
     PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
     PANSC_SPTO_WORKER_OBJECT        pSptoWorker  = (PANSC_SPTO_WORKER_OBJECT     )pMyObject->hSptoWorker;
@@ -281,7 +280,6 @@ HttpApoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
     PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
     PANSC_SPTO_WORKER_OBJECT        pSptoWorker  = (PANSC_SPTO_WORKER_OBJECT     )pMyObject->hSptoWorker;
@@ -492,7 +490,6 @@ HttpApoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT)hThisObject;
 
     /*

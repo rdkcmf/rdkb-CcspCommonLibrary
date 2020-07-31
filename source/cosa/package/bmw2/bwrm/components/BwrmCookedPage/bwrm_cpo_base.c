@@ -119,7 +119,7 @@ BwrmCpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BwrmCpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     AnscFreeLock(&pMyObject->AccessLock);
@@ -230,7 +229,6 @@ BwrmCpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -272,7 +270,6 @@ BwrmCpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_COOKED_PAGE_OBJECT        pMyObject    = (PBWRM_COOKED_PAGE_OBJECT)hThisObject;
 
     /*

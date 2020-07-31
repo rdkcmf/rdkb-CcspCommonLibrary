@@ -212,8 +212,6 @@ SlapCreateBmc2Output
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_OUTPUT_OBJECT        pSlapBmc2Output = NULL;
 
     return  SlapBmc2OutoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -250,9 +248,7 @@ SlapBmc2OutoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_OUTPUT_OBJECT        pSlapBmc2Output = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapBmc2Outo;
 }
 
@@ -288,8 +284,6 @@ SlapBmc2OutoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_OUTPUT_OBJECT        pSlapBmc2Output = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapBmc2Outo;
 }

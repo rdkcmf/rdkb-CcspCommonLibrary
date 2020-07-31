@@ -116,7 +116,6 @@ AnscQioAddIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject       = (PANSC_QUERY_INTERFACE_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoIf          = (PANSC_ATOM_TABLE_OBJECT     )pMyObject->hAtoIf;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
@@ -241,7 +240,6 @@ AnscQioQueryIf
         char*                       pIfName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_QUERY_INTERFACE_OBJECT    pMyObject       = (PANSC_QUERY_INTERFACE_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoIf          = (PANSC_ATOM_TABLE_OBJECT     )pMyObject->hAtoIf;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;

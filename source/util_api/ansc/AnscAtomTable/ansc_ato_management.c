@@ -126,7 +126,6 @@ AnscAtoAddAtomByName
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     ULONG                           ulHashIndex     = 0;
@@ -198,7 +197,6 @@ AnscAtoGetAtomByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -271,7 +269,6 @@ AnscAtoDelAtomByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -332,7 +329,6 @@ AnscAtoDelAllStrAtoms
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -409,7 +405,6 @@ AnscAtoAddAtomById
         ANSC_HANDLE                 hContext
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     ULONG                           ulHashIndex     = 0;
@@ -477,7 +472,6 @@ AnscAtoGetAtomById
         ULONG                       id
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -543,7 +537,6 @@ AnscAtoDelAtomById
         ULONG                       id
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -604,7 +597,6 @@ AnscAtoDelAllIntAtoms
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;

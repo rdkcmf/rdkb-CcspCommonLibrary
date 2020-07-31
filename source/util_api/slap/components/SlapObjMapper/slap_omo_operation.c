@@ -105,9 +105,7 @@ SlapOmoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT)hThisObject;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pMyObject->hRootObjBroker;
 
     if ( pMyObject->bActive )
     {
@@ -152,9 +150,7 @@ SlapOmoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_MAPPER_OBJECT         pMyObject      = (PSLAP_OBJ_MAPPER_OBJECT)hThisObject;
-    PSLAP_OBJ_BROKER_OBJECT         pRootObjBroker = (PSLAP_OBJ_BROKER_OBJECT)pMyObject->hRootObjBroker;
 
     if ( !pMyObject->bActive )
     {

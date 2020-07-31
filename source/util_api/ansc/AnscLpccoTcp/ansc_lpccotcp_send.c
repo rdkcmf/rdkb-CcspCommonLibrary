@@ -117,8 +117,6 @@ AnscLpccoTcpSendHello
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket     = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     PIMCP_HEADER                    pImcpHeader       = (PIMCP_HEADER                  )NULL;
     PIMCP_HELLO_MESSAGE             pImcpHelloMessage = (PIMCP_HELLO_MESSAGE           )NULL;
@@ -200,8 +198,6 @@ AnscLpccoTcpSendAck
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject       = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer   = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer   = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PIMCP_HEADER                    pImcpHeader     = (PIMCP_HEADER                  )NULL;
     PIMCP_ACK_MESSAGE               pImcpAckMessage = (PIMCP_ACK_MESSAGE             )NULL;
@@ -301,10 +297,8 @@ AnscLpccoTcpSendRequest
         ULONG                       ulReqType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject           = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer       = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer       = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket       = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     void*                           pMessageBuffer      = (void*                         )NULL;
     ULONG                           ulBufferSize        = (ULONG                         )0;
@@ -423,10 +417,8 @@ AnscLpccoTcpSendReply
         ULONG                       ulRepCode
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket     = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     void*                           pMessageBuffer    = (void*                         )NULL;
     ULONG                           ulBufferSize      = (ULONG                         )0;
@@ -522,8 +514,6 @@ AnscLpccoTcpSendBye
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject       = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer   = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer   = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket   = (PANSC_BROKER_SOCKET_TCP_OBJECT)hSocket;
     PIMCP_HEADER                    pImcpHeader     = (PIMCP_HEADER                  )NULL;
     PIMCP_BYE_MESSAGE               pImcpByeMessage = (PIMCP_BYE_MESSAGE             )NULL;

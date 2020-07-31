@@ -139,7 +139,6 @@ SlapLsoCpcCallDispatch
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PIMCP_SLAP_CALL                 pImcpSlapCall     = (PIMCP_SLAP_CALL           )pInputBuffer;
 
     *ppOutputBuffer = NULL;
@@ -328,10 +327,7 @@ SlapLsoCpcFreeOutputBuffer
         void*                       pOutputBuffer
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     AnscFreeMemory((void*)((ULONG)pOutputBuffer - IMCP_REPLY_BUFFER_OVERHEAD));
 
     return  ANSC_STATUS_SUCCESS;
@@ -379,9 +375,9 @@ SlapLsoCpcNotifyEvent
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_SERVER_OBJECT        pMyObject         = (PSLAP_LOAM_SERVER_OBJECT  )hThisObject;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulEvent);
+    UNREFERENCED_PARAMETER(hReserved);
 
     return  ANSC_STATUS_SUCCESS;
 }

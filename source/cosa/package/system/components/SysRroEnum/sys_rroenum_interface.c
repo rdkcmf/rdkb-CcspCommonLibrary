@@ -116,8 +116,6 @@ SysCreateRroEnum
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSYS_RRO_ENUM_OBJECT            pSysRroEnum  = NULL;
 
     return  SysRroEnumCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

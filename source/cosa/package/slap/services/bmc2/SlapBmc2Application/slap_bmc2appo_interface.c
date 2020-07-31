@@ -186,8 +186,6 @@ SlapCreateBmc2Application
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_APPLICATION_OBJECT   pSlapBmc2Application = NULL;
 
     return  SlapBmc2AppoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -224,9 +222,7 @@ SlapBmc2AppoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_APPLICATION_OBJECT   pSlapBmc2Application = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapBmc2Appo;
 }
 
@@ -262,8 +258,6 @@ SlapBmc2AppoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_APPLICATION_OBJECT   pSlapBmc2Application = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapBmc2Appo;
 }

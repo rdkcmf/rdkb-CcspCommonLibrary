@@ -116,8 +116,6 @@ WebCreateModuleContainer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PWEB_MODULE_CONTAINER_OBJECT    pWebModuleContainer = NULL;
 
     return  WebMcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

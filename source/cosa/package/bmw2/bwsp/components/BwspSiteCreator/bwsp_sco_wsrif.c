@@ -238,9 +238,7 @@ BwspScoWsrDetachWebHost
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT    )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY  )&pMyObject->Property;
     PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE           )pMyObject->hWebHemIf;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pWebHemIf->GetHttpHco(pWebHemIf->hOwnerContext);
 
     returnStatus =
         pWebHemIf->DeleteWebVho
@@ -297,7 +295,6 @@ BwspScoWsrAttachServlet
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT    )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY  )&pMyObject->Property;
     PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE           )pMyObject->hWebHemIf;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pWebHemIf->GetHttpHco(pWebHemIf->hOwnerContext);
     PBWSP_SERVLET_DESCRIPTOR        pServletDesp = (PBWSP_SERVLET_DESCRIPTOR     )hServletDescr;
@@ -436,9 +433,7 @@ BwspScoWsrDetachServlet
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT    )hThisObject;
-    PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY  )&pMyObject->Property;
     PWEB_HEM_INTERFACE              pWebHemIf    = (PWEB_HEM_INTERFACE           )pMyObject->hWebHemIf;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pWebHemIf->GetHttpHco(pWebHemIf->hOwnerContext);
 
     returnStatus =
         pWebHemIf->DeleteWebRoo

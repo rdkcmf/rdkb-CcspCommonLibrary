@@ -411,6 +411,10 @@ AnscCryptoDesIv64Decrypt
         );
 
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: DES is disabled!!!\n");
 #endif
 
@@ -573,6 +577,10 @@ AnscCryptoDesDecrypt
         }
     }
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: DES is disabled!!!\n");
 #endif
     /*
@@ -693,6 +701,10 @@ AnscCryptoTripleDesDecrypt
 
 #else
     AnscTrace("WARNING: DES is disabled!!!\n");
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
 #endif
 
     /*
@@ -753,6 +765,10 @@ AnscCryptoRc5Decrypt
         PANSC_CRYPTO_IV             iv
     )
 {
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     return  size;
 }
 
@@ -856,6 +872,11 @@ AnscCryptoIdeaDecrypt
      */
     return  size;
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: IDEA is disabled!!!\n");
     return 0;
 #endif
@@ -913,6 +934,10 @@ AnscCryptoCastDecrypt
         PANSC_CRYPTO_IV             iv
     )
 {
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     return  size;
 }
 
@@ -1014,6 +1039,11 @@ AnscCryptoBlowfishDecrypt
      */
     return  size;
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: BF is disabled!!!\n");
     return 0;
 #endif
@@ -1072,6 +1102,10 @@ AnscCryptoTripleIdeaDecrypt
         PANSC_CRYPTO_IV             iv
     )
 {
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     return  size;
 }
 
@@ -1127,6 +1161,10 @@ AnscCryptoDesIv32Decrypt
         PANSC_CRYPTO_IV             iv
     )
 {
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     return  size;
 }
 
@@ -1206,6 +1244,11 @@ AnscCryptoRc4Decrypt
      */
     return  size;
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: RC4 is disabled!!!\n");
     return 0;
 #endif
@@ -1333,6 +1376,11 @@ AnscCryptoTLSRc4Decrypt
      */
     return  size;
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: RC4 is disabled!!!\n");
     return 0;
 #endif
@@ -1437,6 +1485,11 @@ AnscCryptoRc2Decrypt
      */
     return  size;
 #else
+    UNREFERENCED_PARAMETER(cipher);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(iv);
     AnscTrace("WARNING: RC2 is disabled!!!\n");
     return 0;
 #endif
@@ -1490,6 +1543,9 @@ AnscCryptoCrypt_rc2_decrypt
 
     return ANSC_STATUS_SUCCESS;
 #else
+    UNREFERENCED_PARAMETER(xkey);
+    UNREFERENCED_PARAMETER(plain);
+    UNREFERENCED_PARAMETER(cipher);
     AnscTrace("WARNING: RC2 is disabled!!!\n");
     return ANSC_STATUS_FAILURE;
 #endif
@@ -1549,7 +1605,6 @@ AnscCryptoAesDecrypt
     )
 {
 #ifdef _ANSC_AES_USED_
-	ULONG                           ulResult = 0;
     AES_KEY                         aesKey;
     int                             ret;
 
@@ -1558,7 +1613,7 @@ AnscCryptoAesDecrypt
         return 0;
     }
 
-    ret = AES_set_decrypt_key((const char *)key->Value, key->Length * 8, &aesKey);
+    ret = AES_set_decrypt_key((const unsigned char *)key->Value, key->Length * 8, &aesKey);
 
     if ( ret != 0 )
     {

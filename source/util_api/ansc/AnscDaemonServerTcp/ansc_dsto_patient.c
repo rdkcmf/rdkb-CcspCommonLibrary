@@ -113,7 +113,6 @@ AnscDstoPoOverview
         ANSC_HANDLE                 hForm
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject     = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_DSTO_OVERVIEW_FORM        pOverviewForm = (PANSC_DSTO_OVERVIEW_FORM      )hForm;
 
@@ -237,9 +236,7 @@ AnscDstoPoTraceTransaction
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 

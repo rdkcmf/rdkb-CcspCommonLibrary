@@ -104,7 +104,6 @@ TlsMcoGetTlsEnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PTLS_MODULE_CONTAINER_OBJECT    pMyObject    = (PTLS_MODULE_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hTlsEnvController;

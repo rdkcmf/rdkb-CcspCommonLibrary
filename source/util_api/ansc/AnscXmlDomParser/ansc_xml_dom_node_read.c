@@ -414,7 +414,6 @@ AnscXmlDomNodeGetItemSize
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     ULONG                           ulSize        = 0xFFFFFFFF;
 
@@ -487,8 +486,6 @@ AnscXmlDomNodeGetAttrString
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_ATTRIBUTE             pAttribute    = NULL;
 
 
@@ -507,7 +504,7 @@ AnscXmlDomNodeGetAttrString
     /*
      * try to open this Attribute
      */
-    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, name);
+    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, (PUCHAR)name);
 
     if ( !pAttribute )
     {
@@ -590,8 +587,6 @@ AnscXmlDomNodeGetAttrUlong
         PULONG                      pulTarget
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     /*
      * pointer to the new Attribute or an existing Attribute
@@ -616,7 +611,7 @@ AnscXmlDomNodeGetAttrUlong
     /*
      * try to open this Attribute
      */
-    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, name);
+    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, (PUCHAR)name);
 
     if ( !pAttribute )
     {
@@ -688,8 +683,6 @@ AnscXmlDomNodeGetAttrBoolean
         PBOOL                       pbTarget
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     /*
      * pointer to the new Attribute or an existing Attribute
@@ -712,7 +705,7 @@ AnscXmlDomNodeGetAttrBoolean
     /*
      * try to open this Attribute
      */
-    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, name);
+    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, (PUCHAR)name);
 
     if ( !pAttribute )
     {
@@ -795,8 +788,6 @@ AnscXmlDomNodeGetAttrBinary
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     /*
      * pointer to the new Attribute or an existing Attribute
@@ -821,7 +812,7 @@ AnscXmlDomNodeGetAttrBinary
     /*
      * try to open this Attribute
      */
-    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, name);
+    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, (PUCHAR)name);
 
     if ( !pAttribute )
     {
@@ -916,14 +907,12 @@ AnscXmlDomNodeGetAttrSize
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_ATTRIBUTE             pAttribute    = NULL;
 
     /*
      * try to open this Attribute
      */
-    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, name);
+    pAttribute = (PANSC_XML_ATTRIBUTE)AnscXmlDomNodeGetAttr(hThisObject, (PUCHAR)name);
 
     if ( !pAttribute )
     {
@@ -982,7 +971,7 @@ AnscXmlDomNodeGetDataString
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     /*
@@ -1082,7 +1071,7 @@ AnscXmlDomNodeGetDataUlong
         PULONG                      pulTarget
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     ULONG                           i;
@@ -1173,7 +1162,7 @@ AnscXmlDomNodeGetDataLong
         PLONG                       plTarget
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     ULONG                           i;
@@ -1270,7 +1259,7 @@ AnscXmlDomNodeGetDataBoolean
         PBOOL                       pbTarget
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     /*
@@ -1365,7 +1354,7 @@ AnscXmlDomNodeGetDataBinary
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     ULONG                           i;
@@ -1480,7 +1469,7 @@ AnscXmlDomNodeGetDataSize
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(name);
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
 
     return  pXmlNode->DataSize;

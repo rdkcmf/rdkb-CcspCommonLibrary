@@ -106,7 +106,6 @@ SlapBmc2TermoGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
     PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComTerminal->hBmc2EnvController;
@@ -145,10 +144,8 @@ SlapBmc2TermoGetOlmContainer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject          = (PSLAP_BMC2_TERMINAL_OBJECT )hThisObject;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pMyObject->hInsContext;
-    PBMC2_ENV_CONTROLLER_OBJECT     pBmc2EnvController = (PBMC2_ENV_CONTROLLER_OBJECT)pBmc2ComTerminal->hBmc2EnvController;
 
     return  pBmc2ComTerminal->hSlapContainerTerminal;
 }
@@ -184,9 +181,7 @@ SlapBmc2TermoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_TERMINAL_OBJECT      pMyObject        = (PSLAP_BMC2_TERMINAL_OBJECT)hThisObject;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT )pMyObject->hInsContext;
 
     SlapScoGalReset((ANSC_HANDLE)pMyObject);
 

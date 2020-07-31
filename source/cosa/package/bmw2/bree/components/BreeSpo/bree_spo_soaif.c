@@ -97,7 +97,6 @@ BreeSpoSoaGetSlapObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
 
     if ( !pBeepPecIf )
@@ -121,7 +120,6 @@ BreeSpoSoaGetCookedPage
         char*                       page_path
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
 
     if ( !pBeepPecIf )
@@ -145,7 +143,6 @@ BreeSpoSoaRetCookedPage
         ANSC_HANDLE                 hCookedPage
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
 
     if ( !pBeepPecIf )
@@ -171,8 +168,8 @@ BreeSpoSoaGetCookedPageData
         PULONG                      pulStreamSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
     PBREE_COOKED_BSP_PAGE           pCookedPage     = (PBREE_COOKED_BSP_PAGE)hCookedPage;
     PUCHAR                          pData           = NULL;
     ULONG                           ulSize          = 0;
@@ -269,7 +266,7 @@ BreeSpoSoaIsBuiltInObject
         char*                       obj_name
     )
 {
-    PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i;
     ULONG                           ulLen;
     ULONG                           ulObjNameLen    = obj_name ? AnscSizeOfString(obj_name) : 0;
@@ -278,14 +275,14 @@ BreeSpoSoaIsBuiltInObject
     for (i = 0; i < sizeof(s_BreeBuiltinObjs)/sizeof(s_BreeBuiltinObjs[0]); i ++)
     {
         pObjName        = (PUCHAR)s_BreeBuiltinObjs[i];
-        ulLen           = AnscSizeOfString(pObjName);
+        ulLen           = AnscSizeOfString((const char *)pObjName);
 
         if ( ulObjNameLen != ulLen )
         {
             continue;
         }
 
-        if ( AnscEqualString2(obj_name, pObjName, ulLen, TRUE) )
+        if ( AnscEqualString2(obj_name, (char *)pObjName, ulLen, TRUE) )
         {
             return TRUE;
         }
@@ -435,9 +432,7 @@ BreeSpoSoaIsInterrupted
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
-    PBEEP_PEC_INTERFACE             pBeepPecIf      = (PBEEP_PEC_INTERFACE)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return FALSE;
 }
 

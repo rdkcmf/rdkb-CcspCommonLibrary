@@ -107,7 +107,6 @@ HttpWstoOpen
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
     PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
@@ -117,8 +116,7 @@ HttpWstoOpen
     PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT          )pMyObject->hBmoRep;
     HTTP_SIMPLE_SERVER_PROPERTY     httpSsoProperty;
 
-    returnStatus =
-        pSimpleServer->GetProperty
+    pSimpleServer->GetProperty
             (
                 (ANSC_HANDLE)pSimpleServer,
                 (ANSC_HANDLE)&httpSsoProperty
@@ -199,7 +197,6 @@ HttpWstoClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT   )hThisObject;
     PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq       = (PHTTP_BMO_REQ_OBJECT      )pMyObject->hBmoReq;
@@ -209,8 +206,7 @@ HttpWstoClose
     {
         pMyObject->hBmoReq = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pSimpleServer->ReleaseBmoReq
+        pSimpleServer->ReleaseBmoReq
                 (
                     (ANSC_HANDLE)pSimpleServer,
                     (ANSC_HANDLE)pBmoReq
@@ -221,8 +217,7 @@ HttpWstoClose
     {
         pMyObject->hBmoRep = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pSimpleServer->ReleaseBmoRep
+        pSimpleServer->ReleaseBmoRep
                 (
                     (ANSC_HANDLE)pSimpleServer,
                     (ANSC_HANDLE)pBmoRep
@@ -263,10 +258,8 @@ HttpWstoAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -303,10 +296,8 @@ HttpWstoReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

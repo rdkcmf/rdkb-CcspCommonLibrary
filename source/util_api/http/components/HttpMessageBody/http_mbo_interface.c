@@ -117,8 +117,5 @@ HttpCreateMessageBody
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_MESSAGE_BODY_OBJECT       pHttpMessageBody = NULL;
-
     return  HttpMboCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

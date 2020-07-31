@@ -107,9 +107,7 @@ WebMcoIgnite
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
-    PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT   )pMyObject->hWebSso;
 
     if ( TRUE )
     {
@@ -151,10 +149,7 @@ WebMcoPutOut
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
-    PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT   )pMyObject->hWebSso;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -194,7 +189,6 @@ WebMcoSwitch
         BOOL                        bSwitchOn
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_MODULE_CONTAINER_OBJECT    pMyObject    = (PWEB_MODULE_CONTAINER_OBJECT)hThisObject;
     PWEB_SIMPLE_SERVER_OBJECT       pWebSso      = (PWEB_SIMPLE_SERVER_OBJECT   )pMyObject->hWebSso;
 

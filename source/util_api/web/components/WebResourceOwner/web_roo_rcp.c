@@ -117,11 +117,9 @@ WebRooRcpGetDocumentRoot
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
 
     return  pProperty->RootPath;
 }
@@ -162,10 +160,7 @@ WebRooRcpGetPathInfo
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
+    UNREFERENCED_PARAMETER(hThisObject);
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
     char*                           pPathInfo       = (char*                        )pBmoReq->RcpMpad;
@@ -233,10 +228,8 @@ WebRooRcpGetPathTranslated
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
     char*                           pPathInfo       = (char*                        )pBmoReq->RcpBpad;
@@ -308,12 +301,8 @@ WebRooRcpGetRemoteUser
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     return  NULL;
 }
 
@@ -353,11 +342,9 @@ WebRooRcpGetScriptName
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hBmoReq);
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
 
     return  pProperty->RegPath;
 }
@@ -398,10 +385,7 @@ WebRooRcpGetServerName
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
+    UNREFERENCED_PARAMETER(hThisObject);
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
 
     return  pBmoReq->GetServerName((ANSC_HANDLE)pBmoReq);
@@ -443,10 +427,7 @@ WebRooRcpGetServerPort
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
+    UNREFERENCED_PARAMETER(hThisObject);
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
 
     return  pBmoReq->GetDaemonPort((ANSC_HANDLE)pBmoReq);
@@ -488,11 +469,8 @@ WebRooRcpGetServerProtocol
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  HTTP_CURRENT_VERSION;
 }
@@ -533,11 +511,8 @@ WebRooRcpGetServerSoftware
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco     = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
     return  HTTP_SERVER_PRODUCT_NAME;
 }

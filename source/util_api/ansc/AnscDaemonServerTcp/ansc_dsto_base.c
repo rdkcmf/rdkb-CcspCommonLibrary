@@ -120,7 +120,7 @@ AnscDstoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = NULL;
 
@@ -188,10 +188,7 @@ AnscDstoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
-    PANSC_SDTO_PATIENT_OBJECT       pSdtoPatient = (PANSC_SDTO_PATIENT_OBJECT     )pMyObject->hSdtoPatient;
-    PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hWorker;
 
     pMyObject->Cancel((ANSC_HANDLE)pMyObject);
     pMyObject->Reset ((ANSC_HANDLE)pMyObject);
@@ -232,7 +229,6 @@ AnscDstoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_SDTO_PATIENT_OBJECT       pSdtoPatient = (PANSC_SDTO_PATIENT_OBJECT     )pMyObject->hSdtoPatient;
 
@@ -295,7 +291,6 @@ AnscDstoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
 
     /*
@@ -440,7 +435,6 @@ AnscDstoShutdown
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_TCP_OBJECT)hThisObject;
     PANSC_SDTO_PATIENT_OBJECT       pSdtoPatient = (PANSC_SDTO_PATIENT_OBJECT     )pMyObject->hSdtoPatient;
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hWorker;

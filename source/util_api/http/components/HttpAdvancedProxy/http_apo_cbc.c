@@ -115,11 +115,9 @@ HttpApoCbcReplyHeaders
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_TRANS_RECORD_OBJECT       pTransRecord = (PHTTP_TRANS_RECORD_OBJECT    )hSession;
-    PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT         )hMessage;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
+    UNREFERENCED_PARAMETER(hMessage);
 
     return  HTTP_CBC_PMODE_RELAY2;
 }
@@ -165,11 +163,9 @@ HttpApoCbcReplyBody
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ADVANCED_PROXY_OBJECT     pMyObject    = (PHTTP_ADVANCED_PROXY_OBJECT  )hThisObject;
-    PHTTP_ADVANCED_PROXY_PROPERTY   pProperty    = (PHTTP_ADVANCED_PROXY_PROPERTY)&pMyObject->Property;
-    PHTTP_TRANS_RECORD_OBJECT       pTransRecord = (PHTTP_TRANS_RECORD_OBJECT    )hSession;
-    PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT         )hMessage;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
+    UNREFERENCED_PARAMETER(hMessage);
 
     return  HTTP_CBC_PMODE_RELAY2;
 }

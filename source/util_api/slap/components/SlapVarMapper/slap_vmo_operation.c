@@ -108,7 +108,6 @@ SlapVmoInitAtoSyntax
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoSyntax   = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoSyntax;
 
@@ -299,7 +298,6 @@ SlapVmoInitAtoContentType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject       = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoContentType = (PANSC_ATOM_TABLE_OBJECT)pMyObject->hAtoContentType;
 

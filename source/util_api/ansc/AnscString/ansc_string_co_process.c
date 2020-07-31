@@ -117,7 +117,7 @@ AnscStringCOSetString
     if (!pStringObj || !pValue)
         return;
 
-    ulLen   = AnscSizeOfString(pValue);
+    ulLen   = AnscSizeOfString((const char *)pValue);
     
     /* buffer is not big enough */
     if (pStringObj->ulValueBufferLen <= ulLen)
@@ -547,7 +547,7 @@ AnscStringCOEqual
     if (!pString || !pStringObj || !pStringObj->pValue || pStringObj->ulValueLen == 0)
         return FALSE;
 
-    ulStrLen    = AnscSizeOfString(pString);
+    ulStrLen    = AnscSizeOfString((const char *)pString);
     
     if (ulStrLen != pStringObj->ulValueLen)
         return FALSE;
@@ -597,7 +597,7 @@ AnscStringCOEqualNoCase
     if (!pString || !pStringObj || !pStringObj->pValue || pStringObj->ulValueLen == 0)
         return FALSE;
 
-    ulStrLen    = AnscSizeOfString(pString);
+    ulStrLen    = AnscSizeOfString((const char *)pString);
     
     if (ulStrLen != pStringObj->ulValueLen)
         return FALSE;
@@ -842,7 +842,7 @@ AnscStringCOFindString
 
         pSrcString  = pStringObj->GetString(hThisObject);
 
-        pPos        = AnscStrStr(pSrcString, pString);
+        pPos        = (PUCHAR)AnscStrStr((char *)pSrcString, (char *)pString);
         if (!pPos)
             return (LONG)-1;
         else
@@ -1165,7 +1165,7 @@ AnscStringCOTrimLeftString
         pValue      = pStringObj->pValue;
         ulStrLen    = pStringObj->ulValueLen;
 
-        TrimLen     = AnscSizeOfString(pTrimStr);
+        TrimLen     = AnscSizeOfString((const char *)pTrimStr);
         if (TrimLen > ulStrLen || TrimLen == 0)
             return;
 
@@ -1302,7 +1302,7 @@ AnscStringCOTrimRightString
         pValue      = pStringObj->pValue;
         ulStrLen    = pStringObj->ulValueLen;
 
-        TrimLen     = AnscSizeOfString(pTrimStr);
+        TrimLen     = AnscSizeOfString((const char *)pTrimStr);
         if (TrimLen > ulStrLen || TrimLen == 0)
             return;
 
@@ -1438,7 +1438,7 @@ AnscStringCOReplaceString
     ulCount     = 0;
     pos         = pStringObj->FindString((ANSC_HANDLE)pStringObj, pOldStr);
 
-    ulOldStrLen     = AnscSizeOfString(pOldStr);
+    ulOldStrLen     = AnscSizeOfString((const char *)pOldStr);
     bRemoveString   = FALSE;
 
     while (pos >= 0)
@@ -1599,7 +1599,7 @@ AnscStringCOAppendString
 
     if (pValue)
     {
-        ulValueLen  = AnscSizeOfString(pValue);
+        ulValueLen  = AnscSizeOfString((const char *)pValue);
         pStringObj->AppendBuffer((ANSC_HANDLE)pStringObj, pValue, ulValueLen);
     }
 }
@@ -1687,7 +1687,7 @@ AnscStringCOExtractBuffer
     PANSC_STRING_OBJECT             pStringObj  = (PANSC_STRING_OBJECT)hThisObject;
     char                            *pBuf;
 
-    pBuf    = pStringObj->pValue;
+    pBuf    = (char *)pStringObj->pValue;
 
     pStringObj->pValue              = NULL;
     pStringObj->ulValueLen          = 0;

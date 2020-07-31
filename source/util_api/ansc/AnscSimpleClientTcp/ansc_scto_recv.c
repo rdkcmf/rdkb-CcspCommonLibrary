@@ -106,7 +106,6 @@ AnscSctoRecvTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
     PANSC_SCTO_WORKER_OBJECT        pWorker      = (PANSC_SCTO_WORKER_OBJECT      )pMyObject->hWorker;
     char*                           recv_buffer  = NULL;
@@ -144,7 +143,6 @@ AnscSctoRecvTask
     	if (s_result == 0)
     	{
         	if ( i++ > SCTO_MAX_RECV_RETRY_COUNT ) {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -164,7 +162,6 @@ AnscSctoRecvTask
     		AnscTrace("AnscSctoRecvTask - select() returned error %d\n", s_result);
             if ( !pMyObject->bTlsEnabled )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -174,7 +171,6 @@ AnscSctoRecvTask
             }
             else
             {
-    			returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -235,7 +231,6 @@ AnscSctoRecvTask
         if ( s_result == 0 )
         {
         	if ( i++ > SCTO_MAX_RECV_RETRY_COUNT ) {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -259,7 +254,6 @@ AnscSctoRecvTask
             {
                 if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
                 {
-                    returnStatus =
                         pWorker->Notify
                             (
                                 pWorker->hWorkerContext,
@@ -342,7 +336,6 @@ if ( TRUE )
 
                 if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
                 {
-                    returnStatus =
                         pWorker->Notify
                             (
                                 pWorker->hWorkerContext,
@@ -381,7 +374,6 @@ if ( TRUE )
         {
             if ( TRUE  )
             {
-				returnStatus =
 					pWorker->Notify
 						(
 							pWorker->hWorkerContext,
@@ -400,7 +392,6 @@ if ( TRUE )
 
             if ( !pMyObject->bTlsEnabled )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -410,7 +401,6 @@ if ( TRUE )
             }
             else
             {
-    			returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -438,7 +428,6 @@ if ( TRUE )
         	   AnscTrace("AnscSctoRecvTask - recv_buffer running out.\n");
                if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
                {
-                   returnStatus =
                        pWorker->Notify
                            (
                                pWorker->hWorkerContext,
@@ -475,7 +464,6 @@ if ( TRUE )
             {
                 if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
                 {
-                    returnStatus =
                         pWorker->Notify
                             (
                                 pWorker->hWorkerContext,
@@ -519,7 +507,6 @@ if ( TRUE )
 
             if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -544,7 +531,6 @@ if ( TRUE )
 
             if ( !pMyObject->bTlsEnabled || pMyObject->bTlsConnected )
             {
-                returnStatus =
                     pWorker->Notify
                         (
                             pWorker->hWorkerContext,
@@ -582,7 +568,6 @@ if ( TRUE )
             pMyObject->RecvBytesCount += (ULONG)recv_size;
             pMyObject->LastRecvAt      = AnscGetTickInSeconds();
 
-            returnStatus =
                 pMyObject->Recv
                     (
                         (ANSC_HANDLE)pMyObject,
@@ -596,7 +581,6 @@ if ( TRUE )
             pMyObject->RecvBytesCount += (ULONG)recv_size;
             pMyObject->LastRecvAt      = AnscGetTickInSeconds();
 
-            returnStatus =
                 pMyObject->Recv
                     (
                         (ANSC_HANDLE)pMyObject,
@@ -607,7 +591,6 @@ if ( TRUE )
         else
         {
             pBufferDesp->BlockSize += recv_size;
-            returnStatus            =
                 pMyObject->Recv2
                     (
                         (ANSC_HANDLE)pMyObject,

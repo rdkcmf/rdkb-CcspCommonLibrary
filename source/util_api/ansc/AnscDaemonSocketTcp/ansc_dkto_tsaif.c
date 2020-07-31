@@ -119,7 +119,6 @@ AnscDktoTsaRecvAppMessage
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
     PANSC_BUFFER_DESCRIPTOR         pPayloadBdo  = (PANSC_BUFFER_DESCRIPTOR       )hMessageBdo;
     void*                           pRecvBuffer  = (void*                         )NULL;
-    ANSC_HANDLE                     hRecvHandle  = (ANSC_HANDLE                   )NULL;
     ULONG                           ulRecvSize   = (ULONG                         )0;
     ULONG                           ulLeftSize   = (ULONG                         )0;
     ULONG                           ulCopySize   = (ULONG                         )0;
@@ -294,9 +293,7 @@ AnscDktoTsaSendTlsMessage
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pEngine      = (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->hDaemonEngine;
-    PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pServer->hWorker;
     PANSC_BUFFER_DESCRIPTOR         pPayloadBdo  = (PANSC_BUFFER_DESCRIPTOR       )hMessageBdo;
 
     if ( pMyObject->bClosed || pMyObject->bBroken )
@@ -400,6 +397,9 @@ AnscDktoTsaNotifyEvent
                 break;
     }
 #endif
-    
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulEvent);
+    UNREFERENCED_PARAMETER(ulError);
+    UNREFERENCED_PARAMETER(hEventContext); 
     return  returnStatus;
 }

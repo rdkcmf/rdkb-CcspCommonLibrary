@@ -76,7 +76,7 @@
 **********************************************************************/
 
 #include "messagebus_interface_global.h"
-
+#include "slap_vco_internal_api.h"
 
 ULONG    g_uMaxParamInResponse   = 20000/*DSLH_WMPDO_MAX_PARAM_VALUES_IN_RESPONSE*/;
 int      g_currentSessionID      = 0;
@@ -95,10 +95,10 @@ CcspCcMbi_ValidateBoolean
     /* Only supports "0" or "1" or case free "true" and "false". */
 	if ( !boolStr ) return -1;
 
-    if (AnscEqualString(boolStr, "0", FALSE) ||
-        AnscEqualString(boolStr, "1", FALSE) ||
-        AnscEqualString(boolStr, "true", FALSE) ||
-        AnscEqualString(boolStr, "false", FALSE))
+    if (AnscEqualString((char*)boolStr, "0", FALSE) ||
+        AnscEqualString((char*)boolStr, "1", FALSE) ||
+        AnscEqualString((char*)boolStr, "true", FALSE) ||
+        AnscEqualString((char*)boolStr, "false", FALSE))
 	{
 		return 0;
 	}
@@ -112,7 +112,6 @@ static int CcspCcMbi_ValidateINT
 		int signedInt
     )
 {
-    int i = 0;
     int len = strlen(intStr);
 	char* pNext;
 	char c;
@@ -127,8 +126,8 @@ static int CcspCcMbi_ValidateINT
     }
     if(len <= 0) return -1;
 
-	pNext = intStr;
-	while ( c = *pNext )
+	pNext = (char*)intStr;
+	while ( ( c = *pNext ) )
 	{
 		if ( c == '+' || c == '-' )
 		{
@@ -148,7 +147,7 @@ static int CcspCcMbi_ValidateINT
 	else
 		_ansc_ultoa((ULONG)num, buf, 10);
 
-	if ( !AnscEqualString(buf, intStr, TRUE) ) return -1;
+	if ( !AnscEqualString(buf, (char*)intStr, TRUE) ) return -1;
 
     return 0;
 }
@@ -223,7 +222,7 @@ CcspCcMbi_GetParameterValues
                     DSLH_MPA_ENTITY_ACS,
                     pParamNameArray,
 				    g_uMaxParamInResponse,
-                    &pParamValueArray,
+                    (void**)&pParamValueArray,
                     &ulArraySize,
                     writeID
                 );
@@ -276,7 +275,7 @@ CcspCcMbi_GetParameterValues
                 */
                 if(i>0)
                 {
-                    for(--i; i>=0; --i)
+                    for(--i; (int)i>=0; --i)
                     {
                         if(ppReturnVal[i]->parameterName)
                         {
@@ -415,7 +414,6 @@ CcspCcMbi_SetParameterValues
     PDSLH_CWMP_PARAM_VALUE      pParamArray        = NULL;
     PDSLH_CWMP_PARAM_VALUE      pParamValue        = NULL;
     PSLAP_VARIABLE              pSlapVariable      = (PSLAP_VARIABLE)NULL;
-    PDSLH_CWMP_SOAP_FAULT       pCwmpSoapFault     = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     int                         iStatus            = 0;
     int                         i                  = 0;
 
@@ -621,7 +619,6 @@ CcspCcMbi_SetCommit
     }
 
     PDSLH_MPA_INTERFACE             pDslhMpaIf         = (PDSLH_MPA_INTERFACE        )g_pDslhCpeController->GetDslhMpaIf((ANSC_HANDLE)g_pDslhCpeController);
-    PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault     = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     int                             iStatus            = 0;
 
     /*with component binding, we have multiple CpeController handle, each for a component*/
@@ -855,7 +852,7 @@ CcspCcMbi_GetParameterAttributes
                     DSLH_MPA_ENTITY_ACS,
                     pParamNameArray,
 				    g_uMaxParamInResponse,
-                    &pParamAttribArray,
+                    (void**)&pParamAttribArray,
                     &ulArraySize
                 );
 
@@ -893,7 +890,7 @@ CcspCcMbi_GetParameterAttributes
                 */
                 if(i>0)
                 {
-                    for(--i; i>=0; --i)
+                    for(--i; (int)i>=0; --i)
                     {
                         if(ppReturnVal[i]->parameterName)
                         {
@@ -1006,13 +1003,13 @@ CcspCcMbi_AddTblRow
         goto EXIT;
     }
 
-    returnStatus =
+     returnStatus =
         pDslhMpaIf->AddObject
             (
                 pDslhMpaIf->hOwnerContext,
                 DSLH_MPA_ENTITY_ACS,
                 objectName,
-                instanceNumber,
+                (ULONG*)instanceNumber,
                 &iStatus
             );
 
@@ -1151,7 +1148,7 @@ CcspCcMbi_GetParameterNames
                 DSLH_MPA_ENTITY_ACS,
                 parameterName,
                 nextLevel,
-                &pParamInfoArray,
+                (void**)&pParamInfoArray,
                 &ulArraySize
             );
 
@@ -1224,6 +1221,8 @@ CcspCcMbi_CurrentSessionIdSignal
         void * user_data
     )
 {
+    UNREFERENCED_PARAMETER(priority);
+    UNREFERENCED_PARAMETER(user_data);
     AnscTrace("!!! set curent session id to %d !!!\n", sessionID);
 
     g_currentSessionID = sessionID;

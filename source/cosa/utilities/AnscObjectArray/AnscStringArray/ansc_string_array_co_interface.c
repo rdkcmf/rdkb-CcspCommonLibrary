@@ -116,8 +116,6 @@ AnscCreateStringArrayComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_STRING_ARRAY_OBJECT       pStringArray    = NULL;
 
     return  AnscStringArrayCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

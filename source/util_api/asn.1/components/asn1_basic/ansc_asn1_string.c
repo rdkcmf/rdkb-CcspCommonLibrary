@@ -2413,8 +2413,6 @@ AnscAsn1StringDumpObject
         BOOLEAN                     bShowValue
     )
 {
-
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_STRING               pMyObject       = (PANSC_ASN1_STRING)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -2496,7 +2494,7 @@ AnscAsn1StringDumpObject
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType),
-                        pMyObject->uLength,
+                        (int)pMyObject->uLength,
                         pValueBuf
                     );
         }
@@ -2512,7 +2510,7 @@ AnscAsn1StringDumpObject
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType),
-                        pMyObject->uLength,
+                        (int)pMyObject->uLength,
                         pValueBuf
                     );
         }
@@ -2565,8 +2563,7 @@ AnscAsn1StringTraceObject
         BOOLEAN                     bRecursive
     )
 {
-
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_STRING               pMyObject    = (PANSC_ASN1_STRING)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;

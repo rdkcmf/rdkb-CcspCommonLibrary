@@ -120,7 +120,6 @@ SlapSpoGetCallTimeout
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->CallTimeout;
@@ -162,7 +161,6 @@ SlapSpoSetCallTimeout
         ULONG                       timeout
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->CallTimeout = timeout;
@@ -201,7 +199,6 @@ SlapSpoGetObjName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->ObjName;
@@ -243,7 +240,6 @@ SlapSpoSetObjName
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     if ( pMyObject->ObjName )
@@ -301,7 +297,6 @@ SlapSpoGetObjType
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->ObjType;
@@ -343,7 +338,6 @@ SlapSpoSetObjType
         ULONG                       obj_type
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->ObjType = obj_type;
@@ -382,7 +376,6 @@ SlapSpoGetObjMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->ObjMode;
@@ -424,7 +417,6 @@ SlapSpoSetObjMode
         ULONG                       obj_mode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->ObjMode = obj_mode;
@@ -463,7 +455,6 @@ SlapSpoGetSlapGoaObj
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->hSlapGoaObj;
@@ -505,7 +496,6 @@ SlapSpoSetSlapGoaObj
         ANSC_HANDLE                 hSlapGoaObj
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->hSlapGoaObj = hSlapGoaObj;
@@ -544,7 +534,6 @@ SlapSpoGetSlapUoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->hSlapUoaIf;
@@ -586,7 +575,6 @@ SlapSpoSetSlapUoaIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->hSlapUoaIf = hInterface;
@@ -625,7 +613,6 @@ SlapSpoGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->hSlapGoaIf;
@@ -667,7 +654,6 @@ SlapSpoSetSlapGoaIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->hSlapGoaIf = hInterface;
@@ -706,7 +692,6 @@ SlapSpoGetSlapPoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     return  pMyObject->hSlapPoaIf;
@@ -748,7 +733,6 @@ SlapSpoSetSlapPoaIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
 
     pMyObject->hSlapPoaIf = hInterface;
@@ -787,8 +771,6 @@ SlapSpoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_SRV_PROXY_OBJECT          pMyObject    = (PSLAP_SRV_PROXY_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

@@ -234,7 +234,7 @@ AnscTsoScheduleTask
                  * cannot understand it completely at the first look, it's OK, doesn't mean you're
                  * stupid or have a lower IQ.
                  */
-        #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
                 AnscAcquireTsLock(&pMyObject->SyncTsLock);
                 #endif
 
@@ -250,7 +250,7 @@ AnscTsoScheduleTask
                  */
                 returnStatus = pTimerDescriptor->Invoke((ANSC_HANDLE)pTimerDescriptor);
 
-        #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
                 AnscReleaseTsLock(&pMyObject->SyncTsLock);
                 #endif
             }
@@ -363,7 +363,6 @@ AnscTsoStop
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
 
     if ( !pMyObject->bStarted )

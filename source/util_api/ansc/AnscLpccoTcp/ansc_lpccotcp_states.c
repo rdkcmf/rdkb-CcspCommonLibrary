@@ -112,7 +112,6 @@ AnscLpccoTcpGetMyAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MyAddress.Dot;
@@ -154,7 +153,6 @@ AnscLpccoTcpSetMyAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     pMyObject->MyAddress.Value = AnscReadUlong(address);
@@ -193,7 +191,6 @@ AnscLpccoTcpGetMyPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MyPort;
@@ -235,7 +232,6 @@ AnscLpccoTcpSetMyPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     pMyObject->MyPort = port;
@@ -274,7 +270,6 @@ AnscLpccoTcpGetManagerAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     return  pMyObject->ManagerAddress.Dot;
@@ -316,7 +311,6 @@ AnscLpccoTcpSetManagerAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     pMyObject->ManagerAddress.Value = AnscReadUlong(address);
@@ -355,7 +349,6 @@ AnscLpccoTcpGetManagerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     return  pMyObject->ManagerPort;
@@ -397,7 +390,6 @@ AnscLpccoTcpSetManagerPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     pMyObject->ManagerPort = port;
@@ -436,7 +428,6 @@ AnscLpccoTcpReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject    = (PANSC_LPCCO_TCP_OBJECT)hThisObject;
 
     AnscLpccoReset((ANSC_HANDLE)pMyObject);

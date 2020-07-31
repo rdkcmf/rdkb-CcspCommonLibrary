@@ -119,7 +119,7 @@ AnscStringCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_STRING_OBJECT             pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ AnscStringCORemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_STRING_OBJECT     pMyObject    = (PANSC_STRING_OBJECT)hThisObject;
 
     /* Destroy value buffer no matter if the value length is ZERO */
@@ -232,7 +231,6 @@ AnscStringCOEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_STRING_OBJECT             pMyObject    = (PANSC_STRING_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -274,7 +272,6 @@ AnscStringCOInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_STRING_OBJECT             pMyObject     = (PANSC_STRING_OBJECT)hThisObject;
 
     /*

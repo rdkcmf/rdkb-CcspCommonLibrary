@@ -137,14 +137,9 @@ AnscSstoCalendarToSecond
         PULONG                      pTimeStampI
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME)hCalendar;
-    INT                             bIsInDST          = FALSE;
-    LONG                            lDSTOffset        = 0;
-    INT                             iShiftMonth       = 0;
-    INT                             iYear             = pCalendar->Year;
-    ULONG                           ulOverflowNum     = 0;
     ULONG                           ulNewTime         = 0;
     ULONG                           ulLeapsToDate     = 0;
     ULONG                           ulYDay            = 0;
@@ -230,7 +225,6 @@ AnscSstoLocalCalendarToSecond
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
-    PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME)hCalendar;
     ULONG                           ulNewTime         = 0;
 
     /*
@@ -315,7 +309,6 @@ AnscSstoSecondToCalendar
     ULONG                           ulLastYear        = 0;
     ULONG                           ulRealLastYear    = 0;
     ULONG                           ulMonth           = 0;
-    ULONG                           ulYear            = 0;
     USHORT*                         pusDaysInMonth    = NULL;
     USHORT                          usDayOfYear       = 0;
 
@@ -451,7 +444,6 @@ AnscSstoSecondToLocalCalendar
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
-    PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME)hCalendar;
     ULONG                           ulNewTime         = 0;
 
     /*
@@ -518,16 +510,14 @@ AnscSstoGetWeekDay
 
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME)hCalendar;
     LONG                            ulLastYear        = pCalendar->Year - ANSC_SSTO_YEAR_1970;
     LONG                            ulRealLastYear    = pCalendar->Year - 1;
     ULONG                           ulLeapsToDate     = 0;
     ULONG                           ulDayFrom1970     = 0;
     ULONG                           ulYDay            = 0;
-    LONG                            lDayOfMonth       = 0;
-    ULONG                           ulWeek            = 0;
 
     /*
     AnscTrace("AnscSstoGetWeekDay...!\n");

@@ -116,8 +116,6 @@ AnscCreateObjectContainer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pObjectContainer = NULL;
 
     return  AnscOcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

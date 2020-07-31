@@ -442,8 +442,6 @@ SlapCreateDslhParamTree
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_DSLH_PARAMTREE_OBJECT     pSlapDslhParamTree = NULL;
 
     return  SlapDslhParamtoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -480,9 +478,7 @@ SlapDslhParamtoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_DSLH_PARAMTREE_OBJECT     pSlapDslhParamTree = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapDslhParamto;
 }
 
@@ -518,8 +514,6 @@ SlapDslhParamtoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_DSLH_PARAMTREE_OBJECT     pSlapDslhParamTree = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapDslhParamto;
 }

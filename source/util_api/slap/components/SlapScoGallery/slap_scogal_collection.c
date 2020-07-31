@@ -105,7 +105,6 @@ SlapScoGalGetCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject    = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoVariable = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
 

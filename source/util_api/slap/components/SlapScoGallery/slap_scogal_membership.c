@@ -110,11 +110,9 @@ SlapScoGalJoinGallery
         SLAP_VARIABLE*              gallery_var
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject     = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf    = (PSLAP_GOA_INTERFACE     )pMyObject->GetSlapGoaIf   ((ANSC_HANDLE)pMyObject);
     ANSC_HANDLE                     hOlmContainer = (ANSC_HANDLE             )pMyObject->GetOlmContainer((ANSC_HANDLE)pMyObject);
-    PANSC_ATOM_TABLE_OBJECT         pAtoVariable  = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
     ULONG                           i             = 0;
 
     /*
@@ -138,8 +136,7 @@ SlapScoGalJoinGallery
 
                 if ( gallery_var->Variant.varObject )
                 {
-                    returnStatus =
-                        pSlapGoaIf->AttachObject
+                    pSlapGoaIf->AttachObject
                             (
                                 pSlapGoaIf->hOwnerContext,
                                 gallery_var->Variant.varObject,
@@ -157,8 +154,7 @@ SlapScoGalJoinGallery
                     {
                         if ( gallery_var->Variant.varObjectArray->Array.arrayObject[i] )
                         {
-                            returnStatus =
-                                pSlapGoaIf->AttachObject
+                            pSlapGoaIf->AttachObject
                                     (
                                         pSlapGoaIf->hOwnerContext,
                                         gallery_var->Variant.varObjectArray->Array.arrayObject[i],
@@ -214,11 +210,9 @@ SlapScoGalQuitGallery
         SLAP_VARIABLE*              gallery_var
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject     = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf    = (PSLAP_GOA_INTERFACE     )pMyObject->GetSlapGoaIf   ((ANSC_HANDLE)pMyObject);
     ANSC_HANDLE                     hOlmContainer = (ANSC_HANDLE             )pMyObject->GetOlmContainer((ANSC_HANDLE)pMyObject);
-    PANSC_ATOM_TABLE_OBJECT         pAtoVariable  = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
     ULONG                           i             = 0;
 
     /*
@@ -244,8 +238,7 @@ SlapScoGalQuitGallery
 
                 if ( gallery_var->Variant.varObject )
                 {
-                    returnStatus =
-                        pSlapGoaIf->UnlinkObject
+                    pSlapGoaIf->UnlinkObject
                             (
                                 pSlapGoaIf->hOwnerContext,
                                 gallery_var->Variant.varObject
@@ -262,8 +255,7 @@ SlapScoGalQuitGallery
                     {
                         if ( gallery_var->Variant.varObjectArray->Array.arrayObject[i] )
                         {
-                            returnStatus =
-                                pSlapGoaIf->UnlinkObject
+                            pSlapGoaIf->UnlinkObject
                                     (
                                         pSlapGoaIf->hOwnerContext,
                                         gallery_var->Variant.varObjectArray->Array.arrayObject[i]

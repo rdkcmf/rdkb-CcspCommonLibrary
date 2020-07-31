@@ -125,7 +125,6 @@ HttpBmoReqGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->ClientAddr.Dot;
@@ -167,7 +166,6 @@ HttpBmoReqSetClientAddr
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     pMyObject->ClientAddr.Value = *(PULONG)address;
@@ -206,7 +204,6 @@ HttpBmoReqGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->ClientPort;
@@ -248,7 +245,6 @@ HttpBmoReqSetClientPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     pMyObject->ClientPort = port;
@@ -287,7 +283,6 @@ HttpBmoReqGetDaemonAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->DaemonAddr.Dot;
@@ -329,7 +324,6 @@ HttpBmoReqSetDaemonAddr
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     pMyObject->DaemonAddr.Value = *(PULONG)address;
@@ -368,7 +362,6 @@ HttpBmoReqGetDaemonPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->DaemonPort;
@@ -410,7 +403,6 @@ HttpBmoReqSetDaemonPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     pMyObject->DaemonPort = port;
@@ -449,7 +441,6 @@ HttpBmoReqGetServerMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->ServerMode;
@@ -491,7 +482,6 @@ HttpBmoReqSetServerMode
         ULONG                       mode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     pMyObject->ServerMode = mode;
@@ -530,7 +520,6 @@ HttpBmoReqGetRcpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->hRcpIf;
@@ -572,7 +561,6 @@ HttpBmoReqSetRcpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE )pMyObject->hRcpIf;
 
@@ -614,7 +602,6 @@ HttpBmoReqGetCgiIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->hCgiIf;
@@ -650,7 +637,6 @@ HttpBmoReqGetFormContent
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     if ( !pMyObject->hFormContent )
@@ -692,7 +678,6 @@ HttpBmoReqGenFormContent
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT     )hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_FORM_CONTENT_OBJECT       pFormContent = (PHTTP_FORM_CONTENT_OBJECT)pMyObject->hFormContent;
@@ -758,7 +743,6 @@ HttpBmoReqGetMappedPath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->MappedPath;
@@ -800,7 +784,6 @@ HttpBmoReqSetMappedPath
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     if ( pMyObject->MappedPath )
@@ -846,7 +829,6 @@ HttpBmoReqGetOriginalPagePath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->OriginalPagePath;
@@ -888,7 +870,6 @@ HttpBmoReqSetOriginalPagePath
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     if ( pMyObject->OriginalPagePath )
@@ -934,7 +915,6 @@ HttpBmoReqGetFilteredPagePath
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     return  pMyObject->FilteredPagePath;
@@ -976,7 +956,6 @@ HttpBmoReqSetFilteredPagePath
         char*                       page_path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT)hThisObject;
 
     if ( pMyObject->FilteredPagePath )
@@ -1023,7 +1002,6 @@ HttpBmoReqReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REQ_OBJECT            pMyObject    = (PHTTP_BMO_REQ_OBJECT     )hThisObject;
     PHTTP_FORM_CONTENT_OBJECT       pFormContent = (PHTTP_FORM_CONTENT_OBJECT)pMyObject->hFormContent;
 

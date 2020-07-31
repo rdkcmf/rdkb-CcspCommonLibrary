@@ -107,7 +107,6 @@ AnscAtoAllocateIntTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     ULONG                           i            = 0;
 
@@ -164,7 +163,6 @@ AnscAtoAllocateStrTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     ULONG                           i            = 0;
 
@@ -221,7 +219,6 @@ AnscAtoGetAtomCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     return  pMyObject->GetIntAtomCount((ANSC_HANDLE)pMyObject);
@@ -263,7 +260,6 @@ AnscAtoGetAtomByIndex
         ULONG                       index
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
@@ -327,7 +323,6 @@ AnscAtoGetAtomCount2
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject    = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
 
     return  pMyObject->GetStrAtomCount((ANSC_HANDLE)pMyObject);
@@ -369,7 +364,6 @@ AnscAtoGetAtomByIndex2
         ULONG                       index
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;

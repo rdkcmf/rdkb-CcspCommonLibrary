@@ -110,8 +110,6 @@ TlsHsoClientStart
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS       )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE         )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_HSM_INTERFACE              pTlsHsmIf          = (PTLS_HSM_INTERFACE         )pTlsMecIf->GetTlsHsmIf         (pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS     )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
 

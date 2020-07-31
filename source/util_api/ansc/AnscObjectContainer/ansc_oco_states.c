@@ -116,7 +116,6 @@ AnscOcoGetExternalOmo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hExternalObjectMapper;
@@ -158,9 +157,8 @@ AnscOcoSetExternalOmo
         ANSC_HANDLE                 hOmo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hOmo);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -195,7 +193,6 @@ AnscOcoGetInternalOmo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hInternalObjectMapper;
@@ -237,9 +234,8 @@ AnscOcoSetInternalOmo
         ANSC_HANDLE                 hOmo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hOmo);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -274,7 +270,6 @@ AnscOcoGetTso
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hTimerScheduler;
@@ -316,9 +311,8 @@ AnscOcoSetTso
         ANSC_HANDLE                 hTso
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hTso);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -353,7 +347,6 @@ AnscOcoGetIpcPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hIpcPort;
@@ -395,7 +388,6 @@ AnscOcoSetIpcPort
         ANSC_HANDLE                 hIpcPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->hIpcPort = hIpcPort;
@@ -434,7 +426,6 @@ AnscOcoGetCarrier
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hCarrierContext;
@@ -481,7 +472,6 @@ AnscOcoSetCarrier
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     if ( pMyObject->hCarrierContext )
@@ -540,7 +530,6 @@ AnscOcoGetOpMask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->OpMask;
@@ -582,7 +571,6 @@ AnscOcoSetOpMask
         ULONG                       ulMask
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
 
     pMyObject->OpMask = ulMask;
@@ -621,8 +609,6 @@ AnscOcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

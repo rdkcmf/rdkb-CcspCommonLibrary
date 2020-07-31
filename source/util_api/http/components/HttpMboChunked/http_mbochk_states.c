@@ -105,7 +105,6 @@ HttpMboChkReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_CHUNKED_OBJECT        pMyObject    = (PHTTP_MBO_CHUNKED_OBJECT)hThisObject;
 
     pMyObject->State              = HTTP_MBO_STATE_EMPTY;

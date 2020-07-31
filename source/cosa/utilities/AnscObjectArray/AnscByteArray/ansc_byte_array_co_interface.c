@@ -116,8 +116,6 @@ AnscCreateByteArrayComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_BYTE_ARRAY_OBJECT         pObjectArray    = NULL;
 
     return  AnscByteArrayCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

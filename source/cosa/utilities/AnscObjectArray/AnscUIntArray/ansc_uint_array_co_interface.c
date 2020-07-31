@@ -116,8 +116,6 @@ AnscCreateUIntArrayComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PANSC_UINT_ARRAY_OBJECT         pObjectArray    = NULL;
 
     return  AnscUIntArrayCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

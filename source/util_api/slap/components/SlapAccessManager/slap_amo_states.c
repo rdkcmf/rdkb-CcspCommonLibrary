@@ -113,9 +113,7 @@ SlapAmoGetSlapGoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapGoaIf;
 }
@@ -151,9 +149,7 @@ SlapAmoGetSlapPoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapPoaIf;
 }
@@ -189,9 +185,7 @@ SlapAmoGetSlapEnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapEnvController;
 }
@@ -227,9 +221,7 @@ SlapAmoGetSlapLoamClient
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapLoamClient;
 }
@@ -265,9 +257,7 @@ SlapAmoGetSlapLoamServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapLoamServer;
 }
@@ -303,9 +293,7 @@ SlapAmoGetAnscLpcConnector
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscLpcConnector;
 }
@@ -346,7 +334,6 @@ SlapAmoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -391,7 +378,6 @@ SlapAmoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -431,7 +417,6 @@ SlapAmoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
@@ -475,9 +460,6 @@ SlapAmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

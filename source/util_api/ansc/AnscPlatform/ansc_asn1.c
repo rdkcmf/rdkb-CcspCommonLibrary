@@ -268,7 +268,6 @@ AnscAsn1ConvOid
     ULONG                           ulStringSize      = AnscSizeOfString(pOidString);
     ULONG                           ulIdentifierCount = 0;
     PANSC_ASN1_OID                  pNewAsn1Oid       = NULL;
-    ULONG                           ulDigitCount      = 0;
     ULONG                           i                 = 0;
     ULONG                           j                 = 0;
     char                            digitString[16];

@@ -112,7 +112,6 @@ WebUpoGetUriPath
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pSonUriPath  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -193,10 +192,8 @@ WebUpoAddUriPath
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pSonUriPath  = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = 0;
     char                            lc_string[WEB_UPO_PATH_NAME_SIZE];
 
@@ -288,10 +285,8 @@ WebUpoDelUriPath
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pSonUriPath  = NULL;
-    PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulHashIndex  = 0;
 
     pSonUriPath =
@@ -350,7 +345,6 @@ WebUpoDelAllUriPaths
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pSonUriPath  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;

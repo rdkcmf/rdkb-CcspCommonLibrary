@@ -117,8 +117,6 @@ DslhCreateObjRecord
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord = NULL;
 
     return  DslhObjroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

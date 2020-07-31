@@ -114,11 +114,7 @@ AnscLpccoTcpDwoInit
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -154,11 +150,7 @@ AnscLpccoTcpDwoUnload
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -204,10 +196,8 @@ AnscLpccoTcpDwoAccept
         PANSC_HANDLE                phClientContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
+    UNREFERENCED_PARAMETER(phClientContext);
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = NULL;
 
@@ -270,12 +260,8 @@ AnscLpccoTcpDwoSetOut
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -316,10 +302,7 @@ AnscLpccoTcpDwoRemove
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pConnTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hConnTimerObj;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pDaemonSocket->GetBufferContext((ANSC_HANDLE)pDaemonSocket);
@@ -418,18 +401,14 @@ AnscLpccoTcpDwoQuery
         PANSC_HANDLE                phQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(buffer);
     PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )pDaemonSocket->GetBufferContext((ANSC_HANDLE)pDaemonSocket);
     PANSC_BUFFER_DESCRIPTOR         pNewBdo       = (PANSC_BUFFER_DESCRIPTOR       )NULL;
     PIMCP_HEADER                    pImcpHeader   = (PIMCP_HEADER                  )NULL;
     ULONG                           ulMsgSize     = (ULONG                         )0;
     ULONG                           ulCopySize    = (ULONG                         )0;
-    ULONG                           ulLeftSize    = (ULONG                         )0;
-    ULONG                           i             = 0;
 
     if ( !pBufferDesp )
     {
@@ -457,7 +436,6 @@ AnscLpccoTcpDwoQuery
         else
         {
             ulCopySize   = AnscBdoGetBlockSize(pBufferDesp);
-            returnStatus =
                 AnscBdoCopyFrom
                     (
                         (ANSC_HANDLE)pBufferDesp,
@@ -521,7 +499,6 @@ AnscLpccoTcpDwoQuery
                 );
         }
 
-        returnStatus =
             pMyObject->Recv
                 (
                     (ANSC_HANDLE)pMyObject,
@@ -548,7 +525,6 @@ AnscLpccoTcpDwoQuery
         else
         {
             ulCopySize   = ulMsgSize;
-            returnStatus =
                 AnscBdoCopyFrom
                     (
                         (ANSC_HANDLE)pBufferDesp,
@@ -558,7 +534,6 @@ AnscLpccoTcpDwoQuery
                     );
         }
 
-        returnStatus =
             pMyObject->Recv
                 (
                     (ANSC_HANDLE)pMyObject,
@@ -578,7 +553,6 @@ AnscLpccoTcpDwoQuery
          *      - Reset the buffer context of the socket object.
          *      - Calling Query() again with 'ulSize' set to zero.
          */
-        ulLeftSize              = AnscBdoGetBlockSize(pBufferDesp) - ulMsgSize;
         pBufferDesp->Offset    += ulMsgSize;
         pBufferDesp->BlockSize -= ulMsgSize;
 
@@ -627,7 +601,6 @@ AnscLpccoTcpDwoQuery
         else
         {
             ulCopySize   = AnscBdoGetBlockSize(pBufferDesp);
-            returnStatus =
                 AnscBdoCopyFrom
                     (
                         (ANSC_HANDLE)pBufferDesp,
@@ -705,11 +678,11 @@ AnscLpccoTcpDwoProcessSync
         ANSC_HANDLE                 hQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(hQueryContext);
 
     return  ANSC_STATUS_UNAPPLICABLE;
 }
@@ -766,12 +739,11 @@ AnscLpccoTcpDwoProcessAsync
         ANSC_HANDLE                 hQueryContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
+    UNREFERENCED_PARAMETER(hQueryContext);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -822,12 +794,10 @@ AnscLpccoTcpDwoSendComplete
         ANSC_STATUS                 status
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSocket);
+    UNREFERENCED_PARAMETER(hReserved);
+    UNREFERENCED_PARAMETER(status);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -878,10 +848,8 @@ AnscLpccoTcpDwoNotify
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
+    UNREFERENCED_PARAMETER(hReserved);
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
 
     switch ( ulEvent )

@@ -115,16 +115,9 @@ WebRooQuery
         ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE         )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO          )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN           )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
     return  HTTP_STATUS_OK;
 }
 
@@ -177,7 +170,6 @@ WebRooProcess
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
     PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO          )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
     PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN           )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PWEB_AUTH_SERVER_OBJECT         pAuthServer     = (PWEB_AUTH_SERVER_OBJECT     )pMyObject->hAuthServer;
     BOOL                            bAuthenticated  = TRUE;
 

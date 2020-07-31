@@ -119,7 +119,7 @@ BwspWsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BwspWsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT)hThisObject;
     PBWSP_WSH_INTERFACE             pBwspWshIf   = (PBWSP_WSH_INTERFACE     )pMyObject->hBwspWshIf;
 
@@ -234,7 +233,6 @@ BwspWsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT)hThisObject;
     PBWSP_WSH_INTERFACE             pBwspWshIf   = (PBWSP_WSH_INTERFACE     )pMyObject->hBwspWshIf;
 
@@ -313,7 +311,6 @@ BwspWsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT)hThisObject;
 
     /*

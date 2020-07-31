@@ -107,9 +107,7 @@ BwspWsoGetBwspWshIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT  )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty    = (PBWSP_WEB_SERVLET_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hBwspWshIf;
 }
@@ -150,9 +148,7 @@ BwspWsoSetBwspWshIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT  )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty    = (PBWSP_WEB_SERVLET_PROPERTY)&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf   = (PBWSP_WSH_INTERFACE       )pMyObject->hBwspWshIf;
 
     *(PBWSP_WSH_INTERFACE)pBwspWshIf = *(PBWSP_WSH_INTERFACE)hInterface;
@@ -191,9 +187,7 @@ BwspWsoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT  )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty    = (PBWSP_WEB_SERVLET_PROPERTY)&pMyObject->Property;
 
     WebRooResetProperty((ANSC_HANDLE)pMyObject);
 
@@ -231,9 +225,7 @@ BwspWsoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT  )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty    = (PBWSP_WEB_SERVLET_PROPERTY)&pMyObject->Property;
 
     WebRooReset((ANSC_HANDLE)pMyObject);
 

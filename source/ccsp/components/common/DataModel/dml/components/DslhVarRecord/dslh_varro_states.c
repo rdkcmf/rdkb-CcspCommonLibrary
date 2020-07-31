@@ -110,7 +110,6 @@ DslhVarroGetDslhObjRecord
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hDslhObjRecord;
@@ -152,7 +151,6 @@ DslhVarroSetDslhObjRecord
         ANSC_HANDLE                 hObjRecord
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     pMyObject->hDslhObjRecord = hObjRecord;
@@ -191,7 +189,6 @@ DslhVarroGetDslhVarEntity
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hDslhVarEntity;
@@ -233,7 +230,6 @@ DslhVarroSetDslhVarEntity
         ANSC_HANDLE                 hVarEntity
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     pMyObject->hDslhVarEntity = hVarEntity;
@@ -272,7 +268,6 @@ DslhVarroGetPoamIrepFoParameter
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->hIrepFoParameter;
@@ -314,7 +309,6 @@ DslhVarroSetPoamIrepFoParameter
         ANSC_HANDLE                 hPoamIrepFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     pMyObject->hIrepFoParameter = hPoamIrepFolder;
@@ -353,7 +347,6 @@ DslhVarroGetLastName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity   = (PDSLH_VAR_ENTITY_OBJECT)pMyObject->hDslhVarEntity;
 
@@ -391,7 +384,6 @@ DslhVarroGetFullName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject      = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity     = (PDSLH_VAR_ENTITY_OBJECT)pMyObject->hDslhVarEntity;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord     = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
@@ -451,7 +443,6 @@ DslhVarroGetNotification
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->Notification;
@@ -493,7 +484,6 @@ DslhVarroSetNotification
         int                         iNotification
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
@@ -549,7 +539,6 @@ DslhVarroSetNotification
             return ANSC_STATUS_SUCCESS;
         }
 
-        returnStatus =
             pDslhMprIf->DelNotifyParam
                 (
                     pDslhMprIf->hOwnerContext,
@@ -583,13 +572,12 @@ DslhVarroSetNotification
 
         if(pMyObject->RequesterID == DSLH_MPA_ACCESS_CONTROL_ACS) //If notification is set from TR69, then only push into queue
         {
-            returnStatus =
-                 pDslhMprIf->RegNotifyParam
-                    (
-                        pDslhMprIf->hOwnerContext,
-                        (ANSC_HANDLE)pMyObject,
-                        (pMyObject->Notification == DSLH_CWMP_NOTIFICATION_active)
-                    );
+            pDslhMprIf->RegNotifyParam
+                (
+                    pDslhMprIf->hOwnerContext,
+                    (ANSC_HANDLE)pMyObject,
+                    (pMyObject->Notification == DSLH_CWMP_NOTIFICATION_active)
+                );
         }
         }
     }
@@ -628,7 +616,6 @@ DslhVarroGetAccessList
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     return  pMyObject->AccessList;
@@ -670,7 +657,6 @@ DslhVarroSetAccessList
         char*                       pAccessList
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject    = (PDSLH_VAR_RECORD_OBJECT)hThisObject;
 
     if ( pMyObject->AccessList )
@@ -730,7 +716,6 @@ DslhVarroReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController   = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
@@ -740,7 +725,6 @@ DslhVarroReset
     if ( (pMyObject->Notification == DSLH_CWMP_NOTIFICATION_passive) ||
          (pMyObject->Notification == DSLH_CWMP_NOTIFICATION_active ) )
     {
-        returnStatus =
             pDslhMprIf->DelNotifyParam
                 (
                     pDslhMprIf->hOwnerContext,
@@ -882,7 +866,6 @@ DslhVarroNotifyValueChanged
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord          = (PDSLH_OBJ_RECORD_OBJECT      )pMyObject->hDslhObjRecord;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT  )pObjRecord->hDslhCpeController;
     PCCC_MBI_INTERFACE              pDslhMbiIf          = (PCCC_MBI_INTERFACE           )pDslhCpeController->GetInterfaceByName((ANSC_HANDLE)pDslhCpeController, CCC_MBI_INTERFACE_NAME);
-    PDSLH_VAR_ENTITY_OBJECT         pVarEntity          = (PDSLH_VAR_ENTITY_OBJECT      )pMyObject->hDslhVarEntity;
     PSLAP_VARIABLE                  pNewValue           = (PSLAP_VARIABLE               )NULL;
     char*                           pParamFullName      = NULL;
     char*                           pAccessList         = NULL;

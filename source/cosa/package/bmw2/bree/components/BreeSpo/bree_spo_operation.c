@@ -134,7 +134,7 @@ BreeSpoPreparePage
 
     /* all resources have been well cooked */
 
-    PBREE_SPO_OBJECT                pMyObject   = (PBREE_SPO_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBREE_COOKED_BSP_PAGE           pCookedPage = NULL;
 
     pCookedPage = (PBREE_COOKED_BSP_PAGE)BreeCreateCookedPageObj(NULL, NULL, NULL);
@@ -299,7 +299,6 @@ BreeSpoExecutePage
     PBREE_SPO_OBJECT                pMyObject       = (PBREE_SPO_OBJECT)hThisObject;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     PBREE_COOKED_BSP_PAGE           pCookedPage     = (PBREE_COOKED_BSP_PAGE)hBwrmCookedPage;
-    BOOL                            bSucc           = FALSE;
     char                            *pTemplateName  = NULL;
     PBREESPO_READER_OBJECT          pReader         = NULL;
     BOOL                            bReaderOK       = FALSE;
@@ -378,7 +377,7 @@ BreeSpoExecutePage
             );
 
         /* load "compiled" template into list object */
-        bSucc = pList->Load((ANSC_HANDLE)pList, (ANSC_HANDLE)pArchive);
+        pList->Load((ANSC_HANDLE)pList, (ANSC_HANDLE)pArchive);
         pArchive->Remove((ANSC_HANDLE)pArchive);
 
         pTmpl = pList->FindItem((ANSC_HANDLE)pList, pCookedPage->PagePath);
@@ -489,13 +488,14 @@ BreeSpoPrepareStaticRes
         ULONG                       page_size
     )
 {
+    UNREFERENCED_PARAMETER(page_path);
+    UNREFERENCED_PARAMETER(hThisObject);
     /*
      * To provide flexibility and extendibility, system will only store
      * raw data of BSP pages and all resources. So this function is called
      * when a new page is going to be loaded.
      */
 
-    PBREE_SPO_OBJECT                pMyObject   = (PBREE_SPO_OBJECT)hThisObject;
     PBREE_COOKED_BSP_PAGE           pCookedPage = NULL;
 
 /*

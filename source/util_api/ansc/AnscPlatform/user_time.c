@@ -77,46 +77,47 @@
 
 #define ZONE_NUM 38
 char* zonemap[ZONE_NUM][3] = {
-    "(GMT-12:00) Kwajalein", "GMT12:00", "GMT12:00",
-    "(GMT-11:00) Midway Island,Samoa", "GMT11:00", "GMT11:00",
-    "(GMT-10:00) Hawaii", "GMT10:00", "GMT10:00",
-    "(GMT-09:00) Alaska", "GMT09:00HDT", "GMT09:00",
-    "(GMT-08:00) Pacific Time", "GMT08:00PDT", "GMT08:00",
-    "(GMT-07:00) Arizona", "GMT07:00", "GMT07:00",
-    "(GMT-07:00) Mountain Time", "GMT07:00MDT", "GMT07:00",
-    "(GMT-06:00) Mexico", "GMT06:00CDT", "GMT06:00",
-    "(GMT-06:00) Central Time", "GMT06:00CDT", "GMT06:00",
-    "(GMT-05:00) Indiana East,Colombia,Panama", "GMT05:00", "GMT05:00",
-    "(GMT-05:00) Eastern Time", "GMT05:00EDT",  "GMT05:00",
-    "(GMT-04:00) Bolivia,Venezuela", "GMT04:00",  "GMT04:00",
-    "(GMT-04:00) Atlantic Time,Brazil West", "GMT04:00ADT", "GMT04:00",
-    "(GMT-03:00) Guyana", "GMT03:00", "GMT03:00",
-    "(GMT-03:00) Brazil East,Greenland", "GMT03:00GDT", "GMT03:00",
-    "(GMT-02:00) Mid-Atlantic", "GMT02:00MADT", "GMT02:00",
-    "(GMT-01:00) Azores", "GMT01:00AZODT", "GMT01:00",
-    "(GMT) Gambia,Liberia,Morocco", "GMT", "GMT",
-    "(GMT) England", "GMT00:00BST", "GMT00:00",
-    "(GMT+01:00) Tunisia", "GMT-01:00", "GMT-01:00",
-    "(GMT+01:00) France,Germany,Italy", "GMT-01:00FST", "GMT-01:00",
-    "(GMT+02:00) South Africa", "GMT-02:00", "GMT-02:00",
-    "(GMT+02:00) Greece,Ukraine,Romania,Turkey", "GMT-02:00EETDST", "GMT-02:00",
-    "(GMT+03:00) Iraq,Jordan,Kuwait", "GMT-03:00", "GMT-03:00",
-    "(GMT+04:00) Armenia", "GMT-04:00", "GMT-04:00",
-    "(GMT+05:00) Pakistan,Russia", "GMT-05:00", "GMT-05:00",
-    "(GMT+05:30) India", "GMT-05:30", "GMT-05:30",
-    "(GMT+06:00) Bangladesh,Russia", "GMT-06:00", "GMT-06:00",
-    "(GMT+07:00) Thailand,Russia", "GMT-07:00", "GMT-07:00",
-    "(GMT+08:00) China,Hong Kong,Australia Western", "GMT-08:00", "GMT-08:00",
-    "(GMT+08:00) Singapore,Taiwan,Russia", "GMT-08:00", "GMT-08:00",
-    "(GMT+09:00) Japan,Korea", "GMT-09:00", "GMT-09:00",
-    "(GMT+10:00) Guam,Russia", "GMT-10:00", "GMT-10:00",
-    "(GMT+10:00) Australia", "GMT-10:00", "GMT-10:00",
-    "(GMT+11:00) Solomon Islands", "GMT-11:00", "GMT-11:00",
-    "(GMT+12:00) Fiji", "GMT-12:00", "GMT-12:00",
-    "(GMT+12:00) New Zealand", "GMT-12:00", "GMT-12:00",
-    "", "",""
+    {"(GMT-12:00) Kwajalein", "GMT12:00", "GMT12:00"},
+    {"(GMT-11:00) Midway Island,Samoa", "GMT11:00", "GMT11:00"},
+    {"(GMT-10:00) Hawaii", "GMT10:00", "GMT10:00"},
+    {"(GMT-09:00) Alaska", "GMT09:00HDT", "GMT09:00"},
+    {"(GMT-08:00) Pacific Time", "GMT08:00PDT", "GMT08:00"},
+    {"(GMT-07:00) Arizona", "GMT07:00", "GMT07:00"},
+    {"(GMT-07:00) Mountain Time", "GMT07:00MDT", "GMT07:00"},
+    {"(GMT-06:00) Mexico", "GMT06:00CDT", "GMT06:00"},
+    {"(GMT-06:00) Central Time", "GMT06:00CDT", "GMT06:00"},
+    {"(GMT-05:00) Indiana East,Colombia,Panama", "GMT05:00", "GMT05:00"},
+    {"(GMT-05:00) Eastern Time", "GMT05:00EDT",  "GMT05:00"},
+    {"(GMT-04:00) Bolivia,Venezuela", "GMT04:00",  "GMT04:00"},
+    {"(GMT-04:00) Atlantic Time,Brazil West", "GMT04:00ADT", "GMT04:00"},
+    {"(GMT-03:00) Guyana", "GMT03:00", "GMT03:00"},
+    {"(GMT-03:00) Brazil East,Greenland", "GMT03:00GDT", "GMT03:00"},
+    {"(GMT-02:00) Mid-Atlantic", "GMT02:00MADT", "GMT02:00"},
+    {"(GMT-01:00) Azores", "GMT01:00AZODT", "GMT01:00"},
+    {"(GMT) Gambia,Liberia,Morocco", "GMT", "GMT"},
+    {"(GMT) England", "GMT00:00BST", "GMT00:00"},
+    {"(GMT+01:00) Tunisia", "GMT-01:00", "GMT-01:00"},
+    {"(GMT+01:00) France,Germany,Italy", "GMT-01:00FST", "GMT-01:00"},
+    {"(GMT+02:00) South Africa", "GMT-02:00", "GMT-02:00"},
+    {"(GMT+02:00) Greece,Ukraine,Romania,Turkey", "GMT-02:00EETDST", "GMT-02:00"},
+    {"(GMT+03:00) Iraq,Jordan,Kuwait", "GMT-03:00", "GMT-03:00"},
+    {"(GMT+04:00) Armenia", "GMT-04:00", "GMT-04:00"},
+    {"(GMT+05:00) Pakistan,Russia", "GMT-05:00", "GMT-05:00"},
+    {"(GMT+05:30) India", "GMT-05:30", "GMT-05:30"},
+    {"(GMT+06:00) Bangladesh,Russia", "GMT-06:00", "GMT-06:00"},
+    {"(GMT+07:00) Thailand,Russia", "GMT-07:00", "GMT-07:00"},
+    {"(GMT+08:00) China,Hong Kong,Australia Western", "GMT-08:00", "GMT-08:00"},
+    {"(GMT+08:00) Singapore,Taiwan,Russia", "GMT-08:00", "GMT-08:00"},
+    {"(GMT+09:00) Japan,Korea", "GMT-09:00", "GMT-09:00"},
+    {"(GMT+10:00) Guam,Russia", "GMT-10:00", "GMT-10:00"},
+    {"(GMT+10:00) Australia", "GMT-10:00", "GMT-10:00"},
+    {"(GMT+11:00) Solomon Islands", "GMT-11:00", "GMT-11:00"},
+    {"(GMT+12:00) Fiji", "GMT-12:00", "GMT-12:00"},
+    {"(GMT+12:00) New Zealand", "GMT-12:00", "GMT-12:00"},
+    {"", "",""}
 };
 
+void UserSetDelta();
 
 /***********************************************************
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
@@ -328,7 +329,6 @@ UserSetTzString(char *pTimeZone, ...)
     int                             iSize       = 0;
 
     //Get the GMT format from the pTimeZone, such as "GMT+12:00"
-    int                             i           = 0;
     char                            zone[30]    = {0};
 
     va_list arg_p;

@@ -201,14 +201,11 @@ AnscTagInfoParsingData
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TAGINFO_OBJECT            pMyObject    = (PANSC_TAGINFO_OBJECT)hThisObject;
-    PUCHAR                          pBack        = pEncodingUnit;   
 
     /*
      * temporary counters
      */
     ULONG                           i            = 0;
-    ULONG                           j            = 0;
-    ULONG                           length       = 0;
     ULONG                           ulStartOfLength;
 
     if(pEncodingUnit[0] == 0x00)

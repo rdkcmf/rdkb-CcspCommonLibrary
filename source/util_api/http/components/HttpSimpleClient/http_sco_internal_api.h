@@ -369,7 +369,9 @@ HttpScoBspNotify
         ANSC_HANDLE                 hThisObject,
         ULONG                       ulEvent,
         ULONG                       ulError,
-        ANSC_HANDLE                 hReqContext
+        ANSC_HANDLE                 hReqContext,
+        ANSC_HANDLE                 hBmoReq,
+        ANSC_HANDLE                 hBmoRep
     );
 
 

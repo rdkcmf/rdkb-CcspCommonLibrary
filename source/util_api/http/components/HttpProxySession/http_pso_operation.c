@@ -107,12 +107,7 @@ HttpPsoOpen
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhClientIf;
-    PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE       )pMyObject->hTmhServerIf;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -148,10 +143,8 @@ HttpPsoClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-
+    
     pMyObject->DelAllBmoReqs((ANSC_HANDLE)pMyObject);
     pMyObject->DelAllBmoReps((ANSC_HANDLE)pMyObject);
 
@@ -189,10 +182,8 @@ HttpPsoAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject      = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy   = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -229,10 +220,8 @@ HttpPsoReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PHTTP_PROXY_SESSION_OBJECT      pMyObject      = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
-    PHTTP_SIMPLE_PROXY_OBJECT       pSimpleProxy   = (PHTTP_SIMPLE_PROXY_OBJECT )pMyObject->hOwnerContext;
-
+    
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

@@ -111,10 +111,8 @@ HttpWssoOpen
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -149,10 +147,8 @@ HttpWssoClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     pMyObject->DelAllWstos((ANSC_HANDLE)pMyObject);
 
     return  ANSC_STATUS_SUCCESS;
@@ -189,10 +185,7 @@ HttpWssoAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -229,10 +222,8 @@ HttpWssoReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -269,10 +260,8 @@ HttpWssoEnterWspServe
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     /*AnscResetEvent(&pMyObject->ServeEvent);*/
 
     pMyObject->ServeCount++;
@@ -311,10 +300,7 @@ HttpWssoLeaveWspServe
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
     /*AnscSetEvent(&pMyObject->ServeEvent);*/
 
     pMyObject->ServeCount--;
@@ -353,10 +339,8 @@ HttpWssoClearWspServe
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
-
+    
     /*AnscWaitEvent(&pMyObject->ServeEvent, 0xFFFFFFFF);*/
 
     while ( pMyObject->ServeCount > 0 )
@@ -398,9 +382,7 @@ HttpWssoCloseConnection
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_SESSION_OBJECT       pMyObject     = (PHTTP_WEBS_SESSION_OBJECT     )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
 
     if ( pWebSocket )

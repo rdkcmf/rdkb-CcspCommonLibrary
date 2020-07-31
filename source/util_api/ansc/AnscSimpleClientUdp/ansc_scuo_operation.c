@@ -108,10 +108,7 @@ AnscScuoEngage
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
     PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
-    int                             s_result     = 0;
-    int                             s_error      = 0;
     ansc_socket_addr_in             ansc_client_addr;
-    ansc_socket_addr_in             ansc_remote_addr;
     ansc_socket_addr_in             ansc_any_addr;
     xskt_socket_addr_in             xskt_client_addr;
     xskt_socket_addr_in             xskt_remote_addr;
@@ -238,16 +235,12 @@ AnscScuoEngage
             ansc_client_addr.sin_addr.s_addr = pMyObject->HostAddress.Value;
         }
 
-        ansc_remote_addr.sin_family = ANSC_SOCKET_AF_INET;
-        ansc_remote_addr.sin_port   = _ansc_htons(pMyObject->PeerPort);
 
         if ( pMyObject->PeerAddress.Value == 0 )
         {
-            ansc_remote_addr.sin_addr.s_addr = ANSC_SOCKET_ANY_ADDRESS;
         }
         else
         {
-            ansc_remote_addr.sin_addr.s_addr = pMyObject->PeerAddress.Value;
         }
 
         ansc_any_addr.sin_family      = ANSC_SOCKET_AF_INET;
@@ -450,9 +443,7 @@ AnscScuoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
-    PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
 
     if ( !pMyObject->bActive )
     {

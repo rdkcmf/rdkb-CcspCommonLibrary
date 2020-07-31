@@ -119,7 +119,7 @@ AnscCoVer3Create
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_CO_VER3_OBJECT            pMyObject    = NULL;
 
@@ -236,7 +236,6 @@ AnscCoVer3EnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CO_VER3_OBJECT            pMyObject    = (PANSC_CO_VER3_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -278,7 +277,6 @@ AnscCoVer3Initialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CO_VER3_OBJECT            pMyObject    = (PANSC_CO_VER3_OBJECT)hThisObject;
 
     /*
@@ -351,7 +349,6 @@ AnscCoVer3Shutdown
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_CO_VER3_OBJECT            pMyObject    = (PANSC_CO_VER3_OBJECT)hThisObject;
 
     AnscFreeLock(&pMyObject->EtoAccessLock    );

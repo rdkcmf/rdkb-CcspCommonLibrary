@@ -117,8 +117,6 @@ AnscCreateDaemonEngineUdp
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PANSC_DAEMON_ENGINE_UDP_OBJECT  pDaemonEngineUdp = NULL;
 
     return  AnscDeuoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

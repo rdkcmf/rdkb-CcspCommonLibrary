@@ -119,7 +119,7 @@ HttpSpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpSpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = (PHTTP_SIMPLE_PROXY_OBJECT    )hThisObject;
     PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
     PANSC_SPTO_WORKER_OBJECT        pSptoWorker  = (PANSC_SPTO_WORKER_OBJECT     )pMyObject->hSptoWorker;
@@ -280,7 +279,6 @@ HttpSpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = (PHTTP_SIMPLE_PROXY_OBJECT    )hThisObject;
     PANSC_SIMPLE_PROXY_TCP_OBJECT   pSimpleProxy = (PANSC_SIMPLE_PROXY_TCP_OBJECT)pMyObject->hSimpleProxy;
     PANSC_SPTO_WORKER_OBJECT        pSptoWorker  = (PANSC_SPTO_WORKER_OBJECT     )pMyObject->hSptoWorker;
@@ -491,10 +489,7 @@ HttpSpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_PROXY_OBJECT       pMyObject    = (PHTTP_SIMPLE_PROXY_OBJECT)hThisObject;
-    ULONG                           i            = 0;
-
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't
      * appreciate all the nice little things come with C++ language and all the dirty works that

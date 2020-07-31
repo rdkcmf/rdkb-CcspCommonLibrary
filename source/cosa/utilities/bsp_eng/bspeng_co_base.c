@@ -117,6 +117,9 @@ BspEngCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_OBJECT            pMyObject    = NULL;
 
     /*
@@ -272,7 +275,6 @@ BspEngCORemove
     PBSP_TEMPLATE_OBJECT            pMyObject    = (PBSP_TEMPLATE_OBJECT)hThisObject;
     PANSC_BYTE_ARRAY_OBJECT         pText        = (PANSC_BYTE_ARRAY_OBJECT)pMyObject->hText;
     PANSC_PTR_ARRAY_OBJECT          pSymbol      = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hSymbol;
-    PANSC_PTR_ARRAY_OBJECT          pArrayMap    = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hArrayMap;
     PBSP_TEMPLATE_BRANCH_OBJECT     pTree        = (PBSP_TEMPLATE_BRANCH_OBJECT)pMyObject->hTree;
 
     if (pMyObject->pName)

@@ -123,17 +123,7 @@ DslhCpecoInitDataModel
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject          = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty          = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
     PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
-    PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
-    char*                           pAcsUrl            = (char*                        )NULL;
-    BOOL                            bInitialContact    = (BOOL                         )TRUE;
-    char*                           pTriggerCommand    = (char*                        )NULL;
-    char*                           pTriggerCommandKey = (char*                        )NULL;
-    ANSC_IPV4_ADDRESS               ipAddress          = { 0 };
-    char                            ipAdd[32]          = { 0 };
-    ULONG                           ulBootstrapDelay   = 0;
-    ULONG                           ulBootDelay        = 0;
 
     /*
      * Parameter names use a hierarchical form similar to a directory tree. The name of a parti-
@@ -194,12 +184,7 @@ DslhCpecoRegisterAllParams
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PDSLH_CPE_CONTROLLER_OBJECT     pMyObject          = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty          = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
-    PDSLH_MPR_INTERFACE             pDslhMprIf         = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -251,8 +236,6 @@ DslhCpecoRegisterObject2
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty         = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
     PDSLH_CWMP_OBJECT_DESCR         pObjectDescr      = (PDSLH_CWMP_OBJECT_DESCR      )NULL;
     PDSLH_CWMP_PARAM_DESCR          pParamDescr       = (PDSLH_CWMP_PARAM_DESCR       )NULL;
@@ -370,8 +353,6 @@ DslhCpecoRegisterHiddenObject2
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty         = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
     PDSLH_CWMP_OBJECT_DESCR         pObjectDescr      = (PDSLH_CWMP_OBJECT_DESCR      )NULL;
     PDSLH_CWMP_PARAM_DESCR          pParamDescr       = (PDSLH_CWMP_PARAM_DESCR       )NULL;
@@ -482,8 +463,6 @@ DslhCpecoRegisterObject
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty         = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
     PDSLH_CWMP_OBJECT_DESCR         pObjectDescr      = (PDSLH_CWMP_OBJECT_DESCR      )hObjDescr;
     PANSC_HANDLE                    pParamDescrArray  = (PANSC_HANDLE                 )hParamArray;
@@ -616,7 +595,6 @@ DslhCpecoLoadExternalDMLibFile
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
     ANSC_HANDLE                     pFileHandle        = NULL;
     char*                           pXMLContent        = NULL;
-    ULONG                           uXMLLength         = 0;
     ULONG                           uFileLength        = 0;
     ULONG                           uBufferSize        = 0;
 
@@ -740,7 +718,6 @@ DslhCpecoLoadInternalDMLibFile
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
     ANSC_HANDLE                     pFileHandle        = NULL;
     char*                           pXMLContent        = NULL;
-    ULONG                           uXMLLength         = 0;
     ULONG                           uFileLength        = 0;
     ULONG                           uBufferSize        = 0;
 
@@ -834,7 +811,6 @@ DslhCpecoUnloadDMLibFile
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)pMyObject->hDslhDataModelAgent;
     ANSC_HANDLE                     pFileHandle        = NULL;
     char*                           pXMLContent        = NULL;
-    ULONG                           uXMLLength         = 0;
     ULONG                           uFileLength        = 0;
     ULONG                           uBufferSize        = 0;
 
@@ -932,8 +908,6 @@ DslhCpecoRegisterHiddenObject
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT  )hThisObject;
-    PDSLH_CPE_CONTROLLER_PROPERTY   pProperty         = (PDSLH_CPE_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase  = (PDSLH_WMP_DATABASE_OBJECT    )pMyObject->hDslhWmpDatabase;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE          )pMyObject->GetDslhMprIf((ANSC_HANDLE)pMyObject);
     PDSLH_CWMP_OBJECT_DESCR         pObjectDescr      = (PDSLH_CWMP_OBJECT_DESCR      )hObjDescr;
     PANSC_HANDLE                    pParamDescrArray  = (PANSC_HANDLE                 )hParamArray;
@@ -1045,10 +1019,8 @@ dslhCpeEnumObjEntities
     name_spaceType_t *              pParameterArray   = pMyObject->hParameterArray;
     char *                          pParameterHolder  = pMyObject->hParameterHolder;
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT  )NULL;
-    PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity     = (PDSLH_VAR_ENTITY_OBJECT  )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY       )NULL;
 	BOOL							bHasChildParam      = TRUE;
-    int                             i                   = 0;
 
     if ( pObjEntity->ObjDescr && (pObjEntity->ObjDescr->Type == DSLH_CWMP_OBJECT_TYPE_table) )
     {
@@ -1102,7 +1074,6 @@ dslhCpeCheckEmptyObject
 {
     PDSLH_CPE_CONTROLLER_OBJECT     pMyObject         = (PDSLH_CPE_CONTROLLER_OBJECT)hThisObject;
     name_spaceType_t *              pParameterArray   = pMyObject->hParameterArray;
-    char *                          pParameterHolder  = pMyObject->hParameterHolder;
     PDSLH_MPR_INTERFACE             pDslhMprIf        = (PDSLH_MPR_INTERFACE)pMyObject->GetDslhMprIf(pMyObject);
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord         = NULL;
 
@@ -1151,7 +1122,6 @@ DslhCpecoRegisterDataModelInternal
     ULONG                           uCount            = 0;
     char                            pTmpCRName[128]   = { 0 };
     char                            pTmpCompName[128] = { 0 };
-    ULONG                           uIndex            = 0;
 
     if( pCompName == NULL)
     {

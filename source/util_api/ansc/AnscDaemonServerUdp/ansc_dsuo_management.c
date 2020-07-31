@@ -114,7 +114,6 @@ AnscDsuoAcquireSocket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -194,7 +193,6 @@ AnscDsuoReleaseSocket
         ANSC_HANDLE                 hSocket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = (PANSC_DAEMON_SOCKET_UDP_OBJECT)hSocket;
 
@@ -238,7 +236,6 @@ AnscDsuoManufactureSocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
     ULONG                           i            = 0;
@@ -305,7 +302,6 @@ AnscDsuoDestroySocketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SOCKET_UDP_OBJECT  pSocket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -359,7 +355,6 @@ AnscDsuoAcquirePacket
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -444,7 +439,6 @@ AnscDsuoReleasePacket
         ANSC_HANDLE                 hPacket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = (PANSC_DSUO_PACKET_OBJECT      )hPacket;
 
@@ -491,7 +485,6 @@ AnscDsuoManufacturePacketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = NULL;
     ULONG                           i            = 0;
@@ -563,7 +556,6 @@ AnscDsuoDestroyPacketPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -627,7 +619,6 @@ AnscDsuoAssignEngine
         ANSC_HANDLE                 hPacket
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DSUO_PACKET_OBJECT        pPacket      = (PANSC_DSUO_PACKET_OBJECT      )hPacket;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pEngine      = NULL;
@@ -669,7 +660,6 @@ AnscDsuoManufactureEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pEngine      = NULL;
     ULONG                           i            = 0;
@@ -733,7 +723,6 @@ AnscDsuoDestroyEnginePool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_SERVER_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pEngine      = NULL;
     ULONG                           i            = 0;

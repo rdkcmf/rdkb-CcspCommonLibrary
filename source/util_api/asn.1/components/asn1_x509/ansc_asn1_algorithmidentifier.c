@@ -108,7 +108,7 @@ AnscAsn1CreateAlgorithmIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ALGORITHMIDENTIFIER  pThisObject  = NULL;
 
     /*
@@ -203,7 +203,7 @@ AnscAsn1AlgorithmIdentifierGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -373,7 +373,6 @@ AnscAsn1CreateParameters
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PARAMETERS           pThisObject  = NULL;
 
     /*
@@ -391,7 +390,6 @@ AnscAsn1CreateParameters
     }
 
     /*
-     * Initialize the common variables and functions for this ASN.1 object.
      */
     pThisObject->SetClassName(pThisObject, "ANSC_ASN1_PARAMETERS");
     pThisObject->SetName(pThisObject, "Parameters");
@@ -541,6 +539,7 @@ AnscAsn1ParametersGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case PARAMETERS_MASK_NULLPARMS:
@@ -592,6 +591,7 @@ AnscAsn1ParametersGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.2.840.113549.1.1.1",FALSE))
@@ -730,6 +730,7 @@ AnscAsn1ParametersGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case PARAMETERS_MASK_NULLPARMS:
@@ -925,8 +926,8 @@ AnscAsn1CreateDss_Parms
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
-    PANSC_ASN1_DSS_PARMS            pThisObject  = NULL;
+   UNREFERENCED_PARAMETER(hReserved);
+   PANSC_ASN1_DSS_PARMS            pThisObject  = NULL;
 
     /*
      * Create the base ASN.1 object.
@@ -1025,7 +1026,9 @@ AnscAsn1Dss_ParmsCreateChildAttr
         ULONG                       index
     )
 {
-    return NULL;
+    UNREFERENCED_PARAMETER(hThisObject);
+UNREFERENCED_PARAMETER(index);
+return NULL;
 }
 
 PCHAR
@@ -1035,6 +1038,7 @@ AnscAsn1Dss_ParmsGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1076,7 +1080,7 @@ AnscAsn1CreateDomainParameters
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DOMAINPARAMETERS     pThisObject  = NULL;
 
     /*
@@ -1205,6 +1209,8 @@ AnscAsn1DomainParametersCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1218,6 +1224,7 @@ AnscAsn1DomainParametersGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1265,7 +1272,7 @@ AnscAsn1CreateValidationParms
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_VALIDATIONPARMS      pThisObject  = NULL;
 
     /*
@@ -1353,6 +1360,7 @@ AnscAsn1ValidationParmsCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1378,6 +1386,7 @@ AnscAsn1ValidationParmsGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1414,7 +1423,7 @@ AnscAsn1CreatePBMParameter
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_PBMPARAMETER         pThisObject  = NULL;
 
     /*
@@ -1526,6 +1535,8 @@ AnscAsn1PBMParameterCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1539,6 +1550,7 @@ AnscAsn1PBMParameterGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1582,7 +1594,7 @@ AnscAsn1CreateDHBMParameter
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DHBMPARAMETER        pThisObject  = NULL;
 
     /*
@@ -1670,6 +1682,7 @@ AnscAsn1DHBMParameterCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1695,6 +1708,7 @@ AnscAsn1DHBMParameterGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1729,7 +1743,7 @@ AnscAsn1CreateCase5MacParameter
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_CASE5MACPARAMETER    pThisObject  = NULL;
 
     /*
@@ -1817,6 +1831,7 @@ AnscAsn1Case5MacParameterCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1842,6 +1857,7 @@ AnscAsn1Case5MacParameterGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1876,7 +1892,7 @@ AnscAsn1CreatePKCS12PbeParams
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_PKCS12PBEPARAMS      pThisObject  = NULL;
 
     /*
@@ -1964,6 +1980,7 @@ AnscAsn1PKCS12PbeParamsCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1989,6 +2006,7 @@ AnscAsn1PKCS12PbeParamsGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2023,7 +2041,7 @@ AnscAsn1CreateSignatureAlgorithmIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_SIGNATUREALGORITHMIDENTIFIER 
                                     pThisObject  = NULL;
 
@@ -2119,6 +2137,7 @@ AnscAsn1SignatureAlgorithmIdentifierCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -2144,6 +2163,7 @@ AnscAsn1SignatureAlgorithmIdentifierGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2246,7 +2266,6 @@ AnscAsn1CreateSignatureParameters
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SIGNATUREPARAMETERS  pThisObject  = NULL;
     PANSC_ASN1_OBJECT               pSelection;
 
@@ -2336,6 +2355,7 @@ AnscAsn1SignatureParametersGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case SIGNATUREPARAMETERS_MASK_NULLPARMS:
@@ -2355,6 +2375,7 @@ AnscAsn1SignatureParametersCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -2378,6 +2399,7 @@ AnscAsn1SignatureParametersGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -2412,7 +2434,6 @@ AnscAsn1CreateDigestAlgorithmIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DIGESTALGORITHMIDENTIFIER 
                                     pThisObject  = NULL;
 
@@ -2440,4 +2461,3 @@ AnscAsn1CreateDigestAlgorithmIdentifier
 
     return (ANSC_HANDLE)pThisObject;
 }
-

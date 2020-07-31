@@ -123,14 +123,9 @@ BwspWsoDoOptions
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
 
     if ( pBwspWshIf->DoOptions )
     {
@@ -202,14 +197,9 @@ BwspWsoDoGet
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
 
     if ( pBwspWshIf->DoGet )
     {
@@ -281,14 +271,9 @@ BwspWsoDoHead
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
 
     if ( pBwspWshIf->DoHead )
     {
@@ -360,14 +345,9 @@ BwspWsoDoPost
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
     ULONG                           j               = 0;
 
@@ -486,14 +466,9 @@ BwspWsoDoPut
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
     ULONG                           j               = 0;
 
@@ -612,14 +587,9 @@ BwspWsoDoDelete
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
     ULONG                           j               = 0;
 
@@ -738,14 +708,9 @@ BwspWsoDoTrace
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
     ULONG                           j               = 0;
 
@@ -864,14 +829,9 @@ BwspWsoDoConnect
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject       = (PBWSP_WEB_SERVLET_OBJECT   )hThisObject;
-    PBWSP_WEB_SERVLET_PROPERTY      pProperty       = (PBWSP_WEB_SERVLET_PROPERTY )&pMyObject->Property;
     PBWSP_WSH_INTERFACE             pBwspWshIf      = (PBWSP_WSH_INTERFACE        )pMyObject->hBwspWshIf;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE        )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT       )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT       )hBmoRep;
-    PHTTP_REQUEST_INFO              pReqInfo        = (PHTTP_REQUEST_INFO         )pBmoReq->GetReqInfo    ((ANSC_HANDLE)pBmoReq);
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN          )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT)pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = NULL;
     ULONG                           j               = 0;
 

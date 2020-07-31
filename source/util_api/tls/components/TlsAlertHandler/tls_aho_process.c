@@ -122,6 +122,7 @@ TlsAhoRecv
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     PTLS_ALERT_HANDLER_OBJECT       pMyObject          = (PTLS_ALERT_HANDLER_OBJECT  )hThisObject;
 
     return
@@ -174,6 +175,9 @@ TlsAhoSend
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 

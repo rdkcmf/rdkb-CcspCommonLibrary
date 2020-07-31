@@ -207,11 +207,11 @@ AnscDstoAsyncJobTask
                     }
                 }
 
-                while ( pCurEngine =
+                while (( pCurEngine =
                             (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->AssignEngine
                                 (
                                     (ANSC_HANDLE)pMyObject
-                                ) )
+                                )) )
                 {
                     returnStatus =
                         pCurEngine->AddSocket

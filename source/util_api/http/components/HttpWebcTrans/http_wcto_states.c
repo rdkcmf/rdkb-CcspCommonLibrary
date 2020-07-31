@@ -119,7 +119,6 @@ HttpWctoGetBspIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hBspIf;
@@ -161,7 +160,6 @@ HttpWctoSetBspIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hBspIf = hInterface;
@@ -200,7 +198,6 @@ HttpWctoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hHfpIf;
@@ -242,7 +239,6 @@ HttpWctoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hHfpIf = hInterface;
@@ -281,7 +277,6 @@ HttpWctoGetWebcSession
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hWebcSession;
@@ -323,7 +318,6 @@ HttpWctoSetWebcSession
         ANSC_HANDLE                 hWebcSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWebcSession = hWebcSession;
@@ -362,7 +356,6 @@ HttpWctoGetBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hBmoReq;
@@ -404,7 +397,6 @@ HttpWctoSetBmoReq
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hBmoReq = hMessage;
@@ -443,7 +435,6 @@ HttpWctoGetBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hBmoRep;
@@ -485,7 +476,6 @@ HttpWctoSetBmoRep
         ANSC_HANDLE                 hMessage
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hBmoRep = hMessage;
@@ -524,7 +514,6 @@ HttpWctoGetTcpSimpleClient
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->hTcpSimpleClient;
@@ -566,7 +555,6 @@ HttpWctoSetTcpSimpleClient
         ANSC_HANDLE                 hClient
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hTcpSimpleClient = hClient;
@@ -605,7 +593,6 @@ HttpWctoGetTransState
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->TransState;
@@ -647,7 +634,6 @@ HttpWctoSetTransState
         ULONG                       ulState
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->TransState = ulState;
@@ -732,7 +718,6 @@ HttpWctoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     pMyObject->hWebcSession     = (ANSC_HANDLE)NULL;

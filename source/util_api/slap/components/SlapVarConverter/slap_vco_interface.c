@@ -609,8 +609,6 @@ SlapCreateVarConverter
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pSlapVarConverter = NULL;
 
     return  SlapVcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -647,9 +645,7 @@ SlapVcoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pSlapVarConverter = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapVco;
 }
 
@@ -685,8 +681,6 @@ SlapVcoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pSlapVarConverter = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapVco;
 }

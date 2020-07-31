@@ -119,7 +119,7 @@ WebVhoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebVhoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject         = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator  = (PWEB_RESOURCE_LOCATOR_OBJECT )pMyObject->hResourceLocator;
     PWEB_LSM_INTERFACE              pLsmIf            = (PWEB_LSM_INTERFACE           )pMyObject->hLsmIf;
@@ -259,7 +258,6 @@ WebVhoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject         = (PWEB_VIRTUAL_HOST_OBJECT     )hThisObject;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator  = (PWEB_RESOURCE_LOCATOR_OBJECT )pMyObject->hResourceLocator;
     PWEB_LSM_INTERFACE              pLsmIf            = (PWEB_LSM_INTERFACE           )pMyObject->hLsmIf;
@@ -392,7 +390,6 @@ WebVhoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

@@ -125,10 +125,7 @@ AnscSstoStsGetLocalTime
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
-    PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME   )hCalendar;
-    LONG                            lTimeH            = 0;
     ULONG                           ulTimeI           = 0;
-    ULONG                           ulTimeF           = 0;
 
     /*
     AnscTrace("AnscSstoStsGetLocalTime...!\n");
@@ -194,7 +191,6 @@ AnscSstoStsGetCurSeconds
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     return  pMyObject->GetCurrSecond((ANSC_HANDLE)pMyObject);
@@ -243,10 +239,7 @@ AnscSstoStsGetUTCTime
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
-    PANSC_UNIVERSAL_TIME            pCalendar         = (PANSC_UNIVERSAL_TIME   )hCalendar;
-    LONG                            lTimeH            = 0;
     ULONG                           ulTimeI           = 0;
-    ULONG                           ulTimeF           = 0;
 
     /*
     AnscTrace("AnscSstoStsGetUTCTime...!\n");
@@ -456,7 +449,6 @@ AnscSstoStsSecondsToCalendar
         ANSC_HANDLE                 hCalendar
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     return  pMyObject->SecondToCalendar
@@ -515,7 +507,6 @@ AnscSstoStsCalendarToSeconds
         PULONG                      pTimeStampI
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     return  pMyObject->CalendarToSecond
@@ -569,7 +560,6 @@ AnscSstoStsSysTickToCalendar
         ANSC_HANDLE                 hCalendar
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject    = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
     ULONG                           ulCurTick    = (ULONG                       )AnscGetTickInSeconds();
     ULONG                           ulCurSecs    = (ULONG                       )pMyObject->GetCurrSecond((ANSC_HANDLE)pMyObject);
@@ -618,7 +608,6 @@ AnscSstoStsGetTimeOffset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     return  pMyObject->GetiTimeOffset(pMyObject);
@@ -662,7 +651,6 @@ AnscSstoStsSetTimeOffset
         INT                         value
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_SYS_TIME_OBJECT    pMyObject         = (PANSC_SIMPLE_SYS_TIME_OBJECT)hThisObject;
 
     return  pMyObject->SetiTimeOffset(pMyObject, value);

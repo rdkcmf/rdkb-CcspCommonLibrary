@@ -116,9 +116,7 @@ ScliShoDoBufferedCommands
         ANSC_HANDLE                 hExecEnv
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PSCLI_SHELL_EXEC_ENV            pScliExecEnv = (PSCLI_SHELL_EXEC_ENV     )hExecEnv;
     PTELNET_CMD_EXECUTION_ENV       pTelnetEnv   = (PTELNET_CMD_EXECUTION_ENV)pScliExecEnv->hTelnetEnv;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pTelnetEnv->hTscIf;
@@ -143,7 +141,6 @@ ScliShoDoBufferedCommands
 
         if ( bCmdAvailable )
         {
-            returnStatus =
                 pMyObject->RunCmd
                     (
                         (ANSC_HANDLE)pMyObject,
@@ -157,7 +154,6 @@ ScliShoDoBufferedCommands
             
             if ( pSession->CommandLen != 0 )
             {
-                returnStatus = 
                     pTscIf->Output
                         (
                             pTscIf->hOwnerContext,
@@ -222,7 +218,6 @@ ScliShoGetBufferedCmd
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject           = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty           = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
     PSCLI_SHELL_BUFFERED_CMD_LIST   pBufferedCmdArray;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     PSCLI_SHELL_BUFFERED_CMD        pCmd                = NULL;
@@ -318,7 +313,6 @@ ScliShoBufferCmd
     )
 {
     PSCLI_SHELL_OBJECT              pMyObject           = (PSCLI_SHELL_OBJECT  )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty           = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
     PSCLI_SHELL_BUFFERED_CMD_LIST   pBufferedCmdArray;
     PSCLI_SHELL_SESSION_EXEC        pSession;
 
@@ -342,14 +336,14 @@ ScliShoBufferCmd
         return ANSC_STATUS_RESOURCES;
     }
 
-    pBufferedCmdArray->pCmds[pBufferedCmdArray->ulCount].pCmd      = pCmd ? AnscCloneString(pCmd) : NULL;
+    pBufferedCmdArray->pCmds[pBufferedCmdArray->ulCount].pCmd      = (PUCHAR)(pCmd ? AnscCloneString((PCHAR)pCmd) : NULL);
     pBufferedCmdArray->pCmds[pBufferedCmdArray->ulCount].ulCmdCode = ulCmdCode;
 
     pBufferedCmdArray->ulCount ++;
 
     if ( pSession->hActiveTextBox || pSession->bWaitInput )
     {
-        AnscSetEvent(&pSession->InputEvent);
+        AnscSetEvent((PSEM_EVENT *)&pSession->InputEvent);
     }
 
     return ANSC_STATUS_SUCCESS;
@@ -391,8 +385,7 @@ ScliShoClearBufferCmd
         ANSC_HANDLE                 hSession
     )
 {
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT      )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY    )&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSCLI_SHELL_SESSION_EXEC        pSession     = (PSCLI_SHELL_SESSION_EXEC)hSession;
 
     if ( pSession )

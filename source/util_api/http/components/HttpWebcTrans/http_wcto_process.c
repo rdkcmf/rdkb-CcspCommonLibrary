@@ -123,10 +123,7 @@ HttpWctoQuery
         ANSC_HANDLE                 hBufferContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_BSP_INTERFACE             pBspIf        = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR   )hBufferContext;
     PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT      )pMyObject->hBmoRep;
     ULONG                           ulWctoQmode   = HTTP_WCTO_QMODE_COLLECT;
@@ -253,14 +250,12 @@ HttpWctoRecv
         ANSC_HANDLE                 hBufferContext
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_BSP_INTERFACE             pBspIf        = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR   )hBufferContext;
     PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT      )pMyObject->hBmoRep;
-    ULONG                           ulBmoState    = HTTP_BMO_STATE_EMPTY;
-
     /*
      * At time like this, you will always have two options on how to proceed with the message
      * processing:
@@ -273,8 +268,6 @@ HttpWctoRecv
      *
      * Guess which one we're using here ...
      */
-    buffer       = AnscBdoGetBlock    (pBufferDesp);
-    ulSize       = AnscBdoGetBlockSize(pBufferDesp);
     returnStatus =
         pBmoRep->Process
             (
@@ -332,9 +325,7 @@ HttpWctoSend
         ULONG                       ulSendFlags
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject        = (PHTTP_WEBC_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient    = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT          )hMessage;
     ANSC_HANDLE                     hOrgTmhIf        = pBmoReq->GetTmhIf((ANSC_HANDLE)pBmoReq);
@@ -343,8 +334,7 @@ HttpWctoSend
 
     if ( ulSendFlags & HTTP_WCTO_SFLAG_HEADERS )
     {
-        returnStatus =
-            pBmoReq->OutputHeaders
+        pBmoReq->OutputHeaders
                 (
                     (ANSC_HANDLE)pBmoReq,
                     (ANSC_HANDLE)pTcpSimpleClient
@@ -353,8 +343,7 @@ HttpWctoSend
 
     if ( ulSendFlags & HTTP_WCTO_SFLAG_BODY )
     {
-        returnStatus =
-            pBmoReq->OutputBody
+        pBmoReq->OutputBody
                 (
                     (ANSC_HANDLE)pBmoReq,
                     (ANSC_HANDLE)pTcpSimpleClient
@@ -414,10 +403,10 @@ HttpWctoFinish
         ANSC_HANDLE                 hBufferContext
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_BSP_INTERFACE             pBspIf        = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT      )pMyObject->hBmoRep;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR   )hBufferContext;
     ULONG                           ulBmoState    = pBmoRep->GetState((ANSC_HANDLE)pBmoRep);
@@ -433,8 +422,6 @@ HttpWctoFinish
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-    buffer       = AnscBdoGetBlock    (pBufferDesp);
-    ulSize       = AnscBdoGetBlockSize(pBufferDesp);
     returnStatus =
         pBmoRep->CloseUp
             (
@@ -484,10 +471,8 @@ HttpWctoAbort
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
     PHTTP_BSP_INTERFACE             pBspIf        = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
-    PHTTP_BMO_REP_OBJECT            pBmoRep       = (PHTTP_BMO_REP_OBJECT      )pMyObject->hBmoRep;
-
+    
     returnStatus =
         pBspIf->Notify
             (

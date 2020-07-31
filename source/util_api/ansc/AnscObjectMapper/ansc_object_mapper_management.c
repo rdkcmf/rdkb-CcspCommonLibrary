@@ -111,7 +111,6 @@ AnscOmoGetContainerContext
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
 
     return  pObjectMapper->hContainerContext;
@@ -153,7 +152,6 @@ AnscOmoSetContainerContext
         ANSC_HANDLE                 hContainer
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
 
     pObjectMapper->hContainerContext = hContainer;
@@ -197,7 +195,6 @@ AnscOmoAddDescriptor
         ANSC_HANDLE                 hDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hDescriptor;
     ULONG                           ulHashIndex   = AnscHashUlong(pDescriptor->GetOid((ANSC_HANDLE)pDescriptor), DEFAULT_OD_TABLE_SIZE);
@@ -247,7 +244,6 @@ AnscOmoDelDescriptor
         ANSC_HANDLE                 hDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hDescriptor;
 
@@ -291,7 +287,6 @@ AnscOmoDelAllDescriptors
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -354,7 +349,6 @@ AnscOmoGetDescriptorByName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -422,7 +416,6 @@ AnscOmoGetDescriptorByOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
@@ -492,7 +485,6 @@ AnscOmoGetDescriptorByType
         char*                       type
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pDescriptor   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;

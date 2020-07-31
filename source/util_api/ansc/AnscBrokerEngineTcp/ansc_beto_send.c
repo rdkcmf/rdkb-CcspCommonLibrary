@@ -105,7 +105,6 @@ AnscBetoSendTask
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_BROKER_ENGINE_TCP_OBJECT)hThisObject;
     ansc_fd_set*                    pSendSet1    = (ansc_fd_set*                  )pMyObject->SendSocketSet;
     xskt_fd_set*                    pSendSet2    = (xskt_fd_set*                  )pMyObject->SendSocketSet;
@@ -116,7 +115,6 @@ AnscBetoSendTask
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     BOOL                            bSendable    = FALSE;
     int                             s_result     = 0;
-    int                             s_error      = 0;
 
     AnscTrace("AnscBetoSendTask is activated ...!\n");
 
@@ -150,7 +148,6 @@ AnscBetoSendTask
 
         if ( !bSendable )
         {
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,
@@ -177,9 +174,7 @@ AnscBetoSendTask
         if ( ((s_result == XSKT_SOCKET_ERROR) &&  (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)) ||
              ((s_result == ANSC_SOCKET_ERROR) && !(pServer->Mode & ANSC_BSTO_MODE_XSOCKET)) )
         {
-            s_error = (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)? _xskt_get_last_error() : _ansc_get_last_error();
 
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,
@@ -195,7 +190,6 @@ AnscBetoSendTask
         }
         else
         {
-            returnStatus =
                 pWorker->SendComplete
                     (
                         pWorker->hWorkerContext,

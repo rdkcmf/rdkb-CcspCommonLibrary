@@ -126,8 +126,6 @@ SlapLcoLpcToLoaImcpInvoAnswer
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject           = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty           = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController  = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PIMCP_SLAP_INVO_ANSWER          pImcpSlapInvoAnswer = (PIMCP_SLAP_INVO_ANSWER     )pImcpAnswer;
     PIMCP_SLAP_VARIABLE             pImcpSlapVar        = (PIMCP_SLAP_VARIABLE        )NULL;
     PIMCP_SLAP_VARIABLE             pImcpSlapVar2       = (PIMCP_SLAP_VARIABLE        )NULL;
@@ -526,9 +524,7 @@ SlapLcoLpcToLoaSlapObject
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent      = (PSLAP_OBJ_AGENT_OBJECT     )NULL;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     ANSC_HANDLE                     hClonedObject      = (ANSC_HANDLE                )NULL;
@@ -738,19 +734,13 @@ SlapLcoLoaToLpcImcpInvoCall
         void*                       pImcpCall
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PIMCP_SLAP_INVO_CALL            pImcpSlapInvoCall  = (PIMCP_SLAP_INVO_CALL       )pImcpCall;
     PIMCP_SLAP_VARIABLE             pImcpSlapVar       = (PIMCP_SLAP_VARIABLE        )NULL;
     ULONG                           ulImcpVarCount     = (ULONG                      )0;
-    ULONG                           ulSlapVarFlags     = (ULONG                      )0;
     ANSC_HANDLE                     hSlapObjectLpc     = (ANSC_HANDLE                )NULL;
     ANSC_HANDLE                     hSlapObjectLoa     = (ANSC_HANDLE                )NULL;
-    ULONG                           ulSlapObjType      = (ULONG                      )0;
-    char*                           pSlapObjName       = (char*                      )NULL;
     ULONG                           i                  = 0;
     ULONG                           j                  = 0;
 
@@ -856,11 +846,7 @@ SlapLcoLoaToLpcSlapObject
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent      = (PSLAP_OBJ_AGENT_OBJECT     )obj_handle;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     ANSC_HANDLE                     hOriginalObject    = (ANSC_HANDLE                )pSlapObjAgent->hOriginalObj;
     ANSC_HANDLE                     hClonedObject      = (ANSC_HANDLE                )pSlapObjAgent->hClonedObj;
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord     = (PSLAP_OBJ_RECORD_OBJECT    )NULL;
@@ -995,7 +981,6 @@ SlapLcoLoaToUoaParamList
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
     ULONG                           i            = 0;
 
     for ( i = 0; i < param_list->ParamCount; i++ )
@@ -1055,7 +1040,6 @@ SlapLcoUoaToLoaParamList
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
     ULONG                           i            = 0;
 
     for ( i = 0; i < param_list->ParamCount; i++ )
@@ -1113,9 +1097,7 @@ SlapLcoLoaToUoaVariable
         SLAP_VARIABLE*              slap_var
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-    PSLAP_LOAM_CLIENT_OBJECT        pMyObject     = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty     = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent = (PSLAP_OBJ_AGENT_OBJECT    )NULL;
     ULONG                           i             = 0;
 
@@ -1235,9 +1217,7 @@ SlapLcoUoaToLoaVariable
         SLAP_VARIABLE*              slap_var
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent      = (PSLAP_OBJ_AGENT_OBJECT     )NULL;
@@ -1291,8 +1271,7 @@ SlapLcoUoaToLoaVariable
                          * UOA object because we cannot return it the way it is. For SLAP_OBJECT
                          * object, we have to explicitly delete it from UOA.
                          */
-                        returnStatus =
-                            pSlapUoaIf->DeleteObject
+                        pSlapUoaIf->DeleteObject
                                 (
                                     pSlapUoaIf->hOwnerContext,
                                     (ANSC_HANDLE)slap_var->Variant.varObject
@@ -1339,8 +1318,7 @@ SlapLcoUoaToLoaVariable
                                  * ence this UOA object because we cannot return it the way it is.
                                  * For SLAP_OBJECT object, we have to explicitly delete it from UOA.
                                  */
-                                returnStatus =
-                                    pSlapUoaIf->DeleteObject
+                                pSlapUoaIf->DeleteObject
                                         (
                                             pSlapUoaIf->hOwnerContext,
                                             (ANSC_HANDLE)slap_var->Variant.varObjectArray->Array.arrayObject[i]

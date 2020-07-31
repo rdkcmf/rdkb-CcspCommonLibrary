@@ -117,9 +117,9 @@ BspTemplateStackCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_STACK_OBJECT      pMyObject    = NULL;
-    PBSP_TEMPLATE_VAR_OBJECT        *pVars       = NULL;
-    PBSP_TEMPLATE_VAR_OBJECT        pVar         = NULL;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.

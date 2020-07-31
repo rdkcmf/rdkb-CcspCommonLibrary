@@ -117,8 +117,6 @@ SysCreateRecycleBin
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSYS_RECYCLE_BIN_OBJECT         pSysRecycleBin = NULL;
 
     return  SysRboCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

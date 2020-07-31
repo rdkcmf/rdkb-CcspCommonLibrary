@@ -109,9 +109,7 @@ SlapLboGetAnscCpcIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscCpcIf;
 }
@@ -147,9 +145,7 @@ SlapLboGetAnscLpcConnector
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscLpcConnector;
 }
@@ -190,7 +186,6 @@ SlapLboGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
     PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
@@ -235,7 +230,6 @@ SlapLboSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
     PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
@@ -275,7 +269,6 @@ SlapLboResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
     PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
@@ -315,9 +308,7 @@ SlapLboReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = (PSLAP_LOAM_BROKER_OBJECT  )hThisObject;
-    PSLAP_LOAM_BROKER_PROPERTY      pProperty    = (PSLAP_LOAM_BROKER_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllObjBindings((ANSC_HANDLE)pMyObject);
 

@@ -117,8 +117,6 @@ BwspCreateWebServlet
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBWSP_WEB_SERVLET_OBJECT        pBwspWebServlet = NULL;
 
     return  BwspWsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

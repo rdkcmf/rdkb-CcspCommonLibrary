@@ -119,7 +119,6 @@ TlsSeoMatch1
         ULONG                       conn_end
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_ENTRY_OBJECT       pMyObject       = (PTLS_SESSION_ENTRY_OBJECT)hThisObject;
     PTLS_SESSION_STATE              pSessionState   = (PTLS_SESSION_STATE       )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams = (PTLS_SECURITY_PARAMS     )&pSessionState->SecurityParams;
@@ -191,11 +190,9 @@ TlsSeoMatch2
         ULONG                       session_id_size
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_ENTRY_OBJECT       pMyObject       = (PTLS_SESSION_ENTRY_OBJECT)hThisObject;
     PTLS_SESSION_STATE              pSessionState   = (PTLS_SESSION_STATE       )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams = (PTLS_SECURITY_PARAMS     )&pSessionState->SecurityParams;
-
+    
     if ( pSessionState->HostID != host_id )
     {
         return  FALSE;

@@ -113,7 +113,6 @@ AnscScuoGetRecvBuffer
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
 
     if ( !pMyObject->bActive )
@@ -171,6 +170,7 @@ AnscScuoRecv
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
     PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
@@ -272,11 +272,11 @@ AnscScuoSend
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
     PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
     int                             s_result     = 0;
-    int                             s_error      = 0;
     ansc_socket_addr_in             ansc_to_addr;
     xskt_socket_addr_in             xskt_to_addr;
 
@@ -299,7 +299,7 @@ AnscScuoSend
 
         if ( s_result == XSKT_SOCKET_ERROR )
         {
-            s_error = _xskt_get_last_error();
+            _xskt_get_last_error();
 
             returnStatus =
                 pWorker->Notify
@@ -329,7 +329,7 @@ AnscScuoSend
 
         if ( s_result == ANSC_SOCKET_ERROR )
         {
-            s_error = _ansc_get_last_error();
+            _ansc_get_last_error();
 
             returnStatus =
                 pWorker->Notify
@@ -406,11 +406,11 @@ AnscScuoSend2
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_SIMPLE_CLIENT_UDP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)hThisObject;
     PANSC_SCUO_WORKER_OBJECT        pWorker      = (PANSC_SCUO_WORKER_OBJECT      )pMyObject->hWorker;
     int                             s_result     = 0;
-    int                             s_error      = 0;
     ansc_socket_addr_in             ansc_to_addr;
     xskt_socket_addr_in             xskt_to_addr;
 
@@ -429,7 +429,7 @@ AnscScuoSend2
 
         if ( s_result == XSKT_SOCKET_ERROR )
         {
-            s_error = _xskt_get_last_error();
+             _xskt_get_last_error();
 
             returnStatus =
                 pWorker->Notify
@@ -459,7 +459,7 @@ AnscScuoSend2
 
         if ( s_result == ANSC_SOCKET_ERROR )
         {
-            s_error = _ansc_get_last_error();
+            _ansc_get_last_error();
 
             returnStatus =
                 pWorker->Notify

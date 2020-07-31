@@ -117,8 +117,6 @@ Bmc2CreateComTerminal
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = NULL;
 
     return  Bmc2ComtoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

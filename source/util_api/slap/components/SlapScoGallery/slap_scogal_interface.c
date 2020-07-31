@@ -117,8 +117,6 @@ SlapCreateScoGallery
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PSLAP_SCO_GALLERY_OBJECT        pSlapScoGallery = NULL;
 
     return  SlapScoGalCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -119,7 +119,7 @@ WebRooFsmCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_ROO_FSM_OBJECT             pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebRooFsmRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject    = (PWEB_ROO_FSM_OBJECT)hThisObject;
 
     WebRooRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ WebRooFsmEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject    = (PWEB_ROO_FSM_OBJECT)hThisObject;
 
     WebRooEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ WebRooFsmInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_ROO_FSM_OBJECT             pMyObject    = (PWEB_ROO_FSM_OBJECT)hThisObject;
 
     /*

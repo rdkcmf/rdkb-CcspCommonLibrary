@@ -85,6 +85,9 @@
 #include "ccsp_base_api.h"
 #include "ccsp_trace.h"
 
+#ifdef USE_NOTIFY_COMPONENT
+static void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value);
+#endif
 
 /**********************************************************************
 
@@ -124,7 +127,6 @@ DslhObjroGetTotalParamNumber
 		BOOL						bSelfIncluded
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject           = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord     = (PDSLH_OBJ_RECORD_OBJECT)NULL;
@@ -455,7 +457,6 @@ DslhObjroGetAllParamInfos
         BOOL                        bFromACS
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject           = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_CWMP_PARAM_INFO           pParameterInfoArray = (PDSLH_CWMP_PARAM_INFO  )hParamInfoArray;
@@ -467,7 +468,6 @@ DslhObjroGetAllParamInfos
 	PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent    = (PDSLH_OBJ_ENTITY_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY     )NULL;
 	PDSLH_OBJ_RECORD_OBJECT         pObjRecordParent    = (PDSLH_OBJ_RECORD_OBJECT)NULL;
-    ULONG                           i                   = 0;
     ULONG                           ulMaxParamCount     = *pulArraySize;
     ULONG                           ulTotalParamCount   = 0;
     ULONG                           ulParamCount        = 0;
@@ -695,15 +695,14 @@ DslhObjroGetAllParamInfos
             }
 
             ulParamCount    = ulMaxParamCount - ulTotalParamCount;
-            returnStatus    =
-                pChildObjRecord->GetAllParamInfos
-                    (
-                        (ANSC_HANDLE)pChildObjRecord,
-                        (ANSC_HANDLE)&pParameterInfoArray[ulTotalParamCount],
-                        &ulParamCount,
-                        FALSE,
-                        bFromACS
-                    );
+            pChildObjRecord->GetAllParamInfos
+                (
+                    (ANSC_HANDLE)pChildObjRecord,
+                    (ANSC_HANDLE)&pParameterInfoArray[ulTotalParamCount],
+                    &ulParamCount,
+                    FALSE,
+                    bFromACS
+                );
 
             ulTotalParamCount += ulParamCount;
         }
@@ -762,7 +761,6 @@ DslhObjroGetAllParamAttribs
         BOOL                        bFromAcs
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject             = (PDSLH_OBJ_RECORD_OBJECT)hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity            = (PDSLH_OBJ_ENTITY_OBJECT)pMyObject->hDslhObjEntity;
     PDSLH_CWMP_PARAM_ATTRIB         pParameterAttribArray = (PDSLH_CWMP_PARAM_ATTRIB)hParamAttribArray;
@@ -770,7 +768,6 @@ DslhObjroGetAllParamAttribs
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity       = (PDSLH_VAR_ENTITY_OBJECT)NULL;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord       = (PDSLH_OBJ_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry           = (PSINGLE_LINK_ENTRY     )NULL;
-    ULONG                           i                     = 0;
     ULONG                           ulMaxParamCount       = *pulArraySize;
     ULONG                           ulTotalParamCount     = 0;
     ULONG                           ulParamCount          = 0;
@@ -823,7 +820,6 @@ DslhObjroGetAllParamAttribs
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
         ulParamCount    = ulMaxParamCount - ulTotalParamCount;
-        returnStatus    =
             pChildObjRecord->GetAllParamAttribs
                 (
                     (ANSC_HANDLE)pChildObjRecord,
@@ -877,7 +873,6 @@ DslhObjroSetAllParamAttribs
         ANSC_HANDLE                 hSetParamAttrib
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_CWMP_SET_PARAM_ATTRIB     pSetParamAttrib = (PDSLH_CWMP_SET_PARAM_ATTRIB)hSetParamAttrib;
@@ -885,7 +880,6 @@ DslhObjroSetAllParamAttribs
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY         )NULL;
-    ULONG                           i               = 0;
 
     /* Don't count the invisible object in. We will quit here */
     if( pObjEntity->ObjDescr && pObjEntity->ObjDescr->bInvisible)
@@ -913,7 +907,6 @@ DslhObjroSetAllParamAttribs
             pChildVarRecord->RequesterID = pSetParamAttrib->RequesterID;
             if ( pSetParamAttrib->bNotificationChange )
             {
-                returnStatus =
                     pChildVarRecord->SetNotification
                         (
                             (ANSC_HANDLE)pChildVarRecord,
@@ -923,7 +916,6 @@ DslhObjroSetAllParamAttribs
 
             if ( pSetParamAttrib->bAccessListChange )
             {
-                returnStatus =
                     pChildVarRecord->SetAccessList
                         (
                             (ANSC_HANDLE)pChildVarRecord,
@@ -940,7 +932,6 @@ DslhObjroSetAllParamAttribs
     {
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
-        returnStatus    =
             pChildObjRecord->SetAllParamAttribs
                 (
                     (ANSC_HANDLE)pChildObjRecord,
@@ -989,9 +980,7 @@ DslhObjroVerifyChanges
         char**                      ppFaultParamName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject       = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController  = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
     char*                           pErrorParamName = (char*                      )NULL;
     BOOL                            bTestResult     = TRUE;
@@ -1071,9 +1060,7 @@ DslhObjroCommitChanges
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject      = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
 
     return  pObjController->Commit((ANSC_HANDLE)pObjController, pMyObject->hDslhRvqIf);
@@ -1113,15 +1100,10 @@ DslhObjroCommitChanges2
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject          = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController     = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
-    PDSLH_WMP_DATABASE_OBJECT       pDslhWmpDatabase   = (PDSLH_WMP_DATABASE_OBJECT  )pDslhCpeController->hDslhWmpDatabase;
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord    = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity    = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry        = (PSINGLE_LINK_ENTRY         )NULL;
-    char*                           pParamFullName     = (char*                      )NULL;
-    ULONG                           i                  = 0;
     BOOL                            bTestResult        = TRUE;
     char*                           pFaultParamName    = NULL;
 
@@ -1263,9 +1245,7 @@ DslhObjroCancelChanges
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_RECORD_OBJECT         pMyObject      = (PDSLH_OBJ_RECORD_OBJECT    )hThisObject;
-    PDSLH_OBJ_ENTITY_OBJECT         pObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
 
     return  pObjController->Rollback((ANSC_HANDLE)pObjController);
@@ -1315,7 +1295,6 @@ DslhObjroAddChildObject
     PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_CONTROLLER_OBJECT     pChildObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     char*                           pChildFullName      = (char*                      )NULL;
     char*                           pChildLastName      = (char*                      )NULL;
     ULONG                           ulObjInsNumber      = (ULONG                      )0;
@@ -1518,11 +1497,9 @@ DslhObjroDelChildObject
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )pMyObject->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController      = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
     PDSLH_OBJCO_TABLE_OBJECT        pObjcoTable         = (PDSLH_OBJCO_TABLE_OBJECT   )pObjController;
-    PDSLH_OBJ_ENTITY_OBJECT         pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pChildObjRecord     = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_CONTROLLER_OBJECT     pChildObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry         = (PSINGLE_LINK_ENTRY         )NULL;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController  = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     BOOL                            bChildObjFound      = FALSE;
 	ULONG							old_value = 0; 
 
@@ -1560,7 +1537,6 @@ DslhObjroDelChildObject
     }
     else
     {
-        pChildObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT    )pChildObjRecord->hDslhObjEntity;
         pChildObjController = (PDSLH_OBJ_CONTROLLER_OBJECT)pChildObjRecord->hDslhObjController;
     }
 
@@ -1597,7 +1573,7 @@ DslhObjroDelChildObject
 #ifdef USE_NOTIFY_COMPONENT
 extern ANSC_HANDLE bus_handle;
 
-Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
+static void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 {
 
 	char param_name[256] = "Device.NotifyComponent.SetNotifi_ParamName";
@@ -1615,7 +1591,7 @@ Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value)
 	Param_NumberOfEntry[len-1]= '\0';
 	sprintf(Param_NumberOfEntry,"%sNumberOfEntries",Param_NumberOfEntry);
 
-	sprintf(str,"%s,%lu,%lu,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
+	sprintf(str,"%s,%d,%d,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
 		notif_val[0].parameterName =  param_name ;
 		notif_val[0].parameterValue = str;
 		notif_val[0].type = ccsp_string;

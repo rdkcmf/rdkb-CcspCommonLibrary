@@ -164,6 +164,12 @@ AnscReallocMemory
         ULONG ulOldMemorySize,
         ULONG ulNewMemorySize
     );
+
+VOID
+AnscFreeMemoryOrig
+    (
+        PVOID  pMemoryBlock
+    );
 /**********************************************************************
     Only count size, no detail recording.
 **********************************************************************/

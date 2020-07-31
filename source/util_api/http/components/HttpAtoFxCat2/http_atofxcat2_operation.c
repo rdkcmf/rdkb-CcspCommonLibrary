@@ -108,7 +108,6 @@ HttpAtoFxCat2CreateCodeTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
     ULONG                           i            = 0;
 
@@ -160,8 +159,7 @@ HttpAtoFxCat2CreateNameTable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_FXCAT2_OBJECT         pMyObject    = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -203,7 +201,6 @@ HttpAtoFxCat2GetAtomCode
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject       = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 
@@ -259,7 +256,6 @@ HttpAtoFxCat2GetAtomName
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PHTTP_ATO_FXCAT2_OBJECT         pMyObject       = (PHTTP_ATO_FXCAT2_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
 

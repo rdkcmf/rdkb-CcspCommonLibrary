@@ -119,7 +119,7 @@ ScliShoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSCLI_SHELL_OBJECT              pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ ScliShoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PTELNET_TSP_INTERFACE           pTspIf       = (PTELNET_TSP_INTERFACE    )pMyObject->hTspIf;
     PSCLI_SHELL_CEN_INTERFACE       pCenIf       = (PSCLI_SHELL_CEN_INTERFACE)pMyObject->hCenIf;
@@ -271,7 +270,6 @@ ScliShoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PTELNET_TSP_INTERFACE           pTspIf       = (PTELNET_TSP_INTERFACE    )pMyObject->hTspIf;
     PSCLI_SHELL_CEN_INTERFACE       pCenIf       = (PSCLI_SHELL_CEN_INTERFACE)pMyObject->hCenIf;
@@ -362,7 +360,6 @@ ScliShoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT)hThisObject;
 
     /*

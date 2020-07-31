@@ -320,9 +320,9 @@ AdvPKIEntityExportPKCS12Handle
     if( pThisObject->ExportInfo
             (
                 pThisObject,
-                &pEncoding,
+                (PVOID*)&pEncoding,
                 &length,
-                &pKeyEncoding,
+                (PVOID*)&pKeyEncoding,
                 &keyLength
             ) == ANSC_STATUS_SUCCESS
        )

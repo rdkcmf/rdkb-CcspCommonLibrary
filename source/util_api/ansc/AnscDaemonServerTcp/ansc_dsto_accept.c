@@ -110,7 +110,6 @@ AnscDstoAcceptTask
     PANSC_DSTO_WORKER_OBJECT        pWorker       = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hWorker;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pCurEngine    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)NULL;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pNewSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)NULL;
-    PANSC_DSTO_ASYNC_JOB            pAsyncJob     = (PANSC_DSTO_ASYNC_JOB          )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
     ULONG                           ulSocketCount = 0;
     ULONG                           ulRetryCount  = 0;
@@ -280,7 +279,7 @@ AnscDstoAcceptTask
 #ifdef _ANSC_IPV6_COMPATIBLE_
             tmpSocket2  = _xskt_accept(pMyObject->Socket, (xskt_socket_addr*)&client_sockaddr2, &sa_len);
 #else
-	        tmpSocket2  = _xskt_accept(pMyObject->Socket, (xskt_socket_addr*)&client_addr2, &addrlen);
+	        tmpSocket2  = _xskt_accept(pMyObject->Socket, (xskt_socket_addr*)&client_addr2, (unsigned int *)&addrlen);
 #endif
 		}
 		else
@@ -288,7 +287,7 @@ AnscDstoAcceptTask
 #ifdef _ANSC_IPV6_COMPATIBLE_
             tmpSocket1  = _ansc_accept(pMyObject->Socket, (ansc_socket_addr*)&client_sockaddr1, &sa_len);
 #else
-			tmpSocket1  = _ansc_accept(pMyObject->Socket, (ansc_socket_addr*)&client_addr1, &addrlen);
+			tmpSocket1  = _ansc_accept(pMyObject->Socket, (ansc_socket_addr*)&client_addr1, (unsigned int *)&addrlen);
 #endif
 		}
 
@@ -572,11 +571,11 @@ AnscDstoAcceptTask
          */
         ulRetryCount = 0;
 
-        while ( pCurEngine =
+        while ( (pCurEngine =
                     (PANSC_DAEMON_ENGINE_TCP_OBJECT)pMyObject->AssignEngine
                         (
                             (ANSC_HANDLE)pMyObject
-                        ) )
+                        )) )
         {
             returnStatus =
                 pCurEngine->AddSocket

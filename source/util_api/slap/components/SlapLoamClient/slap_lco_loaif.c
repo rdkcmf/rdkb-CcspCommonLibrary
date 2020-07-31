@@ -139,7 +139,6 @@ SlapLcoLoaAcqContainerAccess
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR   )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER         )NULL;
     PIMCP_SLAP_ACQC_ANSWER          pImcpSlapAcqcAnswer = (PIMCP_SLAP_ACQC_ANSWER    )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                     )0;
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
     ANSC_HANDLE                     hLpcSlapContainer   = (ANSC_HANDLE               )NULL;
 
@@ -190,7 +189,7 @@ SlapLcoLoaAcqContainerAccess
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -301,7 +300,6 @@ SlapLcoLoaRelContainerAccess
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR   )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER         )NULL;
     PIMCP_SLAP_RELC_ANSWER          pImcpSlapRelcAnswer = (PIMCP_SLAP_RELC_ANSWER    )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                     )0;
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
 
     if ( !pMyObject->bActive )
@@ -349,7 +347,7 @@ SlapLcoLoaRelContainerAccess
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -469,7 +467,6 @@ SlapLcoLoaLocateObject
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR   )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER         )NULL;
     PIMCP_SLAP_LOCO_ANSWER          pImcpSlapLocoAnswer = (PIMCP_SLAP_LOCO_ANSWER    )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                     )0;
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
     PIMCP_PARTY_INFO                pRepliedPartyInfo   = (PIMCP_PARTY_INFO          )NULL;
     ULONG                           ulPartyInfoSize     = (ULONG                     )0;
@@ -545,7 +542,7 @@ SlapLcoLoaLocateObject
                 ANSC_LPC_MANAGER_PARTY_NAME,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -773,7 +770,6 @@ SlapLcoLoaDeleteObject
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR    )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER          )NULL;
     PIMCP_SLAP_DELO_ANSWER          pImcpSlapDeloAnswer = (PIMCP_SLAP_DELO_ANSWER     )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                      )0;
     ULONG                           ulLpcErrorCode      = (ULONG                      )ANSC_LPC_ERROR_noError;
 
     if ( !pMyObject->bActive )
@@ -881,7 +877,7 @@ SlapLcoLoaDeleteObject
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -1024,7 +1020,6 @@ SlapLcoLoaInvokeObject
     PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE        )NULL;
     PSLAP_OBJ_AGENT_OBJECT          pSlapObjAgent       = (PSLAP_OBJ_AGENT_OBJECT     )hSlapObject;
     ULONG                           ulOaoObjMode        = (ULONG                      )0;
-    PSLAP_LOA_OBJECT_STUB           pObjectStub         = (PSLAP_LOA_OBJECT_STUB      )NULL;
     void*                           pMessageBuffer      = (void*                      )NULL;
     ULONG                           ulBufferSize        = (ULONG                      )0;
     ULONG                           ulImcpVarArraySize  = (ULONG                      )0;
@@ -1039,7 +1034,6 @@ SlapLcoLoaInvokeObject
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR    )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER          )NULL;
     PIMCP_SLAP_INVO_ANSWER          pImcpSlapInvoAnswer = (PIMCP_SLAP_INVO_ANSWER     )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                      )0;
     ULONG                           ulInvoReturnFlag    = (ULONG                      )0;
     BOOL                            bValidSlapAnswer    = (BOOL                       )TRUE;
     PSLAP_PARAMETER_LIST            pOutputParamList    = (PSLAP_PARAMETER_LIST       )NULL;
@@ -1286,7 +1280,7 @@ SlapLcoLoaInvokeObject
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 ulTimeout
             );
@@ -1547,7 +1541,6 @@ SlapLcoLoaAcqObjectAccess
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR   )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER         )NULL;
     PIMCP_SLAP_ACQO_ANSWER          pImcpSlapAcqoAnswer = (PIMCP_SLAP_ACQO_ANSWER    )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                     )0;
     ULONG                           ulLpcErrorCode      = (ULONG                     )ANSC_LPC_ERROR_noError;
     ANSC_HANDLE                     hLpcSlapObject      = (ANSC_HANDLE               )NULL;
 
@@ -1651,7 +1644,7 @@ SlapLcoLoaAcqObjectAccess
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -1843,7 +1836,6 @@ SlapLcoLoaRelObjectAccess
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR    )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER          )NULL;
     PIMCP_SLAP_RELO_ANSWER          pImcpSlapReloAnswer = (PIMCP_SLAP_RELO_ANSWER     )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                      )0;
     ULONG                           ulLpcErrorCode      = (ULONG                      )ANSC_LPC_ERROR_noError;
 
     if ( !pMyObject->bActive )
@@ -1982,7 +1974,7 @@ SlapLcoLoaRelObjectAccess
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -2092,10 +2084,7 @@ SlapLcoLoaRelObjectAccess2
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject           = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty           = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController  = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector   = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf          = (PSLAP_UOA_INTERFACE        )NULL;
     void*                           pMessageBuffer      = (void*                      )NULL;
     ULONG                           ulBufferSize        = (ULONG                      )0;
     PIMCP_SLAP_CALL                 pImcpSlapCall       = (PIMCP_SLAP_CALL            )NULL;
@@ -2105,7 +2094,6 @@ SlapLcoLoaRelObjectAccess2
     PANSC_BUFFER_DESCRIPTOR         pImcpSlapAnswerBdo  = (PANSC_BUFFER_DESCRIPTOR    )NULL;
     PIMCP_SLAP_ANSWER               pImcpSlapAnswer     = (PIMCP_SLAP_ANSWER          )NULL;
     PIMCP_SLAP_RELO_ANSWER          pImcpSlapReloAnswer = (PIMCP_SLAP_RELO_ANSWER     )NULL;
-    ULONG                           ulAnswerBuffSize    = (ULONG                      )0;
     ULONG                           ulLpcErrorCode      = (ULONG                      )ANSC_LPC_ERROR_noError;
 
     if ( !pMyObject->bActive )
@@ -2154,7 +2142,7 @@ SlapLcoLoaRelObjectAccess2
                 lpc_party_addr,
                 pImcpSlapCall,
                 ulCallBuffSize,
-                &pImcpSlapAnswerBdo,
+                (ANSC_HANDLE*)&pImcpSlapAnswerBdo,
                 &ulLpcErrorCode,
                 0       /* using the default timeout value */
             );
@@ -2248,10 +2236,6 @@ SlapLcoLoaFlushAllObjects
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
 
     pMyObject->DelAllObjectStubs((ANSC_HANDLE)pMyObject);
 
@@ -2298,7 +2282,6 @@ SlapLcoLoaEnrollMobileObject
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
 
     if ( pProperty->bMobilityOn && pSlapEnvController )
@@ -2360,7 +2343,6 @@ SlapLcoLoaUnbindMobileObject
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
 
     if ( pProperty->bMobilityOn && pSlapEnvController )
@@ -2418,11 +2400,9 @@ SlapLcoLoaVerifyMobileObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject          = (PSLAP_LOAM_CLIENT_OBJECT   )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty          = (PSLAP_LOAM_CLIENT_PROPERTY )&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
-    PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector  = (PANSC_LPC_CONNECTOR_OBJECT )pMyObject->hAnscLpcConnector;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE        )NULL;
     BOOL                            bVerifyResult      = FALSE;
 

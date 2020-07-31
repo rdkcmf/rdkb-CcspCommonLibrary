@@ -106,7 +106,6 @@ AnscOdoCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = NULL;
 
     pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)AnscAllocateMemory(sizeof(ANSC_OBJECT_DESCRIPTOR_OBJECT));
@@ -186,7 +185,6 @@ AnscOdoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     pObjectDescriptor->Reset((ANSC_HANDLE)pObjectDescriptor);
@@ -227,8 +225,6 @@ AnscOdoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

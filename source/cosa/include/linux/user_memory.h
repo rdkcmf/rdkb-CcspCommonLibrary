@@ -121,6 +121,8 @@ UserMemoryCacheInit
         ULONG                       ulFlags
     )
 {
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(ulFlags);	
     PUSER_MEMORY_CACHE              pMemPool;
 
     pMemPool = (PUSER_MEMORY_CACHE)UserAllocateMemory(sizeof(USER_MEMORY_CACHE));
@@ -144,7 +146,8 @@ UserMemoryCacheAlloc
         ULONG                       ulFlags
     )
 {
-    return  UserAllocateMemory(pMemPool->ulBlockSize);
+    UNREFERENCED_PARAMETER(ulFlags);
+    return  (VOID*)UserAllocateMemory(pMemPool->ulBlockSize);
 }
 
 
@@ -155,6 +158,7 @@ UserMemoryCacheFree
         PVOID                       pMem
     )
 {
+    UNREFERENCED_PARAMETER(pMemPool);
     UserFreeMemory(pMem);
 }
 

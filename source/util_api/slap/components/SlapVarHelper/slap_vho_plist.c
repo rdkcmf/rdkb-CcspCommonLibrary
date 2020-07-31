@@ -119,6 +119,7 @@ SlapVhoShiftLeftParamList
         ULONG                       tbs_num
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            tbs_list  = (PSLAP_PARAMETER_LIST)param_list;
     ULONG                           shift_num = AnscGetMin2(tbs_list->ParamCount, tbs_num);
     ULONG                           ii        = 0;
@@ -182,6 +183,7 @@ SlapVhoShiftRightParamList
         ULONG                       tbs_num
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            tbs_list  = (PSLAP_PARAMETER_LIST)param_list;
     ULONG                           shift_num = tbs_num;
     ULONG                           ii        = 0;
@@ -250,6 +252,7 @@ SlapVhoEqualParamLists
         BOOL                        b_syntax_only
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            param_list1 = (PSLAP_PARAMETER_LIST)list1;
     PSLAP_PARAMETER_LIST            param_list2 = (PSLAP_PARAMETER_LIST)list2;
     BOOL                            b_equal_pl  = TRUE;
@@ -332,6 +335,7 @@ SlapVhoInitParamList
         ANSC_HANDLE                 param_list
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            tbi_list = (PSLAP_PARAMETER_LIST)param_list;
     ULONG                           ii       = 0;
 
@@ -386,6 +390,7 @@ SlapVhoCloneParamList
         ANSC_HANDLE*                dst_param_list
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            src_list = (PSLAP_PARAMETER_LIST)src_param_list;
     PSLAP_PARAMETER_LIST            dst_list = (PSLAP_PARAMETER_LIST)*dst_param_list;
     ULONG                           ii       = 0;
@@ -463,6 +468,7 @@ SlapVhoCleanParamList
         ANSC_HANDLE                 param_list
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_PARAMETER_LIST            tbc_list = (PSLAP_PARAMETER_LIST)param_list;
     ULONG                           ii       = 0;
 

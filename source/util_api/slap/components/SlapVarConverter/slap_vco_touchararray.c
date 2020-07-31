@@ -110,8 +110,7 @@ SlapVcoUint32ToUcharArray
         SLAP_UINT32                 var_uint32
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           ulUcharCount   = sizeof(ULONG);
 
@@ -171,8 +170,7 @@ SlapVcoUint32ToUchar
         SLAP_UINT32                 var_uint32
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject      = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     SLAP_UCHAR_ARRAY*               var_ucharArray = (SLAP_UCHAR_ARRAY*         )NULL;
     ULONG                           ulUcharCount   = 1;
 

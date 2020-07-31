@@ -126,8 +126,7 @@ COSAMwsIfGetResource
         PULONG                      pulResourceLen      /* OUT - length of resource */
     )
 {
-    PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pUrlPath == NULL || !AnscEqualString(pUrlPath, _DATA_MODEL_XML_PATH, FALSE))
     {
         return NULL;

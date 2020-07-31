@@ -106,14 +106,11 @@ DslhVarroLoadConfig
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_RECORD_OBJECT         pMyObject            = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController   = (PDSLH_CPE_CONTROLLER_OBJECT)pObjRecord->hDslhCpeController;
     PDSLH_MPR_INTERFACE             pDslhMprIf           = (PDSLH_MPR_INTERFACE        )pDslhCpeController->GetDslhMprIf((ANSC_HANDLE)pDslhCpeController);
-    PSLAP_VARIABLE                  pSlapVariable        = (PSLAP_VARIABLE             )NULL;
-    PCHAR                           pFullName            = NULL;
 
     if ( pVarEntity->ParamDescr->NotifyStatus == DSLH_CWMP_NOTIFY_STATUS_alwaysOn )
     {
@@ -148,7 +145,6 @@ DslhVarroLoadConfig
         
         if(pMyObject->RequesterID == DSLH_MPA_ACCESS_CONTROL_ACS) //If notification is set from TR69, then only push into queue
         {
-           returnStatus =
                 pDslhMprIf->RegNotifyParam
                     (
                         pDslhMprIf->hOwnerContext,
@@ -196,6 +192,7 @@ DslhVarroSaveConfig
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
 
 #if 0

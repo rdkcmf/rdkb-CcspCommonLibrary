@@ -118,9 +118,6 @@ AnscLpccoTcpEnroll
     ULONG                           ulBrokerMode      = (ULONG                         )ANSC_BSTO_MODE_COMPACT | ANSC_BSTO_MODE_EVENT_SYNC | ANSC_BSTO_MODE_FOREIGN_BUFFER | ANSC_BSTO_MODE_NO_TIMEOUT | ANSC_BSTO_MODE_XSOCKET;
     PANSC_LPC_PARTY_ADDR            pMyPartyAddr      = (PANSC_LPC_PARTY_ADDR          )NULL;
     PANSC_LPC_PARTY_ADDR            pManagerPartyAddr = (PANSC_LPC_PARTY_ADDR          )NULL;
-    PIMCP_HEADER                    pImcpHeader       = (PIMCP_HEADER                  )NULL;
-    PIMCP_HELLO_MESSAGE             pImcpHelloMessage = (PIMCP_HELLO_MESSAGE           )NULL;
-    ULONG                           ulImcpMsgSize     = (ULONG                         )0;
 
     if ( (pMyObject->LpcOpmode != ANSC_LPC_OPMODE_CLIENT) &&
          (pMyObject->LpcOpmode != ANSC_LPC_OPMODE_SERVER) )
@@ -317,7 +314,6 @@ AnscLpccoTcpUnbind
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
@@ -342,7 +338,6 @@ AnscLpccoTcpUnbind
 
             if ( pPartyAddr->PartySocket )
             {
-                returnStatus =
                     pMyObject->SendBye
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -396,7 +391,6 @@ AnscLpccoTcpConnectToManager
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BROKER_SOCKET_TCP_OBJECT  pBrokerSocket     = (PANSC_BROKER_SOCKET_TCP_OBJECT)NULL;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pConnTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hConnTimerObj;

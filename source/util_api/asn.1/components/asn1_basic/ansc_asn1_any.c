@@ -450,6 +450,7 @@ AnscAsn1AnyEqualsTo
         BOOLEAN                     bValueOnly
     )
 {
+    UNREFERENCED_PARAMETER(bValueOnly);
     PANSC_ASN1_ANY                  pMyObject  = (PANSC_ASN1_ANY)hThisObject;
     PANSC_ASN1_ANY                  pNewObject = (PANSC_ASN1_ANY)hOtherObject;
 
@@ -894,7 +895,7 @@ AnscAsn1AnyDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->uLength
+                    (int)pMyObject->uLength
                 );
     }
 
@@ -945,6 +946,7 @@ AnscAsn1AnyTraceObject
         BOOLEAN                     bRecursive
     )
 {
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_ANY                  pMyObject        = (PANSC_ASN1_ANY)hThisObject;
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;

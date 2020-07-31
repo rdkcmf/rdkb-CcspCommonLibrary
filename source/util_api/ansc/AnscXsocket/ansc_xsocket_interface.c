@@ -106,8 +106,7 @@ AnscStartupXsocketWrapper
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-
+    UNREFERENCED_PARAMETER(hOwnerContext);
     #ifdef  _ANSC_WINDOWSNT
 
         WORD                        version = 0x202;
@@ -151,8 +150,7 @@ AnscCleanupXsocketWrapper
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
-
+    UNREFERENCED_PARAMETER(hOwnerContext);
     #ifdef  _ANSC_WINDOWSNT
 
         WSACleanup();
@@ -211,8 +209,6 @@ AnscCreateXsocket
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PANSC_XSOCKET_OBJECT            pXsocketObject = NULL;
 
     return  AnscXsocketCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

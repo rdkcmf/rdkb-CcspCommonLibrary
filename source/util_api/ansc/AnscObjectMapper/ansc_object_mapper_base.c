@@ -106,7 +106,6 @@ AnscOmoCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = NULL;
     ULONG                           i             = 0;
 
@@ -185,7 +184,6 @@ AnscOmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
 
     pObjectMapper->Reset((ANSC_HANDLE)pObjectMapper);
@@ -227,7 +225,6 @@ AnscOmoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_MAPPER_OBJECT      pObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT)hThisObject;
 
     pObjectMapper->DelAllDescriptors((ANSC_HANDLE)pObjectMapper);

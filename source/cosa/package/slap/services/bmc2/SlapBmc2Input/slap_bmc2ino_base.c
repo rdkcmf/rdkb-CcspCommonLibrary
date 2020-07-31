@@ -119,7 +119,7 @@ SlapBmc2InoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapBmc2InoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject    = (PSLAP_BMC2_INPUT_OBJECT)hThisObject;
 
     SlapScoStdRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SlapBmc2InoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject    = (PSLAP_BMC2_INPUT_OBJECT)hThisObject;
 
     SlapScoStdEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SlapBmc2InoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_BMC2_INPUT_OBJECT         pMyObject    = (PSLAP_BMC2_INPUT_OBJECT)hThisObject;
 
     /*

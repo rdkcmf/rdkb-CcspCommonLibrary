@@ -111,7 +111,6 @@ AnscAsn1CreatePFX
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PFX                  pThisObject  = NULL;
 
     /*
@@ -252,6 +251,8 @@ AnscAsn1PFXCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     return NULL;
 }
 
@@ -262,6 +263,7 @@ AnscAsn1PFXGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -558,7 +560,7 @@ encryptAuthSafe
     }
 
     /* encode the whole authsafe and set it in the content */
-    pEncoding = pExtra->GetEncodedData(pExtra, &length);
+    pEncoding = pExtra->GetEncodedData(pExtra, (PULONG)&length);
 
     if( pEncoding == NULL)
     {
@@ -740,6 +742,7 @@ AnscAsn1PFXAfterDecoding
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_PFX                  pThisObject  = (PANSC_ASN1_PFX)hThisObject;
     ANSC_STATUS                     status;
     PANSC_ASN1_CONTENTINFO          pContentInfo;
@@ -1138,7 +1141,6 @@ AnscAsn1PFXLookforKeyInfo
     PANSC_ASN1_PFX                  pThisObject  = (PANSC_ASN1_PFX)hThisObject;
     PANSC_ASN1_STRING               pLocalKeyId  = (PANSC_ASN1_STRING)hLocalKeyID;
     ANSC_HANDLE                     hLocalID;
-    ANSC_STATUS                     status       = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_SEQUENCEOF           pAuthSafe;
     PANSC_ASN1_SEQUENCE             pContentInfo;
     PANSC_ASN1_SEQUENCEOF           pSafeContents;
@@ -1224,7 +1226,6 @@ AnscAsn1CreateMacData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_MACDATA              pThisObject  = NULL;
 
     /*
@@ -1351,6 +1352,8 @@ AnscAsn1MacDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1364,6 +1367,7 @@ AnscAsn1MacDataGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1399,7 +1403,6 @@ AnscAsn1CreateAuthenticatedSafe
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_AUTHENTICATEDSAFE    pThisObject  = NULL;
 
     /*
@@ -1480,6 +1483,7 @@ AnscAsn1AuthenticatedSafeIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -1688,7 +1692,6 @@ decryptContentInfo
         PCHAR                       pPassword
     )
 {
-    PPKCS12_UTILITY_INTERFACE       pPKCS12Util  = (PPKCS12_UTILITY_INTERFACE)hPKCSUtility;
     PANSC_ASN1_SAFECONTENTS         pSafeContents;
     PANSC_ASN1_SAFEBAG              pSafeBag;
     ANSC_STATUS                     status;
@@ -1959,7 +1962,6 @@ AnscAsn1CreateSafeContents
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SAFECONTENTS         pThisObject  = NULL;
 
     /*
@@ -2040,6 +2042,7 @@ AnscAsn1SafeContentsIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2074,7 +2077,6 @@ AnscAsn1CreateSafeBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SAFEBAG              pThisObject  = NULL;
 
     /*
@@ -2211,6 +2213,7 @@ AnscAsn1SafeBagCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -2248,6 +2251,7 @@ AnscAsn1SafeBagGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2538,6 +2542,7 @@ AnscAsn1SafeBagSetKeyInfo
         ULONG                       uLength
     )
 {
+    UNREFERENCED_PARAMETER(uLength);
     PANSC_ASN1_SAFEBAG              pThisObject  = (PANSC_ASN1_SAFEBAG)hThisObject;
     PANSC_ASN1_CHOICE               pBagValue;
     PANSC_ASN1_OIDEN                pOID;
@@ -2579,7 +2584,6 @@ AnscAsn1CreatePKCS12Attributes
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PKCS12ATTRIBUTES     pThisObject  = NULL;
 
     /*
@@ -2659,6 +2663,7 @@ AnscAsn1PKCS12AttributesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2688,7 +2693,6 @@ AnscAsn1CreatePKCS12Attribute
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PKCS12ATTRIBUTE      pThisObject  = NULL;
 
     /*
@@ -2753,7 +2757,6 @@ AnscAsn1CreateKeyBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_KEYBAG               pThisObject  = NULL;
 
     /*
@@ -2819,7 +2822,6 @@ AnscAsn1CreatePKCS8ShroudedKeyBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PKCS8SHROUDEDKEYBAG  pThisObject  = NULL;
 
     /*
@@ -2881,7 +2883,6 @@ AnscAsn1CreateCertBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTBAG              pThisObject  = NULL;
 
     /*
@@ -2993,6 +2994,7 @@ AnscAsn1CertBagCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3026,6 +3028,7 @@ AnscAsn1CertBagGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3083,7 +3086,6 @@ AnscAsn1CreateCertValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTVALUE            pThisObject  = NULL;
 
     /*
@@ -3191,6 +3193,7 @@ AnscAsn1CertValueGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case CERTVALUE_MASK_BASE64CERT:
@@ -3214,6 +3217,7 @@ AnscAsn1CertValueCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -3239,6 +3243,7 @@ AnscAsn1CertValueGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.2.840.113549.1.9.22.1",FALSE))
@@ -3261,6 +3266,7 @@ AnscAsn1CertValueGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case CERTVALUE_MASK_CERT:
@@ -3295,7 +3301,6 @@ AnscAsn1CreateCRLBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CRLBAG               pThisObject  = NULL;
 
     /*
@@ -3406,6 +3411,7 @@ AnscAsn1CRLBagCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3439,6 +3445,7 @@ AnscAsn1CRLBagGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3470,7 +3477,6 @@ AnscAsn1CreateCRLValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CRLVALUE             pThisObject  = NULL;
 
     /*
@@ -3539,7 +3545,6 @@ AnscAsn1CreateSecretBag
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SECRETBAG            pThisObject  = NULL;
 
     /*
@@ -3650,6 +3655,7 @@ AnscAsn1SecretBagCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3675,6 +3681,7 @@ AnscAsn1SecretBagGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3713,7 +3720,6 @@ AnscAsn1CreateBagValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_BAGVALUE             pThisObject  = NULL;
 
     /*
@@ -3869,6 +3875,7 @@ AnscAsn1BagValueGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case BAGVALUE_MASK_KEYBAG:
@@ -3908,6 +3915,7 @@ AnscAsn1BagValueCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -3949,6 +3957,7 @@ AnscAsn1BagValueGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.2.840.113549.1.12.10.1.1",FALSE))
@@ -3987,6 +3996,7 @@ AnscAsn1BagValueGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case BAGVALUE_MASK_KEYBAG:

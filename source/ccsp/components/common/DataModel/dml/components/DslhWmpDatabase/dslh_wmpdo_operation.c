@@ -110,11 +110,9 @@ DslhWmpdoEngage
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT    )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY  )&pMyObject->Property;
     PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT  )pMyObject->hDslhCpeController;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT      )pMyObject->hRootObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT      )pMyObject->hRootObjEntity;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pMonitorTimerObj   = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hMonitorTimerObj;
 
     if ( pMyObject->bActive )
     {
@@ -215,8 +213,6 @@ DslhWmpdoCancel
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT    )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY  )&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT  )pMyObject->hDslhCpeController;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord     = (PDSLH_OBJ_RECORD_OBJECT      )pMyObject->hRootObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pRootObjEntity     = (PDSLH_OBJ_ENTITY_OBJECT      )pMyObject->hRootObjEntity;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMonitorTimerObj   = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hMonitorTimerObj;
@@ -282,10 +278,9 @@ DslhWmpdoSetupEnv
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus           = ANSC_STATUS_SUCCESS;
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject              = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty              = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController     = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
+    /*PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController     = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;*/
     /*
     PSLAP_POA_INTERFACE             pSlapPoaIf             = (PSLAP_POA_INTERFACE        )pDslhCpeController->hSlapPoaIf;
     PSLAP_GOA_INTERFACE             pSlapGoaIf             = (PSLAP_GOA_INTERFACE        )pDslhCpeController->hSlapGoaIf;
@@ -296,7 +291,7 @@ DslhWmpdoSetupEnv
     PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoGoodOldValue= (PPOAM_IREP_FOLDER_OBJECT   )NULL;
     */
 
-    PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor         = (PSLAP_OBJECT_DESCRIPTOR    )NULL;
+    /*PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor         = (PSLAP_OBJECT_DESCRIPTOR    )NULL;*/
 
 #if 0
     /*
@@ -506,7 +501,8 @@ DslhWmpdoCloseEnv
         ANSC_HANDLE                 hThisObject
     )
 {
-    PDSLH_WMP_DATABASE_OBJECT       pMyObject              = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    /*PDSLH_WMP_DATABASE_OBJECT       pMyObject              = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;*/
     /*
     PPOAM_IREP_FOLDER_OBJECT        pPoamIrepFoWmpDatabase = (PPOAM_IREP_FOLDER_OBJECT   )pMyObject->hPoamIrepFoWmpDatabase;
 
@@ -552,10 +548,7 @@ DslhWmpdoMonitorTimerInvoke
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject          = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty          = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_WMPDO_MONITOR_PARAM       pMonitorParam      = (PDSLH_WMPDO_MONITOR_PARAM  )NULL;
     PDSLH_VAR_RECORD_OBJECT         pDslhVarRecord     = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pDslhVarEntity     = (PDSLH_VAR_ENTITY_OBJECT    )NULL;

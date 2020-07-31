@@ -112,7 +112,7 @@ DslhVareoCfgTokenTable
         ULONG                       ulTableSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(ulTableSize);
     PDSLH_VAR_ENTITY_OBJECT         pMyObject    = (PDSLH_VAR_ENTITY_OBJECT)hThisObject;
 
     /*
@@ -170,7 +170,6 @@ DslhVareoGetTokenValueByString
         char*                       pString
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_ENTITY_OBJECT         pMyObject    = (PDSLH_VAR_ENTITY_OBJECT)hThisObject;
     PDSLH_VAREO_TOKEN_VALUE         pTokenValue  = (PDSLH_VAREO_TOKEN_VALUE)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY     )NULL;
@@ -233,11 +232,9 @@ DslhVareoGetTokenValueByCode
         ULONG                       ulCode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_ENTITY_OBJECT         pMyObject    = (PDSLH_VAR_ENTITY_OBJECT)hThisObject;
     PDSLH_VAREO_TOKEN_VALUE         pTokenValue  = (PDSLH_VAREO_TOKEN_VALUE)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY     )NULL;
-    ULONG                           i            = 0;
 
     pSLinkEntry = AnscQueueGetFirstEntry(pMyObject->TokenTable);
 
@@ -296,7 +293,6 @@ DslhVareoAddTokenValue
         ULONG                       ulEnumCode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_ENTITY_OBJECT         pMyObject    = (PDSLH_VAR_ENTITY_OBJECT)hThisObject;
     PDSLH_VAREO_TOKEN_VALUE         pTokenValue  = (PDSLH_VAREO_TOKEN_VALUE)NULL;
 

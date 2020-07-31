@@ -119,7 +119,7 @@ WebRooCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebRooRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT)hThisObject;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE       )pMyObject->hRcpIf;
 
@@ -236,7 +235,6 @@ WebRooEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT)hThisObject;
     PHTTP_RCP_INTERFACE             pRcpIf       = (PHTTP_RCP_INTERFACE       )pMyObject->hRcpIf;
 
@@ -306,7 +304,6 @@ WebRooInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT)hThisObject;
 
     /*

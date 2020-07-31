@@ -117,8 +117,5 @@ DslhCreateObjController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pDslhObjController = NULL;
-
     return  DslhObjcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

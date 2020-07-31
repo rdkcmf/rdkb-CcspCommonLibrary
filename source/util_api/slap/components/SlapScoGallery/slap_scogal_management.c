@@ -113,7 +113,6 @@ SlapScoGalGetVariable
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject       = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoVariable    = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = (PANSC_ATOM_DESCRIPTOR   )NULL;
@@ -535,7 +534,6 @@ SlapScoGalDelAllVariables
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_GALLERY_OBJECT        pMyObject       = (PSLAP_SCO_GALLERY_OBJECT)hThisObject;
     PANSC_ATOM_TABLE_OBJECT         pAtoVariable    = (PANSC_ATOM_TABLE_OBJECT )pMyObject->hAtoVariable;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = (PANSC_ATOM_DESCRIPTOR   )NULL;
@@ -555,8 +553,7 @@ SlapScoGalDelAllVariables
             pSLinkEntry     = AnscSListPopEntry(&pAtoVariable->AdoStrTable[i]);
             pSlapVariable   = pAtomDescriptor->hContext;
 
-            returnStatus =
-                pMyObject->QuitGallery
+            pMyObject->QuitGallery
                     (
                         (ANSC_HANDLE)pMyObject,
                         pSlapVariable

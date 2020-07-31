@@ -141,7 +141,6 @@ AnscAsn1CreateExtensions
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_EXTENSIONS           pThisObject  = NULL;
 
     /*
@@ -209,6 +208,7 @@ AnscAsn1ExtensionsIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -245,7 +245,7 @@ AnscAsn1CreateExtension
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_EXTENSION            pThisObject  = NULL;
 
     /*
@@ -353,6 +353,8 @@ AnscAsn1ExtensionCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -366,6 +368,7 @@ AnscAsn1ExtensionGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -392,6 +395,7 @@ AnscAsn1ExtensionCreateExtraChild
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return AnscAsn1CreateExtensionValue(NULL);
 
 }
@@ -402,6 +406,7 @@ AnscAsn1ExtensionGetExtraChildName
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return "extensionValue";
 
 }
@@ -532,7 +537,7 @@ AnscAsn1ExtensionGenerate
 
         pBack = pBuffer;
 
-        if( ANSC_STATUS_SUCCESS != pExtValue->EncodingData(pExtValue, &pBack))
+        if( ANSC_STATUS_SUCCESS != pExtValue->EncodingData(pExtValue, (PVOID*)&pBack))
         {
             AnscFreeMemory(pBuffer);
 
@@ -544,7 +549,7 @@ AnscAsn1ExtensionGenerate
 
         if( pStringObject != NULL)
         {
-            pStringObject->SetStringValue(pStringObject, pBuffer, length);
+            pStringObject->SetStringValue(pStringObject, (PUCHAR)pBuffer, length);
         }
 
         AnscFreeMemory(pBuffer);
@@ -595,7 +600,7 @@ AnscAsn1CreateAuthorityKeyIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_AUTHORITYKEYIDENTIFIER 
                                     pThisObject  = NULL;
 
@@ -702,6 +707,7 @@ AnscAsn1AuthorityKeyIdentifierCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -755,6 +761,7 @@ AnscAsn1AuthorityKeyIdentifierGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -790,7 +797,6 @@ AnscAsn1CreateKeyIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_KEYIDENTIFIER        pThisObject  = NULL;
 
     /*
@@ -832,7 +838,7 @@ AnscAsn1CreateGeneralNames
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_GENERALNAMES         pThisObject  = NULL;
 
     /*
@@ -954,6 +960,7 @@ AnscAsn1GeneralNamesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -980,10 +987,10 @@ AnscAsn1GeneralNamesAddKb5Name
         ANSC_HANDLE                 hPrinName
     )
 {
-    PANSC_ASN1_GENERALNAMES         pThisObject  = (PANSC_ASN1_GENERALNAMES)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hRealmName);
+    UNREFERENCED_PARAMETER(hPrinName);
 #ifndef _NO_PKI_KB5_SUPPORT
-
     PKB5_PRINNAME_STRUCTURE         pPrinInfo   = (PKB5_PRINNAME_STRUCTURE)hPrinName;
     PKB5_REALM_STRUCTURE            pRealm      = (PKB5_REALM_STRUCTURE)hRealmName;
     PANSC_ASN1_GENERALNAME          pGeneralName;
@@ -1112,7 +1119,7 @@ AnscAsn1GeneralNamesAddAltName
                 return FALSE;
             }
 
-            pIA5String->SetStringValue(pIA5String, pValue, AnscSizeOfString(pValue));
+            pIA5String->SetStringValue(pIA5String, (PUCHAR)pValue, AnscSizeOfString(pValue));
 
             pGeneralName = (PANSC_ASN1_GENERALNAME)AnscAsn1CreateGeneralName(NULL);
 
@@ -1203,10 +1210,12 @@ AnscAsn1GeneralNamesGetKB5Name
         ANSC_HANDLE                 hPrinName
     )
 {
-    PANSC_ASN1_GENERALNAMES         pThisObject  = (PANSC_ASN1_GENERALNAMES)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hRealmName);
+    UNREFERENCED_PARAMETER(hPrinName);
 
 #ifndef _NO_PKI_KB5_SUPPORT
-
+    
     PANSC_ASN1_GENERALNAME          pGeneralName;
     PANSC_ASN1_OTHERNAME            pOtherName;
     PANSC_ASN1_OTHERSTRING          pOtherString;
@@ -1365,7 +1374,6 @@ AnscAsn1CreateGeneralName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_GENERALNAME          pThisObject  = NULL;
 
     /*
@@ -1533,6 +1541,7 @@ AnscAsn1GeneralNameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case GENERALNAME_MASK_OTHERNAME:
@@ -1584,6 +1593,7 @@ AnscAsn1GeneralNameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -1711,6 +1721,7 @@ AnscAsn1GeneralNameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -1801,7 +1812,6 @@ AnscAsn1CreateORAddress
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ORADDRESS            pThisObject  = NULL;
 
     /*
@@ -1847,7 +1857,7 @@ AnscAsn1CreateEDIPartyName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_EDIPARTYNAME         pThisObject  = NULL;
 
     /*
@@ -1937,6 +1947,7 @@ AnscAsn1EDIPartyNameCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -1978,6 +1989,7 @@ AnscAsn1EDIPartyNameGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2009,7 +2021,6 @@ AnscAsn1CreateKeyUsage
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_KEYUSAGE             pThisObject  = NULL;
 
     /*
@@ -2051,7 +2062,6 @@ AnscAsn1CreateExtKeyUsageSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_EXTKEYUSAGESYNTAX    pThisObject  = NULL;
 
     /*
@@ -2108,6 +2118,7 @@ AnscAsn1ExtKeyUsageSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2146,7 +2157,7 @@ AnscAsn1CreateBasicConstraints
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_BASICCONSTRAINTS     pThisObject  = NULL;
 
     /*
@@ -2238,6 +2249,8 @@ AnscAsn1BasicConstraintsCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2251,6 +2264,7 @@ AnscAsn1BasicConstraintsGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2285,7 +2299,7 @@ AnscAsn1CreatePrivateKeyUsagePeriod
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_PRIVATEKEYUSAGEPERIOD 
                                     pThisObject  = NULL;
 
@@ -2378,6 +2392,7 @@ AnscAsn1PrivateKeyUsagePeriodCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -2419,7 +2434,7 @@ AnscAsn1PrivateKeyUsagePeriodGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2450,7 +2465,6 @@ AnscAsn1CreateCertificatePolicies
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CERTIFICATEPOLICIES  pThisObject  = NULL;
 
     /*
@@ -2507,6 +2521,7 @@ AnscAsn1CertificatePoliciesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2540,7 +2555,7 @@ AnscAsn1CreatePolicyInformation
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_POLICYINFORMATION    pThisObject  = NULL;
 
     /*
@@ -2630,6 +2645,8 @@ AnscAsn1PolicyInformationCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
 
@@ -2644,6 +2661,7 @@ AnscAsn1PolicyInformationGetChildName
         ULONG                       index
     )
 {  
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -2674,7 +2692,6 @@ AnscAsn1CreatePolicyQualifiers
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_POLICYQUALIFIERS     pThisObject  = NULL;
 
     /*
@@ -2731,6 +2748,7 @@ AnscAsn1PolicyQualifiersIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -2764,7 +2782,7 @@ AnscAsn1CreatePolicyQualifierInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_POLICYQUALIFIERINFO  pThisObject  = NULL;
 
     /*
@@ -2852,6 +2870,8 @@ AnscAsn1PolicyQualifierInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -2865,7 +2885,7 @@ AnscAsn1PolicyQualifierInfoGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( index )
     {
         case 0:
@@ -2900,7 +2920,6 @@ AnscAsn1CreatePolicyQualifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_POLICYQUALIFIER      pThisObject  = NULL;
 
     /*
@@ -2985,7 +3004,7 @@ AnscAsn1PolicyQualifierGetSelectionName
         ULONG                       selType
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case POLICYQUALIFIER_MASK_USERNOTICE:
@@ -3010,6 +3029,8 @@ AnscAsn1PolicyQualifierCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3023,6 +3044,7 @@ AnscAsn1PolicyQualifierGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.3.6.1.5.5.7.2.2",FALSE))
@@ -3045,6 +3067,7 @@ AnscAsn1PolicyQualifierGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case POLICYQUALIFIER_MASK_USERNOTICE:
@@ -3079,7 +3102,7 @@ AnscAsn1CreateUserNotice
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_USERNOTICE           pThisObject  = NULL;
 
     /*
@@ -3171,6 +3194,8 @@ AnscAsn1UserNoticeCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3184,6 +3209,7 @@ AnscAsn1UserNoticeGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3219,7 +3245,7 @@ AnscAsn1CreateNoticeReference
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_NOTICEREFERENCE      pThisObject  = NULL;
 
     /*
@@ -3311,6 +3337,8 @@ AnscAsn1NoticeReferenceCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -3324,6 +3352,7 @@ AnscAsn1NoticeReferenceGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3360,7 +3389,6 @@ AnscAsn1CreateDisplayText
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DISPLAYTEXT          pThisObject  = NULL;
 
     /*
@@ -3475,6 +3503,7 @@ AnscAsn1DisplayTextGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case DISPLAYTEXT_MASK_VISIBLESTRING:
@@ -3505,6 +3534,7 @@ AnscAsn1DisplayTextCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -3539,6 +3569,7 @@ AnscAsn1DisplayTextGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -3593,7 +3624,6 @@ AnscAsn1CreatePolicyMappings
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_POLICYMAPPINGS       pThisObject  = NULL;
 
     /*
@@ -3650,6 +3680,7 @@ AnscAsn1PolicyMappingsIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -3683,7 +3714,7 @@ AnscAsn1CreateNameConstraints
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_NAMECONSTRAINTS      pThisObject  = NULL;
 
     /*
@@ -3775,6 +3806,7 @@ AnscAsn1NameConstraintsCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -3816,6 +3848,7 @@ AnscAsn1NameConstraintsGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -3846,7 +3879,6 @@ AnscAsn1CreateGeneralSubtrees
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_GENERALSUBTREES      pThisObject  = NULL;
 
     /*
@@ -3903,6 +3935,7 @@ AnscAsn1GeneralSubtreesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -3937,7 +3970,7 @@ AnscAsn1CreateGeneralSubTree
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_GENERALSUBTREE       pThisObject  = NULL;
 
     /*
@@ -4041,6 +4074,7 @@ AnscAsn1GeneralSubTreeCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -4086,7 +4120,7 @@ AnscAsn1GeneralSubTreeGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -4125,7 +4159,7 @@ AnscAsn1CreatePolicyConstraints
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_POLICYCONSTRAINTS    pThisObject  = NULL;
 
     /*
@@ -4217,6 +4251,7 @@ AnscAsn1PolicyConstraintsCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -4295,7 +4330,6 @@ AnscAsn1CreateSubjectDirectoryAttributes
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_SUBJECTDIRECTORYATTRIBUTES 
                                     pThisObject  = NULL;
 
@@ -4353,6 +4387,7 @@ AnscAsn1SubjectDirectoryAttributesIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -4382,7 +4417,6 @@ AnscAsn1CreateCRLNumber
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CRLNUMBER            pThisObject  = NULL;
 
     /*
@@ -4424,7 +4458,6 @@ AnscAsn1CreateCRLDistPointsSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CRLDISTPOINTSSYNTAX  pThisObject  = NULL;
 
     /*
@@ -4481,6 +4514,7 @@ AnscAsn1CRLDistPointsSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -4515,7 +4549,7 @@ AnscAsn1CreateDistributionPoint
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_DISTRIBUTIONPOINT    pThisObject  = NULL;
 
     /*
@@ -4621,6 +4655,7 @@ AnscAsn1DistributionPointCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -4674,6 +4709,7 @@ AnscAsn1DistributionPointGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -4712,7 +4748,6 @@ AnscAsn1CreateDistributionPointName
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DISTRIBUTIONPOINTNAME 
                                     pThisObject  = NULL;
 
@@ -4797,6 +4832,7 @@ AnscAsn1DistributionPointNameGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case DISTRIBUTIONPOINTNAME_MASK_FULLNAME:
@@ -4820,6 +4856,7 @@ AnscAsn1DistributionPointNameCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( selType )
@@ -4863,6 +4900,7 @@ AnscAsn1DistributionPointNameGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -4904,7 +4942,6 @@ AnscAsn1CreateReasonFlags
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_REASONFLAGS          pThisObject  = NULL;
 
     /*
@@ -4953,7 +4990,7 @@ AnscAsn1CreateIssuingDistributionPoint
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ISSUINGDISTRIBUTIONPOINT 
                                     pThisObject  = NULL;
 
@@ -5088,6 +5125,7 @@ AnscAsn1IssuingDistributionPointCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -5165,7 +5203,7 @@ AnscAsn1IssuingDistributionPointGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -5208,7 +5246,6 @@ AnscAsn1CreateAuthorityInfoAccessSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_AUTHORITYINFOACCESSSYNTAX 
                                     pThisObject  = NULL;
 
@@ -5266,6 +5303,7 @@ AnscAsn1AuthorityInfoAccessSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -5299,7 +5337,7 @@ AnscAsn1CreateAccessDescription
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ACCESSDESCRIPTION    pThisObject  = NULL;
 
     /*
@@ -5387,6 +5425,8 @@ AnscAsn1AccessDescriptionCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -5400,7 +5440,7 @@ AnscAsn1AccessDescriptionGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( index )
     {
         case 0:
@@ -5431,7 +5471,6 @@ AnscAsn1CreateCRLReason
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_CRLREASON            pThisObject  = NULL;
 
     /*
@@ -5473,7 +5512,6 @@ AnscAsn1CreateHoldInstructionCode
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_HOLDINSTRUCTIONCODE  pThisObject  = NULL;
 
     /*
@@ -5515,7 +5553,6 @@ AnscAsn1CreateInvalidityDate
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_INVALIDITYDATE       pThisObject  = NULL;
 
     /*
@@ -5561,7 +5598,7 @@ AnscAsn1CreatePolicyMapping
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_POLICYMAPPING        pThisObject  = NULL;
 
     /*
@@ -5649,6 +5686,8 @@ AnscAsn1PolicyMappingCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -5662,7 +5701,7 @@ AnscAsn1PolicyMappingGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);  
     switch ( index )
     {
         case 0:
@@ -5693,7 +5732,6 @@ AnscAsn1CreateNoticeNumbers
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_NOTICENUMBERS        pThisObject  = NULL;
 
     /*
@@ -5750,6 +5788,7 @@ AnscAsn1NoticeNumbersIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -5784,7 +5823,6 @@ AnscAsn1CreateDeltaCRLIndicator
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DELTACRLINDICATOR    pThisObject  = NULL;
 
     /*
@@ -5826,7 +5864,6 @@ AnscAsn1CreateAttributesSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ATTRIBUTESSYNTAX     pThisObject  = NULL;
 
     /*
@@ -5883,6 +5920,7 @@ AnscAsn1AttributesSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -5912,7 +5950,6 @@ AnscAsn1CreateBiometricsSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_BIOMETRICSSYNTAX     pThisObject  = NULL;
 
     /*
@@ -5969,6 +6006,7 @@ AnscAsn1BiometricsSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -6004,7 +6042,7 @@ AnscAsn1CreateBiometricData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_BIOMETRICDATA        pThisObject  = NULL;
 
     /*
@@ -6118,6 +6156,8 @@ AnscAsn1BiometricDataCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -6131,7 +6171,7 @@ AnscAsn1BiometricDataGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -6174,7 +6214,6 @@ AnscAsn1CreateTypeOfBiometricData
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_TYPEOFBIOMETRICDATA  pThisObject  = NULL;
 
     /*
@@ -6258,7 +6297,7 @@ AnscAsn1TypeOfBiometricDataGetSelectionName
         ULONG                       selType
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case TYPEOFBIOMETRICDATA_MASK_PREDEFINEDTYPE:
@@ -6282,6 +6321,8 @@ AnscAsn1TypeOfBiometricDataCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -6297,6 +6338,7 @@ AnscAsn1TypeOfBiometricDataGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+   UNREFERENCED_PARAMETER(hThisObject);
    if( pAttr == NULL || pTagValue == NULL)
     {
         return FALSE;
@@ -6338,7 +6380,6 @@ AnscAsn1CreateQCStatementsSyntax
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_QCSTATEMENTSSYNTAX   pThisObject  = NULL;
 
     /*
@@ -6395,6 +6436,7 @@ AnscAsn1QCStatementsSyntaxIsChildValid
         ANSC_HANDLE                 hChild
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ASN1_OBJECT               pChild    = (PANSC_ASN1_OBJECT)hChild;
 
     if( pChild == NULL)
@@ -6428,7 +6470,7 @@ AnscAsn1CreateQCStatement
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_QCSTATEMENT          pThisObject  = NULL;
 
     /*
@@ -6518,6 +6560,8 @@ AnscAsn1QCStatementCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -6531,7 +6575,7 @@ AnscAsn1QCStatementGetChildName
         ULONG                       index
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( index )
     {
         case 0:
@@ -6566,7 +6610,7 @@ AnscAsn1CreateEntrustVersionInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ENTRUSTVERSIONINFO   pThisObject  = NULL;
 
     /*
@@ -6654,6 +6698,8 @@ AnscAsn1EntrustVersionInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -6668,7 +6714,7 @@ AnscAsn1EntrustVersionInfoGetChildName
     )
 {
 
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( index )
     {
         case 0:
@@ -6732,7 +6778,6 @@ AnscAsn1CreateExtensionValue
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_EXTENSIONVALUE       pThisObject  = NULL;
 
     /*
@@ -7153,7 +7198,7 @@ AnscAsn1ExtensionValueGetSelectionName
         ULONG                       selType
     )
 {
-   
+    UNREFERENCED_PARAMETER(hThisObject);   
     switch ( selType )
     {
         case EXTENSIONVALUE_MASK_AUTHORITYKEYIDENTIFIER:
@@ -7289,6 +7334,8 @@ AnscAsn1ExtensionValueCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -7302,6 +7349,7 @@ AnscAsn1ExtensionValueGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"2.5.29.35",FALSE))
@@ -7520,6 +7568,7 @@ AnscAsn1ExtensionValueGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case EXTENSIONVALUE_MASK_AUTHORITYKEYIDENTIFIER:

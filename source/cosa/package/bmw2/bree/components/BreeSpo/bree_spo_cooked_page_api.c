@@ -120,8 +120,6 @@ BreeCreateCookedPageObj
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBREE_COOKED_BSP_PAGE           pBreeCpo        = NULL;
 
     return  BreeCpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -170,7 +168,9 @@ BreeCpoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBWRM_COOKED_PAGE_OBJECT        pBaseObject  = NULL;
     PBREE_COOKED_BSP_PAGE           pMyObject    = NULL;
 
@@ -233,7 +233,6 @@ BreeCpoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_COOKED_BSP_PAGE           pMyObject    = (PBREE_COOKED_BSP_PAGE)hThisObject;
 
     /* release archive page content if the content is dynamically generated */
@@ -278,7 +277,6 @@ BreeCpoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_COOKED_BSP_PAGE           pMyObject    = (PBREE_COOKED_BSP_PAGE)hThisObject;
 
     BwrmCpoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -320,9 +318,7 @@ BreeCpoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBREE_COOKED_BSP_PAGE           pMyObject    = (PBREE_COOKED_BSP_PAGE)hThisObject;
-    ULONG                           i            = 0;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't

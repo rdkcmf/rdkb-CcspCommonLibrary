@@ -100,7 +100,8 @@
 
 **********************************************************************/
 
-
+#include <stdio.h>
+#include <ctype.h>
 #include "ansc_global.h"
 
 
@@ -609,9 +610,6 @@ AnscExtractToken
         char*                       output
     )
 {
-    ULONG                           ulSizeOfStr = 0;
-    ULONG                           ulSizeOfSep = 0;
-    ULONG                           count       = 0;
     ULONG                           ulTokenSize = 0;
 
     /*RDKB-5652, CID-24096, 11-May-2016, Null validation before assignement*/
@@ -620,8 +618,6 @@ AnscExtractToken
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-    ulSizeOfStr = AnscSizeOfString(string);
-    ulSizeOfSep = AnscSizeOfString(separator);
     string      = AnscMoveToNextToken(string, separator);
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
@@ -663,9 +659,6 @@ AnscExtractToken2
         char*                       output
     )
 {
-    ULONG                           ulSizeOfStr = 0;
-    ULONG                           ulSizeOfSep = 0;
-    ULONG                           count       = 0;
     ULONG                           ulTokenSize = 0;
 
 
@@ -675,8 +668,6 @@ AnscExtractToken2
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-    ulSizeOfStr = AnscSizeOfString(string);
-    ulSizeOfSep = AnscSizeOfString(alphabet);
     string      = AnscMoveToNextToken2(string, alphabet);
     ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
 
@@ -717,7 +708,6 @@ AnscConsumeToken
     )
 {
     ULONG                           ulSizeOfStr = 0;
-    ULONG                           ulSizeOfSep = 0;
     ULONG                           ulTokenSize = 0;
     char*                           pTemp       = string;
     char                            tempChar[128];
@@ -729,7 +719,6 @@ AnscConsumeToken
     }
 
     ulSizeOfStr = AnscSizeOfString(string);
-    ulSizeOfSep = AnscSizeOfString(separator);
 
     AnscZeroMemory(tempChar, 128);
 
@@ -952,6 +941,8 @@ AnscCreateScanner
         ULONG                       string_count
     )
 {
+    UNREFERENCED_PARAMETER(string_array);
+    UNREFERENCED_PARAMETER(string_count);
     return  (ANSC_HANDLE)NULL;
 }
 
@@ -962,6 +953,7 @@ AnscRemoveScanner
         ANSC_HANDLE                 hStringScanner
     )
 {
+    UNREFERENCED_PARAMETER(hStringScanner);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -973,6 +965,8 @@ AnscScanString
         char*                       tbs_string
     )
 {
+    UNREFERENCED_PARAMETER(hStringScanner);
+    UNREFERENCED_PARAMETER(tbs_string);
     return  NULL;
 }
 
@@ -987,8 +981,6 @@ AnscIsValidIpString
     PANSC_STRING_TOKEN              pToken         = NULL;
     BOOL                            bValidIpString = FALSE;
     ULONG                           ulTokenCount   = 0;
-    ANSC_IPV4_ADDRESS               ip4Addr;
-
     if ( !ip_addr_string )
     {
         return  FALSE;
@@ -1019,7 +1011,7 @@ AnscIsValidIpString
         goto  EXIT1;
     }
 
-    while ( pToken = (PANSC_STRING_TOKEN)AnscTcPopToken((ANSC_HANDLE)pTokenChain) )
+    while ( (pToken = (PANSC_STRING_TOKEN)AnscTcPopToken((ANSC_HANDLE)pTokenChain) ))
     {
         if ( AnscSizeOfString(pToken->Name) > 3 )
         {
@@ -1052,7 +1044,7 @@ AnscIsValidIpString
         }
         else
         {
-            ip4Addr.Dot[ulTokenCount++] = _ansc_atoi(pToken->Name);
+            ulTokenCount++;
         }
 
         AnscFreeMemory(pToken);
@@ -1347,7 +1339,7 @@ AnscMacToLower
     int i = 0;
 
     // src must be null terminated
-    while ((*src != '\0') && (i < n))
+    while ((*src != '\0') && (i < (int)n))
     {
         if (*src != ':')
         {
@@ -1356,7 +1348,7 @@ AnscMacToLower
         src++;
     }
 
-    while (i < n)
+    while (i < (int)n)
     {
         dest[i++] = '\0';
     }

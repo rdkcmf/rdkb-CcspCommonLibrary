@@ -105,10 +105,7 @@ AnscMcoRegisterIfs
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pMyObject      = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
-    PANSC_QUERY_INTERFACE_OBJECT    pQueryIfObject = (PANSC_QUERY_INTERFACE_OBJECT )pMyObject->hQueryIfObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 
@@ -148,9 +145,7 @@ AnscMcoDispatchIfs
         ANSC_HANDLE                 hIqcIf
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_MODULE_CONTAINER_OBJECT   pMyObject    = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
-    PANSC_IQC_INTERFACE             pIqcIf       = (PANSC_IQC_INTERFACE          )hIqcIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hIqcIf);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

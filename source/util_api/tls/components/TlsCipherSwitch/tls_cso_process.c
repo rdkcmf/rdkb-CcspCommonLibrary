@@ -122,6 +122,7 @@ TlsCsoRecv
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     PTLS_CIPHER_SWITCH_OBJECT       pMyObject          = (PTLS_CIPHER_SWITCH_OBJECT  )hThisObject;
 
     return
@@ -174,6 +175,9 @@ TlsCsoSend
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  ANSC_STATUS_UNAPPLICABLE;
 }
 

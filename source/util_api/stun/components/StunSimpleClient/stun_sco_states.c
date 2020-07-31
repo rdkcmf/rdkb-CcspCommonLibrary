@@ -127,9 +127,7 @@ StunScoGetStunBsmIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hStunBsmIf;
 }
@@ -170,9 +168,7 @@ StunScoSetStunBsmIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
     pMyObject->hStunBsmIf = hInterface;
 
@@ -210,7 +206,6 @@ StunScoGetClientAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -253,7 +248,6 @@ StunScoSetClientAddr
         ULONG                       ulIp4Addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -293,7 +287,6 @@ StunScoGetClientPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -336,7 +329,6 @@ StunScoSetClientPort
         USHORT                      usUdpPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -376,7 +368,6 @@ StunScoGetClientMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -419,7 +410,6 @@ StunScoSetClientMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -459,7 +449,6 @@ StunScoGetServerAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -502,7 +491,6 @@ StunScoSetServerAddr
         ULONG                       ulIp4Addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -542,7 +530,6 @@ StunScoGetServerPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -585,7 +572,6 @@ StunScoSetServerPort
         USHORT                      usUdpPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -625,7 +611,6 @@ StunScoGetUsername
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -668,7 +653,6 @@ StunScoSetUsername
         char*                       username
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -713,7 +697,6 @@ StunScoGetPassword
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -756,7 +739,6 @@ StunScoSetPassword
         char*                       password
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -801,7 +783,6 @@ StunScoGetMinKeepAliveInterval
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -844,7 +825,6 @@ StunScoSetMinKeepAliveInterval
         int                         iSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -884,7 +864,6 @@ StunScoGetMaxKeepAliveInterval
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -927,7 +906,6 @@ StunScoSetMaxKeepAliveInterval
         int                         iSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -972,7 +950,6 @@ StunScoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -1017,7 +994,6 @@ StunScoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -1057,7 +1033,6 @@ StunScoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -1108,7 +1083,6 @@ StunScoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
 

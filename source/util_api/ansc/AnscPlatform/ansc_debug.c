@@ -147,57 +147,57 @@ static   ULONG                      gTraceMaxId             = sizeof(gTraceIdArr
 
 static   ANSC_TRACE_VALUE_NAME      gTraceIdNameArray[]     =
 {
-    {ANSC_TRACE_ID_DEFAULT            , "default"       },
-    {ANSC_TRACE_ID_PLATFORM_MEMORY    , "memory"        },
-    {ANSC_TRACE_ID_PLATFORM_TASK      , "task"          },
-    {ANSC_TRACE_ID_PLATFORM_PROTECTION, "protection"    },
-    {ANSC_TRACE_ID_PLATFORM_PACKET    , "packet"        },
-    {ANSC_TRACE_ID_PLATFORM_STREE     , "stree"         },
-    {ANSC_TRACE_ID_PLATFORM_TIME      , "time"          },
-    {ANSC_TRACE_ID_PLATFORM_OTHER     , "otherwrapper"  },
-    {ANSC_TRACE_ID_WRAPPER_CRYPTO     , "wrappercrypto" },
+    {{ANSC_TRACE_ID_DEFAULT}            , "default"       },
+    {{ANSC_TRACE_ID_PLATFORM_MEMORY}    , "memory"        },
+    {{ANSC_TRACE_ID_PLATFORM_TASK}      , "task"          },
+    {{ANSC_TRACE_ID_PLATFORM_PROTECTION}, "protection"    },
+    {{ANSC_TRACE_ID_PLATFORM_PACKET}    , "packet"        },
+    {{ANSC_TRACE_ID_PLATFORM_STREE}     , "stree"         },
+    {{ANSC_TRACE_ID_PLATFORM_TIME}      , "time"          },
+    {{ANSC_TRACE_ID_PLATFORM_OTHER}     , "otherwrapper"  },
+    {{ANSC_TRACE_ID_WRAPPER_CRYPTO }    , "wrappercrypto" },
 
-    {ANSC_TRACE_ID_MESSAGE_BUS        , "msgbus"        },
-    {ANSC_TRACE_ID_BASEIF             , "baseif"        },
-    {ANSC_TRACE_ID_DM_LIB             , "dmlib"         },
-    {ANSC_TRACE_ID_DM_API             , "dmapi"         },
+    {{ANSC_TRACE_ID_MESSAGE_BUS}        , "msgbus"        },
+    {{ANSC_TRACE_ID_BASEIF}             , "baseif"        },
+    {{ANSC_TRACE_ID_DM_LIB}             , "dmlib"         },
+   {{ANSC_TRACE_ID_DM_API}             , "dmapi"         },
 
-    {ANSC_TRACE_ID_COMPONENT          , "component"     },
+    {{ANSC_TRACE_ID_COMPONENT}          , "component"     },
     
-    {ANSC_TRACE_ID_SSP                , "ssp"           },
+    {{ANSC_TRACE_ID_SSP}                , "ssp"           },
 
     ANSC_TRACE_CUSTOM_ID_NAMES
 };
 
 static   ANSC_TRACE_VALUE_NAME      gTraceLevelNameArray[]  =
 {
-    {ANSC_TRACE_LEVEL_DEATH   , "death"     },
-    {ANSC_TRACE_LEVEL_CRITICAL, "critical"  },
-    {ANSC_TRACE_LEVEL_ERROR   , "error"     },
-    {ANSC_TRACE_LEVEL_WARNING , "warning"   },
+    {{ANSC_TRACE_LEVEL_DEATH}   , "death"     },
+    {{ANSC_TRACE_LEVEL_CRITICAL}, "critical"  },
+    {{ANSC_TRACE_LEVEL_ERROR}   , "error"     },
+    {{ANSC_TRACE_LEVEL_WARNING} , "warning"   },
 
-    {ANSC_TRACE_LEVEL_TEST    , "test"      },
+    {{ANSC_TRACE_LEVEL_TEST}    , "test"      },
                          
-    {ANSC_TRACE_LEVEL_FLOW    , "flow"      },
+    {{ANSC_TRACE_LEVEL_FLOW}    , "flow"      },
                          
-    {ANSC_TRACE_LEVEL_ENTRY   , "entry"     },
-    {ANSC_TRACE_LEVEL_INFO    , "info"      },
-    {ANSC_TRACE_LEVEL_VERBOSE , "verbose"   },
-    {ANSC_TRACE_LEVEL_VERBOSE2, "verbose2"  },
-    {ANSC_TRACE_LEVEL_DUMPING , "dumping"   }
+    {{ANSC_TRACE_LEVEL_ENTRY}   , "entry"     },
+    {{ANSC_TRACE_LEVEL_INFO}    , "info"      },
+    {{ANSC_TRACE_LEVEL_VERBOSE} , "verbose"   },
+    {{ANSC_TRACE_LEVEL_VERBOSE2}, "verbose2"  },
+    {{ANSC_TRACE_LEVEL_DUMPING} , "dumping"   }
 };
 
 static   ANSC_TRACE_VALUE_NAME      gTraceMaskNameArray[]   =
 {
-    {ANSC_TRACE_MASK_INIT        , "init"       },
-    {ANSC_TRACE_MASK_CFG         , "cfg"        },
-    {ANSC_TRACE_MASK_CONTROL_PATH, "controlpath"},
+    {{ANSC_TRACE_MASK_INIT}        , "init"       },
+    {{ANSC_TRACE_MASK_CFG}         , "cfg"        },
+    {{ANSC_TRACE_MASK_CONTROL_PATH}, "controlpath"},
                             
-    {ANSC_TRACE_MASK_DATA_PATH   , "datapath"   },
+    {{ANSC_TRACE_MASK_DATA_PATH}   , "datapath"   },
                             
-    {ANSC_TRACE_MASK_MONITOR     , "monitor"    },
+    {{ANSC_TRACE_MASK_MONITOR}     , "monitor"    },
                             
-    {ANSC_TRACE_MASK_ALL         , "all"        }
+    {{ANSC_TRACE_MASK_ALL}         , "all"        }
 };
 
 
@@ -639,6 +639,7 @@ AnscDumpMemory
         ULONG                       Format
     )
 {
+    UNREFERENCED_PARAMETER(Format);
     /**************************************************************
                             Local Variables
     **************************************************************/
@@ -785,7 +786,6 @@ AnscTraceIpPacket
         ANSC_HANDLE                 hIpPacket
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PIPV4_HEADER                    pIp4Header          = (PIPV4_HEADER)hIpPacket;
     PUDP_HEADER                     pUdpHeader          = (PUDP_HEADER)AnscIpv4GetPayload(pIp4Header);
     PTCP_HEADER                     pTcpHeader          = (PTCP_HEADER)pUdpHeader;
@@ -815,7 +815,7 @@ AnscTraceIpPacket
      */
     AnscTraceWrapper
         (
-            "%u.%03u IP: len = %d, ",
+            "%lu.%03lu IP: len = %d, ",
             seconds,
             mSeconds,
             AnscIpv4GetTotalLength(pIp4Header)
@@ -880,7 +880,7 @@ AnscTraceIpPacket
 
             AnscTraceWrapper
                 (
-                    "Seq=%u~%u, Ack=%u",
+                    "Seq=%lu~%lu, Ack=%lu",
                     AnscTcpGetSeqNumber(pTcpHeader),
                     AnscTcpGetSeqNumber(pTcpHeader) + ulTpPayloadLen,
                     AnscTcpGetAckNumber(pTcpHeader)
@@ -965,7 +965,7 @@ AnscTraceIpPacket
         AnscTraceWrapper(" DF");
     }
 
-    AnscTraceWrapper(" TTL=%lu", AnscIpv4GetTtl(pIp4Header));
+    AnscTraceWrapper(" TTL=%d", AnscIpv4GetTtl(pIp4Header));
 
     if (!AnscIpv4IsFragment(pIp4Header))
     {
@@ -1003,7 +1003,7 @@ AnscTraceSetIdCfg
             (
                 "AnscTraceSetIdCfg -- invalid ID: %u, maximum allowed %u!\n",
                 pIdCfg->Id,
-                gTraceMaxId
+                (unsigned int)gTraceMaxId
             );
 
         return  ANSC_STATUS_UNAPPLICABLE;
@@ -1024,7 +1024,7 @@ AnscTraceSetAllIdcfgLevels
 {
     int i = 0;
 
-    for (i=0; i<gTraceMaxId; i++)
+    for (i=0; i<(int)gTraceMaxId; i++)
         gTraceIdArray[i].Level = (level>ANSC_TRACE_INVALID_LEVEL) ? ANSC_TRACE_INVALID_LEVEL:level;
     
     return  ANSC_STATUS_SUCCESS;
@@ -1047,8 +1047,8 @@ AnscTraceGetIdCfg
         AnscTraceWrapper
             (
                 "AnscTraceGetIdCfg -- invalid ID: %u, maximum allowed %u!\n",
-                pIdCfg->Id,
-                gTraceMaxId
+                 pIdCfg->Id,
+                (unsigned int)gTraceMaxId
             );
 
         return  ANSC_STATUS_UNAPPLICABLE;

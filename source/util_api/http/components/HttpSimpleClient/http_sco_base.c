@@ -119,7 +119,7 @@ HttpScoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = NULL;
 
@@ -189,7 +189,6 @@ HttpScoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject         = (PHTTP_SIMPLE_CLIENT_OBJECT   )hThisObject;
     PHTTP_BSP_INTERFACE             pBspIf            = (PHTTP_BSP_INTERFACE          )pMyObject->hBspIf;
     PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
@@ -289,7 +288,6 @@ HttpScoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject         = (PHTTP_SIMPLE_CLIENT_OBJECT   )hThisObject;
     PHTTP_BSP_INTERFACE             pBspIf            = (PHTTP_BSP_INTERFACE          )pMyObject->hBspIf;
     PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE          )pMyObject->hHfpIf;
@@ -463,7 +461,6 @@ HttpScoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

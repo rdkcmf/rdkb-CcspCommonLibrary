@@ -113,8 +113,7 @@ SlapVeoGetVarSyntax
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  pTargetVar   = (PSLAP_VARIABLE         )NULL;
 
     if ( !param_list )
@@ -169,8 +168,7 @@ SlapVeoGetVarContentType
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  pTargetVar   = (PSLAP_VARIABLE         )NULL;
 
     if ( !param_list )
@@ -225,7 +223,6 @@ SlapVeoSetVarContentType
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_MAPPER_OBJECT         pMyObject      = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
     PSLAP_BSS_INTERFACE             pSlapBssIf     = (PSLAP_BSS_INTERFACE    )pMyObject->hSlapBssIf;
     PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper = (PSLAP_VAR_MAPPER_OBJECT)pSlapBssIf->GetVarMapper(pSlapBssIf->hOwnerContext);
@@ -312,8 +309,7 @@ SlapVeoGetVarUsageType
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pMyObject    = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  pTargetVar   = (PSLAP_VARIABLE         )NULL;
 
     if ( !param_list )
@@ -368,13 +364,9 @@ SlapVeoSetVarUsageType
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_MAPPER_OBJECT         pMyObject      = (PSLAP_VAR_MAPPER_OBJECT)hThisObject;
-    PSLAP_BSS_INTERFACE             pSlapBssIf     = (PSLAP_BSS_INTERFACE    )pMyObject->hSlapBssIf;
-    PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper = (PSLAP_VAR_MAPPER_OBJECT)pSlapBssIf->GetVarMapper(pSlapBssIf->hOwnerContext);
+    UNREFERENCED_PARAMETER(hThisObject);
     PSLAP_VARIABLE                  pTargetVar     = (PSLAP_VARIABLE         )NULL;
     ULONG                           ulUsageType    = (ULONG                  )SLAP_VAR_USAGE_TYPE_default;
-    char*                           pTypeString    = (char*                  )NULL;
 
     if ( !param_list )
     {
@@ -405,7 +397,6 @@ SlapVeoSetVarUsageType
     }
     else if ( param_list->ParamArray[1].Syntax == SLAP_VAR_SYNTAX_string )
     {
-        pTypeString = param_list->ParamArray[1].Variant.varString;
         ulUsageType = SLAP_VAR_USAGE_TYPE_default;
     }
 

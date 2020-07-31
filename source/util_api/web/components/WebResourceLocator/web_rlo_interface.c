@@ -117,8 +117,6 @@ WebCreateResourceLocator
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_LOCATOR_OBJECT    pWebResourceLocator = NULL;
 
     return  WebRloCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

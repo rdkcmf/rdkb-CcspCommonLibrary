@@ -117,8 +117,5 @@ HttpCreateTransRecord
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PHTTP_TRANS_RECORD_OBJECT       pHttpTransRecord = NULL;
-
     return  HttpTroCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

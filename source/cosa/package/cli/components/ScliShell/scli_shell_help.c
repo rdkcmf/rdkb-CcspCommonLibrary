@@ -372,7 +372,7 @@ ScliShoTokenizeCommand
                 if ( pNext ) pNext ++;
             }
 
-            ulTokenLen = pNext ? pNext - pCmdStart : AnscSizeOfString(pCmdStart);
+            ulTokenLen = pNext ? (ULONG)(pNext - pCmdStart) : (ULONG)AnscSizeOfString(pCmdStart);
             pToken->pValue  = (char*)AnscAllocateMemory(ulTokenLen + 1);
             if ( !pToken->pValue )
             {
@@ -530,12 +530,9 @@ ScliShoIndicateError
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_NOT_SPECIFIED;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PSCLI_SHELL_SESSION_EXEC        pSession;
     int                             i;
 
-    pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
     if ( pErrorCode )
     {
@@ -718,12 +715,9 @@ ScliShoShowArgHelp
         int*                        pErrorPos
     )
 {
+    UNREFERENCED_PARAMETER(ulOptArgCount);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PBMC2_CMD_SIMPLE_ARG            pSimpleArg   = NULL;
-    ULONG                           ulNameLen    = 0;
     ULONG                           ulSimArgType = pCmdArg->Type;
     BOOL                            bSkipNamePart;
     PSCLI_SHELL_ARG_HELP_LIST       pHelpList;
@@ -1369,7 +1363,6 @@ ScliShoShowOptArgHelp
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     BOOL                            bLookupAllOptions   = FALSE;
-    int                             nErrorPos           = 0;
 
     *pErrorPos = 0;
 
@@ -1379,10 +1372,7 @@ ScliShoShowOptArgHelp
     }
     else
     {
-        BOOL                        bNameMatched    = pOptArgMatched[nCurArg].bNameMatched;
         BOOL                        bPartialName    = pOptArgMatched[nCurArg].bNamePartialMatched;
-        BOOL                        bValueMatched   = pOptArgMatched[nCurArg].bValueMatched;
-        BOOL                        bPartialValue   = pOptArgMatched[nCurArg].bPartialValue;
 
         if ( !bPartialName )
         {
@@ -1524,15 +1514,10 @@ ScliShoIndicateHelp
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_NOT_SPECIFIED;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           i;
 
     *pErrorPos  = 0;
 
-    pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
     /* required arguments */
     for (  i = 0; i < pCmdSyntax->ulReqArgCount; i ++ )
@@ -1579,12 +1564,9 @@ ScliShoIndicateHelp
     /* optional arguments */
     if ( TRUE )
     {
-        PBMC2_CMD_ARGUMENT          pCmdArg         = NULL;
-        ULONG                       ulArgIndex      = 0;
 
         for ( i = 0; i < pCmdSyntax->ulOptArgCount; i ++ )
         {
-            pCmdArg = &pCmdSyntax->pOptArgs[i];
             
             if ( pOptArgMatched[i].bMatched && pOptArgMatched[i].bValueMatched )
             {
@@ -1805,6 +1787,7 @@ ScliShoMatchSimpleArg
         
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     BOOL                            bMatched    = TRUE;
     BOOL                            bNamedArg   = ( BMC2_CMD_ARG_TYPE_named == ulArgType );
     char*                           pName       = pCmdTokenList->pTokens[pCmdTokenList->ulCurToken].pValue;
@@ -2173,7 +2156,6 @@ ScliShoMatchOptArgs
     BOOL                            bMatched            = FALSE;
     BOOL                            bArgMatched         = FALSE;
     int                             nArgIndex           = -1;
-    BOOL                            bNameMatched        = FALSE;
     BOOL                            bValueMatched       = FALSE;
     ULONG                           ulTokenMatched      = 0;
     int                             nErrorPos           = 0;
@@ -2781,6 +2763,7 @@ ScliShoGetOptNamedArgMatched
         char*                       pArgName
     )
 {
+    UNREFERENCED_PARAMETER(pOptArgs);
     int                             i;
 
     for ( i = 0; i < (int)ulOptArgCount; i ++ )
@@ -2889,7 +2872,7 @@ ScliShoIsValidInt
         nValue = (int)_ansc_atoi(pValue);
         _ansc_sprintf(buf, "%d", nValue);
 
-        if ( (buf[0] == '-' && nValueSigned >= 0) || buf[0] != '-' && nValueSigned < 0)
+        if ( (buf[0] == '-' && nValueSigned >= 0) || (buf[0] != '-' && nValueSigned < 0))
         {
             return  FALSE;
         }
@@ -2967,7 +2950,7 @@ ScliShoIsValidUint
 
         ulValue = (ULONG)_ansc_atol(pValue);
 
-        _ansc_sprintf(buf, "%u", ulValue);
+        _ansc_sprintf(buf, "%lu", ulValue);
 
         if ( AnscSizeOfString(buf) != AnscSizeOfString(pNonZero) ||
              !AnscEqualString(buf, pNonZero, TRUE) )
@@ -2997,13 +2980,8 @@ ScliShoIsValidDouble
 {
     char*                           pNext = pValue;
     char                            cFirst;
-    BOOL                            bSigned     = FALSE;
-    BOOL                            bInt        = FALSE;
     BOOL                            bNoInt      = FALSE;
-    BOOL                            bFrac       = FALSE;
-    BOOL                            bNoFrac     = FALSE;
     BOOL                            bExp        = FALSE;
-    BOOL                            bExpSigned  = FALSE;
     ULONG                           ulInt       = 0;
     ULONG                           ulFrac      = 0;
     ULONG                           ulExp       = 0;
@@ -3021,7 +2999,6 @@ ScliShoIsValidDouble
 
     if ( cFirst == '+' || cFirst == '-' )
     {
-        bSigned = TRUE;
         pNext ++;
         if ( *pNext == '.' )
         {
@@ -3045,7 +3022,6 @@ ScliShoIsValidDouble
 
     if ( !bNoInt )
     {
-        bInt   = TRUE;
 
         ulInt = (ULONG)_ansc_atol(pNext);
 
@@ -3061,7 +3037,6 @@ ScliShoIsValidDouble
 
         if ( *pNext == 'e' )
         {
-            bNoFrac = TRUE;
         }
         else if ( !SCLI_SHELL_IS_DIGIT(*pNext) )
         {
@@ -3070,7 +3045,6 @@ ScliShoIsValidDouble
         }
         else
         {
-            bFrac = TRUE;
 
             ulFrac = (ULONG)_ansc_atol(pNext);
 
@@ -3104,7 +3078,6 @@ ScliShoIsValidDouble
         pNext ++;
         if ( *pNext == '+' || *pNext == '-' )
         {
-            bExpSigned = TRUE;
             pNext ++;
         }
 
@@ -3165,7 +3138,7 @@ ScliShoIsValidDouble
             int                     max_digits_len = AnscSizeOfString(BMC_CMD_ARG_TYPE_DOUBLE_max_digits);
             int                     nBufLen = 0;
 
-            _ansc_sprintf(buf, "%u%u", ulInt, ulFrac);
+            _ansc_sprintf(buf, "%lu%lu", ulInt, ulFrac);
 
             nBufLen = AnscSizeOfString(buf);
 
@@ -3254,7 +3227,7 @@ ScliShoIsValidIp4Addr
         return  FALSE;
     }
 
-    nRet = _ansc_sscanf(pValue, "%u.%u.%u.%u", &a, &b, &c, &d);
+    nRet = _ansc_sscanf(pValue, "%lu.%lu.%lu.%lu", &a, &b, &c, &d);
 
     if ( nRet == 0 )
     {
@@ -3330,7 +3303,7 @@ ScliShoIsValidIp6Prefix
     }
 
     ulLength = (ULONG)_ansc_atoi(pLength);
-    _ansc_sprintf(buf, "%d", ulLength);
+    _ansc_sprintf(buf, "%lu", ulLength);
     if ( ulLength > 128 || !AnscEqualString(buf, pLength, TRUE) )
     {
         *pErrorPos = (pLength - pCur);
@@ -3365,13 +3338,13 @@ ScliShoIsValidMacAddr
         return  FALSE;
     }
 
-    nRet = _ansc_sscanf(pValue, "%2x-%2x-%2x-%2x-%2x-%2x", &a, &b, &c, &d, &e, &f);
+    nRet = _ansc_sscanf(pValue, "%2x-%2x-%2x-%2x-%2x-%2x", (PUINT)&a, (PUINT)&b, (PUINT)&c, (PUINT)&d, (PUINT)&e, (PUINT)&f);
 
     if ( nRet != 6 )
     {
         nMaxInput = nRet;
 
-        nRet = _ansc_sscanf(pValue, "%2x:%2x:%2x:%2x:%2x:%2x", &a, &b, &c, &d, &e, &f);
+        nRet = _ansc_sscanf(pValue, "%2x:%2x:%2x:%2x:%2x:%2x", (PUINT)&a, (PUINT)&b, (PUINT)&c, (PUINT)&d, (PUINT)&e, (PUINT)&f);
 
         if ( nRet == 0 )
         {
@@ -3542,6 +3515,8 @@ ScliShoIsHexValueInRange
         PBMC2_CMD_ARG_VRANGE        pRange        
     )
 {
+    UNREFERENCED_PARAMETER(pArgValue);
+    UNREFERENCED_PARAMETER(pRange);
     return  TRUE;
 }
 
@@ -3592,6 +3567,8 @@ ScliShoIsMacAddrValueInRange
         PBMC2_CMD_ARG_VRANGE        pRange        
     )
 {
+    UNREFERENCED_PARAMETER(pArgValue);
+    UNREFERENCED_PARAMETER(pRange);
     return  TRUE;
 }
 
@@ -3969,7 +3946,7 @@ ScliShoIsArgValueValid
 		{
 			pSel = pValueList->pTokens[i].pValue;
 
-			if ( AnscSizeOfString(pSel) > vLen &&
+			if ( (int)AnscSizeOfString(pSel) > vLen &&
 				 AnscEqualString2(pSel, pLast, vLen, FALSE) == 0 )
 			{
 				ulDup ++;
@@ -4010,14 +3987,11 @@ ScliShoShowArgHelpList
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
-    PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           i, j;
     ULONG                           ulItemMaxLen = (pHelpList->ulMaxItemLen)/4*4 + 8;
     ULONG                           ulItemLen;
 
-    pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
     for ( i = 0;  i < pHelpList->ulArgHelpCount; i ++ )
     {
@@ -4092,6 +4066,7 @@ ScliShoDepArgFindMatchedBranch
         ULONG                       ulReqArgCount
     )
 {
+    UNREFERENCED_PARAMETER(ulReqArgCount);
     ULONG                       i;
     PBMC2_CMD_DEP_ARG_BRANCH    pDepBr;
     int                         nArgIndex;
@@ -4161,11 +4136,11 @@ ScliShoBuildValueType
     {
         if ( pSimpleArg->ValueMaxCount == BMC2_CMD_ARG_TYPE_UINT_max )
         {
-            _ansc_sprintf(rep, "(%u-)", pSimpleArg->ValueMinLength);
+            _ansc_sprintf(rep, "(%lu-)", pSimpleArg->ValueMinLength);
         }
         else
         {
-            _ansc_sprintf(rep, "(%u-%u)", pSimpleArg->ValueMinLength, pSimpleArg->ValueMaxLength);
+            _ansc_sprintf(rep, "(%lu-%lu)", pSimpleArg->ValueMinLength, pSimpleArg->ValueMaxLength);
         }
     }
 
@@ -4173,11 +4148,11 @@ ScliShoBuildValueType
     {
         if ( pSimpleArg->ValueMaxCount == BMC2_CMD_ARG_TYPE_UINT_max )
         {
-            _ansc_sprintf(rep, "[%u-]", pSimpleArg->ValueMinCount);
+            _ansc_sprintf(rep, "[%lu-]", pSimpleArg->ValueMinCount);
         }
         else
         {
-            _ansc_sprintf(rep, "[%u-%u]", pSimpleArg->ValueMinCount, pSimpleArg->ValueMaxCount);
+            _ansc_sprintf(rep, "[%lu-%lu]", pSimpleArg->ValueMinCount, pSimpleArg->ValueMaxCount);
         }
     }
 
@@ -4193,7 +4168,7 @@ ScliShoBuildValueType
 
             case    BMC2_CMD_ARG_VTYPE_uint:
 
-                    _ansc_sprintf(pValueType, "<%u ~ %u> %s", pVrange->Min.varUint, pVrange->Max.varUint, (rep[0])?rep:"");
+                    _ansc_sprintf(pValueType, "<%lu ~ %lu> %s", pVrange->Min.varUint, pVrange->Max.varUint, (rep[0])?rep:"");
 
                     break;
 
@@ -4337,6 +4312,7 @@ ScliShoGetSimpleArgHelp
         int*                        pErrorPos
     )
 {
+    UNREFERENCED_PARAMETER(ulArgType);
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
 	char*							pOrgPrefix          = pPrefix;
     ULONG                           i;
@@ -4386,10 +4362,7 @@ ScliShoGetSimpleArgHelp
          * not allowed in value options, meaning comma needs to be escaped if
          * this assumption becomes invalid in future
          */
-        char*                       pOrgPrefix  = pPrefix;
         char*                       pNext       = pPrefix;
-        int                         nItemIndex  = 0;
-        int                         nPrefixLen  = AnscSizeOfString(pPrefix);
 
         while ( pPrefix && *pPrefix != '\0' )
         {
@@ -4651,13 +4624,12 @@ ScliShoAutoCompleteArg
         SLAP_STRING_ARRAY**         ppStringArray
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSrvSession);
+    UNREFERENCED_PARAMETER(ulOptArgCount);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT   )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY )&pMyObject->Property;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE)pMyObject->hTscIf;
     PSLAP_STRING_ARRAY              pAcStrArray  = (PSLAP_STRING_ARRAY   )NULL;
     PBMC2_CMD_SIMPLE_ARG            pSimpleArg   = NULL;
-    ULONG                           ulNameLen    = 0;
     ULONG                           ulSimArgType = pCmdArg->Type;
     BOOL                            bSkipNamePart;
     ULONG                           i;
@@ -4882,7 +4854,6 @@ ScliShoGetOptArgsAcOptions
     BOOL                            bDepArgOptional     = FALSE;
     ULONG                           ulArgStart          = 0;
     ULONG                           ulArgEnd            = ulOptArgCount - 1;
-    ULONG                           ulArgCountTBC       = ulOptArgCount;
     ULONG                           i;
     PBMC2_CMD_SIMPLE_ARG            pSimpleArg;
     ULONG                           ulArgType;
@@ -5062,10 +5033,7 @@ ScliShoAutoCompleteOptArg
     }
     else
     {
-        BOOL                        bNameMatched    = pOptArgMatched[nCurArg].bNameMatched;
         BOOL                        bPartialName    = pOptArgMatched[nCurArg].bNamePartialMatched;
-        BOOL                        bValueMatched   = pOptArgMatched[nCurArg].bValueMatched;
-        BOOL                        bPartialValue   = pOptArgMatched[nCurArg].bPartialValue;
 
         if ( !bPartialName )
         {
@@ -5233,9 +5201,6 @@ ScliShoAutoCompleteCommandArg
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_NOT_SPECIFIED;
-    PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
-    PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
-    PTELNET_TSC_INTERFACE           pTscIf       = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     ULONG                           i;
 
     *ppStringArray = NULL;
@@ -5290,12 +5255,9 @@ ScliShoAutoCompleteCommandArg
     /* optional arguments */
     if ( TRUE )
     {
-        PBMC2_CMD_ARGUMENT          pCmdArg         = NULL;
-        ULONG                       ulArgIndex      = 0;
 
         for ( i = 0; i < pCmdSyntax->ulOptArgCount; i ++ )
         {
-            pCmdArg = &pCmdSyntax->pOptArgs[i];
             
             if ( pOptArgMatched[i].bMatched && pOptArgMatched[i].bValueMatched )
             {
@@ -5408,6 +5370,7 @@ ScliShoCanReqArgsSkipped
         ULONG                       ulReqArgFrom
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                           i;
     PBMC2_CMD_DEP_ARG               pDepArg;
     int                             nArgIndex;

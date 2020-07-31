@@ -117,8 +117,6 @@ WebCreateSimpleServer
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_SIMPLE_SERVER_OBJECT       pWebSimpleServer = NULL;
 
     return  WebSsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -112,24 +112,22 @@ Bmc2ReqcoDispatchCommands
         PULONG                      pulPecStatus
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject       = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_CONTROL_COMMAND     pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)NULL;
 
     *pulPecStatus = BMC2_PEC_STATUS_continue;
 
-    while ( pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)pMyObject->PopControlCommand((ANSC_HANDLE)pMyObject) )
+    while (( pControlCommand = (PBMC2_REQCO_CONTROL_COMMAND)pMyObject->PopControlCommand((ANSC_HANDLE)pMyObject) ))
     {
         switch ( pControlCommand->CommandId )
         {
             case    BMC2_REQCO_COMMAND_return :
 
-                    returnStatus =
-                        pMyObject->DoReturn
-                            (
-                                (ANSC_HANDLE)pMyObject,
-                                pControlCommand->ParamList
-                            );
+                    pMyObject->DoReturn
+                        (
+                            (ANSC_HANDLE)pMyObject,
+                            pControlCommand->ParamList
+                        );
 
                     *pulPecStatus = BMC2_PEC_STATUS_terminate;
 
@@ -137,12 +135,11 @@ Bmc2ReqcoDispatchCommands
 
             case    BMC2_REQCO_COMMAND_transfer :
 
-                    returnStatus =
-                        pMyObject->DoTransfer
-                            (
-                                (ANSC_HANDLE)pMyObject,
-                                pControlCommand->ParamList
-                            );
+                    pMyObject->DoTransfer
+                        (
+                            (ANSC_HANDLE)pMyObject,
+                            pControlCommand->ParamList
+                        );
 
                     *pulPecStatus = BMC2_PEC_STATUS_terminate;
 
@@ -150,12 +147,11 @@ Bmc2ReqcoDispatchCommands
 
             case    BMC2_REQCO_COMMAND_execute :
 
-                    returnStatus =
-                        pMyObject->DoExecute
-                            (
-                                (ANSC_HANDLE)pMyObject,
-                                pControlCommand->ParamList
-                            );
+                    pMyObject->DoExecute
+                        (
+                            (ANSC_HANDLE)pMyObject,
+                            pControlCommand->ParamList
+                        );
 
                     break;
 
@@ -206,9 +202,8 @@ Bmc2ReqcoDoReturn
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(param_list);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -248,7 +243,6 @@ Bmc2ReqcoDoTransfer
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_ASYNC_JOB           pAsyncJob    = (PBMC2_REQCO_ASYNC_JOB      )NULL;
     ANSC_EVENT                      asyncEvent;
@@ -322,7 +316,6 @@ Bmc2ReqcoDoExecute
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_REQCO_ASYNC_JOB           pAsyncJob    = (PBMC2_REQCO_ASYNC_JOB      )NULL;
     ANSC_EVENT                      asyncEvent;

@@ -948,7 +948,7 @@ SlapDslhParamtoSetParamValue
 
 		case SLAP_VAR_SYNTAX_uint32:
 			strValStruct[0].type            = ccsp_unsignedInt;
-			_ansc_sprintf(buf, "%d", pParamValue->Variant.varUint32);
+			_ansc_sprintf(buf, "%d", (int)pParamValue->Variant.varUint32);
 			strValStruct[0].parameterValue = AnscCloneString(buf);
 				break;
 
@@ -1189,7 +1189,7 @@ SlapDslhParamtoSetParamValueUint
     
 	strValStruct[0].parameterName  = AnscCloneString(pParamName);
 	strValStruct[0].type  = ccsp_unsignedInt;
-	_ansc_sprintf(buf, "%u", newValue);
+	_ansc_sprintf(buf, "%u", (UINT)newValue);
     strValStruct[0].parameterValue = AnscCloneString(buf);
 
 	return SetParamValueHelper(
@@ -1463,7 +1463,6 @@ SlapDslhParamtoGetParamInfo
 	char	pValueBuf[1024]  = { '\0' };
 	int j	= 0;
 	int i	= 0;
-	int uParentLength = 0;
 	int valueLen = 0;
 	int leaf_cnt = 0;
 	int prior_sz = 0;
@@ -1485,7 +1484,6 @@ SlapDslhParamtoGetParamInfo
 		pParamName = AnscCloneString("Device.");
 	}
 
-	uParentLength = AnscSizeOfString(pParamName);
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -2249,10 +2247,10 @@ SlapDslhParamtoGetHiddenInfo
 		SLAP_STRING_ARRAY**			pValueArray
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PSLAP_DSLH_PARAMTREE_OBJECT     pMyObject        = (PSLAP_DSLH_PARAMTREE_OBJECT)hThisObject;
-    ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
-
+    UNREFERENCED_PARAMETER(pNameArray);
+    UNREFERENCED_PARAMETER(pSubsystemPrefix);
+    UNREFERENCED_PARAMETER(pValueArray);
+    UNREFERENCED_PARAMETER(hThisObject);
 	/* To be implemented in the future.
 	   No d-bus API available to support 
 	   this feature as of 10/07/2011*/
@@ -2725,6 +2723,7 @@ SlapDslhParamtoAcqWriteAccess
 		int							priority
     )
 {
+    UNREFERENCED_PARAMETER(pSubsystemPrefix);
     PSLAP_DSLH_PARAMTREE_OBJECT     pMyObject        = (PSLAP_DSLH_PARAMTREE_OBJECT)hThisObject;
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 	int ret = 0;
@@ -2783,6 +2782,7 @@ SlapDslhParamtoRelWriteAccess
 		int							sessionID
     )
 {
+    UNREFERENCED_PARAMETER(pSubsystemPrefix);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_FAILURE;
     PSLAP_DSLH_PARAMTREE_OBJECT     pMyObject        = (PSLAP_DSLH_PARAMTREE_OBJECT)hThisObject;
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
@@ -2838,16 +2838,16 @@ SlapDslhParamtoIsParamTreeReadOnly
 	 	char*				pSubsystemPrefix
     )
 {
+    UNREFERENCED_PARAMETER(pSubsystemPrefix);
     PSLAP_DSLH_PARAMTREE_OBJECT     pMyObject        = (PSLAP_DSLH_PARAMTREE_OBJECT)hThisObject;
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 
-    int ret = 0;
 	int sessionID = 0;
 	int priority = 0;
     char                            cr_id[256];
     _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
 
-	ret = CcspBaseIf_getCurrentSessionID
+    CcspBaseIf_getCurrentSessionID
         (
             MsgBusHandle,
             cr_id,
@@ -3031,6 +3031,7 @@ SlapDslhParamtoEscapeXmlString
         SLAP_STRING                 pInputString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ULONG                 length     = 0;
     ULONG                 charCount  = 0;
     PCHAR                 pOutString = NULL;
@@ -3099,7 +3100,7 @@ SlapDslhParamtoEscapeXmlString
                     (PCHAR)Predefined_XML_Entities[j].Encode
                 );
 
-            pos += AnscSizeOfString(Predefined_XML_Entities[j].Encode);
+            pos += AnscSizeOfString((const char *)Predefined_XML_Entities[j].Encode);
         }
     }
 

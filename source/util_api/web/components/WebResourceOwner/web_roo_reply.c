@@ -145,13 +145,9 @@ WebRooReplyReq
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
     PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_RESPONSE_INFO             pRepInfo        = NULL;
     char*                           pRepPhrase      = pHttpHco->GetReasonPhrase((ANSC_HANDLE)pHttpHco, ulStatusCode);
 
@@ -487,15 +483,10 @@ WebRooReply300
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -561,15 +552,10 @@ WebRooReply301
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -635,15 +621,10 @@ WebRooReply302
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -709,15 +690,10 @@ WebRooReply303
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -783,15 +759,10 @@ WebRooReply304
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -857,15 +828,10 @@ WebRooReply305
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -931,15 +897,10 @@ WebRooReply307
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject        = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty        = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco         = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf           = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain  = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession         = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_LOCATION              pHttpHfoLocation = (PHTTP_HFO_LOCATION           )hReserved;
 
     /*
@@ -1005,17 +966,12 @@ WebRooReply400
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1064,17 +1020,12 @@ WebRooReply403
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1123,17 +1074,12 @@ WebRooReply404
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1182,15 +1128,10 @@ WebRooReply405
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_ALLOW                 pHttpHfoAllow   = (PHTTP_HFO_ALLOW              )hReserved;
 
     /*
@@ -1256,17 +1197,12 @@ WebRooReply409
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1315,17 +1251,12 @@ WebRooReply410
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1374,17 +1305,12 @@ WebRooReply415
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1433,17 +1359,12 @@ WebRooReply417
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1492,17 +1413,12 @@ WebRooReply500
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1551,17 +1467,12 @@ WebRooReply501
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -1610,15 +1521,10 @@ WebRooReply503
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject          = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty          = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco           = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf             = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq            = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep            = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain    = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession           = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
     PHTTP_HFO_RETRY_AFTER           pHttpHfoRetryAfter = (PHTTP_HFO_RETRY_AFTER        )hReserved;
 
     /*
@@ -1684,15 +1590,10 @@ WebRooReply505
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PWEB_RESOURCE_OWNER_OBJECT      pMyObject       = (PWEB_RESOURCE_OWNER_OBJECT   )hThisObject;
-    PWEB_RESOURCE_OWNER_PROPERTY    pProperty       = (PWEB_RESOURCE_OWNER_PROPERTY )&pMyObject->Property;
-    PHTTP_HELPER_CONTAINER_OBJECT   pHttpHco        = (PHTTP_HELPER_CONTAINER_OBJECT)pMyObject->hContainerContext;
-    PHTTP_RCP_INTERFACE             pRcpIf          = (PHTTP_RCP_INTERFACE          )pMyObject->hRcpIf;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq         = (PHTTP_BMO_REQ_OBJECT         )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
-    PANSC_TOKEN_CHAIN               pPathTokenChain = (PANSC_TOKEN_CHAIN            )pBmoReq->GetRecvContext((ANSC_HANDLE)pBmoReq);
-    PWEB_GENERAL_SESSION_OBJECT     pSession        = (PWEB_GENERAL_SESSION_OBJECT  )pBmoRep->GetRecvContext((ANSC_HANDLE)pBmoRep);
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReserved);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }

@@ -118,10 +118,7 @@ HttpBmoGetStartLineSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  0;
 }
 
@@ -156,7 +153,6 @@ HttpBmoGetHeadersSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject     = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo    = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
@@ -244,9 +240,7 @@ HttpBmoPredictBodySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  0xFFFFFFFF;
 }
@@ -282,9 +276,7 @@ HttpBmoGetBodySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
     ULONG                           ulBodySize   = 0;
 
@@ -331,9 +323,7 @@ HttpBmoGetBodySize2
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
     ULONG                           ulBodySize   = 0;
 
@@ -380,9 +370,7 @@ HttpBmoGetMessageSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject     = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     ULONG                           ulHeadersSize = 0;
     ULONG                           ulBodySize    = 0;
     ULONG                           ulMessageSize = 0;
@@ -425,9 +413,7 @@ HttpBmoGetPtmForHeaders
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
 
     if ( pHeaderBdo )
@@ -471,9 +457,7 @@ HttpBmoGetPtmForBody
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_MESSAGE_BODY_OBJECT       pMessageBody = (PHTTP_MESSAGE_BODY_OBJECT )pMyObject->hMessageBody;
 
     if ( !pMessageBody )
@@ -522,9 +506,7 @@ HttpBmoGetHeaderBdo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
 
     return  (ANSC_HANDLE)pHeaderBdo;
@@ -566,11 +548,8 @@ HttpBmoSetHeaderBdo
         ANSC_HANDLE                 hBdo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
-    PANSC_BUFFER_DESCRIPTOR         pHeaderBdo   = (PANSC_BUFFER_DESCRIPTOR   )pMyObject->hHeaderBdo;
-
+    
     pMyObject->hHeaderBdo = hBdo;
 
     return  ANSC_STATUS_SUCCESS;
@@ -608,9 +587,7 @@ HttpBmoIsProxyKeepAlive
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus            = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject               = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf                  = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HFO_PROXY_CONNECTION      pHttpHfoProxyConnection = NULL;
     ULONG                           i                       = 0;
 
@@ -667,9 +644,7 @@ HttpBmoIsCloseConnection
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject          = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf             = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HFO_CONNECTION            pHttpHfoConnection = NULL;
     ULONG                           i                  = 0;
 
@@ -726,9 +701,7 @@ HttpBmoIsConnKeepAlive
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject          = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf             = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HFO_CONNECTION            pHttpHfoConnection = NULL;
     ULONG                           i                  = 0;
 
@@ -785,9 +758,7 @@ HttpBmoIsChunkedCoding
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus             = ANSC_STATUS_SUCCESS;
     PHTTP_BASIC_MESSAGE_OBJECT      pMyObject                = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf                   = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_HFO_TRANSFER_ENCODING     pHttpHfoTransferEncoding = NULL;
     ULONG                           ulIndex                  = 0;
 
@@ -842,9 +813,7 @@ HttpBmoIsHttpVersion11
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BASIC_MESSAGE_OBJECT      pMyObject    = (PHTTP_BASIC_MESSAGE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     return  FALSE;
 }

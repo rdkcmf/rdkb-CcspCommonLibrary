@@ -119,7 +119,7 @@ AnscObjectArrayCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_OBJECT_ARRAY_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ AnscObjectArrayCORemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_ARRAY_OBJECT       pMyObject    = (PANSC_OBJECT_ARRAY_OBJECT)hThisObject;
 
     AnscCoRemove((ANSC_HANDLE)pMyObject  );
@@ -226,7 +225,6 @@ AnscObjectArrayCOEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_ARRAY_OBJECT       pMyObject    = (PANSC_OBJECT_ARRAY_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ AnscObjectArrayCOInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_ARRAY_OBJECT       pMyObject     = (PANSC_OBJECT_ARRAY_OBJECT)hThisObject;
 
     /*

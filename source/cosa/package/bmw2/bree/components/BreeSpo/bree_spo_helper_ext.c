@@ -113,8 +113,6 @@ CreateBreeSpoReaderComponent
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBREESPO_READER_OBJECT          pReader         = NULL;
 
     return  BreeSpoReaderCOCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

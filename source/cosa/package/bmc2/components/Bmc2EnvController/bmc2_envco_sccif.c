@@ -122,7 +122,6 @@ Bmc2EnvcoSccSetRootInfo
         char*                       pRootDomainCommand
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBMC2_ENV_CONTROLLER_PROPERTY   pProperty    = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -170,7 +169,6 @@ Bmc2EnvcoSccSetMultiUserCtrl
         BOOL                        bEnabled
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBMC2_ENV_CONTROLLER_PROPERTY   pProperty    = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
 
@@ -237,7 +235,6 @@ Bmc2EnvcoSccAddCommand
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )NULL;
     ANSC_HANDLE                     hBmc2CommandRef;
 
@@ -550,7 +547,6 @@ Bmc2EnvcoSccDelTerminal
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )hTerminal;
 
     returnStatus =
@@ -610,9 +606,7 @@ Bmc2EnvcoSccGetCommands
         SLAP_STRING_ARRAY**         ppStringArray
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PBMC2_ENV_CONTROLLER_OBJECT     pMyObject        = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty        = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal = (PBMC2_COM_TERMINAL_OBJECT    )hTerminal;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain   = (PBMC2_COM_DOMAIN_OBJECT      )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
 
@@ -678,9 +672,7 @@ Bmc2EnvcoSccIsCommandValid
         PBOOL                       pbAuthorized
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PBMC2_ENV_CONTROLLER_OBJECT     pMyObject            = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty            = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal     = (PBMC2_COM_TERMINAL_OBJECT    )hTerminal;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain       = (PBMC2_COM_DOMAIN_OBJECT      )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
     PBMC2_COMMAND_PROPERTY          pBmc2CommandProperty = (PBMC2_COMMAND_PROPERTY       )NULL;
@@ -914,7 +906,7 @@ Bmc2EnvcoSccExecuteCommand
                 pBwrmRamIf->hOwnerContext,
                 pProperty->RootPath,
                 pBmc2CommandProperty->ScpPageName,
-                &pBwrmCookedPage
+                (ANSC_HANDLE)&pBwrmCookedPage
             );
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
@@ -1020,7 +1012,7 @@ Bmc2EnvcoSccExecuteCommand
             pBmc2ReqController->SetCommandReply     ((ANSC_HANDLE)pBmc2ReqController, (ANSC_HANDLE)pBmc2CommandRep     );
             pBmc2ReqController->SetCommandProperty  ((ANSC_HANDLE)pBmc2ReqController, (ANSC_HANDLE)pBmc2CommandProperty);
 
-            while ( pArgumentToken = AnscTcUnlinkToken(pCliTokenChain) )
+            while (( pArgumentToken = AnscTcUnlinkToken(pCliTokenChain) ))
             {
                 pBmc2ReqController->AddCliArgument((ANSC_HANDLE)pBmc2ReqController, pArgumentToken->Name);
 
@@ -1228,9 +1220,8 @@ Bmc2EnvcoSccAbortExecution
         ANSC_HANDLE                 hTerminal
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PBMC2_ENV_CONTROLLER_OBJECT     pMyObject          = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty          = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT    )hTerminal;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT      )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
     PBMC2_REQ_CONTROLLER_OBJECT     pBmc2ReqController = (PBMC2_REQ_CONTROLLER_OBJECT  )NULL;
@@ -1291,9 +1282,7 @@ Bmc2EnvcoSccGetCommandSyntax
         char*                       pCommand
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PBMC2_ENV_CONTROLLER_OBJECT     pMyObject          = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
-    PBMC2_ENV_CONTROLLER_PROPERTY   pProperty          = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    UNREFERENCED_PARAMETER(hThisObject);
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT    )hTerminal;
     PBMC2_COM_DOMAIN_OBJECT         pBmc2ComDomain     = (PBMC2_COM_DOMAIN_OBJECT      )pBmc2ComTerminal->GetCurComDomain((ANSC_HANDLE)pBmc2ComTerminal);
     PBMC2_COMMAND_PROPERTY          pCommandProperty   = (PBMC2_COMMAND_PROPERTY       )NULL;

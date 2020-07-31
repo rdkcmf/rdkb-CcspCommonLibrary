@@ -120,7 +120,6 @@ HttpBmoRepGetStartLineSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
@@ -174,9 +173,7 @@ HttpBmoRepPredictBodySize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus             = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject                = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf                   = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pReqInfo                 = (PHTTP_REQUEST_INFO  )pMyObject->hReqInfo;
     PHTTP_RESPONSE_INFO             pRepInfo                 = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
     PHTTP_HFO_CONTENT_LENGTH        pHttpHfoContentLength    = NULL;
@@ -281,9 +278,7 @@ HttpBmoRepIsHttpVersion11
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( (pRepInfo->MajorVersion == 1) && (pRepInfo->MinorVersion == 1) )
@@ -325,9 +320,7 @@ HttpBmoRepGetReqInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO  )pMyObject->hReqInfo;
 
     return  (ANSC_HANDLE)pReqInfo;
@@ -364,9 +357,7 @@ HttpBmoRepGetRepInfo
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     return  (ANSC_HANDLE)pRepInfo;
@@ -403,9 +394,7 @@ HttpBmoRepGetCode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     return  pRepInfo->StatusCode;
@@ -442,9 +431,7 @@ HttpBmoRepGetMajorVersion
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     return  pRepInfo->MajorVersion;
@@ -481,10 +468,8 @@ HttpBmoRepGetMinorVersion
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
-    PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
+     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     return  pRepInfo->MinorVersion;
 }
@@ -520,9 +505,7 @@ HttpBmoRepGetText
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     return  pRepInfo->ReasonPhrase;
@@ -559,11 +542,8 @@ HttpBmoRepGetProgressBits
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
-    PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
-
+    
     return  pMyObject->ProgressBits;
 }
 
@@ -603,9 +583,7 @@ HttpBmoRepSetReqInfo
         ANSC_HANDLE                 hInfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pReqInfo     = (PHTTP_REQUEST_INFO  )pMyObject->hReqInfo;
 
     if ( pReqInfo )
@@ -656,9 +634,7 @@ HttpBmoRepSetRepInfo
         ANSC_HANDLE                 hInfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( pRepInfo )
@@ -709,9 +685,7 @@ HttpBmoRepSetCode
         ULONG                       code
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( !pRepInfo )
@@ -760,9 +734,7 @@ HttpBmoRepSetMajorVersion
         ULONG                       version
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( !pRepInfo )
@@ -811,9 +783,7 @@ HttpBmoRepSetMinorVersion
         ULONG                       version
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( !pRepInfo )
@@ -862,9 +832,7 @@ HttpBmoRepSetText
         char*                       text
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
 
     if ( !pRepInfo )
@@ -914,11 +882,8 @@ HttpBmoRepSetProgressBits
         ULONG                       progress_bits
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE )pMyObject->hHfpIf;
-    PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
-
+    
     pMyObject->ProgressBits = progress_bits;
 
     return  ANSC_STATUS_SUCCESS;

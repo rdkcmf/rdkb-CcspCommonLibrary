@@ -119,7 +119,7 @@ SysRdoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SysRdoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT)hThisObject;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT)pMyObject->hRootFolder;
 
@@ -235,7 +234,6 @@ SysRdoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT)hThisObject;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT)pMyObject->hRootFolder;
 
@@ -298,7 +296,6 @@ SysRdoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT)hThisObject;
 
     /*

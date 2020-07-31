@@ -448,8 +448,7 @@ AnscAsn1BOOLGetSizeOfEncoded
     )
 {
     PANSC_ASN1_BOOL                 pMyObject    = (PANSC_ASN1_BOOL)hThisObject;
-    ULONG                           ulSize       = 0;
-
+    
     /*
      * If it's optional, don't need encode
      */
@@ -868,7 +867,6 @@ AnscAsn1BOOLDumpObject
 
 #ifndef _PKI_KERNEL
 
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_BOOL                 pMyObject       = (PANSC_ASN1_BOOL)hThisObject;
     CHAR                            pAttrBuf[512]   = { 0 };
     ULONG                           attrLength      = 512;
@@ -995,8 +993,7 @@ AnscAsn1BOOLTraceObject
 {
 
 #ifndef _PKI_KERNEL
-
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_BOOL                 pMyObject    = (PANSC_ASN1_BOOL)hThisObject;
     CHAR                            pAttrBuf[512]= { 0 };
     ULONG                           attrLength   = 512;

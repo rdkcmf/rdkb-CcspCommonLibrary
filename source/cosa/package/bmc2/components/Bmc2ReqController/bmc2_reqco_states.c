@@ -119,7 +119,6 @@ Bmc2ReqcoGetBmc2PecIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2PecIf;
@@ -156,7 +155,6 @@ Bmc2ReqcoGetBmc2ComDomain
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2ComDomain;
@@ -198,7 +196,6 @@ Bmc2ReqcoSetBmc2ComDomain
         ANSC_HANDLE                 hComDomain
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hBmc2ComDomain = hComDomain;
@@ -237,7 +234,6 @@ Bmc2ReqcoGetBmc2EnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hBmc2EnvController;
@@ -279,7 +275,6 @@ Bmc2ReqcoSetBmc2EnvController
         ANSC_HANDLE                 hEnvController
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hBmc2EnvController = hEnvController;
@@ -318,7 +313,6 @@ Bmc2ReqcoGetCommandRequest
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hCommandRequest;
@@ -360,7 +354,6 @@ Bmc2ReqcoSetCommandRequest
         ANSC_HANDLE                 hCommandReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hCommandRequest = hCommandReq;
@@ -399,7 +392,6 @@ Bmc2ReqcoGetCommandReply
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hCommandReply;
@@ -441,7 +433,6 @@ Bmc2ReqcoSetCommandReply
         ANSC_HANDLE                 hCommandRep
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hCommandReply = hCommandRep;
@@ -480,7 +471,6 @@ Bmc2ReqcoGetCommandProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->hCommandProperty;
@@ -522,7 +512,6 @@ Bmc2ReqcoSetCommandProperty
         ANSC_HANDLE                 hCommandProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->hCommandProperty = hCommandProperty;
@@ -561,7 +550,6 @@ Bmc2ReqcoGetCliArgumentCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     return  pMyObject->CliArgumentCount;
@@ -603,7 +591,6 @@ Bmc2ReqcoGetCliArgument
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     if ( ulIndex >= pMyObject->CliArgumentCount )
@@ -650,7 +637,6 @@ Bmc2ReqcoAddCliArgument
         char*                       pArgument
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     if ( pMyObject->CliArgumentCount >= BMC2_REQCO_MAX_ARGUMENT_NUMBER )
@@ -694,7 +680,6 @@ Bmc2ReqcoRemoveCliArguments
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     ULONG                           i;
 
@@ -743,7 +728,6 @@ Bmc2ReqcoAbort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->bAborted = TRUE;
@@ -782,7 +766,6 @@ Bmc2ReqcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
 
     pMyObject->ClearCcoQueue((ANSC_HANDLE)pMyObject);

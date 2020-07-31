@@ -129,9 +129,7 @@ TlsSmoHsmSelHandshakeSession
         ANSC_HANDLE                 hSessionState
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_MANAGER_OBJECT     pMyObject     = (PTLS_SESSION_MANAGER_OBJECT  )hThisObject;
-    PTLS_SESSION_MANAGER_PROPERTY   pProperty     = (PTLS_SESSION_MANAGER_PROPERTY)&pMyObject->Property;
     PTLS_SESSION_ENTRY_OBJECT       pSessionEntry = (PTLS_SESSION_ENTRY_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           ulHashIndex   = AnscHashUlong(peer_id, TLS_SMO_SEO_TABLE_SIZE);
@@ -223,9 +221,7 @@ TlsSmoHsmGetHandshakeSession
         ANSC_HANDLE                 hSessionState
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_MANAGER_OBJECT     pMyObject     = (PTLS_SESSION_MANAGER_OBJECT  )hThisObject;
-    PTLS_SESSION_MANAGER_PROPERTY   pProperty     = (PTLS_SESSION_MANAGER_PROPERTY)&pMyObject->Property;
     PTLS_SESSION_ENTRY_OBJECT       pSessionEntry = (PTLS_SESSION_ENTRY_OBJECT    )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           ulHashIndex   = AnscHashUlong(peer_id, TLS_SMO_SEO_TABLE_SIZE);
@@ -299,7 +295,6 @@ TlsSmoHsmAddHandshakeSession
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_MANAGER_OBJECT     pMyObject     = (PTLS_SESSION_MANAGER_OBJECT  )hThisObject;
-    PTLS_SESSION_MANAGER_PROPERTY   pProperty     = (PTLS_SESSION_MANAGER_PROPERTY)&pMyObject->Property;
     PTLS_SESSION_STATE              pSessionState = (PTLS_SESSION_STATE           )hSessionState;
     PTLS_SESSION_ENTRY_OBJECT       pSessionEntry = (PTLS_SESSION_ENTRY_OBJECT    )NULL;
 
@@ -379,9 +374,7 @@ TlsSmoHsmDelHandshakeSession
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_MANAGER_OBJECT     pMyObject     = (PTLS_SESSION_MANAGER_OBJECT  )hThisObject;
-    PTLS_SESSION_MANAGER_PROPERTY   pProperty     = (PTLS_SESSION_MANAGER_PROPERTY)&pMyObject->Property;
-    PTLS_SESSION_ENTRY_OBJECT       pSessionEntry = (PTLS_SESSION_ENTRY_OBJECT    )NULL;
-
+    
     returnStatus =
         pMyObject->DelSession
             (
@@ -428,9 +421,7 @@ TlsSmoHsmDelAllHandshakeSessions
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PTLS_SESSION_MANAGER_OBJECT     pMyObject     = (PTLS_SESSION_MANAGER_OBJECT  )hThisObject;
-    PTLS_SESSION_MANAGER_PROPERTY   pProperty     = (PTLS_SESSION_MANAGER_PROPERTY)&pMyObject->Property;
-    PTLS_SESSION_ENTRY_OBJECT       pSessionEntry = (PTLS_SESSION_ENTRY_OBJECT    )NULL;
-
+    
     returnStatus = pMyObject->DelAllSessions((ANSC_HANDLE)pMyObject);
 
     return  returnStatus;

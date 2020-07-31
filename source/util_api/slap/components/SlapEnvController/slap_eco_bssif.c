@@ -110,11 +110,8 @@ SlapEcoBssGetPoolingFlag
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty         = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT   )NULL;
 
     return  pProperty->bPoolingEnabled;
 }
@@ -156,11 +153,8 @@ SlapEcoBssSetPoolingFlag
         BOOL                        bPooling
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty         = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT   )NULL;
 
     pProperty->bPoolingEnabled = bPooling;
 
@@ -199,11 +193,8 @@ SlapEcoBssGetDefPoolSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty         = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT   )NULL;
 
     return  pProperty->ObjectPoolSize;
 }
@@ -245,11 +236,8 @@ SlapEcoBssSetDefPoolSize
         ULONG                       ulPoolSize
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT  )hThisObject;
     PSLAP_ENV_CONTROLLER_PROPERTY   pProperty         = (PSLAP_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT      )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT   )NULL;
 
     pProperty->ObjectPoolSize = ulPoolSize;
 
@@ -287,10 +275,7 @@ SlapEcoBssGetVarConverter
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
 
     return  pMyObject->hSlapVarConverter;
 }
@@ -326,10 +311,7 @@ SlapEcoBssGetVarMapper
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject         = (PSLAP_ENV_CONTROLLER_OBJECT)hThisObject;
-    PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
-    PSLAP_OBJ_CONTAINER_OBJECT      pSlapObjContainer = (PSLAP_OBJ_CONTAINER_OBJECT )NULL;
 
     return  pMyObject->hSlapVarMapper;
 }

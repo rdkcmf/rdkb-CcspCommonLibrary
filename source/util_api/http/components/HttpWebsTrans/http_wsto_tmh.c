@@ -82,7 +82,6 @@ HttpWstoTmhIsMultipart
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT   )hThisObject;
     PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT)pMyObject->hOwnerContext;
     PHTTP_BMO_REQ_OBJECT            pBmoReq       = (PHTTP_BMO_REQ_OBJECT      )hBmoReq;
@@ -538,9 +537,9 @@ HttpWstoTmhSerialize
         ANSC_HANDLE                 hSerializeContext
     )
 {
+    UNREFERENCED_PARAMETER(hMessage);
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject     = (PHTTP_WEBS_TRANS_OBJECT       )hThisObject;
-    PHTTP_SIMPLE_SERVER_OBJECT      pSimpleServer = (PHTTP_SIMPLE_SERVER_OBJECT    )pMyObject->hOwnerContext;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pWebSocket    = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->hWebSocket;
 
     if ( hSerializeContext == (ANSC_HANDLE)pWebSocket )

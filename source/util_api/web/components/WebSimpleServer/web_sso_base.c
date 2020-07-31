@@ -119,7 +119,7 @@ WebSsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebSsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject       = (PWEB_SIMPLE_SERVER_OBJECT)hThisObject;
     PWEB_SITE_MANAGER_OBJECT        pWebSiteManager = (PWEB_SITE_MANAGER_OBJECT )pMyObject->hWebSiteManager;
     PHTTP_HFP_INTERFACE             pHfpIf          = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
@@ -268,9 +267,7 @@ WebSsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject       = (PWEB_SIMPLE_SERVER_OBJECT)hThisObject;
-    PWEB_SITE_MANAGER_OBJECT        pWebSiteManager = (PWEB_SITE_MANAGER_OBJECT )pMyObject->hWebSiteManager;
     PHTTP_HFP_INTERFACE             pHfpIf          = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PWEB_CSP_INTERFACE              pCspIf          = (PWEB_CSP_INTERFACE       )pMyObject->hCspIf;
     PHTTP_FUM_INTERFACE             pFumIf          = (PHTTP_FUM_INTERFACE      )pMyObject->hFumIf;
@@ -403,7 +400,6 @@ WebSsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT)hThisObject;
     ULONG                           i            = 0;
 

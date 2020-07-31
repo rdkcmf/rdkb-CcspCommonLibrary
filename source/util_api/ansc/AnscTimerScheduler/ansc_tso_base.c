@@ -120,7 +120,7 @@ AnscTsoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = NULL;
 
@@ -188,7 +188,6 @@ AnscTsoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
 
     pMyObject->Stop((ANSC_HANDLE)pMyObject);
@@ -229,7 +228,6 @@ AnscTsoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
 
     AnscCoVer3EnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,7 +269,6 @@ AnscTsoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
 
     /*
@@ -357,7 +354,6 @@ AnscTsoShutdown
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject    = (PANSC_TIMER_SCHEDULER_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);

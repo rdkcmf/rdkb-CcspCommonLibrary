@@ -118,7 +118,6 @@ AnscXmlDomNodeCreate
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = NULL;
 
     pXmlNode = (PANSC_XML_DOM_NODE_OBJECT)AnscAllocateMemory(sizeof(ANSC_XML_DOM_NODE_OBJECT) + 4);
@@ -242,7 +241,6 @@ AnscXmlDomNodeRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_ATTRIBUTE             pNameAttr     = NULL;
     PANSC_XML_ATTRIBUTE             pSonAttribute = NULL;
@@ -258,7 +256,7 @@ AnscXmlDomNodeRemove
             AnscXmlWarning
                 (
                     "The child node queue of XML node is corrupted. cookie1= 0x%.8X\n",
-                    pXmlNode->ChildNodeQueueLock
+                    (unsigned int)pXmlNode->ChildNodeQueueLock
                 );
         }
         else
@@ -266,8 +264,8 @@ AnscXmlDomNodeRemove
             AnscXmlWarning
                 (
                     "The child node queue of XML node '%s' is corrupted.cookie1= 0x%.8X\n",
-                    pXmlNode->ChildNodeQueueLock,
-                    (PCHAR)pNameAttr->StringData
+                    (char *)pXmlNode->ChildNodeQueueLock,
+                    (unsigned int)pNameAttr->StringData
                 );
         }
 
@@ -283,7 +281,7 @@ AnscXmlDomNodeRemove
             AnscXmlWarning
                 (
                     "The child node queue of XML node is corrupted. cookie2= 0x%.8X\n",
-                    pXmlNode->AttributesListLock
+                    (unsigned int)pXmlNode->AttributesListLock
                 );
         }
         else
@@ -291,8 +289,8 @@ AnscXmlDomNodeRemove
             AnscXmlWarning
                 (
                     "The child node queue of XML node '%s' is corrupted.cookie2= 0x%.8X\n",
-                    pXmlNode->AttributesListLock,
-                    (PCHAR)pNameAttr->StringData
+                    (char *)pXmlNode->AttributesListLock,
+                    (unsigned int)pNameAttr->StringData
                 );
         }
 
@@ -376,11 +374,10 @@ AnscXmlDomNodeReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
     PANSC_XML_DOM_NODE_OBJECT       pChildNode    = NULL;
 
-    while ( pChildNode = (PANSC_XML_DOM_NODE_OBJECT)AnscXmlDomNodeRemoveChild((ANSC_HANDLE)pXmlNode) )
+    while ( (pChildNode = (PANSC_XML_DOM_NODE_OBJECT)AnscXmlDomNodeRemoveChild((ANSC_HANDLE)pXmlNode)) )
     {
     	AnscXmlDomNodeRemove((ANSC_HANDLE)pChildNode);
     }

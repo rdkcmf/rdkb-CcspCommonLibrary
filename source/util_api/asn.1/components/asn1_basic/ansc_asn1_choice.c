@@ -134,7 +134,7 @@ AnscAsn1ChoiceCreate
     /*
      * We create object by first allocating memory for holding the variables and member functions.
      */
-    if( hContainerContext > 0)
+    if( (ULONG)hContainerContext > 0)
     {
         pMyObject = (PANSC_ASN1_CHOICE)AnscAllocateMemory((ULONG)hContainerContext);
     }
@@ -630,8 +630,7 @@ AnscAsn1ChoiceGetSizeOfEncoded
 {
     PANSC_ASN1_CHOICE               pMyObject    = (PANSC_ASN1_CHOICE)hThisObject;
     LONG                            lSize        = 0;
-    PANSC_ATTR_OBJECT               pSelAttr     = NULL;
-
+    
     /*
      *  BOOLEAN                         bMyInclude   = bTagIncluded;
      *
@@ -639,8 +638,6 @@ AnscAsn1ChoiceGetSizeOfEncoded
      *  No matter the "bTagIncluded" is true or false, the selection
      *  tag should be encoded.
      */    
-
-    BOOLEAN                         bMyInclude   = TRUE;
 
     /*
      * If it's optional, don't need encode
@@ -846,7 +843,6 @@ AnscAsn1ChoiceDecodingData
     PANSC_ASN1_INTEGER              pInteger;
     PANSC_ATTR_OBJECT               pAttrObj;
     CHAR                            pOIDStringValue[128] = { 0 };
-    PANSC_TAGINFO_OBJECT            pTagInfo     = NULL;
     BOOLEAN                         bTagIncluded = TRUE;
     ULONG                           uLeftSize,uInfiniteTags;
 
@@ -1364,10 +1360,9 @@ AnscAsn1ChoiceDumpObject
         BOOLEAN                     bShowValue
     )
 {
-
+    
 #ifndef _PKI_KERNEL
-
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bShowValue);
     PANSC_ASN1_CHOICE               pMyObject       = (PANSC_ASN1_CHOICE)hThisObject;
     CHAR                            pAttrBuf[512]   = { 0 };
     ULONG                           attrLength      = 512;
@@ -1468,10 +1463,9 @@ AnscAsn1ChoiceTraceObject
         BOOLEAN                     bRecursive
     )
 {
-
+    UNREFERENCED_PARAMETER(bShowValue);
 #ifndef _PKI_KERNEL
-
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    
     PANSC_ASN1_CHOICE               pMyObject    = (PANSC_ASN1_CHOICE)hThisObject;
     PANSC_ASN1_OBJECT               pSelection   = NULL;
     CHAR                            pAttrBuf[512]= { 0 };
@@ -1679,7 +1673,6 @@ AnscAsn1ChoiceSetSelection
         ANSC_HANDLE                 hSelection
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_CHOICE               pMyObject    = (PANSC_ASN1_CHOICE)hThisObject;
     PANSC_ASN1_OBJECT               pSelection   = (PANSC_ASN1_OBJECT)pMyObject->hSelection;
     PANSC_ASN1_OBJECT               pNewSel      = (PANSC_ASN1_OBJECT)hSelection;
@@ -1761,7 +1754,6 @@ AnscAsn1ChoiceSetAndCreateSelection
         ULONG                       selType
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_CHOICE               pMyObject    = (PANSC_ASN1_CHOICE)hThisObject;
     PANSC_ASN1_OBJECT               pSelection   = (PANSC_ASN1_OBJECT)pMyObject->hSelection;
     PANSC_ASN1_OBJECT               pNewSel;
@@ -1830,6 +1822,8 @@ AnscAsn1ChoiceCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     return NULL;
 }
 
@@ -1869,6 +1863,8 @@ AnscAsn1ChoiceCreateSelectionByIndex
         ULONG                       type
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(type);
     AnscTrace("Please implement this function in the derived class.\n");
 
     return NULL;
@@ -1921,6 +1917,10 @@ AnscAsn1ChoiceGetChildTagValue
         PULONG                      pTagValue
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(uIndex);
+    UNREFERENCED_PARAMETER(pForm);
+    UNREFERENCED_PARAMETER(pTagValue);
     return FALSE;
 }
 
@@ -1961,6 +1961,7 @@ AnscAsn1ChoiceGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(pOIDString);
     PANSC_ASN1_CHOICE               pMyObject    = (PANSC_ASN1_CHOICE)hThisObject;
 
     if( pMyObject->bChoiceByOID)
@@ -2049,6 +2050,8 @@ AnscAsn1ChoiceGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     return NULL;
 }
 

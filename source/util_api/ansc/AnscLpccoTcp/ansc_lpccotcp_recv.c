@@ -122,8 +122,6 @@ AnscLpccoTcpRecv
 {
     ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject     = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp   = (PANSC_BUFFER_DESCRIPTOR       )hBufferDesp;
     PIMCP_HEADER                    pImcpHeader   = (PIMCP_HEADER                  )AnscBdoGetBlock(pBufferDesp);
 
@@ -243,10 +241,7 @@ AnscLpccoTcpRecvHello
         ANSC_HANDLE                 hBufferDesp
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket     = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_LPC_PARTY_ADDR            pPartyAddr        = (PANSC_LPC_PARTY_ADDR          )NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp       = (PANSC_BUFFER_DESCRIPTOR       )hBufferDesp;
@@ -317,7 +312,6 @@ AnscLpccoTcpRecvHello
 
     AnscFreeBdo(pBufferDesp);
 
-    returnStatus =
         pMyObject->SendAck
             (
                 (ANSC_HANDLE)pMyObject,
@@ -371,12 +365,9 @@ AnscLpccoTcpRecvAck
         ANSC_HANDLE                 hBufferDesp
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hSocket);
     PANSC_LPCCO_TCP_OBJECT          pMyObject       = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer   = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer   = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_LPC_PARTY_ADDR            pPartyAddr      = (PANSC_LPC_PARTY_ADDR          )NULL;
-    PANSC_LPCCO_PENDING_CALL        pPendingCall    = (PANSC_LPCCO_PENDING_CALL      )NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp     = (PANSC_BUFFER_DESCRIPTOR       )hBufferDesp;
     PIMCP_HEADER                    pImcpHeader     = (PIMCP_HEADER                  )AnscBdoGetBlock(pBufferDesp);
     PIMCP_ACK_MESSAGE               pImcpAckMessage = (PIMCP_ACK_MESSAGE             )ImcpGetMsgData(pImcpHeader);
@@ -415,7 +406,6 @@ AnscLpccoTcpRecvAck
     {
         AnscBdoShrinkRight(pBufferDesp, sizeof(IMCP_HEADER));
 
-        pPendingCall =
             (PANSC_LPCCO_PENDING_CALL)pMyObject->PopPendingCall
                 (
                     (ANSC_HANDLE)pMyObject,
@@ -477,8 +467,6 @@ AnscLpccoTcpRecvRequest
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject           = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf          = (PANSC_CPC_INTERFACE           )pMyObject->hAnscCpcIf;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer       = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer       = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket       = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_LPC_PARTY_ADDR            pPartyAddr          = (PANSC_LPC_PARTY_ADDR          )pDaemonSocket->GetClientContext((ANSC_HANDLE)pDaemonSocket);
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp         = (PANSC_BUFFER_DESCRIPTOR       )hBufferDesp;
@@ -712,18 +700,14 @@ AnscLpccoTcpRecvReply
         ANSC_HANDLE                 hBufferDesp
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hSocket);
     PANSC_LPCCO_TCP_OBJECT          pMyObject         = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer     = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer     = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
-    PANSC_LPCCO_PENDING_CALL        pPendingCall      = (PANSC_LPCCO_PENDING_CALL      )NULL;
     PANSC_BUFFER_DESCRIPTOR         pBufferDesp       = (PANSC_BUFFER_DESCRIPTOR       )hBufferDesp;
     PIMCP_HEADER                    pImcpHeader       = (PIMCP_HEADER                  )AnscBdoGetBlock(pBufferDesp);
     PIMCP_REPLY_MESSAGE             pImcpReplyMessage = (PIMCP_REPLY_MESSAGE           )ImcpGetMsgData(pImcpHeader);
 
     AnscBdoShrinkRight(pBufferDesp, sizeof(IMCP_HEADER) + sizeof(IMCP_REPLY_MESSAGE));
 
-    pPendingCall =
         (PANSC_LPCCO_PENDING_CALL)pMyObject->PopPendingCall
             (
                 (ANSC_HANDLE)pMyObject,
@@ -779,11 +763,8 @@ AnscLpccoTcpRecvBye
         ANSC_HANDLE                 hBufferDesp
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_LPCCO_TCP_OBJECT          pMyObject       = (PANSC_LPCCO_TCP_OBJECT        )hThisObject;
     PANSC_CPC_INTERFACE             pAnscCpcIf      = (PANSC_CPC_INTERFACE           )pMyObject->hAnscCpcIf;
-    PANSC_DAEMON_SERVER_TCP_OBJECT  pDaemonServer   = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-    PANSC_BROKER_SERVER_TCP_OBJECT  pBrokerServer   = (PANSC_BROKER_SERVER_TCP_OBJECT)pMyObject->hBrokerServer;
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pDaemonSocket   = (PANSC_DAEMON_SOCKET_TCP_OBJECT)hSocket;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pConnTimerObj   = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hConnTimerObj;
     PANSC_LPC_PARTY_ADDR            pPartyAddr      = (PANSC_LPC_PARTY_ADDR          )NULL;
@@ -819,7 +800,6 @@ AnscLpccoTcpRecvBye
     {
         if ( TRUE )
         {
-            returnStatus =
                 pAnscCpcIf->NotifyEvent
                     (
                         pAnscCpcIf->hOwnerContext,

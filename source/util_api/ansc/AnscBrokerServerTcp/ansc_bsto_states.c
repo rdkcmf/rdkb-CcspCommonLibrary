@@ -122,7 +122,6 @@ AnscBstoGetHostAddress
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostAddress.Dot;
@@ -164,7 +163,6 @@ AnscBstoSetHostAddress
         PUCHAR                      address
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->HostAddress.Value = *(PULONG)address;
@@ -203,7 +201,6 @@ AnscBstoGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->HostPort;
@@ -245,7 +242,6 @@ AnscBstoSetHostPort
         USHORT                      usPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->HostPort = usPort;
@@ -284,7 +280,6 @@ AnscBstoGetWorker
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hWorker;
@@ -331,7 +326,6 @@ AnscBstoSetWorker
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     if ( pMyObject->hWorker )
@@ -390,7 +384,6 @@ AnscBstoGetMaxMessageSize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MaxMessageSize;
@@ -432,7 +425,6 @@ AnscBstoSetMaxMessageSize
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->MaxMessageSize = ulSize;
@@ -471,7 +463,6 @@ AnscBstoGetEngineCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->EngineCount;
@@ -513,7 +504,6 @@ AnscBstoSetEngineCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->EngineCount = ulCount;
@@ -552,7 +542,6 @@ AnscBstoGetMinSocketCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MinSocketCount;
@@ -594,7 +583,6 @@ AnscBstoSetMinSocketCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->MinSocketCount = ulCount;
@@ -633,7 +621,6 @@ AnscBstoGetMaxSocketCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MaxSocketCount;
@@ -675,7 +662,6 @@ AnscBstoSetMaxSocketCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->MaxSocketCount = ulCount;
@@ -714,7 +700,6 @@ AnscBstoGetSocketTimeOut
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->SocketTimeOut;
@@ -756,7 +741,6 @@ AnscBstoSetSocketTimeOut
         ULONG                       ulSeconds
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->SocketTimeOut = ulSeconds;
@@ -795,7 +779,6 @@ AnscBstoGetMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     return  pMyObject->Mode;
@@ -837,7 +820,6 @@ AnscBstoSetMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->Mode = ulMode;
@@ -876,7 +858,6 @@ AnscBstoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_BROKER_SERVER_TCP_OBJECT  pMyObject    = (PANSC_BROKER_SERVER_TCP_OBJECT)hThisObject;
 
     pMyObject->StartTime = 0;

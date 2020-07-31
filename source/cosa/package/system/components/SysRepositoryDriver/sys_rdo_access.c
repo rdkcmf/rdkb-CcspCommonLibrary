@@ -139,9 +139,7 @@ SysRdoAddFolder1
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = NULL;
 
@@ -223,9 +221,7 @@ SysRdoAddFolder2
         ANSC_HANDLE                 hReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = (hCurFolder != NULL)? (PSYS_REPOSITORY_FOLDER_OBJECT)hCurFolder : pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
@@ -259,7 +255,7 @@ SysRdoAddFolder2
      */
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while (( pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName
@@ -311,7 +307,7 @@ SysRdoAddFolder2
      * created for the middle segments of the specified path? As you shall see below, we assign the
      * default permission and type to all the unspecified folders.
      */
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while (( pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         if ( AnscTcGetTokenCount(pTokenChain) > 0 )
         {
@@ -427,9 +423,7 @@ SysRdoDelFolder1
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = NULL;
 
     returnStatus =
         pMyObject->DelFolder2
@@ -501,8 +495,6 @@ SysRdoDelFolder2
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
 
@@ -583,9 +575,7 @@ SysRdoGetFolder1
         char*                       pFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = NULL;
 
@@ -644,9 +634,7 @@ SysRdoGetFolder2
         char*                       pSubFolderName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = (hCurFolder != NULL)? (PSYS_REPOSITORY_FOLDER_OBJECT)hCurFolder : pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
@@ -675,7 +663,7 @@ SysRdoGetFolder2
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while ((pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName
@@ -783,9 +771,7 @@ SysRdoAddRecord
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
@@ -815,7 +801,7 @@ SysRdoAddRecord
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while ( (pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName
@@ -942,11 +928,9 @@ SysRdoDelRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
-    PSYS_REPOSITORY_RECORD_OBJECT   pThisRecord  = NULL;
     PANSC_TOKEN_CHAIN               pTokenChain  = NULL;
     PANSC_STRING_TOKEN              pTokenEntry  = NULL;
 
@@ -972,7 +956,7 @@ SysRdoDelRecord
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while ( (pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName
@@ -1093,9 +1077,7 @@ SysRdoGetRecord
         char*                       pRecordName
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
@@ -1125,7 +1107,7 @@ SysRdoGetRecord
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while ( (pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName
@@ -1261,11 +1243,9 @@ SysRdoSetRecord
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
-    PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRootFolder  = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pThisFolder  = pRootFolder;
     PSYS_REPOSITORY_FOLDER_OBJECT   pNextFolder  = NULL;
-    PSYS_REPOSITORY_RECORD_OBJECT   pThisRecord  = NULL;
     PANSC_TOKEN_CHAIN               pTokenChain  = NULL;
     PANSC_STRING_TOKEN              pTokenEntry  = NULL;
 
@@ -1291,7 +1271,7 @@ SysRdoSetRecord
 
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
-    while ( pTokenEntry = AnscTcUnlinkToken(pTokenChain) )
+    while ( (pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
     {
         pNextFolder =
             pThisFolder->GetFolderByName

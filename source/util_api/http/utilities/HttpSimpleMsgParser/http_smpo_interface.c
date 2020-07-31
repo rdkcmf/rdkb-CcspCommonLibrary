@@ -116,8 +116,6 @@ CreateHttpSmpo
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_MSG_PARSER         pHttpSmpo      = NULL;
 
     return  (ANSC_HANDLE)HttpSmpoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -110,7 +110,6 @@ AnscDetoGetDaemonServer
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->hDaemonServer;
@@ -152,7 +151,6 @@ AnscDetoSetDaemonServer
         ANSC_HANDLE                 hDaemonServer
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->hDaemonServer = hDaemonServer;
@@ -191,7 +189,6 @@ AnscDetoGetMaxSocketCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->MaxSocketCount;
@@ -233,7 +230,6 @@ AnscDetoSetMaxSocketCount
         ULONG                       ulCount
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->MaxSocketCount = (ulCount < ANSC_DETO_MAX_SOCKET_COUNT)? ulCount : ANSC_DETO_MAX_SOCKET_COUNT;
@@ -272,7 +268,6 @@ AnscDetoGetControlFlags
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     return  pMyObject->ControlFlags;
@@ -314,7 +309,6 @@ AnscDetoSetControlFlags
         ULONG                       ulFlags
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
 
     pMyObject->ControlFlags = ulFlags;
@@ -353,7 +347,6 @@ AnscDetoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
     ansc_fd_set*                    pRecvSet1    = (ansc_fd_set*                  )pMyObject->RecvSocketSet;

@@ -72,6 +72,8 @@
 
 #ifdef  _ANSC_LINUX
 
+extern __inline void UserSetDelta();
+
 struct delta_t {
     unsigned long  sec;
     unsigned long  millisec;
@@ -93,8 +95,6 @@ key_t semKey = 2000;
 void
 UserGetNtpTime(time_t*  ltime)
 {
-	struct tm       Tm = {0};
-    struct tm       *ptm = NULL;
 
 	time(ltime);
 }
@@ -164,17 +164,16 @@ __inline void
 UserSetDelta()
 {
     struct timeval                  tv = {0};
-    struct timezone                 tz = {0};
-    int fd,rd;
+    int fd;
     unsigned char buf[64] = {0};
     unsigned long ulSecond, ulHundredth;
-    char * pbuf = buf;
+    char * pbuf = (char *)buf;
     char * pbuf1 = NULL; /*RDKB-6288, CID-24502, initilize before use*/
 
 	if ( shmid == -1 )
     {
         shmid = shmget(shemkey, SEGSIZE, IPC_CREAT|0666);
-        if((segptr = (struct seg *)shmat(shmid, 0, 0)) == -1)
+        if((segptr = (struct seg *)shmat(shmid, 0, 0)) == (void*)-1)
         {
             fprintf(stderr,"can't get shared memory !\n");
 			shmid = -1;
@@ -190,7 +189,7 @@ UserSetDelta()
         return;
     }
 
-    rd = read(fd, buf, sizeof(buf));
+    read(fd, buf, sizeof(buf));
 
     while ( *pbuf )
     {
@@ -208,7 +207,7 @@ UserSetDelta()
         pbuf++;
     }
 
-    ulSecond    = atol(buf);
+    ulSecond    = atol((char *)buf);
     ulHundredth = atol(pbuf1);
 
     close(fd);
@@ -216,7 +215,7 @@ UserSetDelta()
 
     gettimeofday(&tv, NULL);
 
-    if ( tv.tv_usec > ulHundredth * 10000 )
+    if ( tv.tv_usec > (long)ulHundredth * 10000 )
     {
         segptr->delta.millisec = tv.tv_usec/1000 - ulHundredth * (10000/1000);
     }

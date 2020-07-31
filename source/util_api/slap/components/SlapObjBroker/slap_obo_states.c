@@ -105,7 +105,6 @@ SlapOboIsRemoveable
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject      = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
     PSLAP_OBJ_ENTITY_OBJECT         pSlapObjEntity = (PSLAP_OBJ_ENTITY_OBJECT)pMyObject->hSlapObjEntity;
     PSLAP_OBJ_PROXY_OBJECT          pSlapObjProxy  = (PSLAP_OBJ_PROXY_OBJECT )pMyObject->hSlapObjProxy;
@@ -166,7 +165,6 @@ SlapOboSetPathName
         char*                       path
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_BROKER_OBJECT         pMyObject    = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
 
     if ( pMyObject->PathName )

@@ -109,8 +109,7 @@ SlapVcoUcharArrayToUint32
         SLAP_UCHAR_ARRAY*           var_uchar_array
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_CONVERTER_OBJECT      pMyObject    = (PSLAP_VAR_CONVERTER_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     if ( !var_uchar_array )
     {

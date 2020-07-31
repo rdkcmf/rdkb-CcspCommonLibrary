@@ -106,14 +106,12 @@ ScliShoAsyncRunCmdTask
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PSCLI_SHELL_ASYNC_TASK_CONTEXT  pContext        = (PSCLI_SHELL_ASYNC_TASK_CONTEXT)hContext;
     PSCLI_SHELL_OBJECT              pMyObject       = (PSCLI_SHELL_OBJECT            )pContext->hScliShell;
-    PSCLI_SHELL_PROPERTY            pProperty       = (PSCLI_SHELL_PROPERTY          )&pMyObject->Property;
     PTELNET_CMD_EXECUTION_ENV       pExecEnv        = &pContext->ExecEnv;
     PTELNET_TSC_INTERFACE           pTscIf          = (PTELNET_TSC_INTERFACE         )pExecEnv->hTscIf;
     ANSC_HANDLE                     hSrvSession     = pContext->hSrvSession;
     PUCHAR                          pCmd            = pContext->pCmd;
     PSCLI_SHELL_CEN_INTERFACE       pCenIf          = (PSCLI_SHELL_CEN_INTERFACE     )pMyObject->hCenIf;
     PBMC2_SCC_INTERFACE             pBmc2SccIf      = (PBMC2_SCC_INTERFACE           )pMyObject->hBmc2SccIf;
-    PBMC2_ICE_INTERFACE             pBmc2IceIf      = NULL;
     PSCLI_SHELL_SESSION_EXEC        pSession;
     BMC2_COMMAND_REPLY              CmdReply        = { 0 };
     BMC2_COMMAND_REQUEST            CmdRequest      = { 0 };
@@ -122,12 +120,11 @@ ScliShoAsyncRunCmdTask
 
     if ( pMyObject->hBmc2SccIf )
     {
-        int                         nRow = -1, nCol = -1;
+        int                         nRow = -1;
         ULONG                       ulInputMode;
 
-        pBmc2IceIf      = (PBMC2_ICE_INTERFACE)pSession->hBmc2IceIf;        
 
-        CmdRequest.CommandLine  = pCmd;
+        CmdRequest.CommandLine  = (char *)pCmd;
 
         if ( returnStatus == ANSC_STATUS_SUCCESS )
         {
@@ -164,9 +161,9 @@ ScliShoAsyncRunCmdTask
 
         _ansc_sprintf
             (
-                errMsg,
+                (char *)errMsg,
                 SCLI_SHELL_INTERNAL_ERROR,
-                CmdReply.ErrorCode
+                (int)CmdReply.ErrorCode
             );
 
         pTscIf->Output
@@ -174,7 +171,7 @@ ScliShoAsyncRunCmdTask
                 pTscIf->hOwnerContext,
                 hSrvSession,
                 errMsg,
-                AnscSizeOfString(errMsg)
+                AnscSizeOfString((const char *)errMsg)
             );
     }
 
@@ -189,7 +186,7 @@ ScliShoAsyncRunCmdTask
                         (ANSC_HANDLE)pMyObject,
                         hSrvSession,
                         (ANSC_HANDLE)pExecEnv,
-                        CmdReply.MenuTitle
+                        (PUCHAR)CmdReply.MenuTitle
                     );
 
                 break;

@@ -119,7 +119,7 @@ StunScoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ StunScoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStageTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hStageTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pStageTimerIf     = (PANSC_TDO_CLIENT_OBJECT       )pMyObject->hStageTimerIf;
@@ -313,7 +312,6 @@ StunScoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStageTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hStageTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pStageTimerIf     = (PANSC_TDO_CLIENT_OBJECT       )pMyObject->hStageTimerIf;
@@ -631,7 +629,6 @@ StunScoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT)hThisObject;
 
     /*

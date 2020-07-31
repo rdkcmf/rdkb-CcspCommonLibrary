@@ -117,8 +117,6 @@ SlapCreateVarHelper
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_HELPER_OBJECT         pSlapVarHelper = NULL;
 
     return  SlapVhoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

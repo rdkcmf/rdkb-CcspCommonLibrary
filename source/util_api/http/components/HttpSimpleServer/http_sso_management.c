@@ -119,9 +119,7 @@ HttpSsoAcquireWsso
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -193,9 +191,7 @@ HttpSsoReleaseWsso
         ANSC_HANDLE                 hWsso
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession = (PHTTP_WEBS_SESSION_OBJECT   )hWsso;
 
     pWebsSession->Reset((ANSC_HANDLE)pWebsSession);
@@ -246,9 +242,7 @@ HttpSsoManufactureWssoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession = NULL;
     ULONG                           i            = 0;
 
@@ -316,9 +310,7 @@ HttpSsoDestroyWssoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_SESSION_OBJECT       pWebsSession = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -370,9 +362,7 @@ HttpSsoAcquireWsto
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -444,9 +434,7 @@ HttpSsoReleaseWsto
         ANSC_HANDLE                 hWsto
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = (PHTTP_WEBS_TRANS_OBJECT     )hWsto;
 
     pWebsTrans->Reset((ANSC_HANDLE)pWebsTrans);
@@ -497,9 +485,7 @@ HttpSsoManufactureWstoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = NULL;
     ULONG                           i            = 0;
 
@@ -567,9 +553,7 @@ HttpSsoDestroyWstoPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_WEBS_TRANS_OBJECT         pWebsTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -621,9 +605,7 @@ HttpSsoAcquireBmoReq
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -697,9 +679,7 @@ HttpSsoReleaseBmoReq
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
 
     pBmoReq->Reset((ANSC_HANDLE)pBmoReq);
@@ -750,9 +730,7 @@ HttpSsoManufactureBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     ULONG                           i            = 0;
@@ -822,9 +800,7 @@ HttpSsoDestroyBmoReqPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -876,9 +852,7 @@ HttpSsoAcquireBmoRep
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
@@ -952,9 +926,7 @@ HttpSsoReleaseBmoRep
         ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
 
     pBmoRep->Reset((ANSC_HANDLE)pBmoRep);
@@ -1005,9 +977,7 @@ HttpSsoManufactureBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     ULONG                           i            = 0;
@@ -1077,9 +1047,7 @@ HttpSsoDestroyBmoRepPool
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_SERVER_OBJECT      pMyObject    = (PHTTP_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_SERVER_PROPERTY    pProperty    = (PHTTP_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 

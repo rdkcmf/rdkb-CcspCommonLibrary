@@ -108,7 +108,6 @@ HttpScoEngage
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo  = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
 
     if ( pMyObject->bActive )
@@ -165,7 +164,6 @@ HttpScoCancel
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo  = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
 
     if ( !pMyObject->bActive )
@@ -222,8 +220,6 @@ HttpScoSessionTdoInvoke
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo  = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           i            = 0;

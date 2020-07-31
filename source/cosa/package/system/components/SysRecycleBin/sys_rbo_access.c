@@ -109,9 +109,7 @@ SysRboGetFolderCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject     = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty     = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
     ULONG                           ulFolderCount = 0;
 
     AnscAcquireLock(&pMyObject->FolderQueueLock);
@@ -152,9 +150,7 @@ SysRboGetRecordCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject     = (PSYS_RECYCLE_BIN_OBJECT  )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty     = (PSYS_RECYCLE_BIN_PROPERTY)&pMyObject->Property;
     ULONG                           ulRecordCount = 0;
 
     AnscAcquireLock(&pMyObject->RecordQueueLock);
@@ -200,9 +196,7 @@ SysRboAddFolder
         ANSC_HANDLE                 hFolder
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT      )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY    )&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRepFolder   = (PSYS_REPOSITORY_FOLDER_OBJECT)hFolder;
 
     pRepFolder->Timestamp = AnscGetTickInSeconds();
@@ -251,9 +245,7 @@ SysRboGetFolderByIndex
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT      )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY    )&pMyObject->Property;
     PSYS_REPOSITORY_FOLDER_OBJECT   pRepFolder   = (PSYS_REPOSITORY_FOLDER_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 
@@ -310,9 +302,7 @@ SysRboAddRecord
         ANSC_HANDLE                 hRecord
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT      )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY    )&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = (PSYS_REPOSITORY_RECORD_OBJECT)hRecord;
 
     pRepRecord->Timestamp = AnscGetTickInSeconds();
@@ -361,9 +351,7 @@ SysRboGetRecordByIndex
         ULONG                       ulIndex
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RECYCLE_BIN_OBJECT         pMyObject    = (PSYS_RECYCLE_BIN_OBJECT      )hThisObject;
-    PSYS_RECYCLE_BIN_PROPERTY       pProperty    = (PSYS_RECYCLE_BIN_PROPERTY    )&pMyObject->Property;
     PSYS_REPOSITORY_RECORD_OBJECT   pRepRecord   = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
 

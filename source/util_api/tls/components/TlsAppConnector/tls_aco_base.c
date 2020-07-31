@@ -119,7 +119,7 @@ TlsAcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_APP_CONNECTOR_OBJECT       pMyObject    = NULL;
 

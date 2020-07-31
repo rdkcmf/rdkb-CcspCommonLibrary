@@ -98,7 +98,9 @@
     #define  _ansc_atof                             atof
     #define  _ansc_atoi                             atoi
     #define  _ansc_atol                             atoll
-    #define  _ansc_itoa                             _itoa
+/*  #define  _ansc_itoa                             _itoa*/
+
+char*    _ansc_itoa(int value, char* string, int radix);
 
 char*
 _ansc_ultoa

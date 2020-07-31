@@ -109,7 +109,6 @@ HttpWctoIsLastTrans
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
 
     return  pMyObject->bLastTrans;
@@ -146,7 +145,6 @@ HttpWctoDoLastTrans
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
     PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )pMyObject->hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT   )pMyObject->hBmoRep;
@@ -196,7 +194,6 @@ HttpWctoOpen
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject        = (PHTTP_WEBC_TRANS_OBJECT       )hThisObject;
     PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient    = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
@@ -279,12 +276,8 @@ HttpWctoClose
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject        = (PHTTP_WEBC_TRANS_OBJECT       )hThisObject;
     PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient    = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
-    PHTTP_HFP_INTERFACE             pHfpIf           = (PHTTP_HFP_INTERFACE           )pMyObject->hHfpIf;
-    PHTTP_TMH_INTERFACE             pTmhIf           = (PHTTP_TMH_INTERFACE           )pMyObject->hTmhIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq          = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
     PHTTP_BMO_REP_OBJECT            pBmoRep          = (PHTTP_BMO_REP_OBJECT          )pMyObject->hBmoRep;
 
@@ -292,8 +285,7 @@ HttpWctoClose
     {
         pMyObject->hBmoReq = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pSimpleClient->ReleaseBmoReq
+        pSimpleClient->ReleaseBmoReq
                 (
                     (ANSC_HANDLE)pSimpleClient,
                     (ANSC_HANDLE)pBmoReq
@@ -304,8 +296,7 @@ HttpWctoClose
     {
         pMyObject->hBmoRep = (ANSC_HANDLE)NULL;
 
-        returnStatus       =
-            pSimpleClient->ReleaseBmoRep
+        pSimpleClient->ReleaseBmoRep
                 (
                     (ANSC_HANDLE)pSimpleClient,
                     (ANSC_HANDLE)pBmoRep
@@ -346,10 +337,8 @@ HttpWctoAcquireAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-
+    
     AnscAcquireLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;
@@ -386,10 +375,7 @@ HttpWctoReleaseAccess
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject     = (PHTTP_WEBC_TRANS_OBJECT   )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-
     AnscReleaseLock(&pMyObject->AccessLock);
 
     return  ANSC_STATUS_SUCCESS;

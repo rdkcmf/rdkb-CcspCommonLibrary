@@ -118,7 +118,9 @@ BspTemplateWriterWriteBytes
     /* 
      * The "WriteBytes" function of TEMPLATE_WRITER should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pBuf);
+    UNREFERENCED_PARAMETER(pCount);
     return FALSE;
 }
 
@@ -447,9 +449,9 @@ BspTemplateWriterWriteDouble
     ulFrac  = BSP_TEMPLATE_DOUBLE_GET_FRAC(Value);
 
     if (ulFrac == 0)
-        ulLen   = _ansc_sprintf(buf, "%d", lInt);
+        ulLen   = _ansc_sprintf(buf, "%d", (int)lInt);
     else
-        ulLen   = _ansc_sprintf(buf, BSP_TEMPLATE_DOUBLE_FORMAT, lInt, ulFrac);
+        ulLen   = _ansc_sprintf(buf, BSP_TEMPLATE_DOUBLE_FORMAT, (int)lInt, (int)ulFrac);
 #else
     ulLen   = _ansc_sprintf(buf, "%f", Value);
 #endif
@@ -498,7 +500,7 @@ BspTemplateWriterWriteHex
     char                            buf[16];
     ULONG                           ulLen;
 
-    ulLen = _ansc_sprintf(buf, "0x%.8x", ulNum);
+    ulLen = _ansc_sprintf(buf, "0x%.8x", (UINT)ulNum);
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 
@@ -630,7 +632,8 @@ BspTemplateWriterOpenExternal
     /* 
      * The 'OpenExternal' of base object 'Writer' should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -667,7 +670,7 @@ BspTemplateWriterOpenInternal
     /* 
      * The 'OpenInternal' of base object 'Writer' should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -701,6 +704,7 @@ BspTemplateWriterClose
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     /* 
      * The 'Close' of base object 'Writer' should not be called.
      */
@@ -744,7 +748,8 @@ BspTemplateWriterGetContent
     /* 
      * The 'GetContent' of base object 'Writer' should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pulContentSize);
     return NULL;
 }
 

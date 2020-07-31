@@ -119,7 +119,7 @@ HttpMboIdtCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_MBO_IDENTITY_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpMboIdtRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_IDENTITY_OBJECT       pMyObject    = (PHTTP_MBO_IDENTITY_OBJECT)hThisObject;
 
     HttpMboRemove((ANSC_HANDLE)pMyObject);
@@ -226,7 +225,6 @@ HttpMboIdtEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_IDENTITY_OBJECT       pMyObject    = (PHTTP_MBO_IDENTITY_OBJECT)hThisObject;
 
     HttpMboEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -268,7 +266,6 @@ HttpMboIdtInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_IDENTITY_OBJECT       pMyObject    = (PHTTP_MBO_IDENTITY_OBJECT)hThisObject;
 
     /*

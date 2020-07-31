@@ -117,8 +117,5 @@ HttpCreateWebsTrans
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBS_TRANS_OBJECT         pHttpWebsTrans = NULL;
-
     return  HttpWstoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

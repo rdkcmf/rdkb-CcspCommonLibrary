@@ -117,8 +117,5 @@ HttpCreateAtoStatus
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_STATUS_OBJECT         pHttpAtoStatus = NULL;
-
-    return  HttpAtoStatusCreate(hContainerContext, hOwnerContext, hAnscReserved);
+    return HttpAtoStatusCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

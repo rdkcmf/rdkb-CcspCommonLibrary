@@ -116,8 +116,5 @@ HttpCreateBmoReq
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_BMO_REQ_OBJECT            pHttpBmoReq  = NULL;
-
-    return  HttpBmoReqCreate(hContainerContext, hOwnerContext, hAnscReserved);
+    return HttpBmoReqCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

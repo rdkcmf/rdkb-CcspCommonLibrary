@@ -105,9 +105,7 @@ BwrmFmoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
 
     if ( pMyObject->bActive )
     {
@@ -152,9 +150,7 @@ BwrmFmoCancel
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
 
     if ( !pMyObject->bActive )
     {

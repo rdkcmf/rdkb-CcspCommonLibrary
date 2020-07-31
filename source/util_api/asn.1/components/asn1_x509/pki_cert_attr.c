@@ -145,6 +145,7 @@ PKICreateCertAttribute
         ANSC_HANDLE                 hReserved
     )
 {
+    UNREFERENCED_PARAMETER(hReserved);
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = NULL;
 
     pMyObject = (PALCERTIFICATE_ATTRIBUTE)AnscAllocateMemory(sizeof(ALCERTIFICATE_ATTRIBUTE));
@@ -1267,7 +1268,6 @@ certAttrParsingOneName
     )
 {
     PALCERTIFICATE_ATTRIBUTE        pThisObject     = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
-    int                             index           = 0;
     CHAR                            pName[128]      = { 0 };
     CHAR                            pValue[128]     = { 0 };
     CHAR                            pBuffer[128]    = { 0 };
@@ -1510,6 +1510,8 @@ PKICertAttributeSetKB5Name
         ANSC_HANDLE                 hPrinName
     )
 {
+    UNREFERENCED_PARAMETER(hRealmName);
+    UNREFERENCED_PARAMETER(hPrinName);
     PALCERTIFICATE_ATTRIBUTE        pThisObject         = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
 
     if( pThisObject == NULL)

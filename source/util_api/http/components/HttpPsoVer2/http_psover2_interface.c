@@ -117,8 +117,5 @@ HttpCreatePsoVer2
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_PSO_VER2_OBJECT           pHttpPsoVer2 = NULL;
-
     return  HttpPsoVer2Create(hContainerContext, hOwnerContext, hAnscReserved);
 }

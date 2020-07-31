@@ -133,9 +133,8 @@ SlapScoStdInvokeFixInput0
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(params_in);
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -301,9 +300,7 @@ SlapScoStdInvokeFixInput1
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -478,9 +475,7 @@ SlapScoStdInvokeFixInput2
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -664,9 +659,7 @@ SlapScoStdInvokeFixInput3
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -859,9 +852,7 @@ SlapScoStdInvokeFixInput4
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -1063,9 +1054,7 @@ SlapScoStdInvokeFixInput5
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -1276,9 +1265,7 @@ SlapScoStdInvokeFixInput6
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -1498,9 +1485,7 @@ SlapScoStdInvokeFixInput7
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;
@@ -1729,9 +1714,7 @@ SlapScoStdInvokeFixInput8
         SLAP_PARAMETER_LIST*        params_out
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_SCO_STANDARD_OBJECT       pMyObject         = (PSLAP_SCO_STANDARD_OBJECT)hThisObject;
-    PSLAP_OLA_INTERFACE             pSlapOlaIf        = (PSLAP_OLA_INTERFACE      )pMyObject->hSlapOlaIf;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor = (PSLAP_METHOD_DESCRIPTOR  )hMethodDescriptor;
     PSLAP_VARIABLE                  pReturnedVar      = (PSLAP_VARIABLE           )NULL;
     void*                           pfnTargetMethod   = (void*                    )NULL;

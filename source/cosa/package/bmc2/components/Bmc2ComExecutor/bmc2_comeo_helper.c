@@ -107,7 +107,6 @@ Bmc2ComeoReaderRead
     )
 {
     PBMC2_COMEO_READER_OBJECT       pMyObject = (PBMC2_COMEO_READER_OBJECT)hThisObject;
-    ULONG                           ulRead    = ulSize;
 
     if (pMyObject->bExternalSource || !pMyObject->pContent)
     {
@@ -176,8 +175,8 @@ Bmc2ComeoReaderOpenExternal
         char                        *pName
     )
 {
-    PBMC2_COMEO_READER_OBJECT       pMyObject = (PBMC2_COMEO_READER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
     return ANSC_STATUS_NOT_SUPPORTED;
 }
 
@@ -193,7 +192,7 @@ Bmc2ComeoReaderOpenInternal
 {
     PBMC2_COMEO_READER_OBJECT       pMyObject = (PBMC2_COMEO_READER_OBJECT)hThisObject;
 
-    pMyObject->pName            = AnscDupString(pName);
+    pMyObject->pName            = (char*)AnscDupString((PUCHAR)pName);
     pMyObject->pContent         = pContent;
     pMyObject->ulContentSize    = ulContentLen;
     pMyObject->ulCursor         = 0;

@@ -105,7 +105,7 @@ AnscObjectArrayGetSize
         ANSC_HANDLE                 hThisObject
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return 0;
 }
 
@@ -149,6 +149,9 @@ AnscObjectArraySetSize
         ULONG                       ulGrowBy
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulNewSize);
+    UNREFERENCED_PARAMETER(ulGrowBy);
 }
 
 
@@ -181,6 +184,7 @@ AnscObjectArrayRemoveAll
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
 }
 
 
@@ -218,6 +222,8 @@ AnscObjectArrayGetAt
         ULONG                       ulIndex
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
     return (ANSC_OBJECT_ARRAY_DATA)NULL;
 }
 
@@ -262,6 +268,9 @@ AnscObjectArraySetAt
         ANSC_OBJECT_ARRAY_DATA      Data
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(Data);
 }
 
 
@@ -309,6 +318,10 @@ AnscObjectArrayInsertAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(Data);
+    UNREFERENCED_PARAMETER(ulCount);
 }
 
 
@@ -351,6 +364,9 @@ AnscObjectArrayRemoveAt
         ULONG                       ulCount
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ulIndex);
+    UNREFERENCED_PARAMETER(ulCount);
 }
 
 
@@ -388,9 +404,10 @@ AnscObjectArrayAdd
         ANSC_OBJECT_ARRAY_DATA      Data
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(Data);
     return 0xFFFFFFFF;
 }
-
 
 /**********************************************************************
 
@@ -466,6 +483,8 @@ AnscObjectArrayFind
         ANSC_OBJECT_ARRAY_DATA      Data
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(Data);
     return (LONG)-1;
 }
 

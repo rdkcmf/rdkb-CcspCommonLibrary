@@ -104,7 +104,6 @@ AnscMcoGetQueryIfObject
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_MODULE_CONTAINER_OBJECT   pMyObject    = (PANSC_MODULE_CONTAINER_OBJECT)hThisObject;
 
     return  pMyObject->hQueryIfObject;

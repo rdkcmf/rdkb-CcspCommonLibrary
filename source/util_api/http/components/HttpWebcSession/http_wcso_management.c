@@ -107,14 +107,10 @@ HttpWcsoGetEndWcto
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT)hThisObject;
-    PHTTP_BSP_INTERFACE             pBspIf       = (PHTTP_BSP_INTERFACE      )pMyObject->hBspIf;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
-    ULONG                           ulWctoState  = HTTP_WCTO_STATE_INITIALIZED;
-
+    
     AnscAcquireLock(&pMyObject->WctoSListLock);
 
     pSLinkEntry = AnscSListGetFirstEntry(&pMyObject->WctoSList);
@@ -166,10 +162,7 @@ HttpWcsoGetCurWcto
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT )hThisObject;
-    PHTTP_BSP_INTERFACE             pBspIf       = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans   = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
     ULONG                           ulWctoState  = HTTP_WCTO_STATE_INITIALIZED;
@@ -244,9 +237,7 @@ HttpWcsoAddNewWcto
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject        = (PHTTP_WEBC_SESSION_OBJECT     )hThisObject;
-    PHTTP_WEBC_SESSION_PROPERTY     pProperty        = (PHTTP_WEBC_SESSION_PROPERTY   )&pMyObject->Property;
     PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient    = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
     PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_BSP_INTERFACE             pBspIf           = (PHTTP_BSP_INTERFACE           )pMyObject->hBspIf;
@@ -311,11 +302,7 @@ HttpWcsoDelAllWctos
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_SESSION_OBJECT       pMyObject     = (PHTTP_WEBC_SESSION_OBJECT )hThisObject;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient = (PHTTP_SIMPLE_CLIENT_OBJECT)pMyObject->hOwnerContext;
-    PHTTP_BSP_INTERFACE             pBspIf        = (PHTTP_BSP_INTERFACE       )pMyObject->hBspIf;
-    PHTTP_HFP_INTERFACE             pHfpIf        = (PHTTP_HFP_INTERFACE       )pMyObject->hHfpIf;
     PHTTP_WEBC_TRANS_OBJECT         pWebcTrans    = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry   = NULL;
 

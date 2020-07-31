@@ -122,9 +122,10 @@ DslhObjeoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject    = NULL;
-	ULONG							i			 = 0;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -212,7 +213,6 @@ DslhObjeoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_ENTITY_OBJECT         pMyObject    = (PDSLH_OBJ_ENTITY_OBJECT)hThisObject;
 
     pMyObject->Reset((ANSC_HANDLE)pMyObject);

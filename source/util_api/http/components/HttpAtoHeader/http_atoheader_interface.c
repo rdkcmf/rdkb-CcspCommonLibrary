@@ -117,8 +117,5 @@ HttpCreateAtoHeader
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PHTTP_ATO_HEADER_OBJECT         pHttpAtoHeader = NULL;
-
     return  HttpAtoHeaderCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

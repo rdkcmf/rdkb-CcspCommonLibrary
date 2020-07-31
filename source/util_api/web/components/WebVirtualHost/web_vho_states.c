@@ -118,7 +118,6 @@ WebVhoGetHostName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -161,7 +160,6 @@ WebVhoSetHostName
         char*                       name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -202,7 +200,6 @@ WebVhoGetHostPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -245,7 +242,6 @@ WebVhoSetHostPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -285,9 +281,7 @@ WebVhoGetHfpIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hHfpIf;
 }
@@ -328,9 +322,7 @@ WebVhoSetHfpIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     pMyObject->hHfpIf = hInterface;
 
@@ -368,9 +360,7 @@ WebVhoGetLsmIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hLsmIf;
 }
@@ -411,9 +401,7 @@ WebVhoSetLsmIf
         ANSC_HANDLE                 hInterface
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
     PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE        )pMyObject->hLsmIf;
 
     *pLsmIf = *(PWEB_LSM_INTERFACE)hInterface;
@@ -452,7 +440,6 @@ WebVhoIsDefaultHost
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -495,7 +482,6 @@ WebVhoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -540,7 +526,6 @@ WebVhoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -580,7 +565,6 @@ WebVhoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
@@ -631,9 +615,7 @@ WebVhoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllGsos((ANSC_HANDLE)pMyObject);
 
@@ -689,7 +671,6 @@ WebVhoSetHttpAuth
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner   = NULL;
 
@@ -821,7 +802,6 @@ WebVhoSetHttpAuth2
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty        = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner   = NULL;
 
@@ -894,7 +874,7 @@ WebVhoSetHttpAuth2
                     returnStatus = ANSC_STATUS_INTERNAL_ERROR;
                 }
             
-                AnscCopyString(authProperty.Realm, realm);
+                AnscCopyString((char *)authProperty.Realm, realm);
             }
 
             if ( domain )
@@ -905,7 +885,7 @@ WebVhoSetHttpAuth2
                     returnStatus = ANSC_STATUS_INTERNAL_ERROR;
                 }
             
-                AnscCopyString(authProperty.Domain, domain);
+                AnscCopyString((char *)authProperty.Domain, domain);
             }
 
             if ( returnStatus == ANSC_STATUS_SUCCESS )

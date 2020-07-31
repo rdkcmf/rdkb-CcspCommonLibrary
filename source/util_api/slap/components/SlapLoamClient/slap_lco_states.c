@@ -111,9 +111,7 @@ SlapLcoGetSlapLoaIf
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapLoaIf;
 }
@@ -149,9 +147,7 @@ SlapLcoGetSlapEnvController
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hSlapEnvController;
 }
@@ -187,9 +183,7 @@ SlapLcoGetAnscLpcConnector
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->hAnscLpcConnector;
 }
@@ -230,9 +224,7 @@ SlapLcoSetAnscLpcConnector
         ANSC_HANDLE                 hLpcConnector
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
     pMyObject->hAnscLpcConnector = hLpcConnector;
 
@@ -270,7 +262,6 @@ SlapLcoGetMobilityOn
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -313,7 +304,6 @@ SlapLcoSetMobilityOn
         BOOL                        bMobilityOn
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -358,7 +348,6 @@ SlapLcoGetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -403,7 +392,6 @@ SlapLcoSetProperty
         ANSC_HANDLE                 hProperty
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -443,7 +431,6 @@ SlapLcoResetProperty
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
@@ -483,9 +470,7 @@ SlapLcoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
-    PSLAP_LOAM_CLIENT_PROPERTY      pProperty    = (PSLAP_LOAM_CLIENT_PROPERTY)&pMyObject->Property;
 
     pMyObject->DelAllObjectStubs((ANSC_HANDLE)pMyObject);
 

@@ -109,10 +109,7 @@ BwrmPmoGetPageCount
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     ULONG                           ulPageCount       = 0;
     ULONG                           i                 = 0;
 
@@ -160,10 +157,7 @@ BwrmPmoGetOldestPage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PBWRM_COOKED_PAGE_OBJECT        pOldestCookedPage = (PBWRM_COOKED_PAGE_OBJECT     )NULL;
     PBWRM_COOKED_PAGE_OBJECT        pCookedPage       = (PBWRM_COOKED_PAGE_OBJECT     )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY           )NULL;
@@ -238,10 +232,7 @@ BwrmPmoGetPage
         char*                       file_path
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PBWRM_COOKED_PAGE_OBJECT        pCookedPage       = (PBWRM_COOKED_PAGE_OBJECT     )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY           )NULL;
     ULONG                           ulHashIndex       = (ULONG                        )AnscHashString(file_path, AnscSizeOfString(file_path), BWRM_PMO_CPO_TABLE_SIZE);
@@ -325,7 +316,6 @@ BwrmPmoAddPage
         ANSC_HANDLE                 hCookedPage
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
     PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
@@ -359,7 +349,6 @@ BwrmPmoAddPage
 
             if ( pCookedPage && 0 == pCookedPage->GetRefCount((ANSC_HANDLE)pCookedPage) )
             {
-                returnStatus =
                     pMyObject->DelPage
                         (
                             (ANSC_HANDLE)pMyObject,
@@ -414,9 +403,7 @@ BwrmPmoDelPage
         char*                       file_path
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PBWRM_COOKED_PAGE_OBJECT        pCookedPage       = (PBWRM_COOKED_PAGE_OBJECT     )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY           )NULL;
@@ -487,9 +474,7 @@ BwrmPmoDelAllPages
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PBWRM_PAGE_MANAGER_OBJECT       pMyObject         = (PBWRM_PAGE_MANAGER_OBJECT    )hThisObject;
-    PBWRM_PAGE_MANAGER_PROPERTY     pProperty         = (PBWRM_PAGE_MANAGER_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCacheTimerObject = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hCacheTimerObject;
     PBWRM_COOKED_PAGE_OBJECT        pCookedPage       = (PBWRM_COOKED_PAGE_OBJECT     )NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry       = (PSINGLE_LINK_ENTRY           )NULL;

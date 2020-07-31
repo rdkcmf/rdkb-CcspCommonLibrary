@@ -86,8 +86,12 @@
 #include "sys_definitions.h"
 #include "ccsp_psm_helper.h"
 #include "ccsp_trace.h"
+#include "slap_vco_internal_api.h"
+#include "messagebus_interface_helper.h"
 
 extern ULONG    g_lastWriteEntity;
+void* COSAGetMessageBusHandle();
+char* COSAGetSubsystemPrefix2();
 
 /**********************************************************************
 
@@ -126,10 +130,7 @@ DslhWmpdoMpaLockWriteAccess
         char*                       pAccessEntity
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     BOOL                            bWriteLocked   = FALSE;
 
     AnscAcquireLock(&pMyObject->MpaWriteLock);
@@ -209,8 +210,6 @@ DslhWmpdoMpaUnlockWriteAccess
 {
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject      = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty      = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
 
     AnscAcquireLock(&pMyObject->MpaWriteLock);
 
@@ -259,16 +258,18 @@ static void LoadUserMonitorParameters
 
     SlapInitVariable(&Value);
 
-    ret = PSM_Get_Record_Value(COSAGetMessageBusHandle(), COSAGetSubsystemPrefix2(), 
-                               CCSP_USER_CHANGED_MONITOR_PARAM, &Type, &Value); 
+    ret = PSM_Get_Record_Value((void*)COSAGetMessageBusHandle(),
+                               (const char*)COSAGetSubsystemPrefix2(), 
+                               (const char*)CCSP_USER_CHANGED_MONITOR_PARAM, &Type, &Value); 
     if (ret == CCSP_SUCCESS)
     {
         pDmlAgent->bGlobalMonitor = Value.Variant.varBool;
         SlapCleanVariable(&Value);
     }
 
-    ret = PSM_Get_Record_Value(COSAGetMessageBusHandle(), COSAGetSubsystemPrefix2(),
-                               CCSP_USER_COMPONENTS_PARAM, &Type, &Value); 
+    ret = PSM_Get_Record_Value((void*)COSAGetMessageBusHandle(), 
+                               (const char*)COSAGetSubsystemPrefix2(),
+                               (const char*)CCSP_USER_COMPONENTS_PARAM, &Type, &Value); 
     if (ret == CCSP_SUCCESS)
     {
         pDmlAgent->uMonitorComponents = Value.Variant.varUint32;
@@ -290,6 +291,7 @@ static BOOL LoadUserChangeFlag
         const char* paramName
     )
 {
+    UNREFERENCED_PARAMETER(pDmlAgent);
     // Load User Changed Flag from persistent storage for Parameters that have user change monitoring enabled
     INT            ret                               = CCSP_SUCCESS;
     CHAR           fullName[256]                     = {0};
@@ -299,7 +301,7 @@ static BOOL LoadUserChangeFlag
     /* Get the full name */
     _ansc_sprintf( fullName, "UserChanged.%s", paramName);
 
-    ret = PSM_Get_Record_Value(COSAGetMessageBusHandle(), COSAGetSubsystemPrefix2(), fullName, &Type, &Value); 
+    ret = PSM_Get_Record_Value((void*)COSAGetMessageBusHandle(), (const char*)COSAGetSubsystemPrefix2(), fullName, &Type, &Value); 
 
     if ( ret == CCSP_SUCCESS )
     {
@@ -325,13 +327,13 @@ static void SaveUserChangeFlag
         const char* paramName
     )
 {
+    UNREFERENCED_PARAMETER(pDmlAgent);
     // Save User Changed flag to persistent storage
     PSLAP_VARIABLE pSlapVariable = (PSLAP_VARIABLE)NULL;
 
     SlapAllocVariable(pSlapVariable);
     if (pSlapVariable)
     {
-        INT         ret   = CCSP_SUCCESS;
         CHAR        fullName[IREPFO_FULLNAME_LENGTH]    = {0};
 
         pSlapVariable->Syntax            = SLAP_VAR_SYNTAX_bool;
@@ -341,8 +343,9 @@ static void SaveUserChangeFlag
         _ansc_sprintf( fullName, "UserChanged.%s", paramName);
 
         // write to PSM
-        ret = PSM_Set_Record_Value(COSAGetMessageBusHandle(), COSAGetSubsystemPrefix2(),
-                                  fullName, SYS_REP_RECORD_TYPE_BOOL, pSlapVariable);
+        PSM_Set_Record_Value((void*)COSAGetMessageBusHandle(), 
+                             (const char*)COSAGetSubsystemPrefix2(),
+                             fullName, SYS_REP_RECORD_TYPE_BOOL, pSlapVariable);
 
         SlapFreeVariable(pSlapVariable);
     }
@@ -435,12 +438,12 @@ void parseOldVal(SLAP_VARIABLE * pOldValue, parameterSigStruct_t*  pParamSignal)
         {
             if ( pOldValue->ContentType == SLAP_CONTENT_TYPE_IP4_ADDR )
             {
-                pParamSignal->oldValue = SlapVcoIp4AddrToString(NULL, pOldValue->Variant.varUint32);
+                pParamSignal->oldValue = (char*)SlapVcoIp4AddrToString(NULL, pOldValue->Variant.varUint32);
                 pParamSignal->type = ccsp_string;
             }
             else
             {
-                pParamSignal->oldValue = SlapVcoUint32ToString(NULL, pOldValue->Variant.varUint32);
+                pParamSignal->oldValue = (char*)SlapVcoUint32ToString(NULL, pOldValue->Variant.varUint32);
                 pParamSignal->type     = ccsp_unsignedInt;
             }
         }
@@ -455,16 +458,16 @@ void parseOldVal(SLAP_VARIABLE * pOldValue, parameterSigStruct_t*  pParamSignal)
                 pParamSignal->type = ccsp_string;
             }
 
-            pParamSignal->oldValue = AnscCloneString(pOldValue->Variant.varString);
+           pParamSignal->oldValue = AnscCloneString(pOldValue->Variant.varString);
         }
         else if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_bool )
         {
-            pParamSignal->oldValue = SlapVcoBoolToString(NULL, pOldValue->Variant.varBool); /* This function will be adjust to be consistent with CCSP */
+            pParamSignal->oldValue = (char*)SlapVcoBoolToString(NULL, pOldValue->Variant.varBool); /* This function will be adjust to be consistent with CCSP */
             pParamSignal->type     = ccsp_boolean;
         }
         else if ( pOldValue->Syntax == SLAP_VAR_SYNTAX_int )
         {
-            pParamSignal->oldValue = SlapVcoIntToString(NULL, pOldValue->Variant.varInt);
+            pParamSignal->oldValue = (char*)SlapVcoIntToString(NULL, pOldValue->Variant.varInt);
             pParamSignal->type     = ccsp_int;
         }
     }
@@ -483,8 +486,9 @@ char *str1[50] = {0};
 int paramCount=0;
 pthread_mutex_t NotifyMutex;
 
-void* Send_Notification_Thread_Func()
+void* Send_Notification_Thread_Func(void* arg)
 {
+        UNREFERENCED_PARAMETER(arg);
 	char* faultParam = NULL;
 	int ret = 0;
 	int i = 0;
@@ -540,9 +544,9 @@ void* Send_Notification_Thread_Func()
                 
 	      }
        }
-paramCount=0;
-pthread_mutex_unlock(&NotifyMutex);
-
+    paramCount=0;
+    pthread_mutex_unlock(&NotifyMutex);
+    return NULL;
 }
 #endif
 /**********************************************************************
@@ -612,8 +616,6 @@ DslhWmpdoMpaSetParameterValues
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject            = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty            = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord       = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_CWMP_PARAM_VALUE          pParameterValueArray = (PDSLH_CWMP_PARAM_VALUE     )pParamValueArray;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord           = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
@@ -623,11 +625,9 @@ DslhWmpdoMpaSetParameterValues
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT*        pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )pMyObject->hObjRecordArray;
     PDSLH_VAR_RECORD_OBJECT*        pVarRecordArray      = (PDSLH_VAR_RECORD_OBJECT*   )pMyObject->hVarRecordArray;
-    PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
     ULONG                           ulObjectCount        = (ULONG                      )0;
     char*                           pFaultParamName      = (char*                      )NULL;
     BOOL                            bFaultEncountered    = (BOOL                       )FALSE;
-    BOOL                            bRebootNeeded        = (BOOL                       )FALSE;
     ULONG                           i                    = 0;
     ULONG                           j                    = 0;
     BOOL                            bFromAcs             = FALSE;
@@ -838,9 +838,9 @@ DslhWmpdoMpaSetParameterValues
         pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pVarRecord->hDslhObjRecord;
 #ifdef USE_NOTIFY_COMPONENT
             parameterSigStruct_t            vcSig              = {0};
-            pthread_t Send_Notification_Thread;
-    		int res;
-		static int bFirst = TRUE;
+            /*pthread_t Send_Notification_Thread;*/
+            /*int res;*/
+            static int bFirst = TRUE;
             if(pVarEntity->ParamDescr->NotifyStatus != 3)
             {
                 if(pVarRecord->Notification)
@@ -861,7 +861,7 @@ DslhWmpdoMpaSetParameterValues
                     {
 			pthread_mutex_lock(&NotifyMutex);
 		               memset(str, 0, (sizeof(str)));
-                       sprintf(str,"%s,%lu,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
+                       sprintf(str,"%s,%u,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
 		               /*sensitive information like keyPassphrase should not print*/
 			       if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
 		               {
@@ -881,7 +881,7 @@ DslhWmpdoMpaSetParameterValues
 			pthread_mutex_unlock(&NotifyMutex);
                     }
 
-                    printf("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize);
+                    printf("<< %s sending Notification ulArraySize %lu >>\n",__FUNCTION__,ulArraySize);
                     bPendingNotificaton = TRUE;
                     paramCount = j;
                     if(ulArraySize == i+1)
@@ -1147,19 +1147,14 @@ DslhWmpdoMpaSetCommit
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject            = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty            = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord       = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord           = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_VAR_RECORD_OBJECT*        pVarRecordArray      = (PDSLH_VAR_RECORD_OBJECT*   )pMyObject->hVarRecordArray;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity           = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
-    PDSLH_MPR_INTERFACE             pDslhMprIf           = (PDSLH_MPR_INTERFACE        )pMyObject->hDslhMprIf;
     ULONG                           ulParameterCount     = (ULONG                      )pMyObject->ulVarRecordCount;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT*        pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )pMyObject->hObjRecordArray;
     ULONG                           ulObjectCount        = (ULONG                      )pMyObject->ulObjRecordCount;
-    char*                           pFaultParamName      = (char*                      )NULL;
-    BOOL                            bFaultEncountered    = (BOOL                       )FALSE;
     BOOL                            bRebootNeeded        = (BOOL                       )FALSE;
     ULONG                           i                    = 0;
     BOOL                            bFromAcs             = FALSE;
@@ -1414,9 +1409,7 @@ DslhWmpdoMpaGetParameterValues
 {
     ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject            = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty            = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord       = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault       = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     PDSLH_CWMP_PARAM_VALUE          pParameterValueArray = (PDSLH_CWMP_PARAM_VALUE     )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf           = (PDSLH_MPR_INTERFACE        )pMyObject->hDslhMprIf;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController       = (PDSLH_OBJ_CONTROLLER_OBJECT)NULL;
@@ -1428,7 +1421,6 @@ DslhWmpdoMpaGetParameterValues
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity           = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     ANSC_HANDLE*                    phAnyRecordArray     = (ANSC_HANDLE*               )NULL;
-    SLAP_VARIABLE*                  pParameterVar        = (SLAP_VARIABLE*             )NULL;
     ULONG                           i                    = 0;
     ULONG                           j                    = 0;
     BOOL                            bFromAcs             = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
@@ -1440,7 +1432,6 @@ DslhWmpdoMpaGetParameterValues
     ULONG                           ulSameObj            = 0;
     char**                          ppNameArray          = NULL;
     PSLAP_VARIABLE*                 ppValueArray         = NULL;
-    char *                          pString              = NULL;
 
     *ppParamValueArray = NULL;
     *pulArraySize      = 0;
@@ -1940,7 +1931,6 @@ DslhWmpdoMpaGetParameterNames
 {
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject           = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty           = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord      = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_CWMP_PARAM_INFO           pParameterInfoArray = (PDSLH_CWMP_PARAM_INFO      )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf          = (PDSLH_MPR_INTERFACE        )pMyObject->hDslhMprIf;
@@ -1950,9 +1940,8 @@ DslhWmpdoMpaGetParameterNames
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord          = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     BOOL                            bTargetIsObject     = FALSE;
-    ULONG                           i                   = 0;
     BOOL                            bFromAcs            = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
-    char*                           pRootObjName    = pDslhMprIf->GetRootObjName(pDslhMprIf->hOwnerContext);
+    pDslhMprIf->GetRootObjName(pDslhMprIf->hOwnerContext);
 
     *ppParamInfoArray = NULL;
     *pulArraySize     = 0;
@@ -2257,9 +2246,7 @@ DslhWmpdoMpaSetParameterAttributes
 {
     ANSC_STATUS                     returnStatus             = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject                = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty                = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord           = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault           = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     PDSLH_CWMP_SET_PARAM_ATTRIB     pSetParameterAttribArray = (PDSLH_CWMP_SET_PARAM_ATTRIB)pSetParamAttribArray;
     PDSLH_VAR_RECORD_OBJECT         pVarRecord               = (PDSLH_VAR_RECORD_OBJECT    )NULL;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity               = (PDSLH_VAR_ENTITY_OBJECT    )NULL;
@@ -2268,7 +2255,6 @@ DslhWmpdoMpaSetParameterAttributes
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity               = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     BOOL                            bTargetIsObject          = (BOOL                       )FALSE;
     ANSC_HANDLE*                    phAnyRecordArray         = (ANSC_HANDLE*               )NULL;
-    ULONG                           ulEntityCount            = (ULONG                      )0;
     ULONG                           i                        = 0;
     BOOL                            bFromAcs                 = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
 
@@ -2615,9 +2601,7 @@ DslhWmpdoMpaGetParameterAttributes
 {
     ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject             = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty             = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
     PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord        = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
-    PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault        = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     PDSLH_CWMP_PARAM_ATTRIB         pParameterAttribArray = (PDSLH_CWMP_PARAM_ATTRIB    )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf            = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     ULONG                           ulParameterCount      = (ULONG                      )0;
@@ -2628,7 +2612,6 @@ DslhWmpdoMpaGetParameterAttributes
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord            = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity            = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     ANSC_HANDLE*                    phAnyRecordArray      = (ANSC_HANDLE*               )NULL;
-    SLAP_VARIABLE*                  pParameterVar         = (SLAP_VARIABLE*             )NULL;
     ULONG                           i                     = 0;
     BOOL                            bFromAcs              = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
 
@@ -2958,8 +2941,6 @@ DslhWmpdoMpaAddObject
 {
     ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject       = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty       = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord  = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_MPR_INTERFACE             pDslhMprIf      = (PDSLH_MPR_INTERFACE        )pMyObject->hDslhMprIf;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord      = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
@@ -3141,10 +3122,7 @@ DslhWmpdoMpaDeleteObject
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PDSLH_WMP_DATABASE_OBJECT       pMyObject        = (PDSLH_WMP_DATABASE_OBJECT  )hThisObject;
-    PDSLH_WMP_DATABASE_PROPERTY     pProperty        = (PDSLH_WMP_DATABASE_PROPERTY)&pMyObject->Property;
-    PDSLH_OBJ_RECORD_OBJECT         pRootObjRecord   = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hRootObjRecord;
     PDSLH_MPR_INTERFACE             pDslhMprIf       = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
-    PDSLH_CWMP_SOAP_FAULT           pCwmpSoapFault   = (PDSLH_CWMP_SOAP_FAULT      )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord       = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordParent = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;

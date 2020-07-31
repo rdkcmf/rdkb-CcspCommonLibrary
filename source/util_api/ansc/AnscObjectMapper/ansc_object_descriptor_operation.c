@@ -110,7 +110,6 @@ AnscOdoCreateObject
         ANSC_HANDLE                 hOwnerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     if ( !pObjectDescriptor->pfnObjectCreate )
@@ -162,7 +161,6 @@ AnscOdoRemoveObject
         ANSC_HANDLE                 hObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
     if ( !pObjectDescriptor->pfnObjectRemove )

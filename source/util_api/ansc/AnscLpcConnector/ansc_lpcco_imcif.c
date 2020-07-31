@@ -124,8 +124,7 @@ AnscLpccoImcGenPartyAddr
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
 
     if ( ulSize < sizeof(ANSC_LPC_PARTY_ADDR) )
@@ -185,7 +184,6 @@ AnscLpccoImcGetLpcOpmode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     return  pMyObject->LpcOpmode;
@@ -227,7 +225,6 @@ AnscLpccoImcSetLpcOpmode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     pMyObject->LpcOpmode = ulMode;
@@ -266,7 +263,6 @@ AnscLpccoImcGetPartyName
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     return  pMyObject->PartyName;
@@ -308,7 +304,6 @@ AnscLpccoImcSetPartyName
         char*                       party_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
 
     if ( pMyObject->PartyName )
@@ -368,7 +363,6 @@ AnscLpccoImcIsPartyConnected
         BOOL                        bOutgoingConn
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR      )NULL;
 
@@ -541,9 +535,12 @@ AnscLpccoImcCallRequest
         ULONG                       ulTimeout
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(party_name);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
+    UNREFERENCED_PARAMETER(pulErrorCode);
+    UNREFERENCED_PARAMETER(ulTimeout);
     *phOutputBdo = (ANSC_HANDLE)NULL;
 
     return  ANSC_STATUS_UNAPPLICABLE;
@@ -611,9 +608,12 @@ AnscLpccoImcCallRequest2
         ULONG                       ulTimeout
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = (PANSC_LPC_CONNECTOR_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hPartyAddr);
+    UNREFERENCED_PARAMETER(pInputBuffer);
+    UNREFERENCED_PARAMETER(ulInputSize);
+    UNREFERENCED_PARAMETER(pulErrorCode);
+    UNREFERENCED_PARAMETER(ulTimeout);
     *phOutputBdo = (ANSC_HANDLE)NULL;
 
     return  ANSC_STATUS_UNAPPLICABLE;

@@ -117,7 +117,7 @@ BreeSrmoRegisterCookedResource
         pRes->ulContentLen  = 0;
     }
 
-    ulHashIndex = AnscHashString(pRes->pPath, AnscSizeOfString(pRes->pPath), BREE_SRM_RES_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pRes->pPath, AnscSizeOfString((const char *)pRes->pPath), BREE_SRM_RES_TABLE_SIZE);
 
     AnscSListPushEntry(&pMyObject->ResList[ulHashIndex], &pRes->Linkage);
 
@@ -143,7 +143,7 @@ BreeSrmoUnregisterCookedResource
         return ANSC_STATUS_BAD_PARAMETER;
     }
 
-    ulHashIndex = AnscHashString(pCookedRes->pResPath, AnscSizeOfString(pCookedRes->pResPath), BREE_SRM_RES_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pCookedRes->pResPath, AnscSizeOfString((const char *)pCookedRes->pResPath), BREE_SRM_RES_TABLE_SIZE);
 
     pEntry = AnscSListGetFirstEntry(&pMyObject->ResList[ulHashIndex]);
 
@@ -151,7 +151,7 @@ BreeSrmoUnregisterCookedResource
     {
         pRes = ACCESS_BREE_SRM_RES_ITEM_OBJECT(pEntry);
 
-        if (AnscEqualString(pRes->pPath, pCookedRes->pResPath, FALSE))
+        if (AnscEqualString((char *)pRes->pPath, (char *)pCookedRes->pResPath, FALSE))
         {
             AnscSListPopEntryByLink(&pMyObject->ResList[ulHashIndex], &pRes->Linkage);
         }
@@ -180,7 +180,7 @@ BreeSrmoMapCookedResource
         return (ANSC_HANDLE)NULL;
     }
 
-    ulHashIndex = AnscHashString(pUrl, AnscSizeOfString(pUrl), BREE_SRM_RES_TABLE_SIZE);
+    ulHashIndex = AnscHashString((char *)pUrl, AnscSizeOfString((const char *)pUrl), BREE_SRM_RES_TABLE_SIZE);
 
     pEntry = AnscSListGetFirstEntry(&pMyObject->ResList[ulHashIndex]);
 
@@ -188,7 +188,7 @@ BreeSrmoMapCookedResource
     {
         pRes = ACCESS_BREE_SRM_RES_ITEM_OBJECT(pEntry);
 
-        if (AnscEqualString(pRes->pPath, pUrl, FALSE))
+        if (AnscEqualString((char *)pRes->pPath, (char *)pUrl, FALSE))
         {
             return (ANSC_HANDLE)pRes;
         }

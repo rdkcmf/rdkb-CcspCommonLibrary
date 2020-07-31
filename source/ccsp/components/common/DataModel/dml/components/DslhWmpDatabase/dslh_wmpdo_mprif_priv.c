@@ -98,5 +98,6 @@ DslhWmpdoMprRegObject_priv_CheckParameterUnderDevice
     	PDSLH_CWMP_OBJECT_DESCR pObjectDescr
     )
 {
+    UNREFERENCED_PARAMETER(pObjectDescr);
 	return ANSC_STATUS_BAD_NAME;
 }

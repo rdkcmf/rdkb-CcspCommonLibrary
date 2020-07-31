@@ -144,8 +144,7 @@ TlsCpoHmac
     )
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
-    PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-
+    
     switch ( mac_algorithm )
     {
         case    TLS_MAC_ALGORITHM_md5 :
@@ -253,7 +252,6 @@ TlsCpoHmac_MD5
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
     ANSC_CRYPTO_HASH                hashResult;
     ANSC_CRYPTO_KEY                 macKey;
 
@@ -273,8 +271,7 @@ TlsCpoHmac_MD5
 
     hashResult.Length = ANSC_MD5_OUTPUT_SIZE;
 
-    ulOutputSize =
-        pAnscCrypto->HmacMd5Digest
+    pAnscCrypto->HmacMd5Digest
             (
                 i_data,
                 i_data_size,
@@ -359,7 +356,6 @@ TlsCpoHmac_SHA
 {
     PTLS_CRYPTO_PROVIDER_OBJECT     pMyObject    = (PTLS_CRYPTO_PROVIDER_OBJECT)hThisObject;
     PANSC_CRYPTO_OBJECT             pAnscCrypto  = (PANSC_CRYPTO_OBJECT        )pMyObject->hAnscCrypto;
-    ULONG                           ulOutputSize = 0;
     ANSC_CRYPTO_HASH                hashResult;
     ANSC_CRYPTO_KEY                 macKey;
 
@@ -379,8 +375,7 @@ TlsCpoHmac_SHA
 
     hashResult.Length = ANSC_SHA1_OUTPUT_SIZE;
 
-    ulOutputSize =
-        pAnscCrypto->HmacSha1Digest
+    pAnscCrypto->HmacSha1Digest
             (
                 i_data,
                 i_data_size,

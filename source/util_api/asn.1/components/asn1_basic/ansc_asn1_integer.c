@@ -570,7 +570,7 @@ AnscAsn1IntegerGetSizeOfEncoded
 {
     PANSC_ASN1_INTEGER              pMyObject    = (PANSC_ASN1_INTEGER)hThisObject;
     ULONG                           ulSize       = 0;
-    ULONG                           tagSize      = 0;    
+     
 
     /*
      * If it's optional, don't need encode
@@ -589,10 +589,6 @@ AnscAsn1IntegerGetSizeOfEncoded
 
     ulSize              = pMyObject->uLength;
 
-    /*
-     *  The tag size is 1;
-     */
-    tagSize  = 1;
 
     /*
      *  check the attribute list, from the end of the list;
@@ -1148,7 +1144,6 @@ AnscAsn1IntegerDumpObject
     )
 {
 
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_INTEGER              pMyObject       = (PANSC_ASN1_INTEGER)hThisObject;
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
@@ -1205,7 +1200,7 @@ AnscAsn1IntegerDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->lValue
+                    (int)pMyObject->lValue
                 );
     }
     else
@@ -1220,7 +1215,7 @@ AnscAsn1IntegerDumpObject
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
-                    pMyObject->uLength,
+                    (int)pMyObject->uLength,
                     pValueBuffer[0],
                     pValueBuffer[1],
                     pValueBuffer[2],
@@ -1275,8 +1270,7 @@ AnscAsn1IntegerTraceObject
         BOOLEAN                     bRecursive
     )
 {
-
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(bRecursive);
     PANSC_ASN1_INTEGER              pMyObject        = (PANSC_ASN1_INTEGER)hThisObject;
     CHAR                            pAttrBuffer[128] = { 0 };
     ULONG                           attrLength       = 128;

@@ -111,10 +111,8 @@ HttpMboFileOutput
 {
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_MBO_FILE_OBJECT           pMyObject         = (PHTTP_MBO_FILE_OBJECT)hThisObject;
-    PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE  )pMyObject->hHfpIf;
     PHTTP_BCC_INTERFACE             pBccIf            = (PHTTP_BCC_INTERFACE  )pMyObject->hBccIf;
     ANSC_HANDLE                     hFile             = (ANSC_HANDLE          )NULL;
-    ULONG                           ulFileSize        = 0;
     ULONG                           ulCopySize        = 0;
     PVOID                           pSerializedBuffer = NULL;
     ULONG                           ulSerializedSize  = 0;

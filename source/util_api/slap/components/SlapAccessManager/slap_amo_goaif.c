@@ -129,12 +129,8 @@ SlapAmoGoaGetAggregationMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     return  pProperty->AggregationMode;
 }
@@ -175,12 +171,8 @@ SlapAmoGoaSetAggregationMode
         ULONG                       mode
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     pProperty->AggregationMode = mode;
 
@@ -218,12 +210,8 @@ SlapAmoGoaGetLpcPartyPort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     return  pProperty->LpcPartyPort;
 }
@@ -264,12 +252,8 @@ SlapAmoGoaSetLpcPartyPort
         USHORT                      port
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     pProperty->LpcPartyPort = port;
 
@@ -307,12 +291,8 @@ SlapAmoGoaGetLpcPartyAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     return  pProperty->MyAddress.Value;
 }
@@ -353,12 +333,8 @@ SlapAmoGoaSetLpcPartyAddr
         ULONG                       ipaddr
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     pProperty->MyAddress.Value = ipaddr;
 
@@ -396,12 +372,8 @@ SlapAmoGoaGetLpcManagerAddr
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     return  pProperty->ManagerAddress.Value;
 }
@@ -442,12 +414,8 @@ SlapAmoGoaSetLpcManagerAddr
         ULONG                       ipaddr
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
 
     pProperty->ManagerAddress.Value = ipaddr;
 
@@ -497,14 +465,10 @@ SlapAmoGoaCreateContainer
         ULONG                       container_type
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     ANSC_HANDLE                     hSlapContainer     = (ANSC_HANDLE                  )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper    = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
 
@@ -542,8 +506,7 @@ SlapAmoGoaCreateContainer
 
     if ( !pSlapObjWrapper )
     {
-        returnStatus =
-            pSlapUoaIf->DeleteContainer
+        pSlapUoaIf->DeleteContainer
                 (
                     pSlapUoaIf->hOwnerContext,
                     hSlapContainer
@@ -608,10 +571,7 @@ SlapAmoGoaDeleteContainer
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper    = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapContainer;
     ANSC_HANDLE                     hSlapWrappedObj    = (ANSC_HANDLE                  )NULL;
 
@@ -697,14 +657,10 @@ SlapAmoGoaCreateObject
         ANSC_HANDLE                 hInsContext
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     ANSC_HANDLE                     hSlapObject        = (ANSC_HANDLE                  )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperC   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapContainer;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
@@ -755,8 +711,7 @@ SlapAmoGoaCreateObject
 
     if ( !pSlapObjWrapperO )
     {
-        returnStatus =
-            pSlapUoaIf->DeleteObject
+        pSlapUoaIf->DeleteObject
                 (
                     pSlapUoaIf->hOwnerContext,
                     hSlapObject
@@ -777,8 +732,7 @@ SlapAmoGoaCreateObject
         pSlapObjWrapperO->SetLpcPartyName((ANSC_HANDLE)pSlapObjWrapperO, NULL             );
     }
 
-    returnStatus =
-        pMyObject->GoaAttachObject
+    pMyObject->GoaAttachObject
             (
                 (ANSC_HANDLE)pMyObject,
                 (ANSC_HANDLE)pSlapObjWrapperO,
@@ -830,7 +784,6 @@ SlapAmoGoaDeleteObject
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper    = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
@@ -968,9 +921,7 @@ SlapAmoGoaInvokeObject
         SLAP_VARIABLE**             return_var
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty    = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
 
     return  pMyObject->GoaInvokeObject2
                 (
@@ -1061,7 +1012,6 @@ SlapAmoGoaInvokeObject2
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper    = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
@@ -1318,12 +1268,6 @@ SlapAmoGoaAttachObject
 {
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperC   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapContainer;
     PSLAP_OWO_UOAC_OBJECT           pSlapOwoUoac       = (PSLAP_OWO_UOAC_OBJECT        )pSlapObjWrapperC;
@@ -1397,14 +1341,8 @@ SlapAmoGoaDetachObject
         ANSC_HANDLE                 hSlapObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperC   = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
     PSLAP_OWO_UOAC_OBJECT           pSlapOwoUoac       = (PSLAP_OWO_UOAC_OBJECT        )NULL;
@@ -1472,14 +1410,8 @@ SlapAmoGoaUnlinkObject
         ANSC_HANDLE                 hSlapObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
-    PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperC   = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
     PSLAP_OWO_UOAC_OBJECT           pSlapOwoUoac       = (PSLAP_OWO_UOAC_OBJECT        )NULL;
@@ -1553,20 +1485,18 @@ SlapAmoGoaAcqObjectAccess
         char*                       obj_name
     )
 {
+    #ifdef  _ANSC_SLAP_LPC_
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
+    char*                           pLpcPartyName      = (char*                        )NULL;
+    #endif
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperC   = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapContainer;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapperO   = (PSLAP_OBJ_WRAPPER_OBJECT     )NULL;
     ANSC_HANDLE                     hSlapObject        = (ANSC_HANDLE                  )NULL;
     ULONG                           ulOwoObjType       = (ULONG                        )SLAP_OWO_OBJ_TYPE_uoaContainer;
-    char*                           pLpcPartyName      = (char*                        )NULL;
-    ANSC_HANDLE                     hLpcPartyAddr      = (ANSC_HANDLE                  )NULL;
 
     /*
      * The SLAP_GOA interface greatly simplifies the access to any SLAP object, whether it's owned
@@ -1601,8 +1531,7 @@ SlapAmoGoaAcqObjectAccess
 
                 if ( !pSlapObjWrapperO )
                 {
-                    returnStatus =
-                        pSlapUoaIf->RelObjectAccess
+                    pSlapUoaIf->RelObjectAccess
                             (
                                 pSlapUoaIf->hOwnerContext,
                                 hSlapObject
@@ -1746,8 +1675,7 @@ SlapAmoGoaAcqObjectAccess
 
                     if ( !pSlapObjWrapperO )
                     {
-                        returnStatus =
-                            pSlapUoaIf->RelObjectAccess
+                        pSlapUoaIf->RelObjectAccess
                                 (
                                     pSlapUoaIf->hOwnerContext,
                                     hSlapObject
@@ -1926,7 +1854,7 @@ SlapAmoGoaAcqObjectAccess
     /******************************************************************
                 GRACEFUL ROLLBACK PROCEDURES AND EXIT DOORS
     ******************************************************************/
-
+#ifdef  _ANSC_SLAP_LPC_
 EXIT1:
 
     if ( pLpcPartyName )
@@ -1935,6 +1863,7 @@ EXIT1:
     }
 
     return  (ANSC_HANDLE)pSlapObjWrapperO;
+#endif
 }
 
 
@@ -1979,10 +1908,7 @@ SlapAmoGoaRelObjectAccess
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
     PSLAP_OBJ_WRAPPER_OBJECT        pSlapObjWrapper    = (PSLAP_OBJ_WRAPPER_OBJECT     )hSlapObject;
     ULONG                           ulOwoObjType       = (ULONG                        )SLAP_OWO_OBJ_TYPE_uoaObject;
 
@@ -2091,13 +2017,9 @@ SlapAmoGoaFlushAllObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapLoamClient || !(pProperty->AggregationMode & SLAP_GOA_MODE_imcpClient) )
@@ -2148,14 +2070,10 @@ SlapAmoGoaEnrollObjDescriptor
         ANSC_HANDLE                 hObjDescr
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapEnvController || !(pProperty->AggregationMode & SLAP_GOA_MODE_thisProcess) )
     {
@@ -2205,14 +2123,10 @@ SlapAmoGoaUnbindObjDescriptor
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapEnvController || !(pProperty->AggregationMode & SLAP_GOA_MODE_thisProcess) )
     {
@@ -2262,14 +2176,10 @@ SlapAmoGoaVerifyObjDescriptor
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
-    PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
-    PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapEnvController || !(pProperty->AggregationMode & SLAP_GOA_MODE_thisProcess) )
     {
@@ -2319,13 +2229,9 @@ SlapAmoGoaEnrollMobileObject
         ANSC_HANDLE                 hObjDescr
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapLoamClient || !(pProperty->AggregationMode & SLAP_GOA_MODE_imcpClient) )
@@ -2376,13 +2282,9 @@ SlapAmoGoaUnbindMobileObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapLoamClient || !(pProperty->AggregationMode & SLAP_GOA_MODE_imcpClient) )
@@ -2433,13 +2335,9 @@ SlapAmoGoaVerifyMobileObject
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT  )hThisObject;
     PSLAP_ACCESS_MANAGER_PROPERTY   pProperty          = (PSLAP_ACCESS_MANAGER_PROPERTY)&pMyObject->Property;
-    PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT  )pMyObject->hSlapEnvController;
     PSLAP_LOAM_CLIENT_OBJECT        pSlapLoamClient    = (PSLAP_LOAM_CLIENT_OBJECT     )pMyObject->hSlapLoamClient;
-    PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
-    PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )NULL;
     PSLAP_LOA_INTERFACE             pSlapLoaIf         = (PSLAP_LOA_INTERFACE          )NULL;
 
     if ( !pSlapLoamClient || !(pProperty->AggregationMode & SLAP_GOA_MODE_imcpClient) )

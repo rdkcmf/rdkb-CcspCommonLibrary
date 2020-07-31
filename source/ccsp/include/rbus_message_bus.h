@@ -154,7 +154,7 @@ typedef struct _rbusDateTime {
 } rbusDateTime_t;
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
-static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
+/*static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);*/
 void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
 #endif
           

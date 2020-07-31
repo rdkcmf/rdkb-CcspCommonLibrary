@@ -119,7 +119,7 @@ SlapVhoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_VAR_HELPER_OBJECT         pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SlapVhoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_HELPER_OBJECT         pMyObject    = (PSLAP_VAR_HELPER_OBJECT)hThisObject;
 
     AnscCoRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ SlapVhoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_HELPER_OBJECT         pMyObject    = (PSLAP_VAR_HELPER_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ SlapVhoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_VAR_HELPER_OBJECT         pMyObject    = (PSLAP_VAR_HELPER_OBJECT)hThisObject;
 
     /*

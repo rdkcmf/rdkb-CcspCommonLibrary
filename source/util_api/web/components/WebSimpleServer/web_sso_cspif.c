@@ -114,10 +114,7 @@ WebSsoCspGetCfgMode
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_CFG_MODE_RDWR;
 }
 
@@ -152,10 +149,7 @@ WebSsoCspIsReadOnly
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  FALSE;
 }
 
@@ -190,10 +184,7 @@ WebSsoCspIsSwitchOn
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-
     return  pMyObject->bActive;
 }
 
@@ -230,7 +221,6 @@ WebSsoCspEngage
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     returnStatus = pMyObject->Engage((ANSC_HANDLE)pMyObject);
 
@@ -270,7 +260,6 @@ WebSsoCspCancel
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
     returnStatus = pMyObject->Cancel((ANSC_HANDLE)pMyObject);
 
@@ -313,7 +302,6 @@ WebSsoCspAddHttpDaemon
         ANSC_HANDLE                 hDaemonInfo
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
 
@@ -365,7 +353,6 @@ WebSsoCspDelHttpDaemon
         USHORT                      usDaemonPort
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty    = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     ULONG                           i            = 0;
@@ -425,10 +412,8 @@ WebSsoCspSetHttpServerMode
         ULONG                       ulMode
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject       = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
     PWEB_SIMPLE_SERVER_PROPERTY     pProperty       = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
-    PWEB_SITE_MANAGER_OBJECT        pWebSiteManager = (PWEB_SITE_MANAGER_OBJECT   )pMyObject->hWebSiteManager;
 
     pProperty->HttpServerMode = ulMode;
 
@@ -471,9 +456,7 @@ WebSsoCspSetPersistentConn
         BOOL                        bPersistentConn
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject       = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty       = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PWEB_SITE_MANAGER_OBJECT        pWebSiteManager = (PWEB_SITE_MANAGER_OBJECT   )pMyObject->hWebSiteManager;
 
     pWebSiteManager->SetPersistentConn((ANSC_HANDLE)pWebSiteManager, bPersistentConn);
@@ -517,9 +500,7 @@ WebSsoCspSetProductName
         char*                       pProductName
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject       = (PWEB_SIMPLE_SERVER_OBJECT  )hThisObject;
-    PWEB_SIMPLE_SERVER_PROPERTY     pProperty       = (PWEB_SIMPLE_SERVER_PROPERTY)&pMyObject->Property;
     PWEB_SITE_MANAGER_OBJECT        pWebSiteManager = (PWEB_SITE_MANAGER_OBJECT   )pMyObject->hWebSiteManager;
 
     pWebSiteManager->SetProductName((ANSC_HANDLE)pWebSiteManager, pProductName);

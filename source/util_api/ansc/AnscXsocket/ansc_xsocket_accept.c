@@ -110,7 +110,6 @@ AnscXsocketAcceptTask
     PANSC_XSINK_OBJECT              pXsinkHolder = (PANSC_XSINK_OBJECT  )pMyObject->hXsinkHolder;
     PANSC_XSOCKET_OBJECT            pNewXsocket  = NULL;
     int                             s_result     = 0;
-    int                             s_error      = 0;
     xskt_fd_set                     read_fd_set;
     xskt_timeval                    timeval;
     xskt_socket_addr_in             client_addr;
@@ -163,7 +162,6 @@ AnscXsocketAcceptTask
         }
         else if ( s_result == XSKT_SOCKET_ERROR )
         {
-            s_error = _xskt_get_last_error();
 
             if ( pMyObject->bClosed )
             {
@@ -202,12 +200,11 @@ AnscXsocketAcceptTask
         }
         else
         {
-            pNewXsocket->Xsocket = _xskt_accept(pMyObject->Xsocket, (xskt_socket_addr*)&client_addr, &addrlen);
+            pNewXsocket->Xsocket = _xskt_accept(pMyObject->Xsocket, (xskt_socket_addr*)&client_addr, (unsigned int*)&addrlen);
         }
 
         if ( pNewXsocket->Xsocket == XSKT_SOCKET_INVALID_SOCKET )
         {
-            s_error = _xskt_get_last_error();
 
             pNewXsocket->Remove((ANSC_HANDLE)pNewXsocket);
 

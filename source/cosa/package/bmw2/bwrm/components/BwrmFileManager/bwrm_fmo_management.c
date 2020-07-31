@@ -129,9 +129,8 @@ BwrmFmoGetFile
         PULONG                      file_size
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
     ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
     ULONG                           ulFileSize   = (ULONG                      )0;
@@ -307,9 +306,8 @@ BwrmFmoSetFile
         ULONG                       file_size
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
     ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
 
@@ -426,9 +424,8 @@ BwrmFmoNewFile
         ULONG                       file_size
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
     ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
 
@@ -534,10 +531,8 @@ BwrmFmoDelFile
         char*                       file_path
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pMyObject    = (PBWRM_FILE_MANAGER_OBJECT  )hThisObject;
-    PBWRM_FILE_MANAGER_PROPERTY     pProperty    = (PBWRM_FILE_MANAGER_PROPERTY)&pMyObject->Property;
-    ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
 
     pFileName = (char*)AnscAllocateMemory(AnscSizeOfString(root_path) + AnscSizeOfString(file_path) + 2);

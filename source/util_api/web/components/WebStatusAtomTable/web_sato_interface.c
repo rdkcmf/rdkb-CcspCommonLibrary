@@ -117,8 +117,6 @@ WebCreateStatusAtomTable
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
-    PWEB_STATUS_ATOM_TABLE_OBJECT   pWebStatusAtomTable = NULL;
 
     return  WebSatoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

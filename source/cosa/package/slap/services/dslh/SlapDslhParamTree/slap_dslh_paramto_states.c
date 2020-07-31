@@ -104,7 +104,6 @@ SlapDslhParamtoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_DSLH_PARAMTREE_OBJECT     pMyObject    = (PSLAP_DSLH_PARAMTREE_OBJECT)hThisObject;
 
     SlapScoStdReset((ANSC_HANDLE)pMyObject);

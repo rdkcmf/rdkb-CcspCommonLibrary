@@ -132,9 +132,7 @@ HttpWctoRequest
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PHTTP_WEBC_TRANS_OBJECT         pMyObject         = (PHTTP_WEBC_TRANS_OBJECT       )hThisObject;
     PHTTP_SIMPLE_CLIENT_OBJECT      pSimpleClient     = (PHTTP_SIMPLE_CLIENT_OBJECT    )pMyObject->hOwnerContext;
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpSimpleClient  = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pMyObject->hTcpSimpleClient;
     PHTTP_BSP_INTERFACE             pBspIf            = (PHTTP_BSP_INTERFACE           )pMyObject->hBspIf;
-    PHTTP_HFP_INTERFACE             pHfpIf            = (PHTTP_HFP_INTERFACE           )pMyObject->hHfpIf;
     PHTTP_BMO_REQ_OBJECT            pBmoReq           = (PHTTP_BMO_REQ_OBJECT          )pMyObject->hBmoReq;
     PHTTP_CAS_INTERFACE             pCasIf            = (PHTTP_CAS_INTERFACE           )pSimpleClient->GetCasIf((ANSC_HANDLE)pSimpleClient);
     PHTTP_REQUEST_URI               pReqUri           = (PHTTP_REQUEST_URI             )hReqUri;
@@ -444,11 +442,10 @@ HttpWctoDoOptions
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -488,11 +485,10 @@ HttpWctoDoGet
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -532,11 +528,10 @@ HttpWctoDoHead
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -576,11 +571,10 @@ HttpWctoDoPost
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -620,11 +614,10 @@ HttpWctoDoPut
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -664,11 +657,10 @@ HttpWctoDoDelete
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -708,11 +700,10 @@ HttpWctoDoTrace
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -752,9 +743,8 @@ HttpWctoDoConnect
         ANSC_HANDLE                 hBmoReq
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_WEBC_TRANS_OBJECT         pMyObject    = (PHTTP_WEBC_TRANS_OBJECT)hThisObject;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT   )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }

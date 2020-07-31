@@ -119,7 +119,7 @@ HttpTroCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ HttpTroRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
     PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE      )pMyObject->hTmhClientIf;
     PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE      )pMyObject->hTmhServerIf;
@@ -241,7 +240,6 @@ HttpTroEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
     PHTTP_TMH_INTERFACE             pTmhClientIf = (PHTTP_TMH_INTERFACE      )pMyObject->hTmhClientIf;
     PHTTP_TMH_INTERFACE             pTmhServerIf = (PHTTP_TMH_INTERFACE      )pMyObject->hTmhServerIf;
@@ -323,7 +321,6 @@ HttpTroInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
 
     /*

@@ -117,8 +117,6 @@ SysCreateRepositoryFolder
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
-    PSYS_REPOSITORY_FOLDER_OBJECT   pSysRepositoryFolder = NULL;
 
     return  SysRfoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

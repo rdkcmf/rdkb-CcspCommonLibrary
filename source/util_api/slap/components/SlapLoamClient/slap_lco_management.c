@@ -113,7 +113,6 @@ SlapLcoGetObjectStubByName
         char*                       obj_name
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject         = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_LOA_OBJECT_STUB           pObjectStub       = (PSLAP_LOA_OBJECT_STUB     )NULL;
@@ -217,7 +216,6 @@ SlapLcoGetObjectStubByHandle
         ANSC_HANDLE                 obj_handle
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject         = (PSLAP_LOAM_CLIENT_OBJECT  )hThisObject;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
     PSLAP_LOA_OBJECT_STUB           pObjectStub       = (PSLAP_LOA_OBJECT_STUB     )NULL;
@@ -334,7 +332,6 @@ SlapLcoAddObjectStub
         ANSC_HANDLE                 lpc_party_addr
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT)hThisObject;
     PSLAP_LOA_OBJECT_STUB           pObjectStub  = (PSLAP_LOA_OBJECT_STUB   )NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR    )lpc_party_addr;
@@ -409,7 +406,6 @@ SlapLcoDelObjectStub
         ANSC_HANDLE                 obj_handle
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT)hThisObject;
     PSLAP_LOA_OBJECT_STUB           pObjectStub  = (PSLAP_LOA_OBJECT_STUB   )NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR    )NULL;
@@ -434,8 +430,7 @@ SlapLcoDelObjectStub
 
                 if ( pPartyAddr )
                 {
-                    returnStatus =
-                        pMyObject->LoaRelObjectAccess2
+                    pMyObject->LoaRelObjectAccess2
                             (
                                 (ANSC_HANDLE)pMyObject,
                                 pObjectStub->hLpcPartyAddr,
@@ -490,7 +485,6 @@ SlapLcoDelAllObjectStubs
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = (PSLAP_LOAM_CLIENT_OBJECT)hThisObject;
     PSLAP_LOA_OBJECT_STUB           pObjectStub  = (PSLAP_LOA_OBJECT_STUB   )NULL;
     PANSC_LPC_PARTY_ADDR            pPartyAddr   = (PANSC_LPC_PARTY_ADDR    )NULL;
@@ -511,8 +505,7 @@ SlapLcoDelAllObjectStubs
 
             if ( pPartyAddr )
             {
-                returnStatus =
-                    pMyObject->LoaRelObjectAccess2
+                pMyObject->LoaRelObjectAccess2
                         (
                             (ANSC_HANDLE)pMyObject,
                             pObjectStub->hLpcPartyAddr,

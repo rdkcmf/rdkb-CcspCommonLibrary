@@ -117,8 +117,6 @@ Bmc2CreateComExecutor
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PBMC2_COM_EXECUTOR_OBJECT       pBmc2Comeo      = NULL;
 
     return  Bmc2ComeoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

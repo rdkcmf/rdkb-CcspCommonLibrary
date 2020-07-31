@@ -225,8 +225,6 @@ SlapCreateVarEntity
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_ENTITY_OBJECT         pSlapVarEntity = NULL;
 
     return  SlapVeoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -263,9 +261,7 @@ SlapVeoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_ENTITY_OBJECT         pSlapVarEntity = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapVeo;
 }
 
@@ -301,8 +297,6 @@ SlapVeoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PSLAP_VAR_ENTITY_OBJECT         pSlapVarEntity = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapVeo;
 }

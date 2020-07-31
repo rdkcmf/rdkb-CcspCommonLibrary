@@ -107,11 +107,10 @@ BwspPhoResetProperty
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_PORTAL_HOST_OBJECT        pMyObject    = (PBWSP_PORTAL_HOST_OBJECT  )hThisObject;
-    PBWSP_PORTAL_HOST_PROPERTY      pProperty    = (PBWSP_PORTAL_HOST_PROPERTY)&pMyObject->Property;
 
     WebVhoResetProperty((ANSC_HANDLE)pMyObject);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }
 
 
@@ -147,9 +146,8 @@ BwspPhoReset
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWSP_PORTAL_HOST_OBJECT        pMyObject    = (PBWSP_PORTAL_HOST_OBJECT  )hThisObject;
-    PBWSP_PORTAL_HOST_PROPERTY      pProperty    = (PBWSP_PORTAL_HOST_PROPERTY)&pMyObject->Property;
 
     WebVhoReset((ANSC_HANDLE)pMyObject);
 
-    return  ANSC_STATUS_SUCCESS;
+    return  returnStatus;
 }

@@ -117,8 +117,6 @@ WebCreateAuthso
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_AUTH_SERVER_OBJECT         pWebAuthso   = NULL;
 
     return  WebAuthsoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -97,7 +97,7 @@ AnscAsn1CreateRSADigestInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_RSADIGESTINFO        pThisObject  = NULL;
 
     /*
@@ -185,6 +185,8 @@ AnscAsn1RSADigestInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -198,7 +200,7 @@ AnscAsn1RSADigestInfoGetChildName
         ULONG                       index
     )
 {
-    
+    UNREFERENCED_PARAMETER(hThisObject);    
     switch ( index )
     {
         case 0:

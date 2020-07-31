@@ -82,9 +82,14 @@
 #include "dslh_vareo_exported_api.h"
 #include "dslh_varro_exported_api.h"
 #include "dslh_varro_interface.h"
+#include "slap_vco_internal_api.h"
+#include "dslh_varro_internal_api.h"
 
 ULONG g_currentBsUpdate;
 char g_currentParamFullName[512];
+
+char*
+DslhVarroMacAddrListToString (SLAP_UCHAR_ARRAY* mac_addr_list);
 
 /**********************************************************************
 
@@ -117,7 +122,6 @@ DslhObjcoEngage
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
 
     if( pMyObject->hInsContext == NULL)
@@ -171,15 +175,12 @@ DslhObjcoValidate
         char**                      ppFaultParamName
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject          = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
-    PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController = (PDSLH_CPE_CONTROLLER_OBJECT)pMyObject->hDslhCpeController;
     PDSLH_RVQ_INTERFACE             pDslhRvqIf         = (PDSLH_RVQ_INTERFACE        )hDslhRvqIf;
     PDSLH_TR69_INTERFACE            pInterface         = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     char                            pFaultName[128]    = { 0 };
     ULONG                           uLength            = 128;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord     = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
-    PDSLH_CWMP_PARAM_DESCR          pParamDescrArray   = (PDSLH_CWMP_PARAM_DESCR     )pMyObject->hParamArray;
     PDSLH_CWMP_PARAM_DESCR          pParamDescr        = NULL; 
     PSINGLE_LINK_ENTRY              pSLinkEntry        = (PSINGLE_LINK_ENTRY     )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity         = (PDSLH_OBJ_ENTITY_OBJECT)pDslhObjRecord->hDslhObjEntity;
@@ -364,7 +365,7 @@ DslhObjcoValidate
                     case    SLAP_VAR_SYNTAX_uint32Array :
                     case    SLAP_VAR_SYNTAX_handle :
 
-                            AnscTrace(("Warning: unsupported param '%s' with datatype %s.\n", pCallingName, pParamDescr->DataType));
+                            AnscTrace("Warning: unsupported param '%s' with datatype %s.\n", pCallingName, pParamDescr->DataType);
 
                             break;
                 }
@@ -438,6 +439,7 @@ DslhObjcoCommit
         ANSC_HANDLE                 hDslhRvqIf
     )
 {
+    UNREFERENCED_PARAMETER(hDslhRvqIf);
     ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject      = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
     PDSLH_TR69_INTERFACE            pInterface     = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
@@ -510,7 +512,6 @@ DslhObjcoRollback
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJ_CONTROLLER_OBJECT     pMyObject    = (PDSLH_OBJ_CONTROLLER_OBJECT)hThisObject;
     PDSLH_TR69_INTERFACE            pInterface   = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     PDSLH_OBJ_RECORD_OBJECT         pDslhObjRecord     = (PDSLH_OBJ_RECORD_OBJECT)pMyObject->hDslhObjRecord;
@@ -920,7 +921,7 @@ afterGetValue
             if( pUcharArray != NULL)
             {
                 pSlapVariable->Variant.varString =
-                    AnscBase64Encode
+                    (char*)AnscBase64Encode
                         (
                             pUcharArray->Array.arrayUchar,
                             pUcharArray->VarCount
@@ -1069,7 +1070,7 @@ DslhObjcoGetParamValueByName
 
                 if( pInterface->GetEntryParamBool != NULL)
                 {
-                    bReturn = pInterface->GetEntryParamBool(pMyObject->hInsContext,pName, (BOOL *)&pSlapVariable->Variant.varBool);
+                    bReturn = pInterface->GetEntryParamBool((ANSC_HANDLE)pMyObject->hInsContext,pName, (BOOL*)&pSlapVariable->Variant.varBool);
                 }
 
                 break;

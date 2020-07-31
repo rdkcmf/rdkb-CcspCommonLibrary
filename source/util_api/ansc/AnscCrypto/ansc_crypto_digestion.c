@@ -723,6 +723,9 @@ AnscCryptoDesMacDigest
     AnscFreeMemory(pEncryptedData);
 
 #else
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(key);
     AnscTrace("WARNING: DES digest is disabled!!!\n");
 #endif
     /*
@@ -777,6 +780,9 @@ AnscCryptoKpdkDigest
         PANSC_CRYPTO_KEY            key
     )
 {
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(hash);
+    UNREFERENCED_PARAMETER(key);
     return  size;
 }
 
@@ -987,6 +993,8 @@ AnscCryptoMd4Digest
     hash->Length = ANSC_MD4_OUTPUT_SIZE;
 
 #else
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(size);
     AnscTrace("WARNING: MD4 digest is disabled!!!\n");
 #endif
     return  hash->Length;
@@ -1043,6 +1051,8 @@ AnscCryptoMd2Digest
 
     return  hash->Length;
 #else
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(size);
     AnscTrace("WARNING: MD2 digest is disabled!!!\n");
     return hash->Length;
 #endif
@@ -1184,6 +1194,10 @@ AnscCryptoDesMacKDigest
     AnscFreeMemory(pEncryptedData);
 
 #else
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(size);
+    UNREFERENCED_PARAMETER(key);
+    UNREFERENCED_PARAMETER(pIV);
     AnscTrace("WARNING: DES MAC digest is disabled!!!\n");
 #endif
     /*

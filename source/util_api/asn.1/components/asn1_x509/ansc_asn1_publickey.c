@@ -140,7 +140,6 @@ AnscAsn1CreatePublicKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PUBLICKEY            pThisObject  = NULL;
 
     /*
@@ -252,6 +251,7 @@ AnscAsn1PublicKeyGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case PUBLICKEY_MASK_DSAPUBLICKEY:
@@ -278,6 +278,7 @@ AnscAsn1PublicKeyGetChoiceByOID
         PCHAR                       pOIDString
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     if( pOIDString == NULL)         return -1;
 
     if( AnscEqualString1(pOIDString,"1.2.840.10040.4.1",FALSE))
@@ -324,6 +325,7 @@ AnscAsn1PublicKeyGetOIDValueByMask
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case PUBLICKEY_MASK_DSAPUBLICKEY:
@@ -597,7 +599,6 @@ AnscAsn1CreateRSAPublicKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_RSAPUBLICKEY         pThisObject  = NULL;
 
     /*
@@ -702,6 +703,8 @@ AnscAsn1RSAPublicKeyCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -716,7 +719,7 @@ AnscAsn1RSAPublicKeyGetChildName
     )
 {
 #ifndef _PKI_KERNEL
-    
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -751,6 +754,7 @@ AnscAsn1RSAPublicKeyVerify
         ULONG                       uLength
     )
 {
+    UNREFERENCED_PARAMETER(hParams);
     /* for RSA, hParams is NULL, don't need to care about it */
     PANSC_ASN1_RSAPUBLICKEY         pRSA        = (PANSC_ASN1_RSAPUBLICKEY)hThisHandle;
     ANSC_STATUS                     status;
@@ -1062,7 +1066,6 @@ AnscAsn1CreateDSAPublicKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DSAPUBLICKEY         pThisObject  = NULL;
 
     /*
@@ -1300,7 +1303,6 @@ AnscAsn1CreateDHPublicKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_DHPUBLICKEY          pThisObject  = NULL;
 
     /*
@@ -1420,7 +1422,6 @@ AnscAsn1CreateKeyPair
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_KEYPAIR              pThisObject  = NULL;
 
     /*
@@ -1480,6 +1481,8 @@ AnscAsn1KeyPairCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     return NULL;
 }
 
@@ -1490,7 +1493,7 @@ AnscAsn1KeyPairGetChildName
         ULONG                       index
     )
 {
-    
+    UNREFERENCED_PARAMETER(hThisObject);    
     switch ( index )
     {
         case 0:
@@ -1571,6 +1574,7 @@ AnscAsn1KeyPairBeforeDecodingChild
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_KEYPAIR              pThisObject  = (PANSC_ASN1_KEYPAIR)hThisObject;
     PANSC_ASN1_INTEGER              pKeyType;
     PANSC_ASN1_CHOICE               pPubKey;

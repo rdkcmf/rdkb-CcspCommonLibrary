@@ -617,6 +617,7 @@ AttrListDecodingData
         PULONG                      pInfiniteTag
     )
 {
+    UNREFERENCED_PARAMETER(bIsConstructive);
     PANSC_ATTR_OBJECT               pAttrObject, pAttrNew;
     PSINGLE_LINK_ENTRY              pSListEntry;
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;

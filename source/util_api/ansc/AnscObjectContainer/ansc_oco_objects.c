@@ -292,7 +292,6 @@ AnscOcoCreateObjectByName
         char*                       objectName
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject             = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
 
@@ -346,7 +345,6 @@ AnscOcoCreateObjectByOid
         ULONG                       oid
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject             = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
 
@@ -406,7 +404,6 @@ AnscOcoCreateObjectByType
         char*                       derivedType
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject             = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
 
@@ -455,7 +452,6 @@ AnscOcoGetObjectByRid
         ULONG                       rid
     )
 {
-    ANSC_STATUS                     returnStatus          = ANSC_STATUS_SUCCESS;
     PANSC_OBJECT_CONTAINER_OBJECT   pMyObject             = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
     PANSC_OBJECT_MAPPER_OBJECT      pInternalObjectMapper = (PANSC_OBJECT_MAPPER_OBJECT   )pMyObject->hInternalObjectMapper;
 

@@ -119,7 +119,7 @@ DslhObjcoTableCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ DslhObjcoTableRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject    = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
 
     DslhObjcoRemove((ANSC_HANDLE)pMyObject);
@@ -224,7 +223,6 @@ DslhObjcoTableEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject    = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
 
     DslhObjcoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -266,7 +264,6 @@ DslhObjcoTableInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_OBJCO_TABLE_OBJECT        pMyObject    = (PDSLH_OBJCO_TABLE_OBJECT)hThisObject;
 
     /*

@@ -78,7 +78,7 @@
 
 
 #include "stun_sco_global.h"
-
+#include "ansc_crypto_external_api.h"
 
 /**********************************************************************
 
@@ -111,13 +111,11 @@ StunScoPlayRole1
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject         = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty         = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStageTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hStageTimerObj;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pRetryTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hRetryTimerObj;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pProbeTimerObj    = (PANSC_TIMER_DESCRIPTOR_OBJECT )pMyObject->hProbeTimerObj;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1 = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
 
     AnscTrace("StunScoPlayRole1 --- called.\n");
 
@@ -154,7 +152,7 @@ StunScoPlayRole1
 
     AnscTrace("StunScoPlayRole1 --- returned.\n");
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -192,7 +190,6 @@ StunScoDiscoverBinding
     ANSC_STATUS                     returnStatus              = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject                 = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                 = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1         = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_HEADER                    pStunHeader               = (PSTUN_HEADER                  )NULL;
     PSTUN_ATTRIBUTE                 pStunAttribNext           = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_USERNAME           pStunAttribUsername       = (PSTUN_ATTRIB_USERNAME         )NULL;
@@ -366,7 +363,6 @@ StunScoDiscoverBindingTimeoutA
     ANSC_STATUS                     returnStatus            = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject               = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty               = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpA       = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpA;
     PSTUN_HEADER                    pStunHeader             = (PSTUN_HEADER                  )NULL;
     PSTUN_ATTRIBUTE                 pStunAttribNext         = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_USERNAME           pStunAttribUsername     = (PSTUN_ATTRIB_USERNAME         )NULL;
@@ -523,7 +519,6 @@ StunScoDiscoverBindingTimeoutB
     ANSC_STATUS                     returnStatus               = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject                  = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                  = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdpB          = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdpB;
     PSTUN_HEADER                    pStunHeader                = (PSTUN_HEADER                  )NULL;
     PSTUN_ATTRIBUTE                 pStunAttribNext            = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_USERNAME           pStunAttribUsername        = (PSTUN_ATTRIB_USERNAME         )NULL;
@@ -702,7 +697,6 @@ StunScoMaintainBinding
     ANSC_STATUS                     returnStatus              = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject                 = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                 = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1         = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_HEADER                    pStunHeader               = (PSTUN_HEADER                  )NULL;
     PSTUN_ATTRIBUTE                 pStunAttribNext           = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_USERNAME           pStunAttribUsername       = (PSTUN_ATTRIB_USERNAME         )NULL;
@@ -875,7 +869,6 @@ StunScoNotifyBindingChange
     ANSC_STATUS                     returnStatus              = ANSC_STATUS_SUCCESS;
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject                 = (PSTUN_SIMPLE_CLIENT_OBJECT    )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty                 = (PSTUN_SIMPLE_CLIENT_PROPERTY  )&pMyObject->Property;
-    PANSC_SIMPLE_CLIENT_UDP_OBJECT  pSimpleClientUdp1         = (PANSC_SIMPLE_CLIENT_UDP_OBJECT)pMyObject->hSimpleClientUdp1;
     PSTUN_HEADER                    pStunHeader               = (PSTUN_HEADER                  )NULL;
     PSTUN_ATTRIBUTE                 pStunAttribNext           = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_USERNAME           pStunAttribUsername       = (PSTUN_ATTRIB_USERNAME         )NULL;

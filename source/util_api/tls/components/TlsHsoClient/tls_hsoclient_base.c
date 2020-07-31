@@ -119,6 +119,7 @@ TlsHsoClientCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PTLS_HSO_CLIENT_OBJECT          pMyObject    = NULL;
 
@@ -223,7 +224,6 @@ TlsHsoClientEnrollObjects
     )
 {
     PTLS_HSO_CLIENT_OBJECT          pMyObject      = (PTLS_HSO_CLIENT_OBJECT       )hThisObject;
-    PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pStateTimerIf  = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hStateTimerIf;
 
     TlsHsoEnrollObjects((ANSC_HANDLE)pMyObject);

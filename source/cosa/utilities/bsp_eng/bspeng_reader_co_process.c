@@ -116,6 +116,9 @@ BspTemplateReaderRead
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pBuffer);
+    UNREFERENCED_PARAMETER(ulSize);
     /* 
      * The virtual function "Read" of object TEMPLATE_READER_OBJECT 
      * should not be called. 
@@ -159,7 +162,7 @@ BspTemplateReaderClose
      * The virtual function "Close" of object TEMPLATE_READER_OBJECT 
      * should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -203,7 +206,8 @@ BspTemplateReaderOpenExternal
      * The virtual function "OpenExternal" of object TEMPLATE_READER_OBJECT 
      * should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -257,7 +261,10 @@ BspTemplateReaderOpenInternal
      * The virtual function "OpenInternal" of object TEMPLATE_READER_OBJECT 
      * should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(pName);
+    UNREFERENCED_PARAMETER(pContent);
+    UNREFERENCED_PARAMETER(ulContentLen);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -296,7 +303,7 @@ BspTemplateReaderGetTemplateName
      * The virtual function "GetTemplateName" of object TEMPLATE_READER_OBJECT 
      * should not be called.
      */
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return NULL;
 }
 

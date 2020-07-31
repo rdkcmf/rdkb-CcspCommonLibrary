@@ -120,7 +120,6 @@ AnscXsinkGetRecvBuffer
         PULONG                      pulSize
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
     PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
     PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
@@ -180,7 +179,6 @@ AnscXsinkAccept
         ANSC_HANDLE                 hNewXsocket
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
     PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
     PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
@@ -244,7 +242,6 @@ AnscXsinkRecv
         ULONG                       ulSize
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
     PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
     PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
@@ -301,7 +298,6 @@ AnscXsinkClose
         BOOL                        bByPeer
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
     PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
     PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;
@@ -350,7 +346,6 @@ AnscXsinkAbort
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PANSC_XSINK_OBJECT              pMyObject      = (PANSC_XSINK_OBJECT  )hThisObject;
     PANSC_XSOCKET_OBJECT            pXsocketObject = (PANSC_XSOCKET_OBJECT)pMyObject->hXsocketObject;
     PANSC_XSINK_OBJECT              pExternalXsink = (PANSC_XSINK_OBJECT  )pXsocketObject->hXsinkObject;

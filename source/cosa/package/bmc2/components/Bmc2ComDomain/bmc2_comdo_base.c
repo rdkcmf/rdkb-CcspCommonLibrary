@@ -119,7 +119,7 @@ Bmc2ComdoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ Bmc2ComdoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     pMyObject->Cancel((ANSC_HANDLE)pMyObject);
@@ -230,7 +229,6 @@ Bmc2ComdoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -272,7 +270,6 @@ Bmc2ComdoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COM_DOMAIN_OBJECT         pMyObject    = (PBMC2_COM_DOMAIN_OBJECT)hThisObject;
 
     /*

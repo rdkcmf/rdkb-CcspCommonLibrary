@@ -119,7 +119,7 @@ WebRloCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ WebRloRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pRootUriPath = (PWEB_URI_PATH_OBJECT        )pMyObject->hRootUriPath;
 
@@ -237,7 +236,6 @@ WebRloEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT)hThisObject;
     PWEB_URI_PATH_OBJECT            pRootUriPath = (PWEB_URI_PATH_OBJECT        )pMyObject->hRootUriPath;
 
@@ -303,7 +301,6 @@ WebRloInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PWEB_RESOURCE_LOCATOR_OBJECT    pMyObject    = (PWEB_RESOURCE_LOCATOR_OBJECT)hThisObject;
 
     /*

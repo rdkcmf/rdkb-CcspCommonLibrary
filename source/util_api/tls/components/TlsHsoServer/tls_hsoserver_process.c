@@ -123,14 +123,7 @@ TlsHsoServerRecv
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject           = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj      = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_SESSION_STATE              pSessionState       = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
-    PTLS_SECURITY_PARAMS            pSecurityParams     = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf           = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
-    PTLS_MEC_INTERFACE              pTlsMecIf           = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf           = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
-    PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider  = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_HSM_INTERFACE              pTlsHsmIf           = (PTLS_HSM_INTERFACE           )pTlsMecIf->GetTlsHsmIf         (pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams         = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PTLS_HANDSHAKE_HEADER           pTlsHandshakeHeader = (PTLS_HANDSHAKE_HEADER        )buffer;
     PSSL2_RECORD_HEADER             pSsl2RecordHeader   = (PSSL2_RECORD_HEADER          )hReserved;
     BOOL                            bValidTlsHandshake  = (BOOL                         )TRUE;
@@ -415,5 +408,8 @@ TlsHsoServerSend
         ULONG                       ulSize
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(buffer);
+    UNREFERENCED_PARAMETER(ulSize);
     return  ANSC_STATUS_UNAPPLICABLE;
 }

@@ -119,7 +119,7 @@ SysRroAstrCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = NULL;
 
@@ -185,7 +185,6 @@ SysRroAstrRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     if ( pMyObject->RecordValue )
@@ -229,7 +228,6 @@ SysRroAstrEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     SysRroEnrollObjects((ANSC_HANDLE)pMyObject);
@@ -271,7 +269,6 @@ SysRroAstrInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_RRO_ASTR_OBJECT            pMyObject    = (PSYS_RRO_ASTR_OBJECT)hThisObject;
 
     /*

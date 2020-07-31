@@ -212,8 +212,6 @@ SlapCreateBmc2Terminal
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_TERMINAL_OBJECT      pSlapBmc2Terminal = NULL;
 
     return  SlapBmc2TermoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
@@ -250,9 +248,7 @@ SlapBmc2TermoGetSlapObjCallMap
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_TERMINAL_OBJECT      pSlapBmc2Terminal = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)g_slapObjCallMap_SlapBmc2Termo;
 }
 
@@ -288,8 +284,6 @@ SlapBmc2TermoGetSlapObjDescriptor
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
-    PSLAP_BMC2_TERMINAL_OBJECT      pSlapBmc2Terminal = NULL;
-
+    UNREFERENCED_PARAMETER(hContainerContext);
     return  (ANSC_HANDLE)&g_slapObjDescriptor_SlapBmc2Termo;
 }

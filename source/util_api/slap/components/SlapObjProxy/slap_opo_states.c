@@ -109,7 +109,6 @@ SlapOpoSetObjDescriptor
         ANSC_HANDLE                 hObjDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_PROXY_OBJECT          pMyObject      = (PSLAP_OBJ_PROXY_OBJECT )hThisObject;
     PSLAP_OBJECT_DESCRIPTOR         pObjDescriptor = (PSLAP_OBJECT_DESCRIPTOR)pMyObject->hObjDescriptor;
 

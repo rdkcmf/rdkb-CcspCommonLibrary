@@ -153,12 +153,10 @@ TlsHsoServerRecvClientHello
     ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject           = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj      = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper    = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState       = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams     = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf           = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf           = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf           = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider  = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_HSM_INTERFACE              pTlsHsmIf           = (PTLS_HSM_INTERFACE           )pTlsMecIf->GetTlsHsmIf         (pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams         = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
@@ -489,14 +487,11 @@ TlsHsoServerRecvCertificate
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject          = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     ULONG                           ulClientCertType   = (ULONG                        )0;
     PTLS_HS_CERTIFICATE             pTlsHsCertificate  = (PTLS_HS_CERTIFICATE          )buffer;
     ULONG                           ulTlsHsBodySize    = (ULONG                        )ulSize;
@@ -989,14 +984,11 @@ TlsHsoServerRecvClientKeyExchange
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject          = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PTLS_HS_CLIENT_KEY_EXCHANGE     pTlsHsClientKe     = (PTLS_HS_CLIENT_KEY_EXCHANGE  )buffer;
     ULONG                           ulTlsHsBodySize    = (ULONG                        )ulSize;
     BOOL                            bImplicitKeMsg     = (BOOL                         )(ulSize == 0);
@@ -1553,14 +1545,11 @@ TlsHsoServerRecvCertVerify
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject          = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
-    PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PTLS_HS_CERT_VERIFY             pTlsHsCertVerify   = (PTLS_HS_CERT_VERIFY          )buffer;
     ULONG                           ulTlsHsBodySize    = (ULONG                        )ulSize;
     BOOL                            bValidCertVerify   = (BOOL                         )TRUE;
@@ -2045,12 +2034,10 @@ TlsHsoServerRecvFinished
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HSO_SERVER_OBJECT          pMyObject          = (PTLS_HSO_SERVER_OBJECT       )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pStateTimerObj     = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hStateTimerObj;
-    PTLS_RECORD_KEEPER_OBJECT       pTlsRecordKeeper   = (PTLS_RECORD_KEEPER_OBJECT    )pMyObject->hTlsRecordKeeper;
     PTLS_SESSION_STATE              pSessionState      = (PTLS_SESSION_STATE           )&pMyObject->SessionState;
     PTLS_SECURITY_PARAMS            pSecurityParams    = (PTLS_SECURITY_PARAMS         )&pSessionState->SecurityParams;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE           )pMyObject->hTlsMecIf;
-    PTLS_TSA_INTERFACE              pTlsTsaIf          = (PTLS_TSA_INTERFACE           )pMyObject->hTlsTsaIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT  )pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
     PTLS_CONNECTION_PARAMS          pConnParams        = (PTLS_CONNECTION_PARAMS       )pTlsCbcIf->GetConnParams       (pTlsCbcIf->hOwnerContext);
     PTLS_HS_FINISHED                pTlsHsFinished     = (PTLS_HS_FINISHED             )buffer;
@@ -2062,7 +2049,6 @@ TlsHsoServerRecvFinished
     PVOID                           pScratchPad        = (PVOID                        )NULL;
     ULONG                           ulScratchPadSize   = (ULONG                        )0;
     ULONG                           i                  = (ULONG                        )0;
-    ULONG                           tbs_data_size      = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
     AnscTrace("TlsHsoServer: recv Finished message size = %d!\n", ulSize);
@@ -2159,8 +2145,8 @@ TlsHsoServerRecvFinished
         UCHAR                       ucSslPad1Octet  = (UCHAR )0x36;
         UCHAR                       ucSslPad2Octet  = (UCHAR )0x5c;
         UCHAR                       senderClient[4] = {0x43, 0x4C, 0x4E, 0x54};
-        UCHAR                       senderServer[4] = {0x53, 0x52, 0x56, 0x52};
-
+        //UCHAR                       senderServer[4] = {0x53, 0x52, 0x56, 0x52};
+        
         /*
          * First Round Hashing:
          *

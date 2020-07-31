@@ -117,8 +117,5 @@ HttpCreateMboChunked
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus    = ANSC_STATUS_SUCCESS;
-    PHTTP_MBO_CHUNKED_OBJECT        pHttpMboChunked = NULL;
-
     return  HttpMboChkCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

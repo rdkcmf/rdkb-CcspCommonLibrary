@@ -1431,9 +1431,9 @@ PKIEntityExportToFile
             pThisObject->ExportInfo
                 (
                     pThisObject,
-                    &pCertEncoding,
+                    (PVOID*)&pCertEncoding,
                     &certlength,
-                    &pKeyEncoding,
+                    (PVOID*)&pKeyEncoding,
                     &keylength
                 ))
     {
@@ -1463,6 +1463,7 @@ PKIEntityExportToFile
  * Issue Certificate to user entity, if it's a CA;
  *
  **********************************************************************/
+#if 0
 static
 ANSC_STATUS
 asn1GetMD5FingerPrint
@@ -1517,6 +1518,7 @@ asn1GetMD5FingerPrint
 
     return ANSC_STATUS_SUCCESS;
 }
+#endif
 
 ANSC_STATUS
 PKIEntityIssueCert

@@ -106,7 +106,6 @@ AnscDeuoStart
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     if ( pMyObject->bStarted )
@@ -123,7 +122,6 @@ AnscDeuoStart
     if ( TRUE )
     {
         AnscResetEvent(&pMyObject->RecvEvent);
-        returnStatus =
             AnscSpawnTask
                 (
                     (void*)pMyObject->RecvTask,
@@ -135,7 +133,6 @@ AnscDeuoStart
     if ( pMyObject->ControlFlags & ANSC_DEUO_FLAG_ASYNC_SEND )
     {
         AnscResetEvent(&pMyObject->SendEvent);
-        returnStatus =
             AnscSpawnTask
                 (
                     (void*)pMyObject->SendTask,
@@ -178,7 +175,6 @@ AnscDeuoStop
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
 
     if ( !pMyObject->bStarted )
@@ -229,7 +225,6 @@ AnscDeuoClean
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_DAEMON_ENGINE_UDP_OBJECT  pMyObject    = (PANSC_DAEMON_ENGINE_UDP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_UDP_OBJECT  pServer      = (PANSC_DAEMON_SERVER_UDP_OBJECT)pMyObject->hDaemonServer;
     PANSC_DSUO_WORKER_OBJECT        pWorker      = (PANSC_DSUO_WORKER_OBJECT      )pServer->hWorker;
@@ -276,7 +271,6 @@ AnscDeuoClean
 
         if ( bSocketFound )
         {
-            returnStatus =
                 pWorker->Notify
                     (
                         pWorker->hWorkerContext,
@@ -285,7 +279,6 @@ AnscDeuoClean
                         (ANSC_HANDLE)NULL
                     );
 
-            returnStatus =
                 pMyObject->DelSocket
                     (
                         (ANSC_HANDLE)pMyObject,

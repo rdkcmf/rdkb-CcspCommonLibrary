@@ -118,10 +118,9 @@ HttpScoBspPolish
         ANSC_HANDLE                 hReqContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hReqContext);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -175,11 +174,10 @@ HttpScoBspBrowse
         ANSC_HANDLE                 hReqContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
-    PHTTP_BMO_REQ_OBJECT            pBmoReq      = (PHTTP_BMO_REQ_OBJECT        )hBmoReq;
-    PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT        )hBmoRep;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hBmoReq);
+    UNREFERENCED_PARAMETER(hBmoRep);
+    UNREFERENCED_PARAMETER(hReqContext);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -197,7 +195,9 @@ HttpScoBspBrowse
                 ANSC_HANDLE                 hThisObject,
                 ULONG                       ulEvent,
                 ULONG                       ulError,
-                ANSC_HANDLE                 hReqContext
+                ANSC_HANDLE                 hReqContext,
+                ANSC_HANDLE                 hBmoReq,
+                ANSC_HANDLE                 hBmoRep
             );
 
     description:
@@ -229,12 +229,17 @@ HttpScoBspNotify
         ANSC_HANDLE                 hThisObject,
         ULONG                       ulEvent,
         ULONG                       ulError,
-        ANSC_HANDLE                 hReqContext
+        ANSC_HANDLE                 hReqContext,
+        ANSC_HANDLE                 hBmoReq,
+        ANSC_HANDLE                 hBmoRep
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
-    PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
-
-    return  ANSC_STATUS_SUCCESS;
+   UNREFERENCED_PARAMETER(hThisObject);
+   UNREFERENCED_PARAMETER(ulEvent);
+   UNREFERENCED_PARAMETER(ulError);
+   UNREFERENCED_PARAMETER(hReqContext); 
+   UNREFERENCED_PARAMETER(hBmoReq);
+   UNREFERENCED_PARAMETER(hBmoRep);
+     
+   return  ANSC_STATUS_SUCCESS;
 }

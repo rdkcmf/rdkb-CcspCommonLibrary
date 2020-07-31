@@ -106,9 +106,7 @@ AnscOcoEnrollFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -143,9 +141,7 @@ AnscOcoManufactureFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }
 
@@ -180,8 +176,6 @@ AnscOcoDestroyFeatureObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PANSC_OBJECT_CONTAINER_OBJECT   pMyObject    = (PANSC_OBJECT_CONTAINER_OBJECT)hThisObject;
-
+    UNREFERENCED_PARAMETER(hThisObject);
     return  ANSC_STATUS_SUCCESS;
 }

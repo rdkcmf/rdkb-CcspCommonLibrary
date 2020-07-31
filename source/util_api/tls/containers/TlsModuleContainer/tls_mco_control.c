@@ -163,5 +163,7 @@ TlsMcoDispatchIfs
         ANSC_HANDLE                 hIqcIf
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hIqcIf);
     return  ANSC_STATUS_SUCCESS;
 }

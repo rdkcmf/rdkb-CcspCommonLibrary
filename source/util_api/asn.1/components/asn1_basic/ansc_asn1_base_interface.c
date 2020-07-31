@@ -133,7 +133,6 @@ AnscAsn1Create
         ANSC_HANDLE                 hContainerContext
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_ASN1_OBJECT               pBaseObject  = NULL;
 
     /*
@@ -380,6 +379,8 @@ AnscAsn1CopyTo
         ANSC_HANDLE                 hDestObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hDestObject);
     /* We don't do anything at the base class here */
     return FALSE;
 }
@@ -424,6 +425,9 @@ AnscAsn1EqualsTo
         BOOLEAN                     bValueOnly
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hOtherObject);
+    UNREFERENCED_PARAMETER(bValueOnly);
     /* We don't do anything at the base class here */
     return FALSE;
 }
@@ -633,6 +637,7 @@ AnscAsn1ReadyToEncode
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return TRUE;
 }
 
@@ -668,6 +673,7 @@ AnscAsn1GetSizeOfEncoded
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return 0;
 }
 
@@ -705,6 +711,8 @@ AnscAsn1DecodingData
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ppEncoding);
     return ANSC_ASN1_FORBIDDEN_PLACE;
 }
 
@@ -820,6 +828,8 @@ AnscAsn1EncodingData
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(ppEncoding);
     return ANSC_ASN1_FORBIDDEN_PLACE;
 }
 

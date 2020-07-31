@@ -191,7 +191,6 @@ AnscTsoCancelTimer
         ANSC_HANDLE                 hTimerDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject        = (PANSC_TIMER_SCHEDULER_OBJECT )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pTimerDescriptor = (PANSC_TIMER_DESCRIPTOR_OBJECT)hTimerDescriptor;
     BOOL                            bWaitForInvoke   = FALSE;
@@ -228,7 +227,7 @@ AnscTsoCancelTimer
 
     if ( bWaitForInvoke && !(pTimerDescriptor->TimerMode & ANSC_TIMER_MODE_asyncStop) )
     {
-        #ifndef  _ANSC_NON_PREEMPTIVE_ && defined  _ANSC_KERNEL
+        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
         AnscAcquireTsLock(&pMyObject->SyncTsLock);
         AnscReleaseTsLock(&pMyObject->SyncTsLock);
         #endif
@@ -274,7 +273,6 @@ AnscTsoScheduleTimer
         ANSC_HANDLE                 hTimerDescriptor
     )
 {
-    ANSC_STATUS                     returnStatus        = ANSC_STATUS_SUCCESS;
     PANSC_TIMER_SCHEDULER_OBJECT    pMyObject           = (PANSC_TIMER_SCHEDULER_OBJECT )hThisObject;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pTbpTimerDescriptor = (PANSC_TIMER_DESCRIPTOR_OBJECT)hTimerDescriptor;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pCurTimerDescriptor = NULL;

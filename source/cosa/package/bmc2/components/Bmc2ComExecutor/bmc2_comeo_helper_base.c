@@ -118,7 +118,9 @@ Bmc2ComeoReaderCOCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hContainerContext);
+    UNREFERENCED_PARAMETER(hOwnerContext);
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PBSP_TEMPLATE_READER_OBJECT     pBaseObject  = NULL;
     PBMC2_COMEO_READER_OBJECT       pMyObject    = NULL;
 
@@ -175,7 +177,6 @@ Bmc2ComeoReaderCORemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBMC2_COMEO_READER_OBJECT       pMyObject    = (PBMC2_COMEO_READER_OBJECT)hThisObject;
 
     pMyObject->Close((ANSC_HANDLE)pMyObject);
@@ -219,7 +220,6 @@ Bmc2ComeoReaderCOInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus  = ANSC_STATUS_SUCCESS;
     PBMC2_COMEO_READER_OBJECT       pMyObject     = (PBMC2_COMEO_READER_OBJECT)hThisObject;
 
     /*

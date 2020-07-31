@@ -119,7 +119,7 @@ BwrmEcoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ BwrmEcoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT)hThisObject;
     PBWRM_RAM_INTERFACE             pBwrmRamIf       = (PBWRM_RAM_INTERFACE        )pMyObject->hBwrmRamIf;
     PBWRM_FILE_MANAGER_OBJECT       pBwrmFileManager = (PBWRM_FILE_MANAGER_OBJECT  )pMyObject->hBwrmFileManager;
@@ -269,7 +268,6 @@ BwrmEcoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject        = (PBWRM_ENV_CONTROLLER_OBJECT)hThisObject;
     PBWRM_RAM_INTERFACE             pBwrmRamIf       = (PBWRM_RAM_INTERFACE        )pMyObject->hBwrmRamIf;
     PBWRM_FILE_MANAGER_OBJECT       pBwrmFileManager = (PBWRM_FILE_MANAGER_OBJECT  )pMyObject->hBwrmFileManager;
@@ -390,7 +388,6 @@ BwrmEcoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = (PBWRM_ENV_CONTROLLER_OBJECT)hThisObject;
 
     /*

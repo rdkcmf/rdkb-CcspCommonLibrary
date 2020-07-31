@@ -117,8 +117,6 @@ BwrmCreateFileManager
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
-    PBWRM_FILE_MANAGER_OBJECT       pBwrmFileManager = NULL;
 
     return  BwrmFmoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

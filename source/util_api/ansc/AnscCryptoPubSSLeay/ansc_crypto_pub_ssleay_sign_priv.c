@@ -123,6 +123,11 @@ AnscCryptoPubSSLeayDSASign
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(pDataToSign);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(pulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 
@@ -137,6 +142,12 @@ AnscCryptoPubSSLeayRSASignWithType
         PANSC_CRYPTO_PUB_KEY_PARAMS pParams
     )
 {
+    UNREFERENCED_PARAMETER(nHashMethod);
+    UNREFERENCED_PARAMETER(pDataToSign);
+    UNREFERENCED_PARAMETER(ulSizeOfData);
+    UNREFERENCED_PARAMETER(pSignature);
+    UNREFERENCED_PARAMETER(pulSizeOfSignature);
+    UNREFERENCED_PARAMETER(pParams);
     return ANSC_STATUS_FAILURE;
 }
 

@@ -104,11 +104,9 @@ DslhVareoReset
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PDSLH_VAR_ENTITY_OBJECT         pMyObject    = (PDSLH_VAR_ENTITY_OBJECT)hThisObject;
     PDSLH_VAREO_TOKEN_VALUE         pTokenValue  = (PDSLH_VAREO_TOKEN_VALUE)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = (PSINGLE_LINK_ENTRY     )NULL;
-    ULONG                           i            = 0;
 
     if ( pMyObject->ParamDescr )
     {

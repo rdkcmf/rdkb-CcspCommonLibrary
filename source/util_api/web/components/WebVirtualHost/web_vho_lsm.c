@@ -114,11 +114,8 @@ WebVhoLsmNewContact
         ANSC_HANDLE                 hSession
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT   )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE         )pMyObject->hLsmIf;
     PWEB_GENERAL_SESSION_OBJECT     pSession     = (PWEB_GENERAL_SESSION_OBJECT)hSession;
 
     returnStatus =
@@ -169,14 +166,10 @@ WebVhoLsmClassifyClient
         ANSC_HANDLE                 hSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT   )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE         )pMyObject->hLsmIf;
-    PWEB_GENERAL_SESSION_OBJECT     pSession     = (PWEB_GENERAL_SESSION_OBJECT)hSession;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -215,14 +208,10 @@ WebVhoLsmExpireSession
         ANSC_HANDLE                 hSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT   )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE         )pMyObject->hLsmIf;
-    PWEB_GENERAL_SESSION_OBJECT     pSession     = (PWEB_GENERAL_SESSION_OBJECT)hSession;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
 
-    return  returnStatus;
+    return  ANSC_STATUS_SUCCESS;
 }
 
 
@@ -261,12 +250,7 @@ WebVhoLsmEndSession
         ANSC_HANDLE                 hSession
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT   )hThisObject;
-    PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY )&pMyObject->Property;
-    PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE        )pMyObject->hHfpIf;
-    PWEB_LSM_INTERFACE              pLsmIf       = (PWEB_LSM_INTERFACE         )pMyObject->hLsmIf;
-    PWEB_GENERAL_SESSION_OBJECT     pSession     = (PWEB_GENERAL_SESSION_OBJECT)hSession;
-
-    return  returnStatus;
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(hSession);
+    return  ANSC_STATUS_SUCCESS;
 }

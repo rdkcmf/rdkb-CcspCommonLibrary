@@ -154,7 +154,7 @@ SlapOeoResolveCallDescrI
         goto  EXIT1;
     }
 
-    while ( pTokenParamDesp = (PANSC_STRING_TOKEN)AnscTcPopToken((ANSC_HANDLE)pTokenChainParamList) )
+    while (( pTokenParamDesp = (PANSC_STRING_TOKEN)AnscTcPopToken((ANSC_HANDLE)pTokenChainParamList) ))
     {
         pTokenChainParamDesp =
             (PANSC_TOKEN_CHAIN)AnscTcAllocate
@@ -333,7 +333,6 @@ SlapOeoResolveCallDescrR
         SLAP_VARIABLE*              return_var
     )
 {
-    ANSC_STATUS                     returnStatus         = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject            = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_BSS_INTERFACE             pSlapBssIf           = (PSLAP_BSS_INTERFACE    )pMyObject->hSlapBssIf;
     PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper       = (PSLAP_VAR_MAPPER_OBJECT)pSlapBssIf->GetVarMapper(pSlapBssIf->hOwnerContext);
@@ -441,8 +440,7 @@ SlapOeoResolveCallBridge
         char*                       method_name
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
-    PSLAP_OBJ_ENTITY_OBJECT         pMyObject    = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
+    UNREFERENCED_PARAMETER(hThisObject);
 
     if ( !method_name )
     {
@@ -518,7 +516,6 @@ SlapOeoResolveCallOption
         SLAP_PARAMETER_LIST*        param_list
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject          = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor1 = (PSLAP_METHOD_DESCRIPTOR)NULL;
     PSLAP_METHOD_DESCRIPTOR         pMethodDescriptor2 = (PSLAP_METHOD_DESCRIPTOR)NULL;

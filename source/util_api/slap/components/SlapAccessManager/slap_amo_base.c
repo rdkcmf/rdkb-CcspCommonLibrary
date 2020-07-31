@@ -119,7 +119,7 @@ SlapAmoCreate
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = NULL;
 
@@ -187,7 +187,6 @@ SlapAmoRemove
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pMyObject->hSlapGoaIf;
     PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE        )pMyObject->hSlapPoaIf;
@@ -254,7 +253,6 @@ SlapAmoEnrollObjects
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject          = (PSLAP_ACCESS_MANAGER_OBJECT)hThisObject;
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pMyObject->hSlapGoaIf;
     PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE        )pMyObject->hSlapPoaIf;
@@ -283,9 +281,9 @@ SlapAmoEnrollObjects
         pSlapGoaIf->SetAggregationMode  = SlapAmoGoaSetAggregationMode;
         pSlapGoaIf->GetLpcPartyPort     = SlapAmoGoaGetLpcPartyPort;
         pSlapGoaIf->SetLpcPartyPort     = SlapAmoGoaSetLpcPartyPort;
-        pSlapGoaIf->GetLpcPartyAddr     = SlapAmoGoaSetLpcPartyAddr;
+        pSlapGoaIf->GetLpcPartyAddr     = SlapAmoGoaGetLpcPartyAddr;
         pSlapGoaIf->SetLpcPartyAddr     = SlapAmoGoaSetLpcPartyAddr;
-        pSlapGoaIf->GetLpcManagerAddr   = SlapAmoGoaSetLpcManagerAddr;
+        pSlapGoaIf->GetLpcManagerAddr   = SlapAmoGoaGetLpcManagerAddr;
         pSlapGoaIf->SetLpcManagerAddr   = SlapAmoGoaSetLpcManagerAddr;
 
         pSlapGoaIf->CreateContainer     = SlapAmoGoaCreateContainer;
@@ -398,7 +396,6 @@ SlapAmoInitialize
         ANSC_HANDLE                 hThisObject
     )
 {
-    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = (PSLAP_ACCESS_MANAGER_OBJECT)hThisObject;
 
     /*

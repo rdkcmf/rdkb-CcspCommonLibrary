@@ -117,8 +117,6 @@ BwrmCreateEnvController
         ANSC_HANDLE                 hAnscReserved
     )
 {
-    ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
-    PBWRM_ENV_CONTROLLER_OBJECT     pBwrmEnvController = NULL;
 
     return  BwrmEcoCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }

@@ -326,6 +326,7 @@ AnscMbstoWcs
         PBOOL                       pbLittleEndian
     )
 {
+    UNREFERENCED_PARAMETER(ulMbStrLen);
     int                             nRet    = -1;
 
 #ifdef   _ANSC_LITTLE_ENDIAN_

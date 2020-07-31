@@ -104,7 +104,7 @@ AnscAsn1CreateEncryptedPrivateKeyInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_ENCRYPTEDPRIVATEKEYINFO 
                                     pThisObject  = NULL;
 
@@ -195,6 +195,8 @@ AnscAsn1EncryptedPrivateKeyInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -208,6 +210,7 @@ AnscAsn1EncryptedPrivateKeyInfoGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -231,6 +234,7 @@ AnscAsn1EncryptedPrivateKeyInfoCreateExtraChild
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     /* return AnscAsn1CreatePrivateKeyInfo(NULL); */
     return NULL;
 
@@ -242,6 +246,7 @@ AnscAsn1EncryptedPrivateKeyInfoGetExtraChildName
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return "privateKeyInfo";
 
 }
@@ -260,7 +265,6 @@ AnscAsn1CreateEncryptionAlgorithmIdentifier
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_ENCRYPTIONALGORITHMIDENTIFIER 
                                     pThisObject  = NULL;
 
@@ -311,7 +315,7 @@ AnscAsn1CreatePrivateKeyInfo
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_PRIVATEKEYINFO       pThisObject  = NULL;
 
     /*
@@ -467,6 +471,7 @@ AnscAsn1PrivateKeyInfoCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     switch ( index )
@@ -502,7 +507,7 @@ AnscAsn1PrivateKeyInfoGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -533,6 +538,7 @@ AnscAsn1PrivateKeyInfoCreateExtraChild
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return AnscAsn1CreatePrivateKey(NULL);
 
 }
@@ -543,6 +549,7 @@ AnscAsn1PrivateKeyInfoGetExtraChildName
         ANSC_HANDLE                 hThisObject
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     return "privateKey";
 
 }
@@ -731,11 +738,11 @@ AnscAsn1PrivateKeyInfoAfterDeocdingChild
         PVOID*                      ppEncoding
     )
 {
+    UNREFERENCED_PARAMETER(ppEncoding);
     PANSC_ASN1_PRIVATEKEYINFO       pThisObject  = (PANSC_ASN1_PRIVATEKEYINFO)hThisObject;
     PANSC_ASN1_OIDEN                pOIDObj;
     PANSC_ASN1_SEQUENCE             pAlgor;
-    UCHAR                           pOID[256]    = { 0 };
-    ULONG                           length       = 256;
+    CHAR                            pOID[256]    = { 0 };
     PANSC_ASN1_CHOICE               extraChild;
     PANSC_ASN1_OBJECT               pVersion;
 
@@ -993,7 +1000,6 @@ AnscAsn1CreatePrivateKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
     PANSC_ASN1_PRIVATEKEY           pThisObject  = NULL;
 
     /*
@@ -1094,6 +1100,7 @@ AnscAsn1PrivateKeyGetSelectionName
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( selType )
     {
         case PRIVATEKEY_MASK_RSAPRIVATEKEY:
@@ -1117,6 +1124,8 @@ AnscAsn1PrivateKeyCreateSelectionAttr
         ULONG                       selType
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(selType);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1132,6 +1141,10 @@ AnscAsn1PrivateKeyGetChoiceTagValue
         PULONG                      pTagValue
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(uIndex);
+    UNREFERENCED_PARAMETER(pAttr);
+    UNREFERENCED_PARAMETER(pTagValue);
     return FALSE;
 }
 
@@ -1296,7 +1309,7 @@ AnscAsn1CreateRSAPrivateKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);
     PANSC_ASN1_RSAPRIVATEKEY        pThisObject  = NULL;
 
     /*
@@ -1473,6 +1486,8 @@ AnscAsn1RSAPrivateKeyCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1486,7 +1501,7 @@ AnscAsn1RSAPrivateKeyGetChildName
         ULONG                       index
     )
 {
-
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:
@@ -1833,7 +1848,7 @@ AnscAsn1CreateDSAPrivateKey
         ANSC_HANDLE                 hReserved
     )
 {
-    PANSC_ATTR_OBJECT               pAttrObject  = NULL;
+    UNREFERENCED_PARAMETER(hReserved);    
     PANSC_ASN1_DSAPRIVATEKEY        pThisObject  = NULL;
 
     /*
@@ -1924,6 +1939,8 @@ AnscAsn1DSAPrivateKeyCreateChildAttr
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
+    UNREFERENCED_PARAMETER(index);
     PANSC_ATTR_OBJECT               pAttrObject  = NULL;
 
     return pAttrObject;
@@ -1937,6 +1954,7 @@ AnscAsn1DSAPrivateKeyGetChildName
         ULONG                       index
     )
 {
+    UNREFERENCED_PARAMETER(hThisObject);
     switch ( index )
     {
         case 0:

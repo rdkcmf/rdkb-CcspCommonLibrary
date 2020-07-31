@@ -80,7 +80,8 @@
 #include <signal.h>
 #include <dirent.h>
 #include <stdlib.h>
-
+#include <ctype.h>
+#if 0
 #define  KILL_BUF_SIZE               128
 
 static int kill_by_ppid(int ppid)
@@ -129,7 +130,7 @@ static int kill_by_ppid(int ppid)
 
         fclose(status);
 
-        if ((tmp_PPid == ppid) && (kill(tmp_Pid, SIGTERM) != -1)){
+        if (((int)tmp_PPid == ppid) && (kill(tmp_Pid, SIGTERM) != -1)){
 #if 0
             printf("killed process %d.\n", tmp_Pid);
 #endif
@@ -141,7 +142,7 @@ static int kill_by_ppid(int ppid)
     closedir(dir);
     return -1;
 }
-
+#endif
 
 int _ansc_system(char *command)
 {
