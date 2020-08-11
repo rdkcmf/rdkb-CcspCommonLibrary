@@ -137,6 +137,7 @@ static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_ca
 static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
 static DBusWakeupMainFunction wake_mainloop(void *);
+static int webcfg_signal_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 static int cr_isSystemReady_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response);
@@ -1070,7 +1071,6 @@ ccsp_rbus_logHandler
 }
 #endif /* _RBUS_NOT_REQ_ */
 
-
 int 
 CCSP_Message_Bus_Init
 (
@@ -1148,7 +1148,7 @@ CCSP_Message_Bus_Init
        strncpy(bus_info->component_id, component_id , sizeof(bus_info->component_id) -1);
        bus_info->component_id[sizeof(bus_info->component_id)-1] = '\0';
     }
-    
+
     #ifndef _RBUS_NOT_REQ_
     rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
     RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");  
@@ -1204,10 +1204,15 @@ CCSP_Message_Bus_Init
                     if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
                 }
-                else if(strcmp(component_id,"ccsp.webconfignotify") ==0)
+                else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.webpaagent") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id,"webconfigSignal",NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
-                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for webconfigSignal\n",__FUNCTION__, err);
+                    rbus_method_table_entry_t table[1] = {
+                                                            {"webconfigSignal", (void*)bus_info, webcfg_signal_rbus},
+                                                         };
+                    if( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS )
+                    {
+                        RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
+                    }
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.telemetry") == 0)
                 {
@@ -2375,6 +2380,25 @@ static int cr_isSystemReady_rbus (const char * destination, const char * method,
         result = func->isSystemReady();
         rtMessage_Create(response);
         rbus_AppendInt32(*response, result);
+    }
+    return err;
+}
+
+static int webcfg_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response)
+{
+    (void) destination;
+    (void) method;
+    int err = CCSP_Message_Bus_OK;
+    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+
+    RBUS_LOG ("%s Received %s", __FUNCTION__, method);
+    if (func->webconfigSignal)
+    {
+        char* webconfig_data = 0;
+        RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
+        rbus_PopString(request, &webconfig_data);
+        func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
     }
     return err;
 }
