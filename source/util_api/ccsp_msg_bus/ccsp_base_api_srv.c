@@ -1655,14 +1655,6 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
     {
         func->systemReadySignal(func->systemReadySignal_data);
     }
-#ifdef ENABLE_WEBCONFIG_SUPPORT
-    else if(!strcmp(event_name,"webconfigSignal") && func->webconfigSignal)
-    {
-        char* webconfig_data = 0;
-        rbus_PopString(message, &webconfig_data);
-        func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
-    }
-#endif /* ENABLE_WEBCONFIG_SUPPORT */
     else if(!strcmp(event_name,"systemRebootSignal") && func->systemRebootSignal)
     {
         func->systemRebootSignal(func->systemRebootSignal_data);
