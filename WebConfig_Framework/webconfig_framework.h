@@ -55,8 +55,8 @@ extern ANSC_HANDLE bus_handle;
 
 #define MAX_SIZE 				 1024
 
-#define MAX_EVENTS_IN_MQUEUE 	   		   50  
-#define QUEUE_SIZE 				   50
+#define MAX_EVENTS_IN_MQUEUE 	   		   10  
+#define QUEUE_SIZE 				   10
 
 
 #define DEFAULT_TIMEOUT_PER_ENTRY 		    3
