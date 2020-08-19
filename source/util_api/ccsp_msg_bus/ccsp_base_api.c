@@ -4425,19 +4425,17 @@ int CcspBaseIf_WebConfigSignal_rbus (
 {
     int ret = CCSP_FAILURE;
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
-    rtMessage request;
+    rtMessage request, response;
 
     rtMessage_Create(&request);
     rbus_AppendString(request,webconfig);
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, "webconfigsignal");
-    err = rbus_publishEvent(bus_info->component_id,"webconfigsignal",request);
-    if (err != RTMESSAGE_BUS_SUCCESS)
+    RBUS_LOG("%s : rbus_publishEvent :: event_name : %s :: \n", __FUNCTION__, "webconfigSignal");
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.webpaagent", "webconfigSignal", request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
     {
-        RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for webconfigSignal failed & returns with Err: %d\n", __FUNCTION__, ret);
         ret = CCSP_FAILURE;
     }
-    rtMessage_Release(request);
 
     return ret;
 }
@@ -4600,8 +4598,11 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
     else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
-    else if( strcmp(event_name, "webconfigsignal") == 0)
-        comp = "ccsp.webconfignotify";
+    else if(strcmp(event_name, "webconfigSignal") == 0)
+    {
+        RBUS_LOG_ERR("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);
+        return CCSP_SUCCESS;
+    }
     else
     {
         RBUS_LOG_ERR("%s RBUS_EVENT_NOT_SUBSCRIBED:: Failed to subscribe %s \n", __FUNCTION__, event_name);
