@@ -4368,6 +4368,10 @@ void* CcspBaseIf_SendTelemetryDataSignal_rbus(void* telemetry_data)
   {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for telemetry data:%s returns with Err: %d\n", __FUNCTION__,Telemetry_data, ret);
   }
+  else
+  {
+    rtMessage_Release(response);
+  }
 }
 
 int CcspBaseIf_SendTelemetryDataSignal (
@@ -4436,7 +4440,10 @@ int CcspBaseIf_WebConfigSignal_rbus (
         RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for webconfigSignal failed & returns with Err: %d\n", __FUNCTION__, ret);
         ret = CCSP_FAILURE;
     }
-
+    else
+    {
+        rtMessage_Release(response);
+    }
     return ret;
 }
 
