@@ -81,8 +81,7 @@ export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 BINPATH="/usr/bin"
 source /etc/utopia/service.d/log_env_var.sh                                 
 source /etc/device.properties                                               
-export LOG4C_RCPATH=/rdklogger
-                                                                      
+
 ulimit -c unlimited 
 
 	if [ -f /tmp/cp_subsys_ert ]; then

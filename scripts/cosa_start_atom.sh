@@ -90,7 +90,6 @@ export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBR
 #####BEGIN: Changes for ARRISXB3-3853
 export PATH=$PATH:/etc/ath
 echo "PATH="$PATH
-export LOG4C_RCPATH=/rdklogger
 
 LOG_FOLDER="/rdklogs/logs/"
 CRONPATH="/tmp/cron/"
