@@ -116,8 +116,8 @@ volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
 volatile unsigned int ETHAGENT_RDKLogLevel = 4;
 volatile BOOL BLE_RDKLogEnable = TRUE;
 volatile unsigned int BLE_RDKLogLevel = 4;
-volatile BOOL WANAGENT_RDKLogEnable = TRUE;
-volatile unsigned int WANAGENT_RDKLogLevel = 4;
+volatile BOOL WANMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int WANMANAGER_RDKLogLevel = 4;
 volatile BOOL TELCOVOIPAGENT_RDKLogEnable = TRUE;
 volatile unsigned int TELCOVOIPAGENT_RDKLogLevel = 4;
 
@@ -125,6 +125,10 @@ volatile BOOL ADVSEC_RDKLogEnable = TRUE;
 volatile unsigned int ADVSEC_RDKLogLevel = 4;
 volatile BOOL XDNS_RDKLogEnable = TRUE;
 volatile unsigned int XDNS_RDKLogLevel = 4;
+volatile BOOL XDSLManager_RDKLogEnable = TRUE;
+volatile unsigned int XDSLManager_RDKLogLevel = 4;
+volatile BOOL VLANMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int VLANMANAGER_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -351,11 +355,11 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogLevel = ETHAGENT_RDKLogLevel;
             LogEnable = ETHAGENT_RDKLogEnable;
         }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanagent"))
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanmanager"))
         {
-            ComponentName= "LOG.RDK.WANAGENT";
-            LogLevel = WANAGENT_RDKLogLevel;
-            LogEnable = WANAGENT_RDKLogEnable;
+            ComponentName= "LOG.RDK.WANMANAGER";
+            LogLevel = WANMANAGER_RDKLogLevel;
+            LogEnable = WANMANAGER_RDKLogEnable;
         }
         else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoipagent"))
         {
@@ -374,6 +378,18 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.XDNS";
             LogLevel = XDNS_RDKLogLevel;
             LogEnable = XDNS_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdslmanager"))
+        {
+            ComponentName= "LOG.RDK.XDSLMANAGER";
+            LogLevel = XDSLManager_RDKLogLevel;
+            LogEnable = XDSLManager_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanmanager"))
+        {
+            ComponentName= "LOG.RDK.VLANMANAGER";
+            LogLevel = VLANMANAGER_RDKLogLevel;
+            LogEnable = VLANMANAGER_RDKLogEnable;
         }
         else
         {
