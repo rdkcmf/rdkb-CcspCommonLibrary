@@ -113,10 +113,4 @@
 
 #include "ansc_http_parser.h"
 
-#ifndef SAFEC_DUMMY_API
-/* Macro is defined for non clobbering of the safec secure string API strcpy_s function*/
-/* strcpy_s overwrites the old value and nulls the dest when encounters an error*/
-#define STRCPY_S_NOCLOBBER(dst,dmax,src)   ((src) ? (strlen(src) <= dmax ?  strcpy_s(dst,dmax,src) : ESNOSPC):ESNULLP)
-#endif
-
 #endif
