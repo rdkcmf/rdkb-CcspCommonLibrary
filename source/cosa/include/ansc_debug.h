@@ -80,6 +80,7 @@
 #include "ansc_wrapper_base.h"
 #include "ansc_common_structures.h"
 #include "ccsp_trace.h"
+#include <regex.h>
 
 /*
  *  Whether a debug trace is output depends on the following factors:
@@ -541,6 +542,28 @@ AnscTraceIpPacket
         ANSC_HANDLE                 hIpPacket
     );
 
+int IPv4_Url_Validate
+  (
+       char* pString
+  );
+
+int IPv6_Url_Validate
+  (
+      char* pString
+  );
+
+int Fqdn_Url_Validate
+  (
+       char* pString
+  );
+BOOL Check_hostname
+  (
+       char* input
+  );
+BOOL Check_MAC
+  (
+       char* input
+  );
 /*
 __inline  static  void
 AnscTraceF(char*  pDebugStr, ...)

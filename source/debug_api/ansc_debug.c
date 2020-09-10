@@ -136,6 +136,82 @@ AnscSetTraceLevel_ccsp
     else if(g_iTraceLevel < CCSP_TRACE_LEVEL_ALERT) g_iTraceLevel = CCSP_TRACE_LEVEL_ALERT;
 }
 
+int IPv4_Url_Validate( char* pString)
+{
+       int ret=-1;
+       regex_t reg;
+       const char *Url_Pattern="^(http://|https://)((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]{1}){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([:]{1}([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?([/]{1}(.*))?$";
+       regcomp(&reg ,Url_Pattern, REG_EXTENDED);
+       ret= regexec(&reg, pString, 0, NULL, 0);
+       if (ret== 0) {
+               return 0;
+                    }
+       else {
+               return -1;
+            }
+}
+
+int IPv6_Url_Validate( char* pString)
+{
+       int ret=-1;
+       regex_t reg;
+       const char *Url_Pattern= "^(http://|https://)([[]{1})([0-9a-fA-F]{0,4}[:]{1,2}){1,7}([0-9a-fA-F]{1,4})([]]{1})([:]{1}([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?([/]{1}(.*))?$";
+       regcomp(&reg ,Url_Pattern, REG_EXTENDED);
+       ret = regexec(&reg, pString, 0, NULL, 0);
+       if (ret == 0) {
+               return 0;
+               }
+      else {
+               return -1;
+               }
+}
+
+int Fqdn_Url_Validate( char* pString)
+{
+       int ret=-1;
+       regex_t reg;
+       const char *Url_Pattern="^(http://|https://)([a-zA-Z0-9](([a-zA-Z0-9-]{0,61})?)[a-zA-Z0-9][.]{1})+[a-zA-Z]{2,6}([:]{1}([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5]))?([/]{1}(.*))?$" ;
+       regcomp(&reg ,Url_Pattern, REG_EXTENDED);
+       ret = regexec(&reg, pString, 0, NULL, 0);
+       if (ret == 0) {
+               return 0;
+               }
+      else {
+               return -1;
+               }
+}
+#define HOSTNAME_LENGTH 256
+//HOSTNAME VALIDATION
+BOOL Check_hostname(char* input)
+{
+    regex_t reg;
+    const char *pattern="^([A-Z0-9]|[A-Z0-9][A-Z0-9-]{0,61}[A-Z0-9])([.]([A-Z0-9]|[A-Z0-9][A-Z0-9-]{0,61}[A-Z0-9]))*$";
+    if ((input != NULL) && (strlen(input) < HOSTNAME_LENGTH))
+    {
+        if(regcomp(&reg ,pattern, REG_EXTENDED|REG_ICASE) == 0)
+        {
+            if (0 == regexec(&reg, input, 0, NULL, 0))
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+//MAC ADDRESS VALIDATION
+BOOL Check_MAC(char* input)
+{
+    regex_t reg;
+    const char *macString="^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$";
+    if(input != NULL)
+    {
+       if(regcomp(&reg ,macString, REG_EXTENDED|REG_ICASE) == 0)
+       {
+           if ( 0 ==  regexec(&reg, input, 0, NULL, 0))
+               return TRUE;
+       }
+    }
+    return FALSE;
+}
 static void
 AnscSetTraceLevel_ansc
     (
