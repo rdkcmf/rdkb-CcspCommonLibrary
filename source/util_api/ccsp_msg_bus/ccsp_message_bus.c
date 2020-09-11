@@ -1932,26 +1932,33 @@ CCSP_Message_Bus_Register_Path_Priv
 }
 
 #ifndef _RBUS_NOT_REQ_
-void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char* pStringValue)
+void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue)
 {
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     int32_t ival = 0;
     double fval = 0;
-    void *pValue = NULL;
+    const void *pValue = NULL;
     int length = 0;
+    char *pTmp = NULL;
+    int n = 0;
 
     switch(typeVal)
     {
         case RBUS_DATATYPE_INT16:
         case RBUS_DATATYPE_INT32:
             rbus_PopInt32(msg, &ival);
-            sprintf(pStringValue, "%d", ival);
+            n = snprintf(pTmp, 0, "%d", ival) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%d", ival);
             *pType = ccsp_int;
             break;
 
         case RBUS_DATATYPE_UINT16:
         case RBUS_DATATYPE_UINT32:
             rbus_PopInt32(msg, &ival);
-            sprintf(pStringValue, "%u", (uint32_t)ival);
+            n = snprintf(pTmp, 0, "%u", (uint32_t)ival) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%u", (uint32_t)ival);
             *pType = ccsp_unsignedInt;
             break;
 
@@ -1965,7 +1972,9 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
             union UNION64 u;
             rbus_PopInt32(msg, &u.i32[0]);
             rbus_PopInt32(msg, &u.i32[1]);
-            sprintf(pStringValue, "%lld", u.i64);
+            n = snprintf(pTmp, 0, "%lld", u.i64) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%lld", u.i64);
             *pType = ccsp_long;
             break;
         }
@@ -1979,18 +1988,24 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
             union UNION64 u;
             rbus_PopInt32(msg, &u.i32[0]);
             rbus_PopInt32(msg, &u.i32[1]);
-            sprintf(pStringValue, "%llu", u.u64);
+            n = snprintf(pTmp, 0, "%llu", u.u64) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%llu", u.u64);
             *pType = ccsp_unsignedLong;
             break;
         }
         case RBUS_DATATYPE_SINGLE:
             rbus_PopDouble(msg, &fval);
-            sprintf(pStringValue, "%f", fval);
+            n = snprintf(pTmp, 0, "%f", fval) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%f", fval);
             *pType = ccsp_float;
             break;
         case RBUS_DATATYPE_DOUBLE:
             rbus_PopDouble(msg, &fval);
-            sprintf(pStringValue, "%f", fval);
+            n = snprintf(pTmp, 0, "%f", fval) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%f", fval);
             *pType = ccsp_double;
             break;
         case RBUS_DATATYPE_DATETIME:
@@ -2002,15 +2017,18 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
             rbus_PopInt32(msg, &ival);
             tv.tv_usec = ival;
 
+            n = snprintf(pTmp, 0, "0000-00-00T00:00:00.000000") + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+
             tmpTime = localtime(&tv.tv_sec);
             if (tmpTime)
             {
                 char tmpBuff[40] = ""; /* 27 bytes is good enough; */
                 strftime(tmpBuff, 40, "%Y-%m-%dT%H:%M:%S", tmpTime);
-                sprintf(pStringValue, "%s.%06d", tmpBuff, tv.tv_usec);
+                sprintf(*pStringValue, "%s.%06d", tmpBuff, tv.tv_usec);
             }
             else
-                sprintf(pStringValue, "");
+                sprintf(*pStringValue, "0000-00-00T00:00:00Z");
 
             *pType = ccsp_dateTime;
         }
@@ -2019,7 +2037,9 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
         {
             rbus_PopBinaryData(msg, &pValue, &length);
             unsigned char boolValue = *(unsigned char*)pValue;
-            sprintf(pStringValue, "%s", boolValue ? "true" : "false");
+            n = snprintf(pTmp, 0, "false") + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%s", boolValue ? "true" : "false");
             *pType = ccsp_boolean;
             break;
         }
@@ -2028,7 +2048,9 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
         {
             rbus_PopBinaryData(msg, &pValue, &length);
             signed char tmpValue = *(signed char*)pValue;
-            sprintf(pStringValue, "%d", tmpValue);
+            n = snprintf(pTmp, 0, "%d", tmpValue) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%d", tmpValue);
             *pType = ccsp_int;
             break;
         }
@@ -2037,31 +2059,44 @@ void ccsp_handle_rbus_component_reply (rtMessage msg, rbusNewDataType_t typeVal,
         {
             rbus_PopBinaryData(msg, &pValue, &length);
             unsigned char tmpValue = *(unsigned char*)pValue;
-            sprintf(pStringValue, "%u", tmpValue);
+            n = snprintf(pTmp, 0, "%u", tmpValue) + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            sprintf(*pStringValue, "%u", tmpValue);
             *pType = ccsp_unsignedInt;
             break;
         }
         case RBUS_DATATYPE_STRING:
             rbus_PopBinaryData(msg, &pValue, &length);
-            strcpy (pStringValue, pValue);
+            n = length + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            strcpy (*pStringValue, pValue);
             *pType = ccsp_string;
             break;
         case RBUS_DATATYPE_BYTES:
         {
-            rbus_PopBinaryData(msg, &pValue, &length);
-
             int k = 0;
-            unsigned char* pVar = (unsigned char*)pValue;
+            unsigned char* pVar = NULL;
+            char* pStrVar = NULL;
+            unsigned char tmp = 0;
+            rbus_PopBinaryData(msg, (const void **)&pVar, &length);
+
+            n = (2 * length) + 1;
             *pType = ccsp_byte;
+            pStrVar = bus_info->mallocfunc(n);
+            *pStringValue = pStrVar;
             for (k = 0; k < length; k++)
-                sprintf (&pStringValue[k * 2], "%02X", pVar[k]);
+            {
+                tmp = pVar[k];
+                sprintf (&pStrVar[k * 2], "%02X", tmp);
+            }
             break;
         }
         case RBUS_DATATYPE_PROPERTY:
         case RBUS_DATATYPE_OBJECT:
         case RBUS_DATATYPE_NONE:
         default:
-            strcpy (pStringValue, "");
+            *pStringValue = bus_info->mallocfunc(10);
+            strcpy (*pStringValue, "");
             *pType = ccsp_none;
             break;
     }
@@ -2164,13 +2199,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 }
                 else
                 {
-                    /* 64 bytes long char buffer is good enough for all the data types except string */
-                    if (RBUS_DATATYPE_STRING != (rbusNewDataType_t) dataType)
-                        parameterVal[i].parameterValue = bus_info->mallocfunc(64);
-                    else
-                        parameterVal[i].parameterValue = bus_info->mallocfunc(250);
-
-                    ccsp_handle_rbus_component_reply (request, (rbusNewDataType_t) dataType, &parameterVal[i].type, parameterVal[i].parameterValue);
+                    ccsp_handle_rbus_component_reply (bus_info, request, (rbusNewDataType_t) dataType, &parameterVal[i].type, &parameterVal[i].parameterValue);
                 }
             }
             char *str = NULL;
