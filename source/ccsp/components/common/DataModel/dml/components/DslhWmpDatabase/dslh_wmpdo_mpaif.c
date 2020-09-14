@@ -88,6 +88,7 @@
 #include "ccsp_trace.h"
 #include "slap_vco_internal_api.h"
 #include "messagebus_interface_helper.h"
+#include "safec_lib_common.h"
 
 extern ULONG    g_lastWriteEntity;
 void* COSAGetMessageBusHandle();
@@ -638,6 +639,7 @@ DslhWmpdoMpaSetParameterValues
     bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
     *piStatus    = 0;
+    errno_t rc = -1;
 
     AnscAcquireTsLock(&pMyObject->AccessTsLock);
 
@@ -651,7 +653,6 @@ DslhWmpdoMpaSetParameterValues
 
 
     pMyObject->SessionID       = sessionId;
-
 
     /*
      * The SetParameterValues() operation is divided into three steps: the first round we validate
@@ -774,7 +775,7 @@ DslhWmpdoMpaSetParameterValues
 				}
 			}
 		}
-
+		
         if ( !pVarRecord->IsRecordWritable(pVarRecord))
         {
             bFaultEncountered = TRUE;
@@ -795,7 +796,6 @@ DslhWmpdoMpaSetParameterValues
 
             break;
         }
-
         /* Access bit mask check */
         if ( TRUE )
         {
@@ -836,6 +836,7 @@ DslhWmpdoMpaSetParameterValues
         pVarRecord->SaveOldValue((ANSC_HANDLE)pVarRecord);
 
         pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pVarRecord->hDslhObjRecord;
+		
 #ifdef USE_NOTIFY_COMPONENT
             parameterSigStruct_t            vcSig              = {0};
             /*pthread_t Send_Notification_Thread;*/
@@ -856,20 +857,37 @@ DslhWmpdoMpaSetParameterValues
 				pthread_mutex_init(&NotifyMutex,0);
 				bFirst = FALSE;
 			}
-		    
+
                     if(strcmp(vcSig.newValue,vcSig.oldValue))
                     {
 			pthread_mutex_lock(&NotifyMutex);
-		               memset(str, 0, (sizeof(str)));
-                       sprintf(str,"%s,%u,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
+
+                       rc = sprintf_s(str,sizeof(str),"%s,%u,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
+                       if(rc < EOK)
+                       {
+                         ERR_CHK(rc);
+                         bFaultEncountered = TRUE;
+                         *ppInvalidParameterName = AnscCloneString(pParameterValueArray[i].Name);
+                         returnStatus = CCSP_ERR_INVALID_PARAMETER_VALUE;
+                         pthread_mutex_unlock(&NotifyMutex);
+                         break;
+                       }
 		               /*sensitive information like keyPassphrase should not print*/
 			       if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
 		               {
 		                 CcspTraceWarning(("<< %s sending Notification str %s >>\n",__FUNCTION__,str));
 		               }
-		               str1[j] = (char *) AnscAllocateMemory(strlen(str) + 1);
-		               memset(str1[j], 0, (strlen(str) + 1));
-		               strcpy(str1[j], str);
+
+				str1[j] = strdup(str);
+				if (! str1[j])
+				{
+					CcspTraceWarning(("<< %s, failed for allocation or copy to memory >>\n",__FUNCTION__));
+					bFaultEncountered = TRUE;
+					*ppInvalidParameterName = AnscCloneString(pParameterValueArray[i].Name);
+					returnStatus = CCSP_ERR_INVALID_PARAMETER_VALUE;
+					pthread_mutex_unlock(&NotifyMutex);
+					break;
+				}
 		    
 		               /*sensitive information like keyPassphrase should not print*/
 		               if( _ansc_strstr(str1[j],"KeyPassphrase") == NULL)
@@ -899,6 +917,7 @@ DslhWmpdoMpaSetParameterValues
                 }
             }
 #endif
+
         if ( (pMyObject->hVarRecordArray == NULL) || (pMyObject->hObjRecordArray == NULL) )
         {
             /* init the variable and object record arrays; */ 
@@ -935,6 +954,7 @@ DslhWmpdoMpaSetParameterValues
      * object in the pObjRecordArray created in step1 and calling pObjRecord->VerifyChanges() on
      * each object. Note that one ObjRecord may contain multiple VarRecord objects.
      */
+
     for ( i = 0; i < ulObjectCount; i++ )
     {        
         pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pObjRecordArray[i];

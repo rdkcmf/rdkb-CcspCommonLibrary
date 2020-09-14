@@ -103,6 +103,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include "ansc_global.h"
+#include "safec_lib_common.h"
 
 
 BOOL
@@ -1117,6 +1118,7 @@ AnscParseIp6Address
     int                 ch, saw_xdigit, i , n;
     unsigned            val;
     char*               pch;
+    errno_t   rc = -1;
 
     if( AnscEqualString(ip6_addr, "::", FALSE))
     {
@@ -1145,7 +1147,12 @@ AnscParseIp6Address
         /* we need to handle strings like "::1". an '0' is insert at front */
         tmpIp6[0] = '0';
 
-        AnscCopyMemory( tmpIp6 + 1, ip6_addr, AnscSizeOfString(ip6_addr));
+        rc = memcpy_s( tmpIp6 + 1, sizeof(tmpIp6)-1, ip6_addr, AnscSizeOfString(ip6_addr));
+        if(rc != EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
 
         src = tmpIp6;
     }
@@ -1199,7 +1206,12 @@ AnscParseIp6Address
             {
                 ip4Addr.Value = _ansc_inet_addr(curtok);
 
-                AnscCopyMemory(tp, ip4Addr.Dot, IPV4_ADDRESS_SIZE);
+                rc = memcpy_s(tp, IPV4_ADDRESS_SIZE, ip4Addr.Dot, IPV4_ADDRESS_SIZE);
+                if(rc != EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
 
                 tp += IPV4_ADDRESS_SIZE;
 
@@ -1243,7 +1255,12 @@ AnscParseIp6Address
 
     if (tp != endp)  return FALSE;
 
-    AnscCopyMemory(ipAddrArray, tmp, IPV6_ADDRESS_SIZE);
+    rc = memcpy_s(ipAddrArray, IPV6_ADDRESS_SIZE, tmp, IPV6_ADDRESS_SIZE);
+    if(rc != EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
     
     return TRUE;
 }
