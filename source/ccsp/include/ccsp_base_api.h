@@ -98,6 +98,7 @@ Notes:
 #define CCSP_COMPONENT_ID_ACS      0x00000004
 #define CCSP_COMPONENT_ID_CLI      0x00000008
 #define CCSP_COMPONENT_ID_XPC      0x0000000B
+#define CCSP_COMPONENT_ID_NOTIFY_COMP	     0x0000000C
 
 #define CCSP_DBUS_INTERFACE_PA     "com.cisco.stbservice.protocolagent"
 
