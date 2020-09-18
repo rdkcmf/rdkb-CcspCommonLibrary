@@ -1064,8 +1064,12 @@ ccsp_rbus_logHandler
             CcspTraceInfo(("%s:%d %s\n", file, line, message));
             break;
         case RT_LOG_DEBUG:
-            CcspTraceNotice(("%s:%d %s\n", file, line, message));
-            break;
+            {
+                if(access("/nvram/rbus_support_log_to_file", F_OK) == 0) {
+                    CcspTraceNotice(("%s:%d %s\n", file, line, message));
+                }
+                break;
+            }
     }
     return;
 }
