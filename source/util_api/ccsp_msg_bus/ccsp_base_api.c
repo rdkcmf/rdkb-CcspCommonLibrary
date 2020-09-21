@@ -301,7 +301,7 @@ int CcspBaseIf_setParameterValues_rbus(
 
     /* If the size is 0, val itself is NULL; val[0].parameterName is NULL pointer dereferencing. We avoided it in the above if condition per RDKB-29328 */
     char *object_name = val[0].parameterName;
-    if(dst_component_id && (strstr(dst_component_id, ".psm") || size < 1))
+    if(dst_component_id && (strstr(dst_component_id, ".psm")))
     {
         object_name = dst_component_id;
     }
@@ -586,7 +586,7 @@ int CcspBaseIf_getParameterValues_rbus(
     param_len = strlen(parameterNames[0]);
     char *object_name = parameterNames[0];
     if(dst_component_id) {
-        if((parameterNames[0][param_len - 1] == '.') || strstr(dst_component_id, ".psm") || param_size < 1)
+        if((parameterNames[0][param_len - 1] == '.') || strstr(dst_component_id, ".psm"))
             object_name = dst_component_id;
     }
 
@@ -868,7 +868,22 @@ int CcspBaseIf_setParameterAttributes_rbus(
 {
     int i = 0, ret = 0, ret1 = 0;
     int32_t btmp = 0;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     rtMessage request, response;
+
+    if (0 == size)
+    {
+        CcspTraceWarning(("%s component calls SET attributes without the dml element name. Returning success as there no action taken\n", bus_info->component_id));
+        ret = CCSP_SUCCESS;
+        return ret;
+    }
+
+    if (NULL == val)
+    {
+        CcspTraceWarning(("%s component calls SET with invalid attributes. Returning success as there no action taken\n", bus_info->component_id));
+        ret = CCSP_SUCCESS;
+        return ret;
+    }
 
 #ifdef USE_NOTIFY_COMPONENT
     parameterValStruct_t notif_val[1];
@@ -881,7 +896,6 @@ int CcspBaseIf_setParameterAttributes_rbus(
     char true_false[10];
     char notification_parameter[256];
     char** p_notification_parameter = NULL;
-    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     _ansc_strcpy(PA_name, bus_info->component_id);
     p_notification_parameter = (char**) (bus_info->mallocfunc(sizeof(char*) * size));
     if (!p_notification_parameter )
@@ -922,7 +936,7 @@ int CcspBaseIf_setParameterAttributes_rbus(
     char *object_name = val[0].parameterName;
     if(dst_component_id)
     {
-        if(strstr(dst_component_id, ".psm") || size < 1)
+        if(strstr(dst_component_id, ".psm"))
         {
             object_name = dst_component_id;
         }
@@ -1153,6 +1167,23 @@ int CcspBaseIf_getParameterAttributes_rbus(
     *val_size = 0;
     rtMessage request, response;
 
+    if (0 == size)
+    {
+        CcspTraceWarning(("%s component calls GET attributes without the dml element name. Returning success as there no action taken\n", bus_info->component_id));
+        ret = CCSP_SUCCESS;
+        return ret;
+    }
+
+    for(i = 0; i < size; i++)
+    {
+        if(NULL == parameterNames[i]);
+        {
+            CcspTraceWarning(("%s component calls GET attributes with NULL parameter names. Returning success as there no action taken\n", bus_info->component_id));
+            ret = CCSP_SUCCESS;
+            return ret;
+        }
+    }
+
     rtMessage_Create(&request);
     rbus_AppendInt32(request,size);
     for(i = 0; i < size; i++)
@@ -1164,7 +1195,7 @@ int CcspBaseIf_getParameterAttributes_rbus(
     int param_len = strlen(parameterNames[0]);
     if(dst_component_id)
     {
-        if((parameterNames[0][param_len - 1] == '.') && (strstr(dst_component_id, ".psm") || size < 1))
+        if((parameterNames[0][param_len - 1] == '.') && (strstr(dst_component_id, ".psm")))
         {
             object_name = dst_component_id;
         }
@@ -1567,6 +1598,12 @@ int CcspBaseIf_getParameterNames_rbus(
     *parameter = 0;
     *size = 0;
 
+    if(NULL == parameterName)
+    {
+        CcspTraceWarning(("%s component calls GET with invalid parameter name. Returning success as there no action taken\n", bus_info->component_id));
+        ret = CCSP_SUCCESS;
+        return ret;
+    }
     rtMessage_Create(&request);
     param_len = strlen(parameterName);
     rbus_AppendString(request, parameterName);
@@ -1575,7 +1612,7 @@ int CcspBaseIf_getParameterNames_rbus(
     char *object_name = parameterName;
     if(dst_component_id)
     {
-        if((parameterName[param_len - 1] == '.') || (strstr(dst_component_id, ".psm") || size < 1))
+        if((parameterName[param_len - 1] == '.') || (strstr(dst_component_id, ".psm")))
         {
             object_name = dst_component_id;
         }
