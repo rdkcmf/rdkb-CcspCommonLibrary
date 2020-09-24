@@ -1200,8 +1200,6 @@ CCSP_Message_Bus_Init
                 {
                     if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for diagCompleteSignal\n", __FUNCTION__, err);
-                    if(( err = rbus_registerEvent(component_id,CCSP_PARAMETER_VALUE_CHANGE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
-                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for parameterValueChangeSignal\n", __FUNCTION__, err);
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.rm") == 0)
                 {
@@ -2378,6 +2376,33 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             tmp = result;
             rbus_AppendInt32(*response, tmp); //result
             return DBUS_HANDLER_RESULT_HANDLED;
+        }
+        else if (!strcmp(method, CCSP_PARAMETER_VALUE_CHANGE_SIGNAL) && func->parameterValueChangeSignal)
+        {
+            parameterSigStruct_t *val = 0;
+            int param_size = 0, i = 0;
+
+            rbus_PopInt32(request, (int32_t*)&param_size);
+
+            if(param_size)
+            {
+                val = bus_info->mallocfunc(param_size*sizeof(parameterSigStruct_t ));
+                memset(val, 0, param_size*sizeof(parameterSigStruct_t ));
+
+                for(i = 0; i < param_size; i++)
+                {
+                    rbus_PopString(request, &val[i].parameterName);
+                    rbus_PopString(request, &val[i].oldValue);
+                    rbus_PopString(request, &val[i].newValue);
+                    rbus_PopInt32(request, (int32_t*)&val[i].type);
+                    rbus_PopString(request, &val[i].subsystem_prefix);
+                    rbus_PopInt32(request, (int32_t*)&val[i].writeID);
+                }
+
+                func->parameterValueChangeSignal(val, param_size,func->parameterValueChangeSignal_data);
+
+                bus_info->freefunc(val);
+            }
         }
     }
     return 0;
