@@ -4003,6 +4003,7 @@ int CcspBaseIf_SendparameterValueChangeSignal_rbus (
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
     int ret = CCSP_FAILURE;
     rtMessage request;
+    rtMessage response;
 
     rtMessage_Create(&request);
     rbus_AppendInt32(request, size);
@@ -4020,14 +4021,14 @@ int CcspBaseIf_SendparameterValueChangeSignal_rbus (
     }
 
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    err = rbus_publishEvent(bus_info->component_id, "parameterValueChangeSignal", request);
+    err = rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.tr069pa", "parameterValueChangeSignal", request, CcspBaseIf_timeout_rbus, &response);
     if(err != RTMESSAGE_BUS_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d for bus_info->component_id =%s\n", __FUNCTION__, err,bus_info->component_id);
         return CCSP_FAILURE;
     }
 
-    rtMessage_Release(request);
+    rtMessage_Release(response);
     return CCSP_SUCCESS;
 }
 
@@ -4595,13 +4596,11 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
     else if(strcmp(event_name, "systemRebootSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
-    else if(strcmp(event_name, "parameterValueChangeSignal") == 0)
-        comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
     else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
-    else if(strcmp(event_name, "webconfigSignal") == 0)
+    else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0))
     {
-        RBUS_LOG_ERR("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);
+        RBUS_LOG ("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);
         return CCSP_SUCCESS;
     }
     else
