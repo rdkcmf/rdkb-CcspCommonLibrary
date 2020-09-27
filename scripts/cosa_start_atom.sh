@@ -275,8 +275,6 @@ if [ "$MFG_NAME" = "Cisco" ]; then
     /usr/ccsp/wifi/wifi_default_radius_port.sh
 fi
 
-echo_t "starting stahealth_log.sh"
-sh /usr/ccsp/wifi/stahealth_log.sh &
 
 if [ "$CR_IN_PEER" = "yes" ]
 then
