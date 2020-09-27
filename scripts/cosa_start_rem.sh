@@ -492,13 +492,6 @@ if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
   fi
 fi
 
-#if [ "x$BOX_TYPE" == "xTCCBR" ]; then
-#	echo_t "starting apshealth.sh"
-#	/usr/ccsp/wifi/apshealth.sh &
-#
-#	echo_t "starting stahealth_log.sh"
-#	/usr/ccsp/wifi/stahealth_log.sh &
-#fi
 
 rm -rf /tmp/.dropbear
 
