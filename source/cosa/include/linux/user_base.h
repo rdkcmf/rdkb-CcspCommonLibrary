@@ -156,10 +156,13 @@ typedef  ULONG                      ULONG64,        *PULONG64;
 typedef  UCHAR bool;
 #endif
  */
-
+#ifndef FALSE
 #define  FALSE                  0
+#endif
 #define  false                  0
+#ifndef TRUE
 #define  TRUE                   1
+#endif
 #define  true                   1
 
 extern key_t pubEventKey;

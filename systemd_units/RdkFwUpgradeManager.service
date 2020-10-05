@@ -17,17 +17,19 @@
 # limitations under the License.
 ##########################################################################
 [Unit]
-Description=CcspWanAgent service
-After=CcspCrSsp.service
+Description=Firmware Upgrade Manager service
+After=RdkWanManager.service
+
 [Service]
 Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-EnvironmentFile=/etc/device.properties
-WorkingDirectory=/usr/ccsp/wanagent
-ExecStart=/usr/ccsp/wanagent/wanagent -subsys $Subsys
-ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWanAgent" >> ${PROCESS_RESTART_LOG}'
+WorkingDirectory=/usr/rdk/fwupgrademanager
+ExecStart=/usr/bin/fwupgrademanager -subsys $Subsys
+ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkFwUpgradeManager"'
 Restart=always
+
 StandardOutput=syslog+console
+
 [Install]
 WantedBy=multi-user.target

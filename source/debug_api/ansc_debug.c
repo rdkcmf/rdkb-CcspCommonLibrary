@@ -135,6 +135,29 @@ volatile unsigned int XTMAGENT_RDKLogLevel = 4;
 
 volatile BOOL T2_RDKLogEnable = TRUE;
 volatile unsigned int T2_RDKLogLevel = 4;
+
+#if defined (FEATURE_RDKB_WAN_MANAGER)
+volatile BOOL WANMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int WANMANAGER_RDKLogLevel = 4;
+volatile BOOL XDSLManager_RDKLogEnable = TRUE;
+volatile unsigned int XDSLManager_RDKLogLevel = 4;
+volatile BOOL XTMMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int XTMMANAGER_RDKLogLevel = 4;
+volatile BOOL VLANMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int VLANMANAGER_RDKLogLevel = 4;
+volatile BOOL PLATFORMMGR_RDKLogEnable = TRUE;
+volatile unsigned int PLATFORMMGR_RDKLogLevel = 4;
+volatile BOOL FWUPGRADEMGR_RDKLogEnable = TRUE;
+volatile unsigned int FWUPGRADEMGR_RDKLogLevel = 4;
+#ifdef FEATURE_RDKB_GPON_MANAGER
+volatile BOOL GPONMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int GPONMANAGER_RDKLogLevel = 4;
+#endif
+volatile BOOL TELCOVOICEMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel = 4;
+volatile BOOL PPPMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int PPPMANAGER_RDKLogLevel = 4;
+#endif //FEATURE_RDKB_WAN_MANAGER
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -415,6 +438,64 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogLevel = XTMAGENT_RDKLogLevel;
             LogEnable = XTMAGENT_RDKLogEnable;
         }
+#if defined (FEATURE_RDKB_WAN_MANAGER)
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanmanager"))
+        {
+            ComponentName= "LOG.RDK.WANMANAGER";
+            LogLevel = WANMANAGER_RDKLogLevel;
+            LogEnable = WANMANAGER_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdslmanager"))
+        {
+            ComponentName= "LOG.RDK.XDSLMANAGER";
+            LogLevel = XDSLManager_RDKLogLevel;
+            LogEnable = XDSLManager_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanmanager"))
+        {
+            ComponentName= "LOG.RDK.VLANMANAGER";
+            LogLevel = VLANMANAGER_RDKLogLevel;
+            LogEnable = VLANMANAGER_RDKLogEnable;
+        }
+#ifdef FEATURE_RDKB_GPON_MANAGER
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.gponmanager"))
+        {
+            ComponentName= "LOG.RDK.GPONMANAGER";
+            LogLevel = GPONMANAGER_RDKLogLevel;
+            LogEnable = GPONMANAGER_RDKLogEnable;
+        }
+#endif
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.platformmanager"))
+        {
+            ComponentName= "LOG.RDK.PLATFORMMANAGER";
+            LogLevel = PLATFORMMGR_RDKLogLevel;
+            LogEnable = PLATFORMMGR_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoicemanager"))
+        {
+            ComponentName= "LOG.RDK.TELCOVOICEMANAGER";
+            LogLevel = TELCOVOICEMANAGER_RDKLogLevel;
+            LogEnable = TELCOVOICEMANAGER_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xtmmanager"))
+        {
+            ComponentName= "LOG.RDK.XTMMANAGER";
+            LogLevel = XTMMANAGER_RDKLogLevel;
+            LogEnable = XTMMANAGER_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fwupgrademanager"))
+        {
+            ComponentName= "LOG.RDK.FWUPGRADEMANAGER";
+            LogLevel = FWUPGRADEMGR_RDKLogLevel;
+            LogEnable = FWUPGRADEMGR_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pppmanager"))
+        {
+            ComponentName= "LOG.RDK.PPPMANAGER";
+            LogLevel = PPPMANAGER_RDKLogLevel;
+            LogEnable = PPPMANAGER_RDKLogEnable;
+        }	
+#endif // FEATURE_RDKB_WAN_MANAGER
         else
         {
             ComponentName = "LOG.RDK.Misc";

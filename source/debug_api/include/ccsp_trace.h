@@ -114,6 +114,19 @@ extern volatile unsigned int XDNS_RDKLogLevel;
 extern volatile unsigned int DSLAGENT_RDKLogLevel;
 extern volatile unsigned int VLANAGENT_RDKLogLevel;
 extern volatile unsigned int XTMAGENT_RDKLogLevel;
+#if defined (FEATURE_RDKB_WAN_MANAGER)
+extern volatile unsigned int WANMANAGER_RDKLogLevel;
+extern volatile unsigned int XDSLManager_RDKLogLevel;
+extern volatile unsigned int VLANMANAGER_RDKLogLevel;
+extern volatile unsigned int PLATFORMMGR_RDKLogLevel;
+#ifdef FEATURE_RDKB_GPON_MANAGER
+extern volatile unsigned int GPONMANAGER_RDKLogLevel;
+#endif
+extern volatile unsigned int PPPMANAGER_RDKLogLevel;
+extern volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel;
+extern volatile unsigned int FWUPGRADEMGR_RDKLogLevel;
+extern volatile unsigned int XTMMANAGER_RDKLogLevel;
+#endif //FEATURE_RDKB_WAN_MANAGER
 /* Mesh Wifi log levels */
 extern volatile unsigned int MESH_RDKLogLevel;
 extern volatile BOOL MESH_RDKLogEnable;
@@ -144,6 +157,19 @@ extern volatile BOOL XDNS_RDKLogEnable;
 extern volatile BOOL DSLAGENT_RDKLogEnable;
 extern volatile BOOL VLANAGENT_RDKLogEnable;
 extern volatile BOOL XTMAGENT_RDKLogEnable;
+#if defined (FEATURE_RDKB_WAN_MANAGER)
+extern volatile BOOL WANMANAGER_RDKLogEnable;
+extern volatile BOOL XDSLManager_RDKLogEnable;
+extern volatile BOOL VLANMANAGER_RDKLogEnable;
+extern volatile BOOL PLATFORMMGR_RDKLogEnable;
+#ifdef FEATURE_RDKB_GPON_MANAGER
+extern volatile BOOL GPONMANAGER_RDKLogEnable;
+#endif
+extern volatile BOOL TELCOVOICEMANAGER_RDKLogEnable;
+extern volatile BOOL XTMMANAGER_RDKLogEnable;
+extern volatile BOOL FWUPGRADEMGR_RDKLogEnable;
+extern volatile BOOL PPPMANAGER_RDKLogEnable;
+#endif //FEATURE_RDKB_WAN_MANAGER
 
 extern volatile unsigned int BLE_RDKLogLevel;
 extern volatile BOOL BLE_RDKLogEnable;
