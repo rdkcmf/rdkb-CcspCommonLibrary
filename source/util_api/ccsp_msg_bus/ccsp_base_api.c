@@ -635,13 +635,7 @@ int CcspBaseIf_getParameterValues_rbus(
                 }
                 else
                 {
-                     /* 64 bytes long char buffer is good enough for all the data types except string */
-                    if (RBUS_DATATYPE_STRING != (rbusNewDataType_t) type)
-                        val[i]->parameterValue = bus_info->mallocfunc(64);
-                    else
-                        val[i]->parameterValue = bus_info->mallocfunc(250);
-
-                    ccsp_handle_rbus_component_reply (response, (rbusNewDataType_t) type, &val[i]->type, val[i]->parameterValue);
+                    ccsp_handle_rbus_component_reply (bus_info, response, (rbusNewDataType_t) type, &val[i]->type, &val[i]->parameterValue);
                 }
 
                 RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
