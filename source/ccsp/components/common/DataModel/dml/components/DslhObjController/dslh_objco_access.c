@@ -1069,7 +1069,7 @@ DslhObjcoGetParamValueByName
 
                 if( pInterface->GetEntryParamBool != NULL)
                 {
-                    bReturn = pInterface->GetEntryParamBool(pMyObject->hInsContext,pName, &pSlapVariable->Variant.varBool);
+                    bReturn = pInterface->GetEntryParamBool(pMyObject->hInsContext,pName, (BOOL *)&pSlapVariable->Variant.varBool);
                 }
 
                 break;
