@@ -365,3 +365,8 @@ if [ -f /lib/rdk/ocsp-support.sh ]; then
     sh /lib/rdk/ocsp-support.sh &
 fi
 
+if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
+   if [ -f /usr/ccsp/wifi/disable_lnf.sh ];then
+      /usr/ccsp/wifi/disable_lnf.sh
+   fi
+fi
