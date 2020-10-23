@@ -129,6 +129,7 @@ AC_CONFIG_FILES(
 	source/ccsp/components/common/MessageBusHelper/Makefile
 	source/ccsp/components/common/Makefile
 	source/ccsp/components/CCSP_NamespaceMgr/Makefile
+        source/ccsp/components/CCSP_AliasMgr/Makefile
 	source/ccsp/components/Makefile
 	source/ccsp/Makefile
 	source/util_api/tls/containers/TlsModuleContainer/Makefile
