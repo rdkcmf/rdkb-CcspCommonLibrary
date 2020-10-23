@@ -77,6 +77,7 @@ libccsp_common_la_DEPENDENCIES= \
 	ccsp/components/common/DataModel/dml/components/DslhObjcoTable/libCcspCommonLibrary_DslhObjcoTable.la \
 	ccsp/components/common/MessageBusHelper/helper/libCcspCommonLibrary_helper.la \
 	ccsp/components/CCSP_NamespaceMgr/libCcspCommonLibrary_CCSP_NamespaceMgr.la \
+        ccsp/components/CCSP_AliasMgr/libCcspCommonLibrary_CCSP_AliasMgr.la \
 	util_api/tls/containers/TlsModuleContainer/libCcspCommonLibrary_TlsModuleContainer.la \
 	util_api/tls/components/TlsRecordKeeper/libCcspCommonLibrary_TlsRecordKeeper.la \
 	util_api/tls/components/TlsCryptoProvider/libCcspCommonLibrary_TlsCryptoProvider.la \
