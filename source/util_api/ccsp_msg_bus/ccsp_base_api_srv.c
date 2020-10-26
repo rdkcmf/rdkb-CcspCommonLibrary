@@ -1601,7 +1601,7 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
 }
 
 #ifndef _RBUS_NOT_REQ_
-int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rtMessage message, void * user_data)
+int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rbusMessage message, void * user_data)
 {
     UNREFERENCED_PARAMETER(object_name);
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
@@ -1612,7 +1612,7 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
         parameterSigStruct_t *val = 0;
         int param_size = 0, i = 0;
 
-        rbus_PopInt32(message, (int32_t*)&param_size);
+        rbusMessage_GetInt32(message, (int32_t*)&param_size);
 
         if(param_size)
         {
@@ -1622,12 +1622,12 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
 
         for(i = 0; i < param_size; i++)
         {
-            rbus_PopString(message, &val[i].parameterName);
-            rbus_PopString(message, (const char**)&val[i].oldValue);
-            rbus_PopString(message, (const char**)&val[i].newValue);
-            rbus_PopInt32(message, (int32_t*)&val[i].type);
-            rbus_PopString(message, &val[i].subsystem_prefix);
-            rbus_PopInt32(message, (int32_t*)&val[i].writeID);
+            rbusMessage_GetString(message, &val[i].parameterName);
+            rbusMessage_GetString(message, (const char**)&val[i].oldValue);
+            rbusMessage_GetString(message, (const char**)&val[i].newValue);
+            rbusMessage_GetInt32(message, (int32_t*)&val[i].type);
+            rbusMessage_GetString(message, &val[i].subsystem_prefix);
+            rbusMessage_GetInt32(message, (int32_t*)&val[i].writeID);
         }
 
         func->parameterValueChangeSignal(val, param_size,func->parameterValueChangeSignal_data);
@@ -1639,9 +1639,9 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
         int32_t isAvailable;
         char *component_name = 0;
         char *component_dbus_path = 0;
-        rbus_PopString(message, (const char**)&component_name);
-        rbus_PopString(message, (const char**)&component_dbus_path);
-        rbus_PopInt32(message, &isAvailable);
+        rbusMessage_GetString(message, (const char**)&component_name);
+        rbusMessage_GetString(message, (const char**)&component_dbus_path);
+        rbusMessage_GetInt32(message, &isAvailable);
         func->deviceProfileChangeSignal(component_name,component_dbus_path,isAvailable,func->deviceProfileChangeSignal_data);
     }
 
@@ -1649,8 +1649,8 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
     {
         int32_t sessionID;
         int32_t priority;
-        rbus_PopInt32(message, &priority);
-        rbus_PopInt32(message, &sessionID);
+        rbusMessage_GetInt32(message, &priority);
+        rbusMessage_GetInt32(message, &sessionID);
         func->currentSessionIDSignal(priority, sessionID, func->currentSessionIDSignal_data);
     }
     else if(!strcmp(event_name,"diagCompleteSignal") && func->diagCompleteSignal)
