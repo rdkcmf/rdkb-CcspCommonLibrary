@@ -330,6 +330,24 @@ AnscMemoryCountSize
     AnscReleaseSpinLock(&g_tCountSizeSpinLock);
 }
 
+static ULONG AnscGetMemorySizeCountSize
+    (
+        char*                       pComponentName,
+        PVOID                       pMemoryBlock
+    )
+{
+    UNREFERENCED_PARAMETER(pComponentName);
+    if ( !pMemoryBlock )
+    {
+        return 0;
+    }
+    else
+    {
+        pMemoryBlock = (PVOID)((ULONG)pMemoryBlock - sizeof(ULONG));
+        return *(PULONG)pMemoryBlock;
+    }
+}
+
 void*
 AnscAllocateMemoryCountSize
     (
@@ -426,27 +444,6 @@ AnscFreeMemoryCountSize
     //AnscFlushMemory(pMemoryBlock);
     AnscFreeMemoryOrig(pMemoryPointer);
 }
-
-
-ULONG
-AnscGetMemorySizeCountSize
-    (
-        char*                       pComponentName,
-        PVOID                       pMemoryBlock
-    )
-{
-    UNREFERENCED_PARAMETER(pComponentName);
-    if ( !pMemoryBlock )
-    {
-        return 0;
-    }
-    else
-    {
-        pMemoryBlock = (PVOID)((ULONG)pMemoryBlock - sizeof(ULONG));
-        return *(PULONG)pMemoryBlock;
-    }
-}
-
 
 void*
 AncResizeMemoryCountSize
@@ -1020,6 +1017,23 @@ AnscTraceMemoryTable2
     return  pTraceMsgArray;
 }
 
+static ULONG AnscGetMemorySizeRecordDetail
+    (
+        char*                       pComponentName,
+        PVOID                       pMemoryBlock
+    )
+{
+    UNREFERENCED_PARAMETER(pComponentName);
+    PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = (PANSC_MEMORY_ALLOC_ITEM)AnscGetMemoryAllocItem(pMemoryBlock);
+
+    if ( !pMemoryAllocItem )
+    {
+        return  0;
+    }
+
+    return  pMemoryAllocItem->MemorySize;
+}
+
 void*
 AnscAllocateMemoryRecordDetail
     (
@@ -1351,26 +1365,6 @@ AnscFreeMemoryRecordDetail
     //AnscFlushMemory(pMemoryPointer);
     AnscFreeMemoryOrig(pMemoryPointer);
 }
-
-
-ULONG
-AnscGetMemorySizeRecordDetail
-    (
-        char*                       pComponentName,
-        PVOID                       pMemoryBlock
-    )
-{
-    UNREFERENCED_PARAMETER(pComponentName);
-    PANSC_MEMORY_ALLOC_ITEM         pMemoryAllocItem = (PANSC_MEMORY_ALLOC_ITEM)AnscGetMemoryAllocItem(pMemoryBlock);
-
-    if ( !pMemoryAllocItem )
-    {
-        return  0;
-    }
-
-    return  pMemoryAllocItem->MemorySize;
-}
-
 
 void*
 AncResizeMemoryRecordDetail
