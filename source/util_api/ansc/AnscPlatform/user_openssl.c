@@ -68,7 +68,9 @@ void initialize_openssl_lib()
 
     SSL_library_init ();
     SSL_load_error_strings ();
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)
     SSLeay_add_all_algorithms ();
+#endif
     SSLeay_add_ssl_algorithms ();
 }
 
@@ -372,7 +374,13 @@ SSL * openssl_connect (int fd, hostNames *hosts)
 
   SSL_set_connect_state (ssl);
 
+#if (OPENSSL_VERSION_NUMBER >= 0x10101000L)
+  if (SSL_connect (ssl) <= 0 || SSL_get_state(ssl) != TLS_ST_OK)
+#elif (OPENSSL_VERSION_NUMBER >= 0x10100000L)
+  if (SSL_connect (ssl) <= 0 || SSL_state(ssl) != TLS_ST_OK)
+#else
   if (SSL_connect (ssl) <= 0 || ssl->state != SSL_ST_OK)
+#endif
   {
     AnscTraceWarning(("openssl_connect - failed in SSL_set_connect_state \n"));
     goto error;
