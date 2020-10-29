@@ -111,7 +111,8 @@ volatile unsigned int MESH_RDKLogLevel = 4;
 volatile BOOL MeshService_RDKLogEnable = TRUE;
 volatile unsigned int MeshService_RDKLogLevel = 5;
 
-
+volatile BOOL CPUPROCANALYZER_RDKLogEnable = TRUE;
+volatile unsigned int CPUPROCANALYZER_RDKLogLevel = 4;
 volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
 volatile unsigned int ETHAGENT_RDKLogLevel = 4;
 volatile BOOL BLE_RDKLogEnable = TRUE;
@@ -350,6 +351,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.MeshService";
             LogLevel = MeshService_RDKLogLevel;
             LogEnable = MeshService_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"LOG.RDK.CPUPROCANALYZER"))
+        {
+            ComponentName= "LOG.RDK.CPUPROCANALYZER";
+            LogLevel = CPUPROCANALYZER_RDKLogLevel;
+            LogEnable = CPUPROCANALYZER_RDKLogEnable;
         }
         else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ethagent"))
         {
