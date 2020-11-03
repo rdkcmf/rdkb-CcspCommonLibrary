@@ -487,6 +487,90 @@ HttpScoSetProductName
     prototype:
 
         ANSC_STATUS
+        HttpScoGetHostNames
+            (
+                ANSC_HANDLE                 hThisObject,
+		ANSC_HANDLE		    hHostNames
+            );
+
+    description:
+
+        This function is called to retrieve object state.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+    return:     object state.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpScoGetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+	ANSC_HANDLE		    hHostNames
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
+    PHTTP_SCO_HOST_NAMES	    pHostNames   = (PHTTP_SCO_HOST_NAMES)&pMyObject->hostNames;
+
+    *(PHTTP_SCO_HOST_NAMES)hHostNames = *pHostNames;
+    return returnStatus;
+}
+
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
+        HttpScoSetHostNames
+            (
+                ANSC_HANDLE                 hThisObject,
+                ANSC_HANDLE                 hHostNames
+            );
+
+    description:
+
+        This function is called to configure object state.
+
+    argument:   ANSC_HANDLE                 hThisObject
+                This handle is actually the pointer of this object
+                itself.
+
+                ANSC_HANDLE                 hHostNames
+                Specifies the object state to be configured.
+
+    return:     status of operation.
+
+**********************************************************************/
+
+ANSC_STATUS
+HttpScoSetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
+    PHTTP_SCO_HOST_NAMES            pHostNames   = (PHTTP_SCO_HOST_NAMES)&pMyObject->hostNames;
+
+    *pHostNames = *(PHTTP_SCO_HOST_NAMES)hHostNames;
+    return  returnStatus;
+}
+
+/**********************************************************************
+
+    caller:     owner of this object
+
+    prototype:
+
+        ANSC_STATUS
         HttpScoSetSessionIdleTimeout
             (
                 ANSC_HANDLE                 hThisObject,

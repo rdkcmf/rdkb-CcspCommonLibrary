@@ -246,6 +246,24 @@ HttpScoRemove
         AnscFreeMemory(pMyObject->pAuthPassword);
     }
 
+    if ( pMyObject->hostNames.peerVerify )
+    {
+	if ( pMyObject->hostNames.hostNames && pMyObject->hostNames.numHosts > 0 )
+	{
+	    int i = 0;
+	    for ( i = 0; i < pMyObject->hostNames.numHosts; i++)
+	    {
+		if(pMyObject->hostNames.hostNames[i])
+		{
+		    AnscFreeMemory(pMyObject->hostNames.hostNames[i]);
+		    pMyObject->hostNames.hostNames[i] = NULL;
+		}
+	    }
+	    AnscFreeMemory(pMyObject->hostNames.hostNames );
+	    pMyObject->hostNames.hostNames = NULL;
+	}
+    }
+
     AnscFreeLock(&pMyObject->WcsoTableLock  );
     AnscFreeLock(&pMyObject->WcsoSListLock  );
     AnscFreeLock(&pMyObject->WctoSListLock  );
@@ -501,7 +519,9 @@ HttpScoInitialize
     pMyObject->SetClientMode         = HttpScoSetClientMode;
     pMyObject->GetProductName        = HttpScoGetProductName;
     pMyObject->SetProductName        = HttpScoSetProductName;
-	pMyObject->SetSessionIdleTimeout = HttpScoSetSessionIdleTimeout;
+    pMyObject->GetHostNames	     = HttpScoGetHostNames;
+    pMyObject->SetHostNames	     = HttpScoSetHostNames;
+    pMyObject->SetSessionIdleTimeout = HttpScoSetSessionIdleTimeout;
 
     pMyObject->GetProperty           = HttpScoGetProperty;
     pMyObject->SetProperty           = HttpScoSetProperty;

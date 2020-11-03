@@ -56,11 +56,19 @@ extern "C" {
 #include <openssl/x509.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
+#include <stdbool.h>
 
 #define BBHM_CA_CERT_FILE		"/bbhm/config/acs-ca.pem"
 #define BBHM_CA_DIRECTORY	 	"/bbhm/config/"
 #define BBHM_CERT_FILE  		"/bbhm/config/bbhm-chain.pem"
 #define BBHM_PRIVATE_KEY 		"/bbhm/config/bbhm-key.pem"
+
+typedef struct _hostNames
+{
+	bool peerVerify;
+	char **hostNames;
+	int numHosts;
+}hostNames;
 
 int openssl_init (int who_calls);
 
@@ -76,7 +84,7 @@ int openssl_peek (int fd, char *buf, int bufsize, void *ctx);
 
 void openssl_close (int fd, void *ctx);
 
-SSL * openssl_connect (int fd);
+SSL * openssl_connect (int fd, hostNames *hosts);
 
 SSL * openssl_accept (int conn_fd);
 
@@ -87,7 +95,7 @@ enum
     SSL_CTX_NUM
 };
     
-int openssl_validate_certificate (int fd, char * data, SSL *ssl, int who_calls);
+int openssl_validate_certificate (int fd, char * data, SSL *ssl, int who_calls, bool isSecure);
 
 /* Platform/Board Specific Calls */
 void openssl_priv_verify(SSL_CTX *ssl_ctx);

@@ -330,6 +330,29 @@ typedef  ANSC_STATUS
         ANSC_HANDLE                 hReserved
     );
 
+typedef  struct
+_HTTP_SCTO_HOST_NAMES
+{
+	BOOL peerVerify;
+        char **hostNames;
+        int numHosts;
+}
+HTTP_SCTO_HOST_NAMES, *PHTTP_SCTO_HOST_NAMES;
+
+typedef  ANSC_STATUS
+(*PFN_SCTO_GET_HOSTNAMES)
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
+typedef  ANSC_STATUS
+(*PFN_SCTO_SET_HOSTNAMES)
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
 /*
  * Tcp-based Internet Servers have extremely high requirements on performance, processing delay,
  * reliability, and scalability. While the base Ansc Socket Object is OK for most Tcp-based client
@@ -458,6 +481,8 @@ typedef  ANSC_STATUS
     BOOL                            bBroken;                                                \
     ULONG                           LastEvent;                                              \
     ULONG                           LastError;                                              \
+											    \
+    HTTP_SCTO_HOST_NAMES	    hostNames;						    \
                                                                                             \
     ANSC_HANDLE                     hClientContext;                                         \
     ULONG                           RecvBytesCount;                                         \
@@ -494,6 +519,9 @@ typedef  ANSC_STATUS
     PFN_SCTO_GET_PORT               GetPeerPort;                                            \
     PFN_SCTO_SET_PORT               SetPeerPort;                                            \
                                                                                             \
+    PFN_SCTO_GET_HOSTNAMES          GetHostNames;                                          \
+    PFN_SCTO_SET_HOSTNAMES          SetHostNames;                                          \
+											    \
     PFN_SCTO_GET_WORKER             GetWorker;                                              \
     PFN_SCTO_SET_WORKER             SetWorker;                                              \
     PFN_SCTO_GET_SIZE               GetMaxMessageSize;                                      \

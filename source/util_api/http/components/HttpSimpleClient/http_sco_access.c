@@ -367,6 +367,7 @@ HttpScoAddWcso
     PHTTP_BSP_INTERFACE             pBspIf       = (PHTTP_BSP_INTERFACE         )pMyObject->hBspIf;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = (PHTTP_WEBC_SESSION_OBJECT   )pMyObject->AcquireWcso((ANSC_HANDLE)pMyObject);
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpClient   = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pWebcSession->hTcpSimpleClient;
     ULONG                           ulHashIndex  = AnscHashString2(host, AnscSizeOfString(host), HTTP_SCO_WCSO_TABLE_SIZE);
 
     if ( !pWebcSession )
@@ -398,6 +399,11 @@ HttpScoAddWcso
         pWebcSession->SetSessionFlags((ANSC_HANDLE)pWebcSession, ulWebcSessionMode  );
         pWebcSession->SetBspIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pBspIf);
         pWebcSession->SetHfpIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pHfpIf);
+    }
+
+    if( pTcpClient )
+    {
+	pTcpClient->SetHostNames ((ANSC_HANDLE)pTcpClient, (ANSC_HANDLE)&pMyObject->hostNames);
     }
 
     returnStatus = pWebcSession->Open((ANSC_HANDLE)pWebcSession);

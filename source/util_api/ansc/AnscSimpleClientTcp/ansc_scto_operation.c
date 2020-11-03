@@ -661,7 +661,7 @@ AnscSctoEngage
     if ( pMyObject->bTlsEnabled )
     {
    	    SSL *ssl = NULL;
-   	    ssl = openssl_connect (pMyObject->Socket);
+   	    ssl = openssl_connect (pMyObject->Socket, (void *)&pMyObject->hostNames);
 	    if ( !ssl )
 		{
 
@@ -681,7 +681,7 @@ AnscSctoEngage
 		}
 	    else
 	    {
-			s_error = openssl_validate_certificate (pMyObject->Socket, pMyObject->HostName, ssl, SSL_CLIENT_CALLS);
+			s_error = openssl_validate_certificate (pMyObject->Socket, pMyObject->HostName, ssl, SSL_CLIENT_CALLS, pMyObject->hostNames.peerVerify);
 		    if ( s_error == 0 )
 		    {
 		        AnscTrace("AnscSctoEngage - openssl_validate_certificate() failed %p.\n", ssl);

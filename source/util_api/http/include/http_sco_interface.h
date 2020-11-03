@@ -397,6 +397,21 @@ typedef  ANSC_STATUS
         ULONG                       ipAddr
     );
 
+typedef  ANSC_STATUS
+(*PFN_HTTPSCO_GET_HOSTNAMES)
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
+typedef  ANSC_STATUS
+(*PFN_HTTPSCO_SET_HOSTNAMES)
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
+
 /*
  * The HyperText Transfer Protocol (HTTP) is an application-level protocol for distributed, col-
  * laborative, hypermedia information systems. It is a generic, stateless, protocol which can be
@@ -421,7 +436,9 @@ typedef  ANSC_STATUS
     char*                           pAuthPassword;                                          \
     ANSC_HANDLE                     hAcmIf;                                                 \
     ANSC_HANDLE                     hWebClientSession;                                      \
-	ULONG							SessionIdleTimeout;										\
+    ULONG			    SessionIdleTimeout;					    \
+    /* used to verify peer */								    \
+    HTTP_SCO_HOST_NAMES		    hostNames;	            	    			    \
                                                                                             \
     SLIST_HEADER                    WcsoTable[HTTP_SCO_WCSO_TABLE_SIZE];                    \
     ANSC_LOCK                       WcsoTableLock;                                          \
@@ -448,7 +465,9 @@ typedef  ANSC_STATUS
     PFN_HTTPSCO_SET_MODE            SetClientMode;                                          \
     PFN_HTTPSCO_GET_NAME            GetProductName;                                         \
     PFN_HTTPSCO_SET_NAME            SetProductName;                                         \
-	PFN_HTTPSCO_SET_TIMEOUT			SetSessionIdleTimeout;									\
+    PFN_HTTPSCO_GET_HOSTNAMES       GetHostNames;                                          \
+    PFN_HTTPSCO_SET_HOSTNAMES       SetHostNames;                                          \
+    PFN_HTTPSCO_SET_TIMEOUT	    SetSessionIdleTimeout;			    	    \
     PFN_HTTPSCO_GET_PROPERTY        GetProperty;                                            \
     PFN_HTTPSCO_SET_PROPERTY        SetProperty;                                            \
     PFN_HTTPSCO_RESET               ResetProperty;                                          \

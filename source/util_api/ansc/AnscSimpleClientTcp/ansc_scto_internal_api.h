@@ -169,6 +169,20 @@ AnscSctoSetPeerPort
         USHORT                      usPort
     );
 
+ANSC_STATUS
+AnscSctoGetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+	ANSC_HANDLE		    hHostNames
+    );
+
+ANSC_STATUS
+AnscSctoSetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
 ANSC_HANDLE
 AnscSctoGetWorker
     (
