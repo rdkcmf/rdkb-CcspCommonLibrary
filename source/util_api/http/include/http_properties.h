@@ -326,4 +326,13 @@ _HTTP_WEBC_SESSION_PROPERTY
 HTTP_WEBC_SESSION_PROPERTY,  *PHTTP_WEBC_SESSION_PROPERTY;
 
 
+typedef  struct
+_HTTP_SCO_HOST_NAMES
+{
+    BOOL peerVerify;
+    char **hostNames;
+    int numHosts;
+}
+HTTP_SCO_HOST_NAMES, *PHTTP_SCO_HOST_NAMES;
+
 #endif

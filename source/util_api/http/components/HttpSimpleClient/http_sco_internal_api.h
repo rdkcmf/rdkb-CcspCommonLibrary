@@ -143,6 +143,20 @@ HttpScoSetProductName
     );
 
 ANSC_STATUS
+HttpScoGetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+	ANSC_HANDLE		    hHostNames
+    );
+
+ANSC_STATUS
+HttpScoSetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE                 hHostNames
+    );
+
+ANSC_STATUS
 HttpScoSetSessionIdleTimeout
     (
         ANSC_HANDLE                 hThisObject,

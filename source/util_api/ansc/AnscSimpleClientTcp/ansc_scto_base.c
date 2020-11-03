@@ -364,6 +364,9 @@ AnscSctoInitialize
     pMyObject->GetPeerPort       = AnscSctoGetPeerPort;
     pMyObject->SetPeerPort       = AnscSctoSetPeerPort;
 
+    pMyObject->GetHostNames      = AnscSctoGetHostNames;
+    pMyObject->SetHostNames      = AnscSctoSetHostNames;
+
     pMyObject->GetWorker         = AnscSctoGetWorker;
     pMyObject->SetWorker         = AnscSctoSetWorker;
     pMyObject->GetMaxMessageSize = AnscSctoGetMaxMessageSize;
