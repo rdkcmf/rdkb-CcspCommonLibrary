@@ -274,6 +274,7 @@ typedef struct
     enum access_e access;
     dbus_bool accessControlChanged;
     unsigned int accessControlBitmask;
+    unsigned int RequesterID;
 } parameterAttributeStruct_t;
 
 typedef struct

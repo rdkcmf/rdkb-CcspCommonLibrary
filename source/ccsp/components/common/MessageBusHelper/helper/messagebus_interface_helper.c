@@ -754,6 +754,7 @@ CcspCcMbi_SetParameterAttributes
         pParamAttr->Notification        = val[i].notification ? DSLH_CWMP_NOTIFICATION_passive : DSLH_CWMP_NOTIFICATION_off;
         pParamAttr->bAccessListChange   = val[i].accessControlChanged;
         pParamAttr->AccessList          = AccessControlBitMaskToAccessList(val[i].accessControlBitmask);
+        pParamAttr->RequesterID         = val[i].RequesterID;
     }
 
     returnStatus =

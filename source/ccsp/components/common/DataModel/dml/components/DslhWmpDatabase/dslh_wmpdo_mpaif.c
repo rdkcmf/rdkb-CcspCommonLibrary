@@ -85,6 +85,7 @@
 #include "dslh_dmagnt_interface.h"
 #include "sys_definitions.h"
 #include "ccsp_psm_helper.h"
+#include "ccsp_trace.h"
 
 extern ULONG    g_lastWriteEntity;
 
@@ -2483,7 +2484,10 @@ DslhWmpdoMpaSetParameterAttributes
         else
         {
             pVarRecord = (PDSLH_VAR_RECORD_OBJECT)phAnyRecordArray[i];
+            if(pSetParameterAttribArray[i].RequesterID != 0)
+            CcspTraceInfo(("<<< %s pSetParameterAttribArray[%d].RequesterID %lu >>>\n",__FUNCTION__,i,pSetParameterAttribArray[i].RequesterID));
 
+            pVarRecord->RequesterID = pSetParameterAttribArray[i].RequesterID;
             if ( pSetParameterAttribArray[i].bNotificationChange )
             {
                 returnStatus =
@@ -2503,7 +2507,6 @@ DslhWmpdoMpaSetParameterAttributes
                             pSetParameterAttribArray[i].AccessList
                         );
             }
-
             pVarRecord->SaveConfig((ANSC_HANDLE)pVarRecord);
         }
     }

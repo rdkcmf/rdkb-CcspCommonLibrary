@@ -359,6 +359,7 @@ _DSLH_CWMP_SET_PARAM_ATTRIB
     int                             Notification;
     BOOL                            bAccessListChange;
     char*                           AccessList;     /* comma separated list */
+    int                             RequesterID;
 }
 DSLH_CWMP_SET_PARAM_ATTRIB,  *PDSLH_CWMP_SET_PARAM_ATTRIB;
 

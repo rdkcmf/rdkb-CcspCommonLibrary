@@ -892,11 +892,11 @@ int CcspBaseIf_setParameterAttributes_rbus(
     char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
     char* faultParam = NULL;
     UINT notification_count = 0;
-    char PA_name[256];
+    //char PA_name[256];
     char true_false[10];
     char notification_parameter[256];
     char** p_notification_parameter = NULL;
-    _ansc_strcpy(PA_name, bus_info->component_id);
+    //_ansc_strcpy(PA_name, bus_info->component_id);
     p_notification_parameter = (char**) (bus_info->mallocfunc(sizeof(char*) * size));
     if (!p_notification_parameter )
     {
@@ -905,6 +905,15 @@ int CcspBaseIf_setParameterAttributes_rbus(
     }
     memset(p_notification_parameter, 0, sizeof(char*) * size);
 #endif
+    char PA_name[256];
+    int isTR069Req = 0;
+    memset(PA_name,0,sizeof(PA_name));
+    _ansc_strcpy(PA_name, bus_info->component_id);
+
+    if(strstr(PA_name, ".tr069pa"))
+    {
+            isTR069Req = 1;
+    }
 
     rtMessage_Create(&request);
     rbus_AppendInt32(request, sessionId);
@@ -931,6 +940,15 @@ int CcspBaseIf_setParameterAttributes_rbus(
         rbus_AppendInt32(request, val[i].access);
         rbus_AppendInt32(request, val[i].accessControlChanged);
         rbus_AppendInt32(request, val[i].accessControlBitmask);
+        if(isTR069Req)
+        {
+            val[i].RequesterID = CCSP_COMPONENT_ID_ACS;
+        }
+        else
+            val[i].RequesterID = 0;
+        
+        rbus_AppendInt32(request, val[i].RequesterID);
+        
     }
 
     char *object_name = val[0].parameterName;
@@ -1004,6 +1022,7 @@ int CcspBaseIf_setParameterAttributes(
     dbus_int32_t res ;
     dbus_int32_t  tmp ;
     dbus_uint32_t utmp ;
+    dbus_uint32_t utmp1 ;
     DBusMessageIter iter;
     DBusMessageIter array_iter;
     DBusMessageIter struct_iter;
@@ -1015,13 +1034,22 @@ int CcspBaseIf_setParameterAttributes(
     char param_name[256] = "Device.NotifyComponent.Notifi_ParamName";
     char* faultParam = NULL;
     UINT notification_count = 0;
-    char PA_name[256];
+ 
     char true_false[10];
     char notification_parameter[256];
     char** p_notification_parameter;
-    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    _ansc_strcpy(PA_name, bus_info->component_id);
 #endif
+    char PA_name[256];
+    int isTR069Req = 0;
+    CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    memset(PA_name,0,sizeof(PA_name));
+    _ansc_strcpy(PA_name, bus_info->component_id);
+
+    if(strstr(PA_name, ".tr069pa"))
+    {
+            isTR069Req = 1;
+    }
+
     message = dbus_message_new_method_call (dst_component_id,
             dbus_path,
             CCSP_DBUS_INTERFACE_BASE,
@@ -1051,13 +1079,13 @@ int CcspBaseIf_setParameterAttributes(
 
     ret = dbus_message_iter_open_container (&iter,
             DBUS_TYPE_ARRAY,
-            "(sbbibu)",
+            "(sbbibuu)",
             &array_iter);
     for(i = 0; i < size ; i++)
     {
         dbus_message_iter_open_container (&array_iter,
                 DBUS_TYPE_STRUCT,
-                "sbbibu",
+                "sbbibuu",
                 &struct_iter);
 
         DBUS_MESSAGE_APPEND_STRING( &struct_iter, val[i].parameterName);
@@ -1085,7 +1113,17 @@ int CcspBaseIf_setParameterAttributes(
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_BOOLEAN, &val[i].accessControlChanged);
         utmp = val[i].accessControlBitmask;
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
+        if(isTR069Req)
+        {
+            val[i].RequesterID = CCSP_COMPONENT_ID_ACS;
+        }
+        else
+            val[i].RequesterID = 0;
 
+        utmp1 = val[i].RequesterID;
+        ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp1);
+        //CcspTraceInfo(("NOTIFICATION: %s : Param %s RequesterID = %lu \n", __FUNCTION__,val[i].parameterName, val[i].RequesterID));
+        
         dbus_message_iter_close_container (&array_iter,
                 &struct_iter);
     }

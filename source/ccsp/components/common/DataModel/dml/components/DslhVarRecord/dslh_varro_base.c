@@ -144,6 +144,7 @@ DslhVarroCreate
     pMyObject->hIrepFoParameter       = (ANSC_HANDLE)NULL;
     pMyObject->Notification           = DSLH_CWMP_NOTIFICATION_off;
     pMyObject->NotificationLimit      = 0;
+    pMyObject->RequesterID            = 0;
     pMyObject->AccessList             = NULL;
     pMyObject->TempParamValue         = NULL;
     pMyObject->TempParamValueTrans    = NULL;
