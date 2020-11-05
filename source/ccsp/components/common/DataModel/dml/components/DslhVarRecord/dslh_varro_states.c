@@ -78,7 +78,7 @@
 
 
 #include "dslh_varro_global.h"
-
+#include "ccsp_trace.h"
 
 /**********************************************************************
 
@@ -578,13 +578,19 @@ DslhVarroSetNotification
         }
         else
         {
+        if(pMyObject->RequesterID != 0)
+        CcspTraceInfo(("<<< %s pMyObject->RequesterID %lu >>>\n",__FUNCTION__,pMyObject->RequesterID));
+
+        if(pMyObject->RequesterID == DSLH_MPA_ACCESS_CONTROL_ACS) //If notification is set from TR69, then only push into queue
+        {
             returnStatus =
-                pDslhMprIf->RegNotifyParam
+                 pDslhMprIf->RegNotifyParam
                     (
                         pDslhMprIf->hOwnerContext,
                         (ANSC_HANDLE)pMyObject,
                         (pMyObject->Notification == DSLH_CWMP_NOTIFICATION_active)
                     );
+        }
         }
     }
 

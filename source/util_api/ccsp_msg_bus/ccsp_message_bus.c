@@ -2298,6 +2298,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 rbus_PopInt32(request, &parameterAttribute[i].access);
                 rbus_PopInt32(request, &parameterAttribute[i].accessControlChanged);
                 rbus_PopInt32(request, &parameterAttribute[i].accessControlBitmask);
+                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].RequesterID);
             }
             result = func->setParameterAttributes(sessionId, parameterAttribute, param_size, func->setParameterAttributes_data);
             rtMessage_Create(response);

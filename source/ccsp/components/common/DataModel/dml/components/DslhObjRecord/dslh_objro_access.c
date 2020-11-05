@@ -83,6 +83,7 @@
 
 #include "dslh_objro_global.h"
 #include "ccsp_base_api.h"
+#include "ccsp_trace.h"
 
 
 /**********************************************************************
@@ -906,7 +907,10 @@ DslhObjroSetAllParamAttribs
             {
                 continue;
             }
+            if(pSetParamAttrib->RequesterID != 0)
+            CcspTraceInfo(("<<< %s pSetParamAttrib->RequesterID %lu >>>\n",__FUNCTION__,pSetParamAttrib->RequesterID));
 
+            pChildVarRecord->RequesterID = pSetParamAttrib->RequesterID;
             if ( pSetParamAttrib->bNotificationChange )
             {
                 returnStatus =
@@ -926,7 +930,6 @@ DslhObjroSetAllParamAttribs
                             pSetParamAttrib->AccessList
                         );
             }
-
             pChildVarRecord->SaveConfig((ANSC_HANDLE)pChildVarRecord);
         }
     }

@@ -121,6 +121,7 @@
 #include "ccsp_message_bus.h"
 #include "ccsp_base_api.h"
 #include "messagebus_interface_helper.h"
+#include "ccsp_trace.h"
 
 
 /**********************************************************************
@@ -433,11 +434,12 @@ DslhWmpdoMprRegNotifyParam
      * Sometimes the value changes so fast and we fail to catch the change with the timer we defined.
      * we decide to retrieve current value right away */
     pMonitorParam->PreviousValue = pDslhVarRecord->GetValue((ANSC_HANDLE)pDslhVarRecord);
-
+    if(pDslhVarRecord->RequesterID != 0)
+    CcspTraceInfo(("<<<  pDslhVarRecord->RequesterID %lu >>>\n", pDslhVarRecord->RequesterID));
+    
     AnscAcquireLock   (&pMyObject->MpoQueueLock);
     AnscQueuePushEntry(&pMyObject->MpoQueue, &pMonitorParam->Linkage);
     AnscReleaseLock   (&pMyObject->MpoQueueLock);
-
     return  ANSC_STATUS_SUCCESS;
 }
 

@@ -302,6 +302,7 @@ static const char* Base_Introspect_msg =
     "                enum access_e access; // (CCSP_RO, CCSP_RW, CCSP_WO)\n"
     "                boolean accessControlChanged; \n"
     "                unsigned int accessControlBitmask;\n"
+    "                unsigned int RequesterID;\n"
     "                  //  0x00000000 ACS\n"
     "                  //  0x00000001 XMPP\n"
     "                  //  0x00000002 CLI\n"
@@ -312,7 +313,7 @@ static const char* Base_Introspect_msg =
     "        -->\n"
     "        <method name=\"setParameterAttributes\">\n"
     "            <arg type=\"i\" name=\"sessionId\" direction=\"in\" />\n"
-    "            <arg type=\"a(sbbibu)\" name=\"parameterAttributeStruct\" direction=\"in\" />\n"
+    "            <arg type=\"a(sbbibuu)\" name=\"parameterAttributeStruct\" direction=\"in\" />\n"
     "            <arg type=\"i\" name=\"size\" direction=\"in\" />\n"
     "            <arg type=\"i\" name=\"status\" direction=\"out\" />\n"
     "        </method>\n"
@@ -958,6 +959,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         dbus_int32_t tmp ,count = 0;
         char ** names;
         dbus_uint32_t utmp ;
+        dbus_uint32_t utmp1 ;
         dbus_int32_t sessionId ;
         dbus_int32_t result ;
         int param_size;
@@ -1037,6 +1039,14 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
             {
                 dbus_message_iter_get_basic (&struct_iter, &utmp);
                 parameterAttribute[i].accessControlBitmask = utmp;
+            }
+            dbus_message_iter_next (&struct_iter);
+            if(dbus_message_iter_get_arg_type (&struct_iter) == DBUS_TYPE_UINT32)
+            {
+                dbus_message_iter_get_basic (&struct_iter, &utmp1);
+                parameterAttribute[i].RequesterID = utmp1;
+		if(parameterAttribute[i].RequesterID != 0)
+                CcspTraceInfo(("Notification (%s) Param %s RequesterID %lu\n", __FUNCTION__,parameterAttribute[i].parameterName,parameterAttribute[i].RequesterID));
             }
 
             dbus_message_iter_next (&array_iter);

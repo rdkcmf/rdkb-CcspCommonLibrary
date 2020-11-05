@@ -264,6 +264,7 @@ typedef  ANSC_STATUS
     int                             Notification;                                           \
     ULONG                           NotificationLimit;                                      \
 	ULONG                           ReqSenderID;  											\
+    ULONG                           RequesterID;                                            \
     char*                           AccessList;                                             \
     SLAP_VARIABLE*                  TempParamValue;                                         \
     SLAP_VARIABLE*                  TempParamValueTrans;                                    \
