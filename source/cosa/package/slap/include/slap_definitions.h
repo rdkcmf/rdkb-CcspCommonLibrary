@@ -576,7 +576,7 @@ SLAP_VARIABLE,  *PSLAP_VARIABLE;
 #define  SlapMib2ConvertMibValue                    SlapMib2DboConvertMibValue
 
 #define  SlapResolveInvokeParam(method_descr, input_param_list, index)                      \
-         (method_descr->ParamListI->ParamArray[index].Syntax == SLAP_VAR_SYNTAX_variable)? &input_param_list->ParamArray[index] : input_param_list->ParamArray[index].Variant.varBool
+         (method_descr->ParamListI->ParamArray[index].Syntax == SLAP_VAR_SYNTAX_variable)? &input_param_list->ParamArray[index] : (void*)(&(input_param_list->ParamArray[index].Variant.varBool))
 
 #define  SlapImcpGetVarSize(slap_var, imcp_var_size)                                        \
          {                                                                                  \
