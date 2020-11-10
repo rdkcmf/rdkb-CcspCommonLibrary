@@ -23,6 +23,7 @@
 #include <nanomsg/pipeline.h>
 
 #define WAN_MANAGER_ADDR               "tcp://127.0.0.1:50321"
+#define PPP_MANAGER_ADDR               "tcp://127.0.0.1:50322"
 
 #define BUFLEN_4                         4
 #define BUFLEN_8                         8
@@ -44,13 +45,63 @@
 #define MAX_FULLPATH_LENGTH              1024
 #define AFTR_NAME_LENGTH                 256
 
+//LCP States
+typedef enum _PPP_STATES
+{
+    PPP_INTERFACE_UP = 1,
+    PPP_INTERFACE_DOWN,
+    PPP_INTERFACE_UNCONFIGURED,
+    PPP_INTERFACE_CONNECTING,
+    PPP_INTERFACE_AUTHENTICATING,
+    PPP_INTERFACE_PENDING_DISCONNET,
+    PPP_INTERFACE_DISCONNECTING,
+    PPP_INTERFACE_DISCONNECTED,
+    PPP_INTERFACE_LCP_ECHO_FAILED,
+    PPP_INTERFACE_AUTH_FAILED,
+    PPP_IPCP_COMPLETED,
+    PPP_IPCP_FAILED,
+    PPP_IPV6CP_COMPLETED,
+    PPP_IPV6CP_FAILED,
+    PPP_MAX_STATE
+}PPP_STATES;
+
 typedef enum
 {
     DHCPC_STATE_CHANGED = 1,
     DHCP6C_STATE_CHANGED,
-}msg_type_t;
+    IPC_MSG_PPP_STATE_CHANGE,
 
-typedef struct _dhcpv4_data_t
+}ipc_msg_type_t;
+
+typedef struct _ipc_ppp_ipcp_msg_t
+{
+    char ip[BUFLEN_32];
+    char mask[BUFLEN_32];
+    char gateway[BUFLEN_32];
+    char nameserver[BUFLEN_64];
+
+}ipc_ppp_ipcp_msg_t;
+
+typedef struct _ipc_ppp_ipv6cp_msg_t
+{
+    char localIntfId[IP_ADDR_LENGTH];
+    char remoteIntfId[IP_ADDR_LENGTH];
+
+}ipc_ppp_ipv6cp_msg_t;
+
+typedef struct _ipc_ppp_event_msg_t
+{
+    pid_t pid;
+    PPP_STATES pppState; //lcp state
+    union
+    {
+        ipc_ppp_ipcp_msg_t pppIpcpMsg; //ncp state
+        ipc_ppp_ipv6cp_msg_t pppIpv6cpMsg; // ncp v6 state
+    }event;
+
+}ipc_ppp_event_msg_t;
+
+typedef struct _ipc_dhcpv4_data_t
 {
     bool addressAssigned;              /** Have we been assigned an IP address ? */
     bool isExpired;                    /** Is the lease time expired ? */
@@ -70,9 +121,9 @@ typedef struct _dhcpv4_data_t
     uint32_t downstreamCurrRate;       /** Downstream rate */
     char dhcpServerId[BUFLEN_64];      /** Dhcp server id */
     char dhcpState[BUFLEN_64];         /** Dhcp state. */
-} dhcpv4_data_t;
+} ipc_dhcpv4_data_t;
 
-typedef struct _dhcpv6_data_t
+typedef struct _ipc_dhcpv6_data_t
 {
    bool prefixAssigned;  /** Have we been assigned a site prefix ? */
    bool addrAssigned;    /** Have we been assigned an IPv6 address ? */
@@ -109,14 +160,15 @@ typedef struct _dhcpv6_data_t
    uint32_t psid;
    bool isFMR;
 #endif
-} dhcpv6_data_t;
+} ipc_dhcpv6_data_t;
 
-typedef struct _msg_payload_t
+typedef struct _ipc_msg_payload_t
 {
-    msg_type_t msg_type;
+    ipc_msg_type_t msg_type;
     union {
-        dhcpv4_data_t dhcpv4;
-        dhcpv6_data_t dhcpv6;
+        ipc_dhcpv4_data_t dhcpv4;
+        ipc_dhcpv6_data_t dhcpv6;
+        ipc_ppp_event_msg_t pppEventMsg;
     }data;
-} msg_payload_t;
+} ipc_msg_payload_t;
 #endif

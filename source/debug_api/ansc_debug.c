@@ -131,6 +131,8 @@ volatile BOOL VLANMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int VLANMANAGER_RDKLogLevel = 4;
 volatile BOOL GPONMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int GPONMANAGER_RDKLogLevel = 4;
+volatile BOOL PPPMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int PPPMANAGER_RDKLogLevel = 4;
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -398,6 +400,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.GPONMANAGER";
             LogLevel = GPONMANAGER_RDKLogLevel;
             LogEnable = GPONMANAGER_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pppmanager"))
+        {
+            ComponentName= "LOG.RDK.PPPMANAGER";
+            LogLevel = PPPMANAGER_RDKLogLevel;
+            LogEnable = PPPMANAGER_RDKLogEnable;
         }
         else
         {
