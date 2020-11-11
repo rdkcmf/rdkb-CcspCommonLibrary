@@ -111,9 +111,6 @@ USER_SYSTEM_TIME,  *PUSER_SYSTEM_TIME;
 #define  UserGetTickInMilliSeconds()                GetTickCount()
 #define  UserGetTickInMilliSeconds2                 UserGetTickInMilliSeconds
 #define  UserGetTickInMilliSecondsAbs()             UserGetTickInMilliSeconds()
-#if 0
-#define  UserGetTickInMicroSeconds()                (UserGetTickInMilliSeconds() * 1000)
-#endif
 #define  UserGetUtcTime                             UserGetSystemTime
 #define  UserSetUtcTime                             UserSetSystemTime
 
@@ -197,42 +194,6 @@ UserSetLocalTime(USER_SYSTEM_TIME*  user_local_time)
     windows_local_time.wMilliseconds = (WORD)user_local_time->MilliSecond;
 
     SetLocalTime(&windows_local_time);
-}
-
-
-__inline  void
-UserGetTickInMicroSeconds64(ULONG*  hi_part, ULONG*  lo_part)
-{
-    ULONG                           cur_ms    = GetTickCount();
-    ULONG                           max_block = 0xFFFFFFFF / 1000;
-    ULONG                           cur_block = 0;
-    ULONG                           block_cnt = cur_ms / max_block + 1;
-    ULONG                           k         = 0;
-
-    *hi_part = 0;
-    *lo_part = 0;
-
-    for ( k = 0; k < block_cnt; k++ )
-    {
-        if ( cur_ms >= max_block )
-        {
-            cur_block = max_block;
-        }
-        else
-        {
-            cur_block = cur_ms;
-        }
-
-        cur_ms -= cur_block;
-
-        cur_block *= 1000;
-        *lo_part  += cur_block;
-
-        if ( *lo_part < cur_block )
-        {
-            *hi_part += 1;
-        }
-    }
 }
 
 

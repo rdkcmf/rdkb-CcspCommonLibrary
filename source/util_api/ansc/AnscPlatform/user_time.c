@@ -212,29 +212,7 @@ UserGetTickInMilliSecondsAbs()
 	return ulSecond * 1000 + ulHundredth * 10;
 }
 */
-#if 0
-ULONG
-UserGetTickInMicroSeconds
-    (
-        VOID
-    )
-{
 
-    return  1000*UserGetTickInMilliSeconds();
-}
-
-void
-UserGetTickInMicroSeconds64
-    (
-        ULONG*                      hi_part,
-        ULONG*                      lo_part
-    )
-{
-
-    *hi_part = 0;
-    *lo_part = UserGetTickInMicroSeconds();
-}
-#endif
 void
 UserGetSystemTime(USER_SYSTEM_TIME*  pSystemTime)
 {

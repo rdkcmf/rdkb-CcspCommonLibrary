@@ -126,25 +126,6 @@ KernelGetTickInMilliSeconds()
     return jiffies * (1000 / HZ);
 }
 
-#if 0
-__static_inline  ULONG
-KernelGetTickInMicroSeconds()
-{
-    return jiffies * (1000000 / HZ);
-}
-
-__static_inline  void
-KernelGetTickInMicroSeconds64
-    (
-        ULONG*                      hi_part,
-        ULONG*                      lo_part
-    )
-{
-    *hi_part = 0;
-    *lo_part = jiffies * (1000000 / HZ);
-}
-#endif
-
 #define KernelGetLocalTime KernelGetSystemTime
 __static_inline  void
 KernelGetSystemTime(KERNEL_SYSTEM_TIME*  pSystemTime)

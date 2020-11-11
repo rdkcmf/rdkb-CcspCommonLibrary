@@ -1037,22 +1037,6 @@ AnscFromHexToString
         BOOL                        bLowerCase
     );
 
-#if 0
-ULONG
-AnscFromStringToHex
-    (
-        char*                       string,
-        PUCHAR                      hex
-    );
-
-void
-AnscStringFromAToU
-    (
-        char*                       string,
-        ULONG                       ulSize
-    );
-#endif
-
 void
 AnscStringFromLToU
     (
@@ -1093,22 +1077,6 @@ AnscSizeOfToken3
         ULONG                       range
     );
 
-#if 0
-ULONG
-AnscNumberOfCharsInString
-    (
-        char*                       string,
-        char                        charToFind
-    );
-
-ULONG
-AnscNumberOfTokens
-    (
-        char*                       string,
-        char*                       separator
-    );
-#endif
-
 char*
 AnscMoveToNextToken
     (
@@ -1122,41 +1090,6 @@ AnscMoveToNextToken2
         char*                       string,
         char*                       alphabet
     );
-
-#if 0
-char*
-AnscMoveToPreviousToken
-    (
-        char*                       string,
-        char*                       separator,
-        PULONG                      pulTokenLength
-    );
-
-ANSC_STATUS
-AnscExtractToken
-    (
-        char*                       string,
-        char*                       separator,
-        ULONG                       index,
-        char*                       output
-    );
-
-ANSC_STATUS
-AnscExtractToken2
-    (
-        char*                       string,
-        char*                       alphabet,
-        ULONG                       index,
-        char*                       output
-    );
-
-void
-AnscConsumeToken
-    (
-        char*                       string,
-        char*                       separator
-    );
-#endif
 
 void
 AnscGetUlongString
@@ -1197,28 +1130,6 @@ AnscCloneString
         char*                       src_string
     );
 
-#endif
-
-#if 0
-ANSC_HANDLE
-AnscCreateScanner
-    (
-        char**                      string_array,
-        ULONG                       string_count
-    );
-
-ANSC_STATUS
-AnscRemoveScanner
-    (
-        ANSC_HANDLE                 hStringScanner
-    );
-
-char*
-AnscScanString
-    (
-        ANSC_HANDLE                 hStringScanner,
-        char*                       tbs_string
-    );
 #endif
 
 BOOL
@@ -1284,18 +1195,6 @@ AnscTcGetLength
         ANSC_HANDLE                 hTokenChain,
         char*                       separator
     );
-
-#if 0    
-BOOL
-AnscTcEqualString
-    (
-        ANSC_HANDLE                 hTokenChain,
-        char*                       string,
-        char*                       separator,
-        BOOL                        bCaseSensitive,
-        BOOL                        bStrict
-    );
-#endif
 
 ANSC_HANDLE
 AnscTcPopToken
@@ -1381,14 +1280,6 @@ AnscSecondToLocalCalendar
         ULONG                       ulSeconds,
         ANSC_HANDLE                 hCalendar
     );
-
-#if 0
-ANSC_STATUS
-AnscGetWholeTickInMicroSeconds
-    (
-        PANSC_UINT64                pWholeTicks
-    );
-#endif
 
 /***********************************************************
             FUNCTIONS IMPLEMENTED IN ANSC_TIMER.C

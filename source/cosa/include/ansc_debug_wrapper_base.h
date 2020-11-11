@@ -88,27 +88,12 @@
 
   #define ANSC_FORCEINLINE                  static inline __attribute__((always_inline))
 
-#if 0
-  #if __GNUC__ < 2 || (__GNUC__ == 2 && __GNUC_MINOR__ < 96)
-    #define ansc_likely(x)                  (x)
-    #define ansc_unlikely(x)                (x)
-  #else
-    #define ansc_likely(x)                  __builtin_expect(!!(x), 1)
-    #define ansc_unlikely(x)                __builtin_expect(!!(x), 0)
-  #endif
-#endif
-
 #elif defined(_MSC_VER)
 
   #define ANSC_FORCEINLINE                  __inline
 
   #pragma warning(disable: 4200)   /* zero-sized array in struct/union */
   #pragma warning(disable: 4201)   /* nameless struct/union */
-
-#if 0
-  #define ansc_likely(x)                    (x)
-  #define ansc_unlikely(x)                  (x)
-#endif
 
 #else 
 
@@ -574,12 +559,6 @@
  * its value. While some compilers may provide support for a 64-bit integer, we want to define our
  * own here to make it platform-independent.
  */
-#if 0
-typedef  UCHAR   ANSC_UINT08,  *PANSC_UINT08;
-typedef  USHORT  ANSC_UINT16,  *PANSC_UINT16;
-typedef  ULONG   ANSC_UINT32,  *PANSC_UINT32;
-#endif
-
 typedef  struct
 _ANSC_UINT64
 {
@@ -740,16 +719,6 @@ ANSC_UINT64,  *PANSC_UINT64;
             *(PULONG)pb = u32;
         }
 
-#if 0
-        #define  AnscEqualUshort(a, b)                                                      \
-                 ( (*((PUCHAR)&a) == *((PUCHAR)&b)) && (*((PUCHAR)&a + 1) == *((PUCHAR)&b + 1)) )
-        #define  AnscEqualUlong(a, b)                                                       \
-                 ( (*((PUCHAR)&a) == *((PUCHAR)&b)) && (*((PUCHAR)&a + 1) == *((PUCHAR)&b + 1)) && (*((PUCHAR)&a + 2) == *((PUCHAR)&b + 2)) && (*((PUCHAR)&a + 3) == *((PUCHAR)&b + 3)) )
-
-        #define  AnscUcharToUshort(f_uchar)                                                 \
-                 (USHORT)(f_uchar)
-#endif
-
     #else
 
         ANSC_FORCEINLINE
@@ -828,15 +797,6 @@ ANSC_UINT64,  *PANSC_UINT64;
             *(PULONG)pb = u32;
         }
 
-#if 0
-        #define  AnscEqualUshort(a, b)                                                      \
-                 ( (*((PUCHAR)&a) == *((PUCHAR)&b)) && (*((PUCHAR)&a + 1) == *((PUCHAR)&b + 1)) )
-        #define  AnscEqualUlong(a, b)                                                       \
-                 ( (*((PUCHAR)&a) == *((PUCHAR)&b)) && (*((PUCHAR)&a + 1) == *((PUCHAR)&b + 1)) && (*((PUCHAR)&a + 2) == *((PUCHAR)&b + 2)) && (*((PUCHAR)&a + 3) == *((PUCHAR)&b + 3)) )
-
-        #define  AnscUcharToUshort(f_uchar)                                                 \
-                 (USHORT)(f_uchar) * 0x100
-#endif
     #endif
 
 #else
@@ -849,13 +809,6 @@ ANSC_UINT64,  *PANSC_UINT64;
         #define  AnscWriteUshort(addr, data)        *(PUSHORT)(addr) = data
         #define  AnscWriteUlong(addr, data)         *(PULONG )(addr) = data
 
-#if 0
-        #define  AnscEqualUshort(a, b)              ( a == b )
-        #define  AnscEqualUlong(a, b)               ( a == b )
-
-        #define  AnscUcharToUshort(f_uchar)         (USHORT)(f_uchar)
-#endif
-
     #else
 
         #define  AnscReadUshort(addr)               (*(PUSHORT)(addr))
@@ -863,13 +816,6 @@ ANSC_UINT64,  *PANSC_UINT64;
 
         #define  AnscWriteUshort(addr, data)        *(PUSHORT)(addr) = data
         #define  AnscWriteUlong(addr, data)         *(PULONG )(addr) = data
-
-#if 0
-        #define  AnscEqualUshort(a, b)              ( a == b )
-        #define  AnscEqualUlong(a, b)               ( a == b )
-
-        #define  AnscUcharToUshort(f_uchar)         (USHORT)(f_uchar) * 0x100
-#endif
 
     #endif
 

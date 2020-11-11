@@ -53,7 +53,6 @@
         *   AnscTcAllocate3
         *   AnscTcFree
         *   AnscTcGetLength
-        *   AnscTcEqualString
         *   AnscTcPopToken
         *   AnscGetTokenChain
         *   AnscSetTokenChain
@@ -383,120 +382,6 @@ AnscTcGetLength
 
     return  ulStringLen;
 }
-
-#if 0
-BOOL
-AnscTcEqualString
-    (
-        ANSC_HANDLE                 hTokenChain,
-        char*                       string,
-        char*                       separator,
-        BOOL                        bCaseSensitive,
-        BOOL                        bStrict
-    )
-{
-    ANSC_STATUS                     returnStatus   = ANSC_STATUS_SUCCESS;
-    PANSC_TOKEN_CHAIN               pSrcTokenChain = (PANSC_TOKEN_CHAIN)hTokenChain;
-    PANSC_TOKEN_CHAIN               pDstTokenChain = NULL;
-    PANSC_STRING_TOKEN              pSrcToken      = NULL;
-    PANSC_STRING_TOKEN              pDstToken      = NULL;
-    ULONG                           ulTokenCount   = AnscTcGetTokenCount(pSrcTokenChain);
-    ULONG                           ulStrLen       = AnscTcGetLength(hTokenChain, separator);
-    char*                           pSrcString     = string;
-    char*                           pDstString     = NULL;
-    BOOL                            bStrMatched    = FALSE;
-    ULONG                           i              = 0;
-    ANSC_TOKEN_CHAIN                tempTc;
-
-    if ( bStrict )
-    {
-        bStrMatched = FALSE;
-        pDstString  = (char*)AnscAllocateMemory(ulStrLen + 16);
-
-        if ( !pDstString )
-        {
-            return  FALSE;
-        }
-        else
-        {
-            returnStatus =
-                AnscGetTokenChain
-                    (
-                        (ANSC_HANDLE)pSrcTokenChain,
-                        pDstString,
-                        separator
-                    );
-        }
-
-        if ( AnscEqualString
-                (
-                    pSrcString,
-                    pDstString,
-                    bCaseSensitive
-                ) )
-        {
-            bStrMatched = TRUE;
-        }
-        else
-        {
-            bStrMatched = FALSE;
-        }
-
-        AnscFreeMemory(pDstString);
-    }
-    else
-    {
-        bStrMatched    = FALSE;
-        pDstTokenChain = (PANSC_TOKEN_CHAIN)&tempTc;
-        returnStatus   =
-            AnscSetTokenChain
-                (
-                    (ANSC_HANDLE)pDstTokenChain,
-                    pSrcString,
-                    separator
-                );
-
-        if ( returnStatus == ANSC_STATUS_SUCCESS )
-        {
-            if ( ulTokenCount != AnscTcGetTokenCount(pDstTokenChain) )
-            {
-                bStrMatched = FALSE;
-            }
-            else
-            {
-                for ( i = 0; i < ulTokenCount; i++ )
-                {
-                    pSrcToken = (PANSC_STRING_TOKEN)AnscQueueSearchEntryByIndex(&pSrcTokenChain->TokensQueue, i);
-                    pDstToken = (PANSC_STRING_TOKEN)AnscQueueSearchEntryByIndex(&pDstTokenChain->TokensQueue, i);
-
-                    if ( !AnscEqualString
-                            (
-                                pSrcToken->Name,
-                                pDstToken->Name,
-                                bCaseSensitive
-                            ) )
-                    {
-                        break;
-                    }
-                }
-
-                if ( i >= ulTokenCount )
-                {
-                    bStrMatched = TRUE;
-                }
-                else
-                {
-                    bStrMatched = FALSE;
-                }
-            }
-        }
-
-        AnscDelTokenChain((ANSC_HANDLE)pDstTokenChain);
-    }
-
-    return  bStrMatched;
-}
-#endif
 
 ANSC_HANDLE
 AnscTcPopToken

@@ -283,19 +283,6 @@ AnscSecondToLocalCalendar
 
 }
 
-#if 0
-ANSC_STATUS
-AnscGetWholeTickInMicroSeconds
-    (
-        PANSC_UINT64                pWholeTicks
-    )
-{
-    AnscGetTickInMicroSeconds64(&pWholeTicks->HiPart, &pWholeTicks->LoPart);
-
-    return  ANSC_STATUS_SUCCESS;
-}
-#endif
-
 #ifdef	_ANSC_SIMPLE_TIMEZONE
 
 ANSC_STATUS 

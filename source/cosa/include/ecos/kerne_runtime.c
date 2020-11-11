@@ -50,7 +50,6 @@
 
         *   _ansc_itoa
         *   _ansc_ultoa
-        *   _ansc_strdup
         *   _ansc_stricmp
 
     ---------------------------------------------------------------
@@ -167,35 +166,6 @@ _ansc_ultoa
 
     return  pBuf;
 }
-
-#if 0
-char*
-_ansc_strdup
-    (
-        char*                       pSrc
-    )
-{
-    char*                           pTemp;
-    ULONG                           ulLen;
-    errno_t                         rc = -1;
-
-    ulLen = _ansc_strlen(pSrc) + 1;
-
-    pTemp = malloc(ulLen);
-
-    if(!pTemp)
-        return 	NULL;
-
-    rc = strcpy_s(pTemp, ulLen, pSrc);
-    if(rc != EOK)
-    {
-        ERR_CHK(rc);
-        return NULL;
-    }
-
-    return pTemp;
-}
-#endif
 
 /**********************************************************************
 

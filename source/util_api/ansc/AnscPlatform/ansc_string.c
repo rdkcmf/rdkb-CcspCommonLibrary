@@ -51,28 +51,17 @@
         *   AnscEqualString1
         *   AnscEqualString2
         *   AnscFromHexToString
-        *   AnscFromStringToHex
-        *   AnscStringFromAToU
         *   AnscStringFromLToU
         *   AnscStringFromUToL
         *   AnscSizeOfToken
         *   AnscSizeOfToken2
         *   AnscSizeOfToken3
-        *   AnscNumberOfCharsInString
-        *   AnscNumberOfTokens
         *   AnscMoveToNextToken
         *   AnscMoveToNextToken2
-        *   AnscMoveToPreviousToken
-        *   AnscExtractToken
-        *   AnscExtractToken2
-        *   AnscConsumeToken
         *   AnscGetUlongString
         *   AnscGetStringUlong
         *   AnscGetStringUlongHex
         *   AnscCloneString
-        *   AnscCreateScanner
-        *   AnscRemoveScanner
-        *   AnscScanString
         *   AnscIsValidIpString
         *   AnscIsValidIp6String
         *   AnscParseIp6Address
@@ -267,73 +256,6 @@ AnscFromHexToString
     }
 }
 
-#if 0
-ULONG
-AnscFromStringToHex
-    (
-        char*                       string,
-        PUCHAR                      hex
-    )
-{
-    PUCHAR                          hex_string   = hex;
-    ULONG                           ulUcharCount = AnscSizeOfString(string) / 2;
-    ULONG                           ulTmpValue   = 0;
-    ULONG                           i            = 0;
-    BOOL                            bZeroOmitted = ((AnscSizeOfString(string) % 2) != 0);
-    char                            temp_char[3];
-
-    if ( bZeroOmitted )
-    {
-        temp_char[0] = '0';
-        temp_char[1] = *string; string++;
-        temp_char[2] = 0;
-
-        ulTmpValue = AnscGetStringUlongHex(temp_char);
-
-        *hex_string = (UCHAR)ulTmpValue;
-         hex_string++;
-    }
-
-    for ( i = 0; i < ulUcharCount; i++ )
-    {
-        temp_char[0] = *string; string++;
-        temp_char[1] = *string; string++;
-        temp_char[2] = 0;
-
-        ulTmpValue = AnscGetStringUlongHex(temp_char);
-
-        *hex_string = (UCHAR)ulTmpValue;
-         hex_string++;
-    }
-
-    return  hex_string - hex;
-}
-
-
-void
-AnscStringFromAToU
-    (
-        char*                       string,
-        ULONG                       ulSize
-    )
-{
-    int                             i = 0;
-
-    /*
-     * Caller is responsible for making sure that string buffer is big enough for holding double-
-     * sized unicode string.
-     */
-    for ( i = (int)ulSize - 1; i >= 0; i-- )
-    {
-        string[i * 2 + 0] = string[i];
-        string[i * 2 + 1] = 0;
-    }
-
-    return;
-}
-#endif
-
-
 void
 AnscStringFromLToU
     (
@@ -476,78 +398,6 @@ AnscSizeOfToken3
     return  count;
 }
 
-#if 0
-ULONG
-AnscNumberOfCharsInString
-    (
-        char*                       string,
-        char                        charToFind
-    )
-{
-    ULONG                           ulNumberOfChars = AnscSizeOfString(string);
-    ULONG                           i               = 0;
-    ULONG                           count           = 0;
-
-    for ( i = 0; i < ulNumberOfChars; i++ )
-    {
-        if ( string[i] == charToFind )
-        {
-            return  count;
-        }
-    }
-
-    return  count;
-}
-
-
-ULONG
-AnscNumberOfTokens
-    (
-        char*                       string,
-        char*                       separator
-    )
-{
-    ULONG                           ulSizeOfStr = 0;
-    ULONG                           count       = 0;
-    ULONG                           ulTokenSize = 0;
-    char*                           pTempChar   = NULL;
-
-    /*RDKB-5652, CID-24063, 11-May-2016, Null validation before assignement*/
-    if( !string || !separator )
-    {
-        return  0;
-    }
-
-    ulSizeOfStr = AnscSizeOfString(string);
-    pTempChar   = string;
-
-    string      = AnscMoveToNextToken(string, separator);
-    /*CID: 55077 Dereference before null check*/
-    if ( !string )
-    {
-        return  0;
-    }
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-
-    while ( string && ulTokenSize && ((ULONG)(string - pTempChar) < ulSizeOfStr) )
-    {
-        count++;
-
-        string     += ulTokenSize;
-        string      = AnscMoveToNextToken(string, separator);
-        /*CID: 55077 Dereference before null check*/
-        if ( !string )
-        {
-            break;
-        }
-        ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-    }
-
-    return  count;
-}
-#endif
-
-
 char*
 AnscMoveToNextToken
     (
@@ -578,216 +428,6 @@ AnscMoveToNextToken2
 
     return  string;
 }
-
-#if 0
-char*
-AnscMoveToPreviousToken
-    (
-        char*                       string,
-        char*                       separator,
-        PULONG                      pulTokenLength
-    )
-{
-    ULONG                           count = 0;
-
-    while ( AnscCharInString(separator, *string) )
-    {
-        string--;
-    }
-
-    while ( !AnscCharInString(separator, *string) )
-    {
-        string--;
-        count++;
-    }
-
-    string++;
-
-    *pulTokenLength = count;
-
-    return  string;
-}
-
-
-ANSC_STATUS
-AnscExtractToken
-    (
-        char*                       string,
-        char*                       separator,
-        ULONG                       index,
-        char*                       output
-    )
-{
-    ULONG                           ulTokenSize = 0;
-
-    /*RDKB-5652, CID-24096, 11-May-2016, Null validation before assignement*/
-    if ( !string || !separator )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    string      = AnscMoveToNextToken(string, separator);
-    /*CID: 66026 Dereference before null check*/
-    if ( !string )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-
-    if ( !ulTokenSize )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    while ( index && string && ulTokenSize )
-    {
-        index--;
-
-        string     += ulTokenSize;
-        string      = AnscMoveToNextToken(string, separator);
-	/*CID: 66026 Dereference before null check*/
-        if ( !string )
-        {
-            return  ANSC_STATUS_UNAPPLICABLE;
-        }
-        ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-    }
-
-    if ( string && ulTokenSize )
-    {
-        AnscCopyMemory(output, string, ulTokenSize);
-
-        output[ulTokenSize] = 0;
-    }
-    else
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    return  ANSC_STATUS_SUCCESS;
-}
-
-
-ANSC_STATUS
-AnscExtractToken2
-    (
-        char*                       string,
-        char*                       alphabet,
-        ULONG                       index,
-        char*                       output
-    )
-{
-    ULONG                           ulTokenSize = 0;
-
-
-    /*RDKB-5652, CID-24165, 11-May-2016, Null validation before assignement*/
-    if ( !string || !alphabet )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    string      = AnscMoveToNextToken2(string, alphabet);
-    /*CID: 55939 Dereference before null check*/ 
-    if ( !string )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-    ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
-
-    if ( !ulTokenSize )
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    while ( index && string && ulTokenSize )
-    {
-        index--;
-
-        string     += ulTokenSize;
-        string      = AnscMoveToNextToken2(string, alphabet);
-        /*CID: 55939 Dereference before null check*/ 
-        if ( !string )
-        {
-            return  ANSC_STATUS_UNAPPLICABLE;
-        }
-        ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
-    }
-
-    if ( string && ulTokenSize )
-    {
-        AnscCopyMemory(output, string, ulTokenSize);
-
-        output[ulTokenSize] = 0;
-    }
-    else
-    {
-        return  ANSC_STATUS_UNAPPLICABLE;
-    }
-
-    return  ANSC_STATUS_SUCCESS;
-}
-
-
-void
-AnscConsumeToken
-    (
-        char*                       string,
-        char*                       separator
-    )
-{
-    ULONG                           ulSizeOfStr = 0;
-    ULONG                           ulTokenSize = 0;
-    char*                           pTemp       = string;
-    char                            tempChar[128];
-
-    /*RDKB-5652, CID-24301, 11-May-2016, Null validation before assignement*/
-    if ( !string || !separator )
-    {
-        return;
-    }
-
-    ulSizeOfStr = AnscSizeOfString(string);
-
-    AnscZeroMemory(tempChar, 128);
-
-    string      = AnscMoveToNextToken(string, separator);
-    /*CID: 57633 Dereference before null check*/
-    if ( !string )
-    {
-        return;
-    }
-
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-
-    if ( !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
-    {
-        return;
-    }
-
-    string     += ulTokenSize;
-    string      = AnscMoveToNextToken(string, separator);
-    /*CID: 57633 Dereference before null check*/
-    if ( !string )
-    {
-        return;
-    }
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-
-    if ( !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
-    {
-        pTemp[0] = 0;
-    }
-    else
-    {
-        AnscCopyString(tempChar, string);
-        AnscCopyString(pTemp, tempChar);
-
-        pTemp[AnscSizeOfString(tempChar)] = 0;
-    }
-
-    return;
-}
-#endif
 
 void
 AnscGetUlongString
@@ -971,44 +611,6 @@ AnscCloneString
     return  dst_string;
 }
 
-#endif
-
-#if 0
-ANSC_HANDLE
-AnscCreateScanner
-    (
-        char**                      string_array,
-        ULONG                       string_count
-    )
-{
-    UNREFERENCED_PARAMETER(string_array);
-    UNREFERENCED_PARAMETER(string_count);
-    return  (ANSC_HANDLE)NULL;
-}
-
-
-ANSC_STATUS
-AnscRemoveScanner
-    (
-        ANSC_HANDLE                 hStringScanner
-    )
-{
-    UNREFERENCED_PARAMETER(hStringScanner);
-    return  ANSC_STATUS_SUCCESS;
-}
-
-
-char*
-AnscScanString
-    (
-        ANSC_HANDLE                 hStringScanner,
-        char*                       tbs_string
-    )
-{
-    UNREFERENCED_PARAMETER(hStringScanner);
-    UNREFERENCED_PARAMETER(tbs_string);
-    return  NULL;
-}
 #endif
 
 BOOL

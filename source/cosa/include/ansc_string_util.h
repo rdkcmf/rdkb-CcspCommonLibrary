@@ -79,10 +79,6 @@
 
 #include "ansc_memory_complement.h"
 
-#if 0
-#define  ANSC_STRING_FORMAT                         _ansc_sprintf
-#endif
-
 #define  AnscStrStr                                 _ansc_strstr
 #define  AnscStrChr                                 _ansc_strchr
 #define  AnscStrSpn                                 _ansc_strspn
@@ -91,10 +87,6 @@
 #define  AnscString2Int                             _ansc_atoi
 #define  AnscString2Double                          _ansc_atof
 #define  AnscInt2String                             _ansc_ultoa
-
-#if 0
-#define  AnscStrEqualNoCase(s1, s2)                 AnscEqualString1(s1, s2, FALSE)
-#endif
 
 
 /*
@@ -137,38 +129,6 @@ AnscDupString
         PUCHAR                      pStr
     );
 
-#if 0
-PUCHAR
-AnscDupString2
-    (
-        PUCHAR                      pStr,
-        ULONG                       ulStrLen,
-        ULONG                       ulNumPadding
-    );
-
- 
-PUCHAR
-AnscDupIp4Addr
-    (
-        PUCHAR                      pStr
-    );
-
-
-PUCHAR
-AnscDupMacAddr
-    (
-        PUCHAR                      pStr
-    );
-
- 
-void
-AnscStr2Ip4Addr
-    (
-        PUCHAR                      pStr,
-        PUCHAR                      pIp4Addr
-    );
-#endif
-
 PVOID
 AnscMemUtilRealloc
     (
@@ -176,95 +136,6 @@ AnscMemUtilRealloc
         ULONG                       ulSize,
         ULONG                       ulNewSize
     );
-
-#if 0
-PUCHAR
-AnscStringUtf16ToUtf8
-    (
-        BOOL                        bBigEndian,
-        PUCHAR                      pStr,
-        ULONG                       ulStrLen
-    );
-
-
-ULONG
-AnscUtf16CharToUcs4Code
-    (
-        BOOL                        bBigEndian,
-        PUCHAR                      pChar,
-        ULONG                       ulBufSize,
-        PULONG                      pulCharSize
-    );
-
-
-ANSC_STATUS
-AnscUcs4CodeToUtf8
-    (
-        ULONG                       ulUcs4Code,
-        PUCHAR                      pBuf,
-        PULONG                      pulLen
-    );
-
-
-ULONG
-AnscStringUtf16ToUtf8Size
-    (
-        BOOL                        bBigEndian,
-        PUCHAR                      pStr,
-        ULONG                       ulStrLen
-    );
-
-PUCHAR
-AnscStringUcs2ToUtf8
-    (
-        BOOL                        bBigEndian,
-        PUCHAR                      pStr,
-        ULONG                       ulStrLen
-    );
-
-ULONG
-AnscStringUcs2ToUtf8Size
-    (
-        BOOL                        bBigEndian,
-        PUCHAR                      pStr,
-        ULONG                       ulStrLen
-    );
-
-ANSC_STATUS
-AnscUtf8CharToUcs4Code
-    (
-        PUCHAR                      pChar,
-        ULONG                       ulBufSize,
-        PULONG                      pulUcs4Code,
-        PULONG                      pulCharSize
-    );
-
-
-ANSC_STATUS
-AnscUcs4CodeToUtf16
-    (
-        ULONG                       ulUcs4Code,
-        BOOL                        bBigEndian,
-        PUCHAR                      pBuf,
-        PULONG                      pulLen
-    );
-
-
-PUCHAR
-AnscStringUtf8ToUtf16
-    (
-        PUCHAR                      pStr,
-        BOOL                        bBigEndian,
-        PULONG                      pulUtf16StrSize
-    );
-
-
-ULONG
-AnscStringUtf8T0Utf16Size
-    (
-        PUCHAR                      pStr
-    );
-#endif
 
 BOOL
 AnscValidStringCheck
@@ -283,96 +154,6 @@ is_Ipv6_address
     (
         PUCHAR                     pString
     );
-
-#if 0    
-#if ( defined(_ANSC_WINDOWSNT) ||  defined(_ANSC_WINDOWS9X) ) && !defined(_ANSC_KERNEL)
-
-static __inline  int
-AnscMbstoWcs
-    (
-        PVOID                       pMbStr,
-        ULONG                       ulMbStrLen, /* in bytes */
-        PVOID                       pWcBuf,
-        ULONG                       ulWcBufSize,
-        PBOOL                       pbLittleEndian
-    )
-{
-    int                             nRet    = -1;
-
-#ifdef   _ANSC_LITTLE_ENDIAN_
-    *pbLittleEndian     = TRUE;
-#else
-    *pbLittleEndian     = FALSE;
-#endif
-
-    nRet = 
-        MultiByteToWideChar
-            (
-                CP_ACP,
-                0,
-                (LPCSTR)pMbStr,
-                ulMbStrLen,
-                (LPWSTR)pWcBuf,
-                ulWcBufSize
-            );
-
-    return nRet;
-}
-
-#elif defined(_ANSC_LINUX) && !defined(_ANSC_KERNEL)
-
-#include <stddef.h>
-
-static __inline  int
-AnscMbstoWcs
-    (
-        PVOID                       pMbStr,
-        ULONG                       ulMbStrLen, /* in bytes */
-        PVOID                       pWcBuf,
-        ULONG                       ulWcBufSize,
-        PBOOL                       pbLittleEndian
-    )
-{
-    UNREFERENCED_PARAMETER(ulMbStrLen);
-    int                             nRet    = -1;
-
-#ifdef   _ANSC_LITTLE_ENDIAN_
-    *pbLittleEndian     = TRUE;
-#else
-    *pbLittleEndian     = FALSE;
-#endif
-
-    nRet    = mbstowcs((wchar_t *)pWcBuf, (const char *)pMbStr, ulWcBufSize);
-
-    return nRet;
-}
-
-#else   /* you may need to find out the solution on platforms other than Windows and Linux */
-
-static __inline  int
-AnscMbstoWcs
-    (
-        PVOID                       pMbStr,
-        ULONG                       ulMbStrLen, /* in bytes */
-        PVOID                       pWcBuf,
-        ULONG                       ulWcBufSize,
-        PBOOL                       pbLittleEndian
-    )
-{
-    int                             nRet    = -1;
-
-#ifdef   _ANSC_LITTLE_ENDIAN_
-    *pbLittleEndian     = TRUE;
-#else
-    *pbLittleEndian     = FALSE;
-#endif
-
-    return nRet;
-}
-
-
-#endif
-#endif
 
 #endif
 

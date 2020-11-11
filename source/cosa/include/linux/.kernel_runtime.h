@@ -117,9 +117,6 @@
     #define  _ansc_stricmp                          stricmp
     #define  _ansc_strcoll                          strcoll
     #define  _ansc_strcspn                          strcspn
-#if 0
-    #define  _ansc_strdup                           _strdup
-#endif
     #define  _ansc_strspn                           strspn
     #define  _ansc_strstr                           strstr
     #define  _ansc_strtok                           strtok
@@ -221,30 +218,6 @@
         return  pBuf;
     }
 
-#if 0
-    static __inline__ char*
-    _strdup
-        (
-            char*                       pSrc
-        )
-    {
-        char*                           pTemp;
-        unsigned long                   ulLen;
-        errno_t rc = -1;
-
-        ulLen = strlen(pSrc) + 1;
-
-        pTemp = kmalloc(ulLen, GFP_ATOMIC);
-
-        rc = strcpy_s(pTemp, ulLen, pSrc);
-        if(rc != EOK)
-        {
-           ERR_CHK(rc);
-           return NULL;
-        }
-        return pTemp;
-    }
-#endif
 #ifndef _ANSC_LINUX_2_6_
     static __inline__ int
     strcspn(char *s1, char *s2)
