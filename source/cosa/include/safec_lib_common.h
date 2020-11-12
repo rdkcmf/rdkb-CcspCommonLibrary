@@ -73,6 +73,9 @@ typedef int errno_t;
 #define MEMCPY_S_NOCLOBBER(dst,max,src,len) (src != NULL) ? ((len <= max)?EOK:ESLEMAX):ESNULLP; \
   if((src != NULL) && (len <= max)) memcpy(dst, src, len);
 
+#define sscanf_s( buffer, fmt, ...)  EOK; \
+  sscanf( buffer, fmt, ##__VA_ARGS__ );
+
 #define strtok_s(dest, dmax, delim, ptr) strtok_r(dest, delim, ptr)
 
 #define sprintf_s( dst, max, fmt, ... ) (parseFormat(dst, max, fmt, ##__VA_ARGS__) == 0) ? -ESNULLP : sprintf( dst, fmt, ##__VA_ARGS__)
