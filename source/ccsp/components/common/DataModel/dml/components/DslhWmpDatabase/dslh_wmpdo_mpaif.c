@@ -2454,8 +2454,9 @@ DslhWmpdoMpaSetParameterAttributes
                       pChildVarEntity = (PDSLH_VAR_ENTITY_OBJECT)pChildVarRecord->hDslhVarEntity;
                       pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-                      if ( (pChildVarEntity->ParamDescr->NotifyStatus == DSLH_CWMP_NOTIFY_STATUS_alwaysOff) 
-                           &&  (pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_passive || pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_active))
+                      if ((pChildVarEntity->ParamDescr->NotifyStatus == DSLH_CWMP_NOTIFY_STATUS_alwaysOff) &&
+                          ((pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_active) ||
+                           (pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_passive)))
                       {
                            returnStatus = CCSP_ERR_SETATTRIBUTE_REJECTED;
                            goto  EXIT3;
@@ -2468,8 +2469,31 @@ DslhWmpdoMpaSetParameterAttributes
         }
         else
         {
-            pVarEntity = (PDSLH_VAR_ENTITY_OBJECT)pVarRecord->hDslhVarEntity;
-            
+            // For this code path, pVarRecord and pVarEntity are already set.
+            // pVarEntity = (PDSLH_VAR_ENTITY_OBJECT)pVarRecord->hDslhVarEntity;
+
+            /* Validate the Notification value for the parameter by checking it's NotifyStatus */
+            if ((pVarEntity->ParamDescr->NotifyStatus == DSLH_CWMP_NOTIFY_STATUS_alwaysOff) &&
+                ((pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_active) ||
+                 (pSetParameterAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_passive)))
+            {
+                returnStatus = CCSP_ERR_SETATTRIBUTE_REJECTED;
+                goto  EXIT3;
+            }
+
+            /*
+               2020-11-18 : Keep the original commented code below for reference... maybe there something there which needs to be reused?
+
+               However, note that from the spec:
+
+                 "The CPE may return a 'notification request rejected' error if
+                 an attempt is made to set notification on a parameter deemed
+                 inappropriate (e.g., a continuously varying statistic)"
+
+               So at least the CCSP_ERR_INVALID_PARAMETER_NAME error codes below
+               seem to be wrong.
+            */
+
             /* This is a temp action. In the future, we need make the relation clear. Yan/Tom  */
 /*
             if ( (pVarEntity->ParamDescr->NotifyStatus     == DSLH_CWMP_NOTIFY_STATUS_alwaysOff || pVarEntity->ParamDescr->NotifyStatus     == DSLH_CWMP_NOTIFY_STATUS_configurable) 
