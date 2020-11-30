@@ -273,6 +273,10 @@ int CcspBaseIf_setParameterValues_rbus(
     int i = 0;
     int ret = CCSP_FAILURE;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    if (*invalidParameterName)
+    {
+        *invalidParameterName = NULL; // initialize
+    }
     rtMessage request, response;
 
     /* There is a case which we have seen in RDKB-29328, where set is called with Size as 0.
@@ -4717,7 +4721,7 @@ int PSM_Set_Record_Value
     char psmName[256];
     char*  var_string = 0;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-    char *str;
+    char *str = NULL;
     int ret;
 
     val[0].parameterName  = pRecordName;
