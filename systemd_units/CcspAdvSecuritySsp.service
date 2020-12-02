@@ -34,4 +34,4 @@ Restart=always
 StandardOutput=syslog+console
 
 [Install]
-WantedBy=wifi-initialized.target
+WantedBy=wan-initialized.target
