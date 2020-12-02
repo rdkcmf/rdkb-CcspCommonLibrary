@@ -533,6 +533,7 @@ if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ] ; then
     rm -rf /tmp/bck_bridge
 fi
 
+
 #Check ARM and ATOM are in Time Sync
 if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
 ATOM_DATE=$(rpcclient 169.254.101.2 date | cut -d "*" -f 2  | cut -d ":" -f 1)
@@ -545,4 +546,16 @@ if [ "$ARM_DATE" != "$ATOM_DATE" ]; then
 else
         echo_t "TIMESYNC: ARM and ATOM are in time sync"
 fi
+fi
+
+if [ -e ./logagent ]; then
+	cd logagent
+
+	if [ "x"$Subsys = "x" ];then
+		$BINPATH/log_agent
+	else
+		echo "$BINPATH/log_agent -subsys $Subsys"
+		$BINPATH/log_agent -subsys $Subsys
+	fi
+	cd ..
 fi

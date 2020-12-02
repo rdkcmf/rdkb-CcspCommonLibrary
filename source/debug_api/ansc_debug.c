@@ -272,7 +272,7 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogLevel = RDKLogLevel;
             LogEnable = RDKLogEnable;
         }
-        else if(!strcmp(pComponentName,COMPNAME))
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wifi"))
         {
             ComponentName="LOG.RDK.WIFI";
             LogLevel = WiFi_RDKLogLevel;

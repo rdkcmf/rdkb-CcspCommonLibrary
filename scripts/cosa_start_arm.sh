@@ -151,18 +151,6 @@ then
 	fi
 fi
 
-if [ -e ./logagent ]; then
-	cd logagent
-
-	if [ "x"$Subsys = "x" ];then
-		$BINPATH/log_agent
-	else
-		echo "$BINPATH/log_agent -subsys $Subsys"
-		$BINPATH/log_agent -subsys $Subsys
-	fi
-	cd ..
-fi
-
 echo_t "Getting value of CMC and CID before PSM Initialization"
 grep -irn "X_COMCAST-COM_CID\|X_COMCAST-COM_CMC" $BBHM_CUR_CFG
 
