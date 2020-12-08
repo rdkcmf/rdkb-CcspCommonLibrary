@@ -203,12 +203,6 @@ if [ -f /lib/rdk/start-upnp-service ]; then
     /lib/rdk/start-upnp-service start &
 fi
 
-#if [ -e ./pam ]; then
-    #cd pam
-        #double background to detach the script from the tty
-        #((sh /etc/email_notification_monitor.sh 12 &) &)
-        #cd ..
-#fi
 echo_t "Enabling ssh by default"
 syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
@@ -241,23 +235,9 @@ if [ -e ./moca ]; then
     cd ..
 fi
 
-#if [ -e /nvram/disableCcspRmSsp ]; then
-#   echo "****DISABLE CcspRmSsp*****"
-#elif [ -f ./cp_subsys_ert ]; then
-#        if [ -e ./rm ]; then
-#                cd rm
-#        echo "$BINPATH/CcspRmSsp -subsys $Subsys"
-#                $BINPATH/CcspRmSsp -subsys $Subsys
-#        cd ..
-#        fi
-#fi
-
 if [ "x"$1 = "xpam" ] || [ "x"$2 = "xpam" ]; then
 	exit 0
 fi
-
-#cd ../avahi
-#$PWD/avahi-daemon --file=$PWD/avahi-daemon.conf -D
 
 # Tr069Pa, as well as SecureSoftwareDownload and FirmwareUpgrade
 
@@ -283,36 +263,6 @@ if [ -e ./tr069pa ]; then
 fi
 fi
 
-#if [ -e ./ssd ]; then
-#        cd ssd
-#        if [ "x"$Subsys = "x" ];then
-#                $BINPATH/CcspSsdSsp
-#        else
-#                echo "$BINPATH/CcspSsdSsp -subsys $Subsys"
-#                $BINPATH/CcspSsdSsp -subsys $Subsys
-#        fi
-#        cd ..
-#fi
-
-#if [ -e ./fu ]; then
-#        cd fu
-#        if [ "x"$Subsys = "x" ];then
-#                $BINPATH/CcspFuSsp
-#        else
-#                echo "$BINPATH/CcspFuSsp -subsys $Subsys"
-#                $BINPATH/CcspFuSsp -subsys $Subsys
-#        fi
-#        cd ..
-#fi
-       
-#if [ -e ./tr069pa ]; then
-# add firewall rule to allow incoming packet for port 7547
-#sysevent setunique GeneralPurposeFirewallRule " -A INPUT -i erouter0 -p tcp --dport=7547 -j ACCEPT "
-#fi
-
-#fi
-
-
 if [ -e ./tad ]; then
         cd tad
         #delay TaD in order to reduce CPU overload and make PAM ready early
@@ -329,29 +279,6 @@ if [ "x$BOX_TYPE" != "xTCCBR" ]; then
        echo_t "XCONF SCRIPT : Calling XCONF Client"
        /etc/firmwareSched.sh &
 fi
-
-#if [ -e ./ccspRecoveryManager ]; then
-#        if [ "x"$Subsys = "x" ];then
-#                $BINPATH/ccspRecoveryManager &
-#        else
-#                echo "$BINPATH/ccspRecoveryManager -subsys $Subsys &"
-#                $BINPATH/ccspRecoveryManager -subsys $Subsys &
-#        fi
-#fi
-
-#Lm need initialization after others running
-#Sleep 120 is a temporary method
-#if [ -e ./lm ]; then
-#    sleep 120
-#    cd lm
-#if [ "x"$Subsys = "x" ];then
-#    ./CcspLmSsp
-#else
-#   echo "./CcspLmSsp -subsys $Subsys"
-#   ./CcspLmSsp -subsys $Subsys
-#fi
-#cd ..
-#fi
 
 if [ -e ./xdns ]; then
     cd xdns
@@ -433,9 +360,6 @@ fi
 if [ -f /lib/rdk/uploadDumps.sh ];then
      sh /lib/rdk/uploadDumps.sh  "" 0 &
 fi
-
-
-#/etc/utopia/service.d/service_sshd.sh sshd-start &
 
 # Enable SSH between processors for devices having multiple processors alone
 if [ "x$MULTI_CORE" == "xyes" ]; then
