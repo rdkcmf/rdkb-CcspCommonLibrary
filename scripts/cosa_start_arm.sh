@@ -122,10 +122,6 @@ if [ -f "$PWD/core_compr" ]; then
 	./core_report.sh &
 fi
 
-# Start Config Recover
-
-#conf_rec &
-
 cp ccsp_msg.cfg /tmp
 
 # have IP address for dbus config generated
@@ -167,9 +163,6 @@ fi
 echo_t "Getting value of CMC and CID before PSM Initialization"
 grep -irn "X_COMCAST-COM_CID\|X_COMCAST-COM_CMC" $BBHM_CUR_CFG
 
-
-#if [ -e /nvram/disablePsmSSP ]; then
-#	echo "***disabling PsmSSP****"
 if [ "x"$Subsys = "x" ];then
 	$BINPATH/PsmSsp
 else
@@ -213,19 +206,6 @@ if [ -e ./pam ]; then
 	fi
 	cd ..
 fi
-
-
-#if [ -e ./wecb ];
-#then                                                                                                                                                                                                                   
-#    cd wecb                                                                                                                
-#    if [ "x"$Subsys = "x" ];then                                                                                           
-#        $BINPATH/CcspWecbController                                                                                               
-#    else                                                                                                                   
-#        echo "$BINPATH/CcspWecbController -subsys $Subsys"                                                                        
-#       $BINPATH/CcspWecbController -subsys $Subsys                                                                               
-#    fi                                                                                                                     
-#    cd ..                                                                                                                  
-#fi  
 
 # Enable XCONF Conf config fetch
 if [ -f  /lib/rdk/dcm.service ]; then
