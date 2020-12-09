@@ -1027,7 +1027,7 @@ void
 )
 {
 #ifndef _RBUS_NOT_REQ_
-    if (0 != rbus_enabled)
+    if (0 == rbus_enabled)
         rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
 
     CcspTraceWarning(("%s is enabled\n", rbus_enabled ? "RBus" : "DBus"));
@@ -1160,7 +1160,9 @@ CCSP_Message_Bus_Init
     {
         rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
         CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
-        if((err = rbus_openBrokerConnection(component_id)) != RTMESSAGE_BUS_SUCCESS)
+        err = rbus_openBrokerConnection(component_id);
+        if( err != RTMESSAGE_BUS_SUCCESS &&
+                err != RTMESSAGE_BUS_ERROR_INVALID_STATE/*connection already opened. which is allowed*/)
         {
             CcspTraceError(("<%s>: rbus_openBrokerConnection fails for component_id=%s with %d\n", __FUNCTION__,component_id,err));
         }
@@ -1223,7 +1225,7 @@ CCSP_Message_Bus_Init
                                         };
                     if( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS )
                     {
-                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
+                        RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
                 }
             }
