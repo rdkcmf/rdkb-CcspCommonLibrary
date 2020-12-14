@@ -134,7 +134,7 @@ typedef enum _rbus_data_type_t {
     RBUS_DATATYPE_UINT64,            /** 64 bit unsigned int */
     RBUS_DATATYPE_SINGLE,            /** 32 bit float */
     RBUS_DATATYPE_DOUBLE,            /** 64 bit float */
-    RBUS_DATATYPE_DATETIME,          /** timeval num secs/msecs from epoch */
+    RBUS_DATATYPE_DATETIME,          /** rbusDateTime_t structure for Date/Time */
     RBUS_DATATYPE_STRING,            /** null terminated C style string */
     RBUS_DATATYPE_BYTES,             /** byte array */
     RBUS_DATATYPE_PROPERTY,          /**< property instance */
@@ -142,7 +142,16 @@ typedef enum _rbus_data_type_t {
     RBUS_DATATYPE_NONE
 } rbusNewDataType_t;
 
+typedef struct _rbusTimeZone {
+    int m_tzhour;
+    int m_tzmin;
+    int m_isWest;
+} rbusTimeZone_t ;
 
+typedef struct _rbusDateTime {
+    struct tm       m_time;
+    rbusTimeZone_t  m_tz;
+} rbusDateTime_t;
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
