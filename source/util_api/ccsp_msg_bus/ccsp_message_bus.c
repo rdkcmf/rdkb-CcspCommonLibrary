@@ -2008,26 +2008,34 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         case RBUS_DATATYPE_DATETIME:
         {
-            struct timeval tv = {0};
-            struct tm *tmpTime = NULL;
-            rbus_PopInt32(msg, &ival);
-            tv.tv_sec = ival;
-            rbus_PopInt32(msg, &ival);
-            tv.tv_usec = ival;
-
-            n = snprintf(pTmp, 0, "0000-00-00T00:00:00.000000") + 1;
-            *pStringValue = bus_info->mallocfunc(n);
-
-            tmpTime = localtime(&tv.tv_sec);
-            if (tmpTime)
-            {
-                char tmpBuff[40] = ""; /* 27 bytes is good enough; */
-                strftime(tmpBuff, 40, "%Y-%m-%dT%H:%M:%S", tmpTime);
-                sprintf(*pStringValue, "%s.%06d", tmpBuff, tv.tv_usec);
+            rbusDateTime_t rbus_time = {0};
+            char tmpBuff[40] = {0};
+            rbus_PopBinaryData(msg, &pValue, &length);
+            memcpy(&rbus_time,pValue,sizeof(rbusDateTime_t));
+            if(0 == rbus_time.m_time.tm_year) {
+                sprintf(tmpBuff, "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year,
+                                                                    rbus_time.m_time.tm_mon,
+                                                                    rbus_time.m_time.tm_mday,
+                                                                    rbus_time.m_time.tm_hour,
+                                                                    rbus_time.m_time.tm_min,
+                                                                    rbus_time.m_time.tm_sec);
+            } else {
+                /* tm_mon represents month from 0 to 11. So increment tm_mon by 1.
+                   tm_year represents years since 1900. So add 1900 to tm_year.
+                 */
+                sprintf(tmpBuff, "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year+1900,
+                                                                    rbus_time.m_time.tm_mon+1,
+                                                                    rbus_time.m_time.tm_mday,
+                                                                    rbus_time.m_time.tm_hour,
+                                                                    rbus_time.m_time.tm_min,
+                                                                    rbus_time.m_time.tm_sec);
             }
+            n = snprintf(pTmp, 0, "0000-00-00T00:00:00+00:00") + 1;
+            *pStringValue = bus_info->mallocfunc(n);
+            if( rbus_time.m_tz.m_tzhour || rbus_time.m_tz.m_tzmin )
+                sprintf(*pStringValue, "%s%c%02d:%02d", tmpBuff, (0 == rbus_time.m_tz.m_isWest) ? '+':'-', rbus_time.m_tz.m_tzhour, rbus_time.m_tz.m_tzmin);
             else
-                sprintf(*pStringValue, "0000-00-00T00:00:00Z");
-
+                sprintf(*pStringValue, "%sZ", tmpBuff);
             *pType = ccsp_dateTime;
         }
             break;
