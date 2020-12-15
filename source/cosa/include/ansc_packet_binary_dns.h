@@ -406,11 +406,9 @@ DNS_HEADER,  *PDNS_HEADER;
             char*                   domain_name   = (char*)name;                            \
             char*                   domain_label  = domain_name;                            \
             char*                   src_buffer    = (char*)buffer;                          \
-            ULONG                   buffer_offset = 0;                                      \
             ULONG                   label_offset  = 0;                                      \
             ULONG                   left_size     = size;                                   \
             ULONG                   copy_size     = 0;                                      \
-            ULONG                   name_size     = 0;                                      \
                                                                                             \
             while ( left_size > 0 )                                                         \
             {                                                                               \
@@ -434,7 +432,6 @@ DNS_HEADER,  *PDNS_HEADER;
                 }                                                                           \
             }                                                                               \
                                                                                             \
-            name_size = copy_size;                                                          \
          }
 
 #define  AnscDnsNameWritePointer(name, pointer)     AnscDnsSetLabelPointer(name, ((USHORT)pointer))
