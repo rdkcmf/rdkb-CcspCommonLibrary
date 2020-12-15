@@ -3467,7 +3467,10 @@ int CcspBaseIf_requestSessionID_rbus (
             else
             {
                 if(RT_OK == rbus_PopInt32(response, sessionID))
+                {
                     RBUS_LOG("Got new session id %d\n", *sessionID);
+                    return CCSP_SUCCESS;
+                }
                 else
                     RBUS_LOG_ERR("Malformed response from session manager.\n");
             }
@@ -3478,7 +3481,7 @@ int CcspBaseIf_requestSessionID_rbus (
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
 
-    return result;
+    return CCSP_FAILURE;
 }
 
 int CcspBaseIf_requestSessionID (
