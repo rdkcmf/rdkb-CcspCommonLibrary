@@ -5660,52 +5660,44 @@ int readRemoteIP(char *sIP, int size,char *sName)
         return ret;
 }
 
-int getPartnerId ( char *partnerID)
+int getPartnerId (char *partnerID)
 {
+	char buffer[64];
+	FILE *file;
+	char *pos = NULL;
 
-	FILE 	*file = NULL;
-	char 	*name = "/lib/rdk/getpartnerid.sh";
-	char 	*arg = "GetPartnerID";
-	char 	buffer [ 64 ] = { 0 };
-	char 	command[256] = {0};
-	char 	*pos;
-	sprintf(command,"syscfg get PartnerID");
-	file = popen ( command, "r" );
-	if(file)
+	if ((file = popen ("syscfg get PartnerID", "r")) != NULL)
 	{
-	   char *pos;
-	   fgets ( buffer, 64, file );
-	   pclose ( file );
-	   file = NULL;
-	   if(buffer[0] != '\0')
-	   {
-		if ( ( pos = strchr( buffer, '\n' ) ) != NULL ) {
-		   *pos = '\0';
-	   	}
-		sprintf( partnerID, "%s", buffer );
+		pos = fgets (buffer, sizeof(buffer), file);
+		pclose (file);
+	}
+
+	if ((pos == NULL) && ((file = popen ("/lib/rdk/getpartnerid.sh GetPartnerID", "r")) != NULL))
+	{
+		pos = fgets (buffer, sizeof(buffer), file);
+		pclose (file);
+	}
+
+	if (pos)
+	{
+		size_t len = strlen (pos);
+
+		if ((len > 0) && (pos[len - 1] == '\n'))
+		{
+			len--;
+		}
+
+		memcpy (partnerID, pos, len);
+		partnerID[len] = 0;
+
 		return CCSP_SUCCESS;
-	   }
 	}
-	memset(command,0,sizeof(command));
-	snprintf(command,sizeof(command),"%s %s",name,arg);
-	file = popen ( command, "r" );
-	if(file)
-	{
-	   fgets ( buffer, 64, file );
-	   pclose ( file );
-	   file = NULL;
 
-	   if ( ( pos = strchr( buffer, '\n' ) ) != NULL ) {
-		   *pos = '\0';
-	   }
-	   sprintf( partnerID, "%s", buffer );
-	   return CCSP_SUCCESS;
-	}
-	else
-	{
-		CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
-		return CCSP_FAILURE;
-	}
+	CcspTraceInfo(("%s : Error in opening File\n", __FUNCTION__));
+
+	*partnerID = 0;
+
+	return CCSP_FAILURE;
 }
 
 int Rbus_to_CCSP_error_mapper (int Rbus_error_code)
