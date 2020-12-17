@@ -1047,6 +1047,10 @@ DslhWmpdoFlushDynObjVar
             CcspTraceWarning(("!!!!!!!!!!!!!!!! in DslhWmpdoFlushDynObjVar 2.1  pVarRecord: 0x%p !!!!!!!!!!\n", pVarRecord)); 
             pObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pVarRecord->hDslhObjRecord;
             CcspTraceWarning(("!!!!!!!!!!!!!!!! in DslhWmpdoFlushDynObjVar 2.2  pObjRecord: 0x%p !!!!!!!!!!\n", pObjRecord));
+            if ( !pObjRecord)
+            {
+                continue;
+            }
             pParentObjRecord = (PDSLH_OBJ_RECORD_OBJECT)pObjRecord->hParentObjRecord;
             CcspTraceWarning(("!!!!!!!!!!!!!!!! in DslhWmpdoFlushDynObjVar 2.3  pParentObjRecord: 0x%p, hDynObjRecord: 0x%p !!!!!!!!!!\n", pParentObjRecord, hDynObjRecord));
 
