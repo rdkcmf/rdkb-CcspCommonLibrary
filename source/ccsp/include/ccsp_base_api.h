@@ -1282,7 +1282,6 @@ int CcspBaseIf_SetRemoteParameterValue
 );
 
 int readRemoteIP(char *sIP, int size,char *sName);
-int CosaDml_print_uptime( char *log  );
 
 int getPartnerId ( char *partnerID ) ;
 

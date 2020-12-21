@@ -5573,27 +5573,6 @@ int readRemoteIP(char *sIP, int size,char *sName)
         return ret;
 }
 
-int CosaDml_print_uptime( char *log  )
-{
-    char cmd[256]={0};
-#if defined(_COSA_INTEL_USG_ATOM_)
-    char RemoteIP[128]="";
-    readRemoteIP(RemoteIP, 128,"ARM_ARPING_IP");
-    if (RemoteIP[0] != 0 && strlen(RemoteIP) > 0) {
-        snprintf(cmd, 256, "/usr/bin/rpcclient %s \"print_uptime %s\" &", RemoteIP, log);
-        system(cmd);
-    }
-    else {
-        snprintf(cmd, 256, "print_uptime \"%s\"", log);
-        system(cmd);
-    }
-#else
-    snprintf(cmd, 256, "print_uptime \"%s\"", log);
-    system(cmd);
-#endif
-    return 0;
-}
-
 int getPartnerId ( char *partnerID)
 {
 
