@@ -114,6 +114,7 @@ extern volatile unsigned int XDSLManager_RDKLogLevel;
 extern volatile unsigned int VLANMANAGER_RDKLogLevel;
 extern volatile unsigned int GPONMANAGER_RDKLogLevel;
 extern volatile unsigned int PPPMANAGER_RDKLogLevel;
+extern volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel;
 /* Mesh Wifi log levels */
 extern volatile unsigned int MESH_RDKLogLevel;
 extern volatile BOOL MESH_RDKLogEnable;
@@ -144,6 +145,7 @@ extern volatile BOOL XDSLManager_RDKLogEnable;
 extern volatile BOOL VLANMANAGER_RDKLogEnable;
 extern volatile BOOL GPONMANAGER_RDKLogEnable;
 extern volatile BOOL PPPMANAGER_RDKLogEnable;
+extern volatile BOOL TELCOVOICEMANAGER_RDKLogEnable;
 
 extern volatile unsigned int BLE_RDKLogLevel;
 extern volatile BOOL BLE_RDKLogEnable;
