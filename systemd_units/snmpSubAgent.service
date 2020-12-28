@@ -31,7 +31,7 @@ Environment="MIBS=ALL"
 WorkingDirectory=/usr/ccsp/snmp
 #Note: Don't Uncomment Below Line: Each Device needs a conf file to attach to SNMP Master
 #ExecStart=/usr/bin/snmp_subagent -x tcp:192.168.254.253:705
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting snmp_v2_subagent" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting snmp_v2_subagent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

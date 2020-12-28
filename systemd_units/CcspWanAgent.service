@@ -28,7 +28,7 @@ Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/wanagent
 ExecStart=/usr/ccsp/wanagent/wanagent -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWanAgent" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspWanAgent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

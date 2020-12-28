@@ -28,7 +28,7 @@ Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/xtmagent
 ExecStart=/usr/bin/xtmagent -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspXTMAgent" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspXTMAgent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console
