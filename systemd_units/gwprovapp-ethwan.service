@@ -25,7 +25,7 @@ Description=GwprovappEthWan service
 EnvironmentFile=/etc/device.properties
 ExecStartPre=-/bin/sh -c 'mkdir -p /rdklogs/logs/'
 ExecStart=/usr/bin/gw_prov_ethwan
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting gw_prov_ethwan" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting gw_prov_ethwan" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 StandardOutput=syslog+console
 

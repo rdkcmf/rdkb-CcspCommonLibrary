@@ -27,7 +27,7 @@ Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStartPre=/usr/bin/parodusStart
 ExecStart=/bin/sh -c 'source /tmp/parodusCmd.cmd'
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting parodus" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting parodus" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

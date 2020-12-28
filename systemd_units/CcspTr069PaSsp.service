@@ -29,7 +29,7 @@ Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/tr069pa
 ExecStart=/usr/bin/CcspTr069PaSsp -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspTr069PaSsp" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspTr069PaSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

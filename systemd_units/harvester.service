@@ -24,7 +24,7 @@ Type=forking
 WorkingDirectory=/usr/ccsp/harvester
 EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/harvester
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting harvester" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting harvester" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

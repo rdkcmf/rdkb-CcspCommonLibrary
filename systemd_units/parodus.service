@@ -28,7 +28,7 @@ EnvironmentFile=/etc/device.properties
 ExecStartPre=/bin/sh -c 'while true; do var=`sysevent get wan-status | grep started`; if [ "$var" != "" ]; then sleep 5; break; fi; sleep 5; done'
 ExecStartPre=/usr/bin/parodusStart
 ExecStart=/bin/sh -c 'source /tmp/parodusCmd.cmd'
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting parodus" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting parodus" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console

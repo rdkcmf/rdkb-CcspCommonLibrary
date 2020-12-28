@@ -24,7 +24,7 @@ Type=simple
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/aker -p ${PARODUS_URL} -c ${AKER_URL} -w /usr/bin/parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5 &
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting aker" >> ${PROCESS_RESTART_LOG}'
+ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting aker" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
 StandardOutput=syslog+console
