@@ -27,6 +27,7 @@
 
 import xml.etree.ElementTree as ET
 import sys
+import re
 
 ParamBool=0
 ParamInt=1
@@ -326,13 +327,136 @@ def codeGen(xmlFile, outFile):
   fout.write(" return P0;\n}\n")
   fout.close()
 
+class Preprocessor():
+    def __init__(self):
+        self.cus_vars = {}
+
+    def parse_cus_var(self, xml_str):
+        define_regex = r"(<\?define\s*(\w+)\s*=\s*([\w\s\"]+)\s*\?>)"
+        matches = re.findall(define_regex, xml_str)
+        for group_def, group_name, group_var in matches:
+            group_name = group_name.strip()
+            group_var = group_var.strip().strip("\"")
+            self.cus_vars[group_name] = group_var
+            xml_str = xml_str.replace(group_def, "")
+        cusvar_regex = r"(\$\(var\.(\w+)\))"
+        matches = re.findall(cusvar_regex, xml_str)
+        for group_cus, group_var in matches:
+            if group_var not in self.cus_vars:
+                continue
+            xml_str = xml_str.replace(group_cus, self.cus_vars[group_var])
+        return xml_str
+
+    def parse_if_elseif(self, xml_str):
+        ifelif_regex = r"(<\?(if|elseif)\s*([^\"\s=<>!]+)\s*([!=<>]+)\s*\"*([^\"=<>!]+)\"*\s*\?>)"
+        matches = re.findall(ifelif_regex, xml_str)
+        for group_ifelif, group_tag, group_left, group_operator, group_right in matches:
+            if "<" in group_operator or ">" in group_operator:
+                result = eval(group_left + group_operator + group_right)
+            else:
+                result = eval('"{}" {} "{}"'.format(group_left, group_operator, group_right))
+            xml_str = xml_str.replace(group_ifelif, "<?" + group_tag + " " + str(result) + "?>")
+        return xml_str
+
+    def parse_ifdef_ifndef(self, xml_str):
+        ifdef_cond_regex = r"(<\?(ifdef|ifndef)\s*(!)?([\w]*)\s*([|&]?)\s*(!)?([\w]*)\s*([|&]?)\s*(!)?([\w]*)\s*([|&]?)\s*(!)?([\w]*)\s*([|&]?)\s*(!)?([\w]*)\s*\?>)"
+        matches = re.findall(ifdef_cond_regex, xml_str)
+        for group_ifdef_cond, group_tag, group_1_neg, group_1,  group_operator1, group_2_neg, group_2, group_operator2, group_3_neg, group_3, group_operator3, group_4_neg, group_4,  group_operator4, group_5_neg, group_5 in matches:
+            if "|" in group_operator4 or "&" in group_operator4:
+                if group_tag == "ifdef":
+                    result = eval(str((group_1 not in self.cus_vars) if "!" in group_1_neg else (group_1 in self.cus_vars)) + group_operator1 + str((group_2 not in self.cus_vars) if "!" in group_2_neg else (group_2 in self.cus_vars)) + group_operator2 + str((group_3 not in self.cus_vars) if "!" in group_3_neg else (group_3 in self.cus_vars)) + group_operator3 + str((group_4 not in self.cus_vars) if "!" in group_4_neg else (group_4 in self.cus_vars)) + group_operator4 + str((group_5 not in self.cus_vars) if "!" in group_5_neg else (group_5 in self.cus_vars)))
+                else:
+                    result = eval(str((group_1 in self.cus_vars) if "!" in group_1_neg else (group_1 not in self.cus_vars)) + group_operator1 + str(group_2 in self.cus_vars if "!" in group_2_neg else group_2 not in self.cus_vars) + group_operator2 + str(group_3 in self.cus_vars if "!" in group_3_neg else group_3 not in self.cus_vars) + group_operator3 + str(group_4 in self.cus_vars if "!" in group_4_neg else group_4 not in self.cus_vars) + group_operator4 + str(group_5 in self.cus_vars if "!" in group_5_neg else group_5 not in self.cus_vars))
+            elif "|" in group_operator3 or "&" in group_operator3:
+                if group_tag == "ifdef":
+                    result = eval(str((group_1 not in self.cus_vars) if "!" in group_1_neg else (group_1 in self.cus_vars)) + group_operator1 + str((group_2 not in self.cus_vars) if "!" in group_2_neg else (group_2 in self.cus_vars)) + group_operator2 + str((group_3 not in self.cus_vars) if "!" in group_3_neg else (group_3 in self.cus_vars)) + group_operator3 + str((group_4 not in self.cus_vars) if "!" in group_4_neg else (group_4 in self.cus_vars)))
+                else:
+                    result = eval(str((group_1 in self.cus_vars) if "!" in group_1_neg else (group_1 not in self.cus_vars)) + group_operator1 + str(group_2 in self.cus_vars if "!" in group_2_neg else group_2 not in self.cus_vars) + group_operator2 + str(group_3 in self.cus_vars if "!" in group_3_neg else group_3 not in self.cus_vars) + group_operator3 + str(group_4 in self.cus_vars if "!" in group_4_neg else group_4 not in self.cus_vars))
+            elif "|" in group_operator2 or "&" in group_operator2:
+                if group_tag == "ifdef":
+                    result = eval(str((group_1 not in self.cus_vars) if "!" in group_1_neg else (group_1 in self.cus_vars)) + group_operator1 + str((group_2 not in self.cus_vars) if "!" in group_2_neg else (group_2 in self.cus_vars)) + group_operator2 + str((group_3 not in self.cus_vars) if "!" in group_3_neg else (group_3 in self.cus_vars)))
+                else:
+                    result = eval(str((group_1 in self.cus_vars) if "!" in group_1_neg else (group_1 not in self.cus_vars)) + group_operator1 + str(group_2 in self.cus_vars if "!" in group_2_neg else group_2 not in self.cus_vars) + group_operator2 + str(group_3 in self.cus_vars if "!" in group_3_neg else group_3 not in self.cus_vars))
+            elif "|" in group_operator1 or "&" in group_operator1:
+                if group_tag == "ifdef":
+                    result = eval(str((group_1 not in self.cus_vars) if "!" in group_1_neg else (group_1 in self.cus_vars)) + group_operator1 + str(group_2 not in self.cus_vars if "!" in group_2_neg else group_2 in self.cus_vars))
+                else:
+                    result = eval(str((group_1 in self.cus_vars) if "!" in group_1_neg else (group_1 not in self.cus_vars)) + group_operator1 + str(group_2 in self.cus_vars if "!" in group_2_neg else group_2 not in self.cus_vars))
+            else:
+                if group_tag == "ifdef":
+                    result = group_1 in self.cus_vars
+                else:
+                    result = group_1 not in self.cus_vars
+            xml_str = xml_str.replace(group_ifdef_cond, "<?if " + str(result) + "?>")
+        return xml_str
+
+    def parse_if_else_if(self, xml_str):
+        if_elif_else_regex = r"(<\?if\s(True|False)\?>\n((.(?!<\?))*)\n<\?elseif\s(True|False)\?>\n((.(?!<\?))*)\n<\?else\?>\n((.(?!<\?))*)\n<\?endif\?>\n)"
+        if_else_regex = r"(<\?if\s(True|False)\?>\n((.(?!<\?))*)\n<\?else\?>\n((.(?!<\?))*)\n<\?endif\?>\n)"
+        if_regex = r"(<\?if\s(True|False)\?>\n((.(?!<\?))*)\n<\?endif\?>\n)"
+        matches = re.findall(if_elif_else_regex, xml_str, re.DOTALL)
+        for group_full, group_if, group_if_elif,group_none, group_elif, group_elif_else,group_none, group_else, group_none in matches:
+            result = ""
+            if group_if == "True":
+                result = group_if_elif
+            elif group_elif == "True":
+                result = group_elif_else
+            else:
+                result = group_else
+            xml_str = xml_str.replace(group_full, result+"\n")
+        matches = re.findall(if_else_regex, xml_str, re.DOTALL)
+        for group_full, group_if, group_if_else, group_none, group_else, group_none in matches:
+            result = ""
+            if group_if == "True":
+                result = group_if_else
+            else:
+                result = group_else
+            xml_str = xml_str.replace(group_full, result+"\n")
+        matches = re.findall(if_regex, xml_str, re.DOTALL)
+        for group_full, group_if, group_text, group_none in matches:
+            result = ""
+            if group_if == "True":
+                result = group_text
+                xml_str = xml_str.replace(group_full, result+"\n")
+            else:
+                xml_str = xml_str.replace(group_full, result)
+        return xml_str
+
+    def need_parse(self, xml_str):
+        for keyword in ["<?include", "$(env", "$(var", "$(sys", "<?if", "<?else", "<?end", "<?for", "<?err", "<?war", "<?cmd"]:
+            if keyword in xml_str:
+                return True
+        return False
+
+    def preprocess(self, xml_file, out_file):
+        with open(xml_file, "r") as original_file:
+	        xml_str = original_file.read()
+        proc_functions = [
+            self.parse_cus_var,
+            self.parse_if_elseif,
+            self.parse_ifdef_ifndef,
+            self.parse_if_else_if
+        ]
+        while(self.need_parse(xml_str)):
+            for i in range(len(proc_functions)):
+                xml_str = proc_functions[i](xml_str)
+
+        try:
+            with open(out_file, "w") as processed_file:
+                processed_file.write(xml_str)
+            return 0
+        except:
+            return -1
+
 funcMap={}
 objectMap={}
 if len(sys.argv) != 3:
   print("usage: python ccsp_xml_code_gen.py in_xml_file out_c_file")
 else:
+  proc = Preprocessor()
+  proc.preprocess(sys.argv[1], "output.XML")
   initFuncNames(funcMap)
   initObjectNames(objectMap)
-  codeGen(sys.argv[1], sys.argv[2])
+  codeGen("output.XML", sys.argv[2])
 
 
