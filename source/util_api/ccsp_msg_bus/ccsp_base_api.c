@@ -5427,6 +5427,13 @@ int CcspBaseIf_UnRegister_Event_rbus(
     const char* event_name)
 {
     UNREFERENCED_PARAMETER(bus_handle);
+    /* Ref the CcspBaseIf_Register_Event_rbus() for webconfigSignal event */
+    if (strcmp(event_name, "webconfigSignal") == 0)
+    {
+        RBUS_LOG ("RBUS_EVENT_UNSUBSCRIBED:: webconfigSignal signal is handled as method and nothing to unsubscribe.\n");
+        return CCSP_SUCCESS;
+    }
+
     if(RTMESSAGE_BUS_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name))
     {
         RBUS_LOG_ERR("rbus_unsubscribeFromEvent::CcspBaseIf_UnRegister_Event_rbus returns error for sender %s for event_name %s \n", sender, event_name);

@@ -171,13 +171,21 @@ void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv , se
 }
 
 /* Function to notify subdoc version to webconfig client */
-void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version)
+void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version,int process_crashed)
 {
 
 	CcspTraceInfo(("%s : doc name %s , doc version %u\n",__FUNCTION__,subdoc_name,version));
 
 	char data[128]= {0};
-   	snprintf(data,sizeof(data),"%s,0,%u",subdoc_name,version);
+    
+    	if ( process_crashed == 1 )
+    	{
+   	   	 snprintf(data,sizeof(data),"%s,0,%u,%s",subdoc_name,version,COMPONENT_CRASH_EVENT);
+    	}
+    	else
+    	{
+        	snprintf(data,sizeof(data),"%s,0,%u,%s",subdoc_name,version,COMPONENT_INIT_EVENT);
+    	}
 
 	int ret = CcspBaseIf_WebConfigSignal(bus_handle, data);
 
@@ -193,27 +201,39 @@ void check_component_crash(char* init_file)
 
 	CcspTraceInfo(("Inside FUNC %s LINE %d, init file is %s \n",__FUNCTION__,__LINE__,init_file));
 
+	/**
+	 * Components based purely on RBUS will not invoke CCSP_Message_Bus_Init.
+	 * Check and update rbus_enabled state .
+	 */
+    #ifndef _RBUS_NOT_REQ_
+    rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
+    #endif
+
+    	int comp_crashed = 0 ;
 	int fd = access(init_file, F_OK); 
     	if(fd == 0)
     	{ 
-    		pthread_mutex_lock(&reg_subdoc);
-    		PblobRegInfo blobNotify;
+		CcspTraceInfo(("%s file present, component is coming after crash. Need to notify webconfig \n",init_file )); 
+        	comp_crashed = 1 ;
+        }
+        else
+        {
+                CcspTraceInfo(("%s file not present, need to send component init event to webconfig \n",init_file )); 
 
-    		blobNotify = blobData;
+        }
+    	pthread_mutex_lock(&reg_subdoc);
+    	PblobRegInfo blobNotify;
 
-    		CcspTraceInfo(("%s file present, component is coming after crash. Need to notify webconfig \n",init_file )); 
-	    	int i ;
-	    	for (i=0 ; i < gNumOfSubdocs ; i++)
-		{
-	        	notifyVersion_to_Webconfig (blobNotify->subdoc_name,blobNotify->version);
-	        	blobNotify++;
+    	blobNotify = blobData;
 
-		}
+	int i ;
+	for (i=0 ; i < gNumOfSubdocs ; i++)
+	{
+		notifyVersion_to_Webconfig (blobNotify->subdoc_name,blobNotify->version,comp_crashed);
+	        blobNotify++;
+	}
 
-
-		pthread_mutex_unlock(&reg_subdoc);
-
-    	}
+	pthread_mutex_unlock(&reg_subdoc);
 }
 
 /* Function available to calculate the timeout if component doesn't provide the timeout function */

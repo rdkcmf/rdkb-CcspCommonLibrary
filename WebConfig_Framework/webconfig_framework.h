@@ -69,6 +69,8 @@ extern ANSC_HANDLE bus_handle;
 #define DEFAULT_DEBUG_INTERVAL                     10
 #define DEFAULT_DEBUG_ITER                         12
 
+#define COMPONENT_INIT_EVENT       		"COMP_INIT"
+#define COMPONENT_CRASH_EVENT      		"COMP_CRASH"
 typedef  enum
 _blob_exec_state
 {
@@ -137,7 +139,7 @@ typedef int (*setVersion) (char* , uint32_t ) ;
 
 void register_sub_docs(blobRegInfo *bInfo,int NumOfSubdocs, getVersion getv,setVersion setv);
 
-void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version);
+void notifyVersion_to_Webconfig(char* subdoc_name, uint32_t version,int process_crashed);
 
 
 size_t defFunc_calculateTimeout(size_t numOfEntries);
