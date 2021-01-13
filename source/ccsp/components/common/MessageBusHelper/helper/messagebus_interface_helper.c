@@ -243,7 +243,7 @@ CcspCcMbi_GetParameterValues
         }
         else if( ulArraySize == 0)
         {
-            AnscTraceError(("CcspCcMbi_GetParameterValues -- No parameter value returned.\n"));
+            AnscTraceWarning(("CcspCcMbi_GetParameterValues -- No parameter value returned.\n"));
 
             goto EXIT1;
         }
