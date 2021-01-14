@@ -343,20 +343,11 @@ fi
 
 rm -rf /tmp/.dropbear
 
-if [ -f /version.txt ]
+if [ -f "/usr/sbin/tdkb_launcher.sh" ]
 then
-   echo "version.txt exists"
-   imgname=`cat /version.txt | grep -i 'imagename'`
-   echo $imgname
-   flag=`echo $imgname|awk '{print match($0,"TDK")}'`;
-   if [ $flag -gt 0 ];then
-       if [ -f "/usr/sbin/tdkb_launcher.sh" ]
-       then
-           echo "Found TDK Image"
-           echo "Invoking TDK-B launcher script"
-           sh /usr/sbin/tdkb_launcher.sh &
-       fi
-   fi
+    echo "Found TDK-B launcher script!!!"
+    echo "Invoking TDK-B launcher script!!!"
+    sh /usr/sbin/tdkb_launcher.sh &
 fi
 
 #Start ocsp
