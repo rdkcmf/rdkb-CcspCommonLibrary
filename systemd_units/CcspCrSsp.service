@@ -18,7 +18,7 @@
 ##########################################################################
 [Unit]
 Description=CcspCrSsp service
-After=rbus.service
+After=rbus.service dbus.service
 
 [Service]
 Type=forking

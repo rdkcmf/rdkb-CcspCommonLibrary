@@ -19,6 +19,7 @@
 [Unit]
 Description=CcspLogent service
 After=CcspCrSsp.service
+Requires=dbus.service
 
 [Service]
 Type=forking
