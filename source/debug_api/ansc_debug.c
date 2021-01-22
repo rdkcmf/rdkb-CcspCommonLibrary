@@ -129,6 +129,8 @@ volatile BOOL XDSLManager_RDKLogEnable = TRUE;
 volatile unsigned int XDSLManager_RDKLogLevel = 4;
 volatile BOOL VLANMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int VLANMANAGER_RDKLogLevel = 4;
+volatile BOOL FWUPGRADEMGR_RDKLogEnable = TRUE;
+volatile unsigned int FWUPGRADEMGR_RDKLogLevel = 4;
 volatile BOOL GPONMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int GPONMANAGER_RDKLogLevel = 4;
 volatile BOOL PPPMANAGER_RDKLogEnable = TRUE;
@@ -402,6 +404,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             ComponentName= "LOG.RDK.GPONMANAGER";
             LogLevel = GPONMANAGER_RDKLogLevel;
             LogEnable = GPONMANAGER_RDKLogEnable;
+        }
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fwupgrademanager"))
+        {
+            ComponentName= "LOG.RDK.FWUPGRADEMANAGER";
+            LogLevel = FWUPGRADEMGR_RDKLogLevel;
+            LogEnable = FWUPGRADEMGR_RDKLogEnable;
         }
         else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pppmanager"))
         {
