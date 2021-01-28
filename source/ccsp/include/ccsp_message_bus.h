@@ -88,6 +88,9 @@ notes: see readme.txt
 #define WRITEID         "WRITEID"
 #define PARAM_SIZE      "PARAM_SIZE"
 #define SESSIONID       "SESSIONID"
+#ifdef COMMIT
+    #undef COMMIT
+#endif
 #define COMMIT          "COMMIT"
 #define INVALID_PARAM   "INVALID_PARAM"
 #define RESULT          "RESULT"
