@@ -401,27 +401,29 @@ DslhDmagntParseSourceInfo
                  printf("****LOADING DM LIBRARY***************\n");
                  printf("THE LIB NAME =%s\n",pPluginInfo->SourceName);
                  printf("****LOADING DM LIBRARY***************\n");
-                AnscTraceFlow(("Loading DM library %s...\n", pPluginInfo->SourceName));
+                AnscTraceWarning(("Loading DM library %s...\n", pPluginInfo->SourceName));
+                if( pPluginInfo->SourceName != NULL)
+                {
+                    /* load the library */
+                    pPluginInfo->hInstance = (ANSC_HANDLE)AnscLoadLibrary(pPluginInfo->SourceName);
 
-                 /* load the library */
-                 pPluginInfo->hInstance = (ANSC_HANDLE)AnscLoadLibrary(pPluginInfo->SourceName);
+                    if( pPluginInfo->hInstance == NULL)
+                    {
+                        AnscTraceWarning(("Unable to load library -- %s\n", pPluginInfo->SourceName));
+                        printf("****ERROR LOADING DM LIB %s\n",pPluginInfo->SourceName);
+                        errstr = dlerror();
+                        printf("CAUSE =%s\n",errstr);
+                    #ifdef _ANSC_LINUX
+                        AnscTraceWarning(("cause:%s\n",  errstr ));
+                        printf("CAUSE =%s\n",errstr);
+                    #endif
 
-                 if( pPluginInfo->hInstance == NULL)
-                 {
-                    AnscTraceWarning(("Unable to load library -- %s\n", pPluginInfo->SourceName));
-                    printf("****ERROR LOADING DM LIB %s\n",pPluginInfo->SourceName);
-                    errstr = dlerror();
-                    printf("CAUSE =%s\n",errstr);
-                #ifdef _ANSC_LINUX
-                    AnscTraceWarning(("cause:%s\n",  errstr ));
-                    printf("CAUSE =%s\n",errstr);
-                #endif
+                        pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_LOAD_LIBRARY;
 
-                    pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_LOAD_LIBRARY;
-
-                    return COSA_STATUS_ERROR_LOAD_LIBRARY;
-                 }
-                printf("PLUGIN %s LOADED SUCCESSFULLY\n",pPluginInfo->SourceName);
+                        return COSA_STATUS_ERROR_LOAD_LIBRARY;
+                    }
+                    printf("PLUGIN %s LOADED SUCCESSFULLY\n",pPluginInfo->SourceName);
+                }
              }
          }
 
