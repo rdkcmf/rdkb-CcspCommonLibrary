@@ -84,3 +84,7 @@ fi
 }
 
 checkCaptivePortal
+# moved the code from ccspSysConfigLate.sh
+echo "Enabling ssh by default"
+syscfg set mgmt_wan_sshaccess 1
+syscfg commit
