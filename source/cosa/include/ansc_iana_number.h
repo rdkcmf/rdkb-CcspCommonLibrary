@@ -558,7 +558,7 @@
  * listed below. Note: all static IP address value appeared in macros and functions MUST be
  * defined in the network order.
  */
-#ifdef   _ANSC_LITTLE_ENDIAN_
+#if defined(_ANSC_LITTLE_ENDIAN_)
 
     #define  IPV4_MCAST_ADDR_BASE                   0x000000E0      /* 224.0.0.0  */
     #define  IPV4_MCAST_ADDR_ALL_SYSTEMS            0x010000E0      /* 224.0.0.1  */

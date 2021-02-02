@@ -74,11 +74,15 @@
  */
 /*#define  _ANSC_ENABLE_PRAGMA_*/
 
-/*
- *  Endian order    -- note, if AL_IS_LITTLE_ENDIAN is still used
- *  in any platform, replace it with _ANSC_LITTLE_ENDIAN_!!!
- */
-/* #define  _ANSC_LITTLE_ENDIAN_ */
+#if !defined(__BYTE_ORDER__)
+#error "__BYTE_ORDER__ is not defined?"
+#endif
+
+#undef _ANSC_LITTLE_ENDIAN_
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+#define _ANSC_LITTLE_ENDIAN_
+#endif
 
 /*
  *  Indicates whether word access has to occur on word boundary

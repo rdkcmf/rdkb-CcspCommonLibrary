@@ -120,7 +120,7 @@
  * multicast group). Note: all static IP address value appeared in macros and functions MUST be
  * defined in the network order.
  */
-#ifdef   _ANSC_LITTLE_ENDIAN_
+#if defined(_ANSC_LITTLE_ENDIAN_)
 
     #define  IPV4_LOOPBACK_ADDRESS                  0x0100007F      /* 127.0.0.1       */
     #define  IPV4_DEFAULT_BROADCAST_ADDRESS         0xFFFFFFFF      /* 255.255.255.255 */
