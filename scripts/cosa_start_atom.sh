@@ -290,7 +290,6 @@ then
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 			echo "30 * * * * /rdklogger/log_cpu_info_atom.sh"  >> $CRONFILE
-			echo "*/15 * * * * sh /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE
 			echo "1 */12 * * *  /usr/ccsp/wifi/mesh_status.sh" >> $CRONFILE
 		else
 			if [ ! -d $CRONPATH ]
@@ -303,7 +302,6 @@ then
 			echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
 			echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 			echo "30 * * * * /rdklogger/log_cpu_info_atom.sh"  >> $CRONFILE
-			echo "*/15 * * * * sh /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE
 			echo "1 */12 * * *  /usr/ccsp/wifi/mesh_status.sh" >> $CRONFILE
 		fi
 		crond -c $CRONPATH -l 9
@@ -315,7 +313,6 @@ then
 		echo "35 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
 		echo "47 2 * * *  /usr/ccsp/wifi/dailystats_log.sh" >> $CRONFILE
 		echo "30 * * * * /rdklogger/log_cpu_info_atom.sh" >> $CRONFILE_BK
-		echo "*/15 * * * * sh /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE_BK
 		echo "1 */12 * * *  /usr/ccsp/wifi/mesh_status.sh" >> $CRONFILE_BK
 		crontab $CRONFILE_BK -c $CRONPATH
 		rm -rf $CRONFILE_BK
