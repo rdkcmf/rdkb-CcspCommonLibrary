@@ -23,7 +23,7 @@ After=CcspPandMSsp.service CcspXdnsSsp.service
 
 [Service]
 Type=simple
-EnvironmentFile=/etc/utopia/service.d/log_env_var.sh
+#EnvironmentFile=/etc/utopia/service.d/log_env_var.sh already sourced in process_monitor.sh ' 
 Environment="Subsys=eRT."
 ExecStart=/bin/sh -c '/etc/process_monitor.sh &'
 RemainAfterExit=yes
