@@ -801,7 +801,7 @@ DslhWmpdoMpaSetParameterValues
         {
             if ( 
                    ( writeID != 0xFFFFFFFF    ) &&
-                   ( pVarRecord->AccessList ) &&
+                   ( pVarRecord->AccessList && !(_ansc_strstr(pVarRecord->AccessList, "ANYBODY"))) &&
                    ( writeID != AccessListToAccessControlBitMask(pVarRecord->AccessList) )
                )
             {
