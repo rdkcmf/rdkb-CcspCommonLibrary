@@ -3675,22 +3675,23 @@ int CcspBaseIf_informEndOfSession_rbus (
     UNREFERENCED_PARAMETER(dst_component_id);
     rtMessage out, response;
     int result = 0;
+    int ret = CCSP_FAILURE;
 
     rtMessage_Create(&out);
     rbus_AppendInt32(out, sessionID);
 
-    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, 1000, &response)))
+    if(RTMESSAGE_BUS_SUCCESS == rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, 1000, &response))
     {
         if(RT_OK == rbus_PopInt32(response, &result))
         {
             if(RTMESSAGE_BUS_SUCCESS != result)
             {
                 RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
-                return result;
             }
             else
             {
                 RBUS_LOG("Successfully ended session %d.\n", sessionID);
+                ret = CCSP_SUCCESS;
             }
         }
     }
@@ -3699,7 +3700,7 @@ int CcspBaseIf_informEndOfSession_rbus (
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
 
-    return result;
+    return ret;
 }
 
 int CcspBaseIf_informEndOfSession (
