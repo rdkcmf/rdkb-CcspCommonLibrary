@@ -2181,15 +2181,25 @@ int CcspBaseIf_unregisterComponent_rbus (
 {
     UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dst_component_id);
-    RBUS_LOG("%s calling rbus_unregisterObj for %s \n", __FUNCTION__, component_name);
+    UNREFERENCED_PARAMETER(component_name);
 
-    if(RTMESSAGE_BUS_SUCCESS != rbus_unregisterObj(component_name))
-    {
-        RBUS_LOG("%s rbus_unregisterObj fails\n", __FUNCTION__);
-        return CCSP_FAILURE;
-    }
-
-    RBUS_LOG("%s rbus_unregisterObj succeeds \n", __FUNCTION__);
+    /*
+     * When Process/Component calls, CcspBaseIf_registerCapabilities,
+     *      In dBus mode: The request goes to CcspCR and the CR creates ComponentDB & NameSpaceDB
+     *                    and also tracks the maintains this registration to report SystemReady event.
+     *      In rBus mode: No DBs are created. The namespace is directly registered at rbus.
+     *                    We were not using CcspCR at all in rBus mode but but in recent times,
+     *                    we repurposed it to monitor for registration & send SystemReady event.
+     *
+     *
+     * So when rBus enabled and if a component calls CcspBaseIf_unregisterComponent_rbus(), we must
+     * notify CcspCR to mark this component as NOT_REGISTERED for SystemReady event.
+     *
+     * But In RDK-B system, all the components running as daemon & in while(1),
+     * So CcspBaseIf_unregisterComponent() is never get invoked. Only the unit testing needs this.
+     *
+     * Hence, returning SUCCESS.
+     */
     return CCSP_SUCCESS;
 }
 
