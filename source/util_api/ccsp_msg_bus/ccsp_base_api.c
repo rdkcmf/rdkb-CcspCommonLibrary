@@ -4715,7 +4715,7 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
     else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
-    else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0))
+    else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0) || (strcmp(event_name, "reboot") == 0))
     {
         RBUS_LOG ("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);
         return CCSP_SUCCESS;
@@ -5428,9 +5428,9 @@ int CcspBaseIf_UnRegister_Event_rbus(
 {
     UNREFERENCED_PARAMETER(bus_handle);
     /* Ref the CcspBaseIf_Register_Event_rbus() for webconfigSignal event */
-    if (strcmp(event_name, "webconfigSignal") == 0)
+    if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "reboot") == 0))
     {
-        RBUS_LOG ("RBUS_EVENT_UNSUBSCRIBED:: webconfigSignal signal is handled as method and nothing to unsubscribe.\n");
+        RBUS_LOG ("RBUS_EVENT_UNSUBSCRIBED:: %s signal is handled as method and nothing to unsubscribe.\n", event_name);
         return CCSP_SUCCESS;
     }
 
