@@ -17,10 +17,10 @@
 # limitations under the License.
 ##########################################################################
 [Unit]
-Description=CcspCrSsp Restart Service
+Description=Process Restart Service
 
 [Service]
 Type=simple
-ExecStart=/bin/sh -c '(/usr/ccsp/crResetCheck.sh)'
+ExecStart=/bin/sh -c '(/usr/ccsp/ProcessResetCheck.sh)'
 
 StandardOutput=syslog+console

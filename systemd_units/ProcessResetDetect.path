@@ -17,11 +17,12 @@
 # limitations under the License.
 ##################################################################################
 [Unit]
-Description=CcspCrSsp Restart Occurred Path
+Description=Process Restart Occurred Path
 
 [Path]
 PathExists=/tmp/CcspCrSsp_Restarted
-Unit=crResetDetect.service
+PathExists=/tmp/GWPROV_Restarted
+Unit=ProcessResetDetect.service
 
 [Install]
 WantedBy=multi-user.target
