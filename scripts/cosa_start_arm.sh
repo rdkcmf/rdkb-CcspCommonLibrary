@@ -39,12 +39,6 @@ source /etc/utopia/service.d/log_env_var.sh
 source /etc/utopia/service.d/log_capture_path.sh
 source /etc/device.properties
 
-if [ "$BOX_TYPE" = "XB3" ]; then
-SYS_DB_FILE="/nvram/syscfg.db"
-else
-SYS_DB_FILE="/opt/secure/data/syscfg.db"
-fi
-
 #upstreamed cosa_start_wifi_telemetry.patch as part of RDKB-41493
 if [ "$MODEL_NUM" = "CGA4131COM" ]; then
 	CRONPATH="/var/spool/cron/crontabs/"
