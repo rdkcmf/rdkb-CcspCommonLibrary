@@ -33,6 +33,8 @@ if [ -e /nvram/rbus_support ]; then
           echo "`date`: RBus crash handler updating reboot reason for XB3"
           rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync"
           rpcclient $ARM_ARPING_IP "sh /rdklogger/backupLogs.sh false Rbus_crash"
+          echo "REBOOTING THE SYSTEM....."
+          rpcclient $ARM_ARPING_IP "reboot"
        else
           echo "`date`: RBus crash handler updating reboot reason for NON-XB3"
 
@@ -43,10 +45,9 @@ if [ -e /nvram/rbus_support ]; then
 
           echo "`date`: RBus IPC Process Crashed Rebooting" >> ${PROCESS_RESTART_LOG}
           source /rdklogger/logfiles.sh;syncLogs_nvram2
+          echo "REBOOTING THE SYSTEM....."
+          reboot
        fi
-
-       echo "REBOOTING THE SYSTEM....."
-       reboot
 
     else
       echo "`date`: RBus IPC Process stopped"
