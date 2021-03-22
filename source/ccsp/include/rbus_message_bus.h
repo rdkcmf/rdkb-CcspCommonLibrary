@@ -41,83 +41,8 @@
             11/22/2019    initial revision.
 
 **********************************************************************/
-
-#ifdef _RBUS_NOT_REQ_
-#define rtMessage                                         int
-#define rbus_error_t                                      int
-#define rtError                                           int
-#define rbus_callback_t                                   int
-#define MESSAGE_FIELD_PAYLOAD                            "DUMMY"
-#define METHOD_INVALID                                   "DUMMY"
-#define METHOD_SETPARAMETERVALUES                        "DUMMY"
-#define METHOD_GETPARAMETERVALUES                        "DUMMY"
-#define METHOD_GETPARAMETERNAMES                         "DUMMY"
-#define METHOD_SETPARAMETERATTRIBUTES                    "DUMMY"
-#define METHOD_GETPARAMETERATTRIBUTES                    "DUMMY"
-#define METHOD_COMMIT                                    "DUMMY"
-#define METHOD_ADDTBLROW                                 "DUMMY"
-#define METHOD_DELETETBLROW                              "DUMMY"
-#define METHOD_RPC                                       "DUMMY"
-#define METHOD_RESPONSE                                  "DUMMY"
-#define METHOD_MAX                                       "DUMMY"
-#define MAX_METHOD_NAME_LENGTH                           "DUMMY"
-#define RBUS_SMGR_DESTINATION_NAME                       "DUMMY" 
-#define RBUS_SMGR_METHOD_GET_CURRENT_SESSION_ID          "DUMMY" 
-#define RBUS_SMGR_METHOD_REQUEST_SESSION_ID              "DUMMY" 
-#define RBUS_SMGR_METHOD_END_SESSION                     "DUMMY"
-#define RTMESSAGE_BUS_SUCCESS                               0
-#define RT_OK                                               0
-#define RT_ERROR                                            1
-#define rtMessage_Create(a)                                 0
-#define rtMessage_Release(a)                                0
-#define rbus_openBrokerConnection(x)                        0
-#define rbus_openBrokerConnection2(x, y)                    0
-#define rbus_closeBrokerConnection(x)                       0
-#define rbus_registerObj(x, y, z)                           0
-#define rbus_unregisterObj(x)                               0
-#define rbus_addElement(x, y)                               0
-#define rbus_removeElement(x, y)                            0
-#define rbus_registerMethod(x, y, z, a)                     0
-#define rbus_unregisterMethod(x, y)                         0
-#define rbus_registerMethodTable(x, y, z)                   0
-#define rbus_unregisterMethodTable(x, y, z)                 0
-#define rbus_invokeRemoteMethod(x, y, z, a, b)              0
-#define rbus_invokeRemoteMethodAsync(x, y, z, a, b)         0
-#define rbus_publishEvent(x, y, z)                          0
-#define rbus_registerEvent(x, y)                            0
-#define rbus_unregisterEvent(x, y)                          0
-#define rbus_registerTimedUpdateEventCallback(x, y, z)      0
-#define rbus_subscribeToEvent(x,  y, z, a)                  0
-#define rbus_unsubscribeFromEvent(x, y)                     0
-#define rbus_pushObj(x, y, z)                               0
-#define rbus_pushObjNoAck(x, y)                             0
-#define rbus_pullObj(x, y, z)                               0
-#define rbus_subscribeToTimedUpdateEvents(x, y, a, b, c)    0
-#define rbus_unsubscribeFromTimedUpdateEvents(x, y)         0
-#define rbus_discoverWildcardDestinations(x, y, z)          0
-#define rbus_discoverObjectElements(x, y, z)                0
-#define rbus_discoverElementObjects(x, y, z)                0
-#define rbus_discoverRegisteredComponents(x, y)             0
-#define rbusMessage_Init(a)                                 0
-#define rbusMessage_Release(a)                              0
-#define rbusMessage_SetString(x,y)                          0
-#define rbusMessage_GetString(x,y)                          0
-#define rbusMessage_SetBytes(x,y,z)                         0
-#define rbusMessage_GetBytes(x,y,z)                         0
-#define rbusMessage_SetInt32(x,y)                           0
-#define rbusMessage_GetInt32(x,y)                           0
-#define rbusMessage_SetDouble(x,y)                          0
-#define rbusMessage_GetDouble(x,y)                          0
-#define rbusMessage_SetMessage(x,y)                         0
-#define rbusMessage_GetMessage(x,y)                         0
-#define ccsp_handle_rbus_component_reply(a, b, c, d, e)     0
-#define RBUS_RETURN_CODE_SUCCESS                            0
-#define RBUS_RETURN_CODE_FAILURE                            1
-#define rbusNewDataType_t                                   int
-#define RBUS_DATATYPE_BOOLEAN                               0x500
-#define RBUS_DATATYPE_STRING                                0x50E
-
-#else
+#ifndef CCSP_RBUS_INTERNAL_H
+#define CCSP_RBUS_INTERNAL_H
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_session_mgr.h>
 #include <rtmessage/rtLog.h>
@@ -159,7 +84,6 @@ typedef struct _rbusDateTime {
 } rbusDateTime_t;
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rbusMessage message, void * user_data);
-/*static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);*/
 void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
-#endif
-          
+
+#endif /* CCSP_RBUS_INTERNAL_H */

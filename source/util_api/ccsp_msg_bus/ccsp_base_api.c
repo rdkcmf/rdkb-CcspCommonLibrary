@@ -4664,7 +4664,6 @@ int CcspBaseIf_Register_Event_rbus
  )
 {
     UNREFERENCED_PARAMETER(sender);
-    #ifndef _RBUS_NOT_REQ_
     CcspTraceInfo(("%s : rbus_registerEvent called for event: %s\n", __FUNCTION__, event_name));
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
     char * comp = NULL;
@@ -4697,7 +4696,6 @@ int CcspBaseIf_Register_Event_rbus
     }
 
     RBUS_LOG("%s : rbus_registerEvent success for : %s\n", __FUNCTION__, event_name);
-    #endif
     return CCSP_SUCCESS;
 }
 

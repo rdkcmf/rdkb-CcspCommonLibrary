@@ -1037,18 +1037,13 @@ CCSP_Msg_IsRbus_enabled
 void
 )
 {
-#ifndef _RBUS_NOT_REQ_
     if (0 == rbus_enabled)
         rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
 
     CcspTraceWarning(("%s is enabled\n", rbus_enabled ? "RBus" : "DBus"));
     return rbus_enabled;
-#else
-    return 0;
-#endif
 }
 
-#ifndef _RBUS_NOT_REQ_
 void
 ccsp_rbus_logHandler
 (
@@ -1084,7 +1079,6 @@ ccsp_rbus_logHandler
     }
     return;
 }
-#endif /* _RBUS_NOT_REQ_ */
 
 int 
 CCSP_Message_Bus_Init
@@ -1164,8 +1158,7 @@ CCSP_Message_Bus_Init
        bus_info->component_id[sizeof(bus_info->component_id)-1] = '\0';
     }
 
-    #ifndef _RBUS_NOT_REQ_
-    rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
+    CCSP_Msg_IsRbus_enabled();
     RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");  
     if(rbus_enabled)
     {
@@ -1243,7 +1236,6 @@ CCSP_Message_Bus_Init
         }
         return 0;
     }
-    #endif
     //    CcspTraceDebug(("<%s>: component id = '%s'\n", __FUNCTION__, bus_info->component_id));
 
     // init var, mutex, msg_queue
@@ -1941,7 +1933,6 @@ CCSP_Message_Bus_Register_Path_Priv
     return ret;
 }
 
-#ifndef _RBUS_NOT_REQ_
 void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue)
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
@@ -2510,7 +2501,7 @@ CCSP_Message_Bus_Register_Path_Priv_rbus
     bus_info->rbus_callback = (void *)funcptr;
     return CCSP_Message_Bus_OK;
 }
-#endif
+
 int 
 CCSP_Message_Bus_Register_Path2
 (
