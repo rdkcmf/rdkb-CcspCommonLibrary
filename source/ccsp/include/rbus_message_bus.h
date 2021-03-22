@@ -94,17 +94,23 @@
 #define rbus_pullObj(x, y, z)                               0
 #define rbus_subscribeToTimedUpdateEvents(x, y, a, b, c)    0
 #define rbus_unsubscribeFromTimedUpdateEvents(x, y)         0
-#define rbus_resolveWildcardDestination(x, y, z)            0
-#define rbus_findMatchingObjects(x, y, z)                   0
-#define rbus_registeredComponents(a)                        0
-#define rbus_GetElementsAddedByObject(a, b)                 0
-#define rbus_AppendInt32(x, y)                              0
-#define rbus_PopInt32(x, y)                                 0
-#define rbus_AppendString(x, y)                             0
-#define rbus_PopString(x, y)                                0
-#define rbus_SetString(x,y,z)                               0
-#define rbus_GetString(x,y,z)                               0
-#define ccsp_handle_rbus_component_reply(a, b, c, d)        0
+#define rbus_discoverWildcardDestinations(x, y, z)          0
+#define rbus_discoverObjectElements(x, y, z)                0
+#define rbus_discoverElementObjects(x, y, z)                0
+#define rbus_discoverRegisteredComponents(x, y)             0
+#define rbusMessage_Init(a)                                 0
+#define rbusMessage_Release(a)                              0
+#define rbusMessage_SetString(x,y)                          0
+#define rbusMessage_GetString(x,y)                          0
+#define rbusMessage_SetBytes(x,y,z)                         0
+#define rbusMessage_GetBytes(x,y,z)                         0
+#define rbusMessage_SetInt32(x,y)                           0
+#define rbusMessage_GetInt32(x,y)                           0
+#define rbusMessage_SetDouble(x,y)                          0
+#define rbusMessage_GetDouble(x,y)                          0
+#define rbusMessage_SetMessage(x,y)                         0
+#define rbusMessage_GetMessage(x,y)                         0
+#define ccsp_handle_rbus_component_reply(a, b, c, d, e)     0
 #define RBUS_RETURN_CODE_SUCCESS                            0
 #define RBUS_RETURN_CODE_FAILURE                            1
 #define rbusNewDataType_t                                   int
@@ -113,9 +119,8 @@
 
 #else
 #include <rbus-core/rbus_core.h>
-#include <rbus-core/rbus_marshalling.h>
 #include <rbus-core/rbus_session_mgr.h>
-#include <rbus-core/rtLog.h>
+#include <rtmessage/rtLog.h>
 
 #define RBUS_RETURN_CODE_SUCCESS 0
 #define RBUS_RETURN_CODE_FAILURE 1
@@ -153,8 +158,8 @@ typedef struct _rbusDateTime {
     rbusTimeZone_t  m_tz;
 } rbusDateTime_t;
 
-int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rtMessage message, void * user_data);
-/*static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);*/
-void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
+int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rbusMessage message, void * user_data);
+/*static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);*/
+void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
 #endif
           

@@ -135,13 +135,13 @@ static int               CCSP_Message_Bus_Register_Event_Priv(DBusConnection*, c
 static int               CCSP_Message_Save_Register_Event(void*, const char*, const char*, const char*, const char*);
 static int               CCSP_Message_Bus_Register_Path_Priv(void*, const char*, DBusObjectPathMessageFunction, void*);
 static int               CCSP_Message_Bus_Register_Path_Priv_rbus(void*, rbus_callback_t, void*);
-static int               thread_path_message_func_rbus(const char * destination, const char * method, rtMessage in, void * user_data, rtMessage *out, const rtMessageHeader* hdr);
+static int               thread_path_message_func_rbus(const char * destination, const char * method, rbusMessage in, void * user_data, rbusMessage *out, const rtMessageHeader* hdr);
 static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**);
 static DBusWakeupMainFunction wake_mainloop(void *);
-static int webcfg_signal_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
-static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
-static int cr_isSystemReady_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
-static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr);
+static int webcfg_signal_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
+static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
+static int cr_isSystemReady_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 int rbus_enabled = 0;
 
 
@@ -1942,7 +1942,7 @@ CCSP_Message_Bus_Register_Path_Priv
 }
 
 #ifndef _RBUS_NOT_REQ_
-void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue)
+void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue)
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     int32_t ival = 0;
@@ -1956,7 +1956,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
     {
         case RBUS_DATATYPE_INT16:
         case RBUS_DATATYPE_INT32:
-            rbus_PopInt32(msg, &ival);
+            rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%d", ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%d", ival);
@@ -1965,7 +1965,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
 
         case RBUS_DATATYPE_UINT16:
         case RBUS_DATATYPE_UINT32:
-            rbus_PopInt32(msg, &ival);
+            rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%u", (uint32_t)ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%u", (uint32_t)ival);
@@ -1980,8 +1980,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
                 int64_t i64;
             };
             union UNION64 u;
-            rbus_PopInt32(msg, &u.i32[0]);
-            rbus_PopInt32(msg, &u.i32[1]);
+            rbusMessage_GetInt32(msg, &u.i32[0]);
+            rbusMessage_GetInt32(msg, &u.i32[1]);
             n = snprintf(pTmp, 0, "%lld", u.i64) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%lld", u.i64);
@@ -1996,8 +1996,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
                 uint64_t u64;
             };
             union UNION64 u;
-            rbus_PopInt32(msg, &u.i32[0]);
-            rbus_PopInt32(msg, &u.i32[1]);
+            rbusMessage_GetInt32(msg, &u.i32[0]);
+            rbusMessage_GetInt32(msg, &u.i32[1]);
             n = snprintf(pTmp, 0, "%llu", u.u64) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%llu", u.u64);
@@ -2005,14 +2005,14 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         }
         case RBUS_DATATYPE_SINGLE:
-            rbus_PopDouble(msg, &fval);
+            rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%f", fval);
             *pType = ccsp_float;
             break;
         case RBUS_DATATYPE_DOUBLE:
-            rbus_PopDouble(msg, &fval);
+            rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
             sprintf(*pStringValue, "%f", fval);
@@ -2022,7 +2022,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
         {
             rbusDateTime_t rbus_time = {{0},{0}};
             char tmpBuff[40] = {0};
-            rbus_PopBinaryData(msg, &pValue, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t*)&length);
             memcpy(&rbus_time,pValue,sizeof(rbusDateTime_t));
             if(0 == rbus_time.m_time.tm_year) {
                 sprintf(tmpBuff, "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year,
@@ -2053,7 +2053,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         case RBUS_DATATYPE_BOOLEAN:
         {
-            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             unsigned char boolValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "false") + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2064,7 +2064,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
         case RBUS_DATATYPE_CHAR:
         case RBUS_DATATYPE_INT8:
         {
-            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             signed char tmpValue = *(signed char*)pValue;
             n = snprintf(pTmp, 0, "%d", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2075,7 +2075,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
         case RBUS_DATATYPE_UINT8:
         case RBUS_DATATYPE_BYTE:
         {
-            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             unsigned char tmpValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "%u", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2084,7 +2084,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             break;
         }
         case RBUS_DATATYPE_STRING:
-            rbus_PopBinaryData(msg, (const void**)&pValue, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             n = length + 1;
             *pStringValue = bus_info->mallocfunc(n);
             strcpy (*pStringValue, pValue);
@@ -2096,7 +2096,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
             unsigned char* pVar = NULL;
             char* pStrVar = NULL;
             unsigned char tmp = 0;
-            rbus_PopBinaryData(msg, (const void **)&pVar, (unsigned int *)&length);
+            rbusMessage_GetBytes(msg, (uint8_t const**)&pVar, (uint32_t *)&length);
 
             n = (2 * length) + 1;
             *pType = ccsp_byte;
@@ -2121,7 +2121,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rtMessage msg, rbusNewD
     return;
 }
 
-static int thread_path_message_func_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
+static int thread_path_message_func_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(destination);
     (void)hdr;
@@ -2139,8 +2139,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             char **parameterNames = 0;
             parameterValStruct_t **val = 0;
 
-            rbus_PopInt32(request, (int32_t*)&writeID);
-            rbus_PopInt32(request, &param_size);
+            rbusMessage_GetInt32(request, (int32_t*)&writeID);
+            rbusMessage_GetInt32(request, &param_size);
 
             if(param_size > 0)
             {
@@ -2151,7 +2151,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterNames[i] = NULL;
-                rbus_PopString(request, (const char**)&parameterNames[i]);
+                rbusMessage_GetString(request, (const char**)&parameterNames[i]);
                 RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
             }
 
@@ -2159,18 +2159,18 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             RBUS_LOG("%s size %d result %d\n", __FUNCTION__, size, result);
             bus_info->freefunc(parameterNames);
 
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             if(tmp == CCSP_SUCCESS )
             {
-                rbus_AppendInt32(*response, size);
+                rbusMessage_SetInt32(*response, size);
                 for(i = 0; i < size; i++)
                 {
                     RBUS_LOG("%s val[%d]->parameterName %s val[%d]->parameterValue %s\n", __FUNCTION__, i, val[i]->parameterName, i, val[i]->parameterValue);
-                    rbus_AppendString(*response, val[i]->parameterName);
-                    rbus_AppendInt32(*response, val[i]->type);
-                    rbus_AppendString(*response, val[i]->parameterValue);
+                    rbusMessage_SetString(*response, val[i]->parameterName);
+                    rbusMessage_SetInt32(*response, val[i]->type);
+                    rbusMessage_SetString(*response, val[i]->parameterValue);
                 }
             }
             free_parameterValStruct_t(bus_info, size, val);
@@ -2179,8 +2179,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         {
             int32_t result = 0;
             result = func->getHealth();
-            rtMessage_Create(response);
-            rbus_AppendInt32(*response, result);
+            rbusMessage_Init(response);
+            rbusMessage_SetInt32(*response, result);
             RBUS_LOG("exiting METHOD_GETHEALTH with result %d\n", result);
             return DBUS_HANDLER_RESULT_HANDLED;
         }
@@ -2194,9 +2194,9 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             char *invalidParameterName = 0;
             int32_t dataType = 0;
 
-            rbus_PopInt32(request, &sessionId);
-            rbus_PopInt32(request, (int32_t*)&writeID);
-            rbus_PopInt32(request, (int32_t*)&param_size);
+            rbusMessage_GetInt32(request, &sessionId);
+            rbusMessage_GetInt32(request, (int32_t*)&writeID);
+            rbusMessage_GetInt32(request, (int32_t*)&param_size);
             if(param_size > 0)
             {
                 parameterVal = bus_info->mallocfunc(param_size*sizeof(parameterValStruct_t ));
@@ -2206,33 +2206,33 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterVal[i].parameterName = NULL;
-                rbus_PopString(request, (const char**)&parameterVal[i].parameterName);
-                rbus_PopInt32(request, &dataType);
+                rbusMessage_GetString(request, (const char**)&parameterVal[i].parameterName);
+                rbusMessage_GetInt32(request, &dataType);
                 if (dataType < RBUS_DATATYPE_BOOLEAN)
                 {
                     parameterVal[i].type = dataType;
                     parameterVal[i].parameterValue = NULL;
-                    rbus_PopString(request, (const char**)&parameterVal[i].parameterValue);
+                    rbusMessage_GetString(request, (const char**)&parameterVal[i].parameterValue);
                 }
                 else
                 {
                     ccsp_handle_rbus_component_reply (bus_info, request, (rbusNewDataType_t) dataType, &parameterVal[i].type, &parameterVal[i].parameterValue);
                 }
             }
-            char *str = NULL;
-            rbus_PopString(request, (const char**)&str); //commit
+            const char *str = NULL;
+            rbusMessage_GetString(request, &str); //commit
             commit = (str && strcasecmp(str, "TRUE") == 0)?1:0;
             result = func->setParameterValues(sessionId, writeID, parameterVal, param_size, commit,&invalidParameterName, func->setParameterValues_data);
             RBUS_LOG("%s :setParameterValues result %d\n", __FUNCTION__, result);
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             if( tmp == CCSP_SUCCESS)
             {
                 if(invalidParameterName != NULL)
-                    rbus_AppendString(*response, invalidParameterName); //invalid param
+                    rbusMessage_SetString(*response, invalidParameterName); //invalid param
                 else
-                    rbus_AppendString(*response, ""); //invalid param
+                    rbusMessage_SetString(*response, ""); //invalid param
             }
             bus_info->freefunc(parameterVal);
             bus_info->freefunc(invalidParameterName);
@@ -2244,7 +2244,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             parameterAttributeStruct_t **val = 0;
             int size = 0, result = 0, i = 0, param_size = 0;
             int32_t tmp = 0;
-            rbus_PopInt32(request, &param_size);
+            rbusMessage_GetInt32(request, &param_size);
 
             if(param_size)
             {
@@ -2255,28 +2255,28 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             for(i = 0; i < param_size; i++)
             {
                 parameterNames[i] = NULL;
-                rbus_PopString(request, (const char**)&parameterNames[i]);
+                rbusMessage_GetString(request, (const char**)&parameterNames[i]);
                 RBUS_LOG("%s parameterNames[%d]: %s\n", __FUNCTION__, i, parameterNames[i]);
             }
 
             size = 0;
             result = func->getParameterAttributes(parameterNames, param_size, &size, &val , func->getParameterAttributes_data);
             bus_info->freefunc(parameterNames);
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp);
+            rbusMessage_SetInt32(*response, tmp);
             if( tmp == CCSP_SUCCESS )
             {
-                rbus_AppendInt32(*response, (int32_t)size);
+                rbusMessage_SetInt32(*response, (int32_t)size);
 
                 for(i = 0; i < size; i++)
                 {
-                    rbus_AppendString(*response, val[i]->parameterName);
-                    rbus_AppendInt32(*response, val[i]->notificationChanged);
-                    rbus_AppendInt32(*response, val[i]->notification);
-                    rbus_AppendInt32(*response, val[i]->accessControlChanged);
-                    rbus_AppendInt32(*response, val[i]->access);
-                    rbus_AppendInt32(*response, val[i]->accessControlBitmask);
+                    rbusMessage_SetString(*response, val[i]->parameterName);
+                    rbusMessage_SetInt32(*response, val[i]->notificationChanged);
+                    rbusMessage_SetInt32(*response, val[i]->notification);
+                    rbusMessage_SetInt32(*response, val[i]->accessControlChanged);
+                    rbusMessage_SetInt32(*response, val[i]->access);
+                    rbusMessage_SetInt32(*response, val[i]->accessControlBitmask);
                 }
             }
             free_parameterAttributeStruct_t(bus_info, size, val);
@@ -2286,21 +2286,21 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         {
             int32_t tmp = 0, sessionId = 0, writeID = 0, commit = 0;
             int result = 0;
-            rbus_PopInt32(request, &sessionId);
-            rbus_PopInt32(request, &writeID);
-            rbus_PopInt32(request, &commit);
+            rbusMessage_GetInt32(request, &sessionId);
+            rbusMessage_GetInt32(request, &writeID);
+            rbusMessage_GetInt32(request, &commit);
             result = func->setCommit(sessionId, writeID, commit, func->setCommit_data);
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             return DBUS_HANDLER_RESULT_HANDLED;
         }
         else if(!strncmp(method, METHOD_SETPARAMETERATTRIBUTES, MAX_METHOD_NAME_LENGTH) && func->setParameterAttributes)
         {
             parameterAttributeStruct_t * parameterAttribute = 0;
             int i = 0, sessionId = 0, param_size = 0, result = 0, tmp = 0;
-            rbus_PopInt32(request, &sessionId);
-            rbus_PopInt32(request, &param_size);
+            rbusMessage_GetInt32(request, &sessionId);
+            rbusMessage_GetInt32(request, &param_size);
             if(param_size > 0)
             {
                 parameterAttribute = bus_info->mallocfunc(param_size*sizeof(parameterAttributeStruct_t));
@@ -2308,18 +2308,18 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             }
             for(i = 0; i < param_size; i++)
             {
-                rbus_PopString(request, (const char**)&parameterAttribute[i].parameterName);
-                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].notificationChanged);
-                rbus_PopInt32(request, (int32_t*)&parameterAttribute[i].notification);
-                rbus_PopInt32(request, (int32_t*)&parameterAttribute[i].access);
-                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].accessControlChanged);
-                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].accessControlBitmask);
-                rbus_PopInt32(request, (int32_t *)&parameterAttribute[i].RequesterID);
+                rbusMessage_GetString(request, (const char**)&parameterAttribute[i].parameterName);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].notificationChanged);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].notification);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].access);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].accessControlChanged);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].accessControlBitmask);
+                rbusMessage_GetInt32(request, (int32_t*)&parameterAttribute[i].RequesterID);
             }
             result = func->setParameterAttributes(sessionId, parameterAttribute, param_size, func->setParameterAttributes_data);
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             bus_info->freefunc(parameterAttribute);
             return DBUS_HANDLER_RESULT_HANDLED;
         }
@@ -2329,20 +2329,20 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t btmp = 0 ,result = 0, tmp = 0;
             char * parameterName = 0;
             parameterInfoStruct_t **val = 0;
-            rbus_PopString(request, (const char**)&parameterName);
-            rbus_PopInt32(request, &btmp); //next level
+            rbusMessage_GetString(request, (const char**)&parameterName);
+            rbusMessage_GetInt32(request, &btmp); //next level
             result = func->getParameterNames(parameterName,btmp, &size, &val, func->getParameterNames_data );
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             if( tmp == CCSP_SUCCESS)
             {
-                rbus_AppendInt32(*response, size);
+                rbusMessage_SetInt32(*response, size);
                 for(i = 0; i < size; i++)
                 {
-                    rbus_AppendString(*response, val[i]->parameterName);
+                    rbusMessage_SetString(*response, val[i]->parameterName);
                     btmp = val[i]->writable;
-                    rbus_AppendInt32(*response, btmp);
+                    rbusMessage_SetInt32(*response, btmp);
                     RBUS_LOG("%s Param [%d] Name=%s, Writable=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable);
                 }
             }
@@ -2354,8 +2354,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t tmp = 0, sessionId = 0;
             char *str = 0, *inst_str = 0;
             rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
-            rbus_PopInt32(request, (int32_t*)&sessionId);
-            rbus_PopString(request, (const char**)&str); //object name
+            rbusMessage_GetInt32(request, &sessionId);
+            rbusMessage_GetString(request, (const char**)&str); //object name
             result = func->AddTblRow(sessionId, str, &instanceNumber , func->AddTblRow_data);
             if (result == CCSP_SUCCESS)
             {
@@ -2366,11 +2366,11 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                     RBUS_LOG_ERR("rbus_addElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
                 }
             }
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             tmp = instanceNumber;
-            rbus_AppendInt32(*response, tmp); //inst num
+            rbusMessage_SetInt32(*response, tmp); //inst num
             return DBUS_HANDLER_RESULT_HANDLED;
         }
         else if (!strncmp(method, METHOD_DELETETBLROW, MAX_METHOD_NAME_LENGTH) && func->DeleteTblRow)
@@ -2379,8 +2379,8 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t tmp = 0, sessionId = 0;
             char * str = 0;
             rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
-            rbus_PopInt32(request, (int32_t*)&sessionId);
-            rbus_PopString(request, (const char**)&str); //obj name
+            rbusMessage_GetInt32(request, &sessionId);
+            rbusMessage_GetString(request, (const char**)&str); //obj name
             result = func->DeleteTblRow(sessionId, str , func->DeleteTblRow_data);
             if (result == CCSP_SUCCESS)
             {
@@ -2389,9 +2389,9 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                     RBUS_LOG_ERR("rbus_removeElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
                 }
             }
-            rtMessage_Create(response);
+            rbusMessage_Init(response);
             tmp = result;
-            rbus_AppendInt32(*response, tmp); //result
+            rbusMessage_SetInt32(*response, tmp); //result
             return DBUS_HANDLER_RESULT_HANDLED;
         }
         else if (!strcmp(method, CCSP_PARAMETER_VALUE_CHANGE_SIGNAL) && func->parameterValueChangeSignal)
@@ -2399,7 +2399,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             parameterSigStruct_t *val = 0;
             int param_size = 0, i = 0;
 
-            rbus_PopInt32(request, (int32_t*)&param_size);
+            rbusMessage_GetInt32(request, (int32_t*)&param_size);
 
             if(param_size)
             {
@@ -2408,12 +2408,12 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
 
                 for(i = 0; i < param_size; i++)
                 {
-                    rbus_PopString(request, &val[i].parameterName);
-                    rbus_PopString(request, &val[i].oldValue);
-                    rbus_PopString(request, &val[i].newValue);
-                    rbus_PopInt32(request, (int32_t*)&val[i].type);
-                    rbus_PopString(request, &val[i].subsystem_prefix);
-                    rbus_PopInt32(request, (int32_t*)&val[i].writeID);
+                    rbusMessage_GetString(request, &val[i].parameterName);
+                    rbusMessage_GetString(request, &val[i].oldValue);
+                    rbusMessage_GetString(request, &val[i].newValue);
+                    rbusMessage_GetInt32(request, (int32_t*)&val[i].type);
+                    rbusMessage_GetString(request, &val[i].subsystem_prefix);
+                    rbusMessage_GetInt32(request, (int32_t*)&val[i].writeID);
                 }
 
                 func->parameterValueChangeSignal(val, param_size,func->parameterValueChangeSignal_data);
@@ -2425,7 +2425,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
     return 0;
 }
 
-static int cr_registerCaps_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
+static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(response);
     (void) destination;
@@ -2437,13 +2437,13 @@ static int cr_registerCaps_rbus(const char * destination, const char * method, r
     if (func->registerCaps)
     {
         char* pCompName = NULL;
-        rbus_PopString(request, (char const**)&pCompName);
+        rbusMessage_GetString(request, (const char**)&pCompName);
         func->registerCaps(pCompName, func->registerCaps_data);
     }
     return err;
 }
 
-static int cr_isSystemReady_rbus (const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
+static int cr_isSystemReady_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(request);
     (void) destination;
@@ -2456,13 +2456,13 @@ static int cr_isSystemReady_rbus (const char * destination, const char * method,
     {
         int32_t result = 0;
         result = func->isSystemReady();
-        rtMessage_Create(response);
-        rbus_AppendInt32(*response, result);
+        rbusMessage_Init(response);
+        rbusMessage_SetInt32(*response, result);
     }
     return err;
 }
 
-static int webcfg_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
+static int webcfg_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(response);
     (void) destination;
@@ -2477,13 +2477,13 @@ static int webcfg_signal_rbus(const char * destination, const char * method, rtM
     {
         char* webconfig_data = 0;
         RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
-        rbus_PopString(request, (char const**)&webconfig_data);
+        rbusMessage_GetString(request, (char const**)&webconfig_data);
         func->webconfigSignal(webconfig_data, func->webconfigSignal_data);
     }
     return err;
 }
 
-static int telemetry_send_signal_rbus(const char * destination, const char * method, rtMessage request, void * user_data, rtMessage *response, const rtMessageHeader* hdr)
+static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(response);
     (void) destination;
@@ -2493,7 +2493,7 @@ static int telemetry_send_signal_rbus(const char * destination, const char * met
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    err = rbus_GetString(request, MESSAGE_FIELD_PAYLOAD, (const char**)&telemetry_data);
+    err = rbusMessage_GetString(request, (const char**)&telemetry_data);
     func->telemetryDataSignal(telemetry_data,func->telemetryDataSignal_data);
     return err;
 }
