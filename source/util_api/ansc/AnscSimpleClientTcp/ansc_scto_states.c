@@ -539,6 +539,91 @@ AnscSctoSetPeerPort
     return  ANSC_STATUS_SUCCESS;
 }
 
+/**********************************************************************
+ *
+ *     caller:     owner of this object
+ *
+ *     prototype:
+ *
+ *     ANSC_STATUS
+ *     AnscSctoGetHostNames
+ *         (
+ *             ANSC_HANDLE                 hThisObject,
+ *	       ANSC_HANDLE		   hHostNames
+ *         );
+ *
+ *     description:
+ *
+ *     This function is called to retrieve the object state.
+ *
+ *     argument:   ANSC_HANDLE                 hThisObject
+ *                 This handle is actually the pointer of this object
+ *                 itself.
+ *
+ *     return:     object state.
+ *
+ ***********************************************************************/
+
+ANSC_STATUS
+AnscSctoGetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+	ANSC_HANDLE		    hHostNames
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
+    PHTTP_SCTO_HOST_NAMES	    pHostNames	 = (PHTTP_SCTO_HOST_NAMES)&pMyObject->hostNames;
+
+    *(PHTTP_SCTO_HOST_NAMES)hHostNames = *pHostNames;
+
+    return  returnStatus;
+}
+
+
+/**********************************************************************
+ *
+ *     caller:     owner of this object
+ *
+ *     prototype:
+ *
+ *     ANSC_STATUS
+ *     AnscSctoSetHostNames
+ *         (
+ *             ANSC_HANDLE                 hThisObject,
+ *             ANSC_HANDLE                 hHostNames
+ *         );
+ *
+ *     description:
+ *
+ *     This function is called to configure the object state.
+ *
+ *     argument:   ANSC_HANDLE                 hThisObject
+ *                 This handle is actually the pointer of this object
+ *                 itself.
+ *
+ *                 ANSC_HANDLE			hHostNames
+ *                 Specifies the object state to be configured.
+ *
+ *     return:     status of operation.
+ *
+ *                                                                                                                                       **********************************************************************/
+
+ANSC_STATUS
+AnscSctoSetHostNames
+    (
+        ANSC_HANDLE                 hThisObject,
+        ANSC_HANDLE		    hHostNames
+    )
+{
+    ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pMyObject    = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)hThisObject;
+    PHTTP_SCTO_HOST_NAMES           pHostNames   = (PHTTP_SCTO_HOST_NAMES)&pMyObject->hostNames;
+
+    *pHostNames = *(PHTTP_SCTO_HOST_NAMES)hHostNames;
+
+    return  returnStatus;
+}
 
 /**********************************************************************
 

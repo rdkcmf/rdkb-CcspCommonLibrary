@@ -57,7 +57,6 @@ static int *lock_count;
 
 static pthread_once_t openssl_is_initialized = PTHREAD_ONCE_INIT;
 static void openssl_thread_setup(void);
-//static int isComcastImage = 0;
 
 void initialize_openssl_lib()
 {
@@ -156,29 +155,6 @@ openssl_print_errors (SSL *ssl)
 }
 
 #define DEVICE_PROPERTIES    "/etc/device.properties"
-/*
- *  RDKB-12305  Adding method to check whether comcast device or not
- *  Procedure     : bIsComcastImage
- *  Purpose       : return True for Comcast build.
- *  Parameters    :
- *  Return Values :
- *  1             : 1 for comcast images
- *  2             : 0 for other images
- */
-static int bIsComcastImage( void)
-{
-   char PartnerId[255] = {'\0'};
-   int isComcastImg = 1;
-
-   getPartnerId ( PartnerId ) ;
-   
-   if ( 0 != strcmp ( PartnerId, "comcast") ) {
-       isComcastImg = 0;
-   }
-
-   return isComcastImg;
-}
-
 /* 
  * product specific CA certificate file(s) is specified
  * through global variable openssl_client_ca_certificate_files/openssl_server_ca_certificate_files
@@ -352,15 +328,10 @@ int openssl_poll (int fd, long timeout, int set, void *ctx)
 
 /* Returns SSL handle on success, NULL on failure.  */
 
-SSL * openssl_connect (int fd)
+SSL * openssl_connect (int fd, hostNames *hosts)
 {
   SSL *ssl = NULL;
-  const char *servername = NULL;
   X509_VERIFY_PARAM *param = NULL;
-
-  if ( bIsComcastImage() ) { 
-     servername = "acs-dt-ai-vip.comcast.net";
-  }
 
   SSL_CTX *ssl_ctx = g_ssl_ctx[SSL_CLIENT_CALLS];
 
@@ -369,27 +340,27 @@ SSL * openssl_connect (int fd)
   }
 
   ssl = SSL_new (ssl_ctx);
-  
-  if ( bIsComcastImage() ) {
+  int i = 0;
+  if ( hosts->peerVerify ) {
   
      //RDKB-9319 : Add host validation
      param = SSL_get0_param(ssl);
   
      /* Enable automatic hostname checks */
      X509_VERIFY_PARAM_set_hostflags(param,X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-     X509_VERIFY_PARAM_set1_host(param, servername, 0);
+     X509_VERIFY_PARAM_set1_host(param, hosts->hostNames[0], 0);
 
-     X509_VERIFY_PARAM_add1_host(param,"acswg.g.comcast.net",0);
-     X509_VERIFY_PARAM_add1_host(param,"acs.g.comcast.net",0);
-     X509_VERIFY_PARAM_add1_host(param,"acswg-dt-ai-vip.comcast.net",0);
-
+     for( i = 1; i<hosts->numHosts; i++)
+     {
+         X509_VERIFY_PARAM_add1_host(param, hosts->hostNames[i],0);
+     }
      SSL_set_verify(ssl, SSL_VERIFY_PEER, 0);
   }
   
   if (!ssl)
     goto error;
 
-  if ( bIsComcastImage() ) {
+  if ( hosts->peerVerify ) {
      AnscTraceWarning(("openssl_connect - Hostnames added to verify \n"));
   }
 
@@ -405,7 +376,7 @@ SSL * openssl_connect (int fd)
   }
   else
   {
-    if ( bIsComcastImage() ) {
+    if ( hosts->peerVerify ) {
        AnscTraceWarning(("openssl_connect - get peer certificate result\n"));
        X509 *cert = SSL_get_peer_certificate(ssl);
        if(cert) {
@@ -424,7 +395,6 @@ SSL * openssl_connect (int fd)
   }
 
   AnscTraceWarning(("openssl_connect - connected socket %d to SSL handle %p\n", fd, ssl));
-
   return ssl;
 
 error:
@@ -473,7 +443,7 @@ error:
     return NULL;
 }
 
-int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
+int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl, bool isSecure)
 {
     UNREFERENCED_PARAMETER(fd);
     X509 *cert;
@@ -549,7 +519,7 @@ int _client_openssl_validate_certificate (int fd,  char *host, SSL *ssl)
         AnscTraceWarning(("%s - X509 certificate successfully verified on host %s\n", __FUNCTION__,
                    host));
 
-    if ( bIsComcastImage() ) {
+    if ( isSecure ) {
        //RDKB-9319: Get TLS version and log
        const char* sslVersion = SSL_get_version(ssl);
        AnscTraceWarning(("%s - SSL version is : %s\n",__FUNCTION__,sslVersion));
@@ -581,10 +551,10 @@ int _server_openssl_validate_certificate (int fd, char *data, SSL *ssl)
 }
 
 /* certificate validation -- 1: success, 0- fail. note self-certificate is allowed  */
-int openssl_validate_certificate (int fd, char * data, SSL *ssl, int who_calls)
+int openssl_validate_certificate (int fd, char * data, SSL *ssl, int who_calls, bool isSecure)
 {
     if (who_calls == SSL_CLIENT_CALLS)
-        return _client_openssl_validate_certificate (fd, data, ssl);
+        return _client_openssl_validate_certificate (fd, data, ssl, isSecure);
     else
         return _server_openssl_validate_certificate (fd, data, ssl);
 }

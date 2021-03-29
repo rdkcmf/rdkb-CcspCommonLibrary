@@ -523,7 +523,7 @@ AnscDstoAcceptTask
             }
             else
             {
-                s_error = openssl_validate_certificate (pMyObject->Socket, NULL , ssl, SSL_SERVER_CALLS);
+                s_error = openssl_validate_certificate (pMyObject->Socket, NULL , ssl, SSL_SERVER_CALLS, false);
                 if ( s_error == 0 )
                 {
                     AnscTrace("%s - openssl_validate_certificate() failed %p.\n", __FUNCTION__, ssl);
