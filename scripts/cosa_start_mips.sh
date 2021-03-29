@@ -160,6 +160,11 @@ if [ -e ./pam ]; then
 	cd ..
 fi
 
+#start update CADL 
+if [ -f /usr/bin/check-ca-update.sh ] && [ "$BOX_TYPE" != "XB3" ]; then
+    sh /usr/bin/check-ca-update.sh &
+fi
+
 #Start ocsp
 if [ -f /lib/rdk/ocsp-support.sh ]; then
 	echo_t "Starting ocsp script"
