@@ -75,6 +75,7 @@ typedef struct _ipc_ppp_ipv6cp_msg_t
 typedef struct _ipc_ppp_event_msg_t
 {
     pid_t pid;
+    char interface[IFNAME_LENGTH];
     PPP_STATES pppState; //lcp state
     union
     {
