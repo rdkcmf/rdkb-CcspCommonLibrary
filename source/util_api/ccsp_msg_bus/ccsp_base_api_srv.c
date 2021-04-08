@@ -1600,7 +1600,6 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
-#ifndef _RBUS_NOT_REQ_
 int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rbusMessage message, void * user_data)
 {
     UNREFERENCED_PARAMETER(object_name);
@@ -1673,7 +1672,6 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
 
     return RTMESSAGE_BUS_SUCCESS;
 }
-#endif /* _RBUS_NOT_REQ_ */
 
 void  CcspBaseIf_Set_Default_Event_Callback
 (

@@ -205,9 +205,7 @@ void check_component_crash(char* init_file)
 	 * Components based purely on RBUS will not invoke CCSP_Message_Bus_Init.
 	 * Check and update rbus_enabled state .
 	 */
-    #ifndef _RBUS_NOT_REQ_
-    rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
-    #endif
+    CCSP_Msg_IsRbus_enabled();
 
     	int comp_crashed = 0 ;
 	int fd = access(init_file, F_OK); 
