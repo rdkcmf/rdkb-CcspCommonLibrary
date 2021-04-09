@@ -68,6 +68,9 @@ void DMPackCreateW(PANSC_XML_DOM_NODE_OBJECT P,char* name, int typeId,int W);
 void DMPackCreateN(PANSC_XML_DOM_NODE_OBJECT P,char* name, int typeId,int N);
 PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, const char* pName, const char* pText, ULONG textSize);
 PANSC_XML_DOM_NODE_OBJECT DMPackCreatePNode(PANSC_XML_DOM_NODE_OBJECT pNode, const char* pName);
+
+#if 0
 ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* pNewAttributeName, ULONG dataSize, const char* pNewAttributeData);
+#endif
 
 #endif

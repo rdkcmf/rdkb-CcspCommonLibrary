@@ -45,6 +45,7 @@
     code and not explicitely created in the packing code.
 */
 
+#include <assert.h>
 #include "ansc_platform.h"
 #include "ansc_xml_dom_parser_interface.h"
 #include "ansc_xml_dom_parser_external_api.h"
@@ -87,7 +88,7 @@ typedef enum funcNameId {
   func_IsObjSupported
 }funcNameId;
 
-const char* funcName[] = {
+static const char* funcName[] = {
   "GetEntryCount",
   "GetEntryStatus",
   "GetEntry",
@@ -119,6 +120,38 @@ const char* funcName[] = {
   "MemoryTable",
   "IsObjSupported"
 };
+static const unsigned char funcNameLen[] = {
+  13,
+  14,
+  8,
+  8,
+  8,
+  9,
+  11,
+  4,
+  6,
+  13,
+  17,
+  16,
+  18,
+  19,
+  18,
+  17,
+  16,
+  18,
+  19,
+  18,
+  8,
+  6,
+  8,
+  4,
+  10,
+  6,
+  11,
+  11,
+  11,
+  14
+};
 
 typedef enum paramTypeId
 {
@@ -137,39 +170,39 @@ typedef enum objectTypeId
   ObjDynWritableTable
 }objectTypeId;
 
-char* paramName[] = {
+static const char* paramName[] = {
   "boolean",
   "int",
   "unsignedInt",
   "string"
 };
-int paramNameLen[] = {
+static const unsigned char paramNameLen[] = {
   7,
   3,
   11,
   6
 };
-char* paramSyntax[] = {
+static const char* paramSyntax[] = {
   "bool",
   "int",
   "uint32",
   "string"
 };
-int paramSyntaxLen[] = {
+static const unsigned char paramSyntaxLen[] = {
   4,
   3,
   6,
   6
 };
 
-char* objectType[] = {
+static const char* objectType[] = {
   "object",
   "staticTable",
   "dynamicTable",
   "writableTable",
   "dynWritableTable"
 };
-int objectTypeLen[] = {
+static const unsigned char objectTypeLen[] = {
   6,
   11,
   12,
@@ -185,10 +218,10 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateObject(PANSC_XML_DOM_NODE_OBJECT P, int ty
   PANSC_XML_DOM_NODE_OBJECT P1 = NULL;
 
   P1 = DMPackCreateNode(P,"object",0,0);
-  DMPackCreateNode(P1,"name",name,strlen(name));
+  DMPackCreateNode(P1,"name",name,0);
   DMPackCreateNode(P1,"objectType",objectType[type],objectTypeLen[type]);
   if(maxInstance)
-    DMPackCreateNode(P1,"maxInstance",maxInstance,strlen(maxInstance));
+    DMPackCreateNode(P1,"maxInstance",maxInstance,0);
   pCurrentFunctionsNode=0;
   return P1;
 }
@@ -198,7 +231,7 @@ void DMPackCreateFunctions(PANSC_XML_DOM_NODE_OBJECT P, char* name, int numFuncs
   va_list funcIds;
   int funcId;
   int i;
-  char buff1[128];
+  char buff1[28];
   char buff2[128];
 
   if(P != pLastObject)
@@ -212,9 +245,23 @@ void DMPackCreateFunctions(PANSC_XML_DOM_NODE_OBJECT P, char* name, int numFuncs
   for(i=0; i<numFuncs; ++i)
   {
     funcId = va_arg(funcIds, int); 
+#if 1
+    /* Optimised version - should be equivalent to the original version below */
+    const char *f = funcName[funcId];
+    size_t flen = funcNameLen[funcId];
+    memcpy(buff1, "func_", 5);
+    memcpy(buff1 + 5, f, flen + 1);
+    size_t namelen = strlen(name);
+    assert((namelen + 1 + flen) < sizeof(buff2));
+    memcpy(buff2, name, namelen);
+    buff2[namelen] = '_';
+    memcpy(buff2 + namelen + 1, f, flen + 1);
+    DMPackCreateNode(pCurrentFunctionsNode,buff1,buff2,namelen + 1 + flen);
+#else
     snprintf(buff1, sizeof(buff1), "func_%s", funcName[funcId]);
     snprintf(buff2, sizeof(buff2), "%s_%s", name, funcName[funcId]);
-    DMPackCreateNode(pCurrentFunctionsNode,buff1,buff2,strlen(buff2));
+    DMPackCreateNode(pCurrentFunctionsNode,buff1,buff2,0);
+#endif
   }
 
   va_end(funcIds);
@@ -223,7 +270,7 @@ void DMPackCreateFunctions(PANSC_XML_DOM_NODE_OBJECT P, char* name, int numFuncs
 void DMPackCreateParam(PANSC_XML_DOM_NODE_OBJECT P, char* name, int typeId)
 {
   PANSC_XML_DOM_NODE_OBJECT P1 = DMPackCreateNode(P,"parameter",0,0);
-  DMPackCreateNode(P1,"name",name,strlen(name));
+  DMPackCreateNode(P1,"name",name,0);
   DMPackCreateNode(P1,"type",paramName[typeId],paramNameLen[typeId]);
   DMPackCreateNode(P1,"syntax",paramSyntax[typeId],paramSyntaxLen[typeId]);
 }
@@ -234,15 +281,15 @@ void DMPackCreateParamEx(PANSC_XML_DOM_NODE_OBJECT P, char* name, int typeId, ch
 
   P1 = DMPackCreateNode(P,"parameter",0,0);
 
-  DMPackCreateNode(P1,"name",name,strlen(name));
+  DMPackCreateNode(P1,"name",name,0);
 
   if(type)
-    DMPackCreateNode(P1,"type",type, strlen(type));
+    DMPackCreateNode(P1,"type",type,0);
   else
     DMPackCreateNode(P1,"type",paramName[typeId],paramNameLen[typeId]);
 
   if(syntax)
-    DMPackCreateNode(P1,"syntax",syntax,strlen(syntax));
+    DMPackCreateNode(P1,"syntax",syntax,0);
   else
     DMPackCreateNode(P1,"syntax",paramSyntax[typeId],paramSyntaxLen[typeId]);
 
@@ -366,6 +413,22 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
 
   if(pText)
   {
+    /* Callers may either pass in the string length of pText or pass in 0 and it will be determined here */
+    if (textSize == 0)
+    {
+      textSize = strlen(pText);
+    }
+    else
+    {
+#if 1
+      /* Sanity check - enable for debug builds only */
+      if (textSize != strlen(pText))
+      {
+        printf("DMPackCreateNode bad length pName=%s pText=%s textSize=%lu\n", pName, pText, textSize);
+      }
+#endif
+    }
+
     pNewNode->DataSize     = textSize;
     pNewNode->StringData   = AnscAllocateMemory(pNewNode->DataSize + 1);
 
@@ -385,8 +448,7 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
         return NULL;
     }
 
-    AnscZeroMemory((PVOID)pNewNode->StringData, pNewNode->DataSize + 1);
-    AnscCopyMemory( pNewNode->StringData, (char*)pText, textSize);
+    memcpy(pNewNode->StringData, pText, textSize + 1);
   }
 
   if(pNode)
@@ -438,6 +500,7 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreatePNode(PANSC_XML_DOM_NODE_OBJECT pNode, con
   return pNewNode;
 }
 
+#if 0
 ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* pNewAttributeName, ULONG dataSize, const char* pNewAttributeData)
 {
   PANSC_XML_ATTRIBUTE             pNewAttribute = NULL;
@@ -474,4 +537,5 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
 
   return ANSC_STATUS_SUCCESS;
 }
+#endif
 
