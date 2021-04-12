@@ -85,5 +85,7 @@ typedef struct _rbusDateTime {
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rbusMessage message, void * user_data);
 void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
-
+unsigned int get_writeid(const char *str);
+char* writeid_to_string(unsigned int writeid);
+unsigned int string_to_writeid(const char *str);
 #endif /* CCSP_RBUS_INTERNAL_H */

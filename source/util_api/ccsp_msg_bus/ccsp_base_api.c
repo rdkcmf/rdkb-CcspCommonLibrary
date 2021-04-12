@@ -273,6 +273,7 @@ int CcspBaseIf_setParameterValues_rbus(
     UNREFERENCED_PARAMETER(dbus_path);
     int i = 0;
     int ret = CCSP_FAILURE;
+    char *writeID_str = writeid_to_string(writeID);
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     if (*invalidParameterName)
     {
@@ -293,7 +294,7 @@ int CcspBaseIf_setParameterValues_rbus(
 
     rbusMessage_Init(&request);
     rbusMessage_SetInt32(request, sessionId);
-    rbusMessage_SetInt32(request, (int32_t)writeID);
+    rbusMessage_SetString(request, writeID_str);
     rbusMessage_SetInt32(request, size);
 
     for(i = 0; i < size; i++)
@@ -459,11 +460,12 @@ int CcspBaseIf_setCommit_rbus(
     UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dbus_path);
     int ret = CCSP_FAILURE;
+    char *writeID_str = writeid_to_string(writeID);
     rbusMessage request, response;
 
     rbusMessage_Init(&request);
     rbusMessage_SetInt32(request, sessionId);
-    rbusMessage_SetInt32(request, writeID);
+    rbusMessage_SetString(request, writeID_str);
     rbusMessage_SetInt32(request, (int32_t)commit);
 
      if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id , METHOD_COMMIT, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
@@ -547,28 +549,8 @@ int CcspBaseIf_getParameterValues_rbus(
     int i = 0;
     int param_len = 0;
     int32_t type = 0;
-    unsigned int writeID = 0;
     rbusMessage request, response;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-
-    if ( _ansc_strcmp(bus_info->component_id, "ccsp.busclient" ) == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_SNMP;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.lms") == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_LM;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.wifi") == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_WIFI;
-    }
-    else
-        writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
 
     /* There is a case which we have seen in RDKB-29328, where set is called with Size as 0.
      * No action to be taken for that..
@@ -582,7 +564,7 @@ int CcspBaseIf_getParameterValues_rbus(
     }
 
     rbusMessage_Init(&request);
-    rbusMessage_SetInt32(request, (int32_t)writeID);
+    rbusMessage_SetString(request, bus_info->component_id);
     rbusMessage_SetInt32(request, (int32_t)param_size);
 
     for(i = 0; i < param_size; i++)
@@ -682,7 +664,7 @@ int CcspBaseIf_getParameterValues(
     DBusMessageIter array_iter;
     int i;
     dbus_uint32_t utmp ;
-    unsigned int writeID;
+    unsigned int writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
 
     parameterValStruct_t **val = 0;
     *val_size = 0;
@@ -699,24 +681,7 @@ int CcspBaseIf_getParameterValues(
 
     dbus_message_iter_init_append (message, &iter);
 
-    if ( _ansc_strcmp(bus_info->component_id, "ccsp.busclient" ) == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_SNMP;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.lms") == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_LM;
-    }
-    else if ( _ansc_strcmp(bus_info->component_id, "com.cisco.spvtg.ccsp.wifi") == 0 )
-    {
-        writeID = DSLH_MPA_ACCESS_CONTROL_WIFI;
-    }
-    else
-        writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
+    writeID = get_writeid(bus_info->component_id);
 
     utmp = writeID;
     if (!dbus_message_iter_append_basic (&iter, DBUS_TYPE_UINT32, &utmp))

@@ -45,6 +45,7 @@
 #include <fcntl.h>
 #include <rbus_message_bus.h>
 #include "ansc_platform.h"
+#include <dslh_definitions_database.h>
 
 #ifndef WIN32 
 #include <sys/time.h>
@@ -2112,6 +2113,64 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
     return;
 }
 
+unsigned int get_writeid(const char *str)
+{
+    if ( _ansc_strcmp(str, "ccsp.busclient" ) == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
+    else if ( _ansc_strcmp(str, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_SNMP;
+    else if ( _ansc_strcmp(str, "com.cisco.spvtg.ccsp.lms") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_LM;
+    else if ( _ansc_strcmp(str, "com.cisco.spvtg.ccsp.wifi") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_WIFI;
+    else
+        return  DSLH_MPA_ACCESS_CONTROL_ACS;
+}
+
+char* writeid_to_string(unsigned int writeid)
+{
+    if(writeid == DSLH_MPA_ACCESS_CONTROL_WEBUI)
+        return "writeid_webui";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_SNMP)
+        return "writeid_snmp";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_ACS)
+        return "writeid_acs";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_CLI)
+        return "writeid_cli";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL)
+        return "writeid_clienttool";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_LM)
+        return "writeid_lm";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_WIFI)
+        return "writeid_wifi";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_XMPP)
+        return "writeid_xmpp";
+    else
+        return "writeid_cli";
+}
+
+unsigned int string_to_writeid(const char *str)
+{
+    if ( _ansc_strcmp(str, "writeid_webui") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_WEBUI;
+    else if ( _ansc_strcmp(str, "writeid_snmp") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_SNMP;
+    else if ( _ansc_strcmp(str, "writeid_acs") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_ACS;
+    else if ( _ansc_strcmp(str, "writeid_cli") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_CLI;
+    else if ( _ansc_strcmp(str, "writeid_clienttool") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
+    else if ( _ansc_strcmp(str, "writeid_lm") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_LM;
+    else if ( _ansc_strcmp(str, "writeid_wifi") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_WIFI;
+    else if ( _ansc_strcmp(str, "writeid_xmpp") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_XMPP;
+
+    return DSLH_MPA_ACCESS_CONTROL_CLI;
+}
+
 static int thread_path_message_func_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
 {
     UNREFERENCED_PARAMETER(destination);
@@ -2125,12 +2184,14 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         if(!strncmp(method, METHOD_GETPARAMETERVALUES, MAX_METHOD_NAME_LENGTH) && func->getParameterValues)
         {
             int result = 0, i =0, size =0;
-            unsigned int writeID = 0;
+            unsigned int writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
+            const char *writeID_str = NULL;
             int32_t param_size = 1, tmp = 0;
             char **parameterNames = 0;
             parameterValStruct_t **val = 0;
 
-            rbusMessage_GetInt32(request, (int32_t*)&writeID);
+            if(rbusMessage_GetString(request, &writeID_str) == RT_OK)
+                writeID = get_writeid(writeID_str);
             rbusMessage_GetInt32(request, &param_size);
 
             if(param_size > 0)
@@ -2179,14 +2240,16 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         {
             int param_size = 0, i = 0, result = 0;
             parameterValStruct_t * parameterVal = 0;
-            unsigned int writeID = 0;
+            unsigned int writeID = DSLH_MPA_ACCESS_CONTROL_CLI;
+            const char * writeID_str = NULL;
             int32_t sessionId = 0, tmp = 0;
             dbus_bool commit = 0;
             char *invalidParameterName = 0;
             int32_t dataType = 0;
 
             rbusMessage_GetInt32(request, &sessionId);
-            rbusMessage_GetInt32(request, (int32_t*)&writeID);
+            if(rbusMessage_GetString(request, &writeID_str) != RT_OK)
+                writeID = string_to_writeid(writeID_str);
             rbusMessage_GetInt32(request, (int32_t*)&param_size);
             if(param_size > 0)
             {
@@ -2275,10 +2338,13 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
         else if(!strncmp(method, METHOD_COMMIT, MAX_METHOD_NAME_LENGTH) && func->setCommit)
         {
-            int32_t tmp = 0, sessionId = 0, writeID = 0, commit = 0;
+            int32_t tmp = 0, sessionId = 0, commit = 0;
+            unsigned int writeID = DSLH_MPA_ACCESS_CONTROL_CLI;
+            const char * writeID_str = NULL;
             int result = 0;
             rbusMessage_GetInt32(request, &sessionId);
-            rbusMessage_GetInt32(request, &writeID);
+            if(rbusMessage_GetString(request, &writeID_str) != RT_OK)
+                writeID = string_to_writeid(writeID_str);
             rbusMessage_GetInt32(request, &commit);
             result = func->setCommit(sessionId, writeID, commit, func->setCommit_data);
             rbusMessage_Init(response);
