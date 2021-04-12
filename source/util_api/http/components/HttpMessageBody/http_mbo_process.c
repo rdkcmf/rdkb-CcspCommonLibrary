@@ -399,7 +399,8 @@ HttpMboProcess
                             HTTP_BCC_EVENT_OVER_PACKED,
                             (ANSC_HANDLE)pBufferDesp
                         );
-
+                //CID:72117 Missing break in switch
+		break;
         default :
 
                 AnscFreeBdo((ANSC_HANDLE)pBufferDesp);
@@ -515,7 +516,8 @@ HttpMboCloseUp
                 }
 
                 returnStatus = ANSC_STATUS_UNAPPLICABLE;
-
+               // CID: 71131 Missing break in switch
+	       break;
         default :
 
                 if ( pBufferDesp )

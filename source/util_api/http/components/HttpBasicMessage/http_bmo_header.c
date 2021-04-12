@@ -1080,6 +1080,8 @@ HttpBmoCopyHeadersFrom
 
                 if ( returnStatus != ANSC_STATUS_SUCCESS )
                 {
+		    /*CID: 137590 Missing unlock*/
+		    AnscReleaseLock(&pMyObject->HfoTableLock);
                     return  returnStatus;
                 }
                 else

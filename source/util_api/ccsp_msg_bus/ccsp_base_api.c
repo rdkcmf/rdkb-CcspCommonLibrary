@@ -1648,14 +1648,15 @@ int CcspBaseIf_getParameterNames_rbus(
         rbusMessage_GetInt32(response, size);
         if(*size)
         {
-            val = bus_info->mallocfunc(*size*sizeof(parameterValStruct_t *));
-            memset(val, 0, *size*sizeof(parameterValStruct_t *));
+            val = bus_info->mallocfunc(*size*sizeof(parameterInfoStruct_t *));
+            memset(val, 0, *size*sizeof(parameterInfoStruct_t *));
             const char *tmpbuf = NULL;
 
             for(i = 0; i < *size; i++)
             {
-                val[i] = bus_info->mallocfunc(sizeof(parameterValStruct_t));
-                memset(val[i], 0, sizeof(parameterValStruct_t));
+                val[i] = bus_info->mallocfunc(sizeof(parameterInfoStruct_t));
+		/*CID: 110482 Wrong sizeof argument*/
+                memset(val[i], 0, sizeof(parameterInfoStruct_t));
                 tmpbuf = NULL;
                 rbusMessage_GetString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
@@ -2248,6 +2249,12 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
 
         if(RTMESSAGE_BUS_SUCCESS == rbus_discoverElementObjects(name_space, &num, &compName))
         {
+            /*CID: 126470 Dereference before null check*/
+	    if(*compName == NULL)
+            {
+              RBUS_LOG_ERR("Couldnt find the matching component returning Failure");
+              return CCSP_FAILURE;
+	    }
             pcomp = compName[0];
             if ((num == 1) && (0 == strcmp(pcomp, "")))
             {

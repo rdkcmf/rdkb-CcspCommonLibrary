@@ -667,8 +667,9 @@ CAEntitySetCRLAddress
     if( pString == NULL)
     {
         AnscZeroMemory(pThisObject->pCRLAddress, MAXI_CRL_URL_LENGTH);
+        return ANSC_STATUS_FAILURE;
     }
-
+    /*CID: 68139 Dereference after null check*/
     if( AnscSizeOfString(pString) >= MAXI_CRL_URL_LENGTH)
     {
         return ANSC_STATUS_FAILURE;
@@ -725,8 +726,10 @@ CAEntitySetName
     if( pString == NULL)
     {
         AnscZeroMemory(pThisObject->pName, MAXI_ENTITY_NAME_BUFFER);
+	return ANSC_STATUS_FAILURE;
     }
 
+    /*CID: 74530 Dereference after null check*/
     if( AnscSizeOfString(pString) >= MAXI_ENTITY_NAME_BUFFER)
     {
         return ANSC_STATUS_FAILURE;

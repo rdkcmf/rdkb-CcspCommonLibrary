@@ -585,6 +585,7 @@ DslhWmpdoInitialize
     pMyObject->ResetObjVarArray          = DslhWmpdoResetObjVarArray;
     pMyObject->FlushDynObjVar            = DslhWmpdoFlushDynObjVar;
 
+    /*REVISIT: CID 137470 Data race condition*/
     AnscInitializeTsLock     (&pMyObject->AccessTsLock);
     AnscInitializeLock       (&pMyObject->MpaWriteLock);
     AnscQueueInitializeHeader(&pMyObject->MpoQueue    );

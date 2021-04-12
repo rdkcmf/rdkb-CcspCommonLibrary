@@ -1039,6 +1039,11 @@ ScliShoRunBicCursorEnd
 
     pActiveTBox = (PBMC2_ICE_TEXTBOX_INFO)pSession->hActiveTextBox;
 
+    /*CID: 63881 Dereference before null check*/
+    if (pActiveTBox == NULL)
+    {
+       return returnStatus;
+    }
     if ( pSession->CursorPos >= pSession->CommandLen )
     {
         returnStatus = 
@@ -1931,8 +1936,12 @@ ScliShoRunBicAutoCompletion
             else
             {
                 /* display commands */
-                ULONG               ulCmdsPerLine   = ulWidth % ulMaxLen;
+	        /*CID :61602 Division or modulo by zero*/
+                ULONG               ulCmdsPerLine   = 0;
                 PUCHAR              pBuf            = NULL;
+
+		if ( ulMaxLen )
+			ulCmdsPerLine   = ulWidth % ulMaxLen;
 
                 if ( ulCmdsPerLine > 1 )
                 {

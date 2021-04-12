@@ -599,6 +599,7 @@ DslhDmagntParseSourceInfo
      else
      {
         /* from SLAP object */
+         /*TODO: CID 61733 Dereference after null check - logic error*/
          pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
              pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_slapObjName);
 
@@ -704,6 +705,7 @@ DslhDmagntParseSourceName
      else
      {
         /* from SLAP object */
+         /*TODO CID: 63649 Dereference after null check - Logic error*/
          pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
              pLibNode->GetChildByName(pLibNode, COSA_XML_NODE_slapObjName);
 

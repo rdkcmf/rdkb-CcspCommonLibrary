@@ -1152,9 +1152,12 @@ HttpAuthoGetDigestAuthInfo
 
                         pNext   = (PUCHAR)_ansc_strchr((const char*)pDomain, ' ');
                         ulLen   = pNext ? (ULONG)(pNext - pDomain) : AnscSizeOfString((const char*)pDomain);
-
-                        HttpAuthCloneMemory(pURIs[ulCount], pDomain, ulLen);
-                        ulCount ++;
+                        /*CID: 63078 Dereference after null check*/
+                        if (pURIs)
+                        {
+                          HttpAuthCloneMemory(pURIs[ulCount], pDomain, ulLen);
+                          ulCount ++;
+                        }
 
                         pDomain = pNext ? pNext + 1 : NULL;
                     }

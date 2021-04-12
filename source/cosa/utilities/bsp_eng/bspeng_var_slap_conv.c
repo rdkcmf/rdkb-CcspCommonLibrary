@@ -1255,7 +1255,8 @@ BspEng_VC_VarArray2Slap
 
                     for (i = 0; i < ulLen; i ++)
                     {
-                        if (pVars[i]->Type == BspVar_String)
+                        /*CID: 67191 Dereference after null check*/
+                        if (pVars && pVars[i]->Type == BspVar_String)
                         {
                             pStringArray->Array.arrayString[i]  = 
                                 (SLAP_STRING)AnscCloneString(pVars[i]->Value.str);

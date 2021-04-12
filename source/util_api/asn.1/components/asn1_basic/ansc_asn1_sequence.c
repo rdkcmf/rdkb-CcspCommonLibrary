@@ -168,8 +168,11 @@ AnscAsn1SequenceCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    pMyObject->SetName(pMyObject,ANSC_ASN1_SEQUENCE_NAME);
-    pMyObject->SetClassName(pMyObject,ANSC_ASN1_SEQUENCE_CLASS_NAME);
+    /*CID: 125331 Explicit null dereferenced*/
+    if (pMyObject->SetName)
+        pMyObject->SetName(pMyObject,ANSC_ASN1_SEQUENCE_NAME);
+    if (pMyObject->SetClassName)
+        pMyObject->SetClassName(pMyObject,ANSC_ASN1_SEQUENCE_CLASS_NAME);
 
     return  (ANSC_HANDLE)pMyObject;
 }
@@ -706,6 +709,7 @@ AnscAsn1SequenceEncodingData
     LONG                            uSizeOfEncoded;
     ULONG                           uLeftSize;
     LONG                            i;
+    int				    iEncodedLength = 0;
 
     /*
      * shortcut pointer to a char array
@@ -770,11 +774,17 @@ AnscAsn1SequenceEncodingData
         *pCharData                  = pMyObject->GetFirstOctet(pMyObject);
         pCharData++;
 
+        /*CID: 69114 Improper use of negative value*/
+	iEncodedLength = GetPureEncodedLength( uLeftSize - 1);
+	if ( iEncodedLength < 0 )
+	{
+		return ANSC_ASN1_NOT_READY_TO_ENCODE;
+	}
         returnStatus = 
             EncodeLength
                 (
                     (PVOID*)&pCharData, 
-                    GetPureEncodedLength( uLeftSize - 1)
+                    (ULONG)iEncodedLength
                 );
 
         if( returnStatus != ANSC_STATUS_SUCCESS)

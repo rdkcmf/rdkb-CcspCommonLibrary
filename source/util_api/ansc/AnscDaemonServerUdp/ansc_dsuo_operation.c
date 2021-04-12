@@ -169,8 +169,9 @@ AnscDsuoEngage
 
         goto  EXIT1;
     }
+    
 	   _ansc_en_reuseaddr(pMyObject->Socket);
-
+    
     if ( pMyObject->Mode & ANSC_DSUO_MODE_XSOCKET )
     {
         local_addr2.sin_family = XSKT_SOCKET_AF_INET;

@@ -1005,6 +1005,7 @@ AnscAsn1SequenceOfEncodingData
     LONG                            uSizeOfEncoded;
     ULONG                           uLeftSize;
     LONG                            i;
+    int 			    iEncodedLength = 0;
 
     /*
      * shortcut pointer to a char array
@@ -1069,11 +1070,17 @@ AnscAsn1SequenceOfEncodingData
         *pCharData                  = pMyObject->GetFirstOctet(pMyObject);
         pCharData++;
 
+        /*CID:70317 Improper use of negative value*/
+	iEncodedLength = GetPureEncodedLength( uLeftSize - 1);
+	if ( iEncodedLength < 0 )
+	{
+		 return ANSC_ASN1_NOT_READY_TO_ENCODE;
+	}
         returnStatus = 
             EncodeLength
                 (
                     (PVOID*)&pCharData, 
-                    GetPureEncodedLength( uLeftSize - 1)
+                    (ULONG)iEncodedLength
                 );
 
         if( returnStatus != ANSC_STATUS_SUCCESS)

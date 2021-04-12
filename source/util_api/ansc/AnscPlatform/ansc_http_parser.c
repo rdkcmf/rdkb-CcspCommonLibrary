@@ -1137,7 +1137,8 @@ AnscHttpParseQueryString
         }
     }
 
-    if (pFormInput->ElementCount == 0)
+    /*CID: 63033 Dereference after null check*/
+    if (pFormInput && pFormInput->ElementCount == 0)
     {
         /* the query string might be empty or malformed */
         AnscFreeMemory(pFormInput);
@@ -1422,8 +1423,8 @@ HttpSmpoUtilGetSizeBasicCredential
             pBuf[ulUser]    = ':';
             AnscCopyMemory(pBuf + ulUser + 1, pBasic->Password, ulPass);
         }
-
-        pBuf[ulBufLen]      = 0;
+        /*CID: 54570 Out-of-bounds write*/
+        pBuf[ulBufLen-1]      = 0;
 
         /* Encode the USER:PASS */
         pEncBuf = AnscBase64Encode(pBuf, ulBufLen - 1);
@@ -8772,9 +8773,10 @@ HttpSmpoParseSetCookie
             if ( bExpires )
             {
                 ANSC_UNIVERSAL_TIME *pTime      = &pCookieContent->Expires;
-                char                wday[16];
-                char                mon[3];
-                char*               pDate;
+                /*CID: 137562 Uninitialized scalar variable*/
+                char                wday[16] = {0};
+                char                mon[3] = {0};
+                char*               pDate = NULL;
 
                 pTime->bDayLightSaving = FALSE;
 
@@ -9908,7 +9910,8 @@ AnscHttpParseRequestLine
     pVersion        = pMsg;
     ulVersion       = ((PUCHAR)buffer + ulSize - pMsg);
 
-    if (pMethod && pUri && pVersion)
+    /*Removed (pUri) check for CID: 66815 Dereference before null check */
+    if (pMethod && pVersion)
     {
         pRequestInfo    = (PHTTP_REQUEST_INFO)AnscAllocateMemory(sizeof(HTTP_REQUEST_INFO));
 
@@ -10310,8 +10313,10 @@ AnscHttpParseChunkedLine
             {
                 break;
             }
-
-            pExt ++;
+            /*CID: 54241 Dereference after null check*/
+	    /*Incrementing null pointer pExt*/
+	    if ( pExt )
+                 pExt ++;
             pExt    = HttpSmpoUtilLinearWhiteSpace(pExt, pCRLF - pExt);
 
             pNext   = _ansc_memchr(pExt, HTTP_SMPO_CHAR_SEMICOLON, pCRLF - pExt);

@@ -1043,7 +1043,8 @@ dslhCpeEnumObjEntities
 
 	if( !pSLinkEntry)
 	{
-		if(!bHasChildParam)
+                /*CID: 59112 Dereference after null check*/
+		if((!bHasChildParam) && (pObjEntity->ObjDescr))
 		{
 			/* If there's no child param or object, register a dummy param */
             _ansc_sprintf( &pParameterHolder[pMyObject->uParameterIndex], "%s%s", pObjEntity->ObjDescr->Name, CCSP_DUMMY_PARAM_NAME );

@@ -349,6 +349,8 @@ AnscCryptoCheckParity
         {
             for ( i = 0; i < ulKeyLength; i++ ) 
             {
+              /*TODO CID: 59007 Explicit null dereferenced 
+	       * pKeyValue always NULL, need to update*/
                 ucLastBit = pKeyValue[i] & 0x1;
 
                 if ( ucLastBit != AnscParityChar((pKeyValue[i] & 0xfe)) )
@@ -363,6 +365,8 @@ AnscCryptoCheckParity
 
             for ( i = 0; i < ulKeyLength; i++ ) 
             {
+              /*CID: 59007 Explicit null dereferenced
+	       * pKeyValue always NULL, need to update*/
                 ucLastBit = pKeyValue[i] & 0x1;
 
                 if ( ucLastBit == AnscParityChar((pKeyValue[i] & 0xfe)) )

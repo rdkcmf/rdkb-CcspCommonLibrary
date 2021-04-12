@@ -521,12 +521,12 @@ AnscNumberOfTokens
     pTempChar   = string;
 
     string      = AnscMoveToNextToken(string, separator);
-    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
-
-    if ( !string || !ulTokenSize )
+    /*CID: 55077 Dereference before null check*/
+    if ( !string )
     {
         return  0;
     }
+    ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
     while ( string && ulTokenSize && ((ULONG)(string - pTempChar) < ulSizeOfStr) )
     {
@@ -534,6 +534,11 @@ AnscNumberOfTokens
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+        /*CID: 55077 Dereference before null check*/
+        if ( !string )
+        {
+            break;
+        }
         ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
     }
 
@@ -620,9 +625,14 @@ AnscExtractToken
     }
 
     string      = AnscMoveToNextToken(string, separator);
+    /*CID: 66026 Dereference before null check*/
+    if ( !string )
+    {
+        return  ANSC_STATUS_UNAPPLICABLE;
+    }
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
-    if ( !string || !ulTokenSize )
+    if ( !ulTokenSize )
     {
         return  ANSC_STATUS_UNAPPLICABLE;
     }
@@ -633,6 +643,11 @@ AnscExtractToken
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+	/*CID: 66026 Dereference before null check*/
+        if ( !string )
+        {
+            return  ANSC_STATUS_UNAPPLICABLE;
+        }
         ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
     }
 
@@ -670,9 +685,14 @@ AnscExtractToken2
     }
 
     string      = AnscMoveToNextToken2(string, alphabet);
+    /*CID: 55939 Dereference before null check*/ 
+    if ( !string )
+    {
+        return  ANSC_STATUS_UNAPPLICABLE;
+    }
     ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
 
-    if ( !string || !ulTokenSize )
+    if ( !ulTokenSize )
     {
         return  ANSC_STATUS_UNAPPLICABLE;
     }
@@ -683,6 +703,11 @@ AnscExtractToken2
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken2(string, alphabet);
+        /*CID: 55939 Dereference before null check*/ 
+        if ( !string )
+        {
+            return  ANSC_STATUS_UNAPPLICABLE;
+        }
         ulTokenSize = AnscSizeOfToken2(string, alphabet, AnscSizeOfString(string));
     }
 
@@ -724,18 +749,29 @@ AnscConsumeToken
     AnscZeroMemory(tempChar, 128);
 
     string      = AnscMoveToNextToken(string, separator);
+    /*CID: 57633 Dereference before null check*/
+    if ( !string )
+    {
+        return;
+    }
+
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
-    if ( !string || !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
+    if ( !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
     {
         return;
     }
 
     string     += ulTokenSize;
     string      = AnscMoveToNextToken(string, separator);
+    /*CID: 57633 Dereference before null check*/
+    if ( !string )
+    {
+        return;
+    }
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
-    if ( !string || !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
+    if ( !ulTokenSize || ((ULONG)(string - pTemp) >= ulSizeOfStr) )
     {
         pTemp[0] = 0;
     }

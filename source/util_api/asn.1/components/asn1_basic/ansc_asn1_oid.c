@@ -403,8 +403,9 @@ AnscAsn1OIDCopyTo
         if( pNewObject->pAdvOID == NULL)
         {
             AnscTrace("Failed to allocate memory in AnscAsn1OIDCopyTo().\n");
+            return FALSE;
         }
-
+        /*CID: 71198 Dereference after null check*/
         AnscCopyMemory
             (
                 pNewObject->pAdvOID,
@@ -1185,6 +1186,7 @@ AnscAsn1OIDEncodingData
     LONG                            uSizeOfEncoded;
     ULONG                           uLeftSize;
     PULONG                          pOIDArray;
+    int                             iEncodedLength = 0;
 
     /*
      * shortcut pointer to a char array
@@ -1249,11 +1251,17 @@ AnscAsn1OIDEncodingData
         *pCharData                  = pMyObject->GetFirstOctet(pMyObject);
         pCharData++;
 
+          /*CID: 75029 Improper use of negative value*/
+	iEncodedLength = GetPureEncodedLength( uLeftSize - 1);
+	if ( iEncodedLength < 0 )
+	{
+		return ANSC_ASN1_NOT_READY_TO_ENCODE;
+	}
         returnStatus = 
             EncodeLength
                 (
                     (PVOID*)&pCharData, 
-                    GetPureEncodedLength( uLeftSize - 1)
+                    (ULONG)iEncodedLength
                 );
 
         if( returnStatus != ANSC_STATUS_SUCCESS)

@@ -1209,7 +1209,8 @@ AnscXmlDomNodeGetDataLong
         *plTarget = (LONG)AnscXmlStringToLong((PCHAR)pXmlNode->StringData);
     }
 
-    if( ((PCHAR)pXmlNode->StringData)[0] != '-' && *plTarget < 0)
+    /*CID: 67028 Dereference after null check*/
+    if( ((PCHAR)pXmlNode->StringData)[0] != '-' && plTarget && *plTarget < 0)
     {
         return ANSC_STATUS_XML_INVALID_TEXT_VALUE;
     }

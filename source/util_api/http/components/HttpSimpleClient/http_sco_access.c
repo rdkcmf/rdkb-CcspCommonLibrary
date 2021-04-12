@@ -367,39 +367,37 @@ HttpScoAddWcso
     PHTTP_BSP_INTERFACE             pBspIf       = (PHTTP_BSP_INTERFACE         )pMyObject->hBspIf;
     PHTTP_HFP_INTERFACE             pHfpIf       = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_WEBC_SESSION_OBJECT       pWebcSession = (PHTTP_WEBC_SESSION_OBJECT   )pMyObject->AcquireWcso((ANSC_HANDLE)pMyObject);
-    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpClient   = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pWebcSession->hTcpSimpleClient;
-    ULONG                           ulHashIndex  = AnscHashString2(host, AnscSizeOfString(host), HTTP_SCO_WCSO_TABLE_SIZE);
-
+    /*CID: 164307 Dereference before null check*/
     if ( !pWebcSession )
     {
     	AnscTrace("HttpScoAddWcso - can't acquire web client session object!\n");
         return  (ANSC_HANDLE)NULL;
     }
-    else
+
+    PANSC_SIMPLE_CLIENT_TCP_OBJECT  pTcpClient   = (PANSC_SIMPLE_CLIENT_TCP_OBJECT)pWebcSession->hTcpSimpleClient;
+    ULONG                           ulHashIndex  = AnscHashString2(host, AnscSizeOfString(host), HTTP_SCO_WCSO_TABLE_SIZE);
+    ULONG                           ulWebcSessionMode   = bUseTls? HTTP_WCSO_FLAG_tlsEnabled : 0;
+
+    if ( pMyObject->ClientMode & HTTP_SCO_MODE_XSOCKET )
     {
-        ULONG                       ulWebcSessionMode   = bUseTls? HTTP_WCSO_FLAG_tlsEnabled : 0;
-
-        if ( pMyObject->ClientMode & HTTP_SCO_MODE_XSOCKET )
-        {
-            ulWebcSessionMode   |= HTTP_WCSO_FLAG_xsocketEnabled;
-        }
-
-        if ( pMyObject->ClientMode & HTTP_SCO_MODE_NOTIFY_ON_ALL_CONN_ONCE )
-        {
-            ulWebcSessionMode   |= HTTP_WCSO_FLAG_BspNotifyOnAllConnOnce;
-        }
-
-        pWebcSession->hBspReqContext = hReqContext;
-        pWebcSession->Timestamp      = AnscGetTickInSeconds();
-        pWebcSession->HashIndex      = ulHashIndex;
-
-        pWebcSession->SetPeerName    ((ANSC_HANDLE)pWebcSession, host               );
-        pWebcSession->SetPeerPort    ((ANSC_HANDLE)pWebcSession, port               );
-        pWebcSession->SetHostPort    ((ANSC_HANDLE)pWebcSession, 0                  );
-        pWebcSession->SetSessionFlags((ANSC_HANDLE)pWebcSession, ulWebcSessionMode  );
-        pWebcSession->SetBspIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pBspIf);
-        pWebcSession->SetHfpIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pHfpIf);
+         ulWebcSessionMode   |= HTTP_WCSO_FLAG_xsocketEnabled;
     }
+
+    if ( pMyObject->ClientMode & HTTP_SCO_MODE_NOTIFY_ON_ALL_CONN_ONCE )
+    {
+        ulWebcSessionMode   |= HTTP_WCSO_FLAG_BspNotifyOnAllConnOnce;
+    }
+
+    pWebcSession->hBspReqContext = hReqContext;
+    pWebcSession->Timestamp      = AnscGetTickInSeconds();
+    pWebcSession->HashIndex      = ulHashIndex;
+
+    pWebcSession->SetPeerName    ((ANSC_HANDLE)pWebcSession, host               );
+    pWebcSession->SetPeerPort    ((ANSC_HANDLE)pWebcSession, port               );
+    pWebcSession->SetHostPort    ((ANSC_HANDLE)pWebcSession, 0                  );
+    pWebcSession->SetSessionFlags((ANSC_HANDLE)pWebcSession, ulWebcSessionMode  );
+    pWebcSession->SetBspIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pBspIf);
+    pWebcSession->SetHfpIf       ((ANSC_HANDLE)pWebcSession, (ANSC_HANDLE)pHfpIf);
 
     if( pTcpClient )
     {

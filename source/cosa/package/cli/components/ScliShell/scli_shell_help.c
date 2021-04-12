@@ -867,9 +867,10 @@ ScliShoShowArgHelp
     }
 
 EXIT:
-
     if ( pHelpList )
     {
+        /*CID: 71754 Dereference after null check*/
+	/* Dereferencing null pointer pHelpList->pArgHelps - added NULL check in the macro*/
         SCLI_SHELL_FREE_ARG_HELP_LIST(pHelpList);
         pHelpList = NULL;
     }
@@ -1264,9 +1265,10 @@ ScliShoGetOptArgOptions
     goto EXIT1;
 
 EXIT2:
-
     if ( pHelpList )
     {
+	/*CID: 62403 Dereference after null check*/
+	/* Dereferencing null pointer pHelpList->pArgHelps - added NULL check in the macro*/
         SCLI_SHELL_FREE_ARG_HELP_LIST(pHelpList);
         pHelpList = NULL;
     }
@@ -2585,9 +2587,10 @@ ScliShoGetLastMatchedOptArg
 {
     int                             nLast = -1;
 
+    /*CID: 74816 Dereference after null check*/
     if ( pReqArgMatched         || 
         ulReqArgCount == 0      || 
-        (pReqArgMatched[ulReqArgCount - 1].bMatched && pReqArgMatched[ulReqArgCount - 1].bValueMatched) )
+        (pReqArgMatched && pReqArgMatched[ulReqArgCount - 1].bMatched && pReqArgMatched[ulReqArgCount - 1].bValueMatched) )
     {
         int                         i;
         int                         nMaxTokenPos    = -1;

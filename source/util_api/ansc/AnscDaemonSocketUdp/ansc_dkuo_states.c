@@ -646,7 +646,10 @@ AnscDkuoReset
 
     pMyObject->hDaemonEngine  = (ANSC_HANDLE)NULL;
     pMyObject->hClientContext = (ANSC_HANDLE)NULL;
+    /* CID: 137150 Data race condition */
+    AnscAcquireLock(&pMyObject->OpLock);
     pMyObject->hPacket        = (ANSC_HANDLE)NULL;
+    AnscReleaseLock(&pMyObject->OpLock);
     pMyObject->RecvBytesCount = 0;
     pMyObject->SendBytesCount = 0;
     pMyObject->LastRecvAt     = 0;

@@ -690,7 +690,9 @@ ScliShoCreateSession
         }
     }
 
-    pSession->LastRecvTS    = AnscGetTickInSeconds();
+    /*CID: 58583 Dereference after null check*/
+    if( pSession )
+        pSession->LastRecvTS    = AnscGetTickInSeconds();
 
     goto EXIT;
 

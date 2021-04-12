@@ -512,6 +512,7 @@ SysRfoInitialize
     pMyObject->RcmInit           = SysRfoRcmInit;
     pMyObject->RcmStop           = SysRfoRcmStop;
 
+    /* CID 137529 Data race condition */
     AnscInitializeTsLock(&pMyObject->AccessTsLock);
 
     for ( i = 0; i < SYS_RFO_RFO_TABLE_SIZE; i++ )

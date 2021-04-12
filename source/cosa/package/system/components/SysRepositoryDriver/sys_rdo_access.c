@@ -1105,6 +1105,13 @@ SysRdoGetRecord
         goto  EXIT2;
     }
 
+    /*CID -53152 Dereference before null check*/
+    if ( !pThisFolder )
+    {
+        pThisRecord = (PSYS_REPOSITORY_RECORD_OBJECT)NULL;
+
+        goto  EXIT2;
+    }
     pThisFolder->AcquireAccess((ANSC_HANDLE)pThisFolder);
 
     while ( (pTokenEntry = AnscTcUnlinkToken(pTokenChain)) )
@@ -1266,6 +1273,13 @@ SysRdoSetRecord
     {
         returnStatus = ANSC_STATUS_BAD_NAME;
 
+        goto  EXIT2;
+    }
+    /*CID: 59682 Dereference before null check*/
+    if ( !pThisFolder )
+    {
+        returnStatus = ANSC_STATUS_BAD_NAME;
+ 
         goto  EXIT2;
     }
 

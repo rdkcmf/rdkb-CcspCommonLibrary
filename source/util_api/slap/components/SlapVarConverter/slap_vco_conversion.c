@@ -144,12 +144,16 @@ SlapVcoConvertVariable
                     if ( tpl_var->Syntax == SLAP_VAR_SYNTAX_bool )
                     {
                         tbc_var->Syntax          = tpl_var->Syntax;
-                        tbc_var->Variant.varBool = (SLAP_BOOL)tbc_var->Variant.varInt;
+			/*CID: 53684 Assignment of overlapping memory*/
+			int int_value            = tbc_var->Variant.varInt;
+                        tbc_var->Variant.varBool = (SLAP_BOOL)int_value;
                     }
                     else if ( tpl_var->Syntax == SLAP_VAR_SYNTAX_uint32 )
                     {
                         tbc_var->Syntax            = tpl_var->Syntax;
-                        tbc_var->Variant.varUint32 = (SLAP_UINT32)tbc_var->Variant.varInt;
+			/*CID:71834 Assignment of overlapping memory*/
+			int int_value              = tbc_var->Variant.varInt;
+                        tbc_var->Variant.varUint32 = (SLAP_UINT32)int_value;
                     }
                     else if ( tpl_var->Syntax == SLAP_VAR_SYNTAX_string )
                     {

@@ -246,6 +246,7 @@ AnscReadFile
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
     int                             iReadSize    = (int            )*pulSize;
+    int 			    iReturnsize  = 0;
 
     if ( !pFileInfo )
     {
@@ -254,7 +255,13 @@ AnscReadFile
 
     if ( pFileInfo->bZlibCompressed )
     {
-        ULONG                       ulFileSize      = (ULONG              )_ansc_get_file_size((VOID*)pFileInfo->Handle);
+	iReturnsize  = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+	if ( iReturnsize < 0 )
+	{
+		return ANSC_STATUS_FAILURE;
+	}
+        ULONG                       ulFileSize      = (ULONG              )iReturnsize;
+        /* CID:53804 Argument cannot be negative*/
         void*                       pCompressedFile = (void*              )AnscAllocateMemory(ulFileSize);
 
         if ( !pCompressedFile )
@@ -493,7 +500,7 @@ AnscGetFileSize
 {
     PANSC_FILE_INFO                 pFileInfo    = (PANSC_FILE_INFO)hFile;
     ULONG                           ulFileSize   = 0;
-
+    int				    iReturnSize  = 0;
     if ( !pFileInfo )
     {
         return  0;
@@ -501,7 +508,14 @@ AnscGetFileSize
     else if ( pFileInfo->bZlibCompressed )
     {
         int                         iReadSize            = (int                )0;
-        ULONG                       ulCompressedFileSize = (ULONG              )_ansc_get_file_size((VOID*)pFileInfo->Handle);
+
+	iReturnSize = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+	if ( iReturnSize < 0 )
+	{
+		return 0;
+	}
+        ULONG                       ulCompressedFileSize = (ULONG              )iReturnSize;
+        /*CID:63954 Argument cannot be negative*/
         void*                       pCompressedFile      = (void*              )AnscAllocateMemory(ulCompressedFileSize);
 
         if ( !pCompressedFile )
@@ -548,7 +562,13 @@ AnscGetFileSize
     }
     else
     {
-        ulFileSize = (ULONG)_ansc_get_file_size((VOID*)pFileInfo->Handle);
+	/*CID: 59651 Improper use of negative value*/
+        iReturnSize = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+        if(iReturnSize < 0)
+	{
+		return	0;
+	}
+        ulFileSize = (ULONG)iReturnSize;
     }
 
     return  ulFileSize;

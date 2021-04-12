@@ -294,6 +294,7 @@ UserAcquireSemaphore(PUSER_SEMAPHORE  pSemaphore, ULONG  ulMilliSeconds)
     /* lack of timeout option */
     struct timespec  tm = {0};
     struct timeval                  tv = {0};
+    int ret = 0;
 
     if ( (ulMilliSeconds == 0) || (ulMilliSeconds == 0xFFFFFFFF) )
     {
@@ -311,8 +312,12 @@ UserAcquireSemaphore(PUSER_SEMAPHORE  pSemaphore, ULONG  ulMilliSeconds)
             tm.tv_sec ++;
             tm.tv_nsec -= 1000000000;
         }
-
-        sem_timedwait(pSemaphore, &tm);
+        /*CID: 66947 Unchecked return value*/
+        ret = sem_timedwait(pSemaphore, &tm);
+	if (ret < 0)
+	{
+	     CcspTraceInfo(("%s:sem_timedwait returns error %d - %s\n", __FUNCTION__, errno, strerror(errno)));
+        }
     }
     return;
 }

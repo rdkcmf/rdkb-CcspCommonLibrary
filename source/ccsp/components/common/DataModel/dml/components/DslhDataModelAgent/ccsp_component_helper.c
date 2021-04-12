@@ -172,6 +172,9 @@ CcspComponentLoadCfg
      */
     pBackBuffer = pXMLContent;
 
+    /*CID: 137197 String not null terminated*/
+    pBackBuffer[uBufferSize-1] = '\0';
+
     pRootNode   = (PANSC_XML_DOM_NODE_OBJECT)
         AnscXmlDomParseString
             (
@@ -418,6 +421,9 @@ CcspComponentLoadDmXmlList
      *  Parse the XML content
      */
     pBackBuffer = pXMLContent;
+
+    /*CID: 137623 String not null terminated*/
+    pBackBuffer[uBufferSize-1] = '\0';
 
     pRootNode   = (PANSC_XML_DOM_NODE_OBJECT)
         AnscXmlDomParseString

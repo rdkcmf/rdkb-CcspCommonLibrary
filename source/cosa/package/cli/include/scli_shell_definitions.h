@@ -187,6 +187,7 @@ _SCLI_SHELL_ARG_HELP_LIST
 SCLI_SHELL_ARG_HELP_LIST, *PSCLI_SHELL_ARG_HELP_LIST;
 
 #define  SCLI_SHELL_FREE_ARG_HELP_LIST(pHelpList)                   \
+{                                                                   \
     if ( pHelpList )                                                \
     {                                                               \
         ULONG                       i;                              \
@@ -199,9 +200,11 @@ SCLI_SHELL_ARG_HELP_LIST, *PSCLI_SHELL_ARG_HELP_LIST;
             if ( pHelp->pDescription )                              \
                 AnscFreeMemory(pHelp->pDescription);                \
         }                                                           \
-        AnscFreeMemory((pHelpList)->pArgHelps);                     \
+	if ( (pHelpList)->pArgHelps )                               \
+	    AnscFreeMemory((pHelpList)->pArgHelps);                 \
         AnscFreeMemory(pHelpList);                                  \
-    }
+    }                                                               \
+}
 
 typedef  struct
 _SCLI_CMD_ARG_MATCH_RESULT
@@ -239,24 +242,28 @@ _SCLI_SHELL_ARG_HELP_MATCH
 SCLI_SHELL_ARG_HELP_MATCH, *PSCLI_SHELL_ARG_HELP_MATCH;
 
 #define  SCLI_SHELL_FREE_ARG_HELP_MATCH(pHelpMatch)                 \
+{                                                                   \
     if ( pHelpMatch )                                               \
     {                                                               \
         if ( (pHelpMatch)->pMatches )                               \
             AnscFreeMemory((pHelpMatch)->pMatches);                 \
-        if ( (pHelpMatch)->pArgTypes )                              \
+	if ( (pHelpMatch)->pArgTypes )                              \
             AnscFreeMemory((pHelpMatch)->pArgTypes);                \
         if ( (pHelpMatch)->pSimpleArgs )                            \
             AnscFreeMemory((pHelpMatch)->pSimpleArgs);              \
         if ( (pHelpMatch)->pHelpCounts )                            \
             AnscFreeMemory((pHelpMatch)->pHelpCounts);              \
         AnscFreeMemory(pHelpMatch);                                 \
-    }
+    }                                                               \
+}
 
 #define  SCLI_SHELL_SKIP_SPACE(pCmdStart)                           \
+{                                                                   \
     while ( *pCmdStart != 0 && *pCmdStart == ' ' )                  \
     {                                                               \
         pCmdStart ++;                                               \
-    }
+    }                                                               \
+}
 
 
 #define  SCLI_SHELL_STRING_DIFF_AT(pStr1, pStr2, nErrorPos)         \
@@ -284,7 +291,7 @@ SCLI_SHELL_ARG_HELP_MATCH, *PSCLI_SHELL_ARG_HELP_MATCH;
                 }                                                   \
                 (nErrorPos) ++;                                     \
             }                                                       \
-    } while (0)
+    } while (0)                                                     
 
 
 #endif

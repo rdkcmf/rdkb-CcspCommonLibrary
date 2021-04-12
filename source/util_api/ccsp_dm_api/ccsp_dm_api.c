@@ -891,8 +891,9 @@ DmErr_t Cdm_GetParamString(const char *param, char *val, size_t size)
         return CCSP_ERR_INVALID_ARGUMENTS;
 
     err = Cdm_GetParam(param, &dmVal);
-    if (err != CCSP_SUCCESS)
-        goto errout;
+    /*CID: 63401 Dereference before null check*/
+    if (err != CCSP_SUCCESS || dmVal == NULL)
+        return err;
 
     if (dmVal->type != DM_PT_STR) {
 		err =  CCSP_ERR_INVALID_PARAMETER_TYPE;

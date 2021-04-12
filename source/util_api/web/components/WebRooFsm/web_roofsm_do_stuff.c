@@ -247,8 +247,9 @@ WebRooFsmDoGet
      * produced data which shall be returned as the entity in the response and not the source text
      * of the process, unless that text happens to be the output of the process.
      */
-    ulFileSize = AnscGetFileSize(hMappedFile);
-
+    /*CID :61576 Argument cannot be negative - Added negative check in def part*/
+    ulFileSize = (ULONG) AnscGetFileSize(hMappedFile);
+        
     if ( ulFileSize == 0 )
     {
         return  ANSC_STATUS_SUCCESS;

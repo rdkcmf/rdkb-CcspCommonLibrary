@@ -429,6 +429,10 @@ SlapVhoCloneParamList
 
     *dst_param_list = dst_list;
 
+    /*CID:164052,164053 Resource leak in Bmc2ReqcoDoExecute()*/
+    if (dst_list)
+	SlapFreeParamList(dst_list);
+
     return;
 }
 

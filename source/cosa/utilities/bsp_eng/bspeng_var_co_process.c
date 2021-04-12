@@ -486,15 +486,18 @@ BspTemplateVarAssign
                     }
                     else
                     {
-                        AnscCopyMemory
+                        /*CID: 56594 Explicit null dereferenced*/
+                        if ( pMyObject->Value.arrayItems.hVars ) 
+                        {
+                            AnscCopyMemory
                             (
                                 pNewItems, 
                                 pMyObject->Value.arrayItems.hVars, 
                                 ulItemsNow * sizeof(PBSP_TEMPLATE_VAR_OBJECT)
                             );
 
-                        AnscFreeMemory(pMyObject->Value.arrayItems.hVars);
-
+                            AnscFreeMemory(pMyObject->Value.arrayItems.hVars);
+                        }
                         for (i = ulItemsNow; i < ulNewItems; i ++)
                         {
                             pNewItems[i]    = 
@@ -513,11 +516,13 @@ BspTemplateVarAssign
                 }
 
                 /* copy the values */
-                for (i = 0; i < ulNewItems; i ++)
-                {
-                    pVars[i]->Assign((ANSC_HANDLE)pVars[i], (ANSC_HANDLE)pVarsSrc[i]);
+                /*CID:60250 Explicit null dereferenced*/
+                if (pVars) {
+                   for (i = 0; i < ulNewItems; i ++)
+                   {
+                     pVars[i]->Assign((ANSC_HANDLE)pVars[i], (ANSC_HANDLE)pVarsSrc[i]);
+                   }
                 }
-
                 if (ulNewItems != 0)
                 {
                     pMyObject->Value.arrayItems.ulLen   = pVar->Value.arrayItems.ulLen;

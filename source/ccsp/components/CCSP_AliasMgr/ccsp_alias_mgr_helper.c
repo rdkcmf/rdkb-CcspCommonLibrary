@@ -162,7 +162,12 @@ CcspAliasMgrLoadMappingFile
     if (CcspAliasMgrCheckFileExists( mappingFile ) )
     {
         int fileHandle  = open(mappingFile,  O_RDONLY);
-        fstat(fileHandle,&statBuf);
+	/*CID:154675 Unchecked return value from library*/
+        if (fstat(fileHandle,&statBuf) == -1)
+	{
+             close(fileHandle);
+	     return FALSE;
+	}
         int contentSize = statBuf.st_size;
 
         if ( contentSize > ALIAS_MANAGER_MAX_MAPPER_FILE_SIZE )
@@ -177,7 +182,10 @@ CcspAliasMgrLoadMappingFile
             {
                 AnscZeroMemory(pFileContent, contentSize + 1);
 
-                if (read((int)fileHandle, pFileContent, contentSize) > 0)
+		/*CID: 154671 Ignoring number of bytes read*/
+                int valread = read((int)fileHandle, pFileContent, contentSize);
+		pFileContent[valread] = '\0';
+                if (valread > 0)
                 {
                     /* Some Unicode files may have hidden content at the beginning. So search for the first '<' to begin the XML parse. */
                     PCHAR pBack = pFileContent;

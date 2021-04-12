@@ -613,6 +613,12 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         CcspTraceError(("came inside %s in rbus it should be handled in thread_path_message_func_rbus\n",__FUNCTION__));
         return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
     }
+    /*CID: 56798 Dereference before null check*/
+    if( bus_info == NULL)
+    {
+        CcspTraceError((" %s bus_info is NULL \n",__FUNCTION__));
+        return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    }
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
     if(!strcmp("org.freedesktop.DBus.Introspectable", interface)  && !strcmp(method, "Introspect"))
     {
@@ -854,7 +860,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         }
         dbus_message_iter_next (&iter);
 
-        if ( (bus_info && strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.wifi") == 0) || 
+        if ( ( strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.wifi") == 0) || 
              writeID == DSLH_MPA_ACCESS_CONTROL_WIFI )
         {
             bIsWifi = 1;
@@ -1102,14 +1108,15 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
         DBusMessageIter array_iter;
         DBusMessageIter struct_iter;
         dbus_int32_t tmp ,count = 0;
-        dbus_uint32_t utmp ;
-        dbus_bool_t btmp ;
-	char ** names;
-        dbus_int32_t result ;
-        int param_size;
+        dbus_uint32_t utmp = 0 ;
+        /*CID: 58299 Uninitialized scalar variable*/
+        dbus_bool_t btmp = 0 ;
+	char ** names = NULL;
+        dbus_int32_t result = 0;
+        int param_size = 0;
         char ** parameterNames = 0;
         parameterAttributeStruct_t **val = 0;
-        int i;
+        int i = 0;
         int size = 0;
 
 	/* get param array count first */
@@ -1213,12 +1220,13 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
     else if (!strcmp(CCSP_DBUS_INTERFACE_BASE, interface) && !strcmp("AddTblRow", method) && func->AddTblRow)
     {
         DBusMessageIter iter;
-        int instanceNumber ;
-        dbus_int32_t result ;
-        dbus_int32_t tmp ;
-        dbus_uint32_t utmp ;
-        dbus_int32_t sessionId ;
-        char * str;
+        int instanceNumber = 0;
+        dbus_int32_t result = 0;
+        dbus_int32_t tmp = 0;
+        dbus_uint32_t utmp = 0 ;
+        dbus_int32_t sessionId = 0 ;
+        /*CID: 58495 Uninitialized pointer read*/
+        char * str = NULL;
 
         dbus_message_iter_init (message, &iter);
         if(dbus_message_iter_get_arg_type (&iter) == DBUS_TYPE_INT32)
@@ -1361,9 +1369,10 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
     else if (!strcmp(CCSP_DBUS_INTERFACE_BASE, interface) && !strcmp("freeResources", method) && func->freeResources)
     {
         DBusMessageIter iter;
-        dbus_int32_t tmp ;
-        dbus_int32_t result ;
-        dbus_int32_t priority ;
+        /*CID:65337 Uninitialized scalar variable*/
+        dbus_int32_t tmp = 0 ;
+        dbus_int32_t result = 0 ;
+        dbus_int32_t priority = 0 ;
         
 
         dbus_message_iter_init (message, &iter);

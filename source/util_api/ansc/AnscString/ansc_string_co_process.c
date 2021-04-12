@@ -1488,8 +1488,10 @@ AnscStringCOReplaceString
 
         pStringObj      = pRight;
         bRemoveString   = TRUE;
-        
-        pos = pStringObj->FindString((ANSC_HANDLE)pStringObj, pOldStr);
+       
+        /*CID:70608 Explicit null dereferenced*/
+        if(pStringObj) 
+          pos = pStringObj->FindString((ANSC_HANDLE)pStringObj, pOldStr);
     }
     
     return ulCount;

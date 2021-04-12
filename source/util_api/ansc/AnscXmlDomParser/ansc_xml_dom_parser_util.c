@@ -1047,6 +1047,17 @@ AnscXmlFillContentOfNode
                         length - ( pNodesOfNode - pBackupContent),
                         (LPSTR)SPECIAL_TOKEN
                     );
+     /*CID: 66813 Dereference before null check*/
+    /*
+     *  If pNodesOfNode is NULL
+     */
+    if( !pNodesOfNode )
+    {
+        ANSC_XML_TRACE("Cannot find the end. \n");
+        AnscFreeMemory(pNewNodeName);
+
+        return  ANSC_STATUS_XML_MISSED_END_TAG;
+    }
 
     pEndOfNode    = AnscXmlFindString
                     (
@@ -1054,10 +1065,7 @@ AnscXmlFillContentOfNode
                         (LPSTR)XML_TAG_END
                     );
 
-    /*
-     *  If pNodesOfNode is NULL
-     */
-    if( !pNodesOfNode || !pEndOfNode)
+    if( !pEndOfNode )
     {
         ANSC_XML_TRACE("Cannot find the end. \n");
         AnscFreeMemory(pNewNodeName);

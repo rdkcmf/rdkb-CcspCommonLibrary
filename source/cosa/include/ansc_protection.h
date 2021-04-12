@@ -302,12 +302,14 @@ ANSC_TS_LOCK,  *PANSC_TS_LOCK;
 
 #define  AnscInitializeTsLock(lock)                                                         \
          {                                                                                  \
+            /* CIDs: 137564 , 137529 and 137470 -Data race condition */                     \
+            AnscInitializeLock(&(lock)->InternalLock);                                      \
+            AnscAcquireLock(&(lock)->InternalLock);                                         \
             (lock)->bAcquired        = FALSE;                                               \
             (lock)->ActiveTaskHandle = 0;                                                   \
             (lock)->RefCount         = 0;                                                   \
-                                                                                            \
             AnscInitializeLock(&(lock)->ExternalLock);                                      \
-            AnscInitializeLock(&(lock)->InternalLock);                                      \
+            AnscReleaseLock(&(lock)->InternalLock);                                         \
          }
 
 #define  AnscFreeTsLock(lock)                                                               \

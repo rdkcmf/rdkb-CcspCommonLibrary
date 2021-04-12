@@ -442,7 +442,10 @@ HttpWctoTmhNotify
                  * changed its internal state to either "state_complete" or "state_over_packed" so
                  * a new message object will be created by the wcto_query() function next time.
                  */
-                pTcpSimpleClient->SetBufferContext
+                /*CID:63286 Dereference after null check*/
+                if (pBufferDesp) 
+                {
+                    pTcpSimpleClient->SetBufferContext
                     (
                         (ANSC_HANDLE)pTcpSimpleClient,
                         AnscBdoGetBlock     (pBufferDesp),
@@ -450,10 +453,11 @@ HttpWctoTmhNotify
                         (ANSC_HANDLE)pBufferDesp
                     );
 
-                pTcpSimpleClient->RecvPacketSize = AnscBdoGetBlockSize(pBufferDesp);
-                returnStatus                     = ANSC_STATUS_DO_IT_AGAIN;
+                    pTcpSimpleClient->RecvPacketSize = AnscBdoGetBlockSize(pBufferDesp);
+                    returnStatus                     = ANSC_STATUS_DO_IT_AGAIN;
 
-                AnscBdoSetBlockSize(pBufferDesp, 0);
+                    AnscBdoSetBlockSize(pBufferDesp, 0);
+                }
 
                 break;
 

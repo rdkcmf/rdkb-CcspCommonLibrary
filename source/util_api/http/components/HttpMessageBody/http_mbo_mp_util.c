@@ -363,8 +363,9 @@ HttpMboParsePartHeaders
                             }
                         }
                     }
-
-                    pToken = (PUCHAR)_ansc_strstr((const char*)(pToken + 1), (const char*)pFileName);
+                    /*CID: 61811 Dereference after null check*/
+		    if ( pToken )
+                        pToken = (PUCHAR)_ansc_strstr((const char*)(pToken + 1), (const char*)pFileName);
 
                     if ( pToken )
                     {
@@ -1055,7 +1056,12 @@ EXIT:
             {
                 break;
             }
-        }
+     	}
+    }
+    /*CID: 137764 Resource leak*/
+    if(pFileName)
+    {
+       AnscFreeMemory(pFileName);
     }
 
     return status;

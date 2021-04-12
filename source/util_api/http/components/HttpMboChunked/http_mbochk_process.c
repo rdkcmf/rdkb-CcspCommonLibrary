@@ -346,7 +346,8 @@ HttpMboChkProcess
                             HTTP_BCC_EVENT_OVER_PACKED,
                             (ANSC_HANDLE)pBufferDesp
                         );
-
+               //CID: 56133 Missing break in switch
+	       break;
         default :
 
                 returnStatus = ANSC_STATUS_UNAPPLICABLE;

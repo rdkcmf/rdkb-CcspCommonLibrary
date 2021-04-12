@@ -812,6 +812,14 @@ AnscXmlDomNodeDecode
                         length - ( pNodesOfNode - pBackupContent),
                         (LPSTR)SPECIAL_TOKEN
                     );
+    /*CID: 65081 Dereference before null check*/
+    if( !pNodesOfNode )
+    {
+        ANSC_XML_TRACE("Cannot find the end. \n");
+        AnscFreeMemory(pNewNodeName);
+        return  ANSC_STATUS_XML_MISSED_END_TAG;
+    }
+
     pEndOfNode    = AnscXmlFindString
                     (
                         pNodesOfNode,
@@ -819,9 +827,9 @@ AnscXmlDomNodeDecode
                     );
 
     /*
-     *  If pNodesOfNode is NULL
+     *  If ipEndOfNode is NULL
      */
-    if( !pNodesOfNode || !pEndOfNode)
+    if( !pEndOfNode)
     {
         ANSC_XML_TRACE("Cannot find the end. \n");
         AnscFreeMemory(pNewNodeName);
@@ -1180,7 +1188,13 @@ AnscXmlDomNodeDecode
                             length - ( pEndOfNode - pBackupContent),
                             SPECIAL_TOKEN
                        );
-
+    /*CID: 55910 Dereference before null check*/
+    if( !pStartOfText )
+    {
+        ANSC_XML_TRACE("Cannot find the end tag. \n");
+        AnscFreeMemory(pNewNodeName);
+        return ANSC_STATUS_XML_MISSED_END_TAG;
+    }
     pEndOfText   = AnscXmlFindString
                        (
                             pStartOfText,

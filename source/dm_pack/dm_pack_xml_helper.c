@@ -379,6 +379,9 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
             );
         printf("DMPackCreateNode ANSC_STATUS_XML_RESOURCES pName=%s textSize=%lu\n", pName, textSize);
         fflush(stdout);
+        /*CID: 119749 Resource leak*/
+	AnscFreeMemory(pNewNode->StringData);
+	AnscFreeMemory(pNewNode);
         return NULL;
     }
 

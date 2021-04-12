@@ -180,6 +180,7 @@ BwrmFmoGetFile
 #ifdef   _BREE_SPO_USE_SRMO
         ulFileSize = BreeSpoGetCookedResLength((int)hAnscFile);
 #else
+        /*CID: 59651 Improper use of negative value- Added negative check in def part*/
         ulFileSize = AnscGetFileSize(hAnscFile);
 #endif
 

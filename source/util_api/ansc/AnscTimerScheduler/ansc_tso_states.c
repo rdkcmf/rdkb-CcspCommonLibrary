@@ -108,9 +108,9 @@ AnscTsoReset
 
     AnscAcquireSpinLock      (&pMyObject->TdoQueueSpinLock);
     AnscQueueInitializeHeader(&pMyObject->TdoQueue        );
-    AnscReleaseSpinLock      (&pMyObject->TdoQueueSpinLock);
-
+    /*CID: 137593 Data race condition */
     pMyObject->hCurInvokedTdo = (ANSC_HANDLE)NULL;
+    AnscReleaseSpinLock      (&pMyObject->TdoQueueSpinLock);
 
     return  ANSC_STATUS_SUCCESS;
 }

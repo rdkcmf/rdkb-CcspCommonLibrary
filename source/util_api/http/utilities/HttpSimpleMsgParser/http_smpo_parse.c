@@ -1622,7 +1622,9 @@ HttpSmpoParseContentRange
             }
 
             pEntityLen ++;
-            pHfoContentRange->InstaceLength     = _ansc_atoi((const char *)pEntityLen);
+            /*CID: 64364 Explicit null dereferenced*/
+            if (pHfoContentRange)
+                pHfoContentRange->InstaceLength     = _ansc_atoi((const char *)pEntityLen);
         }
         else
         {
@@ -5381,9 +5383,10 @@ HttpSmpoParseSetCookie
             if ( bExpires )
             {
                 ANSC_UNIVERSAL_TIME *pTime      = &pCookieContent->Expires;
-                char                wday[16];
-                char                mon[3];
-                char*               pDate;
+                /*CID: 137562 Uninitialized scalar variable*/
+                char                wday[16] = {0};
+                char                mon[3] = {0};
+                char*               pDate = NULL;
 
                 pTime->bDayLightSaving = FALSE;
 

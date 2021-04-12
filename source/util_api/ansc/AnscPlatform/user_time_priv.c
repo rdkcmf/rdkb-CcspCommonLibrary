@@ -166,7 +166,7 @@ UserSetDelta()
     struct timeval                  tv = {0};
     int fd;
     unsigned char buf[64] = {0};
-    unsigned long ulSecond, ulHundredth;
+    unsigned long ulSecond, ulHundredth = 0;
     char * pbuf = (char *)buf;
     char * pbuf1 = NULL; /*RDKB-6288, CID-24502, initilize before use*/
 
@@ -189,7 +189,14 @@ UserSetDelta()
         return;
     }
 
-    read(fd, buf, sizeof(buf));
+    /*CID: 162543 Ignoring number of bytes read*/
+    int valread = read(fd, buf, sizeof(buf));
+    if ( valread < 0 )
+    {
+       fprintf(stderr,"Failure in read!\n");
+       close(fd);
+       return;
+    }
 
     while ( *pbuf )
     {
@@ -208,7 +215,9 @@ UserSetDelta()
     }
 
     ulSecond    = atol((char *)buf);
-    ulHundredth = atol(pbuf1);
+    /*CID: 70450 Explicit null dereferenced*/
+    if (pbuf1)
+        ulHundredth = atol(pbuf1);
 
     close(fd);
 
@@ -314,6 +323,11 @@ UserSetSystemTime(USER_SYSTEM_TIME*  pSystemTime)
 
 #if !defined(_ANSC_LINUX_NO_TM_GMT)
     newTime = timegm(&newtm);
+    /*CID: 62026 Argument cannot be negative*/
+    if (newTime < 0) {
+         printf("newTime cant be negative\n");
+         return;
+    }
 #endif
 
     /*
@@ -382,6 +396,11 @@ UserSetLocalTime(USER_SYSTEM_TIME*  pSystemTime)
 
 
     newTime = mktime(&newtm);
+    /*CID:55942 Argument cannot be negative*/
+    if (newTime < 0) {
+         printf("newTime cant be negative\n");
+         return;
+    }
 
     newtv.tv_sec  = (long)newTime;
     newtv.tv_usec = 0;

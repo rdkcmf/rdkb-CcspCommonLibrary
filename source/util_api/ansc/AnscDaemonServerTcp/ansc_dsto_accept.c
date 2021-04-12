@@ -117,8 +117,8 @@ AnscDstoAcceptTask
     ULONG                           ulMrcCount    = 0;
     ULONG                           ulMscCount    = 0;
     ULONG                           ulMwtPrevious = AnscGetTickInSecondsAbs();
-    ANSC_SOCKET                     tmpSocket1    = 0;
-    XSKT_SOCKET                     tmpSocket2    = 0;
+    ANSC_SOCKET                     tmpSocket1    = -1;
+    XSKT_SOCKET                     tmpSocket2    = -1;
     int                             s_result      = 0;
     int                             s_error       = 0;
 #if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
@@ -291,7 +291,8 @@ AnscDstoAcceptTask
 #endif
 		}
 
-        if ( !tmpSocket1 && !tmpSocket2 )
+	/*CID: 60378 Argument cannot be negative*/
+        if ( tmpSocket1 < 0 && tmpSocket2 < 0 )
         {
             AnscSleep(10);
 
@@ -300,7 +301,6 @@ AnscDstoAcceptTask
 
             continue;
         }
-
         pNewSocket =
             (PANSC_DAEMON_SOCKET_TCP_OBJECT)pMyObject->AcquireSocket
                 (

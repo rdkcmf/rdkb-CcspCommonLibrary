@@ -977,6 +977,7 @@ CCSP_Message_Bus_Process_Thread
     
     struct timespec curTime = { 0, 0 };
     struct timespec preTime = { 0, 0 };
+    int ret;
 
     NewTimeout(&preTime, 0, 0);
 
@@ -986,7 +987,13 @@ CCSP_Message_Bus_Process_Thread
         pthread_mutex_lock(&bus_info->msg_mutex);        
 
         NewTimeout(&timeout, CCSP_MESSAGE_BUS_PROCESSING_TIMEOUT_SECONDS, CCSP_MESSAGE_BUS_PROCESSING_TIMEOUT_NANOSECONDS);
-        pthread_cond_timedwait(&bus_info->msg_threshold_cv, &bus_info->msg_mutex, &timeout);
+
+	/*CID: 64258 Unchecked return value*/
+        ret = pthread_cond_timedwait(&bus_info->msg_threshold_cv, &bus_info->msg_mutex, &timeout);
+	if( ret != 0 )
+	{
+	     CcspTraceDebug(("<%s>: pthread_cond_timedwait ERROR!!!\n", __FUNCTION__));
+	}
 
         // now the processing, after either received a signal or timed out
         entry = CcspMsgQueuePopEntry(bus_info->msg_queue);
@@ -1128,7 +1135,8 @@ CCSP_Message_Bus_Init
     /*if its telemetry and we have a stashed handle, give it back
       if no handle yet (which is unexpected) then do full init so t2 gets something back
     */
-    if(strcmp(component_id, "com.cisco.spvtg.ccsp.t2commonlib") == 0)
+    /*CID: 144417 Dereference before null check*/
+    if(component_id && strcmp(component_id, "com.cisco.spvtg.ccsp.t2commonlib") == 0)
     {
         if(stashedHandleForTelemetry)
         {
@@ -1274,6 +1282,8 @@ CCSP_Message_Bus_Init
                 }
             }
         }
+	/*CID: 110434 Resource leak*/
+	fclose(fp);
         return 0;
     }
     //    CcspTraceDebug(("<%s>: component id = '%s'\n", __FUNCTION__, bus_info->component_id));

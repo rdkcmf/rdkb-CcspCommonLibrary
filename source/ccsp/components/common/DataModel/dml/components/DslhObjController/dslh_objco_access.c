@@ -216,7 +216,8 @@ DslhObjcoValidate
     {
         /* pre-allocate arrays */
         uTotal = AnscQueueQueryDepth(&pObjEntity->VareoTable);
-        ppNameArray  = (char**)AnscAllocateMemory( uTotal * sizeof(char**));
+	/*CID: 74649 Sizeof not portable*/
+        ppNameArray  = (char**)AnscAllocateMemory( uTotal * sizeof(char*));
         if( !ppNameArray ) /*RDKB-5790 ; CID-33099, CID- 33417; NULL check after allocation*/
         {
             return FALSE;

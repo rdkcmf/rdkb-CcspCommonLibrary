@@ -150,6 +150,12 @@ AnscTcAllocate
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+
+	/*CID: 59825 Dereference before null check*/
+        if ( !string )
+        {
+            return  (ANSC_HANDLE)pTokenChain;
+        }
         ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
     }
 
@@ -243,6 +249,12 @@ AnscTcAllocate2
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+
+	/*CID: 61614 Dereference before null check*/
+        if ( !string )
+        {
+            return  (ANSC_HANDLE)pTokenChain;
+        }
         ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
     }
 
@@ -318,6 +330,11 @@ AnscTcAllocate3
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+	/*CID: 55215 Dereference before null check*/
+        if ( !string )
+        {
+           return  (ANSC_HANDLE)pTokenChain;
+        }
         ulTokenSize = AnscSizeOfToken3(string, separator, AnscSizeOfString(string));
     }
 
@@ -565,11 +582,18 @@ AnscSetTokenChain
     }
 
     string      = AnscMoveToNextToken(string, separator);
+
+    /*CID: 62792 Dereference before null check*/
+    if ( !string )
+    {
+        return  ANSC_STATUS_UNAPPLICABLE;
+    }
+
     ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
 
-    if ( !string || (*string == 0) || !ulTokenSize )
+    if ( !ulTokenSize )
     {
-        return  ANSC_STATUS_SUCCESS;
+        return  ANSC_STATUS_UNAPPLICABLE;
     }
 
     while ( string && (*string != 0) && ulTokenSize && ((ULONG)(string - pTemp) < ulSizeOfStr) )
@@ -593,6 +617,12 @@ AnscSetTokenChain
 
         string     += ulTokenSize;
         string      = AnscMoveToNextToken(string, separator);
+ 
+	/*CID: 62792 Dereference before null check*/
+        if ( !string )
+        {
+            return  ANSC_STATUS_UNAPPLICABLE;
+        }
         ulTokenSize = AnscSizeOfToken(string, separator, AnscSizeOfString(string));
     }
 

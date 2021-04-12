@@ -842,7 +842,8 @@ DslhWmpdoMpaSetParameterValues
             /*pthread_t Send_Notification_Thread;*/
             /*int res;*/
             static int bFirst = TRUE;
-            if(pVarEntity->ParamDescr->NotifyStatus != 3)
+            /*CID: 65857 Dereference after null check*/
+            if(pVarEntity && pVarEntity->ParamDescr->NotifyStatus != 3)
             {
                 if(pVarRecord->Notification)
                 {
@@ -858,7 +859,14 @@ DslhWmpdoMpaSetParameterValues
 				bFirst = FALSE;
 			}
 
-                    if(strcmp(vcSig.newValue,vcSig.oldValue))
+		    /*CID: 110898 and 110896 Dereference before null check*/
+		    if(vcSig.oldValue == NULL || vcSig.newValue == NULL)
+	            {
+                      CcspTraceWarning(("<< %s Old or  New value is NULL>>\n", __FUNCTION__));
+	              goto  EXIT0;
+	            }
+                    /*CID: 68135 Explicit null dereferenced*/
+                    if(vcSig.newValue && strcmp(vcSig.newValue,vcSig.oldValue))
                     {
 			pthread_mutex_lock(&NotifyMutex);
 

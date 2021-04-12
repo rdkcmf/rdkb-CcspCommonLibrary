@@ -3715,12 +3715,14 @@ BspTemplateObjDoObj
         {
             if (!pParamList || pParamList->ulGroups == 0)
             {
-                ULONG               ulNewStrSize;
+                ULONG               ulNewStrSize = 0;
                 char                *pNewStr;
 
                 aBr = aBr->left.Value.b;
 
-                ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
+                /*CID: 66327 Explicit null dereferenced*/
+                if (pObjName)
+                    ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
                 pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
 
@@ -4016,13 +4018,14 @@ ACCESS_LAST:
              */
             if (!bBuiltInProperty && pObjName)
             {
-                ULONG               ulNewStrSize;
+                ULONG               ulNewStrSize = 0;
                 char                *pNewStr;
                 PSLAP_VARIABLE      pSlapObject;
 
                 aBr = aBr->left.Value.b;
-
-                ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
+                /*CID: 60554 Dereference after null check*/
+                if (aFunc)
+                    ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
                 pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
 
@@ -5640,7 +5643,9 @@ BspTemplateEngDoObjectAccess
         if (!bMethodCall)
         {
             /* determine whether or not to "set" this property's value */
-            bSetProp    = (hValueSet && (i >= pParamList->ulGroups));
+            /*CID: 56026 Dereference after null check*/
+            if (  pParamList )
+                  bSetProp    = (hValueSet && (i >= pParamList->ulGroups));
 
             BspEng_PreparePropertyParamList
                 (

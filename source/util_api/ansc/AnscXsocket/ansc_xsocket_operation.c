@@ -587,6 +587,7 @@ AnscXsocketSend
     PANSC_XSOCKET_OBJECT            pMyObject       = (PANSC_XSOCKET_OBJECT)hThisObject;
     PANSC_SOCKET_ADDRESS            pXsocketAddress = (PANSC_SOCKET_ADDRESS)hAddress;
     xskt_socket_addr_in             to_addr;
+    int				    s_result = 0;
 
     if ( pMyObject->bClosed )
     {
@@ -610,15 +611,29 @@ AnscXsocketSend
 
     if ( pMyObject->Type == ANSC_XSOCKET_TYPE_TCP )
     {
-        _xskt_send(pMyObject->Xsocket, buffer, (int)ulSize, 0);
+	/*CID: 58486 Unchecked return value from library*/
+        s_result = _xskt_send(pMyObject->Xsocket, buffer, (int)ulSize, 0);
+	if ( s_result == XSKT_SOCKET_ERROR || s_result < (int)ulSize )
+	{
+	     CcspTraceError(("AnscXsocketSend:Failed to send request\n"));
+	     AnscReleaseLock(&pMyObject->OpLock);
+	     return ANSC_STATUS_FAILURE;
+	}          
     }
     else if ( pMyObject->Type == ANSC_XSOCKET_TYPE_UDP )
     {
-        _xskt_sendto(pMyObject->Xsocket, buffer, (int)ulSize, 0, (xskt_socket_addr*)&to_addr, sizeof(to_addr));
+	/*CID: 73772 Unchecked return value from library*/
+        s_result = _xskt_sendto(pMyObject->Xsocket, buffer, (int)ulSize, 0, (xskt_socket_addr*)&to_addr, sizeof(to_addr));
     }
     else if ( pMyObject->Type == ANSC_XSOCKET_TYPE_RAW )
     {
-        _xskt_sendto(pMyObject->Xsocket, buffer, (int)ulSize, 0, (xskt_socket_addr*)&to_addr, sizeof(to_addr));
+	 /*CID: 73772 Unchecked return value from library*/
+        s_result = _xskt_sendto(pMyObject->Xsocket, buffer, (int)ulSize, 0, (xskt_socket_addr*)&to_addr, sizeof(to_addr));
+    }
+
+    if ( s_result < 0 )
+    {
+        CcspTraceError(("sendto error: %s\n", strerror(errno)));
     }
 
     AnscReleaseLock(&pMyObject->OpLock);
@@ -707,7 +722,14 @@ AnscXsocketSend2
 
     if ( pMyObject->Type == ANSC_XSOCKET_TYPE_TCP )
     {
-        _xskt_send(pMyObject->Xsocket, buffer, (int)ulSize, 0);
+	/*CID: 65484 Unchecked return value from library*/
+        iSent = _xskt_send(pMyObject->Xsocket, buffer, (int)ulSize, 0);
+	if ( iSent == XSKT_SOCKET_ERROR || iSent  < (int)ulSize )
+        {
+             CcspTraceError(("AnscXsocketSend2: Failed to send request\n"));
+             AnscReleaseLock(&pMyObject->OpLock);
+             return ANSC_STATUS_FAILURE;
+        }
     }
     else if ( pMyObject->Type == ANSC_XSOCKET_TYPE_UDP )
     {

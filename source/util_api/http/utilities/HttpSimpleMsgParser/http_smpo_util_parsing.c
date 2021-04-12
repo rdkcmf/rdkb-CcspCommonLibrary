@@ -181,7 +181,8 @@ HttpSmpoUtilParseRequestLine
     pVersion        = pMsg;
     ulVersion       = ((PUCHAR)buffer + ulSize - pMsg);
 
-    if (pMethod && pUri && pVersion)
+    /*removing pUri check CID: 54262 Dereference before null check*/
+    if (pMethod && pVersion)
     {
         pRequestInfo    = (PHTTP_REQUEST_INFO)AnscAllocateMemory(sizeof(HTTP_REQUEST_INFO));
         
@@ -584,8 +585,10 @@ HttpSmpoUtilParseChunkedLine
             {
                 break;
             }
-
-            pExt ++;
+            /*CID 62548 Dereference after null check*/
+	    /* Incrementing null pointer pExt */
+	    if ( pExt )
+                pExt ++;
             pExt    = HttpSmpoUtilLinearWhiteSpace(pExt, pCRLF - pExt);
 
             pNext   = _ansc_memchr(pExt, HTTP_SMPO_CHAR_SEMICOLON, pCRLF - pExt);

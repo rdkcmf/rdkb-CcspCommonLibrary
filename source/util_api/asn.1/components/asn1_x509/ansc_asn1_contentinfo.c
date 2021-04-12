@@ -1746,7 +1746,8 @@ AnscAsn1SignedDataVerifyMessageDigest
     }
 
     /* get the data of the content */
-    while( IsObjectChoiceType(pObject->uType))
+     /*CID: 56448 Dereference after null check*/
+    while( pObject && IsObjectChoiceType(pObject->uType))
     {
         pObject = (PANSC_ASN1_OBJECT)
             ((PANSC_ASN1_CHOICE)pObject)->hSelection;

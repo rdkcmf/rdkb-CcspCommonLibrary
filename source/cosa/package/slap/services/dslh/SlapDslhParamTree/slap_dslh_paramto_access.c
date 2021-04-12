@@ -2847,12 +2847,13 @@ SlapDslhParamtoIsParamTreeReadOnly
     char                            cr_id[256];
     _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
 
+    /*CID: 52904 Arguments in wrong order*/
     CcspBaseIf_getCurrentSessionID
         (
             MsgBusHandle,
             cr_id,
-            &sessionID,
-			&priority
+	    &priority,
+            &sessionID
         );
 
 	if ( SESSIOIN_ZERO != sessionID) //There is an active session

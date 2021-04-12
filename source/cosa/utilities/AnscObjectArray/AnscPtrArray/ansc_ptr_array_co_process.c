@@ -618,7 +618,6 @@ AnscPtrArrayEnlargeStorage
 /*
             pBuf    = (PANSC_PTR_ARRAY_DATA)AnscReAllocMemory(pPtrArray->hStorage, ulBufSize);
 */
-
             pBuf    = 
                 (PANSC_PTR_ARRAY_DATA)AnscMemUtilRealloc
                     (

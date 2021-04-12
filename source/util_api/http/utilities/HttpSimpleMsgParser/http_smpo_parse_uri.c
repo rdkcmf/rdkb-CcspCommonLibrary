@@ -599,7 +599,10 @@ HttpSmpoUtilParseRelPath
     }
 
     /* parse query parameters */
-    pQuery ++;
+    /* CID:58183 Dereference after null check*/
+    /* Incrementing null pointer pQuery*/
+    if ( pQuery )
+         pQuery ++;
     HttpSmpoUtilCopyHeaderString(pQuery, ulQueryLen, pUri->QueryParams, HTTP_MAX_URI_QUERY_SIZE);
 
     return TRUE;

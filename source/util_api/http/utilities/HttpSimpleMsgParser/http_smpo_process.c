@@ -424,7 +424,8 @@ HttpSmpoParseQueryString
         }
     }
 
-    if (pFormInput->ElementCount == 0)
+    /*CID: 53361 Dereference after null check*/
+    if (pFormInput && pFormInput->ElementCount == 0)
     {
         /* the query string might be empty or malformed */
         AnscFreeMemory(pFormInput);

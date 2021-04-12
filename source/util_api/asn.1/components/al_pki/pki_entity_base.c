@@ -2270,8 +2270,10 @@ PKIEntitySetName
     if( pString == NULL)
     {
         AnscZeroMemory(pThisObject->pName, MAXI_ENTITY_NAME_BUFFER);
+	return ANSC_STATUS_FAILURE;
     }
 
+    /*CID: 69693 Dereference after null check*/
     if( AnscSizeOfString(pString) >= MAXI_ENTITY_NAME_BUFFER)
     {
         return ANSC_STATUS_FAILURE;

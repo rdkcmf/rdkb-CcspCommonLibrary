@@ -300,9 +300,7 @@ BwrmCpoInitialize
     pMyObject->hPageContext     = NULL;
     pMyObject->Timestamp        = AnscGetTickInSeconds();
     pMyObject->RefCount         = 0;
-    
     AnscInitializeLock(&pMyObject->AccessLock);
-
     pMyObject->GetRootPath      = BwrmCpoGetRootPath;
     pMyObject->SetRootPath      = BwrmCpoSetRootPath;
     pMyObject->GetPagePath      = BwrmCpoGetPagePath;

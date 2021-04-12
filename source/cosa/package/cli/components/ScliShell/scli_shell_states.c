@@ -577,9 +577,12 @@ ScliShoShellPromptChanged
             ulPromptLen = TELNET_SSO_SHELL_PROMPT_LEN - 5;
 
             ulMaxMenuLen = ulPromptLen - 1 - AnscSizeOfString((const char *)pProperty->ShellPrompt);
-
-            _ansc_memmove(pMenuTitle, pMenuTitle + AnscSizeOfString((const char *)pMenuTitle) - ulMaxMenuLen, ulMaxMenuLen);
-            pMenuTitle[ulMaxMenuLen]    = 0;
+            /*CID: 67216 Dereference after null check*/
+            if ( pMenuTitle )
+            {
+              _ansc_memmove(pMenuTitle, pMenuTitle + AnscSizeOfString((const char *)pMenuTitle) - ulMaxMenuLen, ulMaxMenuLen);
+              pMenuTitle[ulMaxMenuLen]    = 0;
+            }
         }
 
         pPrompt = (PUCHAR)AnscAllocateMemory(ulPromptLen + 10);

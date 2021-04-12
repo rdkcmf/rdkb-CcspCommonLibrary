@@ -1447,14 +1447,15 @@ void AnscLiveMemoryInspectRecordDetail
             if ( TRUE )
             {
                 
-                AnscReleaseSpinLock(&g_tRecordDetailSpinLock);
+		/*CID:137611 Value not atomically updated*/
+		/* pMemoryBlock might now be unreliable */
                 pMemoryAllocItem = (PANSC_MEMORY_ALLOC_ITEM)AnscGetMemoryAllocItem(pMemoryBlock);                
                 if ( !pMemoryAllocItem )
                 {
                     CcspTraceWarning2(pComponentName, ("Cannot find the memory block before this one!!!\n"));
+		    AnscReleaseSpinLock(&g_tRecordDetailSpinLock);
                     return;
                 }
-                AnscAcquireSpinLock(&g_tRecordDetailSpinLock);
 
                 pMemoryArray1    = (PUCHAR                 )((ULONG)pMemoryBlock - ANSC_MEMORY_ALLOC_HEAD_SIZE);
                 pMemoryArray2    = (PUCHAR                 )((ULONG)pMemoryBlock + ulMemorySize);

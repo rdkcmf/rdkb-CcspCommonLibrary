@@ -1211,5 +1211,10 @@ EXIT2:
 
 EXIT1:
 
+    /*CID: 137471 Resource leak*/
+    if ( pReturnedVar )
+    {
+        SlapFreeVariable(pReturnedVar);
+    }
     return  returnStatus;
 }

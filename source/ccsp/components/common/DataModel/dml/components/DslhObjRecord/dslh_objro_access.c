@@ -320,9 +320,10 @@ DslhObjroGetAllParamValues
             returnStatus = pObjController->GetBulkParamValue(pObjController, ppNameArray, ppValueArray, ulParamCount);
         }
 
-        /* Check parameter value and change it to be 2(notReady)  Begining*/        
-        if ( ( writeID == DSLH_MPA_ACCESS_CONTROL_SNMP ) && 
-             ( pObjEntity->ObjDescr->bWritable == TRUE ) &&
+        /* Check parameter value and change it to be 2(notReady)  Begining*/       
+        /*CID: 69093,65995 Dereference after null check*/ 
+        if ( ( writeID == DSLH_MPA_ACCESS_CONTROL_SNMP ) && pObjEntity->ObjDescr && 
+             ( pObjEntity->ObjDescr->bWritable == TRUE ) && pObjController &&
              ( pObjController->bCommitted == FALSE )        )
         {
             for( j = 0; j < ulParamCount; j ++)
@@ -1582,14 +1583,17 @@ static void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_valu
 	parameterValStruct_t notif_val[1];
 	char* faultParam = NULL;
 	char  str[512] = {0};
-	char Param_NumberOfEntry[512] = {0};
 	UINT len = 0;
+	char Param_NumberOfEntry[512] = {0};
+	char Param_NumberOfEntryTemp[512] = {0};
 	int ret = CCSP_FAILURE;
 
-	_ansc_strcpy(Param_NumberOfEntry,pMyObject->FullName);
-	len = _ansc_strlen(Param_NumberOfEntry);
-	Param_NumberOfEntry[len-1]= '\0';
-	sprintf(Param_NumberOfEntry,"%sNumberOfEntries",Param_NumberOfEntry);
+	_ansc_strcpy(Param_NumberOfEntryTemp,pMyObject->FullName);
+	len = _ansc_strlen(Param_NumberOfEntryTemp);
+
+	Param_NumberOfEntryTemp[len-1]= '\0';
+	/*CID: 65627 Copy of overlapping memory*/
+	snprintf(Param_NumberOfEntry,sizeof(Param_NumberOfEntry), "%sNumberOfEntries",Param_NumberOfEntryTemp);
 
 	sprintf(str,"%s,%d,%d,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
 		notif_val[0].parameterName =  param_name ;

@@ -333,8 +333,9 @@ AnscTaskRoutine2
             bSuspended = pTaskRecord->bSuspended;
             AnscReleaseSpinLock(&pTaskRecord->AccessSpinLock);
         }
-
-        pTaskRecord->Routine(pTaskRecord->hContext);
+        /*CID:162747 Explicit null dereferenced*/
+        if (pTaskRecord->Routine)
+            pTaskRecord->Routine(pTaskRecord->hContext);
         bSuspended   = TRUE;
 
         if ( g_bTraceEnabled )

@@ -929,8 +929,8 @@ Bmc2FreeCmdArgValueRange
 {
     if ( pCmdArgVrange )                                     
     {                                                        
-        Bmc2CleanCmdArgValueRange(pCmdArgVrange);            
-        AnscFreeMemory(pCmdArgVrange);                       
+        Bmc2CleanCmdArgValueRange(pCmdArgVrange);           
+        /*CID: 68730 Double free*/ 
     }
 }
 

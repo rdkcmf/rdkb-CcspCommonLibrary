@@ -868,9 +868,10 @@ DslhVarroIsValidMaskString
             goto EXIT;
         }
 
+	/*CID: 71787 Bad bit shift operation*/
         else if ( (!i && !(~(0x0 ^ ulMaskValue)))           /* 255.255.255.255 */
                   ||
-                  ! (~( ( (((ULONG)~0x0)<<(32-i))) ^ ulMaskValue ))  /* Other subnet masks */
+                  ! (~( ( (((ULONG)~0x0)<<(31-i))) ^ ulMaskValue ))  /* Other subnet masks */
                 )
         {
             bIsValid = TRUE;
