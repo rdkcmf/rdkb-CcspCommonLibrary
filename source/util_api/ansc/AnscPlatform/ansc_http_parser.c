@@ -2489,7 +2489,7 @@ HttpSmpoUtilGetSizeRequestUri
             {
                 if (
                        i == ulLevels - 1       &&
-                       AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                       strcmp(pUri->PathArray[i], "/") == 0 
                    )
                 {
                     /* already counted */
@@ -2536,7 +2536,7 @@ HttpSmpoUtilGetSizeRequestUri
             for (i = 1; i < ulLevels; i ++)
             {
                 /* count each (f)segment */
-                bIsSlash    = AnscEqualString(pUri->PathArray[i], "/", TRUE);
+                bIsSlash    = (strcmp(pUri->PathArray[i], "/") == 0 );
                 if (bIsSlash && i == ulLevels - 1)
                     break;
 
@@ -5828,7 +5828,7 @@ HttpSmpoUtilBuildRequestUri
                     return FALSE;
 
                 if (
-                       AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                       strcmp(pUri->PathArray[i], "/") == 0 
                    )
                 {
                     /* already counted */
@@ -5896,7 +5896,7 @@ HttpSmpoUtilBuildRequestUri
             ulPathLevel     = pUri->PathLevel;
 
             if (
-                   (ulPathLevel == 1 && AnscEqualString(pUri->PathArray[0], "/", TRUE)) ||
+                   (ulPathLevel == 1 && strcmp(pUri->PathArray[0], "/") == 0 ) ||
                    ulPathLevel == 0
                )
             {
@@ -5927,7 +5927,7 @@ HttpSmpoUtilBuildRequestUri
                         return FALSE;
 
                     if (
-                           AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                           strcmp(pUri->PathArray[i], "/") == 0
                        )
                     {
                         /* already counted */
@@ -8840,25 +8840,25 @@ HttpSmpoParseSetCookie
 
                 pTime->Month = HttpSmpoUtilGetMonth((PUCHAR)mon, 3);
 
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SUNDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_SUNDAY) == 0 )
                     pTime->DayOfWeek = 0;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_MONDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_MONDAY) == 0 )
                     pTime->DayOfWeek = 1;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_TUESDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_TUESDAY) == 0 )
                     pTime->DayOfWeek = 2;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_WEDNESDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_WEDNESDAY) == 0 )
                     pTime->DayOfWeek = 3;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_THURSDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_THURSDAY) == 0 )
                     pTime->DayOfWeek = 4;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_FRIDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_FRIDAY) == 0 )
                     pTime->DayOfWeek = 5;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SATURDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_SATURDAY) == 0 )
                     pTime->DayOfWeek = 6;
             }
             else if ( pValue )
@@ -9711,7 +9711,7 @@ HttpSmpoUtilParseRquestLineUri
     PHTTP_REQUEST_URI               pUri    = (PHTTP_REQUEST_URI)hUri;
     BOOL                            bSucc   = TRUE;
 
-    if (AnscEqualString((char *)pBuf, "*", TRUE))
+    if (strcmp((char *)pBuf, "*") == 0 )
     {
         pUri->Type  = HTTP_URI_TYPE_ASTERISK;
     }

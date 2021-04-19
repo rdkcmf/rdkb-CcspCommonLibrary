@@ -1273,12 +1273,7 @@ AnscGetTaskStorageUnit
         pTaskStorageUnit = ACCESS_ANSC_TASK_STORAGE_UNIT(pSLinkEntry);
         pSLinkEntry      = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pTaskStorageUnit->Name,
-                    unit_name,
-                    TRUE
-                ) )
+        if ( strcmp(pTaskStorageUnit->Name,unit_name) == 0 )
         {
             return  pTaskStorageUnit->hSuoContext;
         }
@@ -1357,12 +1352,7 @@ AnscDelTaskStorageUnit
         pTaskStorageUnit = ACCESS_ANSC_TASK_STORAGE_UNIT(pSLinkEntry);
         pSLinkEntry      = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pTaskStorageUnit->Name,
-                    unit_name,
-                    TRUE
-                ) )
+        if ( strcmp(pTaskStorageUnit->Name,unit_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pTaskRecord->SuoTable[ulHashIndex], &pTaskStorageUnit->Linkage);
 

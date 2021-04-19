@@ -295,7 +295,7 @@ AnscSetSimpleTimeZone
 	USHORT				i;
 	errno_t  rc = -1;
 
-	if ( AnscEqualString(gCurrTimeZoneName,  pTzName, TRUE) )
+	if ( strcmp(gCurrTimeZoneName,  pTzName) == 0 )
 	{
 		return return_status;
 	}
@@ -305,7 +305,7 @@ AnscSetSimpleTimeZone
 
 	for (i = 0; i < al_tz_total_zones; i++)
 	{
-		if ( AnscEqualString(al_tz_name_array[i].zone_name, gCurrTimeZoneName, TRUE) )
+		if ( strcmp(al_tz_name_array[i].zone_name, gCurrTimeZoneName) == 0 )
 		{
 			break;
 		}
@@ -351,7 +351,7 @@ AnscGetSimpleTimeZoneOffset
 	{
 		for (i = 0; i < al_tz_total_zones; i++)
 		{
-			if ( AnscEqualString(al_tz_name_array[i].zone_name, gCurrTimeZoneName, TRUE) )
+			if ( strcmp(al_tz_name_array[i].zone_name, gCurrTimeZoneName) == 0 )
 			{
 				break;
 			}

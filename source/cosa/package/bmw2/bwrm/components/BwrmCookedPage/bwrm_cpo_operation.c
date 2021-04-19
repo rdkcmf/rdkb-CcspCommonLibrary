@@ -124,11 +124,11 @@ BwrmCpoMatchPath
     {
         return  FALSE;
     }
-    else if ( !AnscEqualString(root_path, pMyObject->RootPath, FALSE) )
+    else if ( !strcasecmp(root_path, pMyObject->RootPath) == 0 )
     {
         return  FALSE;
     }
-    else if ( !AnscEqualString(page_path, pMyObject->PagePath, FALSE) )
+    else if ( !strcasecmp(page_path, pMyObject->PagePath) == 0 )
     {
         return  FALSE;
     }

@@ -139,7 +139,7 @@ AnscXsocketResolveAddr
          * XXX: some uclibc version getaddrinfo cannot accept "0"
          * but NULL is acceptable.
          */
-        if (AnscEqualString(port, "0", TRUE))
+        if (strcmp(port, "0") == 0 )
             pPort = NULL;
         else
             pPort = port;

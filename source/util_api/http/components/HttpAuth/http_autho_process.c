@@ -391,7 +391,7 @@ HttpAuthoCalcDigestHA1
         AnscSizeOfString((const char*)pRealm)    + 1 +
         (pPassword?AnscSizeOfString((const char*)pPassword):0);
 
-    if ( pAlgorithm && AnscEqualString((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
+    if ( pAlgorithm && strcasecmp((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess) == 0 )
     {
         if ( ulSize < ANSC_MD5_OUTPUT_SIZE * 2 )
         {
@@ -424,7 +424,7 @@ HttpAuthoCalcDigestHA1
 
         AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString(pBuf), &MD5Hash);
 
-        if ( pAlgorithm && AnscEqualString(pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
+        if ( pAlgorithm && strcasecmp(pAlgorithm, HTTP_AUTH_NAME_md5_sess) == 0 )
         {
             ULONG                   ulMsgSize = ANSC_MD5_OUTPUT_SIZE;
 
@@ -453,7 +453,7 @@ HttpAuthoCalcDigestHA1
         AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
         HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pHA1);
 
-        if ( pAlgorithm && AnscEqualString((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
+        if ( pAlgorithm && strcasecmp((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess) == 0 )
         {
             rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s", pHA1, pNonce, pCNonce);
             if(rc < EOK)
@@ -646,7 +646,7 @@ HttpAuthoCalcDigestHA2
 
     ulSize  = AnscSizeOfString((const char*)pMethodName) + 1 + AnscSizeOfString((const char*)pUriPath);
 
-    if ( pQop && AnscEqualString((char*)pQop, HTTP_AUTH_NAME_auth_int, FALSE) )
+    if ( pQop && strcasecmp((char*)pQop, HTTP_AUTH_NAME_auth_int) == 0 )
     {
         bAuthInt    = TRUE;
         ulSize     += 1 + AnscSizeOfString((const char*)pEntityDigest);
@@ -803,7 +803,7 @@ HttpAuthoGetRequestHostUri
         else
         {
             if (
-                   (pReqUri->PathLevel == 1 && AnscEqualString(pReqUri->PathArray[0], "/", TRUE)) ||
+                   (pReqUri->PathLevel == 1 && strcmp(pReqUri->PathArray[0], "/") == 0 ) ||
                    pReqUri->PathLevel == 0
                )
             {
@@ -817,7 +817,7 @@ HttpAuthoGetRequestHostUri
                     rc = strcpy_s((char*)pPath + AnscSizeOfString((const char*)pPath), (ulPathLen - AnscSizeOfString((const char*)pPath)), "/");
                     ERR_CHK(rc);
 
-                    if ( AnscEqualString(pReqUri->PathArray[i], "/", TRUE) )
+                    if ( strcmp(pReqUri->PathArray[i], "/") == 0 )
                     {
                         continue;
                     }
@@ -1973,7 +1973,7 @@ HttpAuthoVerify
         }
         else if ( pPassword && pAuthInfo->pPassword )
         {
-            if ( AnscEqualString((char*)pPassword, (char*)pAuthInfo->pPassword, TRUE) )
+            if ( strcmp((char*)pPassword, (char*)pAuthInfo->pPassword) == 0 )
             {
                 status = ANSC_STATUS_SUCCESS;
             }
@@ -2004,13 +2004,13 @@ HttpAuthoVerify
             goto EXIT;
         }
 
-        if ( !AnscEqualString((char*)pAuthInfo->pRealm, (char*)pServerAuthRealm, TRUE) )
+        if ( !strcmp((char*)pAuthInfo->pRealm, (char*)pServerAuthRealm) == 0 )
         {
             status = ANSC_STATUS_BAD_AUTH_DATA;
             goto EXIT;
         }
 
-        if ( !AnscEqualString((char*)pDigestInfo->pNonce, (char*)pServerNonce, TRUE) )
+        if ( !strcmp((char*)pDigestInfo->pNonce, (char*)pServerNonce) == 0 )
         {
             status = ANSC_STATUS_BAD_AUTH_DATA;
             goto EXIT;
@@ -2039,7 +2039,7 @@ HttpAuthoVerify
         }
         else
         {
-            if ( AnscEqualString((char*)pDigRep, (char*)pDigestInfo->pResponse, TRUE) )
+            if ( strcmp((char*)pDigRep, (char*)pDigestInfo->pResponse) == 0 )
             {
                 status = ANSC_STATUS_SUCCESS;
             }

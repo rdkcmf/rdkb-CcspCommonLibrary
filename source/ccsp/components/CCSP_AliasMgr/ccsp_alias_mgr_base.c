@@ -288,7 +288,7 @@ static BOOL StringSListFind(PSLIST_HEADER pList, char* s)
     {
         pListEntry = ACCESS_STRING_SINGLE_LIST_ENTRY(pLink);
 
-        if (pListEntry != NULL && AnscEqualString(pListEntry->Value, s, TRUE))
+        if (pListEntry != NULL && strcmp(pListEntry->Value, s) == 0 )
         {
             return TRUE;
         }
@@ -502,13 +502,13 @@ CcspAliasMgrFindMakeNode
                 if ( bAddAux == FALSE )
                 {
                     /* Start adding Strict aliases when encountering different node name */
-                    if ( AnscEqualString(pNodeName, pAliasNodeName, TRUE) == FALSE)
+                    if ( ( strcmp(pNodeName, pAliasNodeName) == 0 ) == FALSE)
                     {
                         bAddAux = TRUE;
                     }
                 }
 
-                if ( bAddAux && AnscEqualString(pPartialName, Name, TRUE) == FALSE )
+                if ( bAddAux && ( strcmp(pPartialName, Name) == 0 ) == FALSE )
                 {
                     /* Add Strict alias - will only match the name fully */
                     CcspAliasMgrAliasTreeAddItem
@@ -532,7 +532,7 @@ CcspAliasMgrFindMakeNode
         /* find if any child node's name matches the token */
         while ( pChildNode )
         {
-            if ( AnscEqualString(pNodeName, pChildNode->Name, TRUE) )
+            if ( strcmp(pNodeName, pChildNode->Name) == 0 )
             {
                 pNode        = pChildNode;
                 break;
@@ -833,7 +833,7 @@ CcspAliasMgrIsNameInsIdentifier
         return FALSE;
     }
 
-    return AnscEqualString(buf, Name, TRUE);
+    return ( strcmp(buf, Name) == 0 );
 }
 
 /**********************************************************************
@@ -898,7 +898,7 @@ CcspAliasMgrReplaceInstanceIds
 
     while ( (pStringToken = AnscTcUnlinkToken(pNsTokenChain)) )
     {
-        if ( !IsQueueEmpty(pInsIdQueue) && AnscEqualString(pStringToken->Name, "{i}", TRUE) )
+        if ( !IsQueueEmpty(pInsIdQueue) && strcmp(pStringToken->Name, "{i}") == 0 )
         {
             InsId = NULL;
             BOOL status = QueueGetNext(pInsIdQueue, pLink, &InsId, &pLink);
@@ -1061,13 +1061,13 @@ CcspAliasMgrLookupAliasNode
         while ( pChildNode )
         {
             /* unlike TR-069 PA specific instance mapping is not allowed here */
-            if ( !bInsId && AnscEqualString(pStringToken->Name, pChildNode->Name, TRUE) )
+            if ( !bInsId && strcmp(pStringToken->Name, pChildNode->Name) == 0 )
             {
                 pNode        = pChildNode;
 
                 break;
             }
-            else if ( bInsId && AnscEqualString(pChildNode->Name, "{i}", TRUE) )
+            else if ( bInsId && strcmp(pChildNode->Name, "{i}") == 0 )
             {
                 bInsMatched  = TRUE;
                 pInsNode     = pChildNode;

@@ -127,7 +127,7 @@ HttpWcsoMatchServer
     PHTTP_WEBC_SESSION_OBJECT       pMyObject    = (PHTTP_WEBC_SESSION_OBJECT  )hThisObject;
     PHTTP_WEBC_SESSION_PROPERTY     pProperty    = (PHTTP_WEBC_SESSION_PROPERTY)&pMyObject->Property;
 
-    if ( AnscEqualString(pProperty->PeerName, name, FALSE) &&
+    if ( strcasecmp(pProperty->PeerName, name) == 0 &&
          (pProperty->PeerPort     == port                ) &&
          (pProperty->SessionFlags == flags               ) )
     {

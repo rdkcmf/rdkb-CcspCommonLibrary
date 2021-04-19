@@ -1519,12 +1519,7 @@ SlapVhoEqualVarArrays
                              array2->Array.arrayString[jj] )
                         {
                             b_equal_array =
-                                AnscEqualString
-                                    (
-                                        array1->Array.arrayString[jj],
-                                        array2->Array.arrayString[jj],
-                                        TRUE
-                                    );
+                                strcmp(array1->Array.arrayString[jj],array2->Array.arrayString[jj]) == 0 ;
                         }
                         else if ( !array1->Array.arrayString[jj] &&
                                   !array2->Array.arrayString[jj] )

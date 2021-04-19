@@ -512,7 +512,7 @@ DslhDmagntUnloadDataModelXML
             pSListEntry = AnscQueueGetNextEntry(pSListEntry);
 
             if( pInfo != NULL && pInfo->SourceName != NULL &&
-                AnscEqualString(pInfo->SourceName, buffer, TRUE))
+                strcmp(pInfo->SourceName, buffer) == 0 )
             {                
                 AnscQueuePopEntryByLink(&pMyObject->sPluginInfoList, &pInfo->Linkage);
 

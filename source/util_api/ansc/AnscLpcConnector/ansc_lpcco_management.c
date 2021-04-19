@@ -289,12 +289,7 @@ AnscLpccoGetPartyAddr
         pPartyAddr  = ACCESS_ANSC_LPC_PARTY_ADDR(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pPartyAddr->PartyName,
-                    party_name,
-                    FALSE
-                ) )
+        if ( strcasecmp(pPartyAddr->PartyName,party_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->PartyTableLock);
 
@@ -359,12 +354,7 @@ AnscLpccoGetPartyAddr2
         pPartyAddr  = ACCESS_ANSC_LPC_PARTY_ADDR(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pPartyAddr->PartyName,
-                    party_name,
-                    FALSE
-                ) )
+        if ( strcasecmp(pPartyAddr->PartyName,party_name) == 0 )
         {
             pPartyAddr->RefCount++;
 
@@ -508,12 +498,7 @@ AnscLpccoDelPartyAddr
         pPartyAddr  = ACCESS_ANSC_LPC_PARTY_ADDR(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pPartyAddr->PartyName,
-                    party_name,
-                    FALSE
-                ) )
+        if ( strcasecmp(pPartyAddr->PartyName,party_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->PartyTable[ulHashIndex], &pPartyAddr->Linkage);
 
@@ -726,12 +711,7 @@ AnscLpccoPopPendingCall
         {
             if ( party_name && pPendingCall->PartyName )
             {
-                if ( !AnscEqualString
-                        (
-                            party_name,
-                            pPendingCall->PartyName,
-                            FALSE
-                        ) )
+                if ( !strcasecmp(party_name,pPendingCall->PartyName) == 0 )
                 {
                     continue;
                 }

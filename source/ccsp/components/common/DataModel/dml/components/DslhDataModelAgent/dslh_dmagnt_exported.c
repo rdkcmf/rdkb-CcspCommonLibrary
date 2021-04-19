@@ -1159,7 +1159,7 @@ COSAGetParamValueByPathName
 	 /* Ticket RDKB-39090 purpose */
      _ansc_sprintf(cr_id, "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
 
-    for(i=0; FALSE == AnscEqualString(pSubSysPrefixList[i], END_OF_LIST, TRUE);i++)
+    for(i=0; FALSE == ( strcmp(pSubSysPrefixList[i], END_OF_LIST) == 0 );i++)
     {
         ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -1296,7 +1296,7 @@ COSASetParamValueByPathName
        ERR_CHK(rc);
     }
 
-    for(i=0; FALSE == AnscEqualString(pSubSysPrefixList[i], END_OF_LIST, TRUE);i++)
+    for(i=0; FALSE == ( strcmp(pSubSysPrefixList[i], END_OF_LIST) == 0 );i++)
     {
         ret = CcspBaseIf_discComponentSupportingNamespace 
             (

@@ -398,7 +398,7 @@ DslhCpecoGetInterfaceByName
     {
         pInterface = (PANSC_INTERFACE_OBJECT)pMyObject->hIfArray[i];
 
-        if( pInterface != NULL && AnscEqualString(pInterface->Name, ifName, TRUE))
+        if( pInterface != NULL && strcmp(pInterface->Name, ifName) == 0 )
         {
             return (ANSC_HANDLE)pInterface;
         }

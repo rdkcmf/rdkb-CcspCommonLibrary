@@ -2012,7 +2012,7 @@ AnscAsn1OIDEqualToOIDString
         return FALSE;
     }
 
-    return AnscEqualString( pOIDString, pValue, FALSE);
+    return (strcasecmp( pOIDString, pValue) == 0 );
 }
 
 

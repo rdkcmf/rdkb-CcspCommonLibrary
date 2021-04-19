@@ -694,7 +694,7 @@ AnscAsn1SignedDataAddDigestAlgor
         {
             pNewObject->GetAlgorOIDStringValue(pNewObject, pOID);
 
-            if( AnscEqualString( pOID, pOIDString, FALSE))
+            if( strcasecmp( pOID, pOIDString) == 0 )
             {
                 /* already added */
                 return ANSC_STATUS_SUCCESS;
@@ -1453,7 +1453,7 @@ verifyMessageDigest
         pOIDObj->GetStringOIDValue(pOIDObj, pOIDString);
 
         /* find PKCS9MessageDigest */
-        if( AnscEqualString( pOIDString, "1.2.840.113549.1.9.4", FALSE))
+        if( strcasecmp( pOIDString, "1.2.840.113549.1.9.4") == 0 )
         {
             pAttrValues = (PANSC_ASN1_SETOF)
                 pAttribute->GetChildByIndex(pAttribute, 1);
@@ -1585,12 +1585,12 @@ verifySignerInfo
 
     pDigestAlg->GetAlgorOIDStringValue(pDigestAlg, pOIDString);
 
-    if( AnscEqualString(pOIDString, "1.3.14.3.2.26", FALSE))
+    if( strcasecmp(pOIDString, "1.3.14.3.2.26") == 0 )
     {
         hashType = HASH_SHA1;
         signType = RSA_SHA1_SIGNATURE;
     }
-    else if( AnscEqualString(pOIDString, "1.2.840.113549.2.5", FALSE))
+    else if( strcasecmp(pOIDString, "1.2.840.113549.2.5") == 0 )
     {   
         hashType = HASH_MD5;
         signType = RSA_MD5_SIGNATURE;

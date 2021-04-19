@@ -761,7 +761,7 @@ AnscParseIp6Address
     char*               pch;
     errno_t   rc = -1;
 
-    if( AnscEqualString(ip6_addr, "::", FALSE))
+    if( strcasecmp(ip6_addr, "::") == 0 )
     {
         AnscZeroMemory(ipAddrArray, IPV6_ADDRESS_SIZE);
 

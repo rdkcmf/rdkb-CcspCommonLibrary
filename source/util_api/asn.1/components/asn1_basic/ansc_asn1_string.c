@@ -1554,12 +1554,7 @@ AnscAsn1StringEqualsTo
             if( pMyObject->uType == ASN1_PRINTABLESTRING_TYPE ||
                 pMyObject->uType == ASN1_IA5STRING_TYPE)
             {
-                return AnscEqualString
-                            (
-                                (PCHAR)pMyObject->pString,
-                                (PCHAR)pNewObject->pString,
-                                FALSE
-                            );            
+                return ( strcmp((PCHAR)pMyObject->pString,(PCHAR)pNewObject->pString) == 0 );            
             }
             else
             {

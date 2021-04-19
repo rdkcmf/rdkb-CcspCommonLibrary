@@ -672,7 +672,7 @@ AnscXmlDomNodeGetChildByName
                         (ANSC_HANDLE)pChildNode
                     )) )
     {
-        if ( AnscEqualString(AnscXmlDomNodeGetName((ANSC_HANDLE)pChildNode), name, FALSE) )
+        if ( strcasecmp(AnscXmlDomNodeGetName((ANSC_HANDLE)pChildNode), name) == 0 )
         {
             return  (ANSC_HANDLE)pChildNode;
         }
@@ -937,7 +937,7 @@ AnscXmlDomNodeGetAttr
     {
         pSonAttribute    = ACCESS_XML_ATTRIBUTE(pSLinkEntry);
 
-        if ( AnscEqualString(pSonAttribute->Name, (char *)pAttrName, TRUE) )
+        if ( strcmp(pSonAttribute->Name, (char *)pAttrName) == 0 )
         {
             return  (ANSC_HANDLE)pSonAttribute;
         }

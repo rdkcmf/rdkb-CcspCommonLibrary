@@ -446,27 +446,27 @@ SlapOeoResolveCallBridge
     {
         return  0;
     }
-    else if ( AnscEqualString(method_name, "GetProperty", FALSE) )
+    else if ( strcasecmp(method_name, "GetProperty") == 0 )
     {
         return  SLAP_BRIDGE_ID_GetProperty;
     }
-    else if ( AnscEqualString(method_name, "SetProperty", FALSE) )
+    else if ( strcasecmp(method_name, "SetProperty") == 0 )
     {
         return  SLAP_BRIDGE_ID_SetProperty;
     }
-    else if ( AnscEqualString(method_name, "GetItem", FALSE) )
+    else if ( strcasecmp(method_name, "GetItem") == 0 )
     {
         return  SLAP_BRIDGE_ID_GetItem;
     }
-    else if ( AnscEqualString(method_name, "SetItem", FALSE) )
+    else if ( strcasecmp(method_name, "SetItem") == 0 )
     {
         return  SLAP_BRIDGE_ID_SetItem;
     }
-    else if ( AnscEqualString(method_name, "GetItemByIndex", FALSE) )
+    else if ( strcasecmp(method_name, "GetItemByIndex") == 0 )
     {
         return  SLAP_BRIDGE_ID_GetItemByIndex;
     }
-    else if ( AnscEqualString(method_name, "SetItemByIndex", FALSE) )
+    else if ( strcasecmp(method_name, "SetItemByIndex") == 0 )
     {
         return  SLAP_BRIDGE_ID_SetItemByIndex;
     }

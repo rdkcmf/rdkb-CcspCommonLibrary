@@ -129,7 +129,7 @@ COSAMwsIfGetResource
 {
     errno_t                         rc              = -1;
     UNREFERENCED_PARAMETER(hThisObject);
-    if( pUrlPath == NULL || !AnscEqualString(pUrlPath, _DATA_MODEL_XML_PATH, FALSE))
+    if( pUrlPath == NULL || !strcasecmp(pUrlPath, _DATA_MODEL_XML_PATH) == 0 )
     {
         return NULL;
     }

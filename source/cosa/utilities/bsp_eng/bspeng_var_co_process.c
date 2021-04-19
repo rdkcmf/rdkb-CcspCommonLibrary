@@ -954,12 +954,7 @@ BspTemplateVarEqual
                     if (pMyObject->Value.str && pVar->Value.str)
                     {
                         return 
-                            AnscEqualString
-                                (
-                                    pMyObject->Value.str, 
-                                    pVar->Value.str, 
-                                    BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE
-                                );
+                            ( strcmp(pMyObject->Value.str, pVar->Value.str) == 0 ); 
                     }
                     else
                     {
@@ -1033,7 +1028,7 @@ BspTemplateVarEqual
                 BspEng_GetSlapVarCompareValue((ANSC_HANDLE)pVar->Value.obj, (ANSC_HANDLE)&compVal);
                 return 
                     (compVal.ulType == BSPENG_SLAP_VAR_COMPARE_VALUE_TYPE_STRING) && 
-                    (AnscEqualString(compVal.value.stringValue, pMyObject->Value.str, TRUE));
+                    (strcmp(compVal.value.stringValue, pMyObject->Value.str) == 0 );
                 break;
         default:
             break;
@@ -1162,7 +1157,7 @@ BspTemplateVarEqual
                 BspEng_GetSlapVarCompareValue((ANSC_HANDLE)pMyObject->Value.obj, (ANSC_HANDLE)&compVal);
                 return 
                     (compVal.ulType == BSPENG_SLAP_VAR_COMPARE_VALUE_TYPE_STRING) && 
-                    (AnscEqualString(compVal.value.stringValue, pVar->Value.str, TRUE));
+                    (strcmp(compVal.value.stringValue, pVar->Value.str) == 0 );
             break;
 
         case BspVar_Object:
@@ -2795,82 +2790,82 @@ BspTemplateVarSetContentType
         return;
     }
 
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_MAPPED, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_MAPPED) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_MAPPED;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_IP4_ADDR, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_IP4_ADDR) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_IP4_ADDR;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_MAC_ADDR, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_MAC_ADDR) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_MAC_ADDR;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_IP4_ADDR_LIST, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_IP4_ADDR_LIST) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_IP4_ADDR_LIST;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_TCPUDP_PORT, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_TCPUDP_PORT) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_TCPUDP_PORT;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_CALENDAR_TIME, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_CALENDAR_TIME) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_CALENDAR_TIME;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_PASSWORD, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_PASSWORD) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_PASSWORD;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_MASKED, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_MASKED) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_MASKED;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_OID_LIST, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_OID_LIST) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_OID_LIST;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_ASCII_STRING, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_ASCII_STRING) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_ASCII_STRING;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_HEX_STRING, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_HEX_STRING) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_HEX_STRING;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_TABLE_2D, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_TABLE_2D) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_TABLE_2D;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_TABLE_3D, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_TABLE_3D) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_TABLE_3D;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_SIMPLE_CHART_PIE, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_SIMPLE_CHART_PIE) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_SIMPLE_CHART_PIE;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_SIMPLE_CHART_BAR, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_SIMPLE_CHART_BAR) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_SIMPLE_CHART_BAR;
     }
     else
-    if (AnscEqualString(pContentType, SLAP_CONTENT_NAME_SIMPLE_GRAPH, FALSE))
+    if (strcasecmp(pContentType, SLAP_CONTENT_NAME_SIMPLE_GRAPH) == 0 )
     {
         pMyObject->ContentType  = SLAP_CONTENT_TYPE_SIMPLE_GRAPH;
     }

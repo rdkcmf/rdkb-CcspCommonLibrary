@@ -184,12 +184,7 @@ SlapVhoEqualVariables
                     if ( var1->Variant.varString && var2->Variant.varString )
                     {
                         b_equal_var =
-                            AnscEqualString
-                                (
-                                    var1->Variant.varString,
-                                    var2->Variant.varString,
-                                    TRUE
-                                );
+                            ( strcmp(var1->Variant.varString,var2->Variant.varString) == 0 );
                     }
                     else if ( !var1->Variant.varString && !var2->Variant.varString )
                     {

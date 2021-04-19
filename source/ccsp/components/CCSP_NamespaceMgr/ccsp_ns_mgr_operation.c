@@ -165,7 +165,7 @@ CcspNsMgrLookforComponent
         pCompInfo       = ACCESS_CCSP_NAMESPACE_COMP_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( pCompName != NULL && AnscEqualString(pCompInfo->pCompName, (char*)pCompName, TRUE))
+        if ( pCompName != NULL && strcmp(pCompInfo->pCompName, (char*)pCompName) == 0 )
         {
             return  (ANSC_HANDLE)pCompInfo;
         }
@@ -269,7 +269,7 @@ CcspNsMgrRegisterNamespaces
             /* check whether the comp name is the same */
             pNSComp = (PCCSP_NAMESPACE_COMP_OBJECT)pAtomItem->hContext;
 
-            if (pNSComp && !AnscEqualString(pNSComp->pCompName, (char*)pCompName, TRUE))
+            if (pNSComp && !strcmp(pNSComp->pCompName, (char*)pCompName) == 0 )
             {
                 AnscTrace("The namespace '%s' is already registered.\n", pString);
  
@@ -719,7 +719,7 @@ CcspNsMgrDiscoverNamespace
                 return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
             }
         }
-        else if((AnscSizeOfString(pNSComp->pPrefix) != 0  && !AnscEqualString((char*)pPrefix, pNSComp->pPrefix, TRUE)) ||
+        else if((AnscSizeOfString(pNSComp->pPrefix) != 0  && !strcmp((char*)pPrefix, pNSComp->pPrefix) == 0 ) ||
                 (0 == AnscSizeOfString(pMyObject->SubsysPrefix)) )
         {
             return CCSP_CR_ERR_UNSUPPORTED_NAMESPACE;
@@ -769,8 +769,8 @@ CcspNsMgrDiscoverNamespace
                         uCount ++;
                     }
                 }
-                else if( (AnscSizeOfString(pNSComp->pPrefix) == 0 && (!pMyObject->SubsysPrefix || AnscEqualString((char*)pPrefix, pMyObject->SubsysPrefix, TRUE))) || 
-                         AnscEqualString((char*)pPrefix, pNSComp->pPrefix, TRUE) )
+                else if( (AnscSizeOfString(pNSComp->pPrefix) == 0 && (!pMyObject->SubsysPrefix || strcmp((char*)pPrefix, pMyObject->SubsysPrefix) == 0 )) || 
+                         strcmp((char*)pPrefix, pNSComp->pPrefix) == 0 )
                 {
                     hArray[uCount] = (ANSC_HANDLE)pNSComp;
                     uCount ++;
@@ -799,8 +799,8 @@ CcspNsMgrDiscoverNamespace
                             uCount ++;
                         }
                     }
-                    else if( (AnscSizeOfString(pNSComp->pPrefix) == 0 && (!pMyObject->SubsysPrefix || AnscEqualString((char*)pPrefix, pMyObject->SubsysPrefix, TRUE))) || 
-                             AnscEqualString((char*)pPrefix, pNSComp->pPrefix, TRUE) )
+                    else if( (AnscSizeOfString(pNSComp->pPrefix) == 0 && (!pMyObject->SubsysPrefix || strcmp((char*)pPrefix, pMyObject->SubsysPrefix) == 0 )) || 
+                             strcmp((char*)pPrefix, pNSComp->pPrefix) == 0 )
                     {
                         hArray[uCount] = (ANSC_HANDLE)pNSComp;
                         uCount ++;

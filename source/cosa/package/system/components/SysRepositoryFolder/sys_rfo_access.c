@@ -921,12 +921,7 @@ SysRfoGetFolderByName
         pSubFolder  = ACCESS_SYS_REPOSITORY_FOLDER_OBJECT(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pFolderName,
-                    pSubFolder->GetFolderName((ANSC_HANDLE)pSubFolder),
-                    TRUE
-                ) )
+        if ( strcmp(pFolderName,pSubFolder->GetFolderName((ANSC_HANDLE)pSubFolder)) == 0 )
         {
             pSubFolder->AcquireAccess((ANSC_HANDLE)pSubFolder);
 
@@ -1488,12 +1483,7 @@ SysRfoGetRecordByName
         pRepRecord  = ACCESS_SYS_REPOSITORY_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pRecordName,
-                    pRepRecord->GetRecordName((ANSC_HANDLE)pRepRecord),
-                    TRUE
-                ) )
+        if ( strcmp(pRecordName,pRepRecord->GetRecordName((ANSC_HANDLE)pRepRecord) ) == 0 )
         {
             AnscReleaseLock(&pMyObject->RecordTableLock);
 

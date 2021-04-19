@@ -96,10 +96,10 @@ CcspCcMbi_ValidateBoolean
     /* Only supports "0" or "1" or case free "true" and "false". */
 	if ( !boolStr ) return -1;
 
-    if (AnscEqualString((char*)boolStr, "0", FALSE) ||
-        AnscEqualString((char*)boolStr, "1", FALSE) ||
-        AnscEqualString((char*)boolStr, "true", FALSE) ||
-        AnscEqualString((char*)boolStr, "false", FALSE))
+    if (strcasecmp((char*)boolStr, "0") == 0 ||
+        strcasecmp((char*)boolStr, "1") == 0 ||
+        strcasecmp((char*)boolStr, "true") == 0 ||
+        strcasecmp((char*)boolStr, "false") == 0 )
 	{
 		return 0;
 	}
@@ -148,7 +148,7 @@ static int CcspCcMbi_ValidateINT
 	else
 		_ansc_ultoa((ULONG)num, buf, 10);
 
-	if ( !AnscEqualString(buf, (char*)intStr, TRUE) ) return -1;
+	if ( !strcmp(buf, (char*)intStr) == 0 ) return -1;
 
     return 0;
 }

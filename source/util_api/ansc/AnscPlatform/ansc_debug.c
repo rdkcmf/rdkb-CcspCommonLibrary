@@ -1119,7 +1119,7 @@ AnscTraceNameToId
 
     for ( ulIndex = 0; ulIndex < sizeof(gTraceIdNameArray) / sizeof(gTraceIdNameArray[0]); ulIndex++ )
     {
-        if ( AnscEqualString(pName, gTraceIdNameArray[ulIndex].pName, FALSE) )
+        if ( strcasecmp(pName, gTraceIdNameArray[ulIndex].pName) == 0 )
         {
             return  (USHORT)gTraceIdNameArray[ulIndex].Value.Id;
         }
@@ -1159,7 +1159,7 @@ AnscTraceNameToLevel
 
     for ( ulIndex = 0; ulIndex < sizeof(gTraceLevelNameArray) / sizeof(gTraceLevelNameArray[0]); ulIndex++ )
     {
-        if ( AnscEqualString(pName, gTraceLevelNameArray[ulIndex].pName, FALSE) )
+        if ( strcasecmp(pName, gTraceLevelNameArray[ulIndex].pName) == 0 )
         {
             return  (USHORT)gTraceLevelNameArray[ulIndex].Value.Level;
         }
@@ -1199,7 +1199,7 @@ AnscTraceNameToMask
 
     for ( ulIndex = 0; ulIndex < sizeof(gTraceMaskNameArray) / sizeof(gTraceMaskNameArray[0]); ulIndex++ )
     {
-        if ( AnscEqualString(pName, gTraceMaskNameArray[ulIndex].pName, FALSE) )
+        if ( strcasecmp(pName, gTraceMaskNameArray[ulIndex].pName) == 0 )
         {
             return  gTraceMaskNameArray[ulIndex].Value.Mask;
         }

@@ -2004,7 +2004,7 @@ ScliShoRunCmd
 #ifdef   _CLI_SYSTEM_CONSOLE_ENABLED
                     if ( pSession->bOsShellActive )
                     {
-                        if ( AnscEqualString((char *)pCmd, "exit", FALSE) )
+                        if ( strcasecmp((char *)pCmd, "exit") == 0 )
                         {
                             returnStatus = 
                                 pMyObject->RunBicExit

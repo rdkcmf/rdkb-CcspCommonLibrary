@@ -130,12 +130,7 @@ Bmc2EnvcoGetComTerminal
         pBmc2ComTerminal = ACCESS_BMC2_COM_TERMINAL_OBJECT(pSLinkEntry);
         pSLinkEntry      = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pBmc2ComTerminal->GetUserIdentifier((ANSC_HANDLE)pBmc2ComTerminal),
-                    pUserIdentifier,
-                    TRUE
-                ) )
+        if ( strcmp(pBmc2ComTerminal->GetUserIdentifier((ANSC_HANDLE)pBmc2ComTerminal),pUserIdentifier) == 0 )
         {
             AnscReleaseLock(&pMyObject->ComtoQueueLock);
 
@@ -383,18 +378,13 @@ Bmc2EnvcoGetCommandProperty
         pBmc2CommandProperty = ACCESS_BMC2_COMMAND_PROPERTY(pSLinkEntry);
         pSLinkEntry          = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pBmc2CommandProperty->CommandName,
-                    pCommandName,
-                    FALSE
-                ) )
+        if ( strcasecmp(pBmc2CommandProperty->CommandName,pCommandName) == 0 )
         {
             BOOL                    bDomainMatched = FALSE;
 
             /* check if the specified domain matches pattern defined in command property */
             if ( !pBmc2CommandProperty->DomainNamePattern || 
-                 AnscEqualString(pBmc2CommandProperty->DomainNamePattern, "*", TRUE) )
+                 strcmp(pBmc2CommandProperty->DomainNamePattern, "*") == 0 )
             {
                 bDomainMatched = TRUE;
             }
@@ -405,12 +395,7 @@ Bmc2EnvcoGetCommandProperty
                 if ( !pStar )
                 {
                     bDomainMatched = 
-                        AnscEqualString
-                            (
-                                pBmc2CommandProperty->DomainNamePattern, 
-                                pDomainName, 
-                                FALSE
-                            );
+                        strcasecmp(pBmc2CommandProperty->DomainNamePattern,pDomainName) == 0;
                 }
                 else
                 {
@@ -604,12 +589,7 @@ Bmc2EnvcoDelCommandProperty
         pBmc2CommandProperty = ACCESS_BMC2_COMMAND_PROPERTY(pSLinkEntry);
         pSLinkEntry          = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pBmc2CommandProperty->CommandName,
-                    pCommandName,
-                    FALSE
-                ) )
+        if ( strcasecmp(pBmc2CommandProperty->CommandName,pCommandName) == 0 )
         {
             BOOL                    bDomainMatched = FALSE;
 
@@ -620,15 +600,15 @@ Bmc2EnvcoDelCommandProperty
             }
             else if ( !pDomainNamePattern && pBmc2CommandProperty->DomainNamePattern )
             {
-                if ( AnscEqualString(pBmc2CommandProperty->DomainNamePattern, "*", TRUE) )
+                if ( strcmp(pBmc2CommandProperty->DomainNamePattern, "*") == 0 )
                 {
                     bDomainMatched = TRUE;
                 }
             }
             else if ( !pBmc2CommandProperty->DomainNamePattern || 
-                 AnscEqualString(pBmc2CommandProperty->DomainNamePattern, "*", TRUE) )
+                 strcmp(pBmc2CommandProperty->DomainNamePattern, "*") == 0 )
             {
-                if ( !pDomainNamePattern || AnscEqualString(pDomainNamePattern, "*", TRUE) )
+                if ( !pDomainNamePattern || strcmp(pDomainNamePattern, "*") == 0 )
                 {
                     bDomainMatched = TRUE;
                 }
@@ -645,7 +625,7 @@ Bmc2EnvcoDelCommandProperty
                 }
                 else if ( !pBmc2CommandRef && 
                           (!pBmc2CommandProperty->DomainNamePattern || 
-                            AnscEqualString(pBmc2CommandProperty->DomainNamePattern, "*", TRUE)) )
+                            strcmp(pBmc2CommandProperty->DomainNamePattern, "*") == 0 ) )
                 {
                     pBmc2CommandRef = pBmc2CommandProperty;
                 }
@@ -661,12 +641,7 @@ Bmc2EnvcoDelCommandProperty
                 }
 
                 bDomainMatched = 
-                    AnscEqualString
-                        (
-                            pBmc2CommandProperty->DomainNamePattern, 
-                            pDomainNamePattern, 
-                            FALSE
-                        );
+                    strcasecmp(pBmc2CommandProperty->DomainNamePattern,  pDomainNamePattern) == 0;
             }
 
             if ( !bDomainMatched )

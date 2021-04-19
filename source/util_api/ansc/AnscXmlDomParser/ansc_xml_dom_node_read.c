@@ -715,19 +715,19 @@ AnscXmlDomNodeGetAttrBoolean
     /*
      * read out the data
      */
-    if ( AnscEqualString((LPSTR)(PCHAR)pAttribute->StringData, (LPSTR)STR_FALSE, FALSE))
+    if ( strcasecmp((LPSTR)(PCHAR)pAttribute->StringData, (LPSTR)STR_FALSE) == 0 )
     {
         *pbTarget = FALSE;
     }
-    else if ( AnscEqualString((LPSTR)pAttribute->StringData, (LPSTR)STR_TRUE, FALSE))
+    else if ( strcasecmp((LPSTR)pAttribute->StringData, (LPSTR)STR_TRUE) == 0 )
     {
         *pbTarget = TRUE;
     }
-    else if ( AnscEqualString((LPSTR)(PCHAR)pAttribute->StringData, "0", FALSE))
+    else if ( strcasecmp((LPSTR)(PCHAR)pAttribute->StringData, "0") == 0 )
     {
         *pbTarget = FALSE;
     }
-    else if ( AnscEqualString((LPSTR)pAttribute->StringData, "1", FALSE))
+    else if ( strcasecmp((LPSTR)pAttribute->StringData, "1") == 0 )
     {
         *pbTarget = TRUE;
     }
@@ -1282,19 +1282,19 @@ AnscXmlDomNodeGetDataBoolean
     /*
      * read out the data
      */
-    if( AnscEqualString((LPSTR)(PCHAR)pXmlNode->StringData, (LPSTR)STR_FALSE, FALSE))
+    if( strcasecmp((LPSTR)(PCHAR)pXmlNode->StringData, (LPSTR)STR_FALSE) == 0 )
     {
         *pbTarget = FALSE;
     }
-    else if ( AnscEqualString((LPSTR)pXmlNode->StringData, (LPSTR)STR_TRUE, FALSE))
+    else if ( strcasecmp((LPSTR)pXmlNode->StringData, (LPSTR)STR_TRUE) == 0 )
     {
         *pbTarget = TRUE;
     }
-    else if( AnscEqualString((LPSTR)(PCHAR)pXmlNode->StringData, "0", FALSE))
+    else if( strcasecmp((LPSTR)(PCHAR)pXmlNode->StringData, "0") == 0 )
     {
         *pbTarget = FALSE;
     }
-    else if ( AnscEqualString((LPSTR)pXmlNode->StringData, "1", FALSE))
+    else if ( strcasecmp((LPSTR)pXmlNode->StringData, "1") == 0 )
     {
         *pbTarget = TRUE;
     }

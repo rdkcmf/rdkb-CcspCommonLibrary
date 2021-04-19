@@ -941,7 +941,7 @@ BspTemplateObjParseIdentOrKeyword
 
     for (i = BspOp_None; i < BspOp_Name; i ++)
     {
-        if (AnscEqualString((char *)pBuf, (char *)sBspOpList[i], TRUE))
+        if (strcmp((char *)pBuf, (char *)sBspOpList[i]) == 0 )
             break;
     }
 
@@ -2153,7 +2153,7 @@ BspTemplateObjTakeoutProcedure
             {
                 pStr    = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
 
-                if (AnscEqualString(pStr, (char *)sBspOpList[BspOp_Proc], FALSE))
+                if (strcasecmp(pStr, (char *)sBspOpList[BspOp_Proc]) == 0 )
                 {
                     pStart      = pToken;
                     pPrevStart  = pPrevToken;
@@ -2387,7 +2387,7 @@ BspTemplateObjBuildTree
             {
                 pStr    = (char *)pByteArray->GetBuffer((ANSC_HANDLE)pByteArray, pToken->Value.str);
 
-                bProc   = AnscEqualString(pStr, (char *)sBspOpList[BspOp_Proc], FALSE);
+                bProc   = (strcasecmp(pStr, (char *)sBspOpList[BspOp_Proc]) == 0 );
             }
 
             if (!bProc)
@@ -6301,7 +6301,7 @@ BspTemplateObjProcCallExp
 
         for (i = 0; i < ulSize; i ++)
         {
-            if (AnscEqualString(pProcName, (char *)BspReservedProcNames[i], FALSE))
+            if (strcasecmp(pProcName, (char *)BspReservedProcNames[i]) == 0 )
             {
                 bReserved   = TRUE;
 
@@ -7068,7 +7068,7 @@ BspTemplateObjFindSymbol
     {
         pSymPro = (PBSP_TEMPLATE_SYMBOL_PRO)pPtrArray->GetAt((ANSC_HANDLE)pPtrArray, i);
 
-        if (AnscEqualString((char *)pName, (char *)pSymPro->pName, TRUE))
+        if (strcmp((char *)pName, (char *)pSymPro->pName) == 0 )
         {
 #if 0   /* 11/05/2003, dynamic array support */
             if (pArrayPro)
@@ -9017,14 +9017,7 @@ BspTemplateObjGetApiCode
     apiCount = sizeof(BspTemplateAPINames)/sizeof(BspTemplateAPINames[0]);
     for (i = 0; i < apiCount; i ++)
     {
-        if (
-                AnscEqualString
-                    (
-                        (char *)pApiName, 
-                        (char *)BspTemplateAPINames[i], 
-                        BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE
-                    )
-           )
+        if ( strcmp((char *)pApiName, (char *)BspTemplateAPINames[i]) == 0 )
         {
             return (BSP_TEMPLATE_API_CODE)i;
         }

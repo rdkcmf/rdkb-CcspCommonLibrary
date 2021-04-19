@@ -1746,16 +1746,11 @@ DslhWmpdoMprSetParamValue
 
         goto  EXIT1;
     }
-    else if ( !AnscEqualString
-                (
-                    pAccessEntity,
-                    DSLH_MPA_ENTITY_ACS,
-                    TRUE
-                ) )
+    else if ( !strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 )
     {
         if( !pVarRecord->AccessList)
         {
-            if ( !AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_Subscriber,TRUE ) )  /* by default it's subscriber */
+            if ( !strcmp(pAccessEntity, DSLH_MPA_ENTITY_Subscriber) == 0 )  /* by default it's subscriber */
             {
                 returnStatus = ANSC_STATUS_ACCESS_DENIED;
 
@@ -1824,12 +1819,7 @@ DslhWmpdoMprSetParamValue
 
     AnscTraceEntry(("The notification = %d\n", pVarEntity->Notification));
 
-    if ( AnscEqualString
-            (
-                pAccessEntity,
-                DSLH_MPA_ENTITY_ACS,
-                TRUE
-            ) )
+    if ( strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 ) 
     {
         /* Reset the history value and monitor */
         pDslhMprIf->ResetNotifyParam(pDslhMprIf->hOwnerContext, pVarRecord);
@@ -1987,16 +1977,11 @@ DslhWmpdoMprSetParamValue2
 
         goto  EXIT1;
     }
-    else if ( !AnscEqualString
-                (
-                    pAccessEntity,
-                    DSLH_MPA_ENTITY_ACS,
-                    TRUE
-                ) )
+    else if ( !strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 )
     {
         if( !pVarRecord->AccessList)
         {
-            if ( !AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_Subscriber,TRUE ) )  /* by default it's subscriber */
+            if ( !strcmp(pAccessEntity, DSLH_MPA_ENTITY_Subscriber) == 0 )  /* by default it's subscriber */
             {
                 returnStatus = ANSC_STATUS_ACCESS_DENIED;
 
@@ -2135,16 +2120,11 @@ DslhWmpdoMprSetParamValue3
 
         goto  EXIT1;
     }
-    else if ( !AnscEqualString
-                (
-                    pAccessEntity,
-                    DSLH_MPA_ENTITY_ACS,
-                    TRUE
-                ) )
+    else if ( !strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 )
     {
         if( !pVarRecord->AccessList)
         {
-            if ( !AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_Subscriber,TRUE ) )  /* by default it's subscriber */
+            if ( !strcmp(pAccessEntity, DSLH_MPA_ENTITY_Subscriber) == 0 )  /* by default it's subscriber */
             {
                 returnStatus = ANSC_STATUS_ACCESS_DENIED;
 
@@ -2284,16 +2264,11 @@ DslhWmpdoMprSetParamValue4
 
         goto  EXIT1;
     }
-    else if ( !AnscEqualString
-                (
-                    pAccessEntity,
-                    DSLH_MPA_ENTITY_ACS,
-                    TRUE
-                ) )
+    else if ( !strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 )
     {
         if( !pVarRecord->AccessList)
         {
-            if ( !AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_Subscriber,TRUE ) )  /* by default it's subscriber */
+            if ( !strcmp(pAccessEntity, DSLH_MPA_ENTITY_Subscriber) == 0 )  /* by default it's subscriber */
             {
                 returnStatus = ANSC_STATUS_ACCESS_DENIED;
 
@@ -2362,12 +2337,7 @@ DslhWmpdoMprSetParamValue4
 
     AnscTraceEntry(("The notification = %d\n", pVarEntity->Notification));
 
-    if ( AnscEqualString
-            (
-                pAccessEntity,
-                DSLH_MPA_ENTITY_ACS,
-                TRUE
-            ) )
+    if ( strcmp(pAccessEntity,DSLH_MPA_ENTITY_ACS) == 0 )
     {
         /* Reset the history value and monitor */
         pDslhMprIf->ResetNotifyParam(pDslhMprIf->hOwnerContext, pVarRecord);

@@ -5435,25 +5435,25 @@ HttpSmpoParseSetCookie
 
                 pTime->Month = HttpSmpoUtilGetMonth((PUCHAR)mon, 3);
 
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SUNDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_SUNDAY) == 0 )
                     pTime->DayOfWeek = 0;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_MONDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_MONDAY) == 0 )
                     pTime->DayOfWeek = 1;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_TUESDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_TUESDAY) == 0 )
                     pTime->DayOfWeek = 2;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_WEDNESDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_WEDNESDAY) == 0 )
                     pTime->DayOfWeek = 3;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_THURSDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_THURSDAY) == 0 )
                     pTime->DayOfWeek = 4;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_FRIDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_FRIDAY) == 0 )
                     pTime->DayOfWeek = 5;
                 else
-                if (AnscEqualString(wday, HTTP_SMPO_WEEKDAY_SATURDAY, FALSE))
+                if (strcasecmp(wday, HTTP_SMPO_WEEKDAY_SATURDAY) == 0 )
                     pTime->DayOfWeek = 6;
             }
             else if ( pValue )

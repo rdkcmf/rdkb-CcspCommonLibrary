@@ -737,12 +737,7 @@ AnscGetMimeType
 
     for ( i = 0; i < ANSC_FILE_EXT_ARRAY_SIZE; i++ )
     {
-        if ( AnscEqualString
-                (
-                    pFileExt,
-                    g_FileExtArray[i],
-                    FALSE
-                ) )
+        if ( strcasecmp(pFileExt,g_FileExtArray[i]) == 0 )
         {
             *pulMediaType = g_MediaTypeArray[i];
             *pulSubType   = g_SubTypeArray[i];

@@ -126,7 +126,7 @@ HttpFcoGetFormElement
         pFormElement = ACCESS_HTTP_FORM_ELEMENT(pSLinkEntry);
         pSLinkEntry  = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString(pFormElement->Name, name, TRUE) )
+        if ( strcmp(pFormElement->Name, name) == 0 )
         {
             AnscReleaseLock(&pMyObject->FeoTableLock);
 

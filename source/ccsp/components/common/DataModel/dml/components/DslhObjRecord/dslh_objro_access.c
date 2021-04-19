@@ -329,7 +329,7 @@ DslhObjroGetAllParamValues
         {
             for( j = 0; j < ulParamCount; j ++)
             {
-                if ( !AnscEqualString( ppNameArray[j], "Enable", TRUE ) )
+                if ( !strcmp( ppNameArray[j], "Enable") == 0 )
                     continue;
         
                 if ( ppValueArray[j]->Syntax != SLAP_VAR_SYNTAX_bool )
@@ -1524,12 +1524,7 @@ DslhObjroDelChildObject
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pChildObjRecord->LastName,
-                    pObjName,
-                    TRUE
-                ) )
+        if ( strcmp(pChildObjRecord->LastName,pObjName) == 0 )
         {
             bChildObjFound = TRUE;
 

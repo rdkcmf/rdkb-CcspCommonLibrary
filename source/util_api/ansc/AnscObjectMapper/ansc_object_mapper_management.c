@@ -365,7 +365,7 @@ AnscOmoGetDescriptorByName
             pDescriptor = ACCESS_ANSC_OBJECT_DESCRIPTOR_OBJECT(pSLinkEntry);
             pSLinkEntry = AnscSListGetNextEntry(pSLinkEntry);
 
-            if ( AnscEqualString(pDescriptor->GetName((ANSC_HANDLE)pDescriptor), name, FALSE) )
+            if ( strcasecmp(pDescriptor->GetName((ANSC_HANDLE)pDescriptor), name) == 0 )
             {
                 AnscReleaseLock(&pObjectMapper->DescriptorTableLock);
 
@@ -501,8 +501,8 @@ AnscOmoGetDescriptorByType
             pDescriptor = ACCESS_ANSC_OBJECT_DESCRIPTOR_OBJECT(pSLinkEntry);
             pSLinkEntry = AnscSListGetNextEntry(pSLinkEntry);
 
-            if ( AnscEqualString(pDescriptor->GetBaseName   ((ANSC_HANDLE)pDescriptor), baseName, FALSE) &&
-                 AnscEqualString(pDescriptor->GetDerivedType((ANSC_HANDLE)pDescriptor), type,     FALSE) )
+            if ( strcasecmp(pDescriptor->GetBaseName   ((ANSC_HANDLE)pDescriptor), baseName) == 0 &&
+                 strcasecmp(pDescriptor->GetDerivedType((ANSC_HANDLE)pDescriptor), type) == 0 )
             {
                 AnscReleaseLock(&pObjectMapper->DescriptorTableLock);
 

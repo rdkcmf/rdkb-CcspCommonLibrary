@@ -190,7 +190,7 @@ HttpSmpoUtilParseRquestLineUri
     PHTTP_REQUEST_URI               pUri    = (PHTTP_REQUEST_URI)hUri;
     BOOL                            bSucc   = TRUE;
 
-    if (AnscEqualString((char *)pBuf, "*", TRUE))
+    if (strcmp((char *)pBuf, "*") == 0 )
     {
         pUri->Type  = HTTP_URI_TYPE_ASTERISK;
     }

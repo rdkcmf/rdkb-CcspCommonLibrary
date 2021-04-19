@@ -317,12 +317,7 @@ WebVhoIdentifyGso
             pCookieContent = &pHttpHfoCookie->CookieArray[i];
 
             if ( !bGotSessionId     &&
-                 AnscEqualString
-                    (
-                        pCookieContent->Name,
-                        pProperty->VhoCookieName,
-                        TRUE
-                    ) )
+                 strcmp(pCookieContent->Name,pProperty->VhoCookieName) == 0 )
             {
                 PUCHAR              pCookieValue = (PUCHAR)pCookieContent->Value;
 
@@ -338,12 +333,7 @@ WebVhoIdentifyGso
                 bGotSessionId = TRUE;
             }
             else if ( !bGotLsmId      &&
-                      AnscEqualString
-                        (
-                            pCookieContent->Name,
-                            pProperty->LsmCookieName,
-                            TRUE
-                        ) )
+                      strcmp(pCookieContent->Name,pProperty->LsmCookieName) == 0 )
             {
                 bGotLsmId      = TRUE;
                 pLsmIdentifier = pCookieContent->Value;
@@ -567,12 +557,7 @@ WebVhoGetGso
                         break;
                     }
                 }
-                else if ( AnscEqualString
-                            (
-                                pLsmId,
-                                identifier,
-                                TRUE
-                            ) )
+                else if ( strcmp(pLsmId,identifier) == 0 )
                 {
                     AnscReleaseLock(&pMyObject->GsoTableLock);
 

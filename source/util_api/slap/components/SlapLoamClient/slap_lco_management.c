@@ -130,12 +130,7 @@ SlapLcoGetObjectStubByName
         pSLinkEntry = AnscSListGetNextEntry(pSLinkEntry);
         pPartyAddr  = (PANSC_LPC_PARTY_ADDR)pObjectStub->hLpcPartyAddr;
 
-        if ( AnscEqualString
-                (
-                    pObjectStub->ObjName,
-                    obj_name,
-                    FALSE
-                ) )
+        if ( strcasecmp(pObjectStub->ObjName,obj_name) == 0 )
         {
             /*
              * If there's no LOA objects associated with this binding, we need to check whether the

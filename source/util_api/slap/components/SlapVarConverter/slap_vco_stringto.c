@@ -128,9 +128,9 @@ SlapVcoStringToBool
     )
 {
     UNREFERENCED_PARAMETER(hThisObject);
-    if ( AnscEqualString(var_bool, "yes",  FALSE) ||
-         AnscEqualString(var_bool, "true", FALSE) ||
-         AnscEqualString(var_bool, "1", FALSE))
+    if ( strcasecmp(var_bool, "yes") == 0  ||
+         strcasecmp(var_bool, "true") == 0 ||
+         strcasecmp(var_bool, "1") == 0 )
     {
         return  0xFFFFFFFF;
     }

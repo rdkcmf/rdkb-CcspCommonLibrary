@@ -134,12 +134,7 @@ SlapOboGetObjBroker
         pSonObjBroker = ACCESS_SLAP_OBJ_BROKER_OBJECT(pSLinkEntry);
         pSLinkEntry   = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    path,
-                    pSonObjBroker->PathName,
-                    TRUE
-                ) )
+        if ( strcmp(path,pSonObjBroker->PathName) == 0 )
         {
             AnscReleaseLock(&pMyObject->OboTableLock);
 

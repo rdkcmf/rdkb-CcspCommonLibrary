@@ -165,12 +165,7 @@ DslhObjroGetObjRecord
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( name && pChildObjRecord->LastName && AnscEqualString
-                (
-                    pChildObjRecord->LastName,
-                    name,
-                    TRUE
-                ) )
+        if ( name && pChildObjRecord->LastName && strcmp(pChildObjRecord->LastName,name) == 0 )
         {
             return  (ANSC_HANDLE)pChildObjRecord;
         }
@@ -248,12 +243,7 @@ DslhObjroGetObjRecord2
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( pChildObjRecord->LastName && AnscEqualString
-                (
-                    pChildObjRecord->LastName,
-                    pObjNameToken->Name,
-                    TRUE
-                ) )
+        if ( pChildObjRecord->LastName && strcmp(pChildObjRecord->LastName,pObjNameToken->Name) == 0 )
         {
             bObjRecordFound = TRUE;
 
@@ -566,12 +556,7 @@ DslhObjroGetVarRecord
         pChildVarRecord = ACCESS_DSLH_VAR_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),
-                    name,
-                    TRUE
-                ) )
+        if ( strcmp(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),name) == 0 )
         {
             return  (ANSC_HANDLE)pChildVarRecord;
         }

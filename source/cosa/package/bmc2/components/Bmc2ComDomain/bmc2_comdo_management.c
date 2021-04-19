@@ -281,12 +281,7 @@ Bmc2ComdoGetCommandProperty
         pBmc2CommandProperty = ACCESS_BMC2_COMMAND_PROPERTY(pSLinkEntry);
         pSLinkEntry          = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pBmc2CommandProperty->CommandName,
-                    pCommandName,
-                    FALSE
-                ) )
+        if ( strcasecmp(pBmc2CommandProperty->CommandName,pCommandName) == 0 )
         {
             AnscReleaseLock(&pMyObject->CompoQueueLock);
 
@@ -430,12 +425,7 @@ Bmc2ComdoDelCommandProperty
         pBmc2CommandProperty = ACCESS_BMC2_COMMAND_PROPERTY(pSLinkEntry);
         pSLinkEntry          = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pBmc2CommandProperty->CommandName,
-                    pCommandName,
-                    FALSE
-                ) )
+        if ( strcasecmp(pBmc2CommandProperty->CommandName,pCommandName) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->CompoQueue, &pBmc2CommandProperty->Linkage);
 
@@ -575,7 +565,7 @@ Bmc2ComdoSetCommandHelpSyntax
         pBmc2CommandProperty    = ACCESS_BMC2_COMMAND_PROPERTY(pSLinkEntry);
         pSLinkEntry             = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString(pCommand, pBmc2CommandProperty->CommandName, FALSE) )
+        if ( strcasecmp(pCommand, pBmc2CommandProperty->CommandName) == 0 )
         {
             PBMC2_CMD_HELP_SYNTAX   pCmdHelpSyntax = NULL;
 

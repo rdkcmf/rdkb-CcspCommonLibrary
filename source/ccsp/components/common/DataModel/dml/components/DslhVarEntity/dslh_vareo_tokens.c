@@ -181,12 +181,7 @@ DslhVareoGetTokenValueByString
         pTokenValue = ACCESS_DSLH_VAREO_TOKEN_VALUE(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pTokenValue->String,
-                    pString,
-                    TRUE
-                ) )
+        if ( strcmp(pTokenValue->String,pString) == 0 )
         {
             return  (ANSC_HANDLE)pTokenValue;
         }

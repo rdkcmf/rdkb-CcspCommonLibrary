@@ -345,12 +345,7 @@ Bmc2ReqcoGetObjReference
         pObjReference = ACCESS_BMC2_REQCO_OBJ_REFERENCE(pSLinkEntry);
         pSLinkEntry   = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjReference->ObjName,
-                    obj_name,
-                    TRUE
-                ) )
+        if ( strcmp(pObjReference->ObjName,obj_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->OroTableLock);
 
@@ -543,12 +538,7 @@ Bmc2ReqcoDelObjReference
         pObjReference = ACCESS_BMC2_REQCO_OBJ_REFERENCE(pSLinkEntry);
         pSLinkEntry   = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjReference->ObjName,
-                    obj_name,
-                    TRUE
-                ) )
+        if ( strcmp(pObjReference->ObjName,obj_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->OroTable[ulHashIndex], &pObjReference->Linkage);
 

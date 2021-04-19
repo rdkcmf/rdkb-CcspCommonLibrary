@@ -231,12 +231,7 @@ DslhWmpdoParseParamDataType
         pDataTypeToken = AnscTcUnlinkToken(pDataTypeTokenChain);
     }
 
-    if ( AnscEqualString
-            (
-                pDataTypeToken->Name,
-                DSLH_CWMP_DATA_NAME_string,
-                TRUE
-            ) )
+    if ( strcmp(pDataTypeToken->Name,DSLH_CWMP_DATA_NAME_string) == 0 )
     {
         *pulDataType     = DSLH_CWMP_DATA_TYPE_string;
         *pulFormatValue1 = 0;     /* 16; */
@@ -288,12 +283,7 @@ DslhWmpdoParseParamDataType
             AnscTcFree((ANSC_HANDLE)pFormatValueChain);
         }
     }
-    else if ( AnscEqualString
-                (
-                    pDataTypeToken->Name,
-                    DSLH_CWMP_DATA_NAME_int,
-                    TRUE
-                ) )
+    else if ( strcmp(pDataTypeToken->Name,DSLH_CWMP_DATA_NAME_int) == 0 )
     {
    
         *pulDataType     = DSLH_CWMP_DATA_TYPE_int;
@@ -358,12 +348,7 @@ DslhWmpdoParseParamDataType
             AnscTcFree((ANSC_HANDLE)pFormatValueChain);
         }
     }
-    else if ( AnscEqualString
-                (
-                    pDataTypeToken->Name,
-                    DSLH_CWMP_DATA_NAME_unsignedInt,
-                    TRUE
-                ) )
+    else if ( strcmp(pDataTypeToken->Name,DSLH_CWMP_DATA_NAME_unsignedInt) == 0 )
     {
     
         *pulDataType     = DSLH_CWMP_DATA_TYPE_unsignedInt;
@@ -428,21 +413,11 @@ DslhWmpdoParseParamDataType
             AnscTcFree((ANSC_HANDLE)pFormatValueChain);
         }
     }
-    else if ( AnscEqualString
-                (
-                    pDataTypeToken->Name,
-                    DSLH_CWMP_DATA_NAME_boolean,
-                    TRUE
-                ) )
+    else if ( strcmp(pDataTypeToken->Name,DSLH_CWMP_DATA_NAME_boolean) == 0 )
     {
         *pulDataType = DSLH_CWMP_DATA_TYPE_boolean;
     }
-    else if ( AnscEqualString
-                (
-                    pDataTypeToken->Name,
-                    DSLH_CWMP_DATA_NAME_dateTime,
-                    TRUE
-                ) )
+    else if ( strcmp(pDataTypeToken->Name,DSLH_CWMP_DATA_NAME_dateTime) == 0 )
     {
         *pulDataType     = DSLH_CWMP_DATA_TYPE_dateTime;
         *pulFormatValue1 = AnscSizeOfString("0000-00-00T00:00:00"      );   /* ISO 8601 date-time format */

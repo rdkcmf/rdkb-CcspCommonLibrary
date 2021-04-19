@@ -154,12 +154,11 @@ DslhObjeoGetObjEntity2
         pChildObjEntity = ACCESS_DSLH_OBJ_ENTITY_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
+        if ( strcmp
                 (
                     pChildObjEntity->LastName,
-                    pObjNameToken->Name,
-                    TRUE
-                ) )
+                    pObjNameToken->Name
+                ) == 0 )
         {
             bObjEntityFound = TRUE;
 
@@ -322,7 +321,7 @@ DslhObjeoDelObjEntity
     {
         pChildObjEntity = ACCESS_DSLH_OBJ_ENTITY_OBJECT(pSLinkEntry);
 
-        if( pChildObjEntity->LastName && AnscEqualString(pChildObjEntity->LastName, pObjName, TRUE))
+        if( pChildObjEntity->LastName && strcmp(pChildObjEntity->LastName, pObjName) == 0)
         {
             AnscQueuePopEntryByLink(&pMyObject->ObjeoQueue, &pChildObjEntity->Linkage);
 
@@ -430,7 +429,7 @@ DslhObjeoDelVarEntity
     {
         pChildVarEntity = ACCESS_DSLH_VAR_ENTITY_OBJECT(pSLinkEntry);
 
-        if( pChildVarEntity->ParamDescr && AnscEqualString(pChildVarEntity->ParamDescr->Name, pVarName, TRUE))
+        if( pChildVarEntity->ParamDescr && strcmp(pChildVarEntity->ParamDescr->Name, pVarName) == 0)
         {
             AnscQueuePopEntryByLink(&pMyObject->VareoTable, &pChildVarEntity->Linkage);
 
@@ -494,7 +493,7 @@ DslhObjeoGetVarEntity
     {
         pChildVarEntity = ACCESS_DSLH_VAR_ENTITY_OBJECT(pSLinkEntry);
 
-        if( pChildVarEntity->ParamDescr && AnscEqualString(pChildVarEntity->ParamDescr->Name, pParamName, TRUE))
+        if( pChildVarEntity->ParamDescr && strcmp(pChildVarEntity->ParamDescr->Name, pParamName) == 0 )
         {
             return pChildVarEntity;
         }

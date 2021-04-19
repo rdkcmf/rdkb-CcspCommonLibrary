@@ -128,12 +128,7 @@ SlapLboGetObjBinding
         pObjBinding = ACCESS_SLAP_LBO_OBJECT_BINDING(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjBinding->ObjectName,
-                    obj_name,
-                    TRUE
-                ) )
+        if ( strcmp(pObjBinding->ObjectName,obj_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->OboTableLock);
 
@@ -280,12 +275,7 @@ SlapLboDelObjBinding
         pObjBinding = ACCESS_SLAP_LBO_OBJECT_BINDING(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjBinding->ObjectName,
-                    obj_name,
-                    TRUE
-                ) )
+        if ( strcmp(pObjBinding->ObjectName,obj_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->OboTable[ulHashIndex], &pObjBinding->Linkage);
 
@@ -353,12 +343,7 @@ SlapLboDelObjBinding2
             pObjBinding = ACCESS_SLAP_LBO_OBJECT_BINDING(pSLinkEntry);
             pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-            if ( AnscEqualString
-                    (
-                        pObjBinding->PartyName,
-                        party_name,
-                        TRUE
-                    ) )
+            if ( strcmp(pObjBinding->PartyName,party_name) == 0 )
             {
                 AnscQueuePopEntryByLink(&pMyObject->OboTable[i], &pObjBinding->Linkage);
 

@@ -1023,7 +1023,7 @@ SlapAmoGoaInvokeObject2
      * example, the external modules may try to invoke method "Remove" to delete the target object.
      * Handling of such methods should be taken care by GOA interface.
      */
-    if ( AnscEqualString(method_name, "Remove", FALSE) &&
+    if ( strcasecmp(method_name, "Remove") == 0 &&
          (params_in             != NULL              ) &&
          (params_in->ParamCount == 0                 ) )
     {

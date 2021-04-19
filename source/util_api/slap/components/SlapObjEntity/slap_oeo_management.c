@@ -155,12 +155,7 @@ SlapOeoGetObjectProperty
         pObjectProperty = ACCESS_SLAP_OBJECT_PROPERTY(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjectProperty->PropertyName,
-                    property_name,
-                    TRUE
-                ) )
+        if ( strcmp(pObjectProperty->PropertyName,property_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->OpoTableLock);
 
@@ -306,12 +301,7 @@ SlapOeoDelObjectProperty
         pObjectProperty = ACCESS_SLAP_OBJECT_PROPERTY(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pObjectProperty->PropertyName,
-                    property_name,
-                    TRUE
-                ) )
+        if ( strcmp( pObjectProperty->PropertyName,property_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->OpoTable[ulHashIndex], &pObjectProperty->Linkage);
 
@@ -455,12 +445,7 @@ SlapOeoGetMethodDescriptor1
         pMethodDescriptor = ACCESS_SLAP_METHOD_DESCRIPTOR(pSLinkEntry);
         pSLinkEntry       = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pMethodDescriptor->MethodName,
-                    method_name,
-                    TRUE
-                ) )
+        if ( strcmp(pMethodDescriptor->MethodName, method_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->MdoTableLock);
 
@@ -545,12 +530,7 @@ SlapOeoGetMethodDescriptor2
         pMethodDescriptor = ACCESS_SLAP_METHOD_DESCRIPTOR(pSLinkEntry);
         pSLinkEntry       = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pMethodDescriptor->MethodName,
-                    method_name,
-                    TRUE
-                ) )
+        if ( strcmp(pMethodDescriptor->MethodName,method_name) == 0 )
         {
             if ( pMethodDescriptor->CallOptions & SLAP_CALL_OPTION_passParamListI )
             {
@@ -711,12 +691,7 @@ SlapOeoDelMethodDescriptor
         pMethodDescriptor = ACCESS_SLAP_METHOD_DESCRIPTOR(pSLinkEntry);
         pSLinkEntry       = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pMethodDescriptor->MethodName,
-                    method_name,
-                    TRUE
-                ) )
+        if ( strcmp(pMethodDescriptor->MethodName,method_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->MdoTable[ulHashIndex], &pMethodDescriptor->Linkage);
 

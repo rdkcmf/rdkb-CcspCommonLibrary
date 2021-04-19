@@ -1383,91 +1383,91 @@ DslhDmagntParseObjFuncInfo
             }
 
 
-            if( AnscEqualString(pName, COSA_XML_NODE_func_GetEntryCount, TRUE))
+            if( strcmp(pName, COSA_XML_NODE_func_GetEntryCount) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.GetEntryCount = (PFN_DSLHTR69_GET_COUNT)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetEntryStatus, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetEntryStatus) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.GetEntryStatus = (PFN_DSLHTR69_GET_STATUS)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.GetEntry = (PFN_DSLHTR69_GET_ENTRY)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_AddEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_AddEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.AddEntry = (PFN_DSLHTR69_ADD_ENTRY)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_DelEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_DelEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.DelEntry = (PFN_DSLHTR69_DEL_ENTRY)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_IsUpdated, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_IsUpdated) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.IsUpdated = (PFN_DSLHTR69_UPDATE)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_CheckInstance, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_CheckInstance) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.CheckInstance = (PFN_DSLHTR69_UPDATE)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Synchronize, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Synchronize) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithLastName.Synchronize = (PFN_DSLHTR69_ACTION)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamBoolValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamBoolValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamBool = (PFN_DSLHTR69_GET_BOOL)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamIntValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamIntValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamInt = (PFN_DSLHTR69_GET_INT)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamUlongValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamUlongValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamUlong = (PFN_DSLHTR69_GET_ULONG)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamStringValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamStringValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamString = (PFN_DSLHTR69_GET_STRING)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamBoolValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamBoolValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamBool = (PFN_DSLHTR69_SET_BOOL)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamIntValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamIntValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamInt = (PFN_DSLHTR69_SET_INT)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamUlongValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamUlongValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamUlong = (PFN_DSLHTR69_SET_ULONG)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamStringValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamStringValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamString = (PFN_DSLHTR69_SET_STRING)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Validate, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Validate) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithLastName.Validate = (PFN_DSLHTR69_VALID)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Commit, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Commit) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithLastName.Commit = (PFN_DSLHTR69_ACTION)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Rollback, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Rollback) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithLastName.Rollback = (PFN_DSLHTR69_ACTION)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamBulkValues, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamBulkValues) == 0 )
             {
                  pDslhTr69If->GetEntryBulk = (PFN_DSLHTR69_GET_BULK)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamBulkValues, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamBulkValues) == 0 )
             {
                  pDslhTr69If->SetEntryBulk = (PFN_DSLHTR69_SET_BULK)hProc;
             }
@@ -1571,88 +1571,88 @@ DslhDmagntParseRootFuncInfo
                 hProc = pAtomDescriptor->hContext;
             }
 
-            if( AnscEqualString(pName, COSA_XML_NODE_func_GetEntryCount, TRUE))
+            if( strcmp(pName, COSA_XML_NODE_func_GetEntryCount) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.GetEntryCount = (PFN_DSLHTR69_GET_COUNT1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.GetEntry = (PFN_DSLHTR69_GET_ENTRY1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_AddEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_AddEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.AddEntry = (PFN_DSLHTR69_ADD_ENTRY1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_DelEntry, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_DelEntry) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.DelEntry = (PFN_DSLHTR69_DEL_ENTRY1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_IsUpdated, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_IsUpdated) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.IsUpdated = (PFN_DSLHTR69_UPDATE1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_CheckInstance, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_CheckInstance) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.CheckInstance = (PFN_DSLHTR69_UPDATE1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Synchronize, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Synchronize) == 0 )
             {
                  pDslhTr69If->Methods.MethodWithFullName.Synchronize = (PFN_DSLHTR69_ACTION1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamBoolValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamBoolValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamBool = (PFN_DSLHTR69_GET_BOOL)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamIntValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamIntValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamInt = (PFN_DSLHTR69_GET_INT)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamUlongValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamUlongValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamUlong = (PFN_DSLHTR69_GET_ULONG)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamStringValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamStringValue) == 0 )
             {
                 pDslhTr69If->GetEntryParamString = (PFN_DSLHTR69_GET_STRING)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamBoolValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamBoolValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamBool = (PFN_DSLHTR69_SET_BOOL)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamIntValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamIntValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamInt = (PFN_DSLHTR69_SET_INT)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamUlongValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamUlongValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamUlong = (PFN_DSLHTR69_SET_ULONG)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamStringValue, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamStringValue) == 0 )
             {
                 pDslhTr69If->SetEntryParamString = (PFN_DSLHTR69_SET_STRING)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Validate, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Validate) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithFullName.Validate = (PFN_DSLHTR69_VALID1)hProc;
 
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Commit, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Commit) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithFullName.Commit = (PFN_DSLHTR69_ACTION1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_Rollback, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_Rollback) == 0 )
             {
                 pDslhTr69If->Methods.MethodWithFullName.Rollback = (PFN_DSLHTR69_ACTION1)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_GetParamBulkValues, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_GetParamBulkValues) == 0 )
             {
                  pDslhTr69If->GetEntryBulk = (PFN_DSLHTR69_GET_BULK)hProc;
             }
-            else if( AnscEqualString(pName, COSA_XML_NODE_func_SetParamBulkValues, TRUE))
+            else if( strcmp(pName, COSA_XML_NODE_func_SetParamBulkValues) == 0 )
             {
                  pDslhTr69If->SetEntryBulk = (PFN_DSLHTR69_SET_BULK)hProc;
             }
@@ -1779,7 +1779,7 @@ DslhDmagntParseObjectInfo
         pObjectDesp->Name = AnscCloneString(pName);
         
         /*for cisco.spvtg.ccsp.XXX. base object, we pass DataModelAgent to ObjController->hInsContext*/
-        if (AnscEqualString(buffer2, "com.cisco.spvtg.ccsp.", TRUE))
+        if (strcmp(buffer2, "com.cisco.spvtg.ccsp.") == 0 )
         {
             AnscTrace(" base object  %s config context\n", pName);
             pObjectDesp->hContextToController = pMyObject;
@@ -1794,7 +1794,7 @@ DslhDmagntParseObjectInfo
             return ANSC_STATUS_FAILURE;
         }
 
-        if( !AnscEqualString(pName, pParentObjName, TRUE))
+        if( !strcmp(pName, pParentObjName) == 0 )
         {
             rc = sprintf_s(pName, sizeof(pName), "%s%s.", pParentObjName, buffer);
             if(rc < EOK)
@@ -1807,8 +1807,8 @@ DslhDmagntParseObjectInfo
         pObjectDesp->Name       = AnscCloneString(pName);
         
         /*for cisco.spvtg.ccsp.XXX.Logging. & cisco.spvtg.ccsp.XXX.Memory., we pass DataModelAgent to ObjController->hInsContext*/
-        if (AnscEqualString(buffer, "Logging", TRUE) ||
-            AnscEqualString(buffer, "Memory", TRUE))
+        if (strcmp(buffer, "Logging") == 0 ||
+            strcmp(buffer, "Memory") == 0 )
         {
             unsigned int _size = _ansc_strlen("com.cisco.spvtg.ccsp.");
 
@@ -1830,7 +1830,7 @@ DslhDmagntParseObjectInfo
     AnscZeroMemory(buffer, 1024);
     uLength = 1023;
     if( pChildNode == NULL || ANSC_STATUS_SUCCESS != pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength) || uLength == 0 ||
-        AnscEqualString(buffer, COSA_XML_type_object, TRUE))
+        strcmp(buffer, COSA_XML_type_object) == 0 )
     {
         /* it's an object */
         pObjectDesp->Type                   = DSLH_CWMP_OBJECT_TYPE_regular;
@@ -1852,15 +1852,15 @@ DslhDmagntParseObjectInfo
         pObjectDesp->MaxInstanceNumber      = 8;
 
         /* it's an table */
-        if( AnscEqualString(buffer, COSA_XML_type_dynamicTable, TRUE))
+        if( strcmp(buffer, COSA_XML_type_dynamicTable) == 0 )
         {
             pObjectDesp->bDynamic               = TRUE;
         }
-        else if( AnscEqualString(buffer, COSA_XML_type_writableTable, TRUE))
+        else if( strcmp(buffer, COSA_XML_type_writableTable) == 0 )
         {
             pObjectDesp->bWritable              = TRUE;
         }
-        else if( AnscEqualString(buffer, COSA_XML_type_dynWritableTable, TRUE))
+        else if( strcmp(buffer, COSA_XML_type_dynWritableTable) == 0 )
         {
             pObjectDesp->bWritable              = TRUE;
             pObjectDesp->bDynamic               = TRUE;
@@ -2091,11 +2091,11 @@ DslhDmagntParseParamInfo
 
     if( pChildNode != NULL && ANSC_STATUS_SUCCESS == pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength))
     {
-        if( AnscEqualString(buffer, COSA_XML_bsUpdate_firmware, TRUE))
+        if( strcmp(buffer, COSA_XML_bsUpdate_firmware) == 0 )
         {
             pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_firmware;
         }
-        else if( AnscEqualString(buffer, COSA_XML_bsUpdate_rfcUpdate, TRUE))
+        else if( strcmp(buffer, COSA_XML_bsUpdate_rfcUpdate) == 0 )
         {
             pParamDesp->bsUpdate = DSLH_CWMP_BS_UPDATE_rfcUpdate;
         }
@@ -2169,15 +2169,15 @@ DslhDmagntParseParamInfo
     uLength = 1023;
     if( pChildNode != NULL && ANSC_STATUS_SUCCESS == pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength))
     {
-        if( AnscEqualString(buffer, COSA_XML_notify_off, TRUE) || AnscEqualString(buffer, COSA_XML_notify_alwaysOff, TRUE))
+        if( strcmp(buffer, COSA_XML_notify_off) == 0 || strcmp(buffer, COSA_XML_notify_alwaysOff) == 0 )
         {
             pParamDesp->NotifyStatus = DSLH_CWMP_NOTIFY_STATUS_alwaysOff;
         }
-        else if( AnscEqualString(buffer, COSA_XML_notify_on, TRUE)|| AnscEqualString(buffer, COSA_XML_notify_alwaysOn, TRUE))
+        else if( strcmp(buffer, COSA_XML_notify_on) == 0 || strcmp(buffer, COSA_XML_notify_alwaysOn) == 0 )
         {
             pParamDesp->NotifyStatus = DSLH_CWMP_NOTIFY_STATUS_alwaysOn;
         }
-        else if( AnscEqualString(buffer, COSA_XML_notify_configurable, TRUE) || AnscEqualString(buffer, COSA_XML_notify_configPassive, TRUE))
+        else if( strcmp(buffer, COSA_XML_notify_configurable) == 0 || strcmp(buffer, COSA_XML_notify_configPassive) == 0 )
         {
             pParamDesp->NotifyStatus = DSLH_CWMP_NOTIFY_STATUS_configurable;
         }
@@ -2359,7 +2359,7 @@ DslhDmagntUnloadDataModelObject
     AnscZeroMemory(buffer2, 512);
     uLength = 511;
     if( pChildNode == NULL || ANSC_STATUS_SUCCESS != pChildNode->GetDataString(pChildNode, NULL, buffer2, &uLength) || uLength == 0 ||
-        AnscEqualString(buffer2, COSA_XML_type_object, TRUE))
+        strcmp(buffer2, COSA_XML_type_object) == 0 )
     {
         /* it's an object */
         bIsTable        = FALSE;
@@ -2411,14 +2411,14 @@ GetParamUlongValue_X_CISCO_COM_COSADataModel
     PDSLH_WMP_DATABASE_OBJECT       pWmpDatabase      = (PDSLH_WMP_DATABASE_OBJECT  )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord        = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
 
-    if( AnscEqualString(ParamName, "DataModelLibraryNumberOfEntries", TRUE))
+    if (strcmp(ParamName, "DataModelLibraryNumberOfEntries") == 0)
     {
         *pUlong = GetEntryCount_COSADataModel(hInsContext);
 
         return TRUE;
     }
 
-    if( AnscEqualString(ParamName, "TotalParameterNames", TRUE))
+    if (strcmp(ParamName, "TotalParameterNames") == 0)
     {
         *pUlong = GetEntryCount_COSADataModel(hInsContext);
 
@@ -2638,27 +2638,27 @@ GetParamUlongValue_COSADataModel
 {
     PPLUGIN_INFORMATION             pPluginInfo     = (PPLUGIN_INFORMATION)hInsContext;
 
-    if( AnscEqualString(ParamName, "Version", TRUE))
+    if (strcmp(ParamName, "Version") == 0)
     {
         *pUlong = pPluginInfo->Version;
 
         return TRUE;
     }
-    if( AnscEqualString(ParamName, "LoadStatus", TRUE))
+    if (strcmp(ParamName, "LoadStatus") == 0)
     {
         *pUlong = pPluginInfo->uLoadStatus;
 
         return TRUE;
     }
 
-    if( AnscEqualString(ParamName, "RegisteredObjectCount", TRUE))
+    if (strcmp(ParamName, "RegisteredObjectCount") == 0)
     {
         *pUlong = pPluginInfo->uRegObjCount;
 
         return TRUE;
     }
 
-    if( AnscEqualString(ParamName, "RegisteredParameterCount", TRUE))
+    if (strcmp(ParamName, "RegisteredParameterCount") == 0)
     {
         *pUlong = pPluginInfo->uRegParamCount;
 
@@ -2718,19 +2718,19 @@ GetParamStringValue_COSADataModel
     ULONG                           uLength         = 0;
     errno_t                         rc              = -1;
 
-    if( AnscEqualString(ParamName, "ModuleName", TRUE))
+    if (strcmp(ParamName, "ModuleName") == 0)
     {
         pStringValue = pPluginInfo->ModuleName;
     }
-    else if( AnscEqualString(ParamName, "Author", TRUE))
+    else if (strcmp(ParamName, "Author") == 0)
     {
         pStringValue = pPluginInfo->Author;
     }
-    else if( AnscEqualString(ParamName, "Description", TRUE))
+    else if (strcmp(ParamName, "Description") == 0)
     {
         pStringValue = pPluginInfo->Description;
     }
-    else if( AnscEqualString(ParamName, "Source", TRUE) || AnscEqualString(ParamName, "LibraryPath", TRUE))
+    else if( strcmp(ParamName, "Source") == 0 || strcmp(ParamName, "LibraryPath") == 0 )
     {
         pStringValue = pPluginInfo->SourceName;
     }
@@ -2908,7 +2908,7 @@ SupportedDataModel_GetParamStringValue
 
 #if 0
     /* check the parameter name and return the corresponding value */
-    if( AnscEqualString(ParamName, "URL", TRUE))
+    if (strcmp(ParamName, "URL") == 0)
     {
         /* collect value */
         if( pDslhCfgIf)
@@ -2940,7 +2940,7 @@ SupportedDataModel_GetParamStringValue
         return 0;
     }
 
-    if( AnscEqualString(ParamName, "URN", TRUE))
+    if (strcmp(ParamName, "URN") == 0)
     {
         /* collect value */
         AnscCopyString(pValue, "urn:broadband-forum-org:tr-157-1-0-0");
@@ -2948,7 +2948,7 @@ SupportedDataModel_GetParamStringValue
         return 0;
     }
 
-    if( AnscEqualString(ParamName, "Features", TRUE))
+    if (strcmp(ParamName, "Features") == 0)
     {
         /* collect value */
         AnscCopyString(pValue, "NAT,Firewall");
@@ -3002,21 +3002,21 @@ CcspComp_GetParamUlongValue
     }
 
     /* check the parameter name and return the corresponding value */
-    if ( AnscEqualString(ParamName, "Version", TRUE) )
+    if (strcmp(ParamName, "Version") == 0)
     {
         *puLong = pCcspCcdIf->GetComponentVersion(NULL);
 
         return TRUE;
     }
 
-    if ( AnscEqualString(ParamName, "State", TRUE) )
+    if (strcmp(ParamName, "State") == 0)
     {
         *puLong = pCcspCcdIf->GetComponentState(NULL);
 
         return TRUE;
     }
 
-    if ( AnscEqualString(ParamName, "Health", TRUE) )
+    if (strcmp(ParamName, "Health") == 0)
     {
         *puLong = pCcspCcdIf->GetComponentHealth(NULL);
 
@@ -3046,7 +3046,7 @@ CcspComp_GetParamStringValue
     }
 
     /* check the parameter name and return the corresponding value */
-    if ( AnscEqualString(ParamName, "Name", TRUE) )
+    if (strcmp(ParamName, "Name") == 0)
     {
         rc = strcpy_s(pValue, *pUlSize, pCcspCcdIf->GetComponentName(NULL));
         if ( rc != EOK )
@@ -3058,7 +3058,7 @@ CcspComp_GetParamStringValue
         return 0;
     }
 
-    if ( AnscEqualString(ParamName, "Author", TRUE) )
+    if (strcmp(ParamName, "Author") == 0)
     {
         rc = strcpy_s(pValue, *pUlSize, pCcspCcdIf->GetComponentAuthor(NULL));
         if ( rc != EOK )
@@ -3070,7 +3070,7 @@ CcspComp_GetParamStringValue
         return 0;
     }
 
-    if ( AnscEqualString(ParamName, "DTXml", TRUE) )
+    if (strcmp(ParamName, "DTXml") == 0)
     {
         if( !pDslhDataModelAgent->pDTXml)
         {
@@ -3126,31 +3126,31 @@ CcspComp_GetBulkParamValues
             return FALSE;
         }
 
-        if ( AnscEqualString(pName, "Version", TRUE) )
+        if ( strcmp(pName, "Version") == 0 )
         {
             ppVarArray[i]->Variant.varUint32 = pCcspCcdIf->GetComponentVersion(NULL);
         }
-        else if ( AnscEqualString(pName, "State", TRUE) )
+        else if ( strcmp(pName, "State") == 0 )
         {
             ppVarArray[i]->Variant.varUint32 = pCcspCcdIf->GetComponentState(NULL);
         }
-        else if ( AnscEqualString(pName, "Health", TRUE) )
+        else if ( strcmp(pName, "Health") == 0 )
         {
             ppVarArray[i]->Variant.varUint32 = pCcspCcdIf->GetComponentHealth(NULL);
         }
-        else if( AnscEqualString(pName, "LogLevel", TRUE))
+        else if( strcmp(pName, "LogLevel") == 0 )
         {
             ppVarArray[i]->Variant.varUint32 = pCcspCcdIf->GetLoggingLevel(NULL);
         }
-        else if ( AnscEqualString(pName, "Name", TRUE) )
+        else if ( strcmp(pName, "Name") == 0 )
         {
             ppVarArray[i]->Variant.varString = AnscCloneString(pCcspCcdIf->GetComponentName(NULL));
         }
-        else if ( AnscEqualString(pName, "Author", TRUE) )
+        else if ( strcmp(pName, "Author") == 0 )
         {
             ppVarArray[i]->Variant.varString = AnscCloneString(pCcspCcdIf->GetComponentAuthor(NULL));
         }
-        else if ( AnscEqualString(pName, "DTXml", TRUE) )
+        else if ( strcmp(pName, "DTXml") == 0 )
         {
             if( NULL == pDslhDataModelAgent->pDTXml)
             {
@@ -3190,7 +3190,7 @@ CcspComp_SetParamBoolValue
     name_spaceType_t                *nsArr = (name_spaceType_t *)cpectl->hParameterArray;
     int                             err;
 
-    if (AnscEqualString(ParamName, "Register", TRUE) && bValue == TRUE)
+    if (strcmp(ParamName, "Register") == 0 && bValue == TRUE)
     {
         comp = ccdif->GetComponentName(NULL);
         fprintf(stderr, "ccdif->GetComponentName %s\n", comp);
@@ -3267,7 +3267,7 @@ CcspLog_GetParamBoolValue
     }
 
     /* check the parameter name and return the corresponding value */
-    if ( AnscEqualString(ParamName, "Enable", TRUE) )
+    if (strcmp(ParamName, "Enable") == 0)
     {
          *pBool = pCcspCcdIf->GetLoggingEnabled(NULL);
 
@@ -3294,7 +3294,7 @@ CcspLog_GetParamUlongValue
     }
 
     /* check the parameter name and return the corresponding value */
-    if ( AnscEqualString(ParamName, "LogLevel", TRUE) )
+    if (strcmp(ParamName, "LogLevel") == 0)
     {
         *puLong = pCcspCcdIf->GetLoggingLevel(NULL);
 
@@ -3323,7 +3323,7 @@ CcspLog_SetParamBoolValue
     }
 
     /* check the parameter name and set the corresponding value */
-    if( AnscEqualString(ParamName, "Enable", TRUE))
+    if (strcmp(ParamName, "Enable") == 0)
     {
         returnStatus = 
             pCcspCcdIf->SetLoggingEnabled
@@ -3358,7 +3358,7 @@ CcspLog_SetParamUlongValue
     }
 
     /* check the parameter name and set the corresponding value */
-    if ( AnscEqualString(ParamName, "LogLevel", TRUE) )
+    if (strcmp(ParamName, "LogLevel") == 0)
     {
         returnStatus = 
             pCcspCcdIf->SetLoggingLevel
@@ -3433,21 +3433,21 @@ CcspMem_GetParamUlongValue
     }
 
     /* check the parameter name and return the corresponding value */
-    if ( AnscEqualString(ParamName, "MinUsage", TRUE) )
+    if (strcmp(ParamName, "MinUsage") == 0)
     {
         *puLong = pCcspCcdIf->GetMemMinUsage(NULL);
 
         return TRUE;
     }
 
-    if ( AnscEqualString(ParamName, "MaxUsage", TRUE) )
+    if (strcmp(ParamName, "MaxUsage") == 0)
     {
         *puLong = pCcspCcdIf->GetMemMaxUsage(NULL);
 
         return TRUE;
     }
 
-    if ( AnscEqualString(ParamName, "Consumed", TRUE) )
+    if (strcmp(ParamName, "Consumed") == 0)
     {
         *puLong = pCcspCcdIf->GetMemConsumed(NULL);
 
@@ -3483,12 +3483,12 @@ CcspLog_GetBulkParamValues
             return FALSE;
         }
 
-        if( AnscEqualString(pName, "Enable", TRUE))
+        if( strcmp(pName, "Enable") == 0 )
         {
             ppVarArray[i]->Variant.varBool = pCcspCcdIf->GetLoggingEnabled(NULL);
 
         }
-        else if( AnscEqualString(pName, "LogLevel", TRUE))
+        else if( strcmp(pName, "LogLevel") == 0 )
         {
             ppVarArray[i]->Variant.varUint32 = pCcspCcdIf->GetLoggingLevel(NULL);
         }
@@ -3529,7 +3529,7 @@ CcspLog_SetBulkParamValues
             return FALSE;
         }
 
-        if( AnscEqualString(pName, "Enable", TRUE))
+        if( strcmp(pName, "Enable") == 0 )
         {
             pCcspCcdIf->SetLoggingEnabled
                 (
@@ -3537,7 +3537,7 @@ CcspLog_SetBulkParamValues
                     ppVarArray[i]->Variant.varBool
                 );
         }
-        else if( AnscEqualString(pName, "LogLevel", TRUE))
+        else if( strcmp(pName, "LogLevel") == 0 )
         {
             pCcspCcdIf->SetLoggingLevel
                 (

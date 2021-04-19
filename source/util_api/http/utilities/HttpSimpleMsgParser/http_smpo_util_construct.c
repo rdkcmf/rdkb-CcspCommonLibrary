@@ -321,7 +321,7 @@ HttpSmpoUtilBuildRequestUri
                     return FALSE;
 
                 if (
-                       AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                       strcmp(pUri->PathArray[i], "/") == 0
                    )
                 {
                     /* already counted */
@@ -389,7 +389,7 @@ HttpSmpoUtilBuildRequestUri
             ulPathLevel     = pUri->PathLevel;
 
             if (
-                   (ulPathLevel == 1 && AnscEqualString(pUri->PathArray[0], "/", TRUE)) ||
+                   (ulPathLevel == 1 && strcmp(pUri->PathArray[0], "/") == 0 ) ||
                    ulPathLevel == 0
                )
             {
@@ -420,7 +420,7 @@ HttpSmpoUtilBuildRequestUri
                         return FALSE;
 
                     if (
-                           AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                           strcmp(pUri->PathArray[i], "/") == 0
                        )
                     {
                         /* already counted */

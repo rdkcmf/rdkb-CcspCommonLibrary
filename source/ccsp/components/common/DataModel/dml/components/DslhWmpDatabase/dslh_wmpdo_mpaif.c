@@ -141,12 +141,7 @@ DslhWmpdoMpaLockWriteAccess
 
     if ( pMyObject->bMpaWriteLocked )
     {
-        if ( AnscEqualString
-                (
-                    pAccessEntity,
-                    pMyObject->LockedEntity,
-                    TRUE
-                ) )
+        if ( strcmp(pAccessEntity,pMyObject->LockedEntity) == 0 )
         {
             bWriteLocked = TRUE;
         }
@@ -652,7 +647,7 @@ DslhWmpdoMpaSetParameterValues
     BOOL                            bPendingNotificaton            = FALSE;
     ULONG                           dataType             = 0;
     char  str[500] = {0};
-    bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && ( strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
     *piStatus    = 0;
     errno_t rc = -1;
@@ -1207,7 +1202,7 @@ DslhWmpdoMpaSetCommit
     ULONG                           i                    = 0;
     BOOL                            bFromAcs             = FALSE;
 
-    bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    bFromAcs     = (writeID == DSLH_MPA_ACCESS_CONTROL_ACS) && ( strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
     *piStatus    = 0;
 
     AnscAcquireTsLock(&pMyObject->AccessTsLock);
@@ -1471,7 +1466,7 @@ DslhWmpdoMpaGetParameterValues
     ANSC_HANDLE*                    phAnyRecordArray     = (ANSC_HANDLE*               )NULL;
     ULONG                           i                    = 0;
     ULONG                           j                    = 0;
-    BOOL                            bFromAcs             = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs             = ( strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
     ULONG                           ulParamCount         = (ULONG                      )0;
     ULONG                           ulObjectCount        = (ULONG                      )0;
     PDSLH_OBJ_RECORD_OBJECT*        pObjRecordArray      = (PDSLH_OBJ_RECORD_OBJECT*   )NULL;
@@ -1796,7 +1791,7 @@ DslhWmpdoMpaGetParameterValues
             {
                 for( j = 0; j < ulSameObj; j ++)
                 {
-                    if ( !AnscEqualString( ppNameArray[j], "Enable", TRUE ) )
+                    if ( !strcmp( ppNameArray[j], "Enable") == 0  )
                         continue;
 
                     if ( ppValueArray[j]->Syntax != SLAP_VAR_SYNTAX_bool )
@@ -1988,7 +1983,7 @@ DslhWmpdoMpaGetParameterNames
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord          = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity          = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     BOOL                            bTargetIsObject     = FALSE;
-    BOOL                            bFromAcs            = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs            = ( strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
     pDslhMprIf->GetRootObjName(pDslhMprIf->hOwnerContext);
 
     *ppParamInfoArray = NULL;
@@ -2304,7 +2299,7 @@ DslhWmpdoMpaSetParameterAttributes
     BOOL                            bTargetIsObject          = (BOOL                       )FALSE;
     ANSC_HANDLE*                    phAnyRecordArray         = (ANSC_HANDLE*               )NULL;
     ULONG                           i                        = 0;
-    BOOL                            bFromAcs                 = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs                 = ( strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
 
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord          = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PDSLH_VAR_ENTITY_OBJECT         pChildVarEntity          = (PDSLH_VAR_ENTITY_OBJECT)NULL;
@@ -2661,7 +2656,7 @@ DslhWmpdoMpaGetParameterAttributes
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity            = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     ANSC_HANDLE*                    phAnyRecordArray      = (ANSC_HANDLE*               )NULL;
     ULONG                           i                     = 0;
-    BOOL                            bFromAcs              = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs              = (strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
 
     *ppParamAttribArray = NULL;
     *pulArraySize       = 0;
@@ -2993,7 +2988,7 @@ DslhWmpdoMpaAddObject
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord      = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity      = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityChild = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
-    BOOL                            bFromAcs        = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs        = (strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
 
     *pulObjInsNumber = 0;
     *piStatus        = 0;
@@ -3174,7 +3169,7 @@ DslhWmpdoMpaDeleteObject
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord       = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecordParent = (PDSLH_OBJ_RECORD_OBJECT    )NULL;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
-    BOOL                            bFromAcs         = AnscEqualString(pAccessEntity, DSLH_MPA_ENTITY_ACS,TRUE);
+    BOOL                            bFromAcs         = (strcmp(pAccessEntity, DSLH_MPA_ENTITY_ACS) == 0 );
 
     *piStatus    = 0;
 

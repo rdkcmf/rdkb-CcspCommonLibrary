@@ -1743,7 +1743,7 @@ ALCERTSearchCAByName
 
         if( pEntity != NULL)
         {
-            if(AnscEqualString(pName, pEntity->GetName(pEntity), TRUE))
+            if(strcmp(pName, pEntity->GetName(pEntity)) == 0 )
             {
                 AnscReleaseLock(&pThisObject->CALock);
 
@@ -1783,7 +1783,7 @@ ALCERTSearchEntityByName
 
         if( pEntity != NULL)
         {
-            if( AnscEqualString(pName, pEntity->GetName(pEntity), TRUE))
+            if( strcmp(pName, pEntity->GetName(pEntity)) == 0 )
             {
                 AnscReleaseLock(&pThisObject->ClientLock);
 

@@ -2372,7 +2372,7 @@ AnscAsn1SafeBagGetLocalKeyID
 
         pOID->GetStringOIDValue(pOID, pOIDValue);
 
-        if( AnscEqualString( pOIDValue, "1.2.840.113549.1.9.21", FALSE))
+        if( strcasecmp( pOIDValue, "1.2.840.113549.1.9.21") == 0 )
         {
             pValueObj = 
                 (PANSC_ASN1_CHOICE)pAttribute->GetChildByIndex(pAttribute, 1);

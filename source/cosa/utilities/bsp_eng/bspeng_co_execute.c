@@ -3919,7 +3919,7 @@ ACCESS_LAST:
 
             if (pVal && aFunc)
             {
-                if (AnscEqualString((char *)aFunc, BSP_VAR_CONTENT_TYPE, TRUE))
+                if (strcmp((char *)aFunc, BSP_VAR_CONTENT_TYPE) == 0 )
                 {
                     /*
                      * set/get variable's content type
@@ -3937,7 +3937,7 @@ ACCESS_LAST:
                     bBuiltInProperty    = TRUE;
                 }
                 else
-                if (AnscEqualString((char *)aFunc, BSP_VAR_SLAP_SYNTAX_TYPE, TRUE))
+                if (strcmp((char *)aFunc, BSP_VAR_SLAP_SYNTAX_TYPE) == 0 )
                 {
                     /*
                      * get variable's SLAP syntax
@@ -3960,7 +3960,7 @@ ACCESS_LAST:
 
                     pItems  = &pVal->Value.arrayItems;
 
-                    if (AnscEqualString((char *)aFunc, BSP_ARRAY_VAR_TYPE, TRUE))
+                    if (strcmp((char *)aFunc, BSP_ARRAY_VAR_TYPE) == 0 )
                     {
                         bBuiltInProperty    = TRUE;
 
@@ -3982,7 +3982,7 @@ ACCESS_LAST:
                         }
                     }
                     else
-                    if (AnscEqualString((char *)aFunc, BSP_ARRAY_VAR_LENGTH, TRUE))
+                    if (strcmp((char *)aFunc, BSP_ARRAY_VAR_LENGTH) == 0 )
                     {
                         bBuiltInProperty    = TRUE;
 
@@ -4250,7 +4250,7 @@ BspTemplateObjDoObjProperty
             {
                 AnscTrace("    ---> Making slap call %s, time = %lu (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
 
-                if (AnscEqualString(pMethodName, "SetItem", FALSE) || AnscEqualString(pMethodName, "GetItem", FALSE))
+                if (strcasecmp(pMethodName, "SetItem") == 0 || strcasecmp(pMethodName, "GetItem") == 0 )
                 {
                     if (SlapParamList.ParamCount != 0)
                     {
@@ -5666,7 +5666,7 @@ BspTemplateEngDoObjectAccess
             {
                 AnscTrace("    ---> Making slap call %s, time = %lu (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
 
-                if (AnscEqualString(pMethodName, "SetItem", FALSE) || AnscEqualString(pMethodName, "GetItem", FALSE))
+                if (strcasecmp(pMethodName, "SetItem") == 0 || strcasecmp(pMethodName, "GetItem") == 0 )
                 {
                     if (SlapParamList.ParamCount != 0)
                     {

@@ -195,7 +195,7 @@ WebSsoGetMdhIf
         pEntity = ACCESS_HTTP_FUM_ENTITY(pEntry);
         pEntry  = AnscSListGetNextEntry(pEntry);
 
-        if ( AnscEqualString((char *)pEntity->pUri, (char *)pRequestUri, FALSE) )
+        if ( strcasecmp((char *)pEntity->pUri, (char *)pRequestUri) == 0 )
         {
             hMdhIf = pEntity->hMdhIf;
             break;

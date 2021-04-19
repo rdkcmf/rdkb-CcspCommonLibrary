@@ -862,24 +862,14 @@ WebVhoGetResourcePath
     {
         if ( pHttpHfoHost )
         {
-            if ( !AnscEqualString
-                    (
-                        pHttpHfoReferer->ReferrerUri.HostName,
-                        pHttpHfoHost->HostName,
-                        FALSE
-                    ) )
+            if ( strcasecmp(pHttpHfoReferer->ReferrerUri.HostName,pHttpHfoHost->HostName) == 0 )
             {
                 break;
             }
         }
         else if ( pReqInfo->RequestUri.Type == HTTP_URI_TYPE_ABSOLUTE_URI )
         {
-            if ( !AnscEqualString
-                    (
-                        pHttpHfoReferer->ReferrerUri.HostName,
-                        pReqInfo->RequestUri.HostName,
-                        FALSE
-                    ) )
+            if ( !strcasecmp(pHttpHfoReferer->ReferrerUri.HostName,pReqInfo->RequestUri.HostName) == 0 )
             {
                 break;
             }

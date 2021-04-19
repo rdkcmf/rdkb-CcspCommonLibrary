@@ -173,7 +173,7 @@ HttpSmpoUtilGetSizeRequestUri
             {
                 if (
                        i == ulLevels - 1       &&
-                       AnscEqualString(pUri->PathArray[i], "/", TRUE)
+                       strcmp(pUri->PathArray[i], "/") == 0
                    )
                 {
                     /* already counted */
@@ -220,7 +220,7 @@ HttpSmpoUtilGetSizeRequestUri
             for (i = 1; i < ulLevels; i ++)
             {
                 /* count each (f)segment */
-                bIsSlash    = AnscEqualString(pUri->PathArray[i], "/", TRUE);
+                bIsSlash    = (strcmp(pUri->PathArray[i], "/") == 0 );
                 if (bIsSlash && i == ulLevels - 1)
                     break;
 

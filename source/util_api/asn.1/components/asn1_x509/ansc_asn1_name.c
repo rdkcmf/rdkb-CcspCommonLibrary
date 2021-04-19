@@ -737,7 +737,7 @@ AnscAsn1NameGetNameByOID
 
                     pOIDObject->GetStringOIDValue(pOIDObject, pOID);
 
-                    if(!AnscEqualString(pOID, pOIDString, FALSE)) 
+                    if(!strcasecmp(pOID, pOIDString) == 0 ) 
                     {
                         continue;
                     }
@@ -1622,42 +1622,42 @@ AnscAsn1AttrTypeAndValueExportToString
 
     pOIDObject->GetStringOIDValue(pOIDObject, pOID);
 
-    if( AnscEqualString(pOID, "2.5.4.6", FALSE)) /* country name */
+    if( strcasecmp(pOID, "2.5.4.6") == 0 ) /* country name */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_C);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.10", FALSE)) /* Organ Name*/
+    else if ( strcasecmp(pOID, "2.5.4.10") == 0 ) /* Organ Name*/
     {
         rc = strcpy_s( pBuffer, *pLength, X500_O);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.11", FALSE))  /* organunit name */
+    else if ( strcasecmp(pOID, "2.5.4.11") == 0 )  /* organunit name */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_OU);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.3", FALSE)) /* common name */
+    else if ( strcasecmp(pOID, "2.5.4.3") == 0 ) /* common name */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_CN);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.8", FALSE)) /* state name */
+    else if ( strcasecmp(pOID, "2.5.4.8") == 0 ) /* state name */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_ST);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.7", FALSE))  /* locality name */
+    else if ( strcasecmp(pOID, "2.5.4.7") == 0 )  /* locality name */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_L);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.9", FALSE))  /* street address */
+    else if ( strcasecmp(pOID, "2.5.4.9") == 0 )  /* street address */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_STREET);
         ERR_CHK(rc);
     }
-    else if ( AnscEqualString(pOID, "2.5.4.5", FALSE))  /* street address */
+    else if ( strcasecmp(pOID, "2.5.4.5") == 0 )  /* street address */
     {
         rc = strcpy_s( pBuffer, *pLength, X500_SN);
         ERR_CHK(rc);

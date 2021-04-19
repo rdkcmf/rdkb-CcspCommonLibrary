@@ -223,7 +223,7 @@ AnscAtoGetAtomByName
         pAtomDescriptor = ACCESS_ANSC_ATOM_DESCRIPTOR(pSLinkEntry);
         pSLinkEntry     = AnscSListGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString(pAtomDescriptor->AtomName, name, TRUE) )
+        if ( strcmp(pAtomDescriptor->AtomName, name) == 0 )
         {
             AnscReleaseSpinLock(&pMyObject->AdoStrTableSpinLock);
 

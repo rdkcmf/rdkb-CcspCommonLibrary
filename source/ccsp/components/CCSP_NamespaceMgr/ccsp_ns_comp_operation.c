@@ -130,7 +130,7 @@ CcspNsCompUnregisterNamespace
         pCcspName       = ACCESS_CCSP_NAMESPACE(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if(AnscEqualString(pCcspName->pName, (char*)pNamespace, TRUE))
+        if(strcmp(pCcspName->pName, (char*)pNamespace) == 0 )
         {
             break;
         }

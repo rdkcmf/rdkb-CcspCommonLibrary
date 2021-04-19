@@ -138,12 +138,7 @@ WebUpoGetUriPath
         pSonUriPath = ACCESS_WEB_URI_PATH_OBJECT(pSLinkEntry);
         pSLinkEntry = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    lc_string,
-                    pSonUriPath->GetPathName((ANSC_HANDLE)pSonUriPath),
-                    TRUE
-                ) )
+        if ( strcmp(lc_string,pSonUriPath->GetPathName((ANSC_HANDLE)pSonUriPath) ) == 0 )
         {
             AnscReleaseLock(&pMyObject->UpoTableLock);
 

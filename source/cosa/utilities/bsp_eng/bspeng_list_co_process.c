@@ -133,12 +133,7 @@ BspTemplateListAddItem
     pTmplName       = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
     bBadTemplate    =
             !pTmplName          || 
-            AnscEqualString
-                (
-                    (char *)pTmplName, 
-                    BSP_TEMPLATE_DEFAULT_NAME, 
-                    BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE
-                );
+            strcmp((char *)pTmplName, BSP_TEMPLATE_DEFAULT_NAME) == 0 ;
 
     /* or there's already a template has the name */
     if (!bBadTemplate && pMyObject->FindItem(hThisObject, (const char *)pTmplName))
@@ -268,7 +263,7 @@ BspTemplateListFindItem
             pTmplName   = (PUCHAR)pTemplate->GetTmplName((ANSC_HANDLE)pTemplate);
 
             if (
-                    AnscEqualString((char *)pTmplName, (char *)pName, BSP_TEMPLATE_KEYWORD_CASE_SENSITIVE)
+                    strcmp((char *)pTmplName, (char *)pName) == 0
                )
             {
                 return pTemplate;
@@ -739,7 +734,7 @@ BspTemplateListIsTemplateLoaded
     {
         pName   = (char *)pLoadedTemplatesList->GetAt((ANSC_HANDLE)pLoadedTemplatesList, i);
 
-        if (AnscEqualString(pName, pTemplateName, FALSE))
+        if (strcasecmp(pName, pTemplateName) == 0 )
         {
             return TRUE;
         }
@@ -929,7 +924,7 @@ BspTemplateListGetRegisteredTemplate
     {
         pInfo       = ACCESS_BSP_TEMPLATE_REG_PAGE_INFO(pSLinkEntry);
 
-        if (AnscEqualString(pInfo->pName, pName, FALSE))
+        if (strcasecmp(pInfo->pName, pName) == 0 )
         {
             if (pulLen)
                 *pulLen = pInfo->ulLen;

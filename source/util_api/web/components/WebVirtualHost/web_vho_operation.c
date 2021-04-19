@@ -305,7 +305,7 @@ WebVhoMatchName
     {
         return  TRUE;
     }
-    else if ( AnscEqualString(name, pProperty->HostName, FALSE) )
+    else if ( strcasecmp(name, pProperty->HostName) == 0 )
     {
         return  TRUE;
     }

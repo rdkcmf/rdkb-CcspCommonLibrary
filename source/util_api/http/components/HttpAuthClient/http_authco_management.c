@@ -325,12 +325,12 @@ HttpAuthcoFindAuthInfo
             continue;
         }
 
-        if ( !AnscEqualString((char*)pAuthInfo->pHostName, (char*)pHostName, FALSE) )
+        if ( !strcasecmp((char*)pAuthInfo->pHostName, (char*)pHostName) == 0 )
         {
             continue;
         }
 
-        if ( AnscEqualString((char*)pAuthInfo->pUri, (char*)pUriPath, TRUE ) )
+        if ( strcmp((char*)pAuthInfo->pUri, (char*)pUriPath) == 0 )
         {
             hAuthInfo   = (ANSC_HANDLE)pAuthInfo;
             break;
@@ -485,12 +485,12 @@ HttpAuthcoFindAuthInfo2
             continue;
         }
 
-        if ( !AnscEqualString((char*)pAuthInfo->pHostName, (char*)pHostName, FALSE) )
+        if ( !strcasecmp((char*)pAuthInfo->pHostName, (char*)pHostName) == 0 )
         {
             continue;
         }
 
-        if ( AnscEqualString((char*)pAuthInfo->pUri, (char*)pUriPath, TRUE ) )
+        if ( strcmp((char*)pAuthInfo->pUri, (char*)pUriPath) == 0 )
         {
             hAuthInfo       = (ANSC_HANDLE)pAuthInfo;
             break;

@@ -67,7 +67,7 @@ CcspAliasMgrLoadFromXMLFile
 
     do
     {
-        if (AnscEqualString(pChildNode->Name, "AliasList", TRUE))
+        if (strcmp(pChildNode->Name, "AliasList") == 0 )
         {
             pListNode = (PANSC_XML_DOM_NODE_OBJECT)pChildNode->GetHeadChild(pChildNode);
             while (pListNode != NULL)

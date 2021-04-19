@@ -769,7 +769,7 @@ AnscAsn1PrivateKeyInfoAfterDeocdingChild
         extraChild  = (PANSC_ASN1_CHOICE)pThisObject->pExtraChild;
     }
 
-    if( AnscEqualString( pOID, "1.2.840.113549.1.1.1", FALSE))
+    if( strcasecmp( pOID, "1.2.840.113549.1.1.1") == 0 )
     {
         extraChild->SetAndCreateSelection
             (
@@ -777,7 +777,7 @@ AnscAsn1PrivateKeyInfoAfterDeocdingChild
                 PRIVATEKEY_MASK_RSAPRIVATEKEY
             );
     }
-    else if( AnscEqualString( pOID, "1.2.840.10040.4.1", FALSE))
+    else if( strcasecmp( pOID, "1.2.840.10040.4.1") == 0 )
     {
         extraChild->SetAndCreateSelection
             (

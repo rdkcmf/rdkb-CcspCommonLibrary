@@ -195,12 +195,7 @@ SlapScoMatch1
     {
         return  FALSE;
     }
-    else if ( !AnscEqualString
-                (
-                    obj_name,
-                    pMyObject->ObjName,
-                    TRUE
-                ) )
+    else if ( !strcmp(obj_name,pMyObject->ObjName) == 0 )
     {
         return  FALSE;
     }

@@ -1817,7 +1817,7 @@ ScliShoMatchSimpleArg
     /* match name */
     if ( bNamedArg )
     {
-        if ( AnscEqualString(pName, pSimpleArg->DisplayName, FALSE) )
+        if ( strcasecmp(pName, pSimpleArg->DisplayName) == 0 )
         {
             pArgMatchResult->bMatched           = TRUE;
             pArgMatchResult->bNameMatched       = TRUE;
@@ -2705,7 +2705,7 @@ ScliShoFindDepArgOnName
         if ( pBr->ulArgDepOn == BMC2_CMD_DEP_ARG_DEP_opt_arg_name || 
              pBr->ulArgDepOn == BMC2_CMD_DEP_ARG_DEP_opt_arg_name_optional )
         {
-            if ( AnscEqualString(pBr->pArgValue, pOptArgName, FALSE) )
+            if ( strcasecmp(pBr->pArgValue, pOptArgName) == 0 )
             {
                 *pbOptional = (pBr->ulArgDepOn == BMC2_CMD_DEP_ARG_DEP_opt_arg_name_optional);
                 return  i;
@@ -2790,7 +2790,7 @@ ScliShoGetOptNamedArgMatched
 
             pTokenValue = pCmdTokenList->pTokens[nTokenIndex].pValue;
 
-            if ( pTokenValue && AnscEqualString(pTokenValue, pArgName, FALSE) )
+            if ( pTokenValue && strcasecmp(pTokenValue, pArgName) == 0 )
             {
                 return i;
             }
@@ -2895,7 +2895,7 @@ ScliShoIsValidInt
         }
 
         if ( AnscSizeOfString(pBufStart) != AnscSizeOfString(pNonZero) ||
-             !AnscEqualString(pBufStart, pNonZero, TRUE) )
+             !strcmp(pBufStart, pNonZero) == 0 )
         {
             SCLI_SHELL_STRING_DIFF_AT(pBufStart, pNonZero, *pErrorPos);
 
@@ -2970,7 +2970,7 @@ ScliShoIsValidUint
         }
 
         if ( AnscSizeOfString(buf) != AnscSizeOfString(pNonZero) ||
-             !AnscEqualString(buf, pNonZero, TRUE) )
+             !strcmp(buf, pNonZero) == 0 )
         {
             SCLI_SHELL_STRING_DIFF_AT(buf, pNonZero, *pErrorPos);
 
@@ -3266,7 +3266,7 @@ ScliShoIsValidIp4Addr
     }
 
     if ( AnscSizeOfString(buf) != AnscSizeOfString(pValue) ||
-         !AnscEqualString(buf, pValue, TRUE) )
+         !strcmp(buf, pValue) == 0 )
     {
         SCLI_SHELL_STRING_DIFF_AT(buf, pValue, *pErrorPos);
 
@@ -3339,7 +3339,7 @@ ScliShoIsValidIp6Prefix
         ERR_CHK(rc);
         return FALSE;
     }
-    if ( ulLength > 128 || !AnscEqualString(buf, pLength, TRUE) )
+    if ( ulLength > 128 || !strcmp(buf, pLength) == 0 )
     {
         *pErrorPos = (pLength - pCur);
         return  FALSE;
@@ -3412,7 +3412,7 @@ ScliShoIsValidMacAddr
     }
 
     if ( AnscSizeOfString(buf) != AnscSizeOfString(pValue) ||
-         !AnscEqualString(buf, pValue, FALSE) )
+         !strcasecmp(buf, pValue) == 0 )
     {
         SCLI_SHELL_STRING_DIFF_AT(buf, pValue, *pErrorPos);
 
@@ -3495,7 +3495,7 @@ ScliShoIsStringValueInRange
     for ( i = 0; i < pRange->ulStringCount; i ++ )
     {
         pValueOption = pRange->pStringArray[i];
-        if ( AnscEqualString(pValue, pValueOption, FALSE) )
+        if ( strcasecmp(pValue, pValueOption) == 0 )
         {
             bMatched = TRUE;
         }
@@ -4143,7 +4143,7 @@ ScliShoDepArgFindMatchedBranch
             }
             pValue       = pCmdTokenList->pTokens[nTokenIndex].pValue;
 
-            if ( pValue && AnscEqualString(pValue, pDepBr->pArgValue, FALSE) ) 
+            if ( pValue && strcasecmp(pValue, pDepBr->pArgValue) == 0 ) 
             {
                 return (int)i;
             }

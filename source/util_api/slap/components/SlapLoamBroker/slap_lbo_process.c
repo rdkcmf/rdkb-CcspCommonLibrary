@@ -648,22 +648,12 @@ SlapLboProcessCallLoco
         {
             pPartyAddr = (PANSC_LPC_PARTY_ADDR)((ULONG)pPartyAddrArray + i * ulPartyAddrSize);
 
-            if ( AnscEqualString
-                    (
-                        pPartyAddr->PartyName,
-                        pAnscLpcConnector->ImcGetPartyName((ANSC_HANDLE)pAnscLpcConnector),
-                        FALSE
-                    ) )
+            if ( strcasecmp(pPartyAddr->PartyName,pAnscLpcConnector->ImcGetPartyName((ANSC_HANDLE)pAnscLpcConnector)) == 0 )
             {
                 continue;
             }
             else if ( pCallerPartyAddr &&
-                      AnscEqualString
-                        (
-                            pPartyAddr->PartyName,
-                            pCallerPartyAddr->PartyName,
-                            FALSE
-                        ) )
+                      strcasecmp(pPartyAddr->PartyName,pCallerPartyAddr->PartyName) == 0)
             {
                 continue;
             }

@@ -1543,7 +1543,7 @@ SlapDslhParamtoGetParamInfo
         ERR_CHK(rc);
     }
 	
-	if( pParamName == NULL || AnscEqualString(pParamName, "", TRUE))
+	if( pParamName == NULL || strcmp(pParamName, "") == 0 )
 	{
 		pParamName = AnscCloneString("Device.");
 	}
@@ -1781,7 +1781,7 @@ SlapDslhParamtoGetParamInfo
 				pAccessArrayCopyTo->Array.arrayInt[prior_sz+i] = 0;
 			}
 
-			if( 0 < size3 && leaf_cnt < size3 && AnscEqualString(ppParamInfos[i]->parameterName, ppParamVal[leaf_cnt]->parameterName, TRUE))
+			if( 0 < size3 && leaf_cnt < size3 && strcmp(ppParamInfos[i]->parameterName, ppParamVal[leaf_cnt]->parameterName) == 0 )
 			{
 
 				if ( true == ppParamAttri[leaf_cnt]->notificationChanged )
@@ -2022,7 +2022,7 @@ SlapDslhParamtoGetParamInfoShort
         ERR_CHK(rc);
     }
 
-	if( pParamName == NULL || AnscEqualString(pParamName, "", TRUE))
+	if( pParamName == NULL || strcmp(pParamName, "") == 0 )
 	{
 		pParamName = AnscCloneString("Device.");
 	}
@@ -2155,7 +2155,7 @@ SlapDslhParamtoGetParamInfoShort
 			// clone parameter name without the  parent-prefix portion  
 			pNameArrayCopyTo->Array.arrayString[prior_sz+i]  = AnscCloneString(ppParamInfos[i]->parameterName + uParentLength);
 
-			if( 0 < size3 && leaf_cnt < size3 && AnscEqualString(ppParamInfos[i]->parameterName, ppParamVal[leaf_cnt]->parameterName, TRUE))
+			if( 0 < size3 && leaf_cnt < size3 && strcmp(ppParamInfos[i]->parameterName, ppParamVal[leaf_cnt]->parameterName) == 0 )
 			{
 				switch( (ppParamVal[leaf_cnt]->type))
 				{

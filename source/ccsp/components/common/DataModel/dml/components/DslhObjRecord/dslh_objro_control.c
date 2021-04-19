@@ -943,12 +943,7 @@ DslhObjroChildObjectRemoved
             pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
             pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-            if ( AnscEqualString
-                    (
-                        pChildObjRecord->LastName,
-                        child_name,
-                        TRUE
-                    ) )
+            if ( strcmp(pChildObjRecord->LastName,child_name) == 0 )
             {
                 bChildObjFound = TRUE;
 
@@ -1050,7 +1045,7 @@ DslhObjroPopulateObjRecordByName
         pChildObjEntity  = ACCESS_DSLH_OBJ_ENTITY_OBJECT(pSLinkEntry);
         pSLinkEntry      = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if( AnscEqualString(pChildObjEntity->LastName, pObjName, TRUE))
+        if( strcmp(pChildObjEntity->LastName, pObjName) == 0 )
         {
             pfnObjcoCreate   = (PFN_DSLHOBJCO_CREATE)pChildObjEntity->ObjDescr->pfnObjcoConstructor;
 
@@ -1204,7 +1199,7 @@ DslhObjroPopulateObjRecordByName
             pChildVarRecord = ACCESS_DSLH_VAR_RECORD_OBJECT(pSLinkEntry);
             pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-            if ( AnscEqualString(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName,TRUE))
+            if ( strcmp(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName) == 0 )
             {
                 bExist = TRUE;
 
@@ -1223,7 +1218,7 @@ DslhObjroPopulateObjRecordByName
                 pSLinkEntry          = AnscQueueGetNextEntry(pSLinkEntry);
 
                 if( pChildVarEntity->ParamDescr &&
-                    AnscEqualString(pChildVarEntity->ParamDescr->Name, pParamName, TRUE))
+                    strcmp(pChildVarEntity->ParamDescr->Name, pParamName) == 0 )
                 {
                     pChildVarRecord =
                         (PDSLH_VAR_RECORD_OBJECT)DslhCreateVarRecord
@@ -1322,12 +1317,7 @@ DslhObjroDeleteObjRecordByName
         pChildObjRecord = ACCESS_DSLH_OBJ_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( pChildObjRecord->LastName && AnscEqualString
-                (
-                    pChildObjRecord->LastName,
-                    pObjName,
-                    TRUE
-                ) )
+        if ( pChildObjRecord->LastName && strcmp(pChildObjRecord->LastName,pObjName) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->ObjroQueue, &pChildObjRecord->Linkage);
 
@@ -1353,7 +1343,7 @@ DslhObjroDeleteObjRecordByName
         pChildVarRecord = ACCESS_DSLH_VAR_RECORD_OBJECT(pSLinkEntry);
         pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName,TRUE))
+        if ( strcmp(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->VarroTable, &pChildVarRecord->Linkage);
 

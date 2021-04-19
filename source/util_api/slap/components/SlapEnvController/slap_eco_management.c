@@ -128,12 +128,7 @@ SlapEcoGetSlapContainer
         pSlapObjContainer = ACCESS_SLAP_OBJ_CONTAINER_OBJECT(pSLinkEntry);
         pSLinkEntry       = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pSlapObjContainer->GetContainerName((ANSC_HANDLE)pSlapObjContainer),
-                    container_name,
-                    TRUE
-                ) )
+        if ( strcmp(pSlapObjContainer->GetContainerName((ANSC_HANDLE)pSlapObjContainer),container_name) == 0 )
         {
             AnscReleaseLock(&pMyObject->OcoTableLock);
 
@@ -252,12 +247,7 @@ SlapEcoDelSlapContainer1
         pSlapObjContainer = ACCESS_SLAP_OBJ_CONTAINER_OBJECT(pSLinkEntry);
         pSLinkEntry       = AnscQueueGetNextEntry(pSLinkEntry);
 
-        if ( AnscEqualString
-                (
-                    pSlapObjContainer->GetContainerName((ANSC_HANDLE)pSlapObjContainer),
-                    container_name,
-                    TRUE
-                ) )
+        if ( strcmp(pSlapObjContainer->GetContainerName((ANSC_HANDLE)pSlapObjContainer),container_name) == 0 )
         {
             AnscQueuePopEntryByLink(&pMyObject->OcoTable[ulHashIndex], &pSlapObjContainer->Linkage);
 

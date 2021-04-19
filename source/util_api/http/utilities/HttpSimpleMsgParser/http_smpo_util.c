@@ -118,7 +118,7 @@ HttpSmpoTokenIs
                tokenName                                                  &&               
                httpToken                                                  &&               
                AnscSizeOfString((char *)tokenName) == AnscSizeOfString((char *)httpToken) &&                                                             \
-               AnscEqualString((char *)tokenName, (char *)httpToken, TRUE)    
+               strcmp((char *)tokenName, (char *)httpToken) == 0    
            );
 }
 

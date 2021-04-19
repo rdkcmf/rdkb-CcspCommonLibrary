@@ -3507,7 +3507,7 @@ int CcspBaseIf_isSystemReady_rbus(
     if(ret == CCSP_SUCCESS  && size >= 1)
     {
         CcspTraceDebug(("%s %s is %s\n", __FUNCTION__, parameterNames[0], value[0]->parameterValue));
-        if(AnscEqualString(value[0]->parameterValue, "true", FALSE))
+        if(strcasecmp(value[0]->parameterValue, "true") == 0 )
             *val = 1;
         else
             *val = 0;
@@ -5283,11 +5283,11 @@ int PSM_Get_Record_Value
         {
             pValue->Variant.varBool = SLAP_FALSE;
         }
-        else if( AnscEqualString(val[0]->parameterValue, "false", FALSE))
+        else if( strcasecmp(val[0]->parameterValue, "false") == 0 )
         {
             pValue->Variant.varBool = SLAP_FALSE;
         }
-        else if ( AnscEqualString(val[0]->parameterValue, "true", FALSE))
+        else if ( strcasecmp(val[0]->parameterValue, "true") == 0 )
         {
             pValue->Variant.varBool = TRUE; /*Do not use SLAP_TRUE, its value of -1 causes conversion issues*/
         }

@@ -1314,47 +1314,47 @@ certAttrParsingOneName
     pTemp ++;
     PKICopyStringAfterTrim(pValue, pTemp);
 
-    if( AnscEqualString(pName,  X500_CN, FALSE))
+    if( strcasecmp(pName,  X500_CN) == 0 )
     {
         /* copy name here */
         pThisObject->AddCommonName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_L, FALSE))
+    else if( strcasecmp(pName,  X500_L) == 0 )
     {
         /* copy locality here */
         pThisObject->AddLocalityName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_ST, FALSE))
+    else if( strcasecmp(pName,  X500_ST) == 0 )
     {
         /* copy state here */
         pThisObject->AddStateOrProvinceName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_O, FALSE))
+    else if( strcasecmp(pName,  X500_O) == 0 )
     {
         /* copy organization name here */
         pThisObject->AddOrganizationName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_OU, FALSE))
+    else if( strcasecmp(pName,  X500_OU) == 0 )
     {
         /* copy organization unit name here */
         pThisObject->AddOrganUnitName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_C, FALSE))
+    else if( strcasecmp(pName,  X500_C) == 0 )
     {
         /* copy country name here */
         pThisObject->AddCountryName(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_STREET, FALSE))
+    else if( strcasecmp(pName,  X500_STREET) == 0 )
     {
         /* copy street address */
         pThisObject->AddStreetAddress(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  X500_SN, FALSE))
+    else if( strcasecmp(pName,  X500_SN) == 0 )
     {
         /* copy serial number */
         pThisObject->AddSerialNumber(pThisObject, pValue);
     }
-    else if( AnscEqualString(pName,  ALT_EMAIL_NAME, FALSE))
+    else if( strcasecmp(pName,  ALT_EMAIL_NAME) == 0 )
     {
         /* copy serial number */
         pThisObject->AddEmailAddress(pThisObject, pValue);

@@ -151,7 +151,7 @@ BreeSrmoUnregisterCookedResource
     {
         pRes = ACCESS_BREE_SRM_RES_ITEM_OBJECT(pEntry);
 
-        if (AnscEqualString((char *)pRes->pPath, (char *)pCookedRes->pResPath, FALSE))
+        if (strcasecmp((char *)pRes->pPath, (char *)pCookedRes->pResPath) == 0 )
         {
             AnscSListPopEntryByLink(&pMyObject->ResList[ulHashIndex], &pRes->Linkage);
         }
@@ -188,7 +188,7 @@ BreeSrmoMapCookedResource
     {
         pRes = ACCESS_BREE_SRM_RES_ITEM_OBJECT(pEntry);
 
-        if (AnscEqualString((char *)pRes->pPath, (char *)pUrl, FALSE))
+        if (strcasecmp((char *)pRes->pPath, (char *)pUrl) == 0 )
         {
             return (ANSC_HANDLE)pRes;
         }
