@@ -4779,7 +4779,7 @@ int CcspBaseIf_Register_Event_rbus
         return CCSP_FAILURE;
     }
 
-    err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle);
+    err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle, NULL);
 
     if (err != RTMESSAGE_BUS_SUCCESS)
     {
@@ -5486,7 +5486,7 @@ int CcspBaseIf_UnRegister_Event_rbus(
         return CCSP_SUCCESS;
     }
 
-    if(RTMESSAGE_BUS_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name))
+    if(RTMESSAGE_BUS_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name, NULL))
     {
         RBUS_LOG_ERR("rbus_unsubscribeFromEvent::CcspBaseIf_UnRegister_Event_rbus returns error for sender %s for event_name %s \n", sender, event_name);
         return CCSP_FAILURE;
