@@ -250,3 +250,8 @@ if [ $MODEL_NUM == "DPC3941B" ] || [ $MODEL_NUM == "DPC3939B" ] || [ "$MODEL_NUM
 echo "Coping server-notify.sh into /var/lib/dibbler"
 sh /lib/rdk/dibbler-server-init.sh
 fi
+
+#start update webui certs 
+if [ -f /lib/rdk/check-webui-update.sh ] && [ "$BOX_TYPE" != "XB3" ]; then
+    sh /lib/rdk/check-webui-update.sh &
+fi
