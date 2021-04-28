@@ -2491,7 +2491,7 @@ static int cr_registerCaps_rbus(const char * destination, const char * method, r
     int err = CCSP_Message_Bus_OK;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    if (func->registerCaps)
+    if ((func) && (func->registerCaps))
     {
         char* pCompName = NULL;
         rbusMessage_GetString(request, (const char**)&pCompName);
@@ -2509,7 +2509,7 @@ static int cr_isSystemReady_rbus (const char * destination, const char * method,
     int err = CCSP_Message_Bus_OK;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    if (func->isSystemReady)
+    if ((func) && (func->isSystemReady))
     {
         int32_t result = 0;
         result = func->isSystemReady();
@@ -2530,7 +2530,7 @@ static int webcfg_signal_rbus(const char * destination, const char * method, rbu
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
 
     RBUS_LOG ("%s Received %s", __FUNCTION__, method);
-    if (func->webconfigSignal)
+    if ((func) && (func->webconfigSignal))
     {
         char* webconfig_data = 0;
         RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
@@ -2550,8 +2550,12 @@ static int telemetry_send_signal_rbus(const char * destination, const char * met
     char* telemetry_data = NULL;
     CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
     CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    err = rbusMessage_GetString(request, (const char**)&telemetry_data);
-    func->telemetryDataSignal(telemetry_data,func->telemetryDataSignal_data);
+
+    if ((func) && (func->telemetryDataSignal))
+    {
+        rbusMessage_GetString(request, (const char**)&telemetry_data);
+        func->telemetryDataSignal(telemetry_data,func->telemetryDataSignal_data);
+    }
     return err;
 }
 static int
