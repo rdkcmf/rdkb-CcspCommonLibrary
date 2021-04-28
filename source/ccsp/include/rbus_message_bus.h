@@ -46,6 +46,17 @@
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_session_mgr.h>
 #include <rtmessage/rtLog.h>
+#include <rbus_filter.h>
+
+void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
+void rbusValue_appendToMessage(char const* name, rbusValue_t value, rbusMessage msg);
+void rbusProperty_initFromMessage(rbusProperty_t* property, rbusMessage msg);
+void rbusPropertyList_initFromMessage(rbusProperty_t* prop, rbusMessage msg);
+void rbusPropertyList_appendToMessage(rbusProperty_t prop, rbusMessage msg);
+void rbusObject_initFromMessage(rbusObject_t* obj, rbusMessage msg);
+void rbusObject_appendToMessage(rbusObject_t obj, rbusMessage msg);
+void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);
+void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
 
 #define RBUS_RETURN_CODE_SUCCESS 0
 #define RBUS_RETURN_CODE_FAILURE 1
@@ -72,19 +83,10 @@ typedef enum _rbus_data_type_t {
     RBUS_DATATYPE_NONE
 } rbusNewDataType_t;
 
-typedef struct _rbusTimeZone {
-    int m_tzhour;
-    int m_tzmin;
-    int m_isWest;
-} rbusTimeZone_t ;
-
-typedef struct _rbusDateTime {
-    struct tm       m_time;
-    rbusTimeZone_t  m_tz;
-} rbusDateTime_t;
+typedef enum dataType_e* pdataType_e;
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rbusMessage message, void * user_data);
-void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue);
+void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, pdataType_e pType, char** pStringValue);
 unsigned int get_writeid(const char *str);
 char* writeid_to_string(unsigned int writeid);
 unsigned int string_to_writeid(const char *str);

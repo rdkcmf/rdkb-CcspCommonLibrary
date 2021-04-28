@@ -46,6 +46,7 @@
 #include <rbus_message_bus.h>
 #include "ansc_platform.h"
 #include <dslh_definitions_database.h>
+#include "ccsp_rbus_value_change.h"
 
 #ifndef WIN32 
 #include <sys/time.h>
@@ -144,8 +145,8 @@ static int webcfg_signal_rbus (const char * destination, const char * method, rb
 static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int cr_isSystemReady_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
+static int cssp_event_subscribe_override_handler_rbus(char const* object,  char const* eventName, char const* listener, int added, const rbusMessage payload, void* userData);
 int rbus_enabled = 0;
-
 
 // External Interface, defined in ccsp_message_bus.h
 /*
@@ -1072,14 +1073,34 @@ ccsp_rbus_logHandler
             CcspTraceInfo(("%s:%d %s\n", file, line, message));
             break;
         case RT_LOG_DEBUG:
-            {
-                if(access("/nvram/rbus_support_log_to_file", F_OK) == 0) {
-                    CcspTraceNotice(("%s:%d %s\n", file, line, message));
-                }
-                break;
-            }
+            CcspTraceDebug(("%s:%d %s\n", file, line, message));
+            break;
     }
     return;
+}
+
+void CCSP_Message_Bus_Init_Rbus_Logger()
+{
+    FILE* file = fopen("/nvram/rbus_log_level", "r");
+
+    if(file)
+    {
+        int len, ret;
+        char name[10];
+        ret = fscanf(file, "%6s %n", name, &len);
+        if(ret == 1)
+        {
+            rtLogLevel level = rtLogLevelFromString(name);
+            if(strcasecmp(name, rtLogLevelToString(level)) == 0)
+            {
+                rtLog_SetLevel(level);
+                CcspTraceWarning(("enabling %s rbus logs\n", level));
+            }
+        }
+    }
+    
+    /* Register with rtLog to use CCSPTRACE_LOGS */
+    rtLogSetLogHandler(ccsp_rbus_logHandler);
 }
 
 int 
@@ -1166,6 +1187,9 @@ CCSP_Message_Bus_Init
     {
         rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
         CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
+
+        CCSP_Message_Bus_Init_Rbus_Logger();
+
         err = rbus_openBrokerConnection(component_id);
         if( err != RTMESSAGE_BUS_SUCCESS &&
                 err != RTMESSAGE_BUS_ERROR_INVALID_STATE/*connection already opened. which is allowed*/)
@@ -1176,15 +1200,17 @@ CCSP_Message_Bus_Init
         {
             CcspTraceInfo(("connection opened for %s\n",component_id));
 
-            /* Register with rtLog to use CCSPTRACE_LOGS */
-            rtLogSetLogHandler(ccsp_rbus_logHandler);
-
             if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
             {
                 CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
             }
             else
             {
+                if((err = rbus_registerSubscribeHandler(component_id, cssp_event_subscribe_override_handler_rbus, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+                {
+                    rtLog_Error("<%s>: rbus_registerSubscribeHandler() failed with %d.  Rbus value change will not work.", __FUNCTION__, err);
+                }
+
                 if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.CR") == 0)
                 {
                     if((err = rbus_registerEvent(component_id, CCSP_SYSTEM_READY_SIGNAL, NULL, NULL)) != RTMESSAGE_BUS_SUCCESS)
@@ -2614,6 +2640,67 @@ CCSP_Message_Bus_Register_Path_Priv_rbus
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     bus_info->rbus_callback = (void *)funcptr;
     return CCSP_Message_Bus_OK;
+}
+
+/*
+ *  Added to support rbus value-change detection
+ *  This will check if eventName refers to a parameter (and not an event like CCSP_SYSTEM_READY_SIGNAL)
+ *  If its a parameter it will assume value-change is desired and pass the data to Ccsp_RbusValueChange api to handle it
+ */
+static int cssp_event_subscribe_override_handler_rbus(
+    char const* object,
+    char const* eventName,
+    char const* listener,
+    int added,
+    const rbusMessage payload,
+    void* userData)
+{
+    int32_t interval = 0;
+    int32_t duration = 0;
+    rbusFilter_t filter = NULL;
+    size_t slen;
+    (void)object;
+
+    //determine if eventName is a parameter
+    slen = strlen(eventName);
+    if(slen < 7 || strncmp(eventName, "Device.", 7) != 0 || eventName[slen-1] == '!')
+    {
+        //not a parameter so return special error so rbus_core will search its registered event list for actual events like CCSP_SYSTEM_READY_SIGNAL
+        CcspTraceWarning(("%s: ignored %s\n", __FUNCTION__, eventName));
+        return RTMESSAGE_BUS_SUBSCRIBE_NOT_HANDLED;
+    }
+
+    CcspTraceWarning(("%s: %s\n", __FUNCTION__, eventName));
+
+    //check for rbus filter
+    if(payload)
+    {
+        int hasFilter;
+        rbusMessage_GetInt32(payload, &interval);
+        rbusMessage_GetInt32(payload, &duration);
+        rbusMessage_GetInt32(payload, &hasFilter);
+        if(hasFilter)
+        {
+            rbusFilter_InitFromMessage(&filter, payload);
+            rbusFilter_fwrite(filter, stdout, NULL);
+        }
+    }
+
+    if(added)
+    {
+        Ccsp_RbusValueChange_Subscribe(userData, listener, eventName, filter, interval, duration);
+    }
+    else
+    {
+        Ccsp_RbusValueChange_Unsubscribe(userData, listener, eventName, filter);
+    }
+
+    if(filter)
+    {
+        rbusFilter_Release(filter);
+    }
+
+    return RTMESSAGE_BUS_SUCCESS;
 }
 
 int 
