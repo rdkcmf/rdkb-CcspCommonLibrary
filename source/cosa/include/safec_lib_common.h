@@ -46,6 +46,7 @@ typedef int errno_t;
 #define EOK 0
 #define ESNULLP          400        /* null ptr                    */
 #define ESLEMAX          403       /* length exceeds RSIZE_MAX    */
+#define ESNOSPC          406       /* not enough space for dest     */
 
 #define strcpy_s(dst,max,src) (src != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
  if((src != NULL) && (max > strlen(src))) strcpy(dst,src);
@@ -78,7 +79,7 @@ typedef int errno_t;
 
 #define strtok_s(dest, dmax, delim, ptr) strtok_r(dest, delim, ptr)
 
-#define sprintf_s( dst, max, fmt, ... ) (parseFormat(dst, max, fmt, ##__VA_ARGS__) == 0) ? -ESNULLP : sprintf( dst, fmt, ##__VA_ARGS__)
+#define sprintf_s( dst, max, fmt, ... ) parseFormat(dst, max, fmt, ##__VA_ARGS__)
 
 static inline int parseFormat(const char *dst, int max, const char *fmt, ...)
 {
@@ -87,7 +88,7 @@ static inline int parseFormat(const char *dst, int max, const char *fmt, ...)
 
     if((fmt == NULL) || (dst == NULL) || (max == 0))
     {
-        return 0;
+        return -ESNULLP;
     }
 
     va_start(argp, fmt);
@@ -96,7 +97,7 @@ static inline int parseFormat(const char *dst, int max, const char *fmt, ...)
 
     va_end(argp);
 
-    return (max > len) ? 1 : 0;
+    return (max > len) ? len : -ESNOSPC;
 }
 
 static inline int strcmp_s(const char *dst, int dmax, const char *src, int *r) {
