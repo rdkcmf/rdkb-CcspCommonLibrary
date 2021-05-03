@@ -4472,6 +4472,7 @@ int CcspBaseIf_SendTelemetryDataSignal (
     return CCSP_SUCCESS;
 }
 
+#if 0
 int CcspBaseIf_WebConfigSignal_rbus (
     void* bus_handle,
     char* webconfig
@@ -4496,15 +4497,13 @@ int CcspBaseIf_WebConfigSignal_rbus (
     return ret;
 }
 
+#endif 
 int CcspBaseIf_WebConfigSignal (
     void* bus_handle,
     char* webconfig
 )
 {
-    if(rbus_enabled == 1)
-    {
-        return CcspBaseIf_WebConfigSignal_rbus(bus_handle,webconfig);
-    }
+
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessage *message;
     int i;
