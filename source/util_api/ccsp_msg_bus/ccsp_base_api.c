@@ -76,6 +76,7 @@ typedef struct _component_info {
 int   CcspBaseIf_timeout_seconds        = 60; //seconds
 int   CcspBaseIf_timeout_getval_seconds = 120; //seconds
 #define  CcspBaseIf_timeout_rbus  (CcspBaseIf_timeout_seconds * 1000) // in milliseconds
+#define  CcspBaseIf_timeout_getval_rbus  (CcspBaseIf_timeout_getval_seconds * 1000) // in milliseconds
 
 int CcspBaseIf_freeResources(
     void* bus_handle,
@@ -581,7 +582,7 @@ int CcspBaseIf_getParameterValues_rbus(
     }
 
     RBUS_LOG("Calling rbus_invokeRemoteMethod for %s\n", object_name);
-    if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERVALUES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    if((err = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(object_name, METHOD_GETPARAMETERVALUES, request, CcspBaseIf_timeout_getval_rbus, &response))) != CCSP_Message_Bus_OK)
     {
         RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: for param[0]=%s failed with Err: %d\n", __FUNCTION__, parameterNames[0], err);
         return err;
