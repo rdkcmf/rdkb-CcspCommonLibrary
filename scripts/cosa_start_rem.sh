@@ -398,7 +398,11 @@ SELFHEAL_ENABLE=`syscfg get selfheal_enable`
 if [ "$SELFHEAL_ENABLE" == "false" ]
 then
 	echo_t "Running process monitoring script"
-	/etc/process_monitor.sh &
+	if [ -f /etc/process_monitor.sh ];then
+		/etc/process_monitor.sh &
+	else
+		echo "process_monitor.sh is not found"
+	fi
 fi
 
 # starting the minidump watcher & uploader
