@@ -157,6 +157,8 @@ volatile BOOL TELCOVOICEMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel = 4;
 volatile BOOL PPPMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int PPPMANAGER_RDKLogLevel = 4;
+volatile BOOL LEDMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int LEDMANAGER_RDKLogLevel = 4;
 #endif //FEATURE_RDKB_WAN_MANAGER
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
@@ -495,6 +497,12 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogLevel = PPPMANAGER_RDKLogLevel;
             LogEnable = PPPMANAGER_RDKLogEnable;
         }	
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ledmanager"))
+        {
+            ComponentName= "LOG.RDK.RDKLEDMANAGER";
+            LogLevel = LEDMANAGER_RDKLogLevel;
+            LogEnable = LEDMANAGER_RDKLogEnable;
+        }
 #endif // FEATURE_RDKB_WAN_MANAGER
         else
         {
