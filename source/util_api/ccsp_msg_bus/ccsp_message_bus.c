@@ -2137,6 +2137,10 @@ char* writeid_to_string(unsigned int writeid)
         return "writeid_acs";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_CLI)
         return "writeid_cli";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_XPC)
+        return "writeid_xpc";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_NOTIFY_COMP)
+        return "writeid_notify";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL)
         return "writeid_clienttool";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_LM)
@@ -2159,6 +2163,10 @@ unsigned int string_to_writeid(const char *str)
         return DSLH_MPA_ACCESS_CONTROL_ACS;
     else if ( _ansc_strcmp(str, "writeid_cli") == 0 )
         return DSLH_MPA_ACCESS_CONTROL_CLI;
+    else if ( _ansc_strcmp(str, "writeid_xpc") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_XPC;
+    else if ( _ansc_strcmp(str, "writeid_notify") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_NOTIFY_COMP;
     else if ( _ansc_strcmp(str, "writeid_clienttool") == 0 )
         return DSLH_MPA_ACCESS_CONTROL_CLIENTTOOL;
     else if ( _ansc_strcmp(str, "writeid_lm") == 0 )
@@ -2248,7 +2256,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int32_t dataType = 0;
 
             rbusMessage_GetInt32(request, &sessionId);
-            if(rbusMessage_GetString(request, &writeID_str) != RT_OK)
+            if(rbusMessage_GetString(request, &writeID_str) == RT_OK)
                 writeID = string_to_writeid(writeID_str);
             rbusMessage_GetInt32(request, (int32_t*)&param_size);
             if(param_size > 0)
@@ -2343,7 +2351,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             const char * writeID_str = NULL;
             int result = 0;
             rbusMessage_GetInt32(request, &sessionId);
-            if(rbusMessage_GetString(request, &writeID_str) != RT_OK)
+            if(rbusMessage_GetString(request, &writeID_str) == RT_OK)
                 writeID = string_to_writeid(writeID_str);
             rbusMessage_GetInt32(request, &commit);
             result = func->setCommit(sessionId, writeID, commit, func->setCommit_data);
