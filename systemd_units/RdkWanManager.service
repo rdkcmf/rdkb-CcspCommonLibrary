@@ -27,7 +27,7 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/rdk/wanmanager
-ExecStartPre=/bin/touch /nvram/OS_WANMANAGER_ENABLED
+ExecStartPre=/bin/touch /tmp/OS_WANMANAGER_ENABLED
 ExecStart=/usr/rdk/wanmanager/wanmanager -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkWanManager" >> ${PROCESS_RESTART_LOG}'
 Restart=always
