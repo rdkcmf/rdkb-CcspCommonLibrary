@@ -17,6 +17,9 @@
  * limitations under the License.
 */
 
+#include <stdio.h>
+#include <string.h>
+#include <stddef.h>
 
 #ifndef SAFEC_DUMMY_API
 #include "safe_str_lib.h"
