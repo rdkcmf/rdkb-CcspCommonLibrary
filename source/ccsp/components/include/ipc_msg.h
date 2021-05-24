@@ -95,6 +95,25 @@ typedef struct _ipc_ppp_event_msg_t
 
 }ipc_ppp_event_msg_t;
 
+#ifdef FEATURE_MAPT
+typedef struct _ipc_mapt_data_t
+{
+   char brIPv6Prefix[BUFLEN_128];
+   char ruleIPv4Prefix[BUFLEN_32];
+   char ruleIPv6Prefix[BUFLEN_128];
+   char pdIPv6Prefix[BUFLEN_128];
+   uint32_t iapdPrefixLen;
+   uint32_t eaLen;
+   uint32_t psidOffset;
+   uint32_t psidLen;
+   uint32_t psid;
+   uint32_t v4Len;
+   uint32_t v6Len;
+   uint32_t ratio;
+   bool isFMR;
+} ipc_mapt_data_t;
+#endif
+
 typedef struct _ipc_dhcpv4_data_t
 {
     bool addressAssigned;              /** Have we been assigned an IP address ? */
@@ -145,14 +164,7 @@ typedef struct _ipc_dhcpv6_data_t
    char ntpserver[BUFLEN_128];  /**< New ntp server(s), dhcp server may provide this */
    char aftr[AFTR_NAME_LENGTH];      /**< dhcp server may provide this */
 #ifdef FEATURE_MAPT
-   char brIPv6Prefix[IP_ADDR_LENGTH];
-   char ruleIPv4Prefix[IP_ADDR_LENGTH];
-   char ruleIPv6Prefix[IP_ADDR_LENGTH];
-   uint32_t eaLen;
-   uint32_t psidOffset;
-   uint32_t psidLen;
-   uint32_t psid;
-   bool isFMR;
+   ipc_mapt_data_t mapt;
 #endif
 } ipc_dhcpv6_data_t;
 
