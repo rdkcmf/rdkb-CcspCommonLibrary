@@ -102,9 +102,9 @@
 
     #define  AnscSizeOfString                       UserSizeOfString
     #define  AnscCopyString                         UserCopyString
-    /*#define  AnscEqualString1                       UserEqualString1*/
-    /*#define  AnscEqualString2                       UserEqualString2*/
-    #define  AnscEqualString                        AnscEqualString1
+    #define  AnscEqualString1                       UserEqualString1
+    #define  AnscEqualString2                       UserEqualString2
+    #define  AnscEqualString                        UserEqualString1
     #define  AnscCatString                          UserCatString
     #define  AnscCharInString                       UserCharInString
 
