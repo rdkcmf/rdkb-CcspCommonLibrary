@@ -150,11 +150,12 @@
 
 #define  AnscIsDigitString(tbe_string, b_result)                                            \
          {                                                                                  \
-            ULONG                   ii = 0;                                                 \
+            int ii;                                                                         \
+            int ll = strlen(tbe_string);                                                    \
                                                                                             \
             b_result = TRUE;                                                                \
                                                                                             \
-            for ( ii = 0; ii < AnscSizeOfString(tbe_string); ii++ )                         \
+            for ( ii = 0; ii < ll; ii++ )                                                   \
             {                                                                               \
                 if ( !AnscIsDigit(tbe_string[ii]) )                                         \
                 {                                                                           \
