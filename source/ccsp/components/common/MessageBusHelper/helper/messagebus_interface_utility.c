@@ -166,7 +166,7 @@ mbiIf_SendParameterValueChangeSignal
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscZeroMemory(pParamSignal, sizeof(parameterSigStruct_t*));
+    AnscZeroMemory(pParamSignal, sizeof(parameterSigStruct_t));
 
     pParamSignal->parameterName = AnscCloneString(pPamameterName);
 
