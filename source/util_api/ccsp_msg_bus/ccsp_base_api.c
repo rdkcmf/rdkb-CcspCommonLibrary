@@ -4646,6 +4646,30 @@ int CcspBaseIf_TunnelStatusSignal_rbus (
     return ret;
 }
 
+int CcspBaseIf_WifiDbStatusSignal_rbus (
+    void* bus_handle,
+    char* WifiDbStatus
+)
+{
+    UNREFERENCED_PARAMETER(bus_handle);
+    int ret = CCSP_FAILURE;
+    rbusMessage request, response;
+
+    rbusMessage_Init(&request);
+    rbusMessage_SetString(request,WifiDbStatus);
+    RBUS_LOG("%s : rbus_publishEvent :: event_name : %s :: \n", __FUNCTION__, "WifiDbStatus");
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.wifi", "WifiDbStatus", request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for WifiDbStatus failed & returns with Err: %d\n", __FUNCTION__, ret);
+        ret = CCSP_FAILURE;
+    }
+    else
+    {
+        rbusMessage_Release(response);
+    }
+    return ret;
+}
+
 int CcspBaseIf_SendSignal_WithData(
     void * bus_handle,
     char *event,
@@ -4660,6 +4684,10 @@ int CcspBaseIf_SendSignal_WithData(
         {
             return CcspBaseIf_TunnelStatusSignal_rbus(bus_handle,data);
 
+        }
+        else if(strcmp(event, "WifiDbStatus") == 0)
+        {
+            return CcspBaseIf_WifiDbStatusSignal_rbus(bus_handle,data);
         }
         else
         {
@@ -4775,7 +4803,7 @@ int CcspBaseIf_Register_Event_rbus
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
     else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
         comp = "eRT.com.cisco.spvtg.ccsp.CR";
-    else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0) || (strcmp(event_name, "reboot") == 0) || (strcmp(event_name, "TunnelStatus") == 0))
+    else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0) || (strcmp(event_name, "reboot") == 0) || (strcmp(event_name, "TunnelStatus")  == 0) || (strcmp(event_name, "WifiDbStatus") == 0))
     {
         RBUS_LOG ("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);
         return CCSP_SUCCESS;
@@ -5487,7 +5515,7 @@ int CcspBaseIf_UnRegister_Event_rbus(
 {
     UNREFERENCED_PARAMETER(bus_handle);
     /* Ref the CcspBaseIf_Register_Event_rbus() for webconfigSignal event */
-    if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "reboot") == 0) || (strcmp(event_name, "TunnelStatus") == 0))
+    if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "reboot") == 0) || (strcmp(event_name, "TunnelStatus") == 0)  || (strcmp(event_name, "WifiDbStatus") == 0))
     {
         RBUS_LOG ("RBUS_EVENT_UNSUBSCRIBED:: %s signal is handled as method and nothing to unsubscribe.\n", event_name);
         return CCSP_SUCCESS;

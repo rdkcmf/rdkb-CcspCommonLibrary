@@ -142,6 +142,7 @@ static int               analyze_reply(DBusMessage*, DBusMessage*, DBusMessage**
 static DBusWakeupMainFunction wake_mainloop(void *);
 static int tunnelStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int webcfg_signal_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
+static int wifiDbStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int cr_isSystemReady_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
@@ -1252,10 +1253,11 @@ CCSP_Message_Bus_Init
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.wifi") == 0)
                 {
-                    rbus_method_table_entry_t table[1] = {
+                    rbus_method_table_entry_t table[2] = {
                                                             {"TunnelStatus", (void*)bus_info, tunnelStatus_signal_rbus},
+                                                            {"WifiDbStatus", (void*)bus_info, wifiDbStatus_signal_rbus},
                                                          };
-                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS ))
+                    if(( err = rbus_registerMethodTable(component_id, table, 2) != RTMESSAGE_BUS_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -2606,6 +2608,27 @@ static int tunnelStatus_signal_rbus(const char * destination, const char * metho
         RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
         rbusMessage_GetString(request, (char const**)&tunnel_status);
         func->TunnelStatus(tunnel_status, func->TunnelStatus_data);
+    }
+    return err;
+}
+
+static int wifiDbStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
+{
+    UNREFERENCED_PARAMETER(response);
+    (void) destination;
+    (void) method;
+    (void) hdr;
+    int err = CCSP_Message_Bus_OK;
+    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+
+    RBUS_LOG ("%s Received %s", __FUNCTION__, method);
+    if ((func) && (func->WifiDbStatus))
+    {
+        char* wifidb_status = 0;
+        RBUS_LOG_ERR("Handling : %s from Component: %s", method, bus_info->component_id);
+        rbusMessage_GetString(request, (char const**)&wifidb_status);
+        func->WifiDbStatus(wifidb_status, func->WifiDbStatus_data);
     }
     return err;
 }

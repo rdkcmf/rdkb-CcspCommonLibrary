@@ -1044,6 +1044,11 @@ typedef void (*CCSPBASEIF_TUNNELSTATUS )(
     void* user1_data
 );
 
+typedef void (*CCSPBASEIF_WIFIDBSTATUS )(
+    char* WifiDbStatus_data,
+    void* user1_data
+);
+
 typedef int (*CCSPBASEIF_GETHEEALTH)();
 
 typedef int (*CCSPPAIF_RESTARTBOOTSTRAP)( 
@@ -1146,6 +1151,9 @@ typedef struct _CCSP_Base_Func_CB
 
     CCSPBASEIF_TUNNELSTATUS                        TunnelStatus;
     void *                                         TunnelStatus_data;
+
+    CCSPBASEIF_WIFIDBSTATUS                        WifiDbStatus;
+    void *                                         WifiDbStatus_data;
 } CCSP_Base_Func_CB;
 
 /*

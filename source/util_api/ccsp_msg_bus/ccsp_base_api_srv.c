@@ -588,6 +588,11 @@ void CcspBaseIf_SetCallback2
             cb->TunnelStatus = func;
             cb->TunnelStatus_data = user_data;
         }
+        else if(!strcmp("WifiDbStatus", name))
+        {
+            cb->WifiDbStatus = func;
+            cb->WifiDbStatus_data = user_data;
+        }
 
 }
 
@@ -1630,6 +1635,16 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
                                           DBUS_TYPE_STRING, &TunnelStatus_data,
                                           DBUS_TYPE_INVALID))
                    func->TunnelStatus(TunnelStatus_data, func->TunnelStatus_data);
+            }
+
+            if(!strcmp(method,"WifiDbStatus") && !strcmp(interface, CCSP_DBUS_INTERFACE_EVENT) && func->WifiDbStatus)
+            {
+                char* WifiDbStatus_data = 0;
+                if(dbus_message_get_args (message,
+                                          NULL,
+                                          DBUS_TYPE_STRING, &WifiDbStatus_data,
+                                          DBUS_TYPE_INVALID))
+                   func->WifiDbStatus(WifiDbStatus_data, func->WifiDbStatus_data);
             }
     
 	if(!strcmp(method,STBSERVICE_CDL_DLC_SIGNAL) && !strcmp(interface, STBSERVICE_CDL_INTERFACE) && func->dlCompleteSignal)
