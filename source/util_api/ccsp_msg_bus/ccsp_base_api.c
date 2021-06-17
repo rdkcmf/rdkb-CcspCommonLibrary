@@ -1974,7 +1974,7 @@ int CcspBaseIf_registerCapabilities_rbus(
         rbusMessage_Init(&request);
         rbusMessage_SetString(request, component_name);
         RBUS_LOG("%s : object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, METHOD_REGISTERCAPABILITIES);
-        if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_REGISTERCAPABILITIES, request, 1000, &response))) != CCSP_Message_Bus_OK)
+        if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_REGISTERCAPABILITIES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
         {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s for %s returns with Err: %d\n", __FUNCTION__, METHOD_REGISTERCAPABILITIES, component_name, ret);
             ret = CCSP_FAILURE;
@@ -3347,7 +3347,7 @@ int CcspBaseIf_isSystemReady_rbus(
 #else
     rbusMessage response;
 
-    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_ISSYSTEMREADY, NULL, 1000, &response))) != CCSP_Message_Bus_OK)
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_ISSYSTEMREADY, NULL, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
     {
         RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s s returns with Err: %d\n", __FUNCTION__, METHOD_ISSYSTEMREADY, ret);
         ret = CCSP_FAILURE;
@@ -3426,7 +3426,7 @@ int CcspBaseIf_requestSessionID_rbus (
     rbusMessage response;
     int result = 0;
 
-    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_REQUEST_SESSION_ID, NULL, 1000, &response)))
+    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_REQUEST_SESSION_ID, NULL, CcspBaseIf_timeout_rbus, &response)))
     {
         if(RT_OK == rbusMessage_GetInt32(response, &result))
         {
@@ -3521,7 +3521,7 @@ int CcspBaseIf_getCurrentSessionID_rbus (
     rbusMessage response;
     int result = 0;
 
-    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_GET_CURRENT_SESSION_ID, NULL, 1000, &response)))
+    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_GET_CURRENT_SESSION_ID, NULL, CcspBaseIf_timeout_rbus, &response)))
     {
         if(RT_OK == rbusMessage_GetInt32(response, &result))
         {
@@ -3618,7 +3618,7 @@ int CcspBaseIf_informEndOfSession_rbus (
     rbusMessage_Init(&out);
     rbusMessage_SetInt32(out, sessionID);
 
-    if(RTMESSAGE_BUS_SUCCESS == rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, 1000, &response))
+    if(RTMESSAGE_BUS_SUCCESS == rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, CcspBaseIf_timeout_rbus, &response))
     {
         if(RT_OK == rbusMessage_GetInt32(response, &result))
         {
@@ -4413,7 +4413,7 @@ void* CcspBaseIf_SendTelemetryDataSignal_rbus(void* telemetry_data)
   rbusMessage_Init(&out);
   char* Telemetry_data = (char*)telemetry_data;
   rbusMessage_SetString(out, Telemetry_data);
-  if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.telemetry", CCSP_TELEMETRY_DATA_SIGNAL,out, 1000, &response))) != CCSP_Message_Bus_OK)
+  if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.telemetry", CCSP_TELEMETRY_DATA_SIGNAL,out, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
   {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for telemetry data:%s returns with Err: %d\n", __FUNCTION__,Telemetry_data, ret);
   }
