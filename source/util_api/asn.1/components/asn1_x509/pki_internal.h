@@ -39,14 +39,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1999 ~ 2003
-
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     DESCRIPTION:
 
         Functions defined for ALCERTIFICATE_ATTRIBUTE

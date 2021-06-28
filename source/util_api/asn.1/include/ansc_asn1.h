@@ -42,13 +42,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1997 ~ 2002
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     FUNCTIONAL DESCRIPTION:
 
         This header file defines the materialized Abstract Syntax

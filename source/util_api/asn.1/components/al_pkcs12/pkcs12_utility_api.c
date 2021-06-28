@@ -41,14 +41,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1999 ~ 2003
-
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     DESCRIPTION:
 
         This interface is for the pkcs12 utility functions.

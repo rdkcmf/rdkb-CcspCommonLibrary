@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1997 ~ 2001
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     FUNCTIONAL DESCRIPTION:
 
         This header file defines some data types/apis to hardware

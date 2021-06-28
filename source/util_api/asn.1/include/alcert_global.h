@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 2001 ~ 2005
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     FUNCTIONAL DESCRIPTION:
 
         This header file defines some common data types.

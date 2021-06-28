@@ -41,14 +41,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1999 ~ 2003
-
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     DESCRIPTION:
 
         The ASN.1 object defined in this file

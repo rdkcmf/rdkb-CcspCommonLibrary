@@ -43,13 +43,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1997 ~ 1998
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     FUNCTIONAL DESCRIPTION:
 
         This header file defines all the exported API functions

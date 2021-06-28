@@ -41,14 +41,6 @@
 
     ---------------------------------------------------------------
 
-    COPYRIGHT:
-
-        Cisco Systems, Inc., 1999 ~ 2003
-
-        All Rights Reserved.
-
-    ---------------------------------------------------------------
-
     DESCRIPTION:
 
         The Internal functions defined for ASN.1 objects
