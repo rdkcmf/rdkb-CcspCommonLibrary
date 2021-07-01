@@ -563,10 +563,3 @@ if [ -e ./logagent ]; then
 	fi
 	cd ..
 fi
-
-#Download the package
-if [ "$BOX_TYPE" = "XB3" ] || [ "$BOX_TYPE" = "TCCBR" ]; then
-    if [ -f /lib/rdk/webui-update-dnld-rdkb.sh ]; then
-       sh /lib/rdk/webui-update-dnld-rdkb.sh &
-    fi
-fi

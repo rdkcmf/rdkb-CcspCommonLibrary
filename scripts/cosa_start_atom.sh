@@ -361,9 +361,3 @@ if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
       /usr/ccsp/wifi/disable_lnf.sh
    fi
 fi
-
-if [ "$MODEL_NUM" = "TG1682G" ]; then
-   if [ -f /lib/rdk/webui-update-dnld-rdkb.sh ];then
-      sh /lib/rdk/webui-update-dnld-rdkb.sh &
-   fi
-fi
