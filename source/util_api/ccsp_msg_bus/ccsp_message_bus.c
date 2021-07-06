@@ -2148,6 +2148,8 @@ char* writeid_to_string(unsigned int writeid)
         return "writeid_acs";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_CLI)
         return "writeid_cli";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_WEBPA)
+        return "writeid_webpa";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_XPC)
         return "writeid_xpc";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_NOTIFY_COMP)
@@ -2174,6 +2176,8 @@ unsigned int string_to_writeid(const char *str)
         return DSLH_MPA_ACCESS_CONTROL_ACS;
     else if ( _ansc_strcmp(str, "writeid_cli") == 0 )
         return DSLH_MPA_ACCESS_CONTROL_CLI;
+    else if ( _ansc_strcmp(str, "writeid_webpa") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_WEBPA;
     else if ( _ansc_strcmp(str, "writeid_xpc") == 0 )
         return DSLH_MPA_ACCESS_CONTROL_XPC;
     else if ( _ansc_strcmp(str, "writeid_notify") == 0 )
