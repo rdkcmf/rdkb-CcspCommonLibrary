@@ -542,13 +542,6 @@
             uint32_t                Value;                                                  \
          }
 
-#define  ANSC_IPV4_MASK                                                                     \
-         union                                                                              \
-         {                                                                                  \
-            unsigned char           Dot[IPV4_ADDRESS_SIZE];                                 \
-            uint32_t                Value;                                                  \
-         }
-
 
 /***********************************************************
           DEFINITION OF POPULAR DATA TYPE STRUCTURES

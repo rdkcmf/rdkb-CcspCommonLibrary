@@ -186,7 +186,7 @@ _ANSC_IPV4_HOST_ADDRESS
     ULONG                           HashIndex;
     BOOL                            bStatic;
     ANSC_IPV4_ADDRESS               Address;
-    ANSC_IPV4_MASK                  Mask;
+    ANSC_IPV4_ADDRESS               Mask;
     ANSC_IPV4_ADDRESS               NextHop;
 }
 ANSC_IPV4_HOST_ADDRESS,  *PANSC_IPV4_HOST_ADDRESS;
