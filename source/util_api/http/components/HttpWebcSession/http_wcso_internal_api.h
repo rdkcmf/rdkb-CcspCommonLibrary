@@ -375,7 +375,7 @@ ANSC_STATUS
 HttpWcsoConnectPeer
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddr
+        uint32_t                    ipAddrToConnect
     );
 
 ANSC_STATUS

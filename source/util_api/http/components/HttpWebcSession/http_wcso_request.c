@@ -777,7 +777,7 @@ HttpWcsoDoConnect
         HttpWcsoConnectPeer
             (
                 ANSC_HANDLE                 hThisObject,
-                ANSC_IPV4_ADDRESS           ipAddr
+                uint32_t                    ipAddrToConnect
             );
 
     description:
@@ -789,7 +789,7 @@ HttpWcsoDoConnect
                 This handle is actually the pointer of this object
                 itself.
 
-                ANSC_IPV4_ADDRESS           ipAddr
+                uint32_t                    ipAddrToConnect
                 The peer to connect.
 
     return:     status of operation.
@@ -800,7 +800,7 @@ ANSC_STATUS
 HttpWcsoConnectPeer
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddrToConnect
+        uint32_t                    ipAddrToConnect
     )
 {
     ANSC_STATUS                     returnStatus     = ANSC_STATUS_SUCCESS;
@@ -813,7 +813,7 @@ HttpWcsoConnectPeer
     BOOL                            bGotPeerAddr     = TRUE;
     ANSC_IPV4_ADDRESS               PeerAddr;
     PANSC_BUFFER_DESCRIPTOR         pRecvBdo         = (ANSC_HANDLE)NULL;
-    ULONG                           ipAddr           = ipAddrToConnect;
+    uint32_t                        ipAddr           = ipAddrToConnect;
 
 TRY_NEXT:
     if ( ipAddr == 0 )

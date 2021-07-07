@@ -339,7 +339,7 @@ BOOL
 HttpScoGetNextPeerAddr
     (
         ANSC_HANDLE                 hThisObject,
-        PULONG                      pPeerAddr
+        uint32_t                   *pPeerAddr
     );
 
 ULONG
@@ -352,7 +352,7 @@ ANSC_STATUS
 HttpScoResetPeerAddrPick
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddr
+        uint32_t                    ipAddr
     );
 
 

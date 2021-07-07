@@ -384,7 +384,7 @@ typedef  ANSC_STATUS
 (*PFN_HTTPWCSO_CONNECT_PEER)
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddr
+        uint32_t                    ipAddr
     );
 
 typedef  ANSC_STATUS

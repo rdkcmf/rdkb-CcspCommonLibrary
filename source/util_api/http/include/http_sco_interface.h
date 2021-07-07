@@ -381,7 +381,7 @@ typedef  BOOL
 (*PFN_HTTPSCO_GET_NEXT_ADDR)
     (
         ANSC_HANDLE                 hThisObject,
-        PULONG                      pPeerAddr
+        uint32_t                   *pPeerAddr
     );
 
 typedef  ULONG
@@ -394,7 +394,7 @@ typedef  ANSC_STATUS
 (*PFN_HTTPSCO_RESET_ADDR_PICK)
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddr
+        uint32_t                    ipAddr
     );
 
 typedef  ANSC_STATUS

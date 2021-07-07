@@ -75,6 +75,7 @@
 #ifndef  _ANSC_WRAPPER_BASE_
 #define  _ANSC_WRAPPER_BASE_
 
+#include <stdint.h>
 
 /***********************************************************
                   COMPILER SPECIFIC DEFINITIONS
@@ -552,15 +553,15 @@
 #define  ANSC_IPV4_ADDRESS                                                                  \
          union                                                                              \
          {                                                                                  \
-            UCHAR                   Dot[IPV4_ADDRESS_SIZE];                                 \
-            ULONG                   Value;                                                  \
+            unsigned char           Dot[IPV4_ADDRESS_SIZE];                                 \
+            uint32_t                Value;                                                  \
          }
 
 #define  ANSC_IPV4_MASK                                                                     \
          union                                                                              \
          {                                                                                  \
-            UCHAR                   Dot[IPV4_ADDRESS_SIZE];                                 \
-            ULONG                   Value;                                                  \
+            unsigned char           Dot[IPV4_ADDRESS_SIZE];                                 \
+            uint32_t                Value;                                                  \
          }
 
 

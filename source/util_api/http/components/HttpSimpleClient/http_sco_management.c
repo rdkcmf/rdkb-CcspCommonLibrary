@@ -1179,7 +1179,7 @@ HttpScoSetPeerAddresses
         HttpScoGetNextPeerAddr
             (
                 ANSC_HANDLE                 hThisObject,
-                ANSC_IPV4_ADDRESS*          pPeerAddr
+                uint32_t                   *pPeerAddr
             )
 
     description:
@@ -1190,7 +1190,7 @@ HttpScoSetPeerAddresses
                 This handle is actually the pointer of this object
                 itself.
 
-                ANSC_IPV4_ADDRESS*          pPeerAddr
+                uint32_t                   *pPeerAddr
                 On successful return, it contains the next peer
                 address to contact.
 
@@ -1204,7 +1204,7 @@ BOOL
 HttpScoGetNextPeerAddr
     (
         ANSC_HANDLE                 hThisObject,
-        PULONG                      pPeerAddr
+        uint32_t                   *pPeerAddr
     )
 {
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
@@ -1359,7 +1359,7 @@ HttpScoGetCurPeerAddr
         HttpScoResetPeerAddrPick
             (
                 ANSC_HANDLE                 hThisObject,
-                ANSC_IPV4_ADDRESS           ipAddr
+                uint32_t                    ipAddr
             )
 
     description:
@@ -1371,7 +1371,7 @@ HttpScoGetCurPeerAddr
                 This handle is actually the pointer of this object
                 itself.
 
-                ANSC_IPV4_ADDRESS           ipAddr
+                uint32_t                    ipAddr
                 This address will be marked alone.
 
     return:     status of operation.
@@ -1382,7 +1382,7 @@ ANSC_STATUS
 HttpScoResetPeerAddrPick
     (
         ANSC_HANDLE                 hThisObject,
-        ULONG                       ipAddr
+        uint32_t                    ipAddr
     )
 {
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
