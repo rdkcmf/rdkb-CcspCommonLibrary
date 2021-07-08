@@ -1023,8 +1023,6 @@ DslhObjcoGetParamValueByName
     PDSLH_VAR_RECORD_OBJECT         pVarRecord     = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PDSLH_TR69_INTERFACE            pInterface     = (PDSLH_TR69_INTERFACE)pMyObject->hDslhTr69If;
     char*                           pFind          = NULL;
-    char                            pTempBuf[1024] = { 0 };
-    ULONG                           uLength        = 1023;
     BOOL                            bReturn        = FALSE;
 
     /*AnscTraceVerbose(("DslhObjcoGetParamValueByName -- name %s\n", pName));*/
@@ -1106,6 +1104,12 @@ DslhObjcoGetParamValueByName
 
                 if( pInterface->GetEntryParamString != NULL)
                 {
+                    char pTempBuf[1024];
+                    ULONG uLength;
+
+                    memset (pTempBuf, 0, sizeof(pTempBuf));
+                    uLength = sizeof(pTempBuf) - 1;
+
                     returnStatus = pInterface->GetEntryParamString(pMyObject->hInsContext,pName, pTempBuf, &uLength);
 
                     if( returnStatus != ANSC_STATUS_SUCCESS && returnStatus != ANSC_STATUS_FAILURE)
