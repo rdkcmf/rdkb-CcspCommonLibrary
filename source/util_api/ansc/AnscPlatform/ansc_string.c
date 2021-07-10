@@ -577,38 +577,18 @@ AnscCloneString2
 
 #else
 
-char*
-AnscCloneString
-    (
-        char*                       src_string
-
-
-    )
+char *AnscCloneString (char *src_string)
 {
-    char*                           dst_string = NULL;
+    char *dst_string;
+    size_t len;
 
-
-    if ( !src_string )
-    {
+    if (src_string == NULL)
         return  NULL;
-    }
-    else
-    {
-        dst_string = (char*)AnscAllocateMemory(AnscSizeOfString(src_string) + 1);
-
-
-
-        if ( !dst_string )
-        {
-            return  NULL;
-        }
-        else
-        {
-            AnscCopyString(dst_string, src_string);
-        }
-    }
-
-    return  dst_string;
+    len = strlen (src_string);
+    dst_string = AnscAllocateMemoryNoInit (len + 1);
+    if (dst_string == NULL)
+        return NULL;
+    return memcpy (dst_string, src_string, len + 1);
 }
 
 #endif

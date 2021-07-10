@@ -90,6 +90,9 @@ extern    char *                  pComponentName;
 #define AnscAllocateMemory(size) \
     calloc(1,(size))
 
+#define AnscAllocateMemoryNoInit(size) \
+    malloc((size))
+
 #define AnscReAllocateMemory(pMemory, size)   \
     realloc((pMemory), (size))
 
