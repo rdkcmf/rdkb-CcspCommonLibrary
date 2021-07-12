@@ -75,7 +75,7 @@
 
 
 #include "bwrm_fmo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwrmFmoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWRM_FILE_MANAGER_OBJECT       pMyObject    = NULL;
+    errno_t  rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BwrmFmoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BWRM_FILE_MANAGER_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BWRM_FILE_MANAGER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;

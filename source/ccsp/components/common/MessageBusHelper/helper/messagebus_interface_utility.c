@@ -73,6 +73,7 @@
 #include "messagebus_interface_global.h"
 #include "ccc_ifo_mbi.h"
 #include "slap_vco_internal_api.h"
+#include "safec_lib_common.h"
 
 char                     g_SubPrefix[32] = {0 };
 
@@ -337,11 +338,13 @@ MsgHelper_CreateCcdMbiIf
         char*                               pPrefix
     )
 {
+    errno_t                                 rc        = -1;
     PCCC_MBI_INTERFACE                      pCccMbiIf = NULL;
 
     if( pPrefix != NULL)
     {
-        AnscCopyString(g_SubPrefix, pPrefix);
+        rc = STRCPY_S_NOCLOBBER(g_SubPrefix, sizeof(g_SubPrefix), pPrefix);
+        ERR_CHK(rc);
     }
 
     pCccMbiIf = (PCCC_MBI_INTERFACE)AnscAllocateMemory(sizeof(CCC_MBI_INTERFACE));
@@ -352,7 +355,8 @@ MsgHelper_CreateCcdMbiIf
     }
     else
     {
-        AnscCopyString(pCccMbiIf->Name, CCC_MBI_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pCccMbiIf->Name, sizeof(pCccMbiIf->Name), CCC_MBI_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pCccMbiIf->InterfaceId              = CCC_MBI_INTERFACE_ID;
         pCccMbiIf->hOwnerContext            = (ANSC_HANDLE)dbusHandle;

@@ -84,7 +84,7 @@
 
 
 #include "scli_shell_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1647,6 +1647,7 @@ ScliShoRunBicAutoCompletion
     BOOL                            bMatched     = FALSE;
     int                             nErrorPos    = 0;
     BOOL                            bShowOptOnly = !(NULL == hReserved); 
+    errno_t     rc  = -1;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
@@ -1854,11 +1855,12 @@ ScliShoRunBicAutoCompletion
                             ulDiff
                         );
 
-                AnscCopyString
+                rc = STRCPY_S_NOCLOBBER
                     (
-                        (char*)pSession->Command + AnscSizeOfString((const char *)pSession->Command), 
+                        (char*)pSession->Command + AnscSizeOfString((const char *)pSession->Command), (sizeof(pSession->Command) - AnscSizeOfString((const char *)pSession->Command) ),
                         (char*)pCommand + ulOrgTokenLen
                     );
+                ERR_CHK(rc);
 
                 pSession->CommandLen    = AnscSizeOfString((const char *)pSession->Command);
                 pSession->CursorPos     = pSession->CommandLen;

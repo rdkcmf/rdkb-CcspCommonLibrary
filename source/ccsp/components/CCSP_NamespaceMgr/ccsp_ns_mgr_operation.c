@@ -86,6 +86,7 @@
 #include "ccsp_cr_interface.h"
 #include "ccsp_ns_mgr_internal_api.h"
 #include "ccsp_namespace_mgr.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -232,6 +233,7 @@ CcspNsMgrRegisterNamespaces
     PANSC_ATOM_DESCRIPTOR           pAtomItem         = NULL;
     char*                           pString           = NULL;
     ULONG                           i                 = 0;
+    errno_t                         rc                = -1;
 
     /* Validate the name space */
     for( i = 0; i < ulSize; i ++)
@@ -292,12 +294,15 @@ CcspNsMgrRegisterNamespaces
             return CCSP_ERR_MEMORY_ALLOC_FAIL;
         }
 
-        AnscCopyString(pNSComp->pCompName, (char*)pCompName);
-        AnscCopyString(pNSComp->pDbusPath, (char*)pDbusPath);
+        rc = STRCPY_S_NOCLOBBER(pNSComp->pCompName, sizeof(pNSComp->pCompName), (char*)pCompName);
+        ERR_CHK(rc);
+        rc = STRCPY_S_NOCLOBBER(pNSComp->pDbusPath, sizeof(pNSComp->pDbusPath), (char*)pDbusPath);
+        ERR_CHK(rc);
 
         if( pPrefix != NULL)
         {
-            AnscCopyString(pNSComp->pPrefix,   (char*)pPrefix);
+            rc = STRCPY_S_NOCLOBBER(pNSComp->pPrefix, sizeof(pNSComp->pPrefix), (char*)pPrefix);
+            ERR_CHK(rc);
         }
 
         AnscQueuePushEntry(&pMyObject->ComponentQueue, &pNSComp->Linkage);
@@ -382,6 +387,7 @@ CcspNsMgrBuildNamespaces
     ULONG                           i                 = 0;
     ULONG                           uCount            = 0;
     PVOID*                          ppCopy            = NULL;
+    errno_t                         rc                = -1;
 
     if ( !pAtomNamespace )
     {
@@ -444,12 +450,21 @@ CcspNsMgrBuildNamespaces
         }
 
         AnscQueuePushEntry(&pMyObject->ComponentQueue, &pNSComp->Linkage);
-        AnscCopyString(pNSComp->pCompName, (char*)pCompName);
-        AnscCopyString(pNSComp->pDbusPath, (char*)pDbusPath);
+        if(pCompName != NULL)
+        {
+           rc = STRCPY_S_NOCLOBBER(pNSComp->pCompName, sizeof(pNSComp->pCompName), (char*)pCompName);
+           ERR_CHK(rc);
+        }
+        if(pDbusPath != NULL)
+        {
+           rc = STRCPY_S_NOCLOBBER(pNSComp->pDbusPath, sizeof(pNSComp->pDbusPath), (char*)pDbusPath);
+           ERR_CHK(rc);
+        }
 
         if( pPrefix != NULL)
         {
-            AnscCopyString(pNSComp->pPrefix, (char*)pPrefix);
+            rc = STRCPY_S_NOCLOBBER(pNSComp->pPrefix, sizeof(pNSComp->pPrefix), (char*)pPrefix);
+            ERR_CHK(rc);
         }
     }
 

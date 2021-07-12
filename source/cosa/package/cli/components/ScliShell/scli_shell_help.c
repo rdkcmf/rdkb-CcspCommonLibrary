@@ -88,7 +88,9 @@
 
 
 #include "scli_shell_global.h"
+#include "safec_lib_common.h"
 
+#define MAX_PVALUETYPE_SIZE    64
 
 char*
 ScliShoFindSubStrNoCase
@@ -2830,6 +2832,7 @@ ScliShoIsValidInt
     char*                           pNonZero;
     char*                           pBufStart;
     int                             nValueSigned = 0;
+    errno_t   rc = -1;
 
     *pErrorPos = 0;
 
@@ -2873,7 +2876,12 @@ ScliShoIsValidInt
         }
 
         nValue = (int)_ansc_atoi(pValue);
-        _ansc_sprintf(buf, "%d", nValue);
+        rc = sprintf_s(buf, sizeof(buf), "%d", nValue);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return  FALSE;
+        }
 
         if ( (buf[0] == '-' && nValueSigned >= 0) || (buf[0] != '-' && nValueSigned < 0))
         {
@@ -2921,6 +2929,7 @@ ScliShoIsValidUint
     char                            buf[16];
     ULONG                           ulValue;
     char*                           pNonZero;
+    errno_t    rc  = -1;
 
     *pErrorPos = 0;
 
@@ -2953,7 +2962,12 @@ ScliShoIsValidUint
 
         ulValue = (ULONG)_ansc_atol(pValue);
 
-        _ansc_sprintf(buf, "%lu", ulValue);
+        rc = sprintf_s(buf, sizeof(buf), "%lu", ulValue);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
 
         if ( AnscSizeOfString(buf) != AnscSizeOfString(pNonZero) ||
              !AnscEqualString(buf, pNonZero, TRUE) )
@@ -2990,6 +3004,7 @@ ScliShoIsValidDouble
     ULONG                           ulExp       = 0;
     ULONG                           ulFracLZC   = 0;
     BOOL                            bCountLZC   = FALSE;
+    errno_t   rc   = -1;
 
     *pErrorPos = 0;
 
@@ -3141,7 +3156,12 @@ ScliShoIsValidDouble
             int                     max_digits_len = AnscSizeOfString(BMC_CMD_ARG_TYPE_DOUBLE_max_digits);
             int                     nBufLen = 0;
 
-            _ansc_sprintf(buf, "%lu%lu", ulInt, ulFrac);
+            rc = sprintf_s(buf, sizeof(buf), "%lu%lu", ulInt, ulFrac);
+            if(rc < EOK)
+            {
+               ERR_CHK(rc);
+               return FALSE;
+            }
 
             nBufLen = AnscSizeOfString(buf);
 
@@ -3222,6 +3242,7 @@ ScliShoIsValidIp4Addr
     char                            buf[16];
     ULONG                           a, b, c, d;
     int                             nRet;
+    errno_t    rc   = -1;
 
     *pErrorPos = 0;
 
@@ -3237,7 +3258,12 @@ ScliShoIsValidIp4Addr
         return  FALSE;
     }
 
-    _ansc_sprintf(buf, "%u.%u.%u.%u", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d);
+    rc = sprintf_s(buf, sizeof(buf), "%u.%u.%u.%u", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
 
     if ( AnscSizeOfString(buf) != AnscSizeOfString(pValue) ||
          !AnscEqualString(buf, pValue, TRUE) )
@@ -3286,6 +3312,7 @@ ScliShoIsValidIp6Prefix
     BOOL                            bValid;
     ULONG                           ulLength= 0;
     char                            buf[16];
+    errno_t    rc   = -1;
 
     *pErrorPos = 0;
 
@@ -3306,7 +3333,12 @@ ScliShoIsValidIp6Prefix
     }
 
     ulLength = (ULONG)_ansc_atoi(pLength);
-    _ansc_sprintf(buf, "%lu", ulLength);
+    rc = sprintf_s(buf, sizeof(buf), "%lu", ulLength);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
     if ( ulLength > 128 || !AnscEqualString(buf, pLength, TRUE) )
     {
         *pErrorPos = (pLength - pCur);
@@ -3333,6 +3365,7 @@ ScliShoIsValidMacAddr
     ULONG                           a, b, c, d, e, f;
     int                             nRet, nMaxInput = 0;
     BOOL                            bColonSeparated = FALSE;
+    errno_t   rc  = -1;
 
     *pErrorPos = 0;
 
@@ -3361,11 +3394,21 @@ ScliShoIsValidMacAddr
 
     if ( bColonSeparated )
     {
-        _ansc_sprintf(buf, "%.2x:%.2x:%.2x:%.2x:%.2x;%.2x", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d, (UCHAR)e, (UCHAR)f);
+        rc = sprintf_s(buf, sizeof(buf), "%.2x:%.2x:%.2x:%.2x:%.2x;%.2x", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d, (UCHAR)e, (UCHAR)f);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
     }
     else
     {
-        _ansc_sprintf(buf, "%.2x-%.2x-%.2x-%.2x-%.2x-%.2x", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d, (UCHAR)e, (UCHAR)f);
+        rc = sprintf_s(buf, sizeof(buf), "%.2x-%.2x-%.2x-%.2x-%.2x-%.2x", (UCHAR)a, (UCHAR)b, (UCHAR)c, (UCHAR)d, (UCHAR)e, (UCHAR)f);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
     }
 
     if ( AnscSizeOfString(buf) != AnscSizeOfString(pValue) ||
@@ -4127,6 +4170,7 @@ ScliShoBuildValueType
     PBMC2_CMD_ARG_VRANGE            pVrange     = pSimpleArg->pValueRange;
     char                            rep[64]     = {0};
     BOOL                            bShowVLen;
+    errno_t    rc  = -1;
 
     *pValueType = 0;
 
@@ -4139,11 +4183,19 @@ ScliShoBuildValueType
     {
         if ( pSimpleArg->ValueMaxCount == BMC2_CMD_ARG_TYPE_UINT_max )
         {
-            _ansc_sprintf(rep, "(%lu-)", pSimpleArg->ValueMinLength);
+            rc = sprintf_s(rep, sizeof(rep), "(%lu-)", pSimpleArg->ValueMinLength);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
         else
         {
-            _ansc_sprintf(rep, "(%lu-%lu)", pSimpleArg->ValueMinLength, pSimpleArg->ValueMaxLength);
+            rc = sprintf_s(rep, sizeof(rep), "(%lu-%lu)", pSimpleArg->ValueMinLength, pSimpleArg->ValueMaxLength);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
     }
 
@@ -4151,11 +4203,19 @@ ScliShoBuildValueType
     {
         if ( pSimpleArg->ValueMaxCount == BMC2_CMD_ARG_TYPE_UINT_max )
         {
-            _ansc_sprintf(rep, "[%lu-]", pSimpleArg->ValueMinCount);
+            rc = sprintf_s(rep, sizeof(rep), "[%lu-]", pSimpleArg->ValueMinCount);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
         else
         {
-            _ansc_sprintf(rep, "[%lu-%lu]", pSimpleArg->ValueMinCount, pSimpleArg->ValueMaxCount);
+            rc = sprintf_s(rep, sizeof(rep), "[%lu-%lu]", pSimpleArg->ValueMinCount, pSimpleArg->ValueMaxCount);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
     }
 
@@ -4165,19 +4225,29 @@ ScliShoBuildValueType
         {
             case    BMC2_CMD_ARG_VTYPE_int:
 
-                    _ansc_sprintf(pValueType, "<%d ~ %d> %s", pVrange->Min.varInt, pVrange->Max.varInt, (rep[0])?rep:"");
-
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%d ~ %d> %s", pVrange->Min.varInt, pVrange->Max.varInt, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_uint:
 
-                    _ansc_sprintf(pValueType, "<%lu ~ %lu> %s", pVrange->Min.varUint, pVrange->Max.varUint, (rep[0])?rep:"");
-
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%lu ~ %lu> %s", pVrange->Min.varUint, pVrange->Max.varUint, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_double:
 
-                    _ansc_sprintf(pValueType, "<%g ~ %g> %s", pVrange->Min.varDouble, pVrange->Max.varDouble, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%g ~ %g> %s", pVrange->Min.varDouble, pVrange->Max.varDouble, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
@@ -4197,7 +4267,11 @@ ScliShoBuildValueType
                         c2 = (UCHAR)((pVrange->Max.varUint) >> 8 );
                         d2 = (UCHAR)((pVrange->Max.varUint)      );
 
-                        _ansc_sprintf(pValueType, "<%u.%u.%u.%u ~ %u.%u.%u.%u> %s", a1, b1, c1, d1, a2, b2, c2, d2, (rep[0])?rep:"");
+                        rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%u.%u.%u.%u ~ %u.%u.%u.%u> %s", a1, b1, c1, d1, a2, b2, c2, d2, rep);
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
 
                     break;
@@ -4206,7 +4280,11 @@ ScliShoBuildValueType
 
                     if ( ulHelpIndex < pVrange->ulStringCount )
                     {
-                        _ansc_sprintf(pValueType, "%s %s", pVrange->pStringArray[ulHelpIndex], (rep[0])?rep:"");
+                        rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "%s %s", pVrange->pStringArray[ulHelpIndex], rep);
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
 
                     break;
@@ -4216,7 +4294,11 @@ ScliShoBuildValueType
 
                     if ( ulHelpIndex < pVrange->ulStringCount )
                     {
-                        _ansc_sprintf(pValueType, "%s %s", pVrange->pStringArray[ulHelpIndex], (rep[0])?rep:"");
+                        rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "%s %s", pVrange->pStringArray[ulHelpIndex], rep);
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
 
                     break;
@@ -4227,11 +4309,19 @@ ScliShoBuildValueType
     {
         if ( pSimpleArg->ValueType == BMC2_CMD_ARG_VTYPE_string && ulHelpIndex < pVrange->ulStringCount )
         {
-            _ansc_sprintf(pValueType, "%s %s", pVrange->pStringArray[ulHelpIndex], (rep[0])?rep:"");
+            rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "%s %s", pVrange->pStringArray[ulHelpIndex], rep);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
         else if ( pSimpleArg->ValueType != BMC2_CMD_ARG_VTYPE_string && ulHelpIndex <= pVrange->ulStringCount )
         {
-            _ansc_sprintf(pValueType, "%s %s", pVrange->pStringArray[ulHelpIndex-1], (rep[0])?rep:"");
+            rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "%s %s", pVrange->pStringArray[ulHelpIndex-1], rep);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
     }
 
@@ -4241,61 +4331,100 @@ ScliShoBuildValueType
         {
             case    BMC2_CMD_ARG_VTYPE_int:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_int, (rep[0])?rep:"");
-
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_int, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_uint:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_uint, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_uint, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_double:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_double, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_double, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_ip4addr:
 
-                    _ansc_sprintf(pValueType, "<a.b.c.d> %s", (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<a.b.c.d> %s", rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_ip6addr:
 
-                    _ansc_sprintf(pValueType, "<IPv6 address> %s", (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<IPv6 address> %s", rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_ip6prefix:
 
-                    _ansc_sprintf(pValueType, "<IPv6 prefix> %s", (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<IPv6 prefix> %s", rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_string:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_string, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_string, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_qstring:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_qstring, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_qstring, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_macaddr:
 
-                    _ansc_sprintf(pValueType, "<HH-HH-HH-HH-HH-HH> %s", (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<HH-HH-HH-HH-HH-HH> %s", rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
 
             case    BMC2_CMD_ARG_VTYPE_hex:
 
-                    _ansc_sprintf(pValueType, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_hex, (rep[0])?rep:"");
+                    rc = sprintf_s(pValueType, MAX_PVALUETYPE_SIZE, "<%s> %s", BMC2_CMD_ARG_VTYPE_NAME_hex, rep);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
 
                     break;
         }

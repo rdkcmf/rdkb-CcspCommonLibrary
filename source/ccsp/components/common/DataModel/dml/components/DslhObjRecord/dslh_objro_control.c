@@ -81,6 +81,7 @@
 
 #include "dslh_objro_global.h"
 #include "dslh_ifo_tr69.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -131,6 +132,7 @@ DslhObjroPopulateObjRecords
     char                            child_name[16]      = { 0 };
     PDSLH_TR69_INTERFACE            pDslhTr69If         = {0};
     BOOL                            bCommitted          = TRUE;
+    errno_t                         rc                  = -1;
 
     /*
      * Under each Obj Record folder, there's always a folder named "Parameters", which is where all
@@ -223,22 +225,32 @@ DslhObjroPopulateObjRecords
                 }
                 else if ( !pMyObject->FullName || (AnscSizeOfString(pMyObject->FullName) == 0) )
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s.",
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
                 else
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s%s.",
                             pMyObject->FullName,
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
 
                 pChildObjRecord->hParentObjRecord    = (ANSC_HANDLE)pMyObject;
@@ -361,22 +373,32 @@ DslhObjroPopulateObjRecords
                 }
                 else if ( !pMyObject->FullName || (AnscSizeOfString(pMyObject->FullName) == 0) )
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s.",
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
                 else
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s%s.",
                             pMyObject->FullName,
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
 
                 pChildObjRecord->hParentObjRecord    = (ANSC_HANDLE)pMyObject;
@@ -726,6 +748,7 @@ DslhObjroChildObjectCreated
     char*                           pChildLastName      = (char*                      )NULL;
     ULONG                           ulFullNameSize      = (ULONG                      )0;
     char                            child_name[16];
+    errno_t                         rc                  = -1;
 
     /*
      * To avoid dead lock, this function MUST NOT be called directly within any callbacks provided
@@ -765,13 +788,18 @@ DslhObjroChildObjectCreated
         }
         else
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     pChildFullName,
+                    ulFullNameSize,
                     "%s%s.",
                     pMyObject->FullName,
                     pChildLastName
                 );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
         }
 
         pChildObjRecord->hParentObjRecord    = (ANSC_HANDLE)pMyObject;
@@ -1009,6 +1037,7 @@ DslhObjroPopulateObjRecordByName
     char*                           pChildFullName      = (char*                      )NULL;
     char*                           pChildLastName      = (char*                      )NULL;
     ULONG                           ulFullNameSize      = (ULONG                      )0;
+    errno_t                         rc                  = -1;
 
     /* delete previous one if exists */
     /* pMyObject->DeleteObjRecordByName(pMyObject, pObjName); */
@@ -1081,22 +1110,32 @@ DslhObjroPopulateObjRecordByName
                 }
                 else if ( !pMyObject->FullName || (AnscSizeOfString(pMyObject->FullName) == 0) )
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s.",
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
                 else
                 {
-                    _ansc_sprintf
+                    rc = sprintf_s
                         (
                             pChildFullName,
+                            ulFullNameSize,
                             "%s%s.",
                             pMyObject->FullName,
                             pChildLastName
                         );
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                 }
 
                 pChildObjRecord->hParentObjRecord    = (ANSC_HANDLE)pMyObject;
@@ -1149,7 +1188,11 @@ DslhObjroPopulateObjRecordByName
     /* if it's a table object, add the VarRecord for the count of the table */
     if( bIsTable )
     {
-        _ansc_sprintf(pParamName, "%s%s", pObjName, TR69_NUMBER_OF_ENTRIES_STRING);
+        rc = sprintf_s(pParamName, sizeof(pParamName), "%s%s", pObjName, TR69_NUMBER_OF_ENTRIES_STRING);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         /* check whether it exists or not */
 
@@ -1270,6 +1313,7 @@ DslhObjroDeleteObjRecordByName
     PDSLH_VAR_RECORD_OBJECT         pChildVarRecord = (PDSLH_VAR_RECORD_OBJECT)NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = (PSINGLE_LINK_ENTRY     )NULL;
     char                            pParamName[128] = { 0 };
+    errno_t                         rc              = -1;
 
     pSLinkEntry = AnscQueueGetFirstEntry(&pMyObject->ObjroQueue);
 
@@ -1294,25 +1338,28 @@ DslhObjroDeleteObjRecordByName
     }
 
     /* if it's a table object, remove the VarRecord for the count of the table */
-    if( TRUE )
+
+    rc = sprintf_s(pParamName, sizeof(pParamName), "%s%s", pObjName, TR69_NUMBER_OF_ENTRIES_STRING);
+    if(rc < EOK)
     {
-        _ansc_sprintf(pParamName, "%s%s", pObjName, TR69_NUMBER_OF_ENTRIES_STRING);
+        ERR_CHK(rc);
+        return ANSC_STATUS_FAILURE;
+    }
 
-        pSLinkEntry = AnscQueueGetFirstEntry(&pMyObject->VarroTable);
+    pSLinkEntry = AnscQueueGetFirstEntry(&pMyObject->VarroTable);
 
-        while ( pSLinkEntry )
+    while ( pSLinkEntry )
+    {
+        pChildVarRecord = ACCESS_DSLH_VAR_RECORD_OBJECT(pSLinkEntry);
+        pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
+
+        if ( AnscEqualString(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName,TRUE))
         {
-            pChildVarRecord = ACCESS_DSLH_VAR_RECORD_OBJECT(pSLinkEntry);
-            pSLinkEntry     = AnscQueueGetNextEntry(pSLinkEntry);
+            AnscQueuePopEntryByLink(&pMyObject->VarroTable, &pChildVarRecord->Linkage);
 
-            if ( AnscEqualString(pChildVarRecord->GetLastName((ANSC_HANDLE)pChildVarRecord),pParamName,TRUE))
-            {
-                AnscQueuePopEntryByLink(&pMyObject->VarroTable, &pChildVarRecord->Linkage);
+            pChildVarRecord->Remove ((ANSC_HANDLE)pChildVarRecord);
 
-                pChildVarRecord->Remove ((ANSC_HANDLE)pChildVarRecord);
-
-                break;
-            }
+            break;
         }
     }
 

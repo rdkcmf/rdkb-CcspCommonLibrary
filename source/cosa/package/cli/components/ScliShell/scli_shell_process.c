@@ -94,7 +94,7 @@
 
 
 #include "scli_shell_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -583,6 +583,7 @@ ScliShoCreateSession
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
     PSCLI_SHELL_SESSION_EXEC        pSession     = NULL;
+    errno_t    rc  = -1;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, SessionId);
 
@@ -664,7 +665,8 @@ ScliShoCreateSession
                     pSession->hBmc2IceIf    = (ANSC_HANDLE)pIceIf;
                 }
 
-                AnscCopyString(pIceIf->Name, SCLI_SHELL_ICE_INTERFACE_NAME);
+                rc = STRCPY_S_NOCLOBBER(pIceIf->Name, sizeof(pIceIf->Name), SCLI_SHELL_ICE_INTERFACE_NAME);
+                ERR_CHK(rc);
 
                 pIceIf->InterfaceId         = SCLI_SHELL_ICE_INTERFACE_ID;
                 pIceIf->hOwnerContext       = (ANSC_HANDLE)pSession;
@@ -1807,6 +1809,7 @@ ScliShoRunCmd
     PSCLI_SHELL_SESSION_EXEC        pSession;
     ULONG                           SessionState;
     ULONG                           TermPermission;
+    errno_t   rc = -1;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
     
@@ -1842,7 +1845,8 @@ ScliShoRunCmd
                         break;
                     }
 
-                    AnscCopyString((char*)pSession->Username, (char*)pCmd);
+                    rc = STRCPY_S_NOCLOBBER((char*)pSession->Username, sizeof(pSession->Username), (char*)pCmd);
+                    ERR_CHK(rc);
 
                     AnscFreeMemory(pCmd);
 
@@ -4302,6 +4306,7 @@ ScliShoRunShellCmd
     ULONG                           ulTimeNow;
     ANSC_HANDLE                     hFile        = NULL;
     ULONG                           ulFileMode, ulFileType;
+    errno_t   rc = -1;
 
     ulFileMode  = ANSC_FILE_MODE_READ;
     ulFileType  = ANSC_FILE_TYPE_READ;
@@ -4327,8 +4332,16 @@ ScliShoRunShellCmd
         return ANSC_STATUS_SUCCESS;
     }
 
-    _ansc_sprintf(tmp_fname, SCLI_LOCAL_TEMP_FILE_TEMPLATE, (unsigned int)pSession);
-    _ansc_sprintf(sys_cmd, "%s > %s", pCmd, tmp_fname);
+    rc = sprintf_s(tmp_fname, sizeof(tmp_fname), SCLI_LOCAL_TEMP_FILE_TEMPLATE, (unsigned int)pSession);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
+    rc = sprintf_s(sys_cmd, sizeof(sys_cmd), "%s > %s", pCmd, tmp_fname);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     AnscDeleteFile(tmp_fname);
 

@@ -74,6 +74,7 @@
 
 
 #include "dslh_objro_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -127,6 +128,7 @@ DslhObjroCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PDSLH_OBJ_RECORD_OBJECT         pMyObject    = NULL;
     PDSLH_RVQ_INTERFACE             pDslhRvqIf   = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -199,7 +201,8 @@ DslhObjroCreate
         {
             pMyObject->hDslhRvqIf = (ANSC_HANDLE)pDslhRvqIf;
 
-			AnscCopyString(pDslhRvqIf->Name, DSLH_RVQ_INTERFACE_NAME);
+			rc = STRCPY_S_NOCLOBBER(pDslhRvqIf->Name, sizeof(pDslhRvqIf->Name), DSLH_RVQ_INTERFACE_NAME);
+			ERR_CHK(rc);
 
 			pDslhRvqIf->InterfaceId              = DSLH_RVQ_INTERFACE_ID;
 			pDslhRvqIf->hOwnerContext            = (ANSC_HANDLE)pMyObject;

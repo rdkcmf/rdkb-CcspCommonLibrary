@@ -74,7 +74,7 @@
 
 
 #include "bspeng_co_global.h"
-
+#include "safec_lib_common.h"
 
 #ifdef   _DEBUG
 BOOL
@@ -3567,6 +3567,7 @@ BspTemplateObjDoObj
     BOOL                            bBrokeIn        = FALSE;
     PUCHAR                          pObjName        = NULL;
     PSLAP_VARIABLE                  pSlapVar        = NULL;
+    errno_t   rc   = -1;
 
     pLeft   = (PBSP_TEMPLATE_BRANCH_OBJECT)iBr->left.Value.b;
     if (!pLeft)
@@ -3716,7 +3717,6 @@ BspTemplateObjDoObj
             if (!pParamList || pParamList->ulGroups == 0)
             {
                 ULONG               ulNewStrSize = 0;
-                char                *pNewStr;
 
                 aBr = aBr->left.Value.b;
 
@@ -3724,16 +3724,10 @@ BspTemplateObjDoObj
                 if (pObjName)
                     ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
-                pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
-
-                if (pNewStr)
+                rc = sprintf_s((char *)pObjName, ulNewStrSize, ".%s", aFunc);
+                if(rc < EOK)
                 {
-                    AnscCopyString(pNewStr, (char*)pObjName);
-                    AnscFreeMemory(pObjName);
-                    pObjName        = (PUCHAR)pNewStr;
-
-                    _ansc_strcat((char *)pObjName, ".");
-                    _ansc_strcat((char *)pObjName, aFunc);
+                    ERR_CHK(rc);
                 }
 
                 if (pParamList)
@@ -4019,7 +4013,6 @@ ACCESS_LAST:
             if (!bBuiltInProperty && pObjName)
             {
                 ULONG               ulNewStrSize = 0;
-                char                *pNewStr;
                 PSLAP_VARIABLE      pSlapObject;
 
                 aBr = aBr->left.Value.b;
@@ -4027,42 +4020,36 @@ ACCESS_LAST:
                 if (aFunc)
                     ulNewStrSize    = AnscSizeOfString((const char *)pObjName) + 1 + AnscSizeOfString((const char *)aFunc) + 1;
 
-                pNewStr         = (char *)AnscAllocateMemory(ulNewStrSize);
-
-                if (pNewStr)
+                rc = sprintf_s((char *)pObjName, ulNewStrSize, ".%s", aFunc);
+                if(rc < EOK)
                 {
-                    AnscCopyString(pNewStr, (char*)pObjName);
-                    AnscFreeMemory(pObjName);
-                    pObjName        = (PUCHAR)pNewStr;
+                    ERR_CHK(rc);
+                }
 
-                    _ansc_strcat((char *)pObjName, ".");
-                    _ansc_strcat((char *)pObjName, aFunc);
+                hBeepObj    = 
+                    pMyObject->GetBeepObject
+                        (
+                            hThisObject,
+                            hRuntime,
+                            (ANSC_HANDLE)NULL,
+                            FALSE,
+                            (const char *)pObjName,
+                            &bSimpleVar
+                        );
 
-                    hBeepObj    = 
-                        pMyObject->GetBeepObject
-                            (
-                                hThisObject,
-                                hRuntime,
-                                (ANSC_HANDLE)NULL,
-                                FALSE,
-                                (const char *)pObjName,
-                                &bSimpleVar
-                            );
+                SlapAllocVariable(pSlapObject);
+                if (pSlapObject)
+                {
+                    SlapInitVariable(pSlapObject);
 
-                    SlapAllocVariable(pSlapObject);
+                    pSlapObject->Syntax = SLAP_VAR_SYNTAX_TYPE_object;
+                    pSlapObject->Variant.varObject  = (SLAP_OBJECT)hBeepObj;
+
+                    BspEng_VC_Slap2Var((ANSC_HANDLE)pSlapObject, (ANSC_HANDLE)aResult);
                     if (pSlapObject)
                     {
-                        SlapInitVariable(pSlapObject);
-
-                        pSlapObject->Syntax = SLAP_VAR_SYNTAX_TYPE_object;
-                        pSlapObject->Variant.varObject  = (SLAP_OBJECT)hBeepObj;
-
-                        BspEng_VC_Slap2Var((ANSC_HANDLE)pSlapObject, (ANSC_HANDLE)aResult);
-                        if (pSlapObject)
-                        {
-                            SlapFreeVariable(pSlapObject);
-                            pSlapObject = NULL;
-                        }
+                        SlapFreeVariable(pSlapObject);
+                        pSlapObject = NULL;
                     }
                 }
 

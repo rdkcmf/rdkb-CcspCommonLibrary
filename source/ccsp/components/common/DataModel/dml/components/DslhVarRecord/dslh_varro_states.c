@@ -79,6 +79,7 @@
 
 #include "dslh_varro_global.h"
 #include "ccsp_trace.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -390,6 +391,7 @@ DslhVarroGetFullName
     char*                           pLastName      = (char*                  )pVarEntity->ParamDescr->Name;
     char*                           pFullName      = (char*                  )NULL;
     ULONG                           ulFullNameSize = (ULONG                  )0;
+    errno_t                         rc             = -1;
 
     ulFullNameSize = (pObjRecord->FullName? AnscSizeOfString(pObjRecord->FullName) : 0) + AnscSizeOfString(pLastName) + 4;
     pFullName      = (char*)AnscAllocateMemory(ulFullNameSize);
@@ -400,13 +402,19 @@ DslhVarroGetFullName
     }
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 pFullName,
+                ulFullNameSize,
                 "%s%s",
                 pObjRecord->FullName,
                 pLastName
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  pFullName;

@@ -76,7 +76,7 @@
 
 
 #include "sys_rdo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -234,8 +234,10 @@ SysRdoResetProperty
 {
     PSYS_REPOSITORY_DRIVER_OBJECT   pMyObject    = (PSYS_REPOSITORY_DRIVER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_DRIVER_PROPERTY pProperty    = (PSYS_REPOSITORY_DRIVER_PROPERTY)&pMyObject->Property;
+    errno_t   rc = -1;
 
-    AnscCopyString(pProperty->DriverName, BISGA_PACKAGE_NAME);
+    rc = STRCPY_S_NOCLOBBER(pProperty->DriverName, sizeof(pProperty->DriverName), BISGA_PACKAGE_NAME);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

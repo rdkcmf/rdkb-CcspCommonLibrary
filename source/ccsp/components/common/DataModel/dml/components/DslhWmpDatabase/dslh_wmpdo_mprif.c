@@ -122,6 +122,7 @@
 #include "ccsp_base_api.h"
 #include "messagebus_interface_helper.h"
 #include "ccsp_trace.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -701,6 +702,7 @@ DslhWmpdoMprRegObject
     PDSLH_CWMP_PARAM_DESCR          pParamDesp       = (PDSLH_CWMP_PARAM_DESCR     )NULL;
     char                            pParamName[256]  = { 0 };
     char                            pObjName[256]    = { 0 };
+    errno_t                         rc               = -1;
 
     pObjEntity = pDslhMprIf->GetObjEntity(pDslhMprIf->hOwnerContext, pObjectDescr->Name);
 
@@ -788,7 +790,11 @@ DslhWmpdoMprRegObject
     /* if it's a table, register a parameter named "xxxxNumberOfEntries" in parent object*/
     if( pObjectDescr->Type == DSLH_CWMP_OBJECT_TYPE_table && !pObjectDescr->bInvisible)
     {
-        _ansc_sprintf(pParamName, "%s%s", pObjEntity->LastName, TR69_NUMBER_OF_ENTRIES_STRING);
+        rc = sprintf_s(pParamName, sizeof(pParamName), "%s%s", pObjEntity->LastName, TR69_NUMBER_OF_ENTRIES_STRING);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         /* check whether the same parameter already exists or not */
         if( pObjEntityParent->GetVarEntity(pObjEntityParent, pParamName) == NULL)
@@ -910,6 +916,7 @@ DslhWmpdoMprUnregisterObject
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntityParent = (PDSLH_OBJ_ENTITY_OBJECT    )NULL;
     PDSLH_MPR_INTERFACE             pDslhMprIf       = (PDSLH_MPR_INTERFACE          )pMyObject->hDslhMprIf;
     char                            pParamName[256]  = { 0 };
+    errno_t                         rc               = -1;
 
     pObjEntity = pDslhMprIf->GetObjEntity(pDslhMprIf->hOwnerContext, pObjFullName);
 
@@ -957,7 +964,11 @@ DslhWmpdoMprUnregisterObject
     /* if it's a table, unregister the parameter named "xxxxNumberOfEntries" in parent object*/
     if( bIsTable)
     {
-        _ansc_sprintf(pParamName, "%s%s", pLastName, TR69_NUMBER_OF_ENTRIES_STRING);
+        rc = sprintf_s(pParamName, sizeof(pParamName), "%s%s", pLastName, TR69_NUMBER_OF_ENTRIES_STRING);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         returnStatus = pObjEntityParent->DelVarEntity(pObjEntityParent, pParamName);
 

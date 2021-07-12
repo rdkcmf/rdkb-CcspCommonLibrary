@@ -75,7 +75,7 @@
 
 
 #include "sys_iro_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -247,6 +247,7 @@ SysIroEnrollObjects
     PSYS_INFO_REPOSITORY_OBJECT     pMyObject    = (PSYS_INFO_REPOSITORY_OBJECT  )hThisObject;
     PSYS_IRA_INTERFACE              pIraIf       = (PSYS_IRA_INTERFACE           )pMyObject->hIraIf;
     PSYS_REPOSITORY_DRIVER_OBJECT   pRepDriver   = (PSYS_REPOSITORY_DRIVER_OBJECT)pMyObject->hRepDriver;
+    errno_t   rc    = -1;
 
     if ( !pRepDriver )
     {
@@ -281,7 +282,8 @@ SysIroEnrollObjects
             pMyObject->hIraIf = (ANSC_HANDLE)pIraIf;
         }
 
-        AnscCopyString(pIraIf->Name, SYS_IRA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pIraIf->Name, sizeof(pIraIf->Name), SYS_IRA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pIraIf->InterfaceId        = SYS_IRA_INTERFACE_ID;
         pIraIf->hOwnerContext      = (ANSC_HANDLE)pMyObject;

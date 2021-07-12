@@ -75,7 +75,7 @@
 
 
 #include "bmc2_reqco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ Bmc2ReqcoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = NULL;
+    errno_t   rc = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ Bmc2ReqcoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BMC2_REQ_CONTROLLER_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BMC2_REQ_CONTROLLER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -240,6 +242,7 @@ Bmc2ReqcoEnrollObjects
 {
     PBMC2_REQ_CONTROLLER_OBJECT     pMyObject    = (PBMC2_REQ_CONTROLLER_OBJECT)hThisObject;
     PBMC2_PEC_INTERFACE             pBmc2PecIf   = (PBMC2_PEC_INTERFACE        )pMyObject->hBmc2PecIf;
+    errno_t  rc  = -1;
 
     if ( !pBmc2PecIf )
     {
@@ -254,7 +257,8 @@ Bmc2ReqcoEnrollObjects
             pMyObject->hBmc2PecIf = (ANSC_HANDLE)pBmc2PecIf;
         }
 
-        AnscCopyString(pBmc2PecIf->Name, BMC2_PEC_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBmc2PecIf->Name, sizeof(pBmc2PecIf->Name), BMC2_PEC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBmc2PecIf->InterfaceId    = BMC2_PEC_INTERFACE_ID;
         pBmc2PecIf->hOwnerContext  = (ANSC_HANDLE)pMyObject;

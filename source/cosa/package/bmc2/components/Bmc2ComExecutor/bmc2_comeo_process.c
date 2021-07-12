@@ -73,7 +73,7 @@
 **********************************************************************/
 
 #include "bmc2_comeo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -443,6 +443,7 @@ Bmc2ComeoCreateBmc2SoaIf
 {
     UNREFERENCED_PARAMETER(hThisObject);
     PBSPENG_SOA_INTERFACE           pBmc2SoaIf;
+    errno_t   rc   = -1;
 
     pBmc2SoaIf = (PBSPENG_SOA_INTERFACE)AnscAllocateMemory(sizeof(BSPENG_SOA_INTERFACE));
 
@@ -451,7 +452,8 @@ Bmc2ComeoCreateBmc2SoaIf
         return  NULL;
     }
 
-    AnscCopyString(pBmc2SoaIf->Name, BMC2_SOA_INTERFACE_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBmc2SoaIf->Name, sizeof(pBmc2SoaIf->Name), BMC2_SOA_INTERFACE_NAME);
+    ERR_CHK(rc);
 
     pBmc2SoaIf->InterfaceId         = BMC2_SOA_INTERFACE_ID;
     pBmc2SoaIf->hOwnerContext       = (ANSC_HANDLE)hBmc2PecIf;

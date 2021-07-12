@@ -75,7 +75,7 @@
 
 
 #include "sys_rfo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -263,6 +263,7 @@ SysRfoEnrollObjects
     PSYS_RCA_INTERFACE              pSelfRcaIf   = (PSYS_RCA_INTERFACE           )pMyObject->hSelfRcaIf;
     PSYS_RCG_INTERFACE              pSelfRcgIf   = (PSYS_RCG_INTERFACE           )pMyObject->hSelfRcgIf;
     PSYS_RCM_INTERFACE              pSelfRcmIf   = (PSYS_RCM_INTERFACE           )pMyObject->hSelfRcmIf;
+    errno_t   rc  = -1;
 
     if ( !pSelfRcaIf )
     {
@@ -277,7 +278,8 @@ SysRfoEnrollObjects
             pMyObject->hSelfRcaIf = (ANSC_HANDLE)pSelfRcaIf;
         }
 
-        AnscCopyString(pSelfRcaIf->Name, SYS_RCA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pSelfRcaIf->Name, sizeof(pSelfRcaIf->Name), SYS_RCA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSelfRcaIf->InterfaceId   = SYS_RCA_INTERFACE_ID;
         pSelfRcaIf->hOwnerContext = (ANSC_HANDLE)pMyObject;
@@ -300,7 +302,8 @@ SysRfoEnrollObjects
             pMyObject->hSelfRcgIf = (ANSC_HANDLE)pSelfRcgIf;
         }
 
-        AnscCopyString(pSelfRcgIf->Name, SYS_RCG_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pSelfRcgIf->Name, sizeof(pSelfRcgIf->Name), SYS_RCG_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSelfRcgIf->InterfaceId   = SYS_RCG_INTERFACE_ID;
         pSelfRcgIf->hOwnerContext = (ANSC_HANDLE)pMyObject;
@@ -323,7 +326,8 @@ SysRfoEnrollObjects
             pMyObject->hSelfRcmIf = (ANSC_HANDLE)pSelfRcmIf;
         }
 
-        AnscCopyString(pSelfRcmIf->Name, SYS_RCM_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pSelfRcmIf->Name, sizeof(pSelfRcmIf->Name), SYS_RCM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSelfRcmIf->InterfaceId   = SYS_RCM_INTERFACE_ID;
         pSelfRcmIf->hOwnerContext = (ANSC_HANDLE)pMyObject;

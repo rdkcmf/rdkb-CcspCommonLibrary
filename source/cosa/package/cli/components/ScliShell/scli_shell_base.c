@@ -75,7 +75,7 @@
 
 
 #include "scli_shell_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ ScliShoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSCLI_SHELL_OBJECT              pMyObject    = NULL;
+    errno_t   rc = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ ScliShoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SCLI_SHELL_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), SCLI_SHELL_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -273,6 +275,7 @@ ScliShoEnrollObjects
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT       )hThisObject;
     PTELNET_TSP_INTERFACE           pTspIf       = (PTELNET_TSP_INTERFACE    )pMyObject->hTspIf;
     PSCLI_SHELL_CEN_INTERFACE       pCenIf       = (PSCLI_SHELL_CEN_INTERFACE)pMyObject->hCenIf;
+    errno_t   rc = -1;
 
     if ( !pTspIf )
     {
@@ -287,7 +290,8 @@ ScliShoEnrollObjects
             pMyObject->hTspIf = (ANSC_HANDLE)pTspIf;
         }
 
-        AnscCopyString(pTspIf->Name, SCLI_SHELL_TSP_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pTspIf->Name, sizeof(pTspIf->Name), SCLI_SHELL_TSP_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pTspIf->InterfaceId   = SCLI_SHELL_TSP_INTERFACE_ID;
         pTspIf->hOwnerContext = (ANSC_HANDLE)pMyObject;
@@ -311,7 +315,8 @@ ScliShoEnrollObjects
             pMyObject->hCenIf = (ANSC_HANDLE)pCenIf;
         }
 
-        AnscCopyString(pCenIf->Name, SCLI_SHELL_CEN_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pCenIf->Name, sizeof(pCenIf->Name), SCLI_SHELL_CEN_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pCenIf->InterfaceId     = SCLI_SHELL_CEN_INTERFACE_ID;
         pCenIf->hOwnerContext   = (ANSC_HANDLE)pMyObject;

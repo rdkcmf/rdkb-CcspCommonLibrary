@@ -74,7 +74,7 @@
 
 
 #include "ansc_string_array_co_global.h"
-
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -335,17 +335,18 @@ AnscStringArraySetAt
     else
     {
         PUCHAR                      *pStorage;
-        PUCHAR                      pData, pStr;
-        ULONG                       ulStrLen;
+        char                      *pData, *pStr;
 
         pStorage    = (PUCHAR *)pStringArray->hStorage;
 
-        pData       = (PUCHAR)Data;
-        ulStrLen    = AnscSizeOfString((const char *)pData);
-        pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
-        AnscCopyString((char *)pStr, (char *)pData);
+        pData       = Data;
+        pStr = strdup(pData);
+        if (! pStr)
+        {
+            return;
+        }
 
-        pStorage[ulIndex]   = pStr;
+        pStorage[ulIndex]   = (PUCHAR)pStr;
     }
 }
 
@@ -403,8 +404,7 @@ AnscStringArrayInsertAt
     {
         ULONG                       i;
         PUCHAR                      *pStorage;
-        PUCHAR                      pData, pStr;
-        ULONG                       ulStrLen;
+        char                      *pData, *pStr;
   
         if (ulCount + pStringArray->ulItemCount > pStringArray->ulMaxItemCount)
         {
@@ -429,12 +429,13 @@ AnscStringArrayInsertAt
 
         for (i = 0; i < ulCount; i ++)
         {
-            pData       = (PUCHAR)Data;
-            ulStrLen    = AnscSizeOfString((const char *)pData);
-            pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
-            AnscCopyString((char *)pStr, (char *)pData);
-
-            pStorage[i + ulIndex]   = pStr;
+            pData       = Data;
+            pStr = strdup(pData);
+            if (! pStr)
+            {
+                return;
+            }
+            pStorage[i + ulIndex]   = (PUCHAR)pStr;
         }
     }
 }
@@ -551,19 +552,16 @@ AnscStringArrayAdd
         if (pStringArray->ulItemCount + 1 <= pStringArray->ulMaxItemCount)
         {
             PUCHAR                  *pStorage;
-            PUCHAR                  pData, pStr;
-            ULONG                   ulStrLen;
+            char                  *pData, *pStr;
 
-            pData       = (PUCHAR)Data;
-            ulStrLen    = AnscSizeOfString((const char *)pData);
+            pData       = Data;
 
-            pStr        = (PUCHAR)AnscAllocateMemory(ulStrLen + 1);
+            pStr = strdup(pData);
             if (pStr)
             {
-                AnscCopyString((char *)pStr, (char *)pData);
 
                 pStorage = (PUCHAR *)pStringArray->hStorage;
-                pStorage[pStringArray->ulItemCount ++] = pStr;
+                pStorage[pStringArray->ulItemCount ++] = (PUCHAR)pStr;
 
                 return pStringArray->ulItemCount;
             }

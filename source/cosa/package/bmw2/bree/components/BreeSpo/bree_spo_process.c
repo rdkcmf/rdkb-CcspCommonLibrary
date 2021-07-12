@@ -89,7 +89,7 @@
 
 
 #include "bree_spo_global.h"
-
+#include "safec_lib_common.h"
 
 ANSC_STATUS
 BreeSpoSetBeepEngineDesc
@@ -854,6 +854,7 @@ BreeSpoPrepareDFName
     UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pDFName = NULL;
     ULONG                           ulLen, i;
+    errno_t    rc  = -1;
 
     /* this function assumes there's no double slashes "//" in the page path */
 
@@ -875,7 +876,8 @@ BreeSpoPrepareDFName
         }
         else
         {
-            AnscCopyString((char*)pDFName,(char*)pPagePath);
+            rc = strcpy_s((char*)pDFName, (ulLen + 2), (char*)pPagePath);
+            ERR_CHK(rc);
         }
 
         AnscStrLower(pDFName);
@@ -914,6 +916,7 @@ BreeSpoEnforceCache
     PSLAP_VARIABLE                  pRetVal = NULL;
     ULONG                           ulPecStatus;
     char                            value[48];
+    errno_t    rc  = -1;
 
     hSlapBeepResp  = pBeepPecIf->GetResponse(pBeepPecIf->hOwnerContext);
 
@@ -924,7 +927,12 @@ BreeSpoEnforceCache
 
     if (TRUE)
     {
-        _ansc_sprintf(value, "max-age=%d", (int)ulSeconds);
+        rc = sprintf_s(value, sizeof(value), "max-age=%d", (int)ulSeconds);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return ANSC_STATUS_INTERNAL_ERROR;
+        }
 
         paramList.ParamCount    = 2;
 
@@ -1096,9 +1104,9 @@ BreeSpoEnforceCache
 
         }
 
-        _ansc_sprintf
+        rc = sprintf_s
             (
-                value, 
+                value, sizeof(value),
                 "%s, %.2d %s %d %.2d:%.2d:%.2d GMT", 
                 pWDay, 
                 timeNow.DayOfMonth,
@@ -1108,6 +1116,11 @@ BreeSpoEnforceCache
                 timeNow.Minute,
                 timeNow.Second
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return ANSC_STATUS_INTERNAL_ERROR;
+        }
 
         paramList.ParamCount    = 2;
 
@@ -1157,6 +1170,7 @@ BreeSpoCreateBreeSoaIf
 {
     UNREFERENCED_PARAMETER(hThisObject);
     PBSPENG_SOA_INTERFACE           pBreeSoaIf;
+    errno_t   rc = -1;
 
     pBreeSoaIf = (PBSPENG_SOA_INTERFACE)AnscAllocateMemory(sizeof(BSPENG_SOA_INTERFACE));
 
@@ -1165,7 +1179,8 @@ BreeSpoCreateBreeSoaIf
         return  NULL;
     }
 
-    AnscCopyString(pBreeSoaIf->Name, BREE_SOA_INTERFACE_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBreeSoaIf->Name, sizeof(pBreeSoaIf->Name), BREE_SOA_INTERFACE_NAME);
+    ERR_CHK(rc);
 
     pBreeSoaIf->InterfaceId         = BREE_SOA_INTERFACE_ID;
     pBreeSoaIf->hOwnerContext       = (ANSC_HANDLE)hBeepPecIf;

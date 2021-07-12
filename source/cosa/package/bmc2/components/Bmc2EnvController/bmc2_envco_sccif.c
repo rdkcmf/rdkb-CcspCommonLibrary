@@ -80,7 +80,7 @@
 
 
 #include "bmc2_envco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -124,11 +124,14 @@ Bmc2EnvcoSccSetRootInfo
 {
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBMC2_ENV_CONTROLLER_PROPERTY   pProperty    = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    errno_t rc = -1;
 
     AnscZeroMemory(pProperty->RootPath,          ANSC_MAX_FILE_NAME_SIZE   );
-    AnscCopyString(pProperty->RootPath,          pRootPath                 );
+    rc = STRCPY_S_NOCLOBBER(pProperty->RootPath, sizeof(pProperty->RootPath), pRootPath );
+    ERR_CHK(rc);
     AnscZeroMemory(pProperty->RootDomainCommand, BMC2_MAX_COMMAND_NAME_SIZE);
-    AnscCopyString(pProperty->RootDomainCommand, pRootDomainCommand        );
+    rc = STRCPY_S_NOCLOBBER(pProperty->RootDomainCommand, sizeof(pProperty->RootDomainCommand), pRootDomainCommand        );
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

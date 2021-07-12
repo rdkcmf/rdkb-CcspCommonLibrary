@@ -84,6 +84,7 @@
 #include "dslh_varro_interface.h"
 #include "slap_vco_internal_api.h"
 #include "dslh_varro_internal_api.h"
+#include "safec_lib_common.h"
 
 ULONG g_currentBsUpdate;
 char g_currentParamFullName[512];
@@ -193,6 +194,7 @@ DslhObjcoValidate
     ULONG                           uCount             = 0;
     ULONG                           uErrorIndex        = 0;
     BOOL                            bRet               = FALSE;
+    errno_t                         rc                 = -1;
 
     *ppFaultParamName = NULL;
 
@@ -287,7 +289,12 @@ DslhObjcoValidate
             {   
                 if( pInterface->bUseFullName)
                 {
-                    _ansc_sprintf(pFullName, "%s%s", pDslhObjRecord->FullName, pParamDescr->Name);
+                    rc = sprintf_s(pFullName, sizeof(pFullName), "%s%s", pDslhObjRecord->FullName, pParamDescr->Name);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                        return FALSE;
+                    }
                     pCallingName = pFullName;
                 }
                 else

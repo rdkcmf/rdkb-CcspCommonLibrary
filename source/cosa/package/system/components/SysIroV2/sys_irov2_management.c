@@ -85,7 +85,7 @@
 
 
 #include "sys_irov2_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -314,6 +314,7 @@ SysIroV2AddFolder2
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_IROV2_OBJECT               pMyObject    = (PSYS_IROV2_OBJECT   )hThisObject;
     PSYS_IROV2_FOLDER_ENTRY         pNextFolder  = NULL;
+    errno_t   rc = -1;
 
     pNextFolder =
         (PSYS_IROV2_FOLDER_ENTRY)
@@ -328,7 +329,8 @@ SysIroV2AddFolder2
 
         pNextFolder->hParentFolder  = (ANSC_HANDLE)pCurFolder;
         pNextFolder->UserReserved   = (ULONG)hReserved;
-        _ansc_strcpy(pNextFolder->FolderName, pSubFolderName);
+        rc = STRCPY_S_NOCLOBER(pNextFolder->FolderName, sizeof(pNextFolder->FolderName), pSubFolderName);
+        ERR_CHK(rc);
 
         SysIroV2FolderAcquireAccess(pCurFolder);
         AnscQueuePushEntry         (&pCurFolder->SubFolderQueue, &pNextFolder->Linkage);
@@ -952,6 +954,7 @@ SysIroV2AddRecord
     PSYS_IROV2_RECORD_DATA          pRecordData  = NULL;
     PSYS_IROV2_RECORD_ENTRY         pNewRecord   = NULL;
     BOOLEAN                         bNewRecord   = FALSE;
+    errno_t    rc  = -1;
 
     AnscTrace("SysIroV2AddRecord -- %s %s  ...\n", pThisFolder->FolderName, pRecordName);
 
@@ -1023,7 +1026,8 @@ SysIroV2AddRecord
 
         pRecord->ulDataSize     = ulWriteSize;
         pRecord->pRecordName    = &pRecord->DataAndName[ulWriteSize];
-        _ansc_strcpy(pRecord->pRecordName, pRecordName);
+        rc = STRCPY_S_NOCLOBER(pRecord->pRecordName, sizeof(pRecord->pRecordName), pRecordName);
+        ERR_CHK(rc);
 
         _ansc_memcpy(pRecord->DataAndName, pWriteBuffer, ulWriteSize);
     }
@@ -1198,6 +1202,7 @@ SysIroV2SetRecord
     PSYS_IROV2_RECORD_ENTRY         pRecord      = NULL;
     PSYS_IROV2_RECORD_DATA          pRecordData  = NULL;
     PSYS_IROV2_RECORD_ENTRY         pNewRecord   = NULL;
+    errno_t   rc = -1;
 
     AnscTrace("SysIroV2SetRecord -- %s %s  ...\n", pThisFolder->FolderName, pRecordName);
 
@@ -1255,7 +1260,8 @@ SysIroV2SetRecord
 
         pRecord->ulDataSize     = ulWriteSize;
         pRecord->pRecordName    = &pRecord->DataAndName[ulWriteSize];
-        _ansc_strcpy(pRecord->pRecordName, pRecordName);
+        rc = STRCPY_S_NOCLOBER(pRecord->pRecordName, sizeof(pRecord->pRecordName), pRecordName);
+        ERR_CHK(rc);
 
         _ansc_memcpy(pRecord->DataAndName, pWriteBuffer, ulWriteSize);
     }

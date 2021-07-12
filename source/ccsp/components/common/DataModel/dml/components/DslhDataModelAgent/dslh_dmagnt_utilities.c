@@ -125,7 +125,9 @@
 #include "dslh_dmagnt_global.h"
 #include "slap_vco_exported_api.h"
 #include "ccsp_ifo_ccd.h"
+#include "safec_lib_common.h"
 
+#define PNAME_MAX_SIZE   1024
 /**********************************************************************
 
     caller:     owner of this object
@@ -307,6 +309,7 @@ DslhDmagntParseSourceInfo
     char                            buffer[1024]    = { 0 };
     ULONG                           uLength         = 1023;
     char*                           errstr          = NULL;
+    errno_t                         rc              = -1;
 
     if( hXMLNode == NULL)
     {
@@ -387,10 +390,15 @@ DslhDmagntParseSourceInfo
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
                 #ifdef _ANSC_WINDOWSNT            
-                    _ansc_strcpy(buffer+_ansc_strlen(buffer), ".dll");
+                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".dll");
                 #elif defined(_ANSC_LINUX)
-                    _ansc_strcpy(buffer+_ansc_strlen(buffer), ".so");
+                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".so");
                 #endif
+                    if(rc != EOK)
+                    {
+                       ERR_CHK(rc);
+                       return COSA_STATUS_FAILURE;
+                    }
                  }
                  else 
                  {
@@ -662,6 +670,7 @@ DslhDmagntParseSourceName
     PANSC_XML_DOM_NODE_OBJECT       pLibNode        = (PANSC_XML_DOM_NODE_OBJECT)NULL;
     char                            buffer[1024]    = { 0 };
     ULONG                           uLength         = 1023;
+    errno_t                         rc              = -1;
 
     if( hXMLNode == NULL)
     {
@@ -685,10 +694,15 @@ DslhDmagntParseSourceName
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
 #ifdef _ANSC_WINDOWSNT            
-                    _ansc_strcpy(buffer+_ansc_strlen(buffer), ".dll");
+                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".dll");
 #elif defined(_ANSC_LINUX)
-                    _ansc_strcpy(buffer+_ansc_strlen(buffer), ".so");
+                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".so");
 #endif
+                    if(rc != EOK)
+                    {
+                        ERR_CHK(rc);
+                        return COSA_STATUS_FAILURE;
+                    }
                  }
                  else 
                  {
@@ -696,7 +710,12 @@ DslhDmagntParseSourceName
                     return COSA_STATUS_ERROR_LOAD_LIBRARY;
                  }
                  
-                 AnscCopyString(pName, buffer);
+                 rc = strcpy_s(pName, PNAME_MAX_SIZE, buffer);
+                 if (rc != EOK)
+                 {
+                     ERR_CHK(rc);
+                     return ANSC_STATUS_FAILURE;
+                 }
 
                  return ANSC_STATUS_SUCCESS;
              }
@@ -716,7 +735,12 @@ DslhDmagntParseSourceName
          {
              pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength);
 
-             AnscCopyString(pName, buffer);
+
+             rc = strcpy_s(pName, PNAME_MAX_SIZE, buffer);
+             if (rc != EOK) {
+                 ERR_CHK(rc);
+                 return ANSC_STATUS_FAILURE;
+             }
 
              return ANSC_STATUS_SUCCESS;
          }
@@ -790,6 +814,7 @@ DslhDmagntRegisterDataModelObject
     ANSC_STATUS                     returnStatus      = ANSC_STATUS_SUCCESS;
     char                            buffer[1024]      = { 0 };
     ULONG                           uLength           = 1023;
+    errno_t                         rc                = -1;
     
     pObjDesp = (PDSLH_CWMP_OBJECT_DESCR)AnscAllocateMemory(sizeof(DSLH_CWMP_OBJECT_DESCR));
 
@@ -832,7 +857,11 @@ DslhDmagntRegisterDataModelObject
 
         AnscCopyMemory(pObjDesp, pTableDesp, sizeof(DSLH_CWMP_OBJECT_DESCR));
 
-        _ansc_sprintf(buffer, "%s{i}.", pTableDesp->Name);
+        rc = sprintf_s(buffer, sizeof(buffer), "%s{i}.", pTableDesp->Name);
+        if(rc < EOK)
+        {
+           ERR_CHK(rc);
+        }
 
         pObjDesp->Name                      = AnscCloneString(buffer);
         pObjDesp->Type                      = DSLH_CWMP_OBJECT_TYPE_regular;
@@ -1177,6 +1206,7 @@ DslhDmagntCheckBaseObjNames
     char                            pFullName[300]    = { 0 };
     char                            buffer[256]       = { 0 };
     ULONG                           uLength           = 255;
+    errno_t                         rc                = -1;
 
     pObjectsNode = (PANSC_XML_DOM_NODE_OBJECT)
          pXmlNode->GetChildByName(pXmlNode, COSA_XML_NODE_objects);
@@ -1208,15 +1238,30 @@ DslhDmagntCheckBaseObjNames
 
                 if( _ansc_strstr(buffer, "com.") != NULL || _ansc_strstr(buffer, "CCSP.") != NULL || _ansc_strstr(buffer, pRootName) != NULL)
                 {
-                    _ansc_sprintf(pFullName, "%s", buffer);
+                    rc = strcpy_s(pFullName, sizeof(pFullName), buffer);
+                    if(rc != EOK)
+                    {
+                       ERR_CHK(rc);
+                       return FALSE;
+                    }
                 }
                 else if( buffer[AnscSizeOfString(buffer) - 1] != '.')
                 {
-                    _ansc_sprintf(pFullName, "%s%s.", pRootName, buffer);
+                    rc = sprintf_s(pFullName, sizeof(pFullName), "%s%s.", pRootName, buffer);
+                    if(rc < EOK)
+                    {
+                       ERR_CHK(rc);
+                       return FALSE;
+                    }
                 }
                 else
                 {
-                    _ansc_sprintf(pFullName, "%s%s", pRootName, buffer);
+                    rc = sprintf_s(pFullName, sizeof(pFullName), "%s%s", pRootName, buffer);
+                    if(rc < EOK)
+                    {
+                       ERR_CHK(rc);
+                       return FALSE;
+                    }
                 }
 
                 if( pDslhMprIf->GetObjEntity(pDslhMprIf->hOwnerContext, pFullName) == NULL)
@@ -1681,6 +1726,7 @@ DslhDmagntParseObjectInfo
     char                            buffer[1024]      = { 0 };
     char                            buffer2[1024]     = { 0 };
     ULONG                           uLength           = 1023;
+    errno_t                         rc                = -1;
 
     /* get the name */
     pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
@@ -1704,15 +1750,30 @@ DslhDmagntParseObjectInfo
         if( _ansc_strstr(buffer2, "com.") == buffer2    || _ansc_strstr(buffer2, "CCSP.") == buffer2 || 
             _ansc_strstr(buffer2, "Device.") == buffer2 || _ansc_strstr(buffer2, "InternetGatewayDevice.") == buffer2)
         {
-            _ansc_sprintf(pName, "%s%s.", buffer2, buffer);
+            rc = sprintf_s(pName, sizeof(pName), "%s%s.", buffer2, buffer);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return ANSC_STATUS_FAILURE;
+            }
         }
         else if( buffer2[AnscSizeOfString(buffer2)-1] != '.') /* not ends with '.' */
         {
-            _ansc_sprintf(pName, "%s%s.%s.", pParentObjName, buffer2, buffer);
+            rc = sprintf_s(pName, sizeof(pName), "%s%s.%s.", pParentObjName, buffer2, buffer);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return ANSC_STATUS_FAILURE;
+            }
         }
         else
         {
-            _ansc_sprintf(pName, "%s%s%s.", pParentObjName, buffer2, buffer);
+            rc = sprintf_s(pName, sizeof(pName), "%s%s%s.", pParentObjName, buffer2, buffer);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return ANSC_STATUS_FAILURE;
+            }
         }
 
         pObjectDesp->Name = AnscCloneString(pName);
@@ -1726,11 +1787,21 @@ DslhDmagntParseObjectInfo
     }
     else
     {
-        _ansc_sprintf(pName, "%s.", buffer);
+        rc = sprintf_s(pName, sizeof(pName), "%s.", buffer);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return ANSC_STATUS_FAILURE;
+        }
 
         if( !AnscEqualString(pName, pParentObjName, TRUE))
         {
-            _ansc_sprintf(pName, "%s%s.", pParentObjName, buffer);
+            rc = sprintf_s(pName, sizeof(pName), "%s%s.", pParentObjName, buffer);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return ANSC_STATUS_FAILURE;
+            }
         }
 
         pObjectDesp->Name       = AnscCloneString(pName);
@@ -2232,6 +2303,7 @@ DslhDmagntUnloadDataModelObject
     char                            pNamebuffer[512]  = { 0 };
     char                            buffer2[512]      = { 0 };
     ULONG                           uLength           = 511;
+    errno_t                         rc                = -1;
 
     /* get the name */
     pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
@@ -2252,11 +2324,21 @@ DslhDmagntUnloadDataModelObject
 
     if( pChildNode != NULL && pChildNode->GetDataString(pChildNode, NULL, buffer2, &uLength) == ANSC_STATUS_SUCCESS && uLength > 0)
     {
-        _ansc_sprintf(pFullName, "%s%s%s.", pParentObjName, buffer2, pNamebuffer);
+        rc  = sprintf_s(pFullName, sizeof(pFullName), "%s%s%s.", pParentObjName, buffer2, pNamebuffer);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return ANSC_STATUS_FAILURE;
+        }
     }
     else
     {
-        _ansc_sprintf(pFullName, "%s%s.", pParentObjName, pNamebuffer);
+        rc  = sprintf_s(pFullName, sizeof(pFullName), "%s%s.", pParentObjName, pNamebuffer);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return ANSC_STATUS_FAILURE;
+        }
     }
 
     /* get the object type */
@@ -2623,6 +2705,7 @@ GetParamStringValue_COSADataModel
     PPLUGIN_INFORMATION             pPluginInfo     = (PPLUGIN_INFORMATION)hInsContext;
     char*                           pStringValue    = NULL;
     ULONG                           uLength         = 0;
+    errno_t                         rc              = -1;
 
     if( AnscEqualString(ParamName, "ModuleName", TRUE))
     {
@@ -2662,7 +2745,12 @@ GetParamStringValue_COSADataModel
         return 1;
     }
 
-    AnscCopyString(pValue, pStringValue);
+    rc = strcpy_s(pValue, *pUlSize, pStringValue);
+    if (rc != EOK)
+    {
+        ERR_CHK(rc);
+        return -1;
+    }
 
     *pUlSize = uLength;
 
@@ -2939,6 +3027,7 @@ CcspComp_GetParamStringValue
     PDSLH_DATAMODEL_AGENT_OBJECT    pDslhDataModelAgent = (PDSLH_DATAMODEL_AGENT_OBJECT)hInsContext;
     PCCSP_CCD_INTERFACE             pCcspCcdIf      = (PCCSP_CCD_INTERFACE)pDslhDataModelAgent->hDslhCcdIf;
     ULONG                           uSize           = 0;
+    errno_t                         rc              = -1;
 
     if( pCcspCcdIf == NULL)
     {
@@ -2948,14 +3037,24 @@ CcspComp_GetParamStringValue
     /* check the parameter name and return the corresponding value */
     if ( AnscEqualString(ParamName, "Name", TRUE) )
     {
-        AnscCopyString(pValue, pCcspCcdIf->GetComponentName(NULL));
+        rc = strcpy_s(pValue, *pUlSize, pCcspCcdIf->GetComponentName(NULL));
+        if ( rc != EOK )
+        {
+            ERR_CHK(rc);
+            return -1;
+        }
 
         return 0;
     }
 
     if ( AnscEqualString(ParamName, "Author", TRUE) )
     {
-        AnscCopyString(pValue, pCcspCcdIf->GetComponentAuthor(NULL));
+        rc = strcpy_s(pValue, *pUlSize, pCcspCcdIf->GetComponentAuthor(NULL));
+        if ( rc != EOK )
+        {
+            ERR_CHK(rc);
+            return -1;
+        }
 
         return 0;
     }
@@ -2978,7 +3077,12 @@ CcspComp_GetParamStringValue
             return 1;
         }
 
-        AnscCopyString(pValue, pDslhDataModelAgent->pDTXml);
+        rc = strcpy_s(pValue, *pUlSize, pDslhDataModelAgent->pDTXml);
+        if ( rc != EOK )
+        {
+            ERR_CHK(rc);
+            return -1;
+        }
 
         return 0;
     }

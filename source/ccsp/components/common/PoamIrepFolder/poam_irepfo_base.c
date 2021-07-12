@@ -76,6 +76,7 @@
 
 #include "poam_irepfo_global.h"
 #include "ansc_lco_external_api.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -121,6 +122,7 @@ PoamIrepFoCreate
 {
     PANSC_LIGHT_COMPONENT_OBJECT    pBaseObject  = NULL;
     PPOAM_IREP_FOLDER_OBJECT        pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -137,7 +139,8 @@ PoamIrepFoCreate
     }
 
     /* Copy the name */
-    _ansc_strcpy( (char *)pMyObject->Name, (PCHAR)pName );
+    rc = STRCPY_S_NOCLOBBER( (char *)pMyObject->Name, sizeof(pMyObject->Name), (PCHAR)pName );
+    ERR_CHK(rc);
     
     /*
      * Initialize the common variables and functions for a container object.

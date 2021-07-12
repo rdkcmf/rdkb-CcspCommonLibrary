@@ -86,6 +86,7 @@
 #include "kernel_socket.h"
 #include "kernel_task.h"
 #include "kernel_runtime.h"
+#include "safec_lib_common.h"
 
 /*
  *  for socket_register_message_handler()
@@ -360,6 +361,7 @@ KernelCreateTask2
     tASErr                          taskErr;
     char                            pTaskFullName[128];
     char                            pTaskProperties[128];
+    errno_t   rc = -1;
 
     pTaskContext = KernelAllocateMemory(sizeof(KERNEL_TASK_CONTEXT));
 
@@ -378,12 +380,20 @@ KernelCreateTask2
 
     if ( pName == NULL )
     {
-        _ansc_sprintf(pTaskContext->TaskName, "Ansc%06u", taskNo++);
+        rc = sprintf_s(pTaskContext->TaskName,sizeof(pTaskContext->TaskName),"Ansc%06u", taskNo++);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
         pName = pTaskContext->TaskName;
     }
     else
     {
-        _ansc_sprintf(pTaskContext->TaskName, "%s%06u", pName, taskNo++);
+        rc = sprintf_s(pTaskContext->TaskName, sizeof(pTaskContext->TaskName), "%s%06u", pName, taskNo++);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     KernelTrace2
@@ -419,20 +429,28 @@ KernelCreateTask2
                 (int)pTaskContext
             );
      */
-    _ansc_sprintf
+    rc = sprintf_s
         (
-            pTaskFullName,
+            pTaskFullName, sizeof(pTaskFullName),
             "/task/%s",
             pTaskContext->TaskName
         );
-    _ansc_sprintf
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
+    rc = sprintf_s
         (
-            pTaskProperties,
+            pTaskProperties, sizeof(pTaskProperties),
             "stack=%d/service=%d/main=%p",
             stackSize,
             priority,
             KernelTaskRoutineEntry
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     taskErr = hs_TaskNew(&hTask, pTaskFullName, pTaskProperties, kASTaskInvalid);
 

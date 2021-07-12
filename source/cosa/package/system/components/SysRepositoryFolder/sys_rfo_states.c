@@ -101,7 +101,7 @@
 
 
 #include "sys_rfo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -917,9 +917,11 @@ SysRfoSetFolderName
 {
     PSYS_REPOSITORY_FOLDER_OBJECT   pMyObject    = (PSYS_REPOSITORY_FOLDER_OBJECT  )hThisObject;
     PSYS_REPOSITORY_FOLDER_PROPERTY pProperty    = (PSYS_REPOSITORY_FOLDER_PROPERTY)&pMyObject->Property;
+    errno_t   rc = -1;
 
     AnscZeroMemory(pProperty->FolderName, SYS_MAX_FOLDER_NAME_SIZE);
-    AnscCopyString(pProperty->FolderName, name                    );
+    rc = STRCPY_S_NOCLOBBER(pProperty->FolderName, sizeof(pProperty->FolderName), name  );
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

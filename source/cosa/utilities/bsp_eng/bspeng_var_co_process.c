@@ -74,7 +74,7 @@
 
 
 #include "bspeng_co_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1921,6 +1921,7 @@ BspTemplateVarStrCat
     PBSP_TEMPLATE_VAR_OBJECT        pVar      = (PBSP_TEMPLATE_VAR_OBJECT)hVar;
     ULONG                           ulLen = 0; /*RDKB-6142, CID-24705; initializing the variables*/
     char                            *pBuf = NULL;
+    errno_t   rc = -1;
 
     switch (pMyObject->Type)
     {
@@ -2090,7 +2091,10 @@ BspTemplateVarStrCat
     }
 
     if (pBuf && pMyObject->Value.str)
-        _ansc_strcat(pMyObject->Value.str, pBuf);
+    {
+        rc = strcat_s(pMyObject->Value.str, ulLen, pBuf);
+        ERR_CHK(rc);
+    }
     else
         if (!pMyObject->Value.str && pBuf)
         {

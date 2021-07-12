@@ -87,6 +87,7 @@
 
 #include "dslh_cpeco_global.h"
 #include "ccsp_base_api.h"
+#include "safec_lib_common.h"
 
 #define  CCSP_PARAMETER_MAX_COUNT                       2000
 #define  CCSP_DUMMY_PARAM_NAME							"CcspDummy"
@@ -1123,6 +1124,7 @@ DslhCpecoRegisterDataModelInternal
     ULONG                           uCount            = 0;
     char                            pTmpCRName[128]   = { 0 };
     char                            pTmpCompName[128] = { 0 };
+    errno_t                         rc                = -1;
 
     if( pCompName == NULL)
     {
@@ -1227,26 +1229,38 @@ DslhCpecoRegisterDataModelInternal
     {
         if( _ansc_strstr(pCR_id, pPrefix) == pCR_id)
         {
-            AnscCopyString(pTmpCRName, pCR_id);
+            rc = strcpy_s(pTmpCRName, sizeof(pTmpCRName), pCR_id);
+            ERR_CHK(rc);
         }
         else
         {
-            _ansc_sprintf(pTmpCRName, "%s%s", pPrefix, pCR_id);
+            rc = sprintf_s(pTmpCRName, sizeof(pTmpCRName), "%s%s", pPrefix, pCR_id);
+            if(rc < EOK)
+            {
+               ERR_CHK(rc);
+            }
         }
 
         if( _ansc_strstr(pCompName, pPrefix) == pCR_id)
         {
-            AnscCopyString(pTmpCompName, pCompName);
+            rc = strcpy_s(pTmpCompName, sizeof(pTmpCompName), pCompName);
+            ERR_CHK(rc);
         }
         else
         {
-            _ansc_sprintf(pTmpCompName, "%s%s", pPrefix, pCompName);
+            rc = sprintf_s(pTmpCompName, sizeof(pTmpCompName), "%s%s", pPrefix, pCompName);
+            if(rc < EOK)
+            {
+               ERR_CHK(rc);
+            }
         }
     }
     else
     {
-        AnscCopyString(pTmpCRName, pCR_id);
-        AnscCopyString(pTmpCompName, pCompName);
+        rc = strcpy_s(pTmpCRName, sizeof(pTmpCRName), pCR_id);
+        ERR_CHK(rc);
+        rc = strcpy_s(pTmpCompName, sizeof(pTmpCompName), pCompName);
+        ERR_CHK(rc);
     }
 
 	/* There's a test case with an empty object (No child param, No child object).

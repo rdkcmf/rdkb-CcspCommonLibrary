@@ -75,7 +75,7 @@
 
 
 #include "ansc_obj_array_co_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ AnscObjectArrayCOCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_OBJECT_ARRAY_OBJECT       pMyObject    = NULL;
+    errno_t   rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ AnscObjectArrayCOCreate
     /*
      * Initialize the common variables and functions for a component object.
      */
-    AnscCopyString(pBaseObject->Name, ANSC_OBJECT_ARRAY_COMPONENT_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), ANSC_OBJECT_ARRAY_COMPONENT_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;

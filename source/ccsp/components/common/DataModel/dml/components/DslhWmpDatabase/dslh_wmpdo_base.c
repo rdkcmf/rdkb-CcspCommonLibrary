@@ -82,6 +82,7 @@
 #ifdef FEATURE_SUPPORT_RDKLOG
 #include "rdk_debug.h"
 #endif
+#include "safec_lib_common.h"
 
 #define DEBUG_INI_NAME "/etc/debug.ini"
 
@@ -294,6 +295,7 @@ DslhWmpdoEnrollObjects
 #endif
     PANSC_TIMER_DESCRIPTOR_OBJECT   pMonitorTimerObj  = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hMonitorTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pMonitorTimerIf   = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hMonitorTimerIf;
+    errno_t                         rc                = -1;
 
     if ( !pDslhMprIf )
     {
@@ -308,7 +310,8 @@ DslhWmpdoEnrollObjects
             pMyObject->hDslhMprIf = (ANSC_HANDLE)pDslhMprIf;
         }
 
-        AnscCopyString(pDslhMprIf->Name, DSLH_MPR_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pDslhMprIf->Name, sizeof(pDslhMprIf->Name), DSLH_MPR_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pDslhMprIf->InterfaceId          = DSLH_MPR_INTERFACE_ID;
         pDslhMprIf->hOwnerContext        = (ANSC_HANDLE)pMyObject;
@@ -371,7 +374,8 @@ DslhWmpdoEnrollObjects
             pMyObject->hDslhMpaIf = (ANSC_HANDLE)pDslhMpaIf;
         }
 
-        AnscCopyString(pDslhMpaIf->Name, DSLH_MPA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pDslhMpaIf->Name, sizeof(pDslhMpaIf->Name), DSLH_MPA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pDslhMpaIf->InterfaceId            = DSLH_MPA_INTERFACE_ID;
         pDslhMpaIf->hOwnerContext          = (ANSC_HANDLE)pMyObject;

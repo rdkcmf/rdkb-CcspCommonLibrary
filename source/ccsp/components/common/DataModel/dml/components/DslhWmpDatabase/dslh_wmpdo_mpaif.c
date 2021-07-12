@@ -300,9 +300,14 @@ static BOOL LoadUserChangeFlag
     CHAR           fullName[256]                     = {0};
     UINT           Type                              = 0;
     SLAP_VARIABLE  Value                             = {0};
+    errno_t        rc                                = -1;
 
     /* Get the full name */
-    _ansc_sprintf( fullName, "UserChanged.%s", paramName);
+    rc = sprintf_s(fullName, sizeof(fullName), "UserChanged.%s", paramName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     ret = PSM_Get_Record_Value((void*)COSAGetMessageBusHandle(), (const char*)COSAGetSubsystemPrefix2(), fullName, &Type, &Value); 
 
@@ -333,6 +338,7 @@ static void SaveUserChangeFlag
     UNREFERENCED_PARAMETER(pDmlAgent);
     // Save User Changed flag to persistent storage
     PSLAP_VARIABLE pSlapVariable = (PSLAP_VARIABLE)NULL;
+    errno_t        rc            = -1;
 
     SlapAllocVariable(pSlapVariable);
     if (pSlapVariable)
@@ -343,7 +349,11 @@ static void SaveUserChangeFlag
         pSlapVariable->Variant.varBool   = 1;
 
         /* Get the full name */
-        _ansc_sprintf( fullName, "UserChanged.%s", paramName);
+        rc = sprintf_s( fullName, sizeof(fullName), "UserChanged.%s", paramName);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         // write to PSM
         PSM_Set_Record_Value((void*)COSAGetMessageBusHandle(), 

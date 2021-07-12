@@ -84,6 +84,7 @@
 #include "dslh_objro_global.h"
 #include "ccsp_base_api.h"
 #include "ccsp_trace.h"
+#include "safec_lib_common.h"
 
 #ifdef USE_NOTIFY_COMPONENT
 static void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_value);
@@ -985,6 +986,7 @@ DslhObjroVerifyChanges
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController  = (PDSLH_OBJ_CONTROLLER_OBJECT)pMyObject->hDslhObjController;
     char*                           pErrorParamName = (char*                      )NULL;
     BOOL                            bTestResult     = TRUE;
+    errno_t                         rc              = -1;
 
     bTestResult =
         pObjController->Validate
@@ -994,32 +996,29 @@ DslhObjroVerifyChanges
                 ppFaultParamName
             );
 
-    if ( bTestResult )
+    if ( bTestResult || (!*ppFaultParamName))
     {
         return  bTestResult;
     }
-    else if ( !*ppFaultParamName )
-    {
-        return  bTestResult;
-    }
-    else
-    {
-        pErrorParamName = (char*)AnscAllocateMemory(AnscSizeOfString(pMyObject->FullName) + AnscSizeOfString(*ppFaultParamName) + 8);
-    }
+
+    pErrorParamName = (char*)AnscAllocateMemory(AnscSizeOfString(pMyObject->FullName) + AnscSizeOfString(*ppFaultParamName) + 8);
 
     if ( !pErrorParamName )
     {
         return  bTestResult;
     }
-    else
+
+    rc = sprintf_s
+        (
+            pErrorParamName,
+            (AnscSizeOfString(pMyObject->FullName) + AnscSizeOfString(*ppFaultParamName) + 8),
+            "%s%s",
+            pMyObject->FullName,
+            *ppFaultParamName
+        );
+    if(rc < EOK)
     {
-        _ansc_sprintf
-            (
-                pErrorParamName,
-                "%s%s",
-                pMyObject->FullName,
-                *ppFaultParamName
-            );
+        ERR_CHK(rc);
     }
 
     AnscFreeMemory(*ppFaultParamName);
@@ -1301,6 +1300,7 @@ DslhObjroAddChildObject
     ULONG                           ulObjInsNumber      = (ULONG                      )0;
     char                            child_name[16];
 	ULONG							old_value = 0;
+    errno_t                         rc                  = -1;
 
     /* the object has to be a table in order to add a child object */
     if( pObjEntity->ObjDescr == NULL || pObjEntity->ObjDescr->Type != DSLH_CWMP_OBJECT_TYPE_table)
@@ -1379,13 +1379,18 @@ DslhObjroAddChildObject
         }
         else
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     pChildFullName,
+                    (AnscSizeOfString(pMyObject->FullName) + AnscSizeOfString(pChildLastName) + 4),
                     "%s%s.",
                     pMyObject->FullName,
                     pChildLastName
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
 
         pChildObjRecord->hParentObjRecord	  = (ANSC_HANDLE)pMyObject;
@@ -1587,15 +1592,25 @@ static void Notify_Table_Entry(PDSLH_OBJ_RECORD_OBJECT pMyObject, ULONG old_valu
 	char Param_NumberOfEntry[512] = {0};
 	char Param_NumberOfEntryTemp[512] = {0};
 	int ret = CCSP_FAILURE;
+	errno_t                         rc              = -1;
 
-	_ansc_strcpy(Param_NumberOfEntryTemp,pMyObject->FullName);
+	rc = strcpy_s(Param_NumberOfEntry, sizeof(Param_NumberOfEntry), pMyObject->FullName);
+	ERR_CHK(rc);
 	len = _ansc_strlen(Param_NumberOfEntryTemp);
-
 	Param_NumberOfEntryTemp[len-1]= '\0';
-	/*CID: 65627 Copy of overlapping memory*/
-	snprintf(Param_NumberOfEntry,sizeof(Param_NumberOfEntry), "%sNumberOfEntries",Param_NumberOfEntryTemp);
 
-	sprintf(str,"%s,%d,%d,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
+	/*CID: 65627 Copy of overlapping memory*/
+	rc = sprintf_s(Param_NumberOfEntry, sizeof(Param_NumberOfEntry), "%sNumberOfEntries",Param_NumberOfEntryTemp);
+	if(rc < EOK)
+	{
+		ERR_CHK(rc);
+	}
+
+	rc = sprintf_s(str, sizeof(str), "%s,%d,%d,%lu,%d",Param_NumberOfEntry,0,AnscQueueQueryDepth(&pMyObject->ObjroQueue),old_value,ccsp_unsignedInt);
+	if(rc < EOK)
+	{
+		ERR_CHK(rc);
+	}
 		notif_val[0].parameterName =  param_name ;
 		notif_val[0].parameterValue = str;
 		notif_val[0].type = ccsp_string;

@@ -75,7 +75,7 @@
 
 
 #include "bwsp_wso_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwspWsoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = NULL;
+    errno_t   rc   = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BwspWsoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BWSP_WEB_SERVLET_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BWSP_WEB_SERVLET_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -235,6 +237,7 @@ BwspWsoEnrollObjects
 {
     PBWSP_WEB_SERVLET_OBJECT        pMyObject    = (PBWSP_WEB_SERVLET_OBJECT)hThisObject;
     PBWSP_WSH_INTERFACE             pBwspWshIf   = (PBWSP_WSH_INTERFACE     )pMyObject->hBwspWshIf;
+    errno_t  rc  = -1;
 
     if ( !pBwspWshIf )
     {
@@ -249,7 +252,8 @@ BwspWsoEnrollObjects
             pMyObject->hBwspWshIf = (ANSC_HANDLE)pBwspWshIf;
         }
 
-        AnscCopyString(pBwspWshIf->Name, BWSP_WSH_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBwspWshIf->Name, sizeof(pBwspWshIf->Name), BWSP_WSH_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBwspWshIf->InterfaceId   = BWSP_WSH_INTERFACE_ID;
         pBwspWshIf->hOwnerContext = (ANSC_HANDLE)pMyObject;

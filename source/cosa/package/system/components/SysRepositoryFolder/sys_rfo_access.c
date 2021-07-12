@@ -89,7 +89,7 @@
 
 
 #include "sys_rfo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -133,6 +133,7 @@ SysRfoQueryAbsPath
     PSYS_REPOSITORY_FOLDER_OBJECT   pParentFolder = (PSYS_REPOSITORY_FOLDER_OBJECT  )pMyObject->hParentFolder;
     char*                           pFolderPath   = pMyObject->AbsolutePath;
     ULONG                           ulPathLen     = 0;
+    errno_t   rc = -1;
 
     if ( !pFolderPath )
     {
@@ -144,10 +145,8 @@ SysRfoQueryAbsPath
             return  NULL;
         }
     }
-    else
-    {
-        AnscZeroMemory(pFolderPath, ANSC_MAX_STRING_SIZE);
-    }
+
+    AnscZeroMemory(pFolderPath, ANSC_MAX_STRING_SIZE);
 
     if ( pParentFolder )
     {
@@ -161,14 +160,22 @@ SysRfoQueryAbsPath
     ulPathLen                = AnscSizeOfString(pFolderPath);
     pFolderPath[ulPathLen++] = '/';
 
-    AnscCopyString(&pFolderPath[ulPathLen], pProperty->FolderName);
+    rc = strcpy_s(&pFolderPath[ulPathLen], ANSC_MAX_STRING_SIZE, pProperty->FolderName);
+    if(rc != EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     ulPathLen                = AnscSizeOfString(pFolderPath);
     pFolderPath[ulPathLen++] = 0;
 
     if ( pPathString )
     {
-        AnscCopyString(pPathString, pFolderPath);
+        rc = strcpy_s(pPathString, ANSC_MAX_STRING_SIZE, pFolderPath);
+        if(rc != EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         if ( pMyObject->AbsolutePath )
         {

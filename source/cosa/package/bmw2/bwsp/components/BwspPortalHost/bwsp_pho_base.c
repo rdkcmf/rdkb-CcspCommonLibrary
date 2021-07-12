@@ -75,7 +75,7 @@
 
 
 #include "bwsp_pho_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwspPhoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_PORTAL_HOST_OBJECT        pMyObject    = NULL;
+    errno_t   rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BwspPhoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BWSP_PORTAL_HOST_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BWSP_PORTAL_HOST_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;

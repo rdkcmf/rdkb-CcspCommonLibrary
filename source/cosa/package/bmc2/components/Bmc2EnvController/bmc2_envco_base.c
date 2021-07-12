@@ -75,7 +75,7 @@
 
 
 #include "bmc2_envco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ Bmc2EnvcoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
+    errno_t    rc   = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ Bmc2EnvcoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BMC2_ENV_CONTROLLER_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BMC2_ENV_CONTROLLER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -264,6 +266,7 @@ Bmc2EnvcoEnrollObjects
     PBMC2_SCC_INTERFACE             pBmc2SccIf         = (PBMC2_SCC_INTERFACE        )pMyObject->hBmc2SccIf;
     PBMC2_COM_EXECUTOR_OBJECT       pBmc2ComExecutor   = (PBMC2_COM_EXECUTOR_OBJECT  )pMyObject->hBmc2ComExecutor;
     PBWRM_ENV_CONTROLLER_OBJECT     pBwrmEnvController = (PBWRM_ENV_CONTROLLER_OBJECT)pMyObject->hBwrmEnvController;
+    errno_t    rc = -1;
 
     if ( !pBmc2SccIf )
     {
@@ -278,7 +281,8 @@ Bmc2EnvcoEnrollObjects
             pMyObject->hBmc2SccIf = (ANSC_HANDLE)pBmc2SccIf;
         }
 
-        AnscCopyString(pBmc2SccIf->Name, BMC2_SCC_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBmc2SccIf->Name, sizeof(pBmc2SccIf->Name), BMC2_SCC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBmc2SccIf->InterfaceId      = BMC2_SCC_INTERFACE_ID;
         pBmc2SccIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;

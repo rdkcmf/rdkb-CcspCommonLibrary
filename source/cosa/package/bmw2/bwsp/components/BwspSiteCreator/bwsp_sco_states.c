@@ -79,7 +79,7 @@
 
 
 #include "bwsp_sco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -352,6 +352,7 @@ BwspScoResetProperty
 {
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT  )hThisObject;
     PBWSP_SITE_CREATOR_PROPERTY     pProperty    = (PBWSP_SITE_CREATOR_PROPERTY)&pMyObject->Property;
+    errno_t    rc  = -1;
 
     AnscZeroMemory(pProperty, sizeof(BWSP_SITE_CREATOR_PROPERTY));
 
@@ -359,8 +360,10 @@ BwspScoResetProperty
     pProperty->PhoCookieMaxAge = BWSP_PHO_COOKIE_MAX_AGE;
     pProperty->LsmCookieMaxAge = BWSP_LSM_COOKIE_MAX_AGE;
 
-    AnscCopyString(pProperty->PhoCookieName, BWSP_PHO_COOKIE_NAME);
-    AnscCopyString(pProperty->LsmCookieName, BWSP_LSM_COOKIE_NAME);
+    rc = STRCPY_S_NOCLOBBER(pProperty->PhoCookieName, sizeof(pProperty->PhoCookieName), BWSP_PHO_COOKIE_NAME);
+    ERR_CHK(rc);
+    rc = STRCPY_S_NOCLOBBER(pProperty->LsmCookieName, sizeof(pProperty->LsmCookieName), BWSP_LSM_COOKIE_NAME);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

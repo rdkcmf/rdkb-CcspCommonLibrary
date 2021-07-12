@@ -122,6 +122,7 @@
 
 
 #include "sys_iro_global.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1432,6 +1433,7 @@ SysIroIraEnumSubFolder
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder   = NULL;
     PSYS_REPOSITORY_FOLDER_OBJECT   pSubFolder   = NULL;
     char*                           pFolderName  = NULL;
+    errno_t      rc  = -1;
 
     if ( !pMyObject->bActive )
     {
@@ -1482,9 +1484,10 @@ SysIroIraEnumSubFolder
     }
     else
     {
-        *pulNameSize = AnscSizeOfString(pFolderName);
+        rc = strcpy_s(pSubFolderName, *pulNameSize, pFolderName);
+        ERR_CHK(rc);
 
-        AnscCopyString(pSubFolderName, pFolderName);
+        *pulNameSize = AnscSizeOfString(pFolderName);
     }
 
 
@@ -2585,6 +2588,7 @@ SysIroIraEnumRecord
     PSYS_REPOSITORY_FOLDER_OBJECT   pCurFolder     = NULL;
     PSYS_REPOSITORY_RECORD_OBJECT   pCurRecord     = NULL;
     char*                           pCurRecordName = NULL;
+    errno_t   rc = -1;
 
     if ( !pMyObject->bActive )
     {
@@ -2633,7 +2637,6 @@ SysIroIraEnumRecord
     }
     else
     {
-        *pulNameSize = AnscSizeOfString(pCurRecordName);
 
         if ( pulRecordType )
         {
@@ -2645,7 +2648,10 @@ SysIroIraEnumRecord
             *pulDataSize = pCurRecord->GetRecordSize((ANSC_HANDLE)pCurRecord);
         }
 
-        AnscCopyString(pRecordName, pCurRecordName);
+        rc = strcpy_s(pRecordName, *pulNameSize, pCurRecordName);
+        ERR_CHK(rc);
+
+        *pulNameSize = AnscSizeOfString(pCurRecordName);
     }
 
     returnStatus = ANSC_STATUS_SUCCESS;

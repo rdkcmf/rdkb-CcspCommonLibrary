@@ -18,6 +18,7 @@
 #include "ansc_platform.h"
 #include "ansc_xml_dom_parser_interface.h"
 #include "ansc_debug.h"
+#include "safec_lib_common.h"
 
 // TR-106 defines maximum object or parameter name length as 256
 // It appears to me that the full path can actually be longer than 256
@@ -801,6 +802,7 @@ CcspAliasMgrIsNameInsIdentifier
     int                        len;
     unsigned int               InsNumber;
     char                       buf[32]         = {0};
+    errno_t                    rc              = -1;
 
     len = AnscSizeOfString(Name);
     if ( *Name == '0' )
@@ -824,7 +826,12 @@ CcspAliasMgrIsNameInsIdentifier
         }
     }
 
-    sprintf(buf, "%u", InsNumber);
+    rc = sprintf_s(buf, sizeof(buf), "%u", InsNumber);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
 
     return AnscEqualString(buf, Name, TRUE);
 }
@@ -873,6 +880,7 @@ CcspAliasMgrReplaceInstanceIds
     char*                                InsId               = NULL;
     BOOL                                 bRet                = TRUE;
     PSINGLE_LINK_ENTRY                   pLink               = NULL;
+    errno_t                              rc                  = -1;
 
     pNsTokenChain =
         AnscTcAllocate
@@ -904,18 +912,30 @@ CcspAliasMgrReplaceInstanceIds
             }
             else
             {
-                sprintf( &Result [ AnscSizeOfString(Result) ], ".%s", InsId );
+                rc = sprintf_s( &Result [ AnscSizeOfString(Result) ], (CCSP_Alias_Mgr_Name_Length + 1 - AnscSizeOfString(Result)), ".%s", InsId );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
         }
         else
         {
             if ( AnscSizeOfString(Result) == 0 )
             {
-                sprintf( Result + AnscSizeOfString(Result), "%s", pStringToken->Name );
+                rc = sprintf_s( Result + AnscSizeOfString(Result), (CCSP_Alias_Mgr_Name_Length + 1 - AnscSizeOfString(Result)), "%s", pStringToken->Name );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
             else
             {
-                sprintf( Result + AnscSizeOfString(Result), ".%s", pStringToken->Name );
+                rc = sprintf_s( Result + AnscSizeOfString(Result), (CCSP_Alias_Mgr_Name_Length + 1 - AnscSizeOfString(Result)), ".%s", pStringToken->Name );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
         }
 
@@ -996,6 +1016,7 @@ CcspAliasMgrLookupAliasNode
     BOOL                                 bInsId              = FALSE;
     BOOL                                 bInsMatched         = FALSE;
     char*                                InsId               = NULL;
+    errno_t                              rc                  = -1;
 
     pNsTokenChain =
         AnscTcAllocate
@@ -1029,7 +1050,8 @@ CcspAliasMgrLookupAliasNode
         {
             /* Remember the instance identifier to restore it in the aliased name */
             InsId = AnscAllocateMemory(AnscSizeOfString(pStringToken->Name) + 1);
-            AnscCopyString(InsId, pStringToken->Name);
+            rc = strcpy_s(InsId, (AnscSizeOfString(pStringToken->Name) + 1), pStringToken->Name);
+            ERR_CHK(rc);
 
             QueuePush(pOutInsIdQueue, InsId);
         }
@@ -1169,6 +1191,7 @@ CcspAliasMgrFindAliases
     QUEUE_HEADER                         InsIdQueue;
     char                                 remaining[CCSP_Alias_Mgr_Name_Length + 1] = {0};
     char*                                result              = NULL;
+    errno_t                              rc                  = -1;
 
     BOOL isPartialName = Name [ AnscSizeOfString(Name) - 1 ] == '.';
 
@@ -1265,7 +1288,8 @@ CcspAliasMgrFindAliases
                         }
 
 
-                        AnscCopyString(pResListEntry->Value, result);
+                        rc = strcpy_s(pResListEntry->Value, (AnscSizeOfString(result) + 1), result);
+                        ERR_CHK(rc);
 
                         AnscSListPushEntry(pListResult, &pResListEntry->Linkage);
                     }

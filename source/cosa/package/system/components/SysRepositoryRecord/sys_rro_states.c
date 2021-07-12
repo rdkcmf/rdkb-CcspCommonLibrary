@@ -89,7 +89,7 @@
 
 
 #include "sys_rro_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -587,6 +587,7 @@ SysRroSetRecordName
     )
 {
     PSYS_REPOSITORY_RECORD_OBJECT   pMyObject    = (PSYS_REPOSITORY_RECORD_OBJECT)hThisObject;
+    errno_t    rc = -1;
 
     if ( pMyObject->RecordName )
     {
@@ -606,7 +607,8 @@ SysRroSetRecordName
 
     if ( pMyObject->RecordName && name )
     {
-        AnscCopyString(pMyObject->RecordName, name);
+        rc = STRCPY_S_NOCLOBBER(pMyObject->RecordName, (AnscSizeOfString(name) + 1), name);
+        ERR_CHK(rc);
     }
 
     return  ANSC_STATUS_SUCCESS;

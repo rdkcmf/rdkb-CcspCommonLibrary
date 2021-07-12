@@ -76,7 +76,7 @@
 
 
 #include "bmc2_comeo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -123,6 +123,7 @@ Bmc2ComeoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBMC2_COM_EXECUTOR_OBJECT       pMyObject    = NULL;
+    errno_t    rc   = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -141,7 +142,8 @@ Bmc2ComeoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BMC2_COM_EXECUTOR_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BMC2_COM_EXECUTOR_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -256,6 +258,7 @@ Bmc2ComeoEnrollObjects
     PBSPENG_SOA_INTERFACE           pBmc2SoaIf   = (PBSPENG_SOA_INTERFACE)pMyObject->hBmc2SoaIf;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
+    errno_t   rc  = -1;
 
 #ifdef   _BREE_SPO_USE_SRMO
     if (!g_pBreeSrmo)
@@ -291,7 +294,8 @@ Bmc2ComeoEnrollObjects
             pMyObject->hBmc2SoaIf       = (ANSC_HANDLE)pBmc2SoaIf;
         }
 
-        AnscCopyString(pBmc2SoaIf->Name, BMC2_SOA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBmc2SoaIf->Name, sizeof(pBmc2SoaIf->Name), BMC2_SOA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBmc2SoaIf->InterfaceId         = BMC2_SOA_INTERFACE_ID;
         pBmc2SoaIf->hOwnerContext       = (ANSC_HANDLE)NULL;

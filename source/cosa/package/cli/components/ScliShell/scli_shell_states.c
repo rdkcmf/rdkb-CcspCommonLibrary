@@ -81,7 +81,7 @@
 
 
 #include "scli_shell_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -465,10 +465,12 @@ ScliShoResetProperty
 {
     PSCLI_SHELL_OBJECT              pMyObject    = (PSCLI_SHELL_OBJECT  )hThisObject;
     PSCLI_SHELL_PROPERTY            pProperty    = (PSCLI_SHELL_PROPERTY)&pMyObject->Property;
+    errno_t    rc  = -1;
 
     pProperty->bUserAuth        = TRUE;
     pProperty->CmdCacheMaxCount = SCLI_SHELL_CACHED_CMD_DEF_COUNT;
-    AnscCopyString((char *)pProperty->Greeting, SCLI_SHELL_DEF_GREETING_MSG);
+    rc = STRCPY_S_NOCLOBBER((char *)pProperty->Greeting, sizeof(pProperty->Greeting), SCLI_SHELL_DEF_GREETING_MSG);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -556,6 +558,7 @@ ScliShoShellPromptChanged
     PSCLI_SHELL_PROPERTY            pProperty       = (PSCLI_SHELL_PROPERTY     )&pMyObject->Property;
     PTELNET_TSC_INTERFACE           pTscIf          = (PTELNET_TSC_INTERFACE    )pMyObject->hTscIf;
     PSCLI_SHELL_SESSION_EXEC        pSession;
+    errno_t   rc   = -1;
 
     pSession    = (PSCLI_SHELL_SESSION_EXEC)pMyObject->GetSession((ANSC_HANDLE)pMyObject, (ULONG)hSrvSession);
 
@@ -591,9 +594,10 @@ ScliShoShellPromptChanged
         {
             if ( pMenuTitle )
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         (char *)pPrompt,
+                        ulPromptLen + 10, 
                         "%s (%s) %c ",
                         pProperty->ShellPrompt,
                         pMenuTitle,
@@ -601,18 +605,27 @@ ScliShoShellPromptChanged
                             SCLI_SHELL_PRIVILEGED_SIGN : 
                             SCLI_SHELL_NORMAL_SIGN
                     );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
             else
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         (char *)pPrompt,
+                        ulPromptLen + 10,
                         "%s %c ",
                         pProperty->ShellPrompt,
                         pSession->bPrivileged ? 
                             SCLI_SHELL_PRIVILEGED_SIGN : 
                             SCLI_SHELL_NORMAL_SIGN
                     );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
 
 #ifdef   _CLI_SYSTEM_CONSOLE_ENABLED

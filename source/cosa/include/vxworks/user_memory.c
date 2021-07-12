@@ -76,7 +76,7 @@
 #include "user_memory.h"
 #include "user_debug.h"
 #include "user_protection.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
     WHAT A PAIN TO HAVE TO HANDLE THIS WITHOUT BASE DEFINITIONS!!!
@@ -357,6 +357,7 @@ __UserAllocateMemory
 {
     PAL_MEM_PREHEADER               pHeader;
     PVOID                           pMem    = NULL;
+    errno_t    rc = -1;
 
     if ( !gMemAllocMonitorInitialized )
     {
@@ -386,10 +387,12 @@ __UserAllocateMemory
 
         pMem = ACCESS_MEM_FROM_PREHEADER(pHeader);
 
-        strcpy(pHeader->Description, pFileName);
-        strcat(pHeader->Description, ":");
-        sprintf(&pHeader->Description[strlen(pHeader->Description)], "%u", LineNumber);
-
+        rc = sprintf_s(pHeader->Description, sizeof(pHeader->Description), "%s:%u", pFileName, LineNumber);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
         UserAcquireLock(&gMemAllocMonitorLock);
 
         /* put it into monitoring list */

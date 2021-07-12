@@ -75,7 +75,7 @@
 
 
 #include "bwsp_sco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwspScoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = NULL;
+    errno_t   rc = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BwspScoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BWSP_SITE_CREATOR_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BWSP_SITE_CREATOR_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -243,6 +245,7 @@ BwspScoEnrollObjects
     PBWSP_SITE_CREATOR_OBJECT       pMyObject    = (PBWSP_SITE_CREATOR_OBJECT)hThisObject;
     PBWSP_WSR_INTERFACE             pBwspWsrIf   = (PBWSP_WSR_INTERFACE      )pMyObject->hBwspWsrIf;
     PBWSP_CSP_INTERFACE             pBwspCspIf   = (PBWSP_CSP_INTERFACE      )pMyObject->hBwspCspIf;
+    errno_t  rc = -1;
 
     if ( !pBwspWsrIf )
     {
@@ -257,7 +260,8 @@ BwspScoEnrollObjects
             pMyObject->hBwspWsrIf = (ANSC_HANDLE)pBwspWsrIf;
         }
 
-        AnscCopyString(pBwspWsrIf->Name, BWSP_WSR_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBwspWsrIf->Name, sizeof(pBwspWsrIf->Name), BWSP_WSR_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBwspWsrIf->InterfaceId   = BWSP_WSR_INTERFACE_ID;
         pBwspWsrIf->hOwnerContext = (ANSC_HANDLE)pMyObject;
@@ -282,7 +286,8 @@ BwspScoEnrollObjects
             pMyObject->hBwspCspIf = (ANSC_HANDLE)pBwspCspIf;
         }
 
-        AnscCopyString(pBwspCspIf->Name, BWSP_CSP_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBwspCspIf->Name, sizeof(pBwspCspIf->Name), BWSP_CSP_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBwspCspIf->InterfaceId    = BWSP_CSP_INTERFACE_ID;
         pBwspCspIf->hOwnerContext  = (ANSC_HANDLE)pMyObject;

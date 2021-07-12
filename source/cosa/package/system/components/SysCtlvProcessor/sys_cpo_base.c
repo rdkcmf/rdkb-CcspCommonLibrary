@@ -75,7 +75,7 @@
 
 
 #include "sys_cpo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ SysCpoCreate
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSYS_CTLV_PROCESSOR_OBJECT      pMyObject    = NULL;
+    errno_t   rc = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ SysCpoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SYS_CTLV_PROCESSOR_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), SYS_CTLV_PROCESSOR_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -240,6 +242,7 @@ SysCpoEnrollObjects
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_CTLV_PROCESSOR_OBJECT      pMyObject    = (PSYS_CTLV_PROCESSOR_OBJECT)hThisObject;
     PSYS_SFC_INTERFACE              pSysSfcIf    = (PSYS_SFC_INTERFACE        )pMyObject->hSysSfcIf;
+    errno_t   rc  = -1;
 
     if ( !pSysSfcIf )
     {
@@ -254,7 +257,8 @@ SysCpoEnrollObjects
             pMyObject->hSysSfcIf = (ANSC_HANDLE)pSysSfcIf;
         }
 
-        AnscCopyString(pSysSfcIf->Name, SYS_SFC_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pSysSfcIf->Name, sizeof(pSysSfcIf->Name), SYS_SFC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSysSfcIf->InterfaceId          = SYS_SFC_INTERFACE_ID;
         pSysSfcIf->hOwnerContext        = (ANSC_HANDLE)pMyObject;

@@ -90,6 +90,7 @@
 #include "kernel_time.h"
 #include "kernel_socket.h"
 #include "kernel_task.h"
+#include "safec_lib_common.h"
 
 #include "quantum/as_timer.h"
 #include "quantum/as_task.h"
@@ -275,6 +276,7 @@ KernelRealInitializeLock
     BOOLEAN                         retStatus       = TRUE;
     tASErr                          err;
     char                            cSemaName[32];
+    errno_t   rc  = -1;
 
     if ( !bEnableLock )
     {
@@ -374,7 +376,11 @@ KernelRealInitializeLock
 
     if ( (*pLock)->semaLock == NULL )
     {
-        sprintf(cSemaName, "%s%05u", semaphore_name, gulSemaphoreId);
+        rc = sprintf_s(cSemaName, sizeof(cSemaName), "%s%05u", semaphore_name, gulSemaphoreId);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
         gulSemaphoreId += 1;
 
         err = as_SemaphoreNew

@@ -79,7 +79,9 @@
 #include "user_base.h"
 #include "user_runtime.h"
 #include "user_debug.h"
+#include "safec_lib_common.h"
 
+#define STRING_MAX_SIZE    16
 
 char*
 _ansc_itoa
@@ -89,32 +91,35 @@ _ansc_itoa
         int                         radix
     )
 {
-    if ( string )
+    errno_t rc = -1;
+    char *fmt;
+
+    if (! string)
     {
-        switch ( radix )
-        {
-            case    8:
-
-                    sprintf(string, "%o", value);
-                    break;
-
-            case    10:
-
-                    sprintf(string, "%d", value);
-                    break;
-
-            case    16:
-
-                    sprintf(string, "%x", value);
-                    break;
-
-            default:
-
-                    UserTrace("_ansc_itoa -- unsupported radix %d!!! *** !!!\n", radix);
-        }
+        return NULL;
     }
-
+    switch (radix)
+    {
+        case 8: 
+             fmt = "%o";
+             break;
+        case 10:
+             fmt = "%d";
+             break;
+        case 16:
+             fmt = "%x";
+             break;
+        default:
+             UserTrace("_ansc_itoa -- unsupported radix %d!!! *** !!!\n", radix);
+             return NULL;
+    }
+    rc = sprintf_s(string, STRING_MAX_SIZE, fmt, value);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     return string;
+
 }
 
 

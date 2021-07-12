@@ -76,7 +76,7 @@
 
 
 #include "sys_irov2_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -123,6 +123,7 @@ SysIroV2Create
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSYS_IROV2_OBJECT               pMyObject    = NULL;
+    errno_t  rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -141,7 +142,8 @@ SysIroV2Create
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SYS_INFO_REPOSITORY_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), SYS_INFO_REPOSITORY_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -241,6 +243,7 @@ SysIroV2EnrollObjects
     PSYS_IROV2_OBJECT               pMyObject    = (PSYS_IROV2_OBJECT            )hThisObject;
     PSYS_IRA_INTERFACE              pIraIf       = (PSYS_IRA_INTERFACE           )pMyObject->hIraIf;
     PSYS_IROV2_FOLDER_ENTRY         pRootFolder  = (PSYS_IROV2_FOLDER_ENTRY      )pMyObject->hRootFolder;
+    errno_t    rc   = -1;
 
     if ( !pRootFolder )
     {
@@ -274,7 +277,8 @@ SysIroV2EnrollObjects
             pMyObject->hIraIf = (ANSC_HANDLE)pIraIf;
         }
 
-        AnscCopyString(pIraIf->Name, SYS_IRA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pIraIf->Name, sizeof(pIraIf->Name), SYS_IRA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pIraIf->InterfaceId        = SYS_IRA_INTERFACE_ID;
         pIraIf->hOwnerContext      = (ANSC_HANDLE)pMyObject;

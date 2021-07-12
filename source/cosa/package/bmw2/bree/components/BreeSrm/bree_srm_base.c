@@ -71,7 +71,7 @@
 
 
 #include "bree_srm_global.h"
-
+#include "safec_lib_common.h"
 
 PBREE_SRM_OBJECT                    g_pBreeSrmo     = NULL;
 
@@ -120,6 +120,7 @@ BreeSrmoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBREE_SRM_OBJECT                pMyObject    = NULL;
+    errno_t  rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -138,7 +139,8 @@ BreeSrmoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BREE_SRMO_COMPONENT_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BREE_SRMO_COMPONENT_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;

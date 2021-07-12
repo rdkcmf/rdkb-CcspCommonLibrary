@@ -91,6 +91,7 @@
 #ifndef _ANSC_WINDOWSNT
 #include "ccsp_memory.h"
 #endif
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -118,6 +119,7 @@ CcspCreateNamespaceMgr
     )
 {
     PCCSP_NAMESPACE_MGR_OBJECT      pThisObject  = (PCCSP_NAMESPACE_MGR_OBJECT)NULL;
+    errno_t                         rc           = -1;
 
     pThisObject = (PCCSP_NAMESPACE_MGR_OBJECT)
         AnscAllocateMemory(sizeof(CCSP_NAMESPACE_MGR_OBJECT));
@@ -130,7 +132,8 @@ CcspCreateNamespaceMgr
      * Initialize the common variables and functions.
      */
 
-    AnscCopyString(pThisObject->pContainerName, pContainerName);
+    rc = STRCPY_S_NOCLOBBER(pThisObject->pContainerName, sizeof(pThisObject->pContainerName), pContainerName);
+    ERR_CHK(rc);
 
     pThisObject->uTotalNamespace                    = 0;
 
@@ -330,6 +333,7 @@ CcspNsMgrCloneString
 {
     UNREFERENCED_PARAMETER(pContainerName);
     char*                       pNewString  = NULL;
+    errno_t                     rc          = -1;
 
     if( pString == NULL)
     {
@@ -340,7 +344,8 @@ CcspNsMgrCloneString
 
     if( pNewString != NULL)
     {
-        AnscCopyString(pNewString, (char*)pString);
+        rc = strcpy_s(pNewString, (AnscSizeOfString(pString) + 1), (char*)pString);
+        ERR_CHK(rc);
     }
 
     return pNewString;

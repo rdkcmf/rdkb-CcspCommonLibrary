@@ -92,6 +92,7 @@
 
 
 #include "poam_irepfo_global.h"
+#include "safec_lib_common.h"
 
 ANSC_HANDLE     g_MessageBusHandle_Irep = NULL;
 ANSC_HANDLE     g_MessageBusHandle_Irep_combine = NULL; /*for combined components, they use this handle*/
@@ -199,10 +200,16 @@ PoamIrepFoGetFolder
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
+    errno_t                         rc                                  = -1;
     
     /* Get the full name */
 
-    _ansc_sprintf( fullName, "%s%s.", pMyObject->Name, pSubFolderName);
+    rc = sprintf_s( fullName, sizeof(fullName), "%s%s.", pMyObject->Name, pSubFolderName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return NULL;
+    }
 
     pNewFolder = PoamIrepFoCreate( NULL, NULL, fullName);
     if ( pNewFolder )
@@ -257,6 +264,7 @@ PoamIrepFoGetFolderByIndex
     PPOAM_IREP_FOLDER_OBJECT        pNewFolder                          = NULL;
     PCHAR                           pName                               = NULL;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
+    errno_t                         rc                                  = -1;
 
     /* Get the full name */
     pName = PoamIrepFoEnumFolder
@@ -267,7 +275,12 @@ PoamIrepFoGetFolderByIndex
     
     if ( pName != NULL)
     {
-        _ansc_sprintf( fullName, "%s%s.", pMyObject->Name, pName);
+        rc = sprintf_s( fullName, sizeof(fullName), "%s%s.", pMyObject->Name, pName);
+        if(rc < EOK)
+        {
+           ERR_CHK(rc);
+           return NULL;
+        }
 
         pNewFolder = PoamIrepFoCreate( NULL, NULL, fullName );
         AnscFreeMemory(pName);
@@ -369,9 +382,15 @@ PoamIrepFoDelFolder
     ANSC_STATUS                     returnStatus                        = ANSC_STATUS_SUCCESS;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
+    errno_t                         rc                                  = -1;
 
     /* Del all sub record */
-    _ansc_sprintf( fullName, "%s%s.", pMyObject->Name, pSubFolderName);
+    rc = sprintf_s( fullName, sizeof(fullName), "%s%s.", pMyObject->Name, pSubFolderName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return ANSC_STATUS_FAILURE;
+    }
 
     returnStatus = PSM_Del_Record( hIrep, g_SubSysPrefix_Irep, fullName );
     
@@ -497,6 +516,7 @@ PoamIrepFoEnumFolder
     UINT                            Count                               = 0;
     UINT                            Index                               = 0;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
+    errno_t                         rc                                  = -1;
 
     /* Get the full name */
     ret = PsmEnumRecords
@@ -517,7 +537,11 @@ PoamIrepFoEnumFolder
             {
                 if( Index == ulIndex )
                 {
-                    _ansc_sprintf( fullName, "%s", pRecordArray[Count].Instance.Name);
+                    rc = sprintf_s(fullName, sizeof(fullName), "%s", pRecordArray[Count].Instance.Name);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                     break;
                 }
 
@@ -527,7 +551,11 @@ PoamIrepFoEnumFolder
             {
                 if( Index == ulIndex )
                 {
-                    _ansc_sprintf( fullName, "%d", pRecordArray[Count].Instance.InstanceNumber);
+                    rc = sprintf_s(fullName, sizeof(fullName), "%d", pRecordArray[Count].Instance.InstanceNumber);
+                    if(rc < EOK)
+                    {
+                        ERR_CHK(rc);
+                    }
                     break;
                 }
 
@@ -645,9 +673,15 @@ PoamIrepFoGetRecord
     SLAP_VARIABLE                   Value                               = {0};
     PSLAP_VARIABLE                  pValue                              = NULL;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
+    errno_t                         rc                                  = -1;
 
     /* Get the full name */
-    _ansc_sprintf( fullName, "%s%s", pMyObject->Name, pRecordName);
+    rc = sprintf_s(fullName, sizeof(fullName), "%s%s", pMyObject->Name, pRecordName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return NULL;
+    }
 
     ret = PSM_Get_Record_Value
             (
@@ -896,10 +930,16 @@ PoamIrepFoAddRecord
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
-    
-    /* Get the full name */
-    _ansc_sprintf( fullName, "%s%s", pMyObject->Name, pRecordName);
+    errno_t                         rc                                  = -1;
 
+    /* Get the full name */
+    rc = sprintf_s(fullName, sizeof(fullName), "%s%s", pMyObject->Name, pRecordName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return ANSC_STATUS_FAILURE;
+    }
+    
     ret = PSM_Set_Record_Value
         (
             hIrep,
@@ -955,9 +995,15 @@ PoamIrepFoDelRecord
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;    
+    errno_t                         rc                                  = -1;
 
     /* Get the full name */
-    _ansc_sprintf( fullName, "%s%s", pMyObject->Name, pRecordName);
+    rc = sprintf_s(fullName, sizeof(fullName), "%s%s", pMyObject->Name, pRecordName);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return ANSC_STATUS_FAILURE;
+    }
 
     ret = PSM_Del_Record
             (
@@ -1172,10 +1218,15 @@ PoamIrepFoClear
     PPOAM_IREP_FOLDER_OBJECT        pMyObject                           = (PPOAM_IREP_FOLDER_OBJECT)hThisObject;
     CHAR                            fullName[IREPFO_FULLNAME_LENGTH]    = {0};
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
+    errno_t                         rc                                  = -1;
 
     /* Del all sub record */
-    _ansc_sprintf( fullName, "%s", pMyObject->Name);
-
+    rc = sprintf_s(fullName, sizeof(fullName), "%s", pMyObject->Name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return ANSC_STATUS_FAILURE;
+    }
     /*
       returnStatus = pMyObject->DelRecordRecursive(hThisObject, fullName);
       */
@@ -1307,6 +1358,7 @@ PoamIrepFoDelRecordRecursive
     UINT                            NumOfRecord                         = 0;
     UINT                             Index                               = 0;
     ANSC_HANDLE                     hIrep                               = (g_MessageBusHandle_Irep_combine)?g_MessageBusHandle_Irep_combine:g_MessageBusHandle_Irep;
+    errno_t                         rc                                  = -1;
 
     /* Get the full name */
     ret = PsmEnumRecords
@@ -1325,7 +1377,11 @@ PoamIrepFoDelRecordRecursive
         {
             if ( pRecordArray[Index].RecordType == CCSP_BASE_OBJECT )
             {
-                _ansc_sprintf( fullName, "%s%s.", pRecordName, pRecordArray[Index].Instance.Name);
+                rc = sprintf_s(fullName, sizeof(fullName), "%s%s.", pRecordName, pRecordArray[Index].Instance.Name);
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
                 returnStatus = pMyObject->DelRecordRecursive(hThisObject, fullName);
                 if ( returnStatus != ANSC_STATUS_SUCCESS)
                 {
@@ -1336,7 +1392,11 @@ PoamIrepFoDelRecordRecursive
             }
             else if ( pRecordArray[Index].RecordType == CCSP_BASE_INSTANCE )
             {
-                _ansc_sprintf( fullName, "%s%d.", pRecordName, pRecordArray[Index].Instance.InstanceNumber);
+                rc = sprintf_s(fullName, sizeof(fullName), "%s%d.", pRecordName, pRecordArray[Index].Instance.InstanceNumber);
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
                 returnStatus = pMyObject->DelRecordRecursive(hThisObject, fullName);
                 if ( returnStatus != ANSC_STATUS_SUCCESS)
                 {
@@ -1347,7 +1407,11 @@ PoamIrepFoDelRecordRecursive
             }
             else if ( pRecordArray[Index].RecordType == CCSP_BASE_PARAM )
             {
-                _ansc_sprintf( fullName, "%s%s", pRecordName, pRecordArray[Index].Instance.Name);
+                rc = sprintf_s(fullName, sizeof(fullName), "%s%s", pRecordName, pRecordArray[Index].Instance.Name);
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
                 PSM_Del_Record( hIrep, g_SubSysPrefix_Irep, fullName );
                 
                 continue;    

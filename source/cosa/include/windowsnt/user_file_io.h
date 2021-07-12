@@ -74,6 +74,7 @@
 
 #include <time.h>
 #include <direct.h>
+#include "safec_lib_common.h"
 
 /***********************************************************
         DEFINITION OF BASIC DATA TYPE AND STRUCTURES
@@ -283,6 +284,7 @@ user_copy_directory
     char                            cmd[USER_FILE_OP_CMD_BUF_SIZE];
     int                             ret;
     char*                           pLastPath = srcDir + strlen(srcDir) - 1;
+    errno_t  rc = -1;
 
     while ( *pLastPath != '\\' && pLastPath >= srcDir )
     {
@@ -300,7 +302,11 @@ user_copy_directory
         dstDir[strlen(dstDir) - 1] = 0;
     }
 
-    _ansc_sprintf(cmd, "xcopy \"%s\" \"%s\"\\\"%s\" /E /Q /Y /C /I /H", srcDir, dstDir, pLastPath);
+    rc = sprintf_s(cmd, sizeof(cmd), "xcopy \"%s\" \"%s\"\\\"%s\" /E /Q /Y /C /I /H", srcDir, dstDir, pLastPath);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     ret = system(cmd);
 
@@ -317,8 +323,11 @@ user_delete_directory
     char                            cmd[USER_FILE_OP_CMD_BUF_SIZE];
     int                             ret;
 
-    _ansc_sprintf(cmd, "rmdir \"%s\" /S /Q", dir);
-
+    rc = sprintf_s(cmd, sizeof(cmd), "rmdir \"%s\" /S /Q", dir);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     ret = system(cmd);
 
     return ret == 0;
@@ -340,6 +349,7 @@ user_find_first_file
     char*                           pTargetFileName = NULL;
     WIN32_FIND_DATA*                pWin32FindData  = NULL;
     BOOL                            bResult         = FALSE;
+    errno_t   rc  = -1;
 
     *ph_find_context = (HANDLE)NULL;
     *pb_directory    = FALSE;
@@ -357,12 +367,15 @@ user_find_first_file
         memset(pWin32FindData,  0, sizeof(WIN32_FIND_DATA));
     }
 
-    strcpy(pTargetFileName, dir_name);
+    rc = strcpy_s(pTargetFileName, ulFileNameSize, dir_name);
+    ERR_CHK(rc);
     if ( pTargetFileName[strlen(pTargetFileName) - 1] != '\\' )
     {
-        strcat(pTargetFileName, "\\");
+        rc = strcat_s(pTargetFileName, ulFileNameSize,  "\\");
+        ERR_CHK(rc);
     }
-    strcat(pTargetFileName, tar_file_name);
+    rc = strcat_s(pTargetFileName, ulFileNameSize, tar_file_name);
+    ERR_CHK(rc);
 
     hSearchContext =
         FindFirstFile

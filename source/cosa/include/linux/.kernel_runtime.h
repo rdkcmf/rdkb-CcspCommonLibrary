@@ -72,7 +72,7 @@
 #ifndef  _KERNEL_RUNTIME_
 #define  _KERNEL_RUNTIME_
 
-
+#include "safec_lib_common.h"
 /***********************************************************
     PLATFORM DEPENDENT DATA TYPE AND MACRO DEFINITIONS
 ***********************************************************/
@@ -132,6 +132,8 @@
     #define  atol(x)                                simple_strtoul(x,NULL,0)
     #define  _memicmp                               strnicmp
 
+#define STRING_MAX_SIZE    16
+
     static __inline__ char*
     _itoa
         (
@@ -140,29 +142,33 @@
             int                         radix
         )
     {
-        if ( string )
+        errno_t   rc = -1;
+
+        char *fmt;
+
+        if (! string)
         {
-            switch ( radix )
-            {
-                case    8:
-
-                        sprintf(string, "%o", value);
-                        break;
-
-                case    10:
-
-                        sprintf(string, "%d", value);
-                        break;
-
-                case    16:
-
-                        sprintf(string, "%x", value);
-                        break;
-
-                default:
-
-                        printk("_itoa -- unsupported radix %d!!! *** !!!\n", radix);
-            }
+            return NULL;
+        }
+        switch (radix)
+        {
+            case 8: 
+                 fmt = "%o";
+                 break;
+            case 10:
+                 fmt = "%d";
+                 break;
+            case 16:
+                 fmt = "%x";
+                 break;
+            default:
+             printk("_itoa -- unsupported radix %d!!! *** !!!\n", radix);
+             return NULL;
+        }
+        rc = sprintf_s(string, STRING_MAX_SIZE, fmt, value);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
         }
 
         return string;
@@ -224,13 +230,18 @@
     {
         char*                           pTemp;
         unsigned long                   ulLen;
+        errno_t rc = -1;
 
         ulLen = strlen(pSrc) + 1;
 
         pTemp = kmalloc(ulLen, GFP_ATOMIC);
 
-        strcpy(pTemp, pSrc);
-
+        rc = strcpy_s(pTemp, ulLen, pSrc);
+        if(rc != EOK)
+        {
+           ERR_CHK(rc);
+           return NULL;
+        }
         return pTemp;
     }
 #endif

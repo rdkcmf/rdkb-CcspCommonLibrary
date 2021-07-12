@@ -72,6 +72,7 @@
 #ifndef  _KERNEL_STRING_
 #define  _KERNEL_STRING_
 
+#include "safec_lib_common.h"
 
 /***********************************************************
         DEFINITION OF BASIC DATA TYPE AND STRUCTURES
@@ -84,6 +85,7 @@
 
 #define  KernelSizeOfString(s)                      (ULONG)(strlen(s))
 #define  KernelCatString                            strcat
+#define  Kernelstringlength                         128
 
 __static_inline  BOOLEAN
 KernelEqualString1(char*  pString1, char*  pString2, BOOL  bCaseSensitive)
@@ -200,13 +202,15 @@ KernelEqualString2(char*  pString1, char*  pString2, ULONG  length, BOOL  bCaseS
 __static_inline  VOID
 KernelCopyString(char*  destination, char*  source)
 {
+    errno_t   rc = -1;
 	if ( !source )
     {
 		destination[0] = 0;
     }
 	else
     {
-        strcpy(destination, source);
+        rc = strcpy_s(destination, Kernelstringlength, source);
+        ERR_CHK(rc);
     }
 }
 

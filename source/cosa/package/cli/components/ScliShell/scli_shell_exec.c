@@ -72,7 +72,7 @@
 
 
 #include "scli_shell_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -158,13 +158,18 @@ ScliShoAsyncRunCmdTask
     if ( CmdReply.ErrorCode != 0 )
     {
         UCHAR                       errMsg[64];
+        errno_t    rc  = -1;
 
-        _ansc_sprintf
+        rc = sprintf_s
             (
-                (char *)errMsg,
+                (char *)errMsg, sizeof(errMsg),
                 SCLI_SHELL_INTERNAL_ERROR,
                 (int)CmdReply.ErrorCode
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         pTscIf->Output
             (

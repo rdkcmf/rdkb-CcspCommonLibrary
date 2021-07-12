@@ -89,7 +89,7 @@
 
 
 #include "bmc2_comto_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -323,12 +323,14 @@ Bmc2ComtoSetUserIdentifier
 {
     PBMC2_COM_TERMINAL_OBJECT       pMyObject    = (PBMC2_COM_TERMINAL_OBJECT  )hThisObject;
     PBMC2_COM_TERMINAL_PROPERTY     pProperty    = (PBMC2_COM_TERMINAL_PROPERTY)&pMyObject->Property;
+    errno_t    rc   = -1;
 
     AnscZeroMemory(pProperty->UserIdentifier, BMC2_MAX_USER_ID_SIZE);
 
     if ( pUserIdentifier )
     {
-        AnscCopyString(pProperty->UserIdentifier, pUserIdentifier);
+        rc = STRCPY_S_NOCLOBBER(pProperty->UserIdentifier, sizeof(pProperty->UserIdentifier), pUserIdentifier);
+        ERR_CHK(rc);
     }
 
     return  ANSC_STATUS_SUCCESS;

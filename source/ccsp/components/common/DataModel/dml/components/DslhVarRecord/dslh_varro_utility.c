@@ -82,6 +82,7 @@
 
 
 #include "dslh_varro_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -917,6 +918,7 @@ DslhVarroMacAddrListToString
 {
     char*                           var_string   = (char*                     )(mac_addr_list? AnscAllocateMemory(mac_addr_list->VarCount * 24 / 6 + 1) : NULL);
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -933,28 +935,46 @@ DslhVarroMacAddrListToString
         {
             if ( (i % 6) == 0)
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         &var_string[AnscSizeOfString(var_string)],
+                        ((mac_addr_list->VarCount * 24 / 6 + 1) - AnscSizeOfString(var_string)),
                         ","
                     );
+                if(rc < EOK)
+                {
+                   ERR_CHK(rc);
+                   return NULL;
+                }
             }
             else if( i % 6 )
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         &var_string[AnscSizeOfString(var_string)],
+                        ((mac_addr_list->VarCount * 24 / 6 + 1) - AnscSizeOfString(var_string)),
                         ":"
                     );
+                if(rc < EOK)
+                {
+                   ERR_CHK(rc);
+                   return NULL;
+                }
             }
         }
 
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 &var_string[AnscSizeOfString(var_string)],
+                ((mac_addr_list->VarCount * 24 / 6 + 1) - AnscSizeOfString(var_string)),
                 "%02X",
                 mac_addr_list->Array.arrayUchar[i]
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  var_string;

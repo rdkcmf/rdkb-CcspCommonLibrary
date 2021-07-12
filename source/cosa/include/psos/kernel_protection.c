@@ -85,7 +85,7 @@
 #include "kernel_time.h"
 #include "kernel_socket.h"
 #include "kernel_task.h"
-
+#include "safec_lib_common.h"
 
 static  ULONG                       semaphoreNo = 0;
 static  ULONG                       eventNo     = 0;
@@ -99,9 +99,15 @@ KernelInitializeLock
 {
     ULONG                           returnStatus;
     char                            semaphoreName[5] = {'A', 0, 0, 0, 0};
+    errno_t    rc   = -1;
 
     /* pSOS doesn't check if the name is duplicate */
-    sprintf(&semaphoreName[1], "%03d", semaphoreNo);
+    rc = sprintf_s(&semaphoreName[1], sizeof(semaphoreName), "%03d", semaphoreNo);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
 
     KernelTrace("KernelInitializeLock -- %s.\n", semaphoreName);
 
@@ -130,9 +136,15 @@ KernelInitializeEvent
 {
     ULONG                           returnStatus;
     char                            eventName[5] = {'A', 0, 0, 0, 0};
+    errno_t   rc = -1;
 
     /* pSOS doesn't check if the name is duplicate */
-    sprintf(&eventName[1], "%03d", eventNo);
+    rc = sprintf_s(&eventName[1], sizeof(eventName), "%03d", eventNo);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return FALSE;
+    }
 
     KernelTrace("KernelInitializeEvent -- %s.\n", eventName);
 

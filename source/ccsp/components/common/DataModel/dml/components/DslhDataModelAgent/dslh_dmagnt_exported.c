@@ -92,6 +92,7 @@
 #include "dslh_dmagnt_global.h"
 #include "dslh_varro_interface.h"
 #include "ccsp_base_api.h"
+#include "safec_lib_common.h"
 
 #define	 END_OF_LIST					"END_OF_LIST"
 
@@ -471,6 +472,7 @@ COSAGetParamValueString
     PDSLH_MPR_INTERFACE             pDslhMprIf          = (PDSLH_MPR_INTERFACE        )pDslhWmpDatabase->hDslhMprIf;
     char*                           pString             = NULL;
     ULONG                           uSize               = 0;
+    errno_t                         rc                  = -1;
 
     pString = pDslhMprIf->GetParamValueString(pDslhMprIf->hOwnerContext, pParamName);
 
@@ -490,11 +492,14 @@ COSAGetParamValueString
         return 1;
     }
 
-    AnscCopyString(pBuffer, pString);
-
-    *pulSize = uSize;
-
+    rc = strcpy_s(pBuffer, *pulSize, pString);
     AnscFreeMemory(pString);
+    if(rc != EOK)
+    {
+       ERR_CHK(rc);
+       return 1;
+    }
+    *pulSize = uSize;
 
     return 0;
 }
@@ -1140,6 +1145,7 @@ COSAGetParamValueByPathName
 
     int i, size1, size2, len;
     int ret = 0;
+    errno_t                         rc                      = -1;
 
     componentStruct_t ** ppComponents = NULL;
     parameterValStruct_t **parameterVal = NULL;
@@ -1151,7 +1157,11 @@ COSAGetParamValueByPathName
     /*CCSP_Msg_SleepInMilliSeconds(1000);*/
     /*CCSP_Message_Bus_Register_Path(bus_handle, msg_path, path_message_func, 0);*/
 
-    _ansc_sprintf(cr_id, "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     for(i=0; FALSE == AnscEqualString(pSubSysPrefixList[i], END_OF_LIST, TRUE);i++)
     {
@@ -1203,7 +1213,8 @@ COSAGetParamValueByPathName
 
         }
 
-        strcpy(val->parameterValue, parameterVal[0]->parameterValue);
+        rc = STRCPY_S_NOCLOBBER(val->parameterValue, (*parameterValueLength + 1), parameterVal[0]->parameterValue);
+        ERR_CHK(rc);
 
         *parameterValueLength = len;
     }
@@ -1257,6 +1268,7 @@ COSASetParamValueByPathName
 
     int i, size;
     int ret = 0;
+    errno_t rc = -1;
 
     componentStruct_t ** ppComponents = NULL;
 
@@ -1268,7 +1280,11 @@ COSASetParamValueByPathName
     /*CCSP_Msg_SleepInMilliSeconds(1000);*/
     /*CCSP_Message_Bus_Register_Path(bus_handle, msg_path, path_message_func, 0);*/
 
-    _ansc_sprintf(cr_id, "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+       ERR_CHK(rc);
+    }
 
     for(i=0; FALSE == AnscEqualString(pSubSysPrefixList[i], END_OF_LIST, TRUE);i++)
     {

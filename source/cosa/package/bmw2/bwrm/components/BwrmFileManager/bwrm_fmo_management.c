@@ -76,7 +76,7 @@
 
 #include "bwrm_fmo_global.h"
 #include "bree_spo_srm.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -138,17 +138,20 @@ BwrmFmoGetFile
 
     *file_data = NULL;
     *file_size = 0;
+    errno_t rc = -1;
 
-    pFileName = (char*)AnscAllocateMemory(AnscSizeOfString(root_path) + AnscSizeOfString(file_path) + 2);
+    size_t len = strlen(root_path) + strlen(file_path) + 2;
+    pFileName = (char*)AnscAllocateMemory(len);
 
     if ( !pFileName )
     {
         return  ANSC_STATUS_RESOURCES;
     }
-    else
+
+    rc = sprintf_s(pFileName, len, "%s%s", root_path, file_path );
+    if(rc < EOK)
     {
-        _ansc_strcpy(pFileName, root_path);
-        _ansc_strcat(pFileName, file_path);
+        ERR_CHK(rc);
     }
 
 #ifdef   _BREE_SPO_USE_SRMO
@@ -311,17 +314,19 @@ BwrmFmoSetFile
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
+    errno_t   rc = -1;
 
-    pFileName = (char*)AnscAllocateMemory(AnscSizeOfString(root_path) + AnscSizeOfString(file_path) + 2);
+    size_t len = strlen(root_path) + strlen(file_path) + 2;
+    pFileName = (char*)AnscAllocateMemory(len);
 
     if ( !pFileName )
     {
         return  ANSC_STATUS_RESOURCES;
     }
-    else
+    rc = sprintf_s(pFileName, len, "%s%s", root_path, file_path );
+    if(rc < EOK)
     {
-        _ansc_strcpy(pFileName, root_path);
-        _ansc_strcat(pFileName, file_path);
+        ERR_CHK(rc);
     }
 
     hAnscFile =
@@ -429,17 +434,19 @@ BwrmFmoNewFile
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     ANSC_HANDLE                     hAnscFile    = (ANSC_HANDLE                )NULL;
     char*                           pFileName    = (char*                      )NULL;
+    errno_t         rc   = -1;
 
-    pFileName = (char*)AnscAllocateMemory(AnscSizeOfString(root_path) + AnscSizeOfString(file_path) + 2);
+    size_t len = strlen(root_path) + strlen(file_path) + 2;
+    pFileName = (char*)AnscAllocateMemory(len);
 
     if ( !pFileName )
     {
         return  ANSC_STATUS_RESOURCES;
     }
-    else
+    rc = sprintf_s(pFileName, len, "%s%s", root_path, file_path );
+    if(rc < EOK)
     {
-        _ansc_strcpy(pFileName, root_path);
-        _ansc_strcat(pFileName, file_path);
+        ERR_CHK(rc);
     }
 
     hAnscFile =
@@ -535,17 +542,19 @@ BwrmFmoDelFile
     UNREFERENCED_PARAMETER(hThisObject);
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     char*                           pFileName    = (char*                      )NULL;
+    errno_t    rc = -1;
 
-    pFileName = (char*)AnscAllocateMemory(AnscSizeOfString(root_path) + AnscSizeOfString(file_path) + 2);
+    size_t len = strlen(root_path) + strlen(file_path) + 2;
+    pFileName = (char*)AnscAllocateMemory(len);
 
     if ( !pFileName )
     {
         return  ANSC_STATUS_RESOURCES;
     }
-    else
+    rc = sprintf_s(pFileName, len, "%s%s", root_path, file_path );
+    if(rc < EOK)
     {
-        _ansc_strcpy(pFileName, root_path);
-        _ansc_strcat(pFileName, file_path);
+        ERR_CHK(rc);
     }
 
     goto  EXIT1;

@@ -75,7 +75,7 @@
 
 
 #include "sys_smo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ SysSmoCreate
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSYS_SETUP_MANAGER_OBJECT       pMyObject    = NULL;
+    errno_t   rc = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ SysSmoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SYS_SETUP_MANAGER_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), SYS_SETUP_MANAGER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -235,6 +237,7 @@ SysSmoEnrollObjects
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PSYS_SETUP_MANAGER_OBJECT       pMyObject    = (PSYS_SETUP_MANAGER_OBJECT)hThisObject;
     PSYS_RCM_INTERFACE              pSysRcmIf    = (PSYS_RCM_INTERFACE       )pMyObject->hSysRcmIf;
+    errno_t    rc    = -1;
 
     if ( !pSysRcmIf )
     {
@@ -249,7 +252,8 @@ SysSmoEnrollObjects
             pMyObject->hSysRcmIf = (ANSC_HANDLE)pSysRcmIf;
         }
 
-        AnscCopyString(pSysRcmIf->Name, SYS_RCM_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pSysRcmIf->Name, sizeof(pSysRcmIf->Name), SYS_RCM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSysRcmIf->InterfaceId   = SYS_RCM_INTERFACE_ID;
         pSysRcmIf->hOwnerContext = (ANSC_HANDLE)pMyObject;

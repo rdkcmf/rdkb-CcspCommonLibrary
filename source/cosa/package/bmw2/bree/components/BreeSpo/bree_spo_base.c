@@ -75,7 +75,7 @@
 
 
 #include "bree_spo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BreeSpoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBREE_SPO_OBJECT                pMyObject    = NULL;
+    errno_t   rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BreeSpoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BREE_SPO_COMPONENT_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BREE_SPO_COMPONENT_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -312,6 +314,7 @@ BreeSpoEnrollObjects
     PBSPENG_SOA_INTERFACE           pBreeSoaIf   = (PBSPENG_SOA_INTERFACE)pMyObject->hBreeSoaIf;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
+    errno_t  rc  = -1;
 
 #ifdef   _BREE_SPO_USE_SRMO
     if (!g_pBreeSrmo)
@@ -347,7 +350,8 @@ BreeSpoEnrollObjects
             pMyObject->hBreeSoaIf       = (ANSC_HANDLE)pBreeSoaIf;
         }
 
-        AnscCopyString(pBreeSoaIf->Name, BREE_SOA_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBreeSoaIf->Name, sizeof(pBreeSoaIf->Name), BREE_SOA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBreeSoaIf->InterfaceId         = BREE_SOA_INTERFACE_ID;
         pBreeSoaIf->hOwnerContext       = (ANSC_HANDLE)NULL;

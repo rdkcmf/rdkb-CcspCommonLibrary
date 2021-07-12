@@ -75,7 +75,7 @@
 
 
 #include "bwrm_eco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwrmEcoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PBWRM_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
+    errno_t   rc  = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ BwrmEcoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, BWRM_ENV_CONTROLLER_NAME);
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), BWRM_ENV_CONTROLLER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -272,6 +274,7 @@ BwrmEcoEnrollObjects
     PBWRM_RAM_INTERFACE             pBwrmRamIf       = (PBWRM_RAM_INTERFACE        )pMyObject->hBwrmRamIf;
     PBWRM_FILE_MANAGER_OBJECT       pBwrmFileManager = (PBWRM_FILE_MANAGER_OBJECT  )pMyObject->hBwrmFileManager;
     PBWRM_PAGE_MANAGER_OBJECT       pBwrmPageManager = (PBWRM_PAGE_MANAGER_OBJECT  )pMyObject->hBwrmPageManager;
+    errno_t   rc = -1;
 
     if ( !pBwrmRamIf )
     {
@@ -286,7 +289,8 @@ BwrmEcoEnrollObjects
             pMyObject->hBwrmRamIf = (ANSC_HANDLE)pBwrmRamIf;
         }
 
-        AnscCopyString(pBwrmRamIf->Name, BWRM_RAM_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pBwrmRamIf->Name, sizeof(pBwrmRamIf->Name), BWRM_RAM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pBwrmRamIf->InterfaceId     = BWRM_RAM_INTERFACE_ID;
         pBwrmRamIf->hOwnerContext   = (ANSC_HANDLE)pMyObject;

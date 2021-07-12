@@ -75,6 +75,7 @@
 
 
 #include "dslh_dmagnt_global.h"
+#include "safec_lib_common.h"
 
 PDSLH_DATAMODEL_AGENT_OBJECT         g_DslhDataModelAgent  = NULL;
 
@@ -123,6 +124,7 @@ DslhDmagntCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -141,7 +143,8 @@ DslhDmagntCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, "DataModel Agent");
+    rc = STRCPY_S_NOCLOBBER(pBaseObject->Name, sizeof(pBaseObject->Name), "DataModel Agent");
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -249,6 +252,7 @@ DslhDmagntEnrollObjects
 {
     PDSLH_DATAMODEL_AGENT_OBJECT    pMyObject         = (PDSLH_DATAMODEL_AGENT_OBJECT)hThisObject;
     PDSLH_MWS_INTERFACE             pDslhMwsIf        = (PDSLH_MWS_INTERFACE        )pMyObject->hDslhMwsIf;
+    errno_t                         rc                = -1;
 
     AnscCoEnrollObjects((ANSC_HANDLE)pMyObject);
 
@@ -261,7 +265,8 @@ DslhDmagntEnrollObjects
             return  ANSC_STATUS_RESOURCES;
         }
 
-        AnscCopyString(pDslhMwsIf->Name, DSLH_MWS_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(pDslhMwsIf->Name, sizeof(pDslhMwsIf->Name), DSLH_MWS_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pDslhMwsIf->InterfaceId      = DSLH_MWS_INTERFACE_ID;
         pDslhMwsIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;

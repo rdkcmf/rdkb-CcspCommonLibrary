@@ -75,6 +75,7 @@
 #include "kernel_memory.h"
 #include "kernel_debug.h"
 #include "kernel_protection.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -356,6 +357,7 @@ __KernelAllocateMemory
 {
     PAL_MEM_PREHEADER               pHeader;
     PVOID                           pMem    = NULL;
+    errno_t     rc = -1;
 
     if ( !gMemAllocMonitorInitialized )
     {
@@ -385,9 +387,11 @@ __KernelAllocateMemory
 
         pMem = ACCESS_MEM_FROM_PREHEADER(pHeader);
 
-        strcpy(pHeader->Description, pFileName);
-        strcat(pHeader->Description, ":");
-        sprintf(&pHeader->Description[strlen(pHeader->Description)], "%u", LineNumber);
+        rc = sprintf_s(pHeader->Description, sizeof(pHeader->Description), "%s:%u", pFileName, LineNumber);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         KernelAcquireLock(&gMemAllocMonitorLock);
 

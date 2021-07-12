@@ -74,7 +74,7 @@
 
 
 #include "bspeng_co_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -791,12 +791,10 @@ BspTemplateListSetTemplateLoaded
 
     pLoadedTemplatesList    = (PANSC_PTR_ARRAY_OBJECT)pMyObject->hLoadedTemplatesList;
 
-    pName   = (char *)AnscAllocateMemory(AnscSizeOfString(pTemplateName) + 1);
+    pName = strdup(pTemplateName);
 
     if (!pName)
         return ANSC_STATUS_RESOURCES;
-
-    AnscCopyString(pName, pTemplateName);
 
     pLoadedTemplatesList->Add
         (
@@ -1372,11 +1370,11 @@ BspTemplateListCacheTemplates
         }
     }
 
-    pEntry->pName   = (PUCHAR)AnscAllocateMemory(AnscSizeOfString((const char *)pTemplateName) + 1);
-    if (pEntry->pName)
-    {
-        AnscCopyString((char *)pEntry->pName, (char *)pTemplateName);
-    }
+    pEntry->pName = (PUCHAR)strdup((char *)pTemplateName);
+
+    if (pEntry->pName == NULL)
+        return ANSC_STATUS_RESOURCES;  
+
     pCmif->AddTemplate(pCmif->hOwnerContext, (ANSC_HANDLE)pEntry);
 
     return ANSC_STATUS_SUCCESS;

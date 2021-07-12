@@ -72,6 +72,7 @@
 
 
 #include "dslh_dmagnt_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -126,13 +127,20 @@ COSAMwsIfGetResource
         PULONG                      pulResourceLen      /* OUT - length of resource */
     )
 {
+    errno_t                         rc              = -1;
     UNREFERENCED_PARAMETER(hThisObject);
     if( pUrlPath == NULL || !AnscEqualString(pUrlPath, _DATA_MODEL_XML_PATH, FALSE))
     {
         return NULL;
     }
 
-    AnscCopyString(pMediaType, "text/xml");
+    rc = strcpy_s(pMediaType, *pulMediaTypeLength, "text/xml");
+    if(rc != EOK)
+    {
+       ERR_CHK(rc);
+       return NULL;
+    }
+
     *pulMediaTypeLength  = AnscSizeOfString("text/xml");
 
     *pulResourceLen      = AnscSizeOfString(s_DataModel_TR106_XML);

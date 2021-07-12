@@ -86,7 +86,7 @@
 
 
 #include "bmc2_envco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -636,10 +636,13 @@ Bmc2EnvcoResetProperty
 {
     PBMC2_ENV_CONTROLLER_OBJECT     pMyObject    = (PBMC2_ENV_CONTROLLER_OBJECT  )hThisObject;
     PBMC2_ENV_CONTROLLER_PROPERTY   pProperty    = (PBMC2_ENV_CONTROLLER_PROPERTY)&pMyObject->Property;
+    errno_t   rc  = -1;
 
     AnscZeroMemory(pProperty,                    sizeof(BMC2_ENV_CONTROLLER_PROPERTY));
-    AnscCopyString(pProperty->RootPath,          BMC2_DEF_ROOT_PATH                  );
-    AnscCopyString(pProperty->RootDomainCommand, BMC2_DEF_ROOT_DOMAIN_COMMAND        );
+    rc = STRCPY_S_NOCLOBBER(pProperty->RootPath, sizeof(pProperty->RootPath),  BMC2_DEF_ROOT_PATH                  );
+    ERR_CHK(rc);
+    rc = STRCPY_S_NOCLOBBER(pProperty->RootDomainCommand, sizeof(pProperty->RootDomainCommand), BMC2_DEF_ROOT_DOMAIN_COMMAND        );
+    ERR_CHK(rc);
 
     pProperty->bMultiUserCtrl = TRUE;
     pProperty->bCacheScpPages = TRUE;

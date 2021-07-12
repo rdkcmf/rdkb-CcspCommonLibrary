@@ -75,7 +75,7 @@
 
 
 #include "bwsp_sco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ BwspScoWsrAttachWebHost
     PBWSP_PORTAL_HOST_OBJECT        pPortalHost  = (PBWSP_PORTAL_HOST_OBJECT     )NULL;
     BWSP_PORTAL_HOST_PROPERTY       bwspPhoProperty;
     WEB_LSM_INTERFACE               webLsmIf;
+    errno_t   rc   = -1;
 
     if ( !pMyObject->bActive )
     {
@@ -147,9 +148,12 @@ BwspScoWsrAttachWebHost
     {
         AnscZeroMemory(&bwspPhoProperty, sizeof(BWSP_PORTAL_HOST_PROPERTY));
 
-        AnscCopyString(bwspPhoProperty.HostName,      pWebHostDesp->HostName     );
-        AnscCopyString(bwspPhoProperty.VhoCookieName, pProperty   ->PhoCookieName);
-        AnscCopyString(bwspPhoProperty.LsmCookieName, pProperty   ->LsmCookieName);
+        rc = STRCPY_S_NOCLOBBER(bwspPhoProperty.HostName,  sizeof(bwspPhoProperty.HostName),    pWebHostDesp->HostName     );
+        ERR_CHK(rc);
+        rc = STRCPY_S_NOCLOBBER(bwspPhoProperty.VhoCookieName,  sizeof(bwspPhoProperty.VhoCookieName), pProperty   ->PhoCookieName);
+        ERR_CHK(rc);
+        rc = STRCPY_S_NOCLOBBER(bwspPhoProperty.LsmCookieName,  sizeof(bwspPhoProperty.LsmCookieName), pProperty   ->LsmCookieName);
+        ERR_CHK(rc);
 
         bwspPhoProperty.HostPort               = pWebHostDesp->HostPort;
         bwspPhoProperty.bEnableSessionTracking = pWebHostDesp->bSessionTracking;
@@ -165,7 +169,8 @@ BwspScoWsrAttachWebHost
     {
         AnscZeroMemory(&webLsmIf, sizeof(WEB_LSM_INTERFACE));
 
-        AnscCopyString(webLsmIf.Name, WEB_LSM_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(webLsmIf.Name, sizeof(webLsmIf.Name), WEB_LSM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         webLsmIf.InterfaceId    = WEB_LSM_INTERFACE_ID;
         webLsmIf.hOwnerContext  = pWebHostDesp->hHostContext;
@@ -301,6 +306,7 @@ BwspScoWsrAttachServlet
     PBWSP_WEB_SERVLET_OBJECT        pWebServlet  = (PBWSP_WEB_SERVLET_OBJECT     )NULL;
     BWSP_WEB_SERVLET_PROPERTY       bwspWsoProperty;
     BWSP_WSH_INTERFACE              bwspWshIf;
+    errno_t   rc   = -1;
 
     if ( !pMyObject->bActive )
     {
@@ -326,8 +332,10 @@ BwspScoWsrAttachServlet
     {
         AnscZeroMemory(&bwspWsoProperty, sizeof(BWSP_WEB_SERVLET_PROPERTY));
 
-        AnscCopyString(bwspWsoProperty.RootPath, pServletDesp->WebRootPath);
-        AnscCopyString(bwspWsoProperty.RegPath,  pServletDesp->ServletPath);
+        rc = STRCPY_S_NOCLOBBER(bwspWsoProperty.RootPath, sizeof(bwspWsoProperty.RootPath), pServletDesp->WebRootPath);
+        ERR_CHK(rc);
+        rc = STRCPY_S_NOCLOBBER(bwspWsoProperty.RegPath, sizeof(bwspWsoProperty.RegPath),  pServletDesp->ServletPath);
+        ERR_CHK(rc);
 
         bwspWsoProperty.OwnerFlag  = pServletDesp->bMainPage   ? WEB_ROO_FLAG_STANDARD | WEB_ROO_FLAG_DEFAULT : WEB_ROO_FLAG_STANDARD;
         bwspWsoProperty.OwnerFlag |= pServletDesp->bUpnpSupport? WEB_ROO_FLAG_UPNP_SUPPORT: 0;
@@ -341,7 +349,8 @@ BwspScoWsrAttachServlet
     {
         AnscZeroMemory(&bwspWshIf, sizeof(BWSP_WSH_INTERFACE));
 
-        AnscCopyString(bwspWshIf.Name, BWSP_WSH_INTERFACE_NAME);
+        rc = STRCPY_S_NOCLOBBER(bwspWshIf.Name, sizeof(bwspWshIf.Name), BWSP_WSH_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         bwspWshIf.InterfaceId   = BWSP_WSH_INTERFACE_ID;
         bwspWshIf.hOwnerContext = pServletDesp->hServletContext;
