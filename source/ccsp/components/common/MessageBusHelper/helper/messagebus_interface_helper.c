@@ -338,7 +338,7 @@ CcspCcMbi_GetParameterValues
                     ppReturnVal[i]->type = ccsp_string;
                 }
 
-                ppReturnVal[i]->parameterValue = AnscCloneString(pParamValueArray[i].Value->Variant.varString);
+                ppReturnVal[i]->parameterValue = pParamValueArray[i].Value->Variant.varString ? AnscCloneString(pParamValueArray[i].Value->Variant.varString) : NULL;
             }
             else if ( pParamValueArray[i].Value->Syntax == SLAP_VAR_SYNTAX_bool )
             {

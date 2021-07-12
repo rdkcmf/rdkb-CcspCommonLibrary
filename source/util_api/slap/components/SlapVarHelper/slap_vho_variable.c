@@ -352,7 +352,7 @@ SlapVhoCloneVariable
 
     SlapCleanVariable(dst_var);
 
-    dst_var->Name        = AnscCloneString(src_var->Name);
+    dst_var->Name        = (src_var->Name) ? AnscCloneString(src_var->Name) : NULL;
     dst_var->ContentType = src_var->ContentType;
     dst_var->UsageType   = src_var->UsageType;
     dst_var->Syntax      = src_var->Syntax;
