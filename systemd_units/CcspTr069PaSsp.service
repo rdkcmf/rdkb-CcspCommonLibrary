@@ -28,9 +28,11 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/ccsp/tr069pa
+ExecStartPre=/bin/sh -c 'val=`syscfg get EnableTR69Binary`; if [ "$val" == "false" ]; then `systemctl stop CcspTr069PaSsp`; fi'
 ExecStart=/usr/bin/CcspTr069PaSsp -subsys $Subsys
 ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspTr069PaSsp" >> ${PROCESS_RESTART_LOG}'
 Restart=always
+SuccessExitStatus=SIGTERM
 
 StandardOutput=syslog+console
 
