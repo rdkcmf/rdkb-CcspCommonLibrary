@@ -74,6 +74,7 @@
 
 
 #include "bspeng_co_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -251,8 +252,13 @@ BspTemplateWriterWriteLong
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc        = -1;
 
-    ulLen = _ansc_sprintf(buf, "%ld", lNum);
+    rc = sprintf_s(buf,sizeof(buf), "%ld", lNum);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen = rc;
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 
@@ -297,8 +303,13 @@ BspTemplateWriterWriteUlong
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc = -1;
 
-    ulLen = _ansc_sprintf(buf, "%lu", ulNum);
+    rc = sprintf_s(buf,sizeof(buf), "%lu", ulNum);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen = rc;
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 
@@ -343,8 +354,13 @@ BspTemplateWriterWriteInt
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc = -1;
 
-    ulLen = _ansc_sprintf(buf, "%d", nNum);
+    rc = sprintf_s(buf,sizeof(buf), "%d", nNum);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen = rc;
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 
@@ -389,8 +405,13 @@ BspTemplateWriterWriteUint
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc = -1;
 
-    ulLen = _ansc_sprintf(buf, "%u", uNum);
+    rc = sprintf_s(buf,sizeof(buf), "%u", uNum);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen = rc;
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 
@@ -440,6 +461,7 @@ BspTemplateWriterWriteDouble
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc = -1;
 
 #ifdef   _BSPENG_NO_DOUBLE
     LONG                            lInt;
@@ -448,12 +470,26 @@ BspTemplateWriterWriteDouble
     lInt    = BSP_TEMPLATE_DOUBLE_GET_INT_TRUNK(Value);
     ulFrac  = BSP_TEMPLATE_DOUBLE_GET_FRAC(Value);
 
-    if (ulFrac == 0)
-        ulLen   = _ansc_sprintf(buf, "%d", (int)lInt);
-    else
-        ulLen   = _ansc_sprintf(buf, BSP_TEMPLATE_DOUBLE_FORMAT, (int)lInt, (int)ulFrac);
+    if (ulFrac == 0){
+        rc = sprintf_s(buf,sizeof(buf), "%d", (int)lInt);
+        if(rc < EOK){
+            ERR_CHK(rc);
+        }
+        ulLen   = rc;
+    }
+    else{
+        rc = sprintf_s(buf,sizeof(buf), BSP_TEMPLATE_DOUBLE_FORMAT, (int)lInt, (int)ulFrac);
+        if(rc < EOK){
+            ERR_CHK(rc);
+        }
+        ulLen   = rc;
+    }
 #else
-    ulLen   = _ansc_sprintf(buf, "%f", Value);
+    rc = sprintf_s(buf,sizeof(buf), "%f", Value);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen   = rc;
 #endif
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
@@ -499,8 +535,13 @@ BspTemplateWriterWriteHex
     PBSP_TEMPLATE_WRITER_OBJECT     pMyObject = (PBSP_TEMPLATE_WRITER_OBJECT)hThisObject;
     char                            buf[16];
     ULONG                           ulLen;
+    errno_t                         rc = -1;
 
-    ulLen = _ansc_sprintf(buf, "0x%.8x", (UINT)ulNum);
+    rc = sprintf_s(buf,sizeof(buf), "0x%.8x", (UINT)ulNum);
+    if(rc < EOK){
+        ERR_CHK(rc);
+    }
+    ulLen = rc;
 
     pMyObject->WriteBytes(hThisObject, buf, &ulLen);
 

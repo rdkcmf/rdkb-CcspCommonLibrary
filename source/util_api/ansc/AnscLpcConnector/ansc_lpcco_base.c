@@ -75,7 +75,7 @@
 
 
 #include "ansc_lpcco_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -122,6 +122,7 @@ AnscLpccoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PANSC_LPC_CONNECTOR_OBJECT      pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +141,8 @@ AnscLpccoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, ANSC_LPC_CONNECTOR_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), ANSC_LPC_CONNECTOR_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -264,6 +266,7 @@ AnscLpccoEnrollObjects
     PANSC_CPC_INTERFACE             pAnscCpcIf    = (PANSC_CPC_INTERFACE          )pMyObject->hAnscCpcIf;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pConnTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hConnTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pConnTimerIf  = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hConnTimerIf;
+    errno_t                         rc            = -1;
 
     if ( !pAnscImcIf )
     {
@@ -278,7 +281,8 @@ AnscLpccoEnrollObjects
             pMyObject->hAnscImcIf = (ANSC_HANDLE)pAnscImcIf;
         }
 
-        AnscCopyString(pAnscImcIf->Name, ANSC_IMC_INTERFACE_NAME);
+        rc = strcpy_s(pAnscImcIf->Name, sizeof(pAnscImcIf->Name), ANSC_IMC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pAnscImcIf->InterfaceId      = ANSC_IMC_INTERFACE_ID;
         pAnscImcIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;
@@ -310,7 +314,8 @@ AnscLpccoEnrollObjects
             pMyObject->hAnscCpcIf = (ANSC_HANDLE)pAnscCpcIf;
         }
 
-        AnscCopyString(pAnscCpcIf->Name, ANSC_CPC_INTERFACE_NAME);
+        rc = strcpy_s(pAnscCpcIf->Name, sizeof(pAnscCpcIf->Name), ANSC_CPC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pAnscCpcIf->InterfaceId      = ANSC_CPC_INTERFACE_ID;
         pAnscCpcIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;

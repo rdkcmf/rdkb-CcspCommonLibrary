@@ -79,6 +79,7 @@
 
 
 #include "ansc_object_mapper_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -510,6 +511,7 @@ AnscOmoSerialize
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
     ULONG                           tableIndex      = 0;
     ULONG                           arrayIndex      = 0;
+    errno_t                         rc              = -1;
 
     AnscAcquireLock(&pObjectMapper->DescriptorTableLock);
 
@@ -528,9 +530,12 @@ AnscOmoSerialize
             pObjectTagArray[arrayIndex].pfnObjectCreate = pDescriptor->pfnObjectCreate;
             pObjectTagArray[arrayIndex].pfnObjectRemove = pDescriptor->pfnObjectRemove;
 
-            AnscCopyString(pObjectTagArray[arrayIndex].BaseName,    pDescriptor->BaseName);
-            AnscCopyString(pObjectTagArray[arrayIndex].Name,        pDescriptor->Name);
-            AnscCopyString(pObjectTagArray[arrayIndex].DerivedType, pDescriptor->DerivedType);
+            rc = strcpy_s(pObjectTagArray[arrayIndex].BaseName, sizeof(pObjectTagArray[arrayIndex].BaseName),    pDescriptor->BaseName);
+            ERR_CHK(rc);
+            rc = strcpy_s(pObjectTagArray[arrayIndex].Name, sizeof(pObjectTagArray[arrayIndex].Name),        pDescriptor->Name);
+            ERR_CHK(rc);
+            rc = strcpy_s(pObjectTagArray[arrayIndex].DerivedType, sizeof(pObjectTagArray[arrayIndex].DerivedType), pDescriptor->DerivedType);
+            ERR_CHK(rc);
 
             arrayIndex++;
         }

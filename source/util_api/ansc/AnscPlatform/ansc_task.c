@@ -95,6 +95,7 @@
 
 
 #include "ansc_global.h"
+#include "safec_lib_common.h"
 
 
 static  BOOL                        g_bSafeParenting  = FALSE;
@@ -619,17 +620,24 @@ AnscInitializeTpm
 
     for ( i = 0; i < ulPoolSize; i++ )
     {
-        handle = AnscCreateTask
+        if(
+            (handle = AnscCreateTask
             (
                 AnscPoolableTaskRoutine,
                 ANSC_DEFAULT_TASK_STACK_SIZE,
                 ANSC_DEFAULT_TASK_PRIORITY,
                 NULL,
                 "anscPooledTask"
-            );
+            )) == NULL)
+        {
+            return ANSC_STATUS_FAILURE;
+        }
+        else
+        {
 #ifdef _ANSC_LINUX
-        pthread_detach((pthread_t)handle);
+            pthread_detach((pthread_t)handle);
 #endif
+        }
     }
 
     AnscSleep(ANSC_TASK_BREAK_INTERVAL);
@@ -661,18 +669,24 @@ AnscInitializeTpj
         AnscInitializeSpinLock   (&g_TpjTaskSListSpinLock);
     }
 
-    handle = AnscCreateTask
+    if(
+        (handle = AnscCreateTask
         (
             AnscJanitorTaskRoutine,
             ANSC_DEFAULT_TASK_STACK_SIZE,
             ANSC_DEFAULT_TASK_PRIORITY,
             NULL,
             "anscJanitorTask"
-        );
-
+        )) == NULL)
+    {
+        return ANSC_STATUS_FAILURE;
+    }
+    else
+    {
 #ifdef _ANSC_LINUX
     pthread_detach((pthread_t)handle);
 #endif
+    }
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -689,6 +703,7 @@ AnscAcquireTask
     PFN_ANSC_TASK_ROUTINE           pTaskRoutine = (PFN_ANSC_TASK_ROUTINE)pTaskEntry;
     PANSC_TASK_RECORD               pTaskRecord  = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry  = NULL;
+    errno_t                         rc           = -1;
 
     AnscAcquireSpinLock(&g_TpmTaskSListSpinLock);
     pSLinkEntry = AnscSListPopEntry(&g_TpmTaskSList);
@@ -708,7 +723,8 @@ AnscAcquireTask
     AnscAcquireSpinLock(&pTaskRecord->AccessSpinLock);
 
     AnscZeroMemory(pTaskRecord->Name, ANSC_OBJECT_NAME_SIZE);
-    AnscCopyString(pTaskRecord->Name, name                 );
+    rc = strcpy_s(pTaskRecord->Name, sizeof(pTaskRecord->Name), name                 );
+    ERR_CHK(rc);
 
     pTaskRecord->bSuspended   = FALSE;
     pTaskRecord->Routine      = pTaskRoutine;

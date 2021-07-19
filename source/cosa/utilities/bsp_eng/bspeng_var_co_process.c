@@ -1977,16 +1977,30 @@ BspTemplateVarStrCat
             }
             else
             {
-                if (pMyObject->Type == BspVar_Number)
-                    ulLen   = _ansc_sprintf(pBuf, "%ld", pMyObject->Value.num);
+                if (pMyObject->Type == BspVar_Number){
+                    rc = sprintf_s(pBuf,pMyObject->Size, "%ld", pMyObject->Value.num);
+                    if(rc < EOK){
+                        ERR_CHK(rc);
+                    }
+                    ulLen   = rc;
+                }
                 else
-                if (pMyObject->Type == BspVar_UNumber)
-                    ulLen   = _ansc_sprintf(pBuf, "%u", (UINT)pMyObject->Value.num);
+                if (pMyObject->Type == BspVar_UNumber){
+                    rc = sprintf_s(pBuf,pMyObject->Size, "%u", (UINT)pMyObject->Value.num);
+                    if(rc < EOK){
+                        ERR_CHK(rc);
+                    }
+                    ulLen   = rc;
+                }
                 else
 #ifdef   _BSPENG_NO_DOUBLE
                     ulLen   = BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)pMyObject->Value.real);
 #else
-                    ulLen   = _ansc_sprintf(pBuf, "%f", pMyObject->Value.real);
+                    rc = sprintf_s(pBuf,pMyObject->Size, "%f", pMyObject->Value.real);
+                    if(rc < EOK){
+                        ERR_CHK(rc);
+                    }
+                    ulLen   = rc;
 #endif
             }
 
@@ -2049,16 +2063,30 @@ BspTemplateVarStrCat
 
         if (pBuf)
         {
-            if (pVar->Type == BspVar_Number)
-                ulLen   += _ansc_sprintf(pBuf, "%ld", pVar->Value.num);
+            if (pVar->Type == BspVar_Number){
+                rc = sprintf_s(pBuf,16, "%ld", pVar->Value.num);
+                if(rc < EOK){
+                    ERR_CHK(rc);
+                }
+                ulLen   += rc;
+            }
             else
-            if (pVar->Type == BspVar_UNumber)
-                ulLen   += _ansc_sprintf(pBuf, "%u", (UINT)pVar->Value.num);
+            if (pVar->Type == BspVar_UNumber){
+                rc = sprintf_s(pBuf,16, "%u", (UINT)pVar->Value.num);
+                if(rc < EOK){
+                    ERR_CHK(rc);
+                }
+                ulLen   += rc;
+            }
             else
 #ifdef   _BSPENG_NO_DOUBLE
                 ulLen   += BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)pVar->Value.real);
 #else
-                ulLen   += _ansc_sprintf(pBuf, "%f", pVar->Value.real);
+                rc = sprintf_s(pBuf,16, "%f", pVar->Value.real);
+                if(rc < EOK){
+                    ERR_CHK(rc);
+                }
+                ulLen   += rc;
 #endif
         }
 

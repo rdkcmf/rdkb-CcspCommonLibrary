@@ -95,6 +95,7 @@
 
 
 #include "stun_sco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -655,12 +656,14 @@ StunScoSetUsername
 {
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pProperty->Username, STUN_MAX_USERNAME_SIZE);
 
     if ( username )
     {
-        AnscCopyString(pProperty->Username, username);
+        rc = strcpy_s(pProperty->Username, sizeof(pProperty->Username), username);
+        ERR_CHK(rc);
     }
 
     return  ANSC_STATUS_SUCCESS;
@@ -741,12 +744,14 @@ StunScoSetPassword
 {
     PSTUN_SIMPLE_CLIENT_OBJECT      pMyObject    = (PSTUN_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PSTUN_SIMPLE_CLIENT_PROPERTY    pProperty    = (PSTUN_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pProperty->Password, STUN_MAX_PASSWORD_SIZE);
 
     if ( password )
     {
-        AnscCopyString(pProperty->Password, password);
+        rc = strcpy_s(pProperty->Password, sizeof(pProperty->Password), password);
+        ERR_CHK(rc);
     }
 
     return  ANSC_STATUS_SUCCESS;

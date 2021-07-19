@@ -77,6 +77,7 @@
 
 
 #include "http_bmo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -924,10 +925,15 @@ HttpBmoOutputBody
         ULONG                           ulBodySize   = pMessageBody->GetBodySize((ANSC_HANDLE)pMessageBody);
         char                            chunkMsg[16];
         BOOL                            bChunkedMode = pMyObject->IsChunkedCoding((ANSC_HANDLE)pMyObject);
+        errno_t                         rc           = -1;
 
         if ( bChunkedMode && ulBodySize != 0 )
         {
-            _ansc_sprintf(chunkMsg, "%X   \r\n", (unsigned int)ulBodySize);
+            rc = sprintf_s(chunkMsg, sizeof(chunkMsg), "%X   \r\n", (unsigned int)ulBodySize);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
 
             pBccIf->Serialize
                     (

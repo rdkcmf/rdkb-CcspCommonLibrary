@@ -73,6 +73,7 @@
 
 
 #include "slap_obo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -166,6 +167,7 @@ SlapOboSetPathName
     )
 {
     PSLAP_OBJ_BROKER_OBJECT         pMyObject    = (PSLAP_OBJ_BROKER_OBJECT)hThisObject;
+    errno_t                         rc           = -1;
 
     if ( pMyObject->PathName )
     {
@@ -180,7 +182,8 @@ SlapOboSetPathName
 
         if ( pMyObject->PathName )
         {
-            AnscCopyString(pMyObject->PathName, path);
+            rc = strcpy_s(pMyObject->PathName, (AnscSizeOfString(path) + 1), path);
+            ERR_CHK(rc);
         }
     }
     else

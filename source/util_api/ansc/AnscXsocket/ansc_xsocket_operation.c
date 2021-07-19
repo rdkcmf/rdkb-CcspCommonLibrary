@@ -79,6 +79,7 @@
 
 
 #include "ansc_xsocket_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -119,6 +120,7 @@ AnscXsocketResolveAddr
     char                            port[6]             = {0};
     xskt_addrinfo*                  pxskt_peer_addrinfo = NULL;
     char*                           pPort;
+    errno_t                         rc                  = -1;
 
     if ( TRUE )
     {
@@ -127,7 +129,11 @@ AnscXsocketResolveAddr
         xskt_hints.ai_flags    = AI_CANONNAME;
 
         usPort = pMyObject->GetPeerPort((ANSC_HANDLE)pMyObject);
-        _ansc_sprintf(port, "%d", usPort);
+        rc = sprintf_s(port, sizeof(port), "%d", usPort);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         /**
          * XXX: some uclibc version getaddrinfo cannot accept "0"

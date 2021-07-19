@@ -77,6 +77,7 @@
 
 
 #include "ansc_lpccotcp_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -249,6 +250,7 @@ AnscLpccoTcpRecvHello
     PIMCP_HELLO_MESSAGE             pImcpHelloMessage = (PIMCP_HELLO_MESSAGE           )ImcpGetMsgData  (pImcpHeader);
     ULONG                           ulPartyNameSize   = (ULONG                         )ImcpGetMsgLength(pImcpHeader) - sizeof(IMCP_HELLO_MESSAGE);
     char*                           party_name        = (char*                         )AnscAllocateMemory(ANSC_OBJECT_NAME_SIZE + 1);
+    errno_t                         rc                = -1;
 
     if ( !party_name )
     {
@@ -286,7 +288,8 @@ AnscLpccoTcpRecvHello
 
         if ( pPartyAddr )
         {
-            AnscCopyString(pPartyAddr->PartyName, party_name);
+            rc = strcpy_s(pPartyAddr->PartyName, sizeof(pPartyAddr->PartyName), party_name);
+            ERR_CHK(rc);
 
             pPartyAddr->StructSize      = sizeof(ANSC_LPC_PARTY_ADDR);
             pPartyAddr->RefCount        = 1;

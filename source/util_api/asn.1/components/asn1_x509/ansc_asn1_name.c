@@ -87,6 +87,7 @@
 
 #include "ansc_asn1_advanced_local.h"
 #include "ansc_string_util.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -310,16 +311,15 @@ addRDNAttribute
     UNREFERENCED_PARAMETER(hThisObject);
     CHAR                            pTempBuffer[128]    = { 0 };
     PCHAR                           pBack, pBuffer;
-    ULONG                           uLength;
+    errno_t                         rc = -1;
 
-    uLength = AnscSizeOfString(pString);
-
-    if( uLength == 0)
+    if (! pString[0])
     {
         return TRUE;
     }
 
-    AnscCopyString( pTempBuffer, pString);
+    rc = strcpy_s( pTempBuffer, sizeof(pTempBuffer), pString);
+    ERR_CHK(rc);
 
     pBuffer = pTempBuffer;
     pBack   = AnscStrChr(pBuffer, ';');
@@ -1606,6 +1606,7 @@ AnscAsn1AttrTypeAndValueExportToString
     PANSC_ASN1_ATTRIBUTEVALUE       pAttrValue;
     CHAR                            pOID[64]             = { 0 };
     ULONG                           length               = 0;
+    errno_t                         rc                   = -1;
 
     if(hThisObject == NULL || pBuffer == NULL || pLength == NULL)
     {
@@ -1623,35 +1624,43 @@ AnscAsn1AttrTypeAndValueExportToString
 
     if( AnscEqualString(pOID, "2.5.4.6", FALSE)) /* country name */
     {
-        AnscCopyString( pBuffer, X500_C);
+        rc = strcpy_s( pBuffer, *pLength, X500_C);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.10", FALSE)) /* Organ Name*/
     {
-        AnscCopyString( pBuffer, X500_O);
+        rc = strcpy_s( pBuffer, *pLength, X500_O);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.11", FALSE))  /* organunit name */
     {
-        AnscCopyString( pBuffer, X500_OU);
+        rc = strcpy_s( pBuffer, *pLength, X500_OU);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.3", FALSE)) /* common name */
     {
-        AnscCopyString( pBuffer, X500_CN);
+        rc = strcpy_s( pBuffer, *pLength, X500_CN);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.8", FALSE)) /* state name */
     {
-        AnscCopyString( pBuffer, X500_ST);
+        rc = strcpy_s( pBuffer, *pLength, X500_ST);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.7", FALSE))  /* locality name */
     {
-        AnscCopyString( pBuffer, X500_L);
+        rc = strcpy_s( pBuffer, *pLength, X500_L);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.9", FALSE))  /* street address */
     {
-        AnscCopyString( pBuffer, X500_STREET);
+        rc = strcpy_s( pBuffer, *pLength, X500_STREET);
+        ERR_CHK(rc);
     }
     else if ( AnscEqualString(pOID, "2.5.4.5", FALSE))  /* street address */
     {
-        AnscCopyString( pBuffer, X500_SN);
+        rc = strcpy_s( pBuffer, *pLength, X500_SN);
+        ERR_CHK(rc);
     }
     else
     {

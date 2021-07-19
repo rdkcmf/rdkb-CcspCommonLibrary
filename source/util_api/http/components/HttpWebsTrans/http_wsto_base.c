@@ -75,6 +75,7 @@
 
 
 #include "http_wsto_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ HttpWstoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_WEBS_TRANS_OBJECT         pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ HttpWstoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, HTTP_WEBS_TRANS_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), HTTP_WEBS_TRANS_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;

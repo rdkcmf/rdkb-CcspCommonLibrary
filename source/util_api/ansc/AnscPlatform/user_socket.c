@@ -39,6 +39,8 @@
 #include <sys/ioctl.h>
 #include <linux/if.h>
 #endif
+#include "safec_lib_common.h"
+
 
 int
 _ansc_select
@@ -165,11 +167,13 @@ _ansc_get_ipv4_addr
 
     struct ifreq            ifr;
     int                     fd = 0;
+    errno_t                 rc = -1;
 
     if (!netdev)
         return -1;
 
-    strcpy(ifr.ifr_name, netdev);
+    rc = strcpy_s(ifr.ifr_name, sizeof(ifr.ifr_name), netdev);
+    ERR_CHK(rc);
 
     if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) >= 0)
     {
@@ -214,11 +218,13 @@ _ansc_get_hw_addr
 
     struct ifreq            ifr;
     int                     fd = 0, j, k;
+    errno_t                 rc = -1;
 
     if (!netdev)
         return -1;
 
-    strcpy(ifr.ifr_name, netdev);
+    rc = strcpy_s(ifr.ifr_name, sizeof(ifr.ifr_name), netdev);
+    ERR_CHK(rc);
 
     if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) >= 0)
     {

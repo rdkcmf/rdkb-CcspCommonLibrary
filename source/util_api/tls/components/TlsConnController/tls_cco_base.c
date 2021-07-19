@@ -75,6 +75,7 @@
 
 
 #include "tls_cco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -247,6 +248,7 @@ TlsCcoEnrollObjects
     PTLS_CONN_CONTROLLER_OBJECT     pMyObject    = (PTLS_CONN_CONTROLLER_OBJECT)hThisObject;
     PANSC_PACKET_DESCRIPTOR         pTbpPdo      = (PANSC_PACKET_DESCRIPTOR    )pMyObject->hTbpPdo;
     PTLS_CBC_INTERFACE              pTlsCbcIf    = (PTLS_CBC_INTERFACE         )pMyObject->hTlsCbcIf;
+    errno_t                         rc           = -1;
 
     if ( !pTbpPdo )
     {
@@ -275,7 +277,8 @@ TlsCcoEnrollObjects
             pMyObject->hTlsCbcIf = (ANSC_HANDLE)pTlsCbcIf;
         }
 
-        AnscCopyString(pTlsCbcIf->Name, TLS_CBC_INTERFACE_NAME);
+        rc = strcpy_s(pTlsCbcIf->Name, sizeof(pTlsCbcIf->Name), TLS_CBC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pTlsCbcIf->InterfaceId         = TLS_CBC_INTERFACE_ID;
         pTlsCbcIf->hOwnerContext       = (ANSC_HANDLE)pMyObject;

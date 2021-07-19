@@ -91,6 +91,7 @@
 
 
 #include "slap_eco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -657,12 +658,13 @@ SlapEcoUoaInvokeObject
     PSLAP_OBJ_RECORD_OBJECT         pSlapObjRecord    = (PSLAP_OBJ_RECORD_OBJECT    )hSlapObject;
     PSLAP_SRV_COMPONENT_OBJECT      pSlapSrvComponent = (PSLAP_SRV_COMPONENT_OBJECT )pSlapObjRecord->hSlapSrvComponent;
     ULONG                           ulObjType         = (ULONG                      )0;
+    errno_t                         rc                = -1;
 
     pMyObject->bCallPending         = TRUE;
     pMyObject->PendingCallTimestamp = AnscGetTickInSeconds();
 
-    AnscZeroMemory(pMyObject->PendingCallName, 256);
-    AnscCopyString(pMyObject->PendingCallName, method_name);
+    rc = strcpy_s(pMyObject->PendingCallName, sizeof(pMyObject->PendingCallName), method_name);
+    ERR_CHK(rc);
 
     /*
      * There're certain object methods should not be simply relayed to the target logic object. For

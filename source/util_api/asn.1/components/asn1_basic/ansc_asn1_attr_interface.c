@@ -79,6 +79,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -746,6 +747,7 @@ AnscAsn1AttrDump
 
     PANSC_ATTR_OBJECT               pMyObject    = (PANSC_ATTR_OBJECT)hThisObject;
     ULONG                           length = 0; /*RDKB-6196, CID-24573, initialize before use*/
+    errno_t                         rc     = -1;
 
     if( pBuffer == NULL || pLength == NULL || *pLength < 10)
     {
@@ -757,69 +759,111 @@ AnscAsn1AttrDump
         case APPLICATION_FORM:
             if( pMyObject->bImplicit)
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[APP %d IMP]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             else
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[APP %d]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             break;
 
         case CONTEXT_FORM:
             if( pMyObject->bImplicit)
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[CON %d IMP]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             else
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[CON %d]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             break;
 
         case PRIVATE_FORM:
             if( pMyObject->bImplicit)
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[PRI %d IMP]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             else
             {
-                length = 
-                    AnscSprintfString
+                rc = 
+                    sprintf_s
                         (
                             pBuffer,
+                            *pLength,
                             "[PRI %d]", 
                             (int)pMyObject->ulClassNumber
                         );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return FALSE;
+                }
+                length = rc;
             }
             break;
 

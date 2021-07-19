@@ -88,6 +88,7 @@
 
 
 #include "http_bmorep_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -834,6 +835,7 @@ HttpBmoRepSetText
 {
     PHTTP_BMO_REP_OBJECT            pMyObject    = (PHTTP_BMO_REP_OBJECT)hThisObject;
     PHTTP_RESPONSE_INFO             pRepInfo     = (PHTTP_RESPONSE_INFO )pMyObject->hRepInfo;
+    errno_t                         rc           = -1;
 
     if ( !pRepInfo )
     {
@@ -841,7 +843,8 @@ HttpBmoRepSetText
     }
 
     AnscZeroMemory(pRepInfo->ReasonPhrase, HTTP_MAX_REASON_PHRASE_SIZE);
-    AnscCopyString(pRepInfo->ReasonPhrase, text                       );
+    rc = strcpy_s(pRepInfo->ReasonPhrase, sizeof(pRepInfo->ReasonPhrase), text);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

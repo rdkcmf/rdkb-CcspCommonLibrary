@@ -75,6 +75,7 @@
 
 
 #include "slap_lco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ SlapLcoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_LOAM_CLIENT_OBJECT        pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ SlapLcoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SLAP_LOAM_CLIENT_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), SLAP_LOAM_CLIENT_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -253,6 +256,7 @@ SlapLcoEnrollObjects
     PANSC_TIMER_DESCRIPTOR_OBJECT   pPatrolTimerObj = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hPatrolTimerObj;
     PANSC_TDO_CLIENT_OBJECT         pPatrolTimerIf  = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hPatrolTimerIf;
     PSLAP_LOA_INTERFACE             pSlapLoaIf      = (PSLAP_LOA_INTERFACE          )pMyObject->hSlapLoaIf;
+    errno_t                         rc              = -1;
 
     if ( !pPatrolTimerObj )
     {
@@ -309,7 +313,8 @@ SlapLcoEnrollObjects
             pMyObject->hSlapLoaIf = (ANSC_HANDLE)pSlapLoaIf;
         }
 
-        AnscCopyString(pSlapLoaIf->Name, SLAP_LOA_INTERFACE_NAME);
+        rc = strcpy_s(pSlapLoaIf->Name, sizeof(pSlapLoaIf->Name), SLAP_LOA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapLoaIf->InterfaceId        = SLAP_LOA_INTERFACE_ID;
         pSlapLoaIf->hOwnerContext      = (ANSC_HANDLE)pMyObject;

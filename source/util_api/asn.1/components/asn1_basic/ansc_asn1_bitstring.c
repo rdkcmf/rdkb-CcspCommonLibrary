@@ -83,6 +83,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1308,6 +1309,7 @@ AnscAsn1BitStringDumpObject
     ULONG                           attrLength      = 512;
     PCHAR                           pName;
     CHAR                            pValueBuf[128]  = { 0 };
+    errno_t                         rc              = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -1332,49 +1334,71 @@ AnscAsn1BitStringDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->uLength == 0)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (%d,L0)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
                     (int)pMyObject->uUnusedBit
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else
     {
         writeValueToBuffer( pMyObject->GetValueBuffer(pMyObject), pMyObject->uLength, pValueBuf);
 
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (%d,L%d,0x%s)",
                     pName,
                     pAttrBuffer,
@@ -1383,6 +1407,12 @@ AnscAsn1BitStringDumpObject
                     (int)pMyObject->uLength,
                     pValueBuf
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
 
 #endif

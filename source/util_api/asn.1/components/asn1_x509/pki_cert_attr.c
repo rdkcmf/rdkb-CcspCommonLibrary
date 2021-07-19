@@ -129,6 +129,7 @@
 
 #include "ansc_asn1_advanced_local.h"
 #include "ansc_string_util.h"
+#include "safec_lib_common.h"
 
 
 ANSC_HANDLE
@@ -357,6 +358,7 @@ addAttributeValue
 {
     ULONG                           uLength;
     ULONG                           uAdded;
+    errno_t                         rc = -1;
 
     uAdded = AnscSizeOfString(pAddedValue);
 
@@ -371,7 +373,8 @@ addAttributeValue
 
     if( uLength == 0 )
     {
-        AnscCopyString(pOldValue, pAddedValue);
+        rc = strcpy_s(pOldValue, maxiSize, pAddedValue);
+        ERR_CHK(rc);
 
         return TRUE;
     }
@@ -517,6 +520,7 @@ PKICertAttributeSetName
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -530,7 +534,8 @@ PKICertAttributeSetName
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pName, pValue);
+    rc = strcpy_s( pMyObject->pName, sizeof(pMyObject->pName), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -622,6 +627,7 @@ PKICertAttributeSetChallengePassword
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -635,7 +641,8 @@ PKICertAttributeSetChallengePassword
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pChallengePassword, pValue);
+    rc = strcpy_s( pMyObject->pChallengePassword, sizeof(pMyObject->pChallengePassword), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -650,6 +657,7 @@ PKICertAttributeSetSurName
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -663,7 +671,8 @@ PKICertAttributeSetSurName
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pSurName, pValue);
+    rc = strcpy_s( pMyObject->pSurName, sizeof(pMyObject->pSurName), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -678,6 +687,7 @@ PKICertAttributeSetGivenName
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -691,7 +701,8 @@ PKICertAttributeSetGivenName
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pGivenName, pValue);
+    rc = strcpy_s( pMyObject->pGivenName, sizeof(pMyObject->pGivenName), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -706,6 +717,7 @@ PKICertAttributeSetInitials
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -719,7 +731,8 @@ PKICertAttributeSetInitials
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pInitials, pValue);
+    rc = strcpy_s( pMyObject->pInitials, sizeof(pMyObject->pInitials), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -734,6 +747,7 @@ PKICertAttributeSetTitle
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -747,7 +761,8 @@ PKICertAttributeSetTitle
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pTitle, pValue);
+    rc = strcpy_s( pMyObject->pTitle, sizeof(pMyObject->pTitle), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -762,6 +777,7 @@ PKICertAttributeSetDescription
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -775,7 +791,8 @@ PKICertAttributeSetDescription
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pDescription, pValue);
+    rc = strcpy_s( pMyObject->pDescription, sizeof(pMyObject->pDescription), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -790,6 +807,7 @@ PKICertAttributeSetUnstructedName
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -803,7 +821,8 @@ PKICertAttributeSetUnstructedName
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pUnstructedName, pValue);
+    rc = strcpy_s( pMyObject->pUnstructedName, sizeof(pMyObject->pUnstructedName), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -836,6 +855,7 @@ PKICertAttributeSetUnstructedAddress
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -849,7 +869,8 @@ PKICertAttributeSetUnstructedAddress
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pUnstructedAddress, pValue);
+    rc = strcpy_s( pMyObject->pUnstructedAddress, sizeof(pMyObject->pUnstructedAddress), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -864,6 +885,7 @@ PKICertAttributeSetSubjectAltName
 {
     PALCERTIFICATE_ATTRIBUTE        pMyObject  = (PALCERTIFICATE_ATTRIBUTE)hThisObject;
     ULONG                           uLength;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -877,7 +899,8 @@ PKICertAttributeSetSubjectAltName
         return FALSE;
     }
 
-    AnscCopyString( pMyObject->pSubjectAltName, pValue);
+    rc = strcpy_s( pMyObject->pSubjectAltName, sizeof(pMyObject->pSubjectAltName), pValue);
+    ERR_CHK(rc);
 
     return TRUE;
 }
@@ -1359,6 +1382,7 @@ PKICertAttributeInitRFC2253Encode
     PCHAR                           pBuffer;
     ULONG                           uLength;
     ULONG                           nIndex;
+    errno_t                         rc                  = -1;
 
     if( hThisObject == NULL || pRFC2253 == NULL)
     {
@@ -1369,7 +1393,8 @@ PKICertAttributeInitRFC2253Encode
 
     if( uLength < MAXI_FULL_NAME_SIZE)
     {
-        AnscCopyString(pThisObject->pFullName, pRFC2253);
+        rc = strcpy_s(pThisObject->pFullName, sizeof(pThisObject->pFullName), pRFC2253);
+        ERR_CHK(rc);
     }
 
     /* 
@@ -1384,7 +1409,8 @@ PKICertAttributeInitRFC2253Encode
         return FALSE;
     }
 
-    AnscCopyString(pTempBuffer, pRFC2253);
+    rc = strcpy_s(pTempBuffer, (uLength + 1), pRFC2253);
+    ERR_CHK(rc);
 
     pBuffer = pTempBuffer;
 
@@ -1545,6 +1571,7 @@ PKICertAttributeAddDomainName
     CHAR                            pTemp[64]  = { 0 };
     ULONG                           length     = 56;
     ULONG                           addLen;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -1560,21 +1587,33 @@ PKICertAttributeAddDomainName
 
     if( length == 0)
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 pTemp,
+                sizeof(pTemp),
                 "dns=%s",
                 pValue
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
     }
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 pTemp,
+                sizeof(pTemp),
                 ";dns=%s",
                 pValue
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
     }
 
     addLen = AnscSizeOfString(pTemp);
@@ -1600,6 +1639,7 @@ PKICertAttributeAddEmailAddress
     CHAR                            pTemp[64]  = { 0 };
     ULONG                           length     = 56;
     ULONG                           addLen;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -1613,25 +1653,19 @@ PKICertAttributeAddEmailAddress
 
     length = AnscSizeOfString(pMyObject->pSubjectAltName);
 
-    if( length == 0)
+    rc = sprintf_s
+        (
+            pTemp,
+            sizeof(pTemp),
+            "%s%s=%s",
+            ((length) ? ";" : ""),
+            ALT_EMAIL_NAME,
+            pValue
+        );
+    if(rc < EOK)
     {
-        _ansc_sprintf
-            (
-                pTemp,
-                "%s=%s",
-                ALT_EMAIL_NAME,
-                pValue
-            );
-    }
-    else
-    {
-        _ansc_sprintf
-            (
-                pTemp,
-                ";%s=%s",
-                ALT_EMAIL_NAME,
-                pValue
-            );
+        ERR_CHK(rc);
+        return FALSE;
     }
 
     addLen = AnscSizeOfString(pTemp);
@@ -1657,6 +1691,7 @@ PKICertAttributeAddIPAddress
     CHAR                            pTemp[64]  = { 0 };
     ULONG                           length     = 56;
     ULONG                           addLen;
+    errno_t                         rc         = -1;
 
     if( pMyObject == NULL || pValue == NULL)
     {
@@ -1670,23 +1705,18 @@ PKICertAttributeAddIPAddress
 
     length = AnscSizeOfString(pMyObject->pSubjectAltName);
 
-    if( length == 0)
+    rc = sprintf_s
+        (
+            pTemp,
+            sizeof(pTemp),
+            "%sip=%s",
+            ((length) ? ";" : ""),
+            pValue
+        );
+    if(rc < EOK)
     {
-        _ansc_sprintf
-            (
-                pTemp,
-                "ip=%s",
-                pValue
-            );
-    }
-    else
-    {
-        _ansc_sprintf
-            (
-                pTemp,
-                ";ip=%s",
-                pValue
-            );
+        ERR_CHK(rc);
+        return FALSE;
     }
 
     addLen = AnscSizeOfString(pTemp);

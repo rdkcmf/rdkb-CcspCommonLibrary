@@ -75,6 +75,7 @@
 
 
 #include "slap_eco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ SlapEcoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_ENV_CONTROLLER_OBJECT     pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ SlapEcoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SLAP_ENV_CONTROLLER_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), SLAP_ENV_CONTROLLER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -275,6 +278,7 @@ SlapEcoEnrollObjects
     PSLAP_OBJ_MAPPER_OBJECT         pSlapObjMapper    = (PSLAP_OBJ_MAPPER_OBJECT    )pMyObject->hSlapObjMapper;
     PSLAP_VAR_CONVERTER_OBJECT      pSlapVarConverter = (PSLAP_VAR_CONVERTER_OBJECT )pMyObject->hSlapVarConverter;
     PSLAP_VAR_MAPPER_OBJECT         pSlapVarMapper    = (PSLAP_VAR_MAPPER_OBJECT    )pMyObject->hSlapVarMapper;
+    errno_t                         rc                = -1;
 
     if ( !pSlapUoaIf )
     {
@@ -289,7 +293,8 @@ SlapEcoEnrollObjects
             pMyObject->hSlapUoaIf = (ANSC_HANDLE)pSlapUoaIf;
         }
 
-        AnscCopyString(pSlapUoaIf->Name, SLAP_UOA_INTERFACE_NAME);
+        rc = strcpy_s(pSlapUoaIf->Name, sizeof(pSlapUoaIf->Name), SLAP_UOA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapUoaIf->InterfaceId         = SLAP_UOA_INTERFACE_ID;
         pSlapUoaIf->hOwnerContext       = (ANSC_HANDLE)pMyObject;
@@ -333,7 +338,8 @@ SlapEcoEnrollObjects
             pMyObject->hSlapBssIf = (ANSC_HANDLE)pSlapBssIf;
         }
 
-        AnscCopyString(pSlapBssIf->Name, SLAP_BSS_INTERFACE_NAME);
+        rc = strcpy_s(pSlapBssIf->Name, sizeof(pSlapBssIf->Name), SLAP_BSS_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapBssIf->InterfaceId     = SLAP_BSS_INTERFACE_ID;
         pSlapBssIf->hOwnerContext   = (ANSC_HANDLE)pMyObject;

@@ -80,6 +80,7 @@
 
 
 #include "http_bmoreq_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -165,10 +166,12 @@ HttpBmoReqRcpGetPathInfo
     char*                           pPathInfo    = (char*                        )pMyObject->RcpMpad;
     ULONG                           ulPathLen    = 0;
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     for ( i = 0; i < pReqInfo->RequestUri.PathLevel; i++ )
     {
-        AnscCopyString((char*)(pPathInfo + ulPathLen), pReqInfo->RequestUri.PathArray[i]);
+        rc = strcpy_s((char*)(pPathInfo + ulPathLen), (sizeof(pPathInfo) - ulPathLen), pReqInfo->RequestUri.PathArray[i]);/*Need to confirm*/
+        ERR_CHK(rc);
 
         ulPathLen += AnscSizeOfString(pReqInfo->RequestUri.PathArray[i]);
 
@@ -228,10 +231,12 @@ HttpBmoReqRcpGetPathTranslated
     char*                           pPathInfo    = (char*                        )pMyObject->RcpBpad;
     ULONG                           ulPathLen    = 0;
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     for ( i = 0; i < pReqInfo->RequestUri.PathLevel; i++ )
     {
-        AnscCopyString((char*)(pPathInfo + ulPathLen), pReqInfo->RequestUri.PathArray[i]);
+        rc = strcpy_s((char*)(pPathInfo + ulPathLen), (sizeof(pPathInfo) - ulPathLen), pReqInfo->RequestUri.PathArray[i]);/*Need to confirm*/
+        ERR_CHK(rc);
 
         ulPathLen             += AnscSizeOfString(pReqInfo->RequestUri.PathArray[i]);
         pPathInfo[ulPathLen++] = '/';

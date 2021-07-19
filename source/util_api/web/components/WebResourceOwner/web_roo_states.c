@@ -82,6 +82,7 @@
 
 
 #include "web_roo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -309,9 +310,10 @@ WebRooSetPathName
 {
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
-    AnscZeroMemory(pProperty->RegPath, WEB_MAX_PATH_NAME_SIZE);
-    AnscCopyString(pProperty->RegPath, path                  );
+    rc = strcpy_s(pProperty->RegPath, sizeof(pProperty->RegPath), path);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -474,9 +476,12 @@ WebRooResetProperty
 {
     PWEB_RESOURCE_OWNER_OBJECT      pMyObject    = (PWEB_RESOURCE_OWNER_OBJECT  )hThisObject;
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
-    AnscCopyString(pProperty->RootPath, WEB_DEF_ROOT_PATH);
-    AnscCopyString(pProperty->RegPath,  WEB_DEF_ROOT_PATH);
+    rc = strcpy_s(pProperty->RootPath, sizeof(pProperty->RootPath), WEB_DEF_ROOT_PATH);
+    ERR_CHK(rc);
+    rc = strcpy_s(pProperty->RegPath, sizeof(pProperty->RegPath),  WEB_DEF_ROOT_PATH);
+    ERR_CHK(rc);
 
     pProperty->OwnerFlag = WEB_ROO_FLAG_STANDARD;
     pProperty->OwnerType = WEB_ROO_TYPE_FILE_SYSTEM;

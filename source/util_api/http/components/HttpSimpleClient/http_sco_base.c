@@ -75,6 +75,7 @@
 
 
 #include "http_sco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,9 @@ HttpScoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = NULL;
+#ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
+    errno_t                         rc = -1;
+#endif
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -141,7 +145,8 @@ HttpScoCreate
      * Initialize the common variables and functions for a container object.
      */
 #ifndef _CCSP_CWMP_TCP_CONNREQ_HANDLER
-    AnscCopyString(pBaseObject->Name, HTTP_SIMPLE_CLIENT_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), HTTP_SIMPLE_CLIENT_NAME);
+    ERR_CHK(rc);
 #endif
 
     pBaseObject->hContainerContext = hContainerContext;

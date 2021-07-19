@@ -73,6 +73,7 @@
 
 
 #include "slap_amo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -114,6 +115,7 @@ SlapAmoEngage
     PSLAP_LOAM_SERVER_OBJECT        pSlapLoamServer    = (PSLAP_LOAM_SERVER_OBJECT     )pMyObject->hSlapLoamServer;
     PSLAP_UOA_INTERFACE             pSlapUoaIf         = (PSLAP_UOA_INTERFACE          )pSlapEnvController->GetSlapUoaIf((ANSC_HANDLE)pSlapEnvController);
     char                            lpcPartyName[64];
+    errno_t                         rc                 = -1;
     #ifdef _SLAP_IPC_USE_TCP_SOCKET
         PANSC_LPCCO_TCP_OBJECT          pAnscLpccoTcp      = (PANSC_LPCCO_TCP_OBJECT       )pAnscLpcConnector;
     #else
@@ -146,7 +148,7 @@ SlapAmoEngage
     }
 
 
-    #ifdef  _ANSC_SLAP_LPC_
+#ifdef  _ANSC_SLAP_LPC_
 
     if ( (pProperty->AggregationMode & SLAP_GOA_MODE_imcpClient) ||
          (pProperty->AggregationMode & SLAP_GOA_MODE_imcpServer) )
@@ -190,9 +192,10 @@ SlapAmoEngage
         {
             AnscZeroMemory(lpcPartyName, 64);
 
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     lpcPartyName,
+                    sizeof(lpcPartyName);
                     "slapAccessManager-0x%x-0x%x@%d.%d.%d.%d",
                     (ULONG)AnscGetProcessId    (),
                     (ULONG)AnscGetCurTaskHandle(),
@@ -201,6 +204,10 @@ SlapAmoEngage
                     pProperty->MyAddress.Dot[2],
                     pProperty->MyAddress.Dot[3]
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
 
         pAnscLpcConnector->ImcSetLpcOpmode  ((ANSC_HANDLE)pAnscLpcConnector, ANSC_LPC_OPMODE_CLIENT       );
@@ -288,7 +295,7 @@ SlapAmoEngage
         pSlapLoamServer->Engage             ((ANSC_HANDLE)pSlapLoamServer);
     }
 
-    #endif
+#endif
 
 
     pMyObject->bActive = TRUE;

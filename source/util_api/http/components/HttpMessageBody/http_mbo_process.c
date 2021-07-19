@@ -76,6 +76,7 @@
 
 
 #include "http_mbo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -215,6 +216,7 @@ HttpMboProcess
     ULONG                           ulArrivedBodySize   = 0;
     ULONG                           ulTotalPackedSize   = 0;
     PHTTP_BASIC_MESSAGE_OBJECT      pBmo                = (PHTTP_BASIC_MESSAGE_OBJECT)pMyObject->hOwnerContext;
+    errno_t                         rc                  = -1;
 
     switch ( pMyObject->State )
     {
@@ -266,7 +268,8 @@ HttpMboProcess
                                     pMyObject->SetMode((ANSC_HANDLE)pMyObject, HTTP_MBO_MODE_STORE_EXTERNAL);
 
                                     pMyObject->pBoundaryStr[0] = pMyObject->pBoundaryStr[1] = '-';
-                                    AnscCopyString((char*)(pMyObject->pBoundaryStr + 2), (char*)pBoundaryStr);
+                                    rc = strcpy_s((char*)(pMyObject->pBoundaryStr + 2), (2 + AnscSizeOfString((const char*)pBoundaryStr) + 1), (char*)pBoundaryStr);/*Need to confirm*/
+                                    ERR_CHK(rc);
 
                                     returnStatus = pMdhIf->Begin((ANSC_HANDLE)pMdhIf, pBmo->GetWebSessionId((ANSC_HANDLE)pBmo));
                                 }

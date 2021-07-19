@@ -80,6 +80,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -839,6 +840,7 @@ AnscAsn1AnyDumpObject
     CHAR                            pAttrBuffer[512] = { 0 };
     ULONG                           attrLength       = 512;
     PCHAR                           pName;
+    errno_t                         rc               = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -863,40 +865,61 @@ AnscAsn1AnyDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (L%d)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
                     (int)pMyObject->uLength
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
 
     return  TRUE;

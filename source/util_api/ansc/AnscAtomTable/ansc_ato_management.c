@@ -79,6 +79,7 @@
 
 
 #include "ansc_ato_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -129,6 +130,7 @@ AnscAtoAddAtomByName
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     ULONG                           ulHashIndex     = 0;
+    errno_t                         rc              = -1;
 
     if ( !name || !AnscSizeOfString(name) )
     {
@@ -151,7 +153,8 @@ AnscAtoAddAtomByName
         pAtomDescriptor->AtomId    = id;
         pAtomDescriptor->hContext  = hContext;
 
-        AnscCopyString(pAtomDescriptor->AtomName, name);
+        rc = strcpy_s(pAtomDescriptor->AtomName, AnscSizeOfString(name) + 2, name);
+        ERR_CHK(rc);
     }
 
     AnscAcquireSpinLock(&pMyObject->AdoStrTableSpinLock);
@@ -408,6 +411,7 @@ AnscAtoAddAtomById
     PANSC_ATOM_TABLE_OBJECT         pMyObject       = (PANSC_ATOM_TABLE_OBJECT)hThisObject;
     PANSC_ATOM_DESCRIPTOR           pAtomDescriptor = NULL;
     ULONG                           ulHashIndex     = 0;
+    errno_t                         rc              = -1;
 
     ulHashIndex     = AnscHashUlong(id, pMyObject->AdoIntTableSize);
     pAtomDescriptor = (PANSC_ATOM_DESCRIPTOR)AnscAllocateMemory(sizeof(ANSC_ATOM_DESCRIPTOR));
@@ -425,7 +429,8 @@ AnscAtoAddAtomById
 
         if ( name && pAtomDescriptor->AtomName )
         {
-            AnscCopyString(pAtomDescriptor->AtomName, name);
+            rc = strcpy_s(pAtomDescriptor->AtomName, AnscSizeOfString(name) + 2, name);
+            ERR_CHK(rc);
         }
     }
 

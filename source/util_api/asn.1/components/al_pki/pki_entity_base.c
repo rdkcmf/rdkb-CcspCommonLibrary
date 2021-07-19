@@ -98,6 +98,7 @@
  **********************************************************************/
 
 #include "ansc_pki_local.h"
+#include "safec_lib_common.h"
 
 void 
 InitPKIEntityAPIs
@@ -2266,6 +2267,7 @@ PKIEntitySetName
     )
 {
     PPKI_CLIENT_ENTITY              pThisObject = (PPKI_CLIENT_ENTITY)hThisObject;
+    errno_t                         rc          = -1;
 
     if( pString == NULL)
     {
@@ -2279,7 +2281,8 @@ PKIEntitySetName
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscCopyString(pThisObject->pName, pString);
+    rc = strcpy_s(pThisObject->pName, sizeof(pThisObject->pName), pString);
+    ERR_CHK(rc);
 
     return ANSC_STATUS_SUCCESS;
 }

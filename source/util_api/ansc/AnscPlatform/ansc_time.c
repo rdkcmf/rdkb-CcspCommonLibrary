@@ -87,6 +87,7 @@
 #include "ansc_global.h"
 #include "ansc_ssto_interface.h"
 #include "ansc_ssto_external_api.h"
+#include "safec_lib_common.h"
 
 
 #ifdef	_ANSC_SIMPLE_TIMEZONE
@@ -305,13 +306,15 @@ AnscSetSimpleTimeZone
 {
 	ANSC_STATUS			return_status = ANSC_STATUS_SUCCESS;
 	USHORT				i;
+	errno_t  rc = -1;
 
-	if ( AnscEqualString(gCurrTimeZoneName, pTzName, TRUE) )
+	if ( AnscEqualString(gCurrTimeZoneName,  pTzName, TRUE) )
 	{
 		return return_status;
 	}
 
-	AnscCopyString(gCurrTimeZoneName, pTzName);
+	rc = strcpy_s(gCurrTimeZoneName, sizeof(gCurrTimeZoneName), pTzName);
+	ERR_CHK(rc);
 
 	for (i = 0; i < al_tz_total_zones; i++)
 	{

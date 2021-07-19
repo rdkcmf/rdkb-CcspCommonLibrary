@@ -79,6 +79,7 @@
 
 
 #include "http_smpo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -126,6 +127,7 @@ HttpSmpoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PHTTP_SIMPLE_MSG_PARSER         pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -144,7 +146,8 @@ HttpSmpoCreate
     /*
      * Initialize the common variables and functions for a component object.
      */
-    AnscCopyString(pBaseObject->Name, HTTP_SMPO_COMPONENT_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), HTTP_SMPO_COMPONENT_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -283,6 +286,7 @@ HttpSmpoInitialize
     PHTTP_SIMPLE_MSG_PARSER         pMyObject     = (PHTTP_SIMPLE_MSG_PARSER)hThisObject;
     PHTTP_HFP_INTERFACE             pHfpIf;
     ULONG                           i;
+    errno_t                         rc            = -1;
 
     /*
      * Until you have to simulate C++ object-oriented programming style with standard C, you don't
@@ -352,7 +356,8 @@ HttpSmpoInitialize
         pHfpIf->BuildStatusLine                 = HttpSmpoBuildStatusLine;
 
         /* set the owner context and size of the structure */
-        AnscCopyString(pHfpIf->Name, HTTP_HFP_INTERFACE_NAME);
+        rc = strcpy_s(pHfpIf->Name, sizeof(pHfpIf->Name), HTTP_HFP_INTERFACE_NAME);
+        ERR_CHK(rc);
         pHfpIf->hOwnerContext                   = hThisObject;
         pHfpIf->Size                            = sizeof(HTTP_HFP_INTERFACE);
 

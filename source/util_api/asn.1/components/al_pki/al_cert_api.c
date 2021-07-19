@@ -107,6 +107,7 @@
 #include "cert_attr_structure.h"
 #include "cert_exported_api.h"
 #include "alcert_internal.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -845,6 +846,7 @@ ALCertAcquireCertInformation
     ULONG                           length;
     UCHAR                           pValue[256]= { 0 };
     ULONG                           valueLen   = 256;
+    errno_t                         rc         = -1;
 
     CERT_TRACE("AL_CERT: ALCertAcquireCertInformation...\n");
 
@@ -1059,15 +1061,20 @@ ALCertAcquireCertInformation
                       &valueLen
                    ) == ANSC_STATUS_SUCCESS)
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         pInternalPKIInfo->SubjectAltNameIP,
+                        sizeof(pInternalPKIInfo->SubjectAltNameIP),
                         "%d.%d.%d.%d",
                         pValue[0],
                         pValue[1],
                         pValue[2],
                         pValue[3]
                     );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
 
             /* check DNS Name */
@@ -2023,6 +2030,7 @@ ALCertCreateEntity
     PALCERT_CONTEXT             pPKICertContext = (PALCERT_CONTEXT)hCertContext;
     PPKI_CLIENT_ENTITY          pEntity         = NULL;
     PALCERTIFICATE_ATTRIBUTE    pCertAttr;
+    errno_t                     rc              = -1;
 
     CERT_TRACE("AL_CERT: ALCertCreateEntity() ...\n");
 
@@ -2038,59 +2046,70 @@ ALCertCreateEntity
     pCertAttr->KeyLength          = pAttribute->KeyLength;
     pCertAttr->SignAlgor          = pAttribute->SignAlgor;
 
-    if( AnscSizeOfString(pAttribute->pCountryName) > 0)
+    if(pAttribute->pCountryName[0])
     {
-        AnscCopyString(pCertAttr->pCountryName, pAttribute->pCountryName);
+        rc = strcpy_s(pCertAttr->pCountryName, sizeof(pCertAttr->pCountryName), pAttribute->pCountryName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pChallengePassword) > 0)
+    if(pAttribute->pChallengePassword[0])
     {
-        AnscCopyString(pCertAttr->pChallengePassword, pAttribute->pChallengePassword);
+        rc = strcpy_s(pCertAttr->pChallengePassword, sizeof(pCertAttr->pChallengePassword), pAttribute->pChallengePassword);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pOrganizationName) > 0)
+    if(pAttribute->pOrganizationName[0])
     {
-        AnscCopyString(pCertAttr->pOrganizationName, pAttribute->pOrganizationName);
+        rc = strcpy_s(pCertAttr->pOrganizationName, sizeof(pCertAttr->pOrganizationName), pAttribute->pOrganizationName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pOrganizationUnitName) > 0)
+    if(pAttribute->pOrganizationUnitName[0])
     {
-        AnscCopyString(pCertAttr->pOrganizationUnitName, pAttribute->pOrganizationUnitName);
+        rc = strcpy_s(pCertAttr->pOrganizationUnitName, sizeof(pCertAttr->pOrganizationUnitName), pAttribute->pOrganizationUnitName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pCommonName) > 0)
+    if(pAttribute->pCommonName[0])
     {
-        AnscCopyString(pCertAttr->pCommonName, pAttribute->pCommonName);
+        rc = strcpy_s(pCertAttr->pCommonName, sizeof(pCertAttr->pCommonName), pAttribute->pCommonName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pStateOrProvinceName) > 0)
+    if(pAttribute->pStateOrProvinceName[0])
     {
-        AnscCopyString(pCertAttr->pStateOrProvinceName, pAttribute->pStateOrProvinceName);
+        rc = strcpy_s(pCertAttr->pStateOrProvinceName, sizeof(pCertAttr->pStateOrProvinceName), pAttribute->pStateOrProvinceName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pLocalityName) > 0)
+    if(pAttribute->pLocalityName[0])
     {
-        AnscCopyString(pCertAttr->pLocalityName, pAttribute->pLocalityName);
+        rc = strcpy_s(pCertAttr->pLocalityName, sizeof(pCertAttr->pLocalityName), pAttribute->pLocalityName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pPKCS9Email) > 0)
+    if(pAttribute->pPKCS9Email[0])
     {
-        AnscCopyString(pCertAttr->pPKCS9Email, pAttribute->pPKCS9Email);
+        rc = strcpy_s(pCertAttr->pPKCS9Email, sizeof(pCertAttr->pPKCS9Email), pAttribute->pPKCS9Email);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pUnstructuredName) > 0)
+    if(pAttribute->pUnstructuredName[0])
     {
-        AnscCopyString(pCertAttr->pUnstructedName, pAttribute->pUnstructuredName);
+        rc = strcpy_s(pCertAttr->pUnstructedName, sizeof(pCertAttr->pUnstructedName), pAttribute->pUnstructuredName);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pUnstructuredAddress) > 0)
+    if(pAttribute->pUnstructuredAddress[0])
     {
-        AnscCopyString(pCertAttr->pUnstructedAddress, pAttribute->pUnstructuredAddress);
+        rc = strcpy_s(pCertAttr->pUnstructedAddress, sizeof(pCertAttr->pUnstructedAddress), pAttribute->pUnstructuredAddress);
+        ERR_CHK(rc);
     }
 
-    if( AnscSizeOfString(pAttribute->pSubjectAltName) > 0)
+    if(pAttribute->pSubjectAltName[0])
     {
-        AnscCopyString(pCertAttr->pSubjectAltName, pAttribute->pSubjectAltName);
+        rc = strcpy_s(pCertAttr->pSubjectAltName, sizeof(pCertAttr->pSubjectAltName), pAttribute->pSubjectAltName);
+        ERR_CHK(rc);
     }
 
     pEntity = (PPKI_CLIENT_ENTITY)
@@ -2628,6 +2647,7 @@ ALCertMime64Encoding
 {
     PCHAR                               pOutput;
     ULONG                               length;
+    errno_t                             rc = -1;
 
     if( pInputData == NULL || pSizeOfOutputData == NULL)
     {
@@ -2658,11 +2678,13 @@ ALCertMime64Encoding
 
     *pSizeOfOutputData = length;
 
-    AnscCopyString
+    rc = strcpy_s
         (
             (PCHAR)pOutputData,
+            length,
             pOutput
         );
+    ERR_CHK(rc);
 
     AnscFreeMemory(pOutput);
 

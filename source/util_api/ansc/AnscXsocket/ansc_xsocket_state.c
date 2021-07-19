@@ -97,6 +97,7 @@
 
 
 #include "ansc_xsocket_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -486,9 +487,11 @@ AnscXsocketSetHostName
         PUCHAR                      hostname
     )
 {
+    errno_t                         rc           = -1;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
 
-    AnscCopyString(pMyObject->HostName, (char *)hostname);
+    rc = strcpy_s(pMyObject->HostName, sizeof(pMyObject->HostName), (char *)hostname);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -801,9 +804,11 @@ AnscXsocketSetPeerName
         PUCHAR                      peername
     )
 {
+    errno_t                         rc = -1;
     PANSC_XSOCKET_OBJECT            pMyObject    = (PANSC_XSOCKET_OBJECT)hThisObject;
 
-    AnscCopyString(pMyObject->PeerName, (char *)peername);
+    rc = strcpy_s(pMyObject->PeerName, sizeof(pMyObject->PeerName), (char *)peername);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

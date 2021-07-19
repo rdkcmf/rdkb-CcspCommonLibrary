@@ -91,6 +91,7 @@
 
 
 #include "ansc_object_mapper_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -480,9 +481,13 @@ AnscOdoSetName
         char*                       name
     )
 {
+    errno_t rc = -1;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
-    AnscCopyString(pObjectDescriptor->Name, name);
+    if(!name)
+    return ANSC_STATUS_FAILURE;
+    rc = strcpy_s(pObjectDescriptor->Name, sizeof(pObjectDescriptor->Name), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -638,9 +643,14 @@ AnscOdoSetBaseName
         char*                       name
     )
 {
+    errno_t rc = -1;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
-    AnscCopyString(pObjectDescriptor->BaseName, name);
+    if(!name)
+    return ANSC_STATUS_FAILURE;
+
+    rc = strcpy_s(pObjectDescriptor->BaseName, sizeof(pObjectDescriptor->BaseName), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -796,9 +806,13 @@ AnscOdoSetDerivedType
         char*                       type
     )
 {
+    errno_t rc = -1;
     PANSC_OBJECT_DESCRIPTOR_OBJECT  pObjectDescriptor = (PANSC_OBJECT_DESCRIPTOR_OBJECT)hThisObject;
 
-    AnscCopyString(pObjectDescriptor->DerivedType, type);
+    if(!type)
+    return ANSC_STATUS_FAILURE;
+    rc = strcpy_s(pObjectDescriptor->DerivedType, sizeof(pObjectDescriptor->DerivedType), type);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

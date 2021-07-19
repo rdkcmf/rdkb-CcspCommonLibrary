@@ -103,6 +103,7 @@
 
 
 #include "http_pso_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -888,9 +889,11 @@ HttpPsoSetServerName
     )
 {
     PHTTP_PROXY_SESSION_OBJECT      pMyObject    = (PHTTP_PROXY_SESSION_OBJECT)hThisObject;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pMyObject->ServerName, ANSC_DOMAIN_NAME_SIZE);
-    AnscCopyString(pMyObject->ServerName, name                 );
+    rc = strcpy_s(pMyObject->ServerName, sizeof(pMyObject->ServerName), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

@@ -80,6 +80,7 @@
 
 #include "http_authco_global.h"
 #include "ansc_crypto_internal_api.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -135,6 +136,7 @@ HttpAuthcoProcessRequest
         PHTTP_HFO_AUTHORIZATION     pHfoAuthorization   = NULL;
         PHTTP_AUTH_CREDENTIAL       pCredential         = NULL;
         ULONG                       ulNC                = 0;
+        errno_t                     rc                  = -1;
 
         if ( pAuthInfo->AuthType == HTTP_AUTH_TYPE_DIGEST )
         {
@@ -146,7 +148,11 @@ HttpAuthcoProcessRequest
             ulNC    = pMyObject->GetNC              ((ANSC_HANDLE)pMyObject, hRequest, (ANSC_HANDLE)pAuthInfo);
             pMyObject->GenerateCNonce((ANSC_HANDLE)pMyObject, (ANSC_HANDLE)pAuthInfo);
 
-            _ansc_sprintf(NC, "%.8X", (unsigned int)ulNC);
+            rc = sprintf_s(NC, sizeof(NC), "%.8X", (unsigned int)ulNC);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
 
             pChal   =
                 pMyObject->CalcDigRep
@@ -169,6 +175,7 @@ HttpAuthcoProcessRequest
         if ( TRUE )
         {
             BOOL                    bHfoOK  = TRUE;
+            errno_t                 rc      = -1;
 
             pHfoAuthorization   =
                 (PHTTP_HFO_AUTHORIZATION)AnscAllocateMemory(sizeof(HTTP_HFO_AUTHORIZATION));
@@ -197,7 +204,8 @@ HttpAuthcoProcessRequest
                         }
                         else
                         {
-                            AnscCopyString(pBasicCred->UserName, (char*)pAuthInfo->pUserName);
+                            rc = strcpy_s(pBasicCred->UserName, sizeof(pBasicCred->UserName), (char*)pAuthInfo->pUserName);
+                            ERR_CHK(rc);
                         }
                     }
 
@@ -209,7 +217,8 @@ HttpAuthcoProcessRequest
                         }
                         else
                         {
-                            AnscCopyString(pBasicCred->Password, (char*)pAuthInfo->pPassword);
+                            rc = strcpy_s(pBasicCred->Password, sizeof(pBasicCred->Password), (char*)pAuthInfo->pPassword);
+                            ERR_CHK(rc);
                         }
                     }
                 }
@@ -234,7 +243,8 @@ HttpAuthcoProcessRequest
                     }
                     else
                     {
-                        AnscCopyString(pDigestCred->UserName, (char*)pDigRep);
+                        rc = strcpy_s(pDigestCred->UserName, sizeof(pDigestCred->UserName), (char*)pDigRep);
+                        ERR_CHK(rc);
                     }
 
                     if ( pDigRep )
@@ -443,6 +453,7 @@ HttpAuthcoGenerateDigestResponse
     PUCHAR                          pHostName    = NULL;
     PUCHAR                          pUriPath     = NULL;
     USHORT                          HostPort     = 0;
+    errno_t                         rc           = -1;
 
     if ( !pAuthInfo->pDigest || !pRequestDigest )
     {
@@ -511,101 +522,151 @@ HttpAuthcoGenerateDigestResponse
         goto EXIT;
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigRep,
+            ulDigRepSize, 
             "%s=\"%s\", %s=\"%s\"",
             HTTP_AUTH_NAME_realm,
             pAuthInfo->pRealm,
             HTTP_AUTH_NAME_username,
             pAuthInfo->pUserName
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     if ( pAuthInfo->pDigest->pQop )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+                ulDigRepSize,
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_qop,
                 pAuthInfo->pDigest->pQop
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     if ( pAuthInfo->pDigest->pAlgorithm )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+                ulDigRepSize,
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_algorithm,
                 pAuthInfo->pDigest->pAlgorithm
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+                ulDigRepSize,
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_algorithm,
                 HTTP_AUTH_NAME_md5
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+            ulDigRepSize,
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_digest_uri,
             pUriPath
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     if ( pAuthInfo->pDigest->pNonce )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+                ulDigRepSize,
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_nonce,
                 pAuthInfo->pDigest->pNonce
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+            ulDigRepSize,
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_cnonce,
             pAuthInfo->pDigest->pCNonce
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+            ulDigRepSize,
             ", %s=%.8X",
             HTTP_AUTH_NAME_nc,
             (unsigned int)ulNC
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     if ( pAuthInfo->pDigest->pOpaque )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+                ulDigRepSize,
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_opaque,
                 pAuthInfo->pDigest->pOpaque
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigRep + AnscSizeOfString((const char*)pDigRep),
+            ulDigRepSize,
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_response,
             pRequestDigest
         );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
 EXIT:
 
@@ -664,6 +725,7 @@ HttpAuthcoGenerateCNonce
     ULONG                           ulBufLen     = 0;
     ANSC_CRYPTO_HASH                MD5Hash;
     PUCHAR                          pCNonce      = pAuthInfo->pDigest->pCNonce;
+    errno_t                         rc           = -1;
 
     if ( !pCNonce )
     {
@@ -690,24 +752,34 @@ HttpAuthcoGenerateCNonce
 
     if ( pAuthInfo->pDigest->pOpaque )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pBuf,
+                ulBufLen,
                 "%s%s%.8X",
                 pAuthInfo->pDigest->pNonce,
                 pAuthInfo->pDigest->pOpaque,
                 (unsigned int)AnscGetTickInMilliSeconds()
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pBuf,
+                ulBufLen,
                 "%s%.8X",
                 pAuthInfo->pDigest->pNonce,
                 (unsigned int)AnscGetTickInMilliSeconds()
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     AnscCryptoMd5Digest

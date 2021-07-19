@@ -74,6 +74,7 @@
 
 
 #include "ansc_lpccotcp_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -118,6 +119,7 @@ AnscLpccoTcpEnroll
     ULONG                           ulBrokerMode      = (ULONG                         )ANSC_BSTO_MODE_COMPACT | ANSC_BSTO_MODE_EVENT_SYNC | ANSC_BSTO_MODE_FOREIGN_BUFFER | ANSC_BSTO_MODE_NO_TIMEOUT | ANSC_BSTO_MODE_XSOCKET;
     PANSC_LPC_PARTY_ADDR            pMyPartyAddr      = (PANSC_LPC_PARTY_ADDR          )NULL;
     PANSC_LPC_PARTY_ADDR            pManagerPartyAddr = (PANSC_LPC_PARTY_ADDR          )NULL;
+    errno_t                         rc                = -1;
 
     if ( (pMyObject->LpcOpmode != ANSC_LPC_OPMODE_CLIENT) &&
          (pMyObject->LpcOpmode != ANSC_LPC_OPMODE_SERVER) )
@@ -145,7 +147,8 @@ AnscLpccoTcpEnroll
         }
         else
         {
-            AnscCopyString(pMyPartyAddr->PartyName, pMyObject->PartyName);
+            rc = strcpy_s(pMyPartyAddr->PartyName, sizeof(pMyPartyAddr->PartyName), pMyObject->PartyName);
+            ERR_CHK(rc);
 
             pMyPartyAddr->StructSize      = sizeof(ANSC_LPC_PARTY_ADDR);
             pMyPartyAddr->RefCount        = 0;
@@ -175,7 +178,8 @@ AnscLpccoTcpEnroll
         }
         else
         {
-            AnscCopyString(pManagerPartyAddr->PartyName, ANSC_LPC_MANAGER_PARTY_NAME);
+            rc = strcpy_s(pManagerPartyAddr->PartyName,sizeof(pManagerPartyAddr->PartyName), ANSC_LPC_MANAGER_PARTY_NAME);
+            ERR_CHK(rc);
 
             pManagerPartyAddr->StructSize      = sizeof(ANSC_LPC_PARTY_ADDR);
             pManagerPartyAddr->RefCount        = 0;

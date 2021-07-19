@@ -82,6 +82,7 @@
 
 
 #include "http_sco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -238,19 +239,27 @@ HttpScoRequest2
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PHTTP_HFP_INTERFACE             pHttpHfpIf   = (PHTTP_HFP_INTERFACE         )pMyObject->hHfpIf;
     PHTTP_REQUEST_INFO              pHttpReqInfo = (PHTTP_REQUEST_INFO          )NULL;
-    char*                           pStdReqLine  = (char*                       )AnscAllocateMemory(AnscSizeOfString(request_line) + 2);
+    char*                           pStdReqLine  = NULL;
     BOOL                            bApplyTls    = (BOOL                        )FALSE;
+    errno_t                         rc           = -1;
 
+    if(!request_line)
+    {
+        return ANSC_STATUS_FAILURE;
+    }
+    size_t len = AnscSizeOfString(request_line) + 2;
+    pStdReqLine = (char *) AnscAllocateMemory(len);
     if ( !pStdReqLine )
     {
         return  ANSC_STATUS_RESOURCES;
     }
-    else
-    {
-        AnscCopyString(pStdReqLine, request_line);
 
-        pStdReqLine[AnscSizeOfString(pStdReqLine)] = HTTP_CARRIAGE_RETURN;
-        pStdReqLine[AnscSizeOfString(pStdReqLine)] = HTTP_LINE_FEED;
+    rc = sprintf_s(pStdReqLine, len, "%s\r\n", request_line);
+    if (rc < EOK)
+    {
+        ERR_CHK(rc);
+        AnscFreeMemory(pStdReqLine);
+        return ANSC_STATUS_FAILURE;
     }
 
     pHttpReqInfo =

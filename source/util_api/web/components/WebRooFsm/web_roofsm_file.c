@@ -73,6 +73,7 @@
 
 
 #include "web_roofsm_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -119,11 +120,13 @@ WebRooFsmMapDiskFile
     ULONG                           ulFileNameLen   = 0;
     char*                           pTempChar       = NULL;
     char                            sFileName[ANSC_MAX_FILE_NAME_SIZE];
+    errno_t                         rc              = -1;
 
     pTempChar = &sFileName[0];
 
     AnscZeroMemory(sFileName, ANSC_MAX_FILE_NAME_SIZE);
-    AnscCopyString(sFileName, pProperty->RootPath    );
+    rc = strcpy_s(sFileName, sizeof(sFileName), pProperty->RootPath);
+    ERR_CHK(rc);
 
     ulFileNameLen = AnscSizeOfString(sFileName);
     pTempChar    += ulFileNameLen;
@@ -145,7 +148,8 @@ WebRooFsmMapDiskFile
 
         *pTempChar++ = ANSC_FILE_PATH_SEP;
 
-        AnscCopyString(pTempChar, pPathToken->Name);
+        rc = strcpy_s(pTempChar, ANSC_MAX_FILE_NAME_SIZE, pPathToken->Name);
+        ERR_CHK(rc);
 
         pTempChar += AnscSizeOfString(pPathToken->Name);
     }

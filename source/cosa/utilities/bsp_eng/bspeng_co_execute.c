@@ -4157,6 +4157,7 @@ BspTemplateObjDoObjProperty
     ULONG                           ulBspSoaStatus;
     char                            *pPropertyName  = NULL;
     BOOL                            bSimpleVar      = FALSE;
+    errno_t                         rc              = -1;
 
     SlapInitParamList((&SlapParamList));
 
@@ -4302,7 +4303,11 @@ BspTemplateObjDoObjProperty
                         case    SLAP_VAR_SYNTAX_int:
                         case    SLAP_VAR_SYNTAX_uint32:
 
-                                _ansc_sprintf(buf, "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                rc = sprintf_s(buf, sizeof(buf), "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                if(rc < EOK)
+                                {
+                                    ERR_CHK(rc);
+                                }
                                 AnscTrace("        <--- Return numberic value: %s.\n", buf);
 
                                 break;
@@ -5538,6 +5543,7 @@ BspTemplateEngDoObjectAccess
     ANSC_STATUS                     status;
     PSLAP_VARIABLE                  pReturnVal  = NULL;
     ULONG                           ulBspSoaStatus;
+    errno_t                         rc = -1;
 
     if (!pBspSoaIf || !hObj || (!pName && !hParamList))
     {
@@ -5715,7 +5721,11 @@ BspTemplateEngDoObjectAccess
                         case    SLAP_VAR_SYNTAX_int:
                         case    SLAP_VAR_SYNTAX_uint32:
 
-                                _ansc_sprintf(buf, "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                rc = sprintf_s(buf, sizeof(buf), "0x%.8x, signed=%s", (UINT)pRetVal->Variant.varUint32, pRetVal->Syntax==SLAP_VAR_SYNTAX_int?"yes":"no");
+                                if(rc < EOK)
+                                {
+                                    ERR_CHK(rc);
+                                }
                                 AnscTrace("        <--- Return numeric value: %s.\n", buf);
 
                                 break;
@@ -6024,11 +6034,17 @@ BspTemplateEngOutputNumber
 {
     PBSP_TEMPLATE_OBJECT            pMyObject   = (PBSP_TEMPLATE_OBJECT)hThisObject;
     char                            buf[32];
+    errno_t                         rc              = -1;
 
     if (bSigned)
-        _ansc_sprintf(buf, "%d", (int)ulVal);
+        rc = sprintf_s(buf, sizeof(buf), "%d", (int)ulVal);
     else
-        _ansc_sprintf(buf, "%u", (UINT)ulVal);
+        rc = sprintf_s(buf, sizeof(buf), "%u", (UINT)ulVal);
+
+    if(rc < EOK)
+    {
+       ERR_CHK(rc);
+    }
 
     pMyObject->OutputString(hThisObject, (const char *)buf);
 }
@@ -6154,6 +6170,7 @@ BspTemplateEngGetSlapObjectString
     ULONG                           ulSize      = 0;
     PSLAP_VAR_ARRAY                 pArray      = NULL;
     ULONG                           i;
+    errno_t                         rc          = -1;
 
     if (!pSlapVar)
     {
@@ -6161,7 +6178,8 @@ BspTemplateEngGetSlapObjectString
         
         if (pString)
         {
-            AnscCopyString(pString, "0");
+            rc = strcpy_s(pString, 2, "0");
+            ERR_CHK(rc);
         }
 
         return pString;
@@ -6178,7 +6196,11 @@ BspTemplateEngGetSlapObjectString
 
             if (pString)
             {
-                _ansc_sprintf(pString, "%.08X", (UINT)pSlapVar->Variant.varHandle);
+                rc = sprintf_s(pString, ulSize, "%.08X", (UINT)pSlapVar->Variant.varHandle);
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                }
             }
 
             break;
@@ -6201,12 +6223,17 @@ BspTemplateEngGetSlapObjectString
                 {
                     for (i = 0; i < pArray->VarCount; i ++)
                     {
-                        _ansc_sprintf
+                        rc = sprintf_s
                             (
                                 pString + AnscSizeOfString(pString),
+                                ulSize + 1,
                                 (i == 0)? "%s" : ".%s",
                                 pArray->Array.arrayBool[i] ? "true" : "false"
                             );
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
                 }
             }
@@ -6269,12 +6296,17 @@ BspTemplateEngGetSlapObjectString
                 {
                     for (i = 0; i < pArray->VarCount; i ++)
                     {
-                        _ansc_sprintf
+                        rc = sprintf_s
                             (
                                 pString + AnscSizeOfString(pString),
+                                ulSize+1,
                                 (i == 0)? "%d" : ".%d",
                                 pArray->Array.arrayInt[i]
                             );
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
                 }
             }
@@ -6306,12 +6338,17 @@ BspTemplateEngGetSlapObjectString
                     {
                         for (i = 0; i < pArray->VarCount; i ++)
                         {
-                            _ansc_sprintf
+                            rc = sprintf_s
                                 (
                                     pString + AnscSizeOfString(pString),
+                                    ulSize+1,
                                     (i == 0)? "%s" : "~%s",
                                     pArray->Array.arrayString[i]
                                 );
+                            if(rc < EOK)
+                            {
+                                ERR_CHK(rc);
+                            }
                         }
                     }
                 }
@@ -6337,12 +6374,17 @@ BspTemplateEngGetSlapObjectString
                 {
                     for (i = 0; i < pArray->VarCount; i ++)
                     {
-                        _ansc_sprintf
+                        rc = sprintf_s
                             (
                                 pString + AnscSizeOfString(pString),
+                                ulSize+1,
                                 (i == 0)? "%u" : ".%u",
                                 (UINT)pArray->Array.arrayUint32[i]
                             );
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
                 }
             }
@@ -6368,12 +6410,17 @@ BspTemplateEngGetSlapObjectString
                 {
                     for (i = 0; i < pArray->VarCount; i ++)
                     {
-                        _ansc_sprintf
+                        rc = sprintf_s
                             (
                                 pString + AnscSizeOfString(pString),
+                                ulSize+1,
                                 (i == 0)? "%.08X" : ".%.08X",
                                 (UINT)pArray->Array.arrayHandle[i]
                             );
+                        if(rc < EOK)
+                        {
+                            ERR_CHK(rc);
+                        }
                     }
                 }
             }

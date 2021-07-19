@@ -75,6 +75,7 @@
 
 
 #include "web_authso_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -188,6 +189,7 @@ WebAuthsoResetProperty
 {
     PWEB_AUTH_SERVER_OBJECT         pMyObject    = (PWEB_AUTH_SERVER_OBJECT)hThisObject;
     PWEB_AUTH_SERVER_PROPERTY       pProperty    = &pMyObject->Property;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pProperty, sizeof(WEB_AUTH_SERVER_PROPERTY));
 
@@ -196,8 +198,10 @@ WebAuthsoResetProperty
     pProperty->bNoQop           = FALSE;
     pProperty->NonceTimeout     = WEB_AUTH_NONCE_TIMEOUT_INTERVAL;
     
-    AnscCopyString((char*)pProperty->Realm, "All Protected");
-    AnscCopyString((char*)pProperty->Domain, "/");
+    rc = strcpy_s((char*)pProperty->Realm, sizeof(pProperty->Realm), "All Protected");
+    ERR_CHK(rc);
+    rc = strcpy_s((char*)pProperty->Domain, sizeof(pProperty->Domain), "/");
+    ERR_CHK(rc);
 
     return ANSC_STATUS_SUCCESS;
 }

@@ -75,6 +75,7 @@
 
 
 #include "tls_smo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -253,6 +254,7 @@ TlsSmoEnrollObjects
     PANSC_TIMER_DESCRIPTOR_OBJECT   pPatrolTimer = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hPatrolTimer;
     PANSC_TDO_CLIENT_OBJECT         pTimerClient = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hTimerClient;
     PTLS_HSM_INTERFACE              pTlsHsmIf    = (PTLS_HSM_INTERFACE           )pMyObject->hTlsHsmIf;
+    errno_t                         rc           = -1;
 
     if ( !pPatrolTimer )
     {
@@ -309,7 +311,8 @@ TlsSmoEnrollObjects
             pMyObject->hTlsHsmIf = (ANSC_HANDLE)pTlsHsmIf;
         }
 
-        AnscCopyString(pTlsHsmIf->Name, TLS_HSM_INTERFACE_NAME);
+        rc = strcpy_s(pTlsHsmIf->Name, sizeof(pTlsHsmIf->Name), TLS_HSM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pTlsHsmIf->InterfaceId             = TLS_HSM_INTERFACE_ID;
         pTlsHsmIf->hOwnerContext           = (ANSC_HANDLE)pMyObject;

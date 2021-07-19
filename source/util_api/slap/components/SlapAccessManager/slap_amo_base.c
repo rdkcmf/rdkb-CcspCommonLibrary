@@ -75,6 +75,7 @@
 
 
 #include "slap_amo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ SlapAmoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_ACCESS_MANAGER_OBJECT     pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ SlapAmoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SLAP_ACCESS_MANAGER_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), SLAP_ACCESS_MANAGER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -257,6 +260,7 @@ SlapAmoEnrollObjects
     PSLAP_GOA_INTERFACE             pSlapGoaIf         = (PSLAP_GOA_INTERFACE        )pMyObject->hSlapGoaIf;
     PSLAP_POA_INTERFACE             pSlapPoaIf         = (PSLAP_POA_INTERFACE        )pMyObject->hSlapPoaIf;
     PSLAP_ENV_CONTROLLER_OBJECT     pSlapEnvController = (PSLAP_ENV_CONTROLLER_OBJECT)pMyObject->hSlapEnvController;
+    errno_t                         rc                 = -1;
 
     if ( !pSlapGoaIf )
     {
@@ -271,7 +275,8 @@ SlapAmoEnrollObjects
             pMyObject->hSlapGoaIf = (ANSC_HANDLE)pSlapGoaIf;
         }
 
-        AnscCopyString(pSlapGoaIf->Name, SLAP_GOA_INTERFACE_NAME);
+        rc = strcpy_s(pSlapGoaIf->Name, sizeof(pSlapGoaIf->Name), SLAP_GOA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapGoaIf->InterfaceId         = SLAP_GOA_INTERFACE_ID;
         pSlapGoaIf->hOwnerContext       = (ANSC_HANDLE)pMyObject;
@@ -322,7 +327,8 @@ SlapAmoEnrollObjects
             pMyObject->hSlapPoaIf = (ANSC_HANDLE)pSlapPoaIf;
         }
 
-        AnscCopyString(pSlapPoaIf->Name, SLAP_POA_INTERFACE_NAME);
+        rc = strcpy_s(pSlapPoaIf->Name, sizeof(pSlapPoaIf->Name), SLAP_POA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapPoaIf->InterfaceId       = SLAP_POA_INTERFACE_ID;
         pSlapPoaIf->hOwnerContext     = (ANSC_HANDLE)pMyObject;

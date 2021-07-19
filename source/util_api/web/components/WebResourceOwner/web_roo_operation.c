@@ -75,6 +75,7 @@
 
 
 #include "web_roo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -190,6 +191,7 @@ WebRooEngage
     PWEB_RESOURCE_OWNER_PROPERTY    pProperty    = (PWEB_RESOURCE_OWNER_PROPERTY)&pMyObject->Property;
     PWEB_AUTH_SERVER_OBJECT         pAuthServer  = (PWEB_AUTH_SERVER_OBJECT     )pMyObject->hAuthServer;
     BOOL                            bAuthEnabled = FALSE;
+    errno_t                         rc           = -1;
 
     if ( pMyObject->bActive )
     {
@@ -229,7 +231,8 @@ WebRooEngage
 
                 if ( pProperty->RegPath[0] != '\0' )
                 {
-                    AnscCopyString((char *)pAuthProperty->Domain, pProperty->RegPath);
+                    rc = strcpy_s((char *)pAuthProperty->Domain, sizeof(pAuthProperty->Domain), pProperty->RegPath);
+                    ERR_CHK(rc);
                 }
 
                 pAuthServer->SetProperty((ANSC_HANDLE)pAuthServer, (ANSC_HANDLE)pAuthProperty);

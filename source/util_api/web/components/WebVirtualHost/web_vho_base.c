@@ -75,6 +75,7 @@
 
 
 #include "web_vho_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ WebVhoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ WebVhoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, WEB_VIRTUAL_HOST_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), WEB_VIRTUAL_HOST_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -263,6 +266,7 @@ WebVhoEnrollObjects
     PWEB_LSM_INTERFACE              pLsmIf            = (PWEB_LSM_INTERFACE           )pMyObject->hLsmIf;
     PANSC_TIMER_DESCRIPTOR_OBJECT   pSessionTdo       = (PANSC_TIMER_DESCRIPTOR_OBJECT)pMyObject->hSessionTdo;
     PANSC_TDO_CLIENT_OBJECT         pSessionTdoClient = (PANSC_TDO_CLIENT_OBJECT      )pMyObject->hSessionTdoClient;
+    errno_t                         rc                = -1;
 
     if ( !pResourceLocator )
     {
@@ -297,7 +301,8 @@ WebVhoEnrollObjects
             pMyObject->hLsmIf = (ANSC_HANDLE)pLsmIf;
         }
 
-        AnscCopyString(pLsmIf->Name, WEB_LSM_INTERFACE_NAME);
+        rc = strcpy_s(pLsmIf->Name, sizeof(pLsmIf->Name), WEB_LSM_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pLsmIf->InterfaceId    = WEB_LSM_INTERFACE_ID;
         pLsmIf->hOwnerContext  = (ANSC_HANDLE)pMyObject;

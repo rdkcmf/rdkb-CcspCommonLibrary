@@ -87,6 +87,7 @@
  **********************************************************************/
 
 #include "ansc_pki_local.h"
+#include "safec_lib_common.h"
 
 ANSC_HANDLE 
 AnscCreateCAEntity
@@ -663,6 +664,7 @@ CAEntitySetCRLAddress
     )
 {
     PCA_ENTITY                      pThisObject = (PCA_ENTITY)hThisObject;
+    errno_t                         rc          = -1;
 
     if( pString == NULL)
     {
@@ -675,7 +677,8 @@ CAEntitySetCRLAddress
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscCopyString(pThisObject->pCRLAddress, pString);
+    rc = strcpy_s(pThisObject->pCRLAddress, sizeof(pThisObject->pCRLAddress), pString);
+    ERR_CHK(rc);
 
     return ANSC_STATUS_SUCCESS;
 }
@@ -722,6 +725,7 @@ CAEntitySetName
     )
 {
     PCA_ENTITY                      pThisObject = (PCA_ENTITY)hThisObject;
+    errno_t                         rc          = -1;
 
     if( pString == NULL)
     {
@@ -735,7 +739,8 @@ CAEntitySetName
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscCopyString(pThisObject->pName, pString);
+    rc = strcpy_s(pThisObject->pName, sizeof(pThisObject->pName), pString);
+    ERR_CHK(rc);
 
     return ANSC_STATUS_SUCCESS;
 }

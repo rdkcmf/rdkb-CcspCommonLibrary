@@ -75,6 +75,7 @@
 
 
 #include "slap_lbo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ SlapLboCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PSLAP_LOAM_BROKER_OBJECT        pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ SlapLboCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, SLAP_LOAM_BROKER_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), SLAP_LOAM_BROKER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -258,6 +261,7 @@ SlapLboEnrollObjects
 
     PANSC_CPC_INTERFACE             pAnscCpcIf        = (PANSC_CPC_INTERFACE       )pMyObject->hAnscCpcIf;
     PANSC_LPC_CONNECTOR_OBJECT      pAnscLpcConnector = (PANSC_LPC_CONNECTOR_OBJECT)pMyObject->hAnscLpcConnector;
+    errno_t                         rc                = -1;
 
     if ( !pAnscCpcIf )
     {
@@ -272,7 +276,8 @@ SlapLboEnrollObjects
             pMyObject->hAnscCpcIf = (ANSC_HANDLE)pAnscCpcIf;
         }
 
-        AnscCopyString(pAnscCpcIf->Name, ANSC_CPC_INTERFACE_NAME);
+        rc = strcpy_s(pAnscCpcIf->Name, sizeof(pAnscCpcIf->Name), ANSC_CPC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pAnscCpcIf->InterfaceId      = ANSC_CPC_INTERFACE_ID;
         pAnscCpcIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;

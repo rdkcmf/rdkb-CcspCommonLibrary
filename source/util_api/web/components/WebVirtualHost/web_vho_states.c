@@ -86,6 +86,7 @@
 
 
 #include "web_vho_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -162,9 +163,10 @@ WebVhoSetHostName
 {
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
-    AnscZeroMemory(pProperty->HostName, WEB_MAX_HOST_NAME_SIZE);
-    AnscCopyString(pProperty->HostName, name                  );
+    rc = strcpy_s(pProperty->HostName, sizeof(pProperty->HostName), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -567,8 +569,10 @@ WebVhoResetProperty
 {
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject    = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_VIRTUAL_HOST_PROPERTY      pProperty    = (PWEB_VIRTUAL_HOST_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
-    AnscCopyString(pProperty->HostName, WEB_WILDCARD_HOST_NAME);
+    rc = strcpy_s(pProperty->HostName, sizeof(pProperty->HostName), WEB_WILDCARD_HOST_NAME);
+    ERR_CHK(rc);
 
     pProperty->HostPort               = 0;      /* wildcard, accept request on any port */
     pProperty->bDefaultVirtualHost    = FALSE;
@@ -578,8 +582,10 @@ WebVhoResetProperty
     pProperty->LsmCookieMaxAge        = WEB_DEF_LSM_COOKIE_MAX_AGE;
     pProperty->SessionMaxLifespan     = 0;
 
-    AnscCopyString(pProperty->VhoCookieName, WEB_DEF_VHO_COOKIE_NAME);
-    AnscCopyString(pProperty->LsmCookieName, WEB_DEF_LSM_COOKIE_NAME);
+    rc = strcpy_s(pProperty->VhoCookieName, sizeof(pProperty->VhoCookieName), WEB_DEF_VHO_COOKIE_NAME);
+    ERR_CHK(rc);
+    rc = strcpy_s(pProperty->LsmCookieName, sizeof(pProperty->LsmCookieName), WEB_DEF_LSM_COOKIE_NAME);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -804,6 +810,7 @@ WebVhoSetHttpAuth2
     PWEB_VIRTUAL_HOST_OBJECT        pMyObject        = (PWEB_VIRTUAL_HOST_OBJECT  )hThisObject;
     PWEB_RESOURCE_LOCATOR_OBJECT    pResourceLocator = (PWEB_RESOURCE_LOCATOR_OBJECT)pMyObject->hResourceLocator;
     PWEB_RESOURCE_OWNER_OBJECT      pResourceOwner   = NULL;
+    errno_t                         rc               = -1;
 
     pResourceOwner  = 
         (PWEB_RESOURCE_OWNER_OBJECT)pResourceLocator->GetResourceOwner1
@@ -874,7 +881,8 @@ WebVhoSetHttpAuth2
                     returnStatus = ANSC_STATUS_INTERNAL_ERROR;
                 }
             
-                AnscCopyString((char *)authProperty.Realm, realm);
+                rc = strcpy_s((char *)authProperty.Realm, sizeof(authProperty.Realm), realm); /*Need to confirm*/
+                ERR_CHK(rc);
             }
 
             if ( domain )
@@ -885,7 +893,8 @@ WebVhoSetHttpAuth2
                     returnStatus = ANSC_STATUS_INTERNAL_ERROR;
                 }
             
-                AnscCopyString((char *)authProperty.Domain, domain);
+                rc = strcpy_s((char *)authProperty.Domain, sizeof(authProperty.Domain), domain);
+                ERR_CHK(rc);
             }
 
             if ( returnStatus == ANSC_STATUS_SUCCESS )

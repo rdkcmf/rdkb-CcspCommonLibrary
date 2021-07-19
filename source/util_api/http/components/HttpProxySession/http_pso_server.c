@@ -77,6 +77,7 @@
 
 
 #include "http_pso_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -557,12 +558,15 @@ HttpPsoConnectToServer
     PHTTP_BMO_REQ_OBJECT            pBmoReq        = (PHTTP_BMO_REQ_OBJECT          )hReserved;
     ULONG                           ulWamPmode     = HTTP_WAM_PMODE_PASS;
     HTTP_WAM_SERVER_INFO            wamServerInfo;
+    errno_t                         rc             = -1;
 
     AnscZeroMemory(pMyObject->ServerName,  ANSC_DOMAIN_NAME_SIZE                       );
-    AnscCopyString(pMyObject->ServerName,  pBmoReq->GetServerName((ANSC_HANDLE)pBmoReq));
+    rc = strcpy_s(pMyObject->ServerName, sizeof(pMyObject->ServerName), pBmoReq->GetServerName((ANSC_HANDLE)pBmoReq));
+    ERR_CHK(rc);
 
     AnscZeroMemory(wamServerInfo.HostName, ANSC_DOMAIN_NAME_SIZE                       );
-    AnscCopyString(wamServerInfo.HostName, pBmoReq->GetServerName((ANSC_HANDLE)pBmoReq));
+    rc = strcpy_s(wamServerInfo.HostName, sizeof(wamServerInfo.HostName), pBmoReq->GetServerName((ANSC_HANDLE)pBmoReq));
+    ERR_CHK(rc);
 
     pMyObject->ServerAddr.Value = 0;
     pMyObject->ServerPort       = pBmoReq->GetServerPort((ANSC_HANDLE)pBmoReq);

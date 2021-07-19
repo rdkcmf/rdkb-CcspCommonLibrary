@@ -77,6 +77,7 @@
 
 #include "http_autho_global.h"
 #include "ansc_crypto_internal_api.h"
+#include "safec_lib_common.h"
 
 static const char                   g_httpAuthMsgBody[] =
 "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">"
@@ -185,6 +186,7 @@ HttpAuthoCalcDigResponse
     PUCHAR                          pDigRep      = NULL;
     ANSC_CRYPTO_HASH                MD5Hash;
     PUCHAR                          pHA1, pHA2;
+    errno_t                         rc           = -1;
 
     pDigRep = (PUCHAR)AnscAllocateMemory(ANSC_MD5_OUTPUT_SIZE * 2 + 1);
     if ( !pDigRep )
@@ -259,21 +261,21 @@ HttpAuthoCalcDigResponse
     {
         goto EXIT2;
     }
+
+    if ( pQop )
+    {
+        rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s:%s:%s:%s", pHA1, pNonce, pNC,  pCNonce, pQop, pHA2);
+    }
     else
     {
-        _ansc_sprintf(pBuf, "%s:%s:", pHA1, pNonce);
-
-        if ( pQop )
-        {
-            _ansc_sprintf(pBuf + AnscSizeOfString((const char*)pBuf), "%s:%s:%s:", pNC,  pCNonce, pQop);
-        }
-
-        _ansc_sprintf(pBuf + AnscSizeOfString((const char*)pBuf), "%s", pHA2);
-
-        AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
-
-        AnscFreeMemory(pBuf);
+        rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s", pHA1, pNonce, pHA2);
     }
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
+    AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
+    AnscFreeMemory(pBuf);
 
     HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pDigRep);
 
@@ -382,6 +384,7 @@ HttpAuthoCalcDigestHA1
     PCHAR                           pBuf         = NULL;
     ULONG                           ulSize       = 0;
     ANSC_CRYPTO_HASH                MD5Hash;
+    errno_t                         rc           = -1;
 
     ulSize  =
         AnscSizeOfString((const char*)pUserName) + 1 +
@@ -441,14 +444,22 @@ HttpAuthoCalcDigestHA1
     */
     else
     {
-        _ansc_sprintf(pBuf, "%s:%s:%s", pUserName, pRealm, pPassword?pPassword:(PUCHAR)"");
+        rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s", pUserName, pRealm, pPassword?pPassword:(PUCHAR)"");
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
         HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pHA1);
 
         if ( pAlgorithm && AnscEqualString((char*)pAlgorithm, HTTP_AUTH_NAME_md5_sess, FALSE) )
         {
-            _ansc_sprintf(pBuf, "%s:%s:%s", pHA1, pNonce, pCNonce);
+            rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s", pHA1, pNonce, pCNonce);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
 
             AnscCryptoMd5Digest((PVOID)pBuf, AnscSizeOfString((const char*)pBuf), &MD5Hash);
             HttpAuthoBinToHex(MD5Hash.Value, ANSC_MD5_OUTPUT_SIZE, pHA1);
@@ -526,6 +537,7 @@ HttpAuthoCalcDigestHA2
     BOOL                            bAuthInt     = FALSE;
     PUCHAR                          pUriPath     = NULL;
     ANSC_CRYPTO_HASH                MD5Hash = {0}; /*RDKB-6235, CID-24777, initialize before use*/
+    errno_t                         rc           = -1;
 
     if ( !pMethodName || *pMethodName == '\0' )
     {
@@ -647,16 +659,17 @@ HttpAuthoCalcDigestHA2
     }
     else
     {
-        _ansc_sprintf(pBuf, "%s:%s", pMethodName, pUriPath);
-
-        if ( bAuthInt )
+        if(bAuthInt)
         {
-            _ansc_sprintf
-                (
-                    pBuf + AnscSizeOfString((const char*)pBuf),
-                    ":%s",
-                    pEntityDigest
-                );
+            rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s:%s", pMethodName, pUriPath, pEntityDigest);
+        }
+        else
+        {
+            rc = sprintf_s(pBuf, (ulSize + 16), "%s:%s", pMethodName, pUriPath);
+        }
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
         }
 
         if ( status == ANSC_STATUS_SUCCESS )
@@ -763,6 +776,7 @@ HttpAuthoGetRequestHostUri
         ULONG                       ulPathLen   = 0;
         ULONG                       i;
         PUCHAR                      pPath       = NULL;
+        errno_t                     rc          = -1;
 
         if ( *ppHostName == NULL )
         {
@@ -800,14 +814,16 @@ HttpAuthoGetRequestHostUri
             {
                 for ( i = 1; i < pReqUri->PathLevel; i ++ )
                 {
-                    AnscCopyString((char*)pPath + AnscSizeOfString((const char*)pPath), "/");
+                    rc = strcpy_s((char*)pPath + AnscSizeOfString((const char*)pPath), (ulPathLen - AnscSizeOfString((const char*)pPath)), "/");
+                    ERR_CHK(rc);
 
                     if ( AnscEqualString(pReqUri->PathArray[i], "/", TRUE) )
                     {
                         continue;
                     }
 
-                    AnscCopyString((char*)(pPath + AnscSizeOfString((const char*)pPath)), (char*)pReqUri->PathArray[i]);
+                    rc = strcpy_s((char*)(pPath + AnscSizeOfString((const char*)pPath)), (ulPathLen - AnscSizeOfString((const char*)pPath)), (char*)pReqUri->PathArray[i]);
+                    ERR_CHK(rc);
                 }
             }
 
@@ -1277,6 +1293,7 @@ HttpAuthoGenDigestChallenge
     UNREFERENCED_PARAMETER(hThisObject);
     PUCHAR                          pDigChal     = NULL;
     ULONG                           ulSize       = 0;
+    errno_t                         rc           = -1;
 
     ulSize  = AnscSizeOfString(HTTP_AUTH_NAME_realm) + 1 + AnscSizeOfString((const char*)pRealm) + 2;
     ulSize += 2;
@@ -1315,66 +1332,96 @@ HttpAuthoGenDigestChallenge
     }
 
     /* realm */
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigChal,
+            ulSize,
             "%s=\"%s\"",
             HTTP_AUTH_NAME_realm,
             pRealm
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     /* nonce */
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
+            (ulSize - AnscSizeOfString((const char*)pDigChal)),
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_nonce,
             pNonce
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     /* algorithm */
-    _ansc_sprintf
+    rc = sprintf_s
         (
             (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
+            (ulSize - AnscSizeOfString((const char*)pDigChal)),
             ", %s=\"%s\"",
             HTTP_AUTH_NAME_algorithm,
             pAlgorithm
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     /* domain */
     if ( pDomain )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
+                (ulSize - AnscSizeOfString((const char*)pDigChal)),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_domain,
                 pDomain
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     /* qop */
     if ( pQop )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
+                (ulSize - AnscSizeOfString((const char*)pDigChal)),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_qop,
                 pQop
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     /* stale if neccessary */
     if ( bNonceExpired )
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 (char*)pDigChal + AnscSizeOfString((const char*)pDigChal),
+                (ulSize - AnscSizeOfString((const char*)pDigChal)),
                 ", %s=\"%s\"",
                 HTTP_AUTH_NAME_stale,
                 HTTP_AUTH_NAME_true
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
 
     return pDigChal;
@@ -1424,6 +1471,7 @@ HttpAuthoGenBasicResponse
     PHTTP_AUTH_CHALLENGE            pAuthChal    = NULL;
     PUCHAR                          pChalReq     = NULL;
     PHTTP_CHALLENGE_BASIC           pBasicAuth   = NULL;
+    errno_t                         rc           = -1;
 
     pChalReq    = pMyObject->GenBasicChallenge((ANSC_HANDLE)pMyObject, pRealm);
     if ( !pChalReq )
@@ -1444,7 +1492,8 @@ HttpAuthoGenBasicResponse
 
         pAuthChal->AuthType = HTTP_AUTH_TYPE_BASIC;
         pBasicAuth  = &pAuthChal->Challenge.Basic;
-        AnscCopyString(pBasicAuth->Realm, (char*)pChalReq);
+        rc = strcpy_s(pBasicAuth->Realm, sizeof(pBasicAuth->Realm), (char*)pChalReq);
+        ERR_CHK(rc);
 
         status = pMyObject->GenResponse((ANSC_HANDLE)pMyObject, hResponse, (ANSC_HANDLE)pHfoWwwAuth);
     }
@@ -1532,6 +1581,7 @@ HttpAuthoGenDigestResponse
     PHTTP_AUTH_CHALLENGE            pAuthChal    = NULL;
     PUCHAR                          pChalReq     = NULL;
     PHTTP_CHALLENGE_DIGEST          pDigestAuth  = NULL;
+    errno_t                         rc           = -1;
 
     pChalReq    =
         pMyObject->GenDigestChallenge
@@ -1563,7 +1613,8 @@ HttpAuthoGenDigestResponse
 
         pAuthChal->AuthType = HTTP_AUTH_TYPE_DIGEST;
         pDigestAuth = &pAuthChal->Challenge.Digest;
-        AnscCopyString(pDigestAuth->Realm, (char*)pChalReq);
+        rc = strcpy_s(pDigestAuth->Realm, sizeof(pDigestAuth->Realm), (char*)pChalReq);
+        ERR_CHK(rc);
 
         status = pMyObject->GenResponse((ANSC_HANDLE)pMyObject, hResponse, (ANSC_HANDLE)pHfoWwwAuth);
     }
@@ -1625,6 +1676,7 @@ HttpAuthoGenResponse
     PHTTP_HFO_CONNECTION            pHfoConn     = NULL;
     PHTTP_HFO_CONTENT_LENGTH        pHfoConLen   = NULL;
     PHTTP_RESPONSE_INFO             pRepInfo     = NULL;
+    errno_t                         rc           = -1;
 
     /* add WWW-Authenticate header */
     if ( pHfoWwwAuth )
@@ -1646,7 +1698,8 @@ HttpAuthoGenResponse
 
         pHfoConType->MediaType  = IANA_MEDIA_TYPE_CODE_TEXT;
         pHfoConType->SubType    = IANA_MT_TX_STYPE_CODE_HTML;
-        AnscCopyString(pHfoConType->Parameters, "charset=iso-8859-1");
+        rc = strcpy_s(pHfoConType->Parameters, sizeof(pHfoConType->Parameters), "charset=iso-8859-1");
+        ERR_CHK(rc);
 
         pResponse->AddHeaderField
             (
@@ -1669,7 +1722,8 @@ HttpAuthoGenResponse
         pConnToken              = &pHfoConn->TokenArray[0];
 
         pConnToken->OptionType  = IANA_CONNECTION_CODE_KEEP_ALIVE;
-        AnscCopyString(pConnToken->Token, IANA_CONNECTION_TEXT_KEEP_ALIVE);
+        rc = strcpy_s(pConnToken->Token, sizeof(pConnToken->Token), IANA_CONNECTION_TEXT_KEEP_ALIVE);
+        ERR_CHK(rc);
 
         pResponse->AddHeaderField
             (
@@ -1708,7 +1762,8 @@ HttpAuthoGenResponse
         pRepInfo->MinorVersion = HTTP_CURRENT_MINOR_VERSION;
         pRepInfo->StatusCode   = pHfoWwwAuth ? HTTP_STATUS_UNAUTHORIZED : HTTP_STATUS_INTERNAL_SERVER_ERROR;
 
-        AnscCopyString(pRepInfo->ReasonPhrase, "Unauthorized");
+        rc = strcpy_s(pRepInfo->ReasonPhrase, sizeof(pRepInfo->ReasonPhrase), "Unauthorized");
+        ERR_CHK(rc);
     }
 
     pResponse->SetRepInfo
@@ -1776,6 +1831,7 @@ HttpAuthoGenNonce
     ULONG                           ulTimeNow    = AnscGetTickInMilliSeconds();
     ULONG                           ulRandomBytes= 0;
     ANSC_CRYPTO_HASH                MD5Hash;
+    errno_t                         rc           = -1;
 
     if ( ulNonceLen <= 2 )
     {
@@ -1799,7 +1855,11 @@ HttpAuthoGenNonce
 
     if ( status != ANSC_STATUS_SUCCESS )
     {
-        _ansc_sprintf((char*)MD5Hash.Value, "%.8X", (unsigned int)ulTimeNow);
+        rc = sprintf_s((char*)MD5Hash.Value, sizeof(MD5Hash.Value), "%.8X", (unsigned int)ulTimeNow); /*Need to confirm*/
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         AnscCryptoMd5Digest
             (

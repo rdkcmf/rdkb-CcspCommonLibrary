@@ -91,6 +91,7 @@
 
 
 #include "slap_vco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -231,6 +232,7 @@ SlapVcoUcharArrayToString
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = NULL;
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     /*RDKB-6307, CID-24090, null check before use*/
     if(!var_uchar_array || (var_uchar_array->VarCount == 0))
@@ -248,12 +250,18 @@ SlapVcoUcharArrayToString
     {
         for ( i = 0; i < var_uchar_array->VarCount; i++ )
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     &var_string[i * 2],
+                    (var_uchar_array->VarCount * 2 + 1),
                     "%02X",
                     var_uchar_array->Array.arrayUchar[i]
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return NULL;
+            }
         }
     }
 
@@ -581,6 +589,7 @@ SlapVcoIp4AddrListToString
     char*                           var_string   = (char*                     )(ip4_addr_list? AnscAllocateMemory(32 * ip4_addr_list->VarCount + 1) : NULL);
     ULONG                           i            = 0;
     ANSC_IPV4_ADDRESS               temp_addr;
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -599,27 +608,39 @@ SlapVcoIp4AddrListToString
 
             if ( i == (ip4_addr_list->VarCount - 1) )
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         &var_string[AnscSizeOfString(var_string)],
+                        (32 * ip4_addr_list->VarCount + 1),
                         "%d.%d.%d.%d",
                         temp_addr.Dot[0],
                         temp_addr.Dot[1],
                         temp_addr.Dot[2],
                         temp_addr.Dot[3]
                     );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return NULL;
+                }
             }
             else
             {
-                _ansc_sprintf
+                rc = sprintf_s
                     (
                         &var_string[AnscSizeOfString(var_string)],
+                        (32 * ip4_addr_list->VarCount + 1),
                         "%d.%d.%d.%d,",
                         temp_addr.Dot[0],
                         temp_addr.Dot[1],
                         temp_addr.Dot[2],
                         temp_addr.Dot[3]
                     );
+                if(rc < EOK)
+                {
+                    ERR_CHK(rc);
+                    return NULL;
+                }
             }
         }
     }
@@ -713,6 +734,7 @@ SlapVcoIp6AddrListToString
     char*                           var_string   = (char*                     )(ip6_addr_list? AnscAllocateMemory(ip6_addr_list->VarCount * 4 + 1) : NULL);
     ULONG                           i            = 0;
     char*                           pTempString  = NULL;
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -727,20 +749,27 @@ SlapVcoIp6AddrListToString
     {
         if ( ((i % 16) == 0) && (i != 0) )
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     &var_string[AnscSizeOfString(var_string)],
+                    (ip6_addr_list->VarCount * 4 + 1),
                     ", "
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return NULL;
+            }
         }
 
         pTempString = AnscIp6AddressToString((unsigned char*)&ip6_addr_list->Array.arrayUchar[i]);
 
         if( pTempString != NULL)
         {
-            _ansc_strcat
+            rc = strcat_s
                 (
                     var_string,
+                    (ip6_addr_list->VarCount * 4 + 1),
                     pTempString
                 );
 
@@ -789,6 +818,7 @@ SlapVcoMacAddrToString
 {
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -796,9 +826,10 @@ SlapVcoMacAddrToString
     }
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 var_string,
+                32,
                 "%02X:%02X:%02X:%02X:%02X:%02X",
                 (mac_addr->VarCount > 0)? mac_addr->Array.arrayUchar[0] : 0,
                 (mac_addr->VarCount > 1)? mac_addr->Array.arrayUchar[1] : 0,
@@ -807,6 +838,11 @@ SlapVcoMacAddrToString
                 (mac_addr->VarCount > 4)? mac_addr->Array.arrayUchar[4] : 0,
                 (mac_addr->VarCount > 5)? mac_addr->Array.arrayUchar[5] : 0
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  var_string;
@@ -851,6 +887,7 @@ SlapVcoMacAddrToString2
 {
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -867,9 +904,10 @@ SlapVcoMacAddrToString2
 	}
     else
     {
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 var_string,
+                32,
                 "%02X:%02X:%02X:%02X:%02X:%02X",
                 (mac_addr->VarCount > 0)? mac_addr->Array.arrayUchar[0] : 0,
                 (mac_addr->VarCount > 1)? mac_addr->Array.arrayUchar[1] : 0,
@@ -878,6 +916,11 @@ SlapVcoMacAddrToString2
                 (mac_addr->VarCount > 4)? mac_addr->Array.arrayUchar[4] : 0,
                 (mac_addr->VarCount > 5)? mac_addr->Array.arrayUchar[5] : 0
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  var_string;
@@ -922,6 +965,7 @@ SlapVcoMacAddrListToString
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(mac_addr_list? AnscAllocateMemory(mac_addr_list->VarCount * 24 / 6 + 1) : NULL);
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -936,19 +980,31 @@ SlapVcoMacAddrListToString
     {
         if ( ((i % 6) == 0) && (i != 0) )
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     &var_string[AnscSizeOfString(var_string)],
+                    (mac_addr_list->VarCount * 24 / 6 + 1),
                     ", "
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return NULL;
+            }
         }
 
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 &var_string[AnscSizeOfString(var_string)],
+                (mac_addr_list->VarCount * 24 / 6 + 1),
                 "%02X",
                 mac_addr_list->Array.arrayUchar[i]
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  var_string;
@@ -994,6 +1050,7 @@ SlapVcoOidListToString
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )(oid_list? AnscAllocateMemory(oid_list->VarCount * 16 + 1) : NULL);
     ULONG                           i            = 0;
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -1007,12 +1064,18 @@ SlapVcoOidListToString
     {
         for ( i = 0; i < oid_list->VarCount; i++ )
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     &var_string[AnscSizeOfString(var_string)],
+                    (oid_list->VarCount * 16 + 1),
                     "%d.",
                     (int)oid_list->Array.arrayUint32[i]
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return NULL;
+            }
         }
 
         var_string[AnscSizeOfString(var_string) - 1] = 0;
@@ -1061,15 +1124,17 @@ SlapVcoCalendarTimeToString
     UNREFERENCED_PARAMETER(hThisObject);
     PANSC_UNIVERSAL_TIME            pUniversalTime = (PANSC_UNIVERSAL_TIME      )calendar_time;
     char*                           var_string     = (char*                     )AnscAllocateMemory(32);
+    errno_t                         rc             = -1;
 
     if ( !var_string )
     {
         return  NULL;
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             var_string,
+            32,
             "%04d-%02d-%02dT%02d:%02d:%02dZ",
             pUniversalTime->Year,
             pUniversalTime->Month,
@@ -1078,6 +1143,11 @@ SlapVcoCalendarTimeToString
             pUniversalTime->Minute,
             pUniversalTime->Second
         );
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return NULL;
+    }
 
     return  var_string;
 }
@@ -1120,6 +1190,7 @@ SlapVcoUint32ToHexString
 {
     UNREFERENCED_PARAMETER(hThisObject);
     char*                           var_string   = (char*                     )AnscAllocateMemory(32);
+    errno_t                         rc           = -1;
 
     if ( !var_string )
     {
@@ -1128,12 +1199,18 @@ SlapVcoUint32ToHexString
     else
     {
         /*_ansc_ultoa(var_uint32, var_string, 16);*/
-        _ansc_sprintf
+        rc = sprintf_s
             (
                 var_string,
+                32,
                 "%X",
                 (unsigned int)var_uint32
             );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return NULL;
+        }
     }
 
     return  var_string;

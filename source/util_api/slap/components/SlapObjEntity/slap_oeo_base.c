@@ -75,6 +75,7 @@
 
 
 #include "slap_oeo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -240,6 +241,7 @@ SlapOeoEnrollObjects
 {
     PSLAP_OBJ_ENTITY_OBJECT         pMyObject    = (PSLAP_OBJ_ENTITY_OBJECT)hThisObject;
     PSLAP_OLA_INTERFACE             pSlapOlaIf   = (PSLAP_OLA_INTERFACE    )pMyObject->hSlapOlaIf;
+    errno_t                         rc           = -1;
 
     if ( !pSlapOlaIf )
     {
@@ -254,7 +256,8 @@ SlapOeoEnrollObjects
             pMyObject->hSlapOlaIf = (ANSC_HANDLE)pSlapOlaIf;
         }
 
-        AnscCopyString(pSlapOlaIf->Name, SLAP_OLA_INTERFACE_NAME);
+        rc = strcpy_s(pSlapOlaIf->Name, sizeof(pSlapOlaIf->Name), SLAP_OLA_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pSlapOlaIf->InterfaceId         = SLAP_OLA_INTERFACE_ID;
         pSlapOlaIf->hOwnerContext       = (ANSC_HANDLE)pMyObject;

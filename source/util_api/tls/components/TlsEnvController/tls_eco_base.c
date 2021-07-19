@@ -75,6 +75,7 @@
 
 
 #include "tls_eco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -265,6 +266,7 @@ TlsEcoEnrollObjects
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pMyObject->hTlsCryptoProvider;
     PTLS_SCS_INTERFACE              pTlsScsIf          = (PTLS_SCS_INTERFACE         )pMyObject->hTlsScsIf;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
+    errno_t                         rc                 = -1;
 
     if ( !pTlsSessionManager )
     {
@@ -319,7 +321,8 @@ TlsEcoEnrollObjects
             pMyObject->hTlsScsIf = (ANSC_HANDLE)pTlsScsIf;
         }
 
-        AnscCopyString(pTlsScsIf->Name, TLS_SCS_INTERFACE_NAME);
+        rc = strcpy_s(pTlsScsIf->Name, sizeof(pTlsScsIf->Name), TLS_SCS_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pTlsScsIf->InterfaceId      = TLS_SCS_INTERFACE_ID;
         pTlsScsIf->hOwnerContext    = (ANSC_HANDLE)pMyObject;
@@ -351,7 +354,8 @@ TlsEcoEnrollObjects
             pMyObject->hTlsMecIf = (ANSC_HANDLE)pTlsMecIf;
         }
 
-        AnscCopyString(pTlsMecIf->Name, TLS_MEC_INTERFACE_NAME);
+        rc = strcpy_s(pTlsMecIf->Name, sizeof(pTlsMecIf->Name), TLS_MEC_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pTlsMecIf->InterfaceId          = TLS_MEC_INTERFACE_ID;
         pTlsMecIf->hOwnerContext        = (ANSC_HANDLE)pMyObject;

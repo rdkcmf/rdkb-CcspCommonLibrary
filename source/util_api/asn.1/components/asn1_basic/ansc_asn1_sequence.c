@@ -90,6 +90,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -2019,6 +2020,7 @@ AnscAsn1SequenceDumpObject
     CHAR                            pAttrBuffer[512]= { 0 };
     ULONG                           attrLength      = 512;
     PCHAR                           pName;
+    errno_t                         rc              = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -2036,31 +2038,23 @@ AnscAsn1SequenceDumpObject
         pName   = pMyObject->Name;
     }
 
-    if( pMyObject->bOptional)
+    rc =
+        sprintf_s
+            (
+                pBuffer,
+                *pLength,
+                "%s ::=%s %s%s",
+                pName,
+                pAttrBuffer,
+                ASN1Type2String(pMyObject->uType),
+                ((pMyObject->bOptional) ? " (Optional)" : "")
+            );
+    if(rc < EOK)
     {
-        *pLength = 
-            AnscSprintfString
-                (
-                    pBuffer,
-                    "%s ::=%s %s (Optional)",
-                    pName,
-                    pAttrBuffer,
-                    ASN1Type2String(pMyObject->uType)
-                );
+        ERR_CHK(rc);
+        return FALSE;
     }
-    else
-    {
-        *pLength = 
-            AnscSprintfString
-                (
-                    pBuffer,
-                    "%s ::=%s %s",
-                    pName,
-                    pAttrBuffer,
-                    ASN1Type2String(pMyObject->uType)
-                );
-    }
-
+    *pLength = rc;
 #endif
 
     return  TRUE;

@@ -100,6 +100,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -2419,6 +2420,7 @@ AnscAsn1StringDumpObject
     PCHAR                           pName;
     CHAR                            pValueBuf[128]  = { 0 };
     PUCHAR                          pMyBuffer;
+    errno_t                         rc              = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -2443,27 +2445,41 @@ AnscAsn1StringDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else
     {
@@ -2471,25 +2487,32 @@ AnscAsn1StringDumpObject
 
         if( pMyObject->uLength == 0)
         {
-            *pLength = 
-                AnscSprintfString
+            rc =
+                sprintf_s
                     (
                         pBuffer,
+                        *pLength,
                         "%s ::=%s %s (L0)",
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType)
                     );
-
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return FALSE;
+            }
+            *pLength = rc;
         }
         else if( AnscIsReadableString(pMyBuffer, pMyObject->uLength))
         {
             writeStringToBuffer((PCHAR)pMyBuffer, pMyObject->uLength, pValueBuf);
 
-            *pLength = 
-                AnscSprintfString
+            rc =
+                sprintf_s
                     (
                         pBuffer,
+                        *pLength,
                         "%s ::=%s %s (L%d, '%s')",
                         pName,
                         pAttrBuffer,
@@ -2497,15 +2520,22 @@ AnscAsn1StringDumpObject
                         (int)pMyObject->uLength,
                         pValueBuf
                     );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return FALSE;
+            }
+            *pLength = rc;
         }
         else
         {
             writeBinaryToBuffer(pMyBuffer, pMyObject->uLength, pValueBuf);
 
-            *pLength = 
-                AnscSprintfString
+            rc =
+                sprintf_s
                     (
                         pBuffer,
+                        *pLength,
                         "%s ::=%s %s (L%d, 0x%s)",
                         pName,
                         pAttrBuffer,
@@ -2513,6 +2543,12 @@ AnscAsn1StringDumpObject
                         (int)pMyObject->uLength,
                         pValueBuf
                     );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+                return FALSE;
+            }
+            *pLength = rc;
         }
     }
 

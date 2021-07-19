@@ -91,6 +91,7 @@
 
 
 #include "web_roo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -150,6 +151,7 @@ WebRooReplyReq
     PHTTP_BMO_REP_OBJECT            pBmoRep         = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
     PHTTP_RESPONSE_INFO             pRepInfo        = NULL;
     char*                           pRepPhrase      = pHttpHco->GetReasonPhrase((ANSC_HANDLE)pHttpHco, ulStatusCode);
+    errno_t                         rc              = -1;
 
     if ( !pRepPhrase )
     {
@@ -169,7 +171,8 @@ WebRooReplyReq
             pRepInfo->MinorVersion = WEB_SMO_MINOR_VERSION;
             pRepInfo->StatusCode   = ulStatusCode;
 
-            AnscCopyString(pRepInfo->ReasonPhrase, pRepPhrase);
+            rc = strcpy_s(pRepInfo->ReasonPhrase, sizeof(pRepInfo->ReasonPhrase), pRepPhrase);
+            ERR_CHK(rc);
         }
     }
 

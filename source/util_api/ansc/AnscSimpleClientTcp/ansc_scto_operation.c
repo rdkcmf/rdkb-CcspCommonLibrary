@@ -74,6 +74,9 @@
 
 
 #include "ansc_scto_global.h"
+#include "safec_lib_common.h"
+
+void Trace_Client_Server_address(char *ptr);
 
 /**********************************************************************
 
@@ -176,7 +179,11 @@ AnscSctoEngage
         xskt_hints.ai_flags    = AI_CANONNAME;
 
         usPort = pMyObject->GetPeerPort((ANSC_HANDLE)pMyObject);
-        _ansc_sprintf(port, "%d", usPort);
+        rc = sprintf_s(port, sizeof(port), "%d", usPort);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         AnscTrace("!!! Peer Port: %s !!!\n", port);
 
@@ -247,7 +254,11 @@ AnscSctoEngage
         ansc_hints.ai_flags    = AI_CANONNAME;
 
         usPort = pMyObject->GetPeerPort((ANSC_HANDLE)pMyObject);
-        _ansc_sprintf(port, "%d", usPort);
+        rc = sprintf_s(port, sizeof(port), "%d", usPort);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
 
         if ( _ansc_getaddrinfo
                 (
@@ -385,21 +396,8 @@ AnscSctoEngage
         if ( _xskt_bind((XSKT_SOCKET)pMyObject->Socket, (xskt_socket_addr*)&xskt_client_addr, sizeof(xskt_client_addr)) != 0 )
         {
             AnscTrace("!!!!!!!!!! _xskt_bind error: socket=%d, error=%d !!!!!!!!!!\n", (XSKT_SOCKET)pMyObject->Socket, errno);
-            {
-                int j;                 
-                char s[256];
-                char *ptr1 = ((xskt_socket_addr*)(&xskt_client_addr))->sa_data;
-                char stmp[16];
+            Trace_Client_Server_address(((xskt_socket_addr*)(&xskt_client_addr))->sa_data);
 
-                s[0] = '\0';                  
-                for(j=0; j<13; j++) {
-                    sprintf(stmp, "%.2x:", *(ptr1++));
-                    strcat(s, stmp);
-                }
-                sprintf(stmp, "%.2x", *ptr1); 
-                strcat(s, stmp);
-                AnscTrace("!!!!!!!!!! _xskt_bind error: client_addr=%s\n", s);
-            }
             perror("_xskt_bind error");
 
             if ( pMyObject->Mode & (ANSC_SCTO_MODE_NO_BSP_NOTIFY_CONN_ERR == 0 ))
@@ -453,21 +451,8 @@ AnscSctoEngage
         if ( _ansc_bind(pMyObject->Socket, (ansc_socket_addr*)&ansc_client_addr, sizeof(ansc_client_addr)) != 0 )
         {
             AnscTrace("!!!!!!!!!! _ansc_bind error: socket=%d, error=%d !!!!!!!!!!\n", (XSKT_SOCKET)pMyObject->Socket, errno);
-            {
-                int j;                 
-                char s[256];
-                char *ptr1 = ((ansc_socket_addr*)(&ansc_client_addr))->sa_data;
-                char stmp[16];
+            Trace_Client_Server_address(((xskt_socket_addr*)(&ansc_client_addr))->sa_data);
 
-                s[0] = '\0';                  
-                for(j=0; j<13; j++) {
-                    sprintf(stmp, "%.2x:", *(ptr1++));
-                    strcat(s, stmp);
-                }
-                sprintf(stmp, "%.2x", *ptr1); 
-                strcat(s, stmp);
-                AnscTrace("!!!!!!!!!! _ansc_bind error: client_addr=%s\n", s);
-            }
             perror("_ansc_bind error");
 
             if ( pMyObject->Mode & (ANSC_SCTO_MODE_NO_BSP_NOTIFY_CONN_ERR == 0 ))
@@ -522,21 +507,8 @@ AnscSctoEngage
 #endif
         {
             AnscTrace("!!!!!!!!!! _xskt_connect error: socket=%d, error=%d !!!!!!!!!!\n", (XSKT_SOCKET)pMyObject->Socket, errno);
-            {
-                int j;                 
-                char s[256];
-                char *ptr1 = ((xskt_socket_addr*)(&xskt_server_addr))->sa_data;
-                char stmp[16];
+            Trace_Client_Server_address(((xskt_socket_addr*)(&xskt_server_addr))->sa_data);
 
-                s[0] = '\0';                  
-                for(j=0; j<13; j++) {
-                    sprintf(stmp, "%.2x:", *(ptr1++));
-                    strcat(s, stmp);
-                }
-                sprintf(stmp, "%.2x", *ptr1); 
-                strcat(s, stmp);
-                AnscTrace("!!!!!!!!!! _xskt_connect error: server_addr=%s\n", s);
-            }
             perror("_xskt_connect error");
 
             s_error = _xskt_get_last_error();
@@ -776,6 +748,33 @@ FREE_ADDRINFO: // Handling memory leak
 #endif
 
     return  returnStatus;
+}
+
+void Trace_Client_Server_address(char *ptr)
+{
+    int j;
+    char s[256];
+    char stmp[16];
+    s[0] = '\0';
+    errno_t rc = -1;
+
+    for(j=0; j<13; j++) {
+        rc = sprintf_s(stmp, sizeof(stmp), "%.2x:", *(ptr++));
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
+        rc = strcat_s(s, sizeof(s), stmp);
+        ERR_CHK(rc);
+    }
+    rc = sprintf_s(stmp, sizeof(stmp), "%.2x", *ptr);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
+    rc = strcat_s(s, sizeof(s), stmp);
+    ERR_CHK(rc);
+    AnscTrace("!!!!!!!!!! _xskt_bind error: server/client_addr=%s\n", s);
 }
 
 

@@ -88,6 +88,7 @@
 #include "ansc_ntpco_external_api.h"
 #include "ansc_smtco_interface.h"
 #include "ansc_smtco_external_api.h"
+#include "safec_lib_common.h"
 
 /**************************************************************
       ATTRIBUTE RELATED UTILITY FUNCTIONS
@@ -823,6 +824,7 @@ AttrListDump
     CHAR                            pTmpBuffer[512] = { 0 };
     ULONG                           lenOfBuffer     = 0;
     ULONG                           uSingleLen      = 512;
+    errno_t                         rc              = -1;
 
     if( pListHeader == NULL || AnscSListQueryDepth(pListHeader) == 0 ||
         pBuffer     == NULL || pLength == NULL )
@@ -864,7 +866,8 @@ AttrListDump
 
     *pLength = lenOfBuffer;
 
-    AnscCopyString( pBuffer, pTmpBuffer);
+    rc = strcpy_s( pBuffer, *pLength, pTmpBuffer);
+    ERR_CHK(rc);
 
     return TRUE;
 }

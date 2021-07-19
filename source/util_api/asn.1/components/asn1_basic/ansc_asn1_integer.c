@@ -92,6 +92,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1149,6 +1150,7 @@ AnscAsn1IntegerDumpObject
     ULONG                           attrLength      = 512;
     PCHAR                           pName;
     PUCHAR                          pValueBuffer;
+    errno_t                         rc              = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -1168,49 +1170,71 @@ AnscAsn1IntegerDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->uLength <= sizeof(ULONG))
     {
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (%d)",
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
                     (int)pMyObject->lValue
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else
     {
         pValueBuffer = pMyObject->GetValueBuffer(pMyObject);
 
-        *pLength = 
-            AnscSprintfString
+        rc = 
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (L%d, 0x%.2X%.2X%.2X%.2X...)",
                     pName,
                     pAttrBuffer,
@@ -1221,6 +1245,12 @@ AnscAsn1IntegerDumpObject
                     pValueBuffer[2],
                     pValueBuffer[3]
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
 
     return  TRUE;

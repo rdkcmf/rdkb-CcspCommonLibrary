@@ -81,7 +81,7 @@
 
 
 #include "slap_bmc2domo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -162,6 +162,7 @@ SlapBmc2DomoAddCommand
     PBMC2_COM_TERMINAL_OBJECT       pBmc2ComTerminal   = (PBMC2_COM_TERMINAL_OBJECT  )pBmc2ComDomain->hBmc2ComTerminal;
     PBMC2_COMMAND_PROPERTY          pCommandPropertyE  = (PBMC2_COMMAND_PROPERTY     )NULL;
     PBMC2_COMMAND_PROPERTY          pCommandPropertyD  = (PBMC2_COMMAND_PROPERTY     )NULL;
+    errno_t                         rc                 = -1;
 
     pCommandPropertyD = (PBMC2_COMMAND_PROPERTY)AnscAllocateMemory(sizeof(BMC2_COMMAND_PROPERTY));
 
@@ -200,12 +201,17 @@ SlapBmc2DomoAddCommand
 
         if ( pCommandPropertyD->ScpPageName )
         {
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     pCommandPropertyD->ScpPageName,
+                    (AnscSizeOfString(pCommandPropertyD->CommandName) + 16),
                     "%s.scp",
                     pCommandPropertyD->CommandName
                 );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
     }
 

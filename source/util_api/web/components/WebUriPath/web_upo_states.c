@@ -77,6 +77,7 @@
 
 
 #include "web_upo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -205,9 +206,10 @@ WebUpoSetPathName
     )
 {
     PWEB_URI_PATH_OBJECT            pMyObject    = (PWEB_URI_PATH_OBJECT)hThisObject;
+    errno_t                         rc           = -1;
 
-    AnscZeroMemory(pMyObject->PathName, WEB_UPO_PATH_NAME_SIZE);
-    AnscCopyString(pMyObject->PathName, path                  );
+    rc = strcpy_s(pMyObject->PathName, sizeof(pMyObject->PathName), path);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

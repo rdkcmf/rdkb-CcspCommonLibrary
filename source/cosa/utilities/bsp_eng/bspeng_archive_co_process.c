@@ -96,7 +96,7 @@
 **********************************************************************/
 
 #include "bspeng_co_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -229,7 +229,12 @@ BspTemplateArchiveWriteDouble
 #ifdef   _BSPENG_NO_DOUBLE
     BSP_TEMPLATE_DOUBLE_TO_STRING(buf, (int)Value);
 #else
-    _ansc_sprintf(buf, "%f", Value);
+    errno_t                         rc          = -1;
+    rc = sprintf_s(buf, sizeof(buf), "%f", Value);
+    if(rc < EOK)
+    {
+       ERR_CHK(rc);
+    }
 #endif
 
     return pArchive->WriteString(hThisObject, (PUCHAR)buf);
@@ -1274,12 +1279,16 @@ BspTemplateArchiveSaveToFile
                 while (total <= pArchive->ContentLen)
                 {
                     size = 
-                        _ansc_sprintf
+                        sprintf_s
                             (
-                                buf, "%d,%s", 
+                                buf, sizeof(buf), "%d,%s", 
                                 pArchive->pStorage[total], 
                                 (total % 40 == 0 && total != 0)?"\n":""
                             );
+                    if(size < 0)
+                    {
+                        ERR_CHK(size);
+                    }
 		    total++;
                     ulSize  = size;
                     AnscWriteFile(hFile, buf, &ulSize);

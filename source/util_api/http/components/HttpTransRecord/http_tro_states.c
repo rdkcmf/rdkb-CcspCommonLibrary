@@ -107,6 +107,7 @@
 
 
 #include "http_tro_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -1050,9 +1051,11 @@ HttpTroSetServerName
     )
 {
     PHTTP_TRANS_RECORD_OBJECT       pMyObject    = (PHTTP_TRANS_RECORD_OBJECT)hThisObject;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pMyObject->ServerName, ANSC_DOMAIN_NAME_SIZE);
-    AnscCopyString(pMyObject->ServerName, name                 );
+    rc = strcpy_s(pMyObject->ServerName, sizeof(pMyObject->ServerName), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }

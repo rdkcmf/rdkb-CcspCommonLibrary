@@ -76,6 +76,7 @@
 
 
 #include "ansc_xml_dom_parser_global.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -787,6 +788,7 @@ AnscXmlDomNodeDecode
     PCHAR                           pNewAttributeName = NULL;
     ULONG                           ulBufLen          = *pulSize;
     ULONG                           ulPrevBufLen;
+    errno_t                         rc                = -1;
 
     /***********************************************************
               GO DOWN DEEPLY TO DIG EACH CHILDREN NODE
@@ -885,7 +887,8 @@ AnscXmlDomNodeDecode
     /*
      *  Then set the node name;
      */
-    AnscCopyString( pNode->Name, pNewNodeName);
+    rc = strcpy_s( pNode->Name, sizeof(pNode->Name), pNewNodeName);
+    ERR_CHK(rc);
 
     /*
      *  Maybe it's <node/> only, return success (Seldom occurred, but possible );
@@ -1067,7 +1070,8 @@ AnscXmlDomNodeDecode
             pNewAttribute->hParentNode   = (ANSC_HANDLE)pNode;
             pNewAttribute->hXMLContext   = pNode->hXMLContext;
 
-            AnscCopyString(pNewAttribute->Name, pNewAttributeName);
+            rc = strcpy_s(pNewAttribute->Name, sizeof(pNewAttribute->Name), pNewAttributeName);
+            ERR_CHK(rc);
 
             if( pEndOfAttrValue >= pStartOfAttrValue)
             {

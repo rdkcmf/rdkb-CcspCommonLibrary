@@ -77,6 +77,7 @@
 
 
 #include "web_vho_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -511,6 +512,7 @@ WebVhoConstructResponse
     PHTTP_BMO_REP_OBJECT            pBmoRep      = (PHTTP_BMO_REP_OBJECT         )hBmoRep;
     PHTTP_RESPONSE_INFO             pRepInfo     = NULL;
     char*                           pRepPhrase   = pHttpHco->GetReasonPhrase((ANSC_HANDLE)pHttpHco, ulStatusCode);
+    errno_t                         rc           = -1;
 
     if ( !pRepPhrase )
     {
@@ -530,7 +532,8 @@ WebVhoConstructResponse
             pRepInfo->MinorVersion = WEB_SMO_MINOR_VERSION;
             pRepInfo->StatusCode   = ulStatusCode;
 
-            AnscCopyString(pRepInfo->ReasonPhrase, pRepPhrase);
+            rc = strcpy_s(pRepInfo->ReasonPhrase, sizeof(pRepInfo->ReasonPhrase), pRepPhrase);
+            ERR_CHK(rc);
         }
     }
 
@@ -592,6 +595,7 @@ WebVhoAddHttpRepHeaders
     ULONG                           ulTimeInSeconds   = 0;
     ANSC_UNIVERSAL_TIME             curCalendarTime;
     char*                           pLsmId            = NULL;
+    errno_t                         rc                = -1;
 
     if ( !pProperty->bEnableSessionTracking )
     {
@@ -705,8 +709,10 @@ WebVhoAddHttpRepHeaders
                 );
         }
 
-        AnscCopyString(pVhoCookieContent->Name, pProperty->VhoCookieName);
-        AnscCopyString(pVhoCookieContent->Path, HTTP_ROOT_URI_PATH      );
+        rc = strcpy_s(pVhoCookieContent->Name, sizeof(pVhoCookieContent->Name), pProperty->VhoCookieName);
+        ERR_CHK(rc);
+        rc = strcpy_s(pVhoCookieContent->Path, sizeof(pVhoCookieContent->Path), HTTP_ROOT_URI_PATH      );
+        ERR_CHK(rc);
 
         AnscGetUlongString
             (
@@ -731,16 +737,20 @@ WebVhoAddHttpRepHeaders
                 );
         }
 
-        AnscCopyString(pLsmCookieContent->Name, pProperty->LsmCookieName);
-        AnscCopyString(pLsmCookieContent->Path, HTTP_ROOT_URI_PATH      );
+        rc = strcpy_s(pLsmCookieContent->Name, sizeof(pLsmCookieContent->Name), pProperty->LsmCookieName);
+        ERR_CHK(rc);
+        rc = strcpy_s(pLsmCookieContent->Path, sizeof(pLsmCookieContent->Path), HTTP_ROOT_URI_PATH      );
+        ERR_CHK(rc);
 
         if ( pLsmId )
         {
-        AnscCopyString
+        rc = strcpy_s
             (
                 pLsmCookieContent->Value,
+                sizeof(pLsmCookieContent->Value),
                 pLsmId
             );
+        ERR_CHK(rc);
         }
     }
 
@@ -818,6 +828,7 @@ WebVhoGetResourcePath
     PANSC_TOKEN_CHAIN               pUriPathTokenChain = (PANSC_TOKEN_CHAIN         )hTokenChain;
     PANSC_STRING_TOKEN              pUriPathToken      = NULL;
     ULONG                           i                  = 0;
+    errno_t                         rc                 = -1;
 
     if ( !bReferred )
     {
@@ -831,7 +842,8 @@ WebVhoGetResourcePath
             }
             else
             {
-                AnscCopyString(pUriPathToken->Name, pReqInfo->RequestUri.PathArray[i]);
+                rc = strcpy_s(pUriPathToken->Name, sizeof(pUriPathToken->Name), pReqInfo->RequestUri.PathArray[i]);
+                ERR_CHK(rc);
 
                 AnscQueuePushEntry(&pUriPathTokenChain->TokensQueue, &pUriPathToken->Linkage);
             }
@@ -901,7 +913,8 @@ WebVhoGetResourcePath
             }
             else
             {
-                AnscCopyString(pUriPathToken->Name, pHttpHfoReferer->ReferrerUri.PathArray[i]);
+                rc = strcpy_s(pUriPathToken->Name, sizeof(pUriPathToken->Name), pHttpHfoReferer->ReferrerUri.PathArray[i]);
+                ERR_CHK(rc);
 
                 AnscQueuePushEntry(&pUriPathTokenChain->TokensQueue, &pUriPathToken->Linkage);
             }
@@ -920,7 +933,8 @@ WebVhoGetResourcePath
         }
         else
         {
-            AnscCopyString(pUriPathToken->Name, pReqInfo->RequestUri.PathArray[i]);
+            rc = strcpy_s(pUriPathToken->Name, sizeof(pUriPathToken->Name), pReqInfo->RequestUri.PathArray[i]);
+            ERR_CHK(rc);
 
             AnscQueuePushEntry(&pUriPathTokenChain->TokensQueue, &pUriPathToken->Linkage);
         }

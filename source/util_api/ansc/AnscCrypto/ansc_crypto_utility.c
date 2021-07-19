@@ -88,6 +88,7 @@
 **********************************************************************/
 
 #include "ansc_crypto_global.h"
+#include "safec_lib_common.h"
 
 #define AL_UUID_STRING_FORMAT                        "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x"
 
@@ -350,13 +351,21 @@ AnscCryptoCheckParity
             for ( i = 0; i < ulKeyLength; i++ ) 
             {
               /*TODO CID: 59007 Explicit null dereferenced 
-	       * pKeyValue always NULL, need to update*/
+           * pKeyValue always NULL, need to update*/
                 ucLastBit = pKeyValue[i] & 0x1;
 
                 if ( ucLastBit != AnscParityChar((pKeyValue[i] & 0xfe)) )
                 {
-                    bResult = FALSE;
-                    break;
+                    if(pKeyValue)
+                    {
+                            ucLastBit = pKeyValue[i] & 0x1;
+        
+                        if ( ucLastBit != AnscParityChar((pKeyValue[i] & 0xfe)) )
+                        {
+                            bResult = FALSE;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -366,18 +375,25 @@ AnscCryptoCheckParity
             for ( i = 0; i < ulKeyLength; i++ ) 
             {
               /*CID: 59007 Explicit null dereferenced
-	       * pKeyValue always NULL, need to update*/
+           * pKeyValue always NULL, need to update*/
                 ucLastBit = pKeyValue[i] & 0x1;
 
                 if ( ucLastBit == AnscParityChar((pKeyValue[i] & 0xfe)) )
                 {
-                    bResult = FALSE;
-                    break;
+                    if(pKeyValue)
+                    {
+                        ucLastBit = pKeyValue[i] & 0x1;
+        
+                            if ( ucLastBit == AnscParityChar((pKeyValue[i] & 0xfe)) )
+                            {
+                                bResult = FALSE;
+                                break;
+                            }
+                    }
                 }
             }
         }
     }
-
     return  bResult;
 }
 
@@ -1868,6 +1884,7 @@ AnscCryptoGenerateUuid
     UCHAR                           hString[16]  = { 0 };
     ULONG                           uTicks       = AnscGetTickInSeconds();
     USHORT                          ClockSeq     = 0;
+    errno_t                         rc           = -1;
 
     if( ulMacAddrSize != 6 || pMacAddress == NULL)
     {
@@ -1909,9 +1926,10 @@ AnscCryptoGenerateUuid
         return NULL;
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             pUuidValue,
+            40,
             AL_UUID_STRING_FORMAT,
             hString[0],
             hString[1],
@@ -1930,6 +1948,12 @@ AnscCryptoGenerateUuid
             hString[14],
             hString[15]
         );
+
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return NULL;
+    }
 
     return pUuidValue;
 }
@@ -1978,6 +2002,7 @@ AnscCryptoGenerateUuid2
     UCHAR                           hString[32]   = { 0 };
     ULONG                           uUuidSize     = 16;
     ANSC_CRYPTO_HASH                hashResult;
+    errno_t                         rc            = -1;
 
     if( ulMacAddrSize != 6 || pMacAddress == NULL)
     {
@@ -2103,9 +2128,10 @@ AnscCryptoGenerateUuid2
         return NULL;
     }
 
-    _ansc_sprintf
+    rc = sprintf_s
         (
             pUuidValue,
+            40,
             AL_UUID_STRING_FORMAT,
             hString[0],
             hString[1],
@@ -2124,6 +2150,12 @@ AnscCryptoGenerateUuid2
             hString[14],
             hString[15]
         );
+
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+        return NULL;
+    }
 
     return pUuidValue;
 }

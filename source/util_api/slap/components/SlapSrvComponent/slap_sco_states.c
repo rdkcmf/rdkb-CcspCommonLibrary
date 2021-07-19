@@ -162,16 +162,12 @@ SlapScoSetObjName
 
     if ( obj_name )
     {
-        pMyObject->ObjName = (char*)AnscAllocateMemory(AnscSizeOfString(obj_name) + 1);
-
-        if ( pMyObject->ObjName )
-        {
-            AnscCopyString(pMyObject->ObjName, obj_name);
-        }
+        pMyObject->ObjName = strdup(obj_name);
     }
     else
     {
         pMyObject->ObjName = (char*)AnscAllocateMemory(1);
+        pMyObject->ObjName[0] = '\0';
     }
 
     return  ANSC_STATUS_SUCCESS;

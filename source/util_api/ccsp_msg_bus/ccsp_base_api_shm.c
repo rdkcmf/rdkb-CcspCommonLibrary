@@ -38,6 +38,7 @@
 #include <ccsp_base_api.h>
 #include "ccsp_trace.h"
 #include "ansc_platform.h"
+#include "safec_lib_common.h"
 
 #ifndef _GNU_SOURCE
     #define _GNU_SOURCE
@@ -318,6 +319,7 @@ int CcspBaseIf_base_path_message_write_shm (
     char * p;
     int totalSize = 0;
     int i = 0;
+    errno_t rc = -1;
 
     totalSize = GetParamValueArrSize(val, size);
     if ( (shmPtr = CreateShm(totalSize)) == NULL)
@@ -336,7 +338,8 @@ int CcspBaseIf_base_path_message_write_shm (
 
         if (val[i]->parameterName)
         {
-            strcpy(p, val[i]->parameterName);
+            rc = strcpy_s(p, (unsigned int)totalSize, val[i]->parameterName);
+            ERR_CHK(rc);
             p += _get_align_num(strlen(val[i]->parameterName) +1);
         }
         else
@@ -344,7 +347,8 @@ int CcspBaseIf_base_path_message_write_shm (
             
         if (val[i]->parameterValue)
         {
-            strcpy(p, val[i]->parameterValue);
+            rc = strcpy_s(p, (unsigned int)totalSize, val[i]->parameterValue);
+            ERR_CHK(rc);
             p += _get_align_num(strlen(val[i]->parameterValue) +1);
         }
         else

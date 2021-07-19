@@ -104,6 +104,7 @@
 
 
 #include "slap_dslh_paramto_global.h"
+#include "safec_lib_common.h"
 
 #define  TYPE_DSLH_PARAMETER_NAME						0
 #define  TYPE_DSLH_ENTRY_NAME							1
@@ -125,8 +126,9 @@ SlapSetSubsystem
         char*           pSubsystem
     )
 {
-    AnscCopyString(g_Subsystem, pSubsystem);
-
+    errno_t  rc = -1;
+    rc = STRCPY_S_NOCLOBBER(g_Subsystem, sizeof(g_Subsystem), pSubsystem);
+    ERR_CHK(rc);
     return ANSC_STATUS_SUCCESS;
 }
 
@@ -199,7 +201,13 @@ SetParamValueHelper
 	char * parameterNames[1]	=   {strValStruct[0].parameterName};
 	char * pFaultParameter	= NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
         (
@@ -333,7 +341,13 @@ SlapDslhParamtoGetChildObjNames
 	SLAP_STRING_ARRAY*			pNameArrayCopyFrom = NULL;
 	SLAP_STRING_ARRAY*			pNameArrayCopyTo = NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -510,7 +524,13 @@ SlapDslhParamtoGetParamNames
 	SLAP_STRING_ARRAY*			pNameArrayCopyFrom = NULL;
 	SLAP_STRING_ARRAY*			pNameArrayCopyTo = NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -643,7 +663,14 @@ SlapDslhParamtoGetParamValue
 	char * dst_dbus_path    =  NULL;
 	char * parameterNames[1]	=   {pParamName};
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
+
 
 	if (TYPE_DSLH_PARAMETER_NAME != GetDslhNameType(pParamName))
 	{
@@ -778,7 +805,13 @@ SlapDslhParamtoGetParamTypeAndValue
 	char * dst_dbus_path    =  NULL;
 	char * parameterNames[1]	=   {pParamName};
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	*ppType = AnscCloneString("unknown");
 	*ppValue = AnscCloneString("unknown");
@@ -930,27 +963,36 @@ SlapDslhParamtoSetParamValue
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 	parameterValStruct_t strValStruct[1] = {{0}};
 	char buf[32] = {'\0'};
+    errno_t rc = -1;
 
 	if (TYPE_DSLH_PARAMETER_NAME != GetDslhNameType(pParamName))
 	{
 		return 1;  //object or instance name 
 	}
     
-	strValStruct[0].parameterName  = AnscCloneString(pParamName);
+    strValStruct[0].parameterName  = AnscCloneString(pParamName);
 
-	switch( (pParamValue->Syntax))
-	{
-		case SLAP_VAR_SYNTAX_int:
-			strValStruct[0].type         = ccsp_int;
-			_ansc_sprintf(buf, "%d", pParamValue->Variant.varInt);
-			strValStruct[0].parameterValue = AnscCloneString(buf);
-				break;
+    switch( (pParamValue->Syntax))
+    {
+        case SLAP_VAR_SYNTAX_int:
+            strValStruct[0].type         = ccsp_int;
+            rc = sprintf_s(buf, sizeof(buf), "%d", pParamValue->Variant.varInt);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
+            strValStruct[0].parameterValue = AnscCloneString(buf);
+            break;
 
-		case SLAP_VAR_SYNTAX_uint32:
-			strValStruct[0].type            = ccsp_unsignedInt;
-			_ansc_sprintf(buf, "%d", (int)pParamValue->Variant.varUint32);
-			strValStruct[0].parameterValue = AnscCloneString(buf);
-				break;
+        case SLAP_VAR_SYNTAX_uint32:
+            strValStruct[0].type            = ccsp_unsignedInt;
+            rc = sprintf_s(buf, sizeof(buf), "%d", (int)pParamValue->Variant.varUint32);
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
+            strValStruct[0].parameterValue = AnscCloneString(buf);
+            break;
 
 		case SLAP_VAR_SYNTAX_bool:
 			strValStruct[0].type          = ccsp_boolean;
@@ -1113,6 +1155,7 @@ SlapDslhParamtoSetParamValueInt
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 	parameterValStruct_t strValStruct[1] = {{0}};
 	char   buf[32] = {'\0'};
+    errno_t rc = -1;
 
 	if (TYPE_DSLH_PARAMETER_NAME != GetDslhNameType(pParamName))
 	{
@@ -1121,7 +1164,11 @@ SlapDslhParamtoSetParamValueInt
     
 	strValStruct[0].parameterName  = AnscCloneString(pParamName);
 	strValStruct[0].type  = ccsp_int;
-	_ansc_sprintf(buf, "%d", intValue);
+	rc = sprintf_s(buf, sizeof(buf), "%d", intValue);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     strValStruct[0].parameterValue = AnscCloneString(buf);
 
 	return SetParamValueHelper(
@@ -1181,6 +1228,7 @@ SlapDslhParamtoSetParamValueUint
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 	parameterValStruct_t strValStruct[1] = {{0}};
 	char   buf[32] = {'\0'};;
+    errno_t rc = -1;
 
 	if (TYPE_DSLH_PARAMETER_NAME != GetDslhNameType(pParamName))
 	{
@@ -1189,7 +1237,11 @@ SlapDslhParamtoSetParamValueUint
     
 	strValStruct[0].parameterName  = AnscCloneString(pParamName);
 	strValStruct[0].type  = ccsp_unsignedInt;
-	_ansc_sprintf(buf, "%u", (UINT)newValue);
+	rc = sprintf_s(buf, sizeof(buf), "%u", (UINT)newValue);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     strValStruct[0].parameterValue = AnscCloneString(buf);
 
 	return SetParamValueHelper(
@@ -1334,7 +1386,13 @@ SlapDslhParamtoApplyChanges
     componentStruct_t ** ppComponents = NULL;
 	int i	= 0;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -1477,7 +1535,13 @@ SlapDslhParamtoGetParamInfo
 	SLAP_STRING_ARRAY*			pAttrArrayCopyTo = NULL;
 	SLAP_INT_ARRAY*				pAccessArrayCopyTo = NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 	
 	if( pParamName == NULL || AnscEqualString(pParamName, "", TRUE))
 	{
@@ -1950,7 +2014,13 @@ SlapDslhParamtoGetParamInfoShort
 	SLAP_STRING_ARRAY*			pValueArrayCopyTo = NULL;
 
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	if( pParamName == NULL || AnscEqualString(pParamName, "", TRUE))
 	{
@@ -2322,7 +2392,13 @@ SlapDslhParamtoGetObjectInfo
 	SLAP_STRING_ARRAY*			pDeletableArrayCopyFrom = NULL;
 	SLAP_STRING_ARRAY*			pDeletableArrayCopyTo = NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -2530,7 +2606,13 @@ SlapDslhParamtoAddObject
     unsigned int *NumArray	= NULL;
 	int InstanceNumber = 0;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	if (TYPE_DSLH_OBJECT_NAME != GetDslhNameType(pObjName))
 	{
@@ -2643,7 +2725,13 @@ SlapDslhParamtoDelObject
 	char * dst_componentid =  NULL;
 	char * dst_dbus_path    =  NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	if (TYPE_DSLH_ENTRY_NAME != GetDslhNameType(pObjName))
 	{
@@ -2729,7 +2817,13 @@ SlapDslhParamtoAcqWriteAccess
 	int ret = 0;
 	int sessionID = 0;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_requestSessionID
         (
@@ -2788,7 +2882,13 @@ SlapDslhParamtoRelWriteAccess
     ANSC_HANDLE                     MsgBusHandle     = (ANSC_HANDLE                )pMyObject->hInsContext;
 	int ret = 0;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 	ret = CcspBaseIf_informEndOfSession
         (
@@ -2845,7 +2945,13 @@ SlapDslhParamtoIsParamTreeReadOnly
 	int sessionID = 0;
 	int priority = 0;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     /*CID: 52904 Arguments in wrong order*/
     CcspBaseIf_getCurrentSessionID
@@ -2909,7 +3015,13 @@ SlapDslhParamtoIsParameterReadOnly
 	char * dst_componentid =  NULL;
 	char * dst_dbus_path    =  NULL;
     char                            cr_id[256];
-    _ansc_sprintf(cr_id, "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    errno_t rc = -1;
+
+    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", g_Subsystem, CCSP_DBUS_INTERFACE_CR);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
 
 	if (TYPE_DSLH_PARAMETER_NAME != GetDslhNameType(pParamName))
@@ -3040,6 +3152,7 @@ SlapDslhParamtoEscapeXmlString
     ULONG                 i          = 0;
     ULONG                 j          = 0;
     char                  c          = '0';
+    errno_t               rc         = -1;
 
     if( pInputString == NULL)
     {
@@ -3095,16 +3208,20 @@ SlapDslhParamtoEscapeXmlString
         }
         else
         {
-            AnscCopyString
+            rc = strcpy_s
                 (
                     (PCHAR)(pOutString + pos),
+                    (length + charCount * 4 + 16 - pos),
                     (PCHAR)Predefined_XML_Entities[j].Encode
                 );
-
+            if(rc != EOK){
+                ERR_CHK(rc);
+            }
             pos += AnscSizeOfString((const char *)Predefined_XML_Entities[j].Encode);
         }
     }
 
     return pOutString;
 }
+
 

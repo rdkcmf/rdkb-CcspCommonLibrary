@@ -73,6 +73,7 @@
 **********************************************************************/
 #include "user_base.h"
 #include "user_time.h"
+#include "safec_lib_common.h"
 
 
 #define ZONE_NUM 38
@@ -316,9 +317,13 @@ UserSetTzString(char *pTimeZone, ...)
     char    *tzlink    = "/config/localtime";
     char    *zoneinfo  = "/usr/share/zoneinfo/";
     char    zonefile[128];
+    errno_t rc = -1;
 
-    strcpy( zonefile, zoneinfo);
-    strcat( zonefile, pTimeZone);
+    rc = sprintf_s( zonefile, sizeof(zonefile),"%s%s", zoneinfo,pTimeZone);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
 
     unlink( tzlink);
     symlink( zonefile, tzlink);
@@ -327,6 +332,7 @@ UserSetTzString(char *pTimeZone, ...)
     char*                           zoneinfo    = "/etc/TZ";
     int                             TzFile      = 0;
     int                             iSize       = 0;
+    errno_t                         rc          = -1;
 
     //Get the GMT format from the pTimeZone, such as "GMT+12:00"
     char                            zone[30]    = {0};
@@ -342,12 +348,12 @@ UserSetTzString(char *pTimeZone, ...)
     va_end( arg_p );
 
     bDaylightSavingsUsed = param;
-    if (UserGetZone(pTimeZone, bDaylightSavingsUsed) != 0) {
-	//printf("%s\n", UserGetZone(pTimeZone, bDaylightSavingsUsed));
-        //sizeof(zone)-2 to accommodate the "\n" in the following
-        strncpy(zone, UserGetZone(pTimeZone, bDaylightSavingsUsed), sizeof(zone)-2);
+    char *z = UserGetZone(pTimeZone, bDaylightSavingsUsed);
+    rc = sprintf_s(zone, sizeof(zone), "%s\n", (z ? z : ""));
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
     }
-    strcat(zone,"\n");
 
     TzFile = open(zoneinfo, O_CREAT | O_WRONLY | O_TRUNC, mode);
 

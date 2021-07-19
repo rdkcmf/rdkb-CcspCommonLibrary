@@ -75,6 +75,7 @@
 
 
 #include "web_sso_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -122,6 +123,7 @@ WebSsoCreate
     UNREFERENCED_PARAMETER(hAnscReserved);
     PANSC_COMPONENT_OBJECT          pBaseObject  = NULL;
     PWEB_SIMPLE_SERVER_OBJECT       pMyObject    = NULL;
+    errno_t                         rc           = -1;
 
     /*
      * We create object by first allocating memory for holding the variables and member functions.
@@ -140,7 +142,8 @@ WebSsoCreate
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscCopyString(pBaseObject->Name, WEB_SIMPLE_SERVER_NAME);
+    rc = strcpy_s(pBaseObject->Name, sizeof(pBaseObject->Name), WEB_SIMPLE_SERVER_NAME);
+    ERR_CHK(rc);
 
     pBaseObject->hContainerContext = hContainerContext;
     pBaseObject->hOwnerContext     = hOwnerContext;
@@ -271,6 +274,7 @@ WebSsoEnrollObjects
     PHTTP_HFP_INTERFACE             pHfpIf          = (PHTTP_HFP_INTERFACE      )pMyObject->hHfpIf;
     PWEB_CSP_INTERFACE              pCspIf          = (PWEB_CSP_INTERFACE       )pMyObject->hCspIf;
     PHTTP_FUM_INTERFACE             pFumIf          = (PHTTP_FUM_INTERFACE      )pMyObject->hFumIf;
+    errno_t                         rc              = -1;
 
     // Assume no support for WebSiteManager.
     /*if ( !pWebSiteManager )
@@ -323,7 +327,8 @@ WebSsoEnrollObjects
             pMyObject->hCspIf = (ANSC_HANDLE)pCspIf;
         }
 
-        AnscCopyString(pCspIf->Name, WEB_CSP_INTERFACE_NAME);
+        rc = strcpy_s(pCspIf->Name, sizeof(pCspIf->Name), WEB_CSP_INTERFACE_NAME);
+        ERR_CHK(rc);
 
         pCspIf->InterfaceId       = WEB_CSP_INTERFACE_ID;
         pCspIf->hOwnerContext     = (ANSC_HANDLE)pMyObject;

@@ -90,6 +90,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 #define  UNI_TIME_ENCODING_LENGTH           13
 #define  GEN_TIME_ENCODING_LENGTH           15
@@ -1325,6 +1326,7 @@ AnscAsn1TimeDumpObject
     CHAR                            pAttrBuf[512]= { 0 };
     ULONG                           attrLength   = 512;
     PCHAR                           pName;
+    errno_t                         rc           = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -1349,34 +1351,49 @@ AnscAsn1TimeDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuf,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuf,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (%.4d/%.2d/%.2d %.2d:%.2d:%.2d)",
                     pName,
                     pAttrBuf,
@@ -1388,6 +1405,12 @@ AnscAsn1TimeDumpObject
                     pMyObject->mTime.Minute,
                     pMyObject->mTime.Second
                  );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
 
      return  TRUE;

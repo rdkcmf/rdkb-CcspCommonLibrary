@@ -101,6 +101,7 @@
 
 #include "ansc_global.h"
 #include "bss_ifo_bsd.h"
+#include "safec_lib_common.h"
 
 #ifdef _ANSC_SOCKET_LIBRARY_
 static  ANSC_HANDLE                 g_hBssBsdIf      = (ANSC_HANDLE)NULL;
@@ -440,6 +441,7 @@ AnscSocketLibGetHostName
     char*                           pHostName    = NULL;
     ULONG                           ulErrorCode  = 0;
     int                             returnValue  = ANSC_SOCKET_ERROR;
+    errno_t                         rc           = -1;
 
     AnscSocketLibValidate2(ulErrorCode);
 
@@ -463,7 +465,8 @@ AnscSocketLibGetHostName
     {
         returnValue = 0;
 
-        AnscCopyString(name, pHostName);
+        rc = strcpy_s(name, sizeof(name), pHostName);
+        ERR_CHK(rc);
     }
 
     AnscSocketLibSetLastError(ulErrorCode);

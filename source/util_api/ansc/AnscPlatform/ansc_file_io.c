@@ -103,6 +103,7 @@
 #include "ansc_crypto_interface.h"
 #include "ansc_crypto_external_api.h"
 #include "ansc_crypto_internal_api.h"
+#include "safec_lib_common.h"
 
 
 ANSC_HANDLE
@@ -135,6 +136,7 @@ AnscOpenFile
     int                             iFileHandle  = -1;
     int                             iFileFlags   = 0;
     int                             iFilePmode   = 0;
+    errno_t                         rc           = -1;
 
     if ( ((mode & ANSC_FILE_MODE_READ ) != 0) &&
          ((mode & ANSC_FILE_MODE_WRITE) != 0) )
@@ -204,7 +206,8 @@ AnscOpenFile
         }
     }
 
-    AnscCopyString(pFileInfo->Name, name);
+    rc = strcpy_s(pFileInfo->Name, sizeof(pFileInfo->Name), name);
+    ERR_CHK(rc);
 
     pFileInfo->Handle = iFileHandle;
 
@@ -818,6 +821,7 @@ AnscOpenGzipFile
     int                             iFileFlags   = 0;
 #endif
     int                             iFilePmode   = 0;
+    errno_t                         rc           = -1;
 
     if ( (mode & ANSC_FILE_MODE_READ) != 0 )
     {
@@ -850,7 +854,8 @@ AnscOpenGzipFile
         }
     }
 
-    AnscCopyString(pFileInfo->Name, name);
+    rc = strcpy_s(pFileInfo->Name, sizeof(pFileInfo->Name), name);
+    ERR_CHK(rc);
 
     pFileInfo->Handle = iFileHandle;
 

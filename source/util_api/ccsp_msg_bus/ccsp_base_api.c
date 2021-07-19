@@ -54,6 +54,7 @@
 #include "ansc_xml_dom_parser_interface.h"
 #include "ansc_xml_dom_parser_external_api.h"
 #include "ansc_xml_dom_parser_status.h"
+#include "safec_lib_common.h"
 
 /* define default CR device profile name */
 #ifndef CCSP_ETHWAN_ENABLE
@@ -140,9 +141,14 @@ int CcspBaseIf_queryStatus(
     char tmp[512];
     int size;
     int ret ;
+    errno_t rc = -1;
     parameterValStruct_t **parameterVal = 0;
 //    sprintf(tmp,"%s%s.%s",CcspBaseIf_DataModel,dst_component_id, "State");
-    sprintf(tmp,"%s.%s",dst_component_id, "State");
+    rc = sprintf_s(tmp, sizeof(tmp), "%s.State",dst_component_id);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     parameterNames[0] = tmp;
 
     ret = CcspBaseIf_getParameterValues(
@@ -173,9 +179,14 @@ int CcspBaseIf_healthCheck(
     parameterValStruct_t **parameterVal = 0;
     int size;
     int ret ;
+    errno_t rc = -1;
 
 //    sprintf(tmp,"%s%s.%s",CcspBaseIf_DataModel,dst_component_id, "Health");
-    sprintf(tmp,"%s.%s",dst_component_id, "State");
+    rc = sprintf_s(tmp, sizeof(tmp), "%s.State",dst_component_id);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     parameterNames[0] = tmp;
     ret = CcspBaseIf_getParameterValues(
               bus_handle,
@@ -206,8 +217,13 @@ int CcspBaseIf_getAllocatedMemory(
     int size;
     parameterValStruct_t **parameterVal = 0;
     int ret ;
+    errno_t rc = -1;
 //    sprintf(tmp,"%s%s.%s",CcspBaseIf_DataModel,dst_component_id, "Memory.Consumed");
-    sprintf(tmp,"%s.%s",dst_component_id, "State");
+    rc = sprintf_s(tmp, sizeof(tmp), "%s.State",dst_component_id);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     parameterNames[0] = tmp;
 
     ret = CcspBaseIf_getParameterValues(
@@ -238,8 +254,13 @@ int CcspBaseIf_getMaxMemoryUsage(
     int size;
     int ret ;
     parameterValStruct_t **parameterVal = 0;
+    errno_t rc = -1;
 //    sprintf(tmp,"%s%s.%s",CcspBaseIf_DataModel,dst_component_id, "Memory.MinUsage");
-    sprintf(tmp,"%s.%s",dst_component_id, "State");
+    rc = sprintf_s(tmp, sizeof(tmp), "%s.State",dst_component_id);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     parameterNames[0] = tmp;
 
     ret = CcspBaseIf_getParameterValues(
@@ -366,6 +387,7 @@ int CcspBaseIf_setParameterValues(
     dbus_int32_t tmp ;
     dbus_uint32_t utmp ;
     int i;
+    errno_t rc = -1;
 
     *invalidParameterName = 0;
     message = dbus_message_new_method_call (dst_component_id,
@@ -431,7 +453,8 @@ int CcspBaseIf_setParameterValues(
             if(str)
             {
                 *invalidParameterName = bus_info->mallocfunc(strlen(str)+1);
-                strcpy(*invalidParameterName, str);
+                rc = strcpy_s(*invalidParameterName, (strlen(str)+1), str);
+                ERR_CHK(rc);
             }
         }
 
@@ -550,6 +573,7 @@ int CcspBaseIf_getParameterValues_rbus(
     int i = 0;
     int param_len = 0;
     int32_t type = 0;
+    errno_t rc = -1;
     rbusMessage request, response;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 
@@ -609,7 +633,8 @@ int CcspBaseIf_getParameterValues_rbus(
                 tmpbuf = NULL;
                 rbusMessage_GetString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-                strcpy(val[i]->parameterName, tmpbuf);
+                rc = strcpy_s(val[i]->parameterName, (strlen(tmpbuf)+1), tmpbuf);
+                ERR_CHK(rc);
 
                 /* Get Type */
                 rbusMessage_GetInt32(response, &type);
@@ -622,7 +647,13 @@ int CcspBaseIf_getParameterValues_rbus(
                     tmpbuf = NULL;
                     rbusMessage_GetString(response, &tmpbuf);
                     val[i]->parameterValue = bus_info->mallocfunc(strlen(tmpbuf)+1);
-                    strcpy(val[i]->parameterValue, tmpbuf);
+                    /*
+                     * LIMITATION
+                     * Below strcpy_s() api reverting to strcpy() api,
+                     * Because, safec has the limitation of copying only 4k ( RSIZE_MAX ) to destination pointer
+                     * And here, we have source pointer size more than 4k, i.e simetimes 190k also . So it won't copy to destination.
+                     */
+                     strcpy(val[i]->parameterValue, tmpbuf);
                 }
                 else
                 {
@@ -665,6 +696,7 @@ int CcspBaseIf_getParameterValues(
     DBusMessageIter array_iter;
     int i;
     dbus_uint32_t utmp ;
+    errno_t rc = -1;
     unsigned int writeID = DSLH_MPA_ACCESS_CONTROL_ACS;
 
     parameterValStruct_t **val = 0;
@@ -744,7 +776,8 @@ int CcspBaseIf_getParameterValues(
                     if(str)
                     {
                         val[i]->parameterName = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->parameterName, str);
+                        rc = strcpy_s( val[i]->parameterName, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->parameterName = NULL;
@@ -757,6 +790,12 @@ int CcspBaseIf_getParameterValues(
                     if(str)
                     {
                         val[i]->parameterValue = bus_info->mallocfunc(strlen(str)+1);
+                       /*
+                        * LIMITATION
+                        * Below strcpy_s() api reverting to strcpy() api,
+                        * Because, safec has the limitation of copying only 4k ( RSIZE_MAX ) to destination pointer
+                        * And here, we have source pointer size more than 4k, i.e simetimes 190k also . So it won't copy to destination.
+                        */
                         strcpy(val[i]->parameterValue, str);
                     }
                     else
@@ -867,7 +906,6 @@ int CcspBaseIf_setParameterAttributes_rbus(
     char* faultParam = NULL;
     UINT notification_count = 0;
     //char PA_name[256];
-    char true_false[10];
     char notification_parameter[256];
     char** p_notification_parameter = NULL;
     //_ansc_strcpy(PA_name, bus_info->component_id);
@@ -881,8 +919,10 @@ int CcspBaseIf_setParameterAttributes_rbus(
 #endif
     char PA_name[256];
     int isTR069Req = 0;
+    errno_t rc = -1;
     memset(PA_name,0,sizeof(PA_name));
-    _ansc_strcpy(PA_name, bus_info->component_id);
+    rc = strcpy_s(PA_name, sizeof(PA_name), bus_info->component_id);
+    ERR_CHK(rc);
 
     if(strstr(PA_name, ".tr069pa"))
     {
@@ -899,13 +939,14 @@ int CcspBaseIf_setParameterAttributes_rbus(
 #ifdef USE_NOTIFY_COMPONENT
         if(val[i].notificationChanged)
         {
-            if(val[i].notification)
-                _ansc_strcpy(true_false, "true");
-            else
-                _ansc_strcpy(true_false, "false");
-            sprintf(notification_parameter,"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+            rc = sprintf_s(notification_parameter, sizeof(notification_parameter), "%s,%s,%s",val[i].parameterName,PA_name, ((val[i].notification) ? "true" : "false"));
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
             p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
-            _ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
+            rc = strcpy_s(p_notification_parameter[notification_count] , (strlen(notification_parameter)+1), notification_parameter);
+            ERR_CHK(rc);
             notification_count++;
         }
 #endif
@@ -1014,9 +1055,11 @@ int CcspBaseIf_setParameterAttributes(
 #endif
     char PA_name[256];
     int isTR069Req = 0;
+    errno_t rc = -1;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     memset(PA_name,0,sizeof(PA_name));
-    _ansc_strcpy(PA_name, bus_info->component_id);
+    rc = strcpy_s(PA_name, sizeof(PA_name), bus_info->component_id);
+    ERR_CHK(rc);
 
     if(strstr(PA_name, ".tr069pa"))
     {
@@ -1065,14 +1108,13 @@ int CcspBaseIf_setParameterAttributes(
 #ifdef USE_NOTIFY_COMPONENT
         if(val[i].notificationChanged)
         {
-            if(val[i].notification)
-                _ansc_strcpy(true_false, "true");
-            else
-                _ansc_strcpy(true_false, "false");
+            rc = strcpy_s(true_false, sizeof(true_false), ((val[i].notification) ? "true" : "false"));
+            ERR_CHK(rc);
 
             snprintf(notification_parameter,sizeof(notification_parameter),"%s,%s,%s",val[i].parameterName,PA_name, true_false);
             p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
-            _ansc_strcpy(p_notification_parameter[notification_count] , notification_parameter);
+            rc = strcpy_s(p_notification_parameter[notification_count] , (strlen(notification_parameter)+1), notification_parameter);
+            ERR_CHK(rc);
 
 
             notification_count++;
@@ -1178,6 +1220,7 @@ int CcspBaseIf_getParameterAttributes_rbus(
     parameterAttributeStruct_t **val = 0;
     *val_size = 0;
     rbusMessage request, response;
+    errno_t rc = -1;
 
     if (0 == size)
     {
@@ -1236,7 +1279,8 @@ int CcspBaseIf_getParameterAttributes_rbus(
                 tmpbuf = NULL;
                 rbusMessage_GetString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-                strcpy(val[i]->parameterName, tmpbuf);
+                rc = strcpy_s(val[i]->parameterName, (strlen(tmpbuf)+1), tmpbuf);
+                ERR_CHK(rc);
                 rbusMessage_GetInt32(response, (int32_t*)&val[i]->notificationChanged);
                 rbusMessage_GetInt32(response, (int32_t*)&val[i]->notification);
                 rbusMessage_GetInt32(response, (int32_t*)&val[i]->accessControlChanged);
@@ -1274,6 +1318,7 @@ int CcspBaseIf_getParameterAttributes(
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     DBusMessageIter array_iter;
     int i;
+    errno_t rc = -1;
 
     parameterAttributeStruct_t **val = 0;
     *val_size = 0;
@@ -1349,7 +1394,8 @@ int CcspBaseIf_getParameterAttributes(
                     if(str)
                     {
                         val[i]->parameterName = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->parameterName, str);
+                        rc = strcpy_s( val[i]->parameterName, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->parameterName = NULL;
@@ -1437,10 +1483,9 @@ int CcspBaseIf_AddTblRow_rbus(
     UNREFERENCED_PARAMETER(dbus_path);
     int ret = CCSP_FAILURE;
     int32_t tmp = 0;
-    const char ch = '.';
     rbusMessage request, response;
 
-    if(objectName == NULL || instanceNumber == NULL || objectName[strlen(objectName)-1] != ch)
+    if(objectName == NULL || instanceNumber == NULL ||  objectName[0] == '\0' || objectName[strlen(objectName)-1] != '.')
     {
         return CCSP_ERR_INVALID_PARAMETER_VALUE;
     }
@@ -1619,6 +1664,7 @@ int CcspBaseIf_getParameterNames_rbus(
     parameterInfoStruct_t **val=NULL;
     *parameter = 0;
     *size = 0;
+    errno_t rc = -1;
 
     if(NULL == parameterName)
     {
@@ -1665,7 +1711,8 @@ int CcspBaseIf_getParameterNames_rbus(
                 tmpbuf = NULL;
                 rbusMessage_GetString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
-                strcpy(val[i]->parameterName, tmpbuf);
+                rc = strcpy_s(val[i]->parameterName, (strlen(tmpbuf)+1), tmpbuf);
+                ERR_CHK(rc);
                 rbusMessage_GetInt32(response, &type);
                 val[i]->writable = type;
                 RBUS_LOG("Param [%d] Name = %s, Type = %d\n",
@@ -1699,6 +1746,7 @@ int CcspBaseIf_getParameterNames(
     DBusMessageIter iter;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     parameterInfoStruct_t **val=NULL;
+    errno_t rc = -1;
 
     *parameter = 0;
     *size = 0;
@@ -1760,7 +1808,8 @@ int CcspBaseIf_getParameterNames(
                     if(str)
                     {
                         val[i]->parameterName = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->parameterName, str);
+                        rc = strcpy_s( val[i]->parameterName, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->parameterName = NULL;
@@ -1829,6 +1878,7 @@ int CcspBaseIf_EnumRecords
     int inst_num;
     char buf[CCSP_BASE_PARAM_LENGTH];
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    errno_t rc = -1;
 
 
     int ret = CcspBaseIf_getParameterNames(
@@ -1860,7 +1910,8 @@ int CcspBaseIf_EnumRecords
 	            }
 	            else if(type == CCSP_BASE_PARAM || type == CCSP_BASE_OBJECT)
 	            {
-	                strcpy(pRecArray[i].Instance.Name, buf);
+	                rc = strcpy_s(pRecArray[i].Instance.Name, sizeof(pRecArray[i].Instance.Name), buf);
+                    ERR_CHK(rc);
 	                pRecArray[i].RecordType = type;
 	            }
             }else
@@ -2295,6 +2346,7 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
 
         /* Set to 0 before we discover; the discovery will result a proper number */
         *size = 0;
+        errno_t rc = -1;
 
         if(RTMESSAGE_BUS_SUCCESS == rbus_discoverElementObjects(name_space, &num, &compName))
         {
@@ -2320,8 +2372,10 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
                     val[i] = bus_info->mallocfunc(sizeof(componentStruct_t));
                     val[i]->componentName = bus_info->mallocfunc(strlen(compName[i])+1);
                     val[i]->dbusPath = bus_info->mallocfunc(strlen(compName[i])+1);
-                    strcpy( val[i]->componentName, compName[i]);
-                    strcpy( val[i]->dbusPath, compName[i]);
+                    rc = strcpy_s( val[i]->componentName, (strlen(compName[i])+1), compName[i]);
+                    ERR_CHK(rc);
+                    rc = strcpy_s( val[i]->dbusPath, (strlen(compName[i])+1), compName[i]);
+                    ERR_CHK(rc);
                     val[i]->type = ccsp_string;
                     val[i]->remoteCR_name = NULL;
                     val[i]->remoteCR_dbus_path = NULL;
@@ -2453,6 +2507,7 @@ int CcspBaseIf_discComponentSupportingNamespace (
     componentStruct_t **val=NULL;
     *components = 0;
     *size = 0;
+    errno_t rc = -1;
     message = dbus_message_new_method_call (dst_component_id,
             CCSP_DBUS_PATH_CR,
             CCSP_DBUS_INTERFACE_CR,
@@ -2509,7 +2564,8 @@ int CcspBaseIf_discComponentSupportingNamespace (
                     if(str)
                     {
                         val[i]->componentName = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->componentName, str);
+                        rc = strcpy_s( val[i]->componentName, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->componentName = NULL;
@@ -2523,7 +2579,8 @@ int CcspBaseIf_discComponentSupportingNamespace (
                     if(str)
                     {
                         val[i]->dbusPath = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->dbusPath, str);
+                        rc = strcpy_s( val[i]->dbusPath, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->dbusPath = NULL;
@@ -2544,7 +2601,8 @@ int CcspBaseIf_discComponentSupportingNamespace (
                     if(str)
                     {
                         val[i]->remoteCR_name = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->remoteCR_name, str);
+                        rc = strcpy_s( val[i]->remoteCR_name, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->remoteCR_name = NULL;
@@ -2558,7 +2616,8 @@ int CcspBaseIf_discComponentSupportingNamespace (
                     if(str)
                     {
                         val[i]->remoteCR_dbus_path = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->remoteCR_dbus_path, str);
+                        rc = strcpy_s( val[i]->remoteCR_dbus_path, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->remoteCR_dbus_path = NULL;
@@ -2623,6 +2682,7 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
     dbus_int32_t res ;
     DBusMessageIter iter;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
+    errno_t rc = -1;
 
     componentStruct_t *val=NULL;
     *component = 0;
@@ -2656,7 +2716,8 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
             if(str)
             {
                 val->componentName = bus_info->mallocfunc(strlen(str)+1);
-                strcpy( val->componentName, str);
+                rc = strcpy_s( val->componentName, (strlen(str)+1), str);
+                ERR_CHK(rc);
             }
             else
                 val->componentName = NULL;
@@ -2670,7 +2731,8 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
             if(str)
             {
                 val->dbusPath = bus_info->mallocfunc(strlen(str)+1);
-                strcpy( val->dbusPath, str);
+                rc = strcpy_s( val->dbusPath, (strlen(str)+1), str);
+                ERR_CHK(rc);
             }
             else
                 val->dbusPath = NULL;
@@ -2691,7 +2753,8 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
             if(str)
             {
                 val->remoteCR_name = bus_info->mallocfunc(strlen(str)+1);
-                strcpy( val->remoteCR_name, str);
+                rc = strcpy_s( val->remoteCR_name, (strlen(str)+1), str);
+                ERR_CHK(rc);
             }
             else
                 val->remoteCR_name = NULL;
@@ -2705,7 +2768,8 @@ int CcspBaseIf_discComponentSupportingDynamicTbl (
             if(str)
             {
                 val->remoteCR_dbus_path = bus_info->mallocfunc(strlen(str)+1);
-                strcpy( val->remoteCR_dbus_path, str);
+                rc = strcpy_s( val->remoteCR_dbus_path, (strlen(str)+1), str);
+                ERR_CHK(rc);
             }
             else
                 val->remoteCR_dbus_path = NULL;
@@ -2744,6 +2808,7 @@ int CcspBaseIf_discNamespaceSupportedByComponent_rbus (
     name_spaceType_t **val = NULL;
     *name_space = 0;
     *size = 0;
+    errno_t rc = -1;
 
     RBUS_LOG("calling %s for %s \n", __FUNCTION__, component_name);
     ret = rbus_discoverObjectElements(component_name, &num_elements, &elements);
@@ -2762,7 +2827,8 @@ int CcspBaseIf_discNamespaceSupportedByComponent_rbus (
             {
                 val[i] = bus_info->mallocfunc(sizeof(name_spaceType_t));
                 val[i]->name_space = bus_info->mallocfunc(strlen(elements[i])+1);
-                strcpy(val[i]->name_space, elements[i]);
+                rc = strcpy_s(val[i]->name_space, (strlen(elements[i])+1), elements[i]);
+                ERR_CHK(rc);
                 RBUS_LOG("%s returns name_space %d as %s\n", __FUNCTION__, i, val[i]->name_space);
             }
         }
@@ -2802,6 +2868,7 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
     name_spaceType_t **val=NULL;
     *name_space = 0;
     *size = 0;
+    errno_t rc = -1;
     message = dbus_message_new_method_call (dst_component_id,
                                             CCSP_DBUS_PATH_CR,
                                             CCSP_DBUS_INTERFACE_CR,
@@ -2855,7 +2922,8 @@ int CcspBaseIf_discNamespaceSupportedByComponent (
                     if(str)
                     {
                         val[i]->name_space = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->name_space, str);
+                        rc = strcpy_s( val[i]->name_space, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->name_space = NULL;
@@ -2918,6 +2986,7 @@ int CcspBaseIf_getRegisteredComponents_rbus(
     *size = 0;
     int num_components = 0;
     char** component_names;
+    errno_t rc = -1;
 
     int ret = rbus_discoverRegisteredComponents(&num_components, &component_names);
 
@@ -2938,7 +3007,8 @@ int CcspBaseIf_getRegisteredComponents_rbus(
                 val[i]->dbusPath = NULL;
                 val[i]->subsystem_prefix = NULL;
                 val[i]->componentName = bus_info->mallocfunc(strlen(component_names[i])+1);
-                strcpy(val[i]->componentName, component_names[i]);
+                rc = strcpy_s(val[i]->componentName, (strlen(component_names[i])+1), component_names[i]);
+                ERR_CHK(rc);
                 RBUS_LOG("%s returns component %d as %s\n", __FUNCTION__, i, val[i]->componentName);
             }
         }
@@ -2970,6 +3040,7 @@ int CcspBaseIf_getRegisteredComponents (
     registeredComponent_t **val=NULL;
     *components = 0;
     *size = 0;
+    errno_t rc = -1;
     message = dbus_message_new_method_call (dst_component_id,
             CCSP_DBUS_PATH_CR,
             CCSP_DBUS_INTERFACE_CR,
@@ -3020,7 +3091,8 @@ int CcspBaseIf_getRegisteredComponents (
                     if(str)
                     {
                         val[i]->componentName = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->componentName, str);
+                        rc = strcpy_s( val[i]->componentName, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->componentName = NULL;
@@ -3034,7 +3106,8 @@ int CcspBaseIf_getRegisteredComponents (
                     if(str)
                     {
                         val[i]->dbusPath = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->dbusPath, str);
+                        rc = strcpy_s( val[i]->dbusPath, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->dbusPath = NULL;
@@ -3049,7 +3122,8 @@ int CcspBaseIf_getRegisteredComponents (
                     if(str)
                     {
                         val[i]->subsystem_prefix = bus_info->mallocfunc(strlen(str)+1);
-                        strcpy( val[i]->subsystem_prefix, str);
+                        rc = strcpy_s( val[i]->subsystem_prefix, (strlen(str)+1), str);
+                        ERR_CHK(rc);
                     }
                     else
                         val[i]->subsystem_prefix = NULL;
@@ -3260,6 +3334,7 @@ void update_component_info(component_info *compInfo)
     ULONG                           uFileLength        = 0;
     ULONG                           uBufferSize        = 0;
     USHORT                          uComponentCount    = 0;
+    errno_t                         rc                 = -1;
 
     /* load from the file */
     if (access(CCSP_ETHWAN_ENABLE, F_OK) == 0)
@@ -3341,7 +3416,8 @@ void update_component_info(component_info *compInfo)
             {
                 compInfo->list[compInfo->size] = (char*)AnscAllocateMemory(AnscSizeOfString(buffer) + 1);
                 buffer[uLength] = '\0';
-                AnscCopyString(compInfo->list[compInfo->size], (char*)buffer);
+                rc = strcpy_s(compInfo->list[compInfo->size], (AnscSizeOfString(buffer) + 1), (char*)buffer);
+                ERR_CHK(rc);
                 RBUS_LOG("%s component name read is %s \n",__FUNCTION__, compInfo->list[compInfo->size]);
                 compInfo->size++;
             }
@@ -4080,47 +4156,88 @@ int CcspBaseIf_registerBase(
 
     char buf[11][256];
     name_spaceType_t name_space[11];
-    sprintf(buf[0],"%s%s.Name",CCSP_NAME_PREFIX,component_name);
+    errno_t rc = -1;
+    rc = sprintf_s(buf[0],sizeof(buf[0]), "%s%s.Name",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[0].name_space = buf[0];
     name_space[0].dataType = ccsp_string;
 
-    sprintf(buf[1],"%s%s.Version",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[1],sizeof(buf[1]),"%s%s.Version",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[1].name_space = buf[1];
     name_space[1].dataType = ccsp_int;
 
-    sprintf(buf[2],"%s%s.Author",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[2],sizeof(buf[2]),"%s%s.Author",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[2].name_space = buf[2];
     name_space[2].dataType = ccsp_string;
 
-    sprintf(buf[3],"%s%s.Health",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[3],sizeof(buf[3]),"%s%s.Health",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[3].name_space = buf[3];
     name_space[3].dataType = ccsp_string;
 
-    sprintf(buf[4],"%s%s.State",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[4],sizeof(buf[4]),"%s%s.State",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[4].name_space = buf[4];
     name_space[4].dataType = ccsp_int;
 
 
-    sprintf(buf[5],"%s%s.Logging.Enable",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[5],sizeof(buf[5]),"%s%s.Logging.Enable",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[5].name_space = buf[5];
     name_space[5].dataType = ccsp_boolean;
 
 
-    sprintf(buf[6],"%s%s.Logging.LogLevel",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[6],sizeof(buf[6]),"%s%s.Logging.LogLevel",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[6].name_space = buf[6];
     name_space[6].dataType = ccsp_int;
 
 
-    sprintf(buf[7],"%s%s.Memory.MinUsage",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[7],sizeof(buf[7]),"%s%s.Memory.MinUsage",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[7].name_space = buf[7];
     name_space[7].dataType = ccsp_int;
 
 
-    sprintf(buf[8],"%s%s.Memory.MaxUsage",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[8],sizeof(buf[8]),"%s%s.Memory.MaxUsage",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[8].name_space = buf[8];
     name_space[8].dataType = ccsp_int;
 
-    sprintf(buf[9],"%s%s.Memory.Consumed",CCSP_NAME_PREFIX,component_name);
+    rc = sprintf_s(buf[9],sizeof(buf[9]),"%s%s.Memory.Consumed",CCSP_NAME_PREFIX,component_name);
+    if(rc < EOK)
+    {
+        ERR_CHK(rc);
+    }
     name_space[9].name_space = buf[9];
     name_space[9].dataType = ccsp_int;
     return CcspBaseIf_registerCapabilities(
@@ -4956,32 +5073,41 @@ int PSM_Set_Record_Value
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     char *str = NULL;
     int ret;
+    errno_t rc = -1;
 
     val[0].parameterName  = (char *)pRecordName;
     val[0].parameterValue = buf;
     switch(pValue->Syntax)
     {
     case SLAP_VAR_SYNTAX_int:
-        sprintf(
+        rc = sprintf_s(
             buf,
+            sizeof(buf),
             "%d",
             pValue->Variant.varInt
         );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
         val[0].type = ccsp_int;
         break;
     case SLAP_VAR_SYNTAX_uint32:
-        sprintf(
+        rc = sprintf_s(
             buf,
+            sizeof(buf),
             "%u",
             (unsigned int) pValue->Variant.varUint32
         );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
         val[0].type = ccsp_unsignedInt;
         break;
     case SLAP_VAR_SYNTAX_bool:
-        if(pValue->Variant.varBool)
-            strcpy(buf,PSM_TRUE);
-        else
-            strcpy(buf,PSM_FALSE);
+        rc = strcpy_s(buf, sizeof(buf), ((pValue->Variant.varBool) ? PSM_TRUE : PSM_FALSE));
+        ERR_CHK(rc);
         val[0].type = ccsp_boolean;
         break;
     case SLAP_VAR_SYNTAX_string:
@@ -4997,12 +5123,17 @@ int PSM_Set_Record_Value
         val[0].type = ccsp_byte;
         for ( i = 0; i < var_uchar_array->VarCount; i++ )
         {
-            sprintf
+            rc = sprintf_s
             (
                 &var_string[i * 2],
+                (var_uchar_array->VarCount * 2 + 1),
                 "%02X",
                 var_uchar_array->Array.arrayUchar[i]
             );
+            if(rc < EOK)
+            {
+                ERR_CHK(rc);
+            }
         }
 
         val[0].parameterValue = var_string;
@@ -5014,11 +5145,16 @@ int PSM_Set_Record_Value
 
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
     }
 
     ret =  CcspBaseIf_setParameterValues(
@@ -5053,15 +5189,21 @@ int PSM_Get_Record_Value
     int size;
     parameterNames[0] =(char *)pRecordName;
     parameterValStruct_t **val = 0;
+    errno_t rc = -1;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
     }
 
     int ret = CcspBaseIf_getParameterValues(
@@ -5189,6 +5331,7 @@ int PSM_Set_Record_Value2
     char *str = NULL;
     char psmName[256];
     int ret;
+    errno_t rc = -1;
 
     val[0].parameterName  = (char *)pRecordName;
     val[0].type = ulRecordType;
@@ -5202,11 +5345,16 @@ int PSM_Set_Record_Value2
 
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
     }
 
     val[0].parameterValue = (char *)pVal;
@@ -5246,15 +5394,21 @@ int PSM_Get_Record_Value2
     parameterValStruct_t **val = 0;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
 	int ret = 0;
+    errno_t rc = -1;
 
 	*pValue = NULL;
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
     }
 
     parameterNames[0] = (char *)pRecordName;
@@ -5315,14 +5469,20 @@ int PSM_Del_Record
     int size;
     int orgSize;
     int ret;
+    errno_t rc = -1;
 
     if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
     {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
     }
     else
     {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
     }
 
     if ( pRecordName[strlen(pRecordName)-1] == '.' )
@@ -5418,14 +5578,20 @@ int PsmGetNextLevelInstances
 )
 {
    char psmName[256];
+   errno_t rc = -1;
 
    if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
    {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
    }
    else
    {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
    }
 
    return CcspBaseIf_GetNextLevelInstances
@@ -5451,14 +5617,20 @@ int PsmEnumRecords
 )
 {
    char psmName[256];
+   errno_t rc = -1;
 
    if ( pSubSystemPrefix && pSubSystemPrefix[0] != 0 )
    {
-        sprintf(psmName, "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        rc = sprintf_s(psmName, sizeof(psmName), "%s%s", pSubSystemPrefix, CCSP_DBUS_PSM);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+        }
    }
    else
    {
-        strcpy(psmName, CCSP_DBUS_PSM);
+        rc = strcpy_s(psmName, sizeof(psmName), CCSP_DBUS_PSM);
+        ERR_CHK(rc);
    }
 
    return CcspBaseIf_EnumRecords

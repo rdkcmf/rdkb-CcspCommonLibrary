@@ -85,7 +85,7 @@
 
 
 #include "http_bmo_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -602,6 +602,7 @@ HttpBmoSetHeaderValueByName
     PHTTP_HEADER_FIELD              pHttpHfo     = NULL;
     char*                           pHfLine      = (char*)pMyObject->ScratchPad1;
     ULONG                           ulLineSize   = 0;
+    errno_t                         rc           = -1;
 
     if ( (AnscSizeOfString(name) + AnscSizeOfString(value) + 4) >= pMyObject->PadSize1 )
     {
@@ -609,14 +610,16 @@ HttpBmoSetHeaderValueByName
     }
     else
     {
-        AnscCopyString(pHfLine, name);
+        rc = strcpy_s(pHfLine, sizeof(pMyObject->ScratchPad1), name);
+        ERR_CHK(rc);
 
         ulLineSize  = AnscSizeOfString(name);
         pHfLine[ulLineSize + 0] = HTTP_COLON;
         pHfLine[ulLineSize + 1] = HTTP_SPACE;
         ulLineSize += 2;
 
-        AnscCopyString(pHfLine + ulLineSize, value);
+        rc = strcpy_s(pHfLine + ulLineSize, (sizeof(pMyObject->ScratchPad1) - ulLineSize), value);
+        ERR_CHK(rc);
 
         ulLineSize += AnscSizeOfString(value);
         pHfLine[ulLineSize + 0] = HTTP_CARRIAGE_RETURN;

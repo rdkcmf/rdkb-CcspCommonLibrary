@@ -86,6 +86,7 @@
 
 
 #include "http_sco_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -472,9 +473,11 @@ HttpScoSetProductName
 {
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pProperty->ProductName, HTTP_MAX_PRODUCT_NAME_SIZE);
-    AnscCopyString(pProperty->ProductName, name                      );
+    rc = strcpy_s(pProperty->ProductName, sizeof(pProperty->ProductName), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -724,12 +727,14 @@ HttpScoResetProperty
 {
     PHTTP_SIMPLE_CLIENT_OBJECT      pMyObject    = (PHTTP_SIMPLE_CLIENT_OBJECT  )hThisObject;
     PHTTP_SIMPLE_CLIENT_PROPERTY    pProperty    = (PHTTP_SIMPLE_CLIENT_PROPERTY)&pMyObject->Property;
+    errno_t                         rc           = -1;
 
     AnscZeroMemory(pProperty, sizeof(HTTP_SIMPLE_CLIENT_PROPERTY));
 
     pProperty->bReuseConnections = TRUE;
 
-    AnscCopyString(pProperty->ProductName, HTTP_SCO_PRODUCT_NAME);
+    rc = strcpy_s(pProperty->ProductName, sizeof(pProperty->ProductName), HTTP_SCO_PRODUCT_NAME);
+    ERR_CHK(rc);
 
     pProperty->SPMode   = HTTP_SCO_MHOST_MODE_RANDOM;
 

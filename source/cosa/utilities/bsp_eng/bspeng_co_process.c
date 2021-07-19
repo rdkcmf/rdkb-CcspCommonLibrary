@@ -74,7 +74,7 @@
 
 
 #include "bspeng_co_global.h"
-
+#include "safec_lib_common.h"
 
 const char BspTemplateAPINames[][_BSP_TEMPLATE_API_MAX_NAME_LENGTH] = 
 {
@@ -8093,7 +8093,11 @@ BspTemplateObjDoApi
 #ifdef   _BSPENG_NO_DOUBLE
                             BSP_TEMPLATE_DOUBLE_TO_STRING(pBuf, (int)num->Value.real);
 #else
-                            _ansc_sprintf(pBuf, "%f", num->Value.real);
+                            errno_t rc = -1;
+                            rc =sprintf_s(pBuf,32, "%f", num->Value.real);
+                            if(rc < EOK){
+                                ERR_CHK(rc);
+                            }
 #endif
                             pResult->Value.str = pBuf;
                             pResult->Type = BspVar_String;
@@ -10440,6 +10444,7 @@ BspEng_CalcPagePath
     int                             i, Len;
     char                            *pLoc; 
     char                            *pTail;
+    errno_t                         rc = -1;
 
     Len = AnscSizeOfString(pPagePath);
     for (i = Len - 1; i >= 0; i --)
@@ -10452,12 +10457,16 @@ BspEng_CalcPagePath
 
     if (i < 0)
     {
-        AnscCopyString(pPagePath, pName);
+        /* Size of pPagePath is passed as 512 bytes*/
+        rc = strcpy_s(pPagePath, 512, pName);
+        ERR_CHK(rc);
     }
     else
     {
         i ++;
-        AnscCopyString(pPagePath + i, pName);
+        /* Size of pPagePath is passed as 512 bytes*/
+        rc = strcpy_s((pPagePath + i), (unsigned int)(512 - i), pName);
+        ERR_CHK(rc);
     }
 
     /* remove relative path such as ".." from the path name */
@@ -10570,6 +10579,7 @@ BspTemplateObjIncludeTemplate
     char                            *pPagePath      = NULL;
     ANSC_STATUS                     status          = ANSC_STATUS_SUCCESS;
     ANSC_HANDLE                     hCookedPage     = (ANSC_HANDLE)NULL;
+    errno_t                         rc              = -1;
 
     /*
      *  The path of the new BSP page should be the relative
@@ -10585,7 +10595,8 @@ BspTemplateObjIncludeTemplate
         goto OUT_OF_RESOURCES;
     }
 
-    AnscCopyString(pPagePath, (char *)pMyObject->pName);
+    rc = strcpy_s(pPagePath,512, (char *)pMyObject->pName);
+    ERR_CHK(rc);
     BspEng_CalcPagePath(pPagePath,(char *) pName);
 
     if (!pList->IsTemplateLoaded((ANSC_HANDLE)pList, pPagePath))

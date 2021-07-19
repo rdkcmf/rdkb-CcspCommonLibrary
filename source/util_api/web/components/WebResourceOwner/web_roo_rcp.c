@@ -80,6 +80,7 @@
 
 
 #include "web_roo_global.h"
+#include "safec_lib_common.h"
 
 
 /**********************************************************************
@@ -167,6 +168,7 @@ WebRooRcpGetPathInfo
     ULONG                           ulPathLen       = 0;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
+    errno_t                         rc              = -1;
 
     if ( !pPathTokenChain )
     {
@@ -182,7 +184,9 @@ WebRooRcpGetPathInfo
 
         pPathInfo[ulPathLen++] = '/';
 
-        AnscCopyString((char*)(pPathInfo + ulPathLen), pPathToken->Name);
+        /* pPathInfo is a pointer, of size HTTP_BMO_REQ_RCP_MPAD_SIZE bytes */
+        rc = strcpy_s((char*)(pPathInfo + ulPathLen), (HTTP_BMO_REQ_RCP_MPAD_SIZE - ulPathLen), pPathToken->Name);
+        ERR_CHK(rc);
 
         ulPathLen += AnscSizeOfString(pPathToken->Name);
     }
@@ -236,8 +240,11 @@ WebRooRcpGetPathTranslated
     ULONG                           ulPathLen       = 0;
     PANSC_STRING_TOKEN              pPathToken      = NULL;
     PSINGLE_LINK_ENTRY              pSLinkEntry     = NULL;
+    errno_t                         rc              = -1;
 
-    AnscCopyString(pPathInfo, pProperty->RootPath);
+    /*pPathInfo is a pointer pointing to data of size HTTP_BMO_REQ_RCP_BPAD_SIZE bytes*/
+    rc = strcpy_s(pPathInfo, HTTP_BMO_REQ_RCP_BPAD_SIZE, pProperty->RootPath);
+    ERR_CHK(rc);
 
     ulPathLen = AnscSizeOfString(pProperty->RootPath);
 
@@ -255,7 +262,8 @@ WebRooRcpGetPathTranslated
 
         pPathInfo[ulPathLen++] = '/';
 
-        AnscCopyString((char*)(pPathInfo + ulPathLen), pPathToken->Name);
+        rc = strcpy_s((char*)(pPathInfo + ulPathLen), (HTTP_BMO_REQ_RCP_BPAD_SIZE - ulPathLen), pPathToken->Name);
+        ERR_CHK(rc);
 
         ulPathLen += AnscSizeOfString(pPathToken->Name);
     }

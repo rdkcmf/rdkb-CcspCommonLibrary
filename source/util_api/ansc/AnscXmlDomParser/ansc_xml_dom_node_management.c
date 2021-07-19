@@ -89,6 +89,7 @@
 **********************************************************************/
 
 #include "ansc_xml_dom_parser_global.h"
+#include "safec_lib_common.h"
 
 #define  AnscXmlWarning(arg...)             fprintf(stderr, arg)
 
@@ -164,6 +165,7 @@ AnscXmlDomNodeSetName
     )
 {
     PANSC_XML_DOM_NODE_OBJECT       pXmlNode      = (PANSC_XML_DOM_NODE_OBJECT)hThisObject;
+    errno_t     rc = -1;
 
     if( name == NULL)
     {
@@ -181,7 +183,8 @@ AnscXmlDomNodeSetName
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscCopyString(pXmlNode->Name, name);
+    rc = strcpy_s(pXmlNode->Name, sizeof(pXmlNode->Name), name);
+    ERR_CHK(rc);
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -962,6 +965,7 @@ AnscXmlDomNodeCopy
 
     PANSC_XML_DOM_NODE_OBJECT       pFirstNode      = NULL;
     ANSC_HANDLE                     hCopy, hChild;
+    errno_t                         rc              = -1;
 
     if( hNode == NULL)
     {
@@ -1007,7 +1011,8 @@ AnscXmlDomNodeCopy
             AnscZeroMemory(pNewAttribute->StringData,pFirst->DataSize + 1);
 
             /* copy the attribute name and value */
-            AnscCopyString(pNewAttribute->Name, pFirst->Name);
+            rc = strcpy_s(pNewAttribute->Name, sizeof(pNewAttribute->Name), pFirst->Name);
+            ERR_CHK(rc);
 
             if( pFirst->StringData != NULL)
             {

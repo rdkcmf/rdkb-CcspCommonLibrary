@@ -78,6 +78,7 @@
 
 #include "ansc_asn1_advanced_local.h"
 #include "ansc_string_util.h"
+#include "safec_lib_common.h"
 
 BOOLEAN
 PKIIsExtensionsObjectValid
@@ -588,6 +589,7 @@ PKIParsingAltName
     CHAR                            pTempBuffer[256]    = { 0 };
     BOOLEAN                         bParsingResult      = TRUE;
     PCHAR                           pBack, pBuffer;
+    errno_t                         rc                  = -1;
 
     if( pString == NULL || AnscSizeOfString(pString) < 4)
     {
@@ -625,7 +627,8 @@ PKIParsingAltName
      *  ip=127.0.0.1;dns=spice.entrust.com;email=geek@entrust.com   
      *  ip=127.0.0.1;dns=gonzo.entrust.com;ip=47.97.226.20;dns=blah.cisco.com
      */
-    AnscCopyString( pTempBuffer, pString);
+    rc = strcpy_s( pTempBuffer, sizeof(pTempBuffer), pString);
+    ERR_CHK(rc);
 
     pBuffer = pTempBuffer;
     pBack   = AnscStrChr(pBuffer, ';');

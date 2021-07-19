@@ -125,6 +125,7 @@
 #include "ansc_crypto_pub.h"
 #include "ansc_crypto_interface.h"
 #include "ansc_crypto_external_api.h"
+#include "safec_lib_common.h"
 
 /***********************************************************
         FUNCTIONS TO CHECK THE OBJECT TYPE
@@ -739,14 +740,11 @@ ParsingOIDStringValue
     /*
      *  Copy the string;
      */
-    pBack                           = (PCHAR)AnscAllocateMemory( length + 1);
-
-    if( pBack == NULL)
-    {
+    pBack = strdup(pInput);
+    if (! pBack) {
         return FALSE;
     }
 
-    AnscCopyString( pBack, pInput);
     pBack[ length ]                 = 0;
 
     /*

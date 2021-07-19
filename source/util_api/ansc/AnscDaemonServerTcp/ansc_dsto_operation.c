@@ -75,7 +75,7 @@
 
 
 #include "ansc_dsto_global.h"
-
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -112,6 +112,7 @@ AnscDstoEngage
     PANSC_DSTO_WORKER_OBJECT        pWorker      = (PANSC_DSTO_WORKER_OBJECT      )pMyObject->hWorker;
     int                             s_result     = 0;
 #ifdef _ANSC_IPV6_COMPATIBLE_
+    errno_t                         rc                   = -1;
     ansc_addrinfo                   ansc_hints           = {0};
     ansc_addrinfo*                  pansc_local_addrinfo = NULL;
     xskt_addrinfo                   xskt_hints           = {0};
@@ -163,7 +164,13 @@ AnscDstoEngage
         xskt_hints.ai_flags    = AI_PASSIVE | AI_ADDRCONFIG;
 
         usPort = pMyObject->GetHostPort((ANSC_HANDLE)pMyObject);
-        _ansc_sprintf(port, "%d", usPort);
+        rc = sprintf_s(port, sizeof(port), "%d", usPort);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            returnStatus = ANSC_STATUS_FAILURE;
+            goto  EXIT1;
+        }
         CcspTraceInfo(("!!! Host Name: %s, Host Port: %s !!!\n", pMyObject->HostName, port));
 
         if ( _xskt_getaddrinfo
@@ -191,7 +198,14 @@ AnscDstoEngage
         ansc_hints.ai_flags    = AI_PASSIVE | AI_ADDRCONFIG;
 
         usPort = pMyObject->GetHostPort((ANSC_HANDLE)pMyObject);
-        _ansc_sprintf(port, "%d", usPort);
+        rc = sprintf_s(port, sizeof(port), "%d", usPort);
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            returnStatus = ANSC_STATUS_FAILURE;
+            goto  EXIT1;
+        }
+
         CcspTraceInfo(("!!! Host Name: %s, Host Port: %s !!!\n", pMyObject->HostName, port));
 
         if ( _ansc_getaddrinfo

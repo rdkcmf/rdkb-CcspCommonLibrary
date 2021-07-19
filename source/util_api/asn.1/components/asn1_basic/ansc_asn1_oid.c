@@ -88,6 +88,7 @@
 **********************************************************************/
 
 #include "ansc_asn1_local.h"
+#include "safec_lib_common.h"
 
 /**********************************************************************
 
@@ -1389,6 +1390,7 @@ AnscAsn1OIDDumpObject
     CHAR                            pOIDValue[128]  = { 0 };
     ULONG                           attrLength      = 128;
     PCHAR                           pName;
+    errno_t                         rc              = -1;
 
     if( pBuffer == NULL || pLength == NULL)
     {
@@ -1413,42 +1415,63 @@ AnscAsn1OIDDumpObject
 
     if( !bShowValue)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s",
                     pName,
                     pAttrBuf,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else if( pMyObject->bOptional)
     {
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (Optional)",
                     pName,
                     pAttrBuf,
                     ASN1Type2String(pMyObject->uType)
                 );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
     else 
     {
         pMyObject->GetStringOIDValue(pMyObject, pOIDValue);
 
-        *pLength = 
-            AnscSprintfString
+        rc =
+            sprintf_s
                 (
                     pBuffer,
+                    *pLength,
                     "%s ::=%s %s (%s)",
                     pName,
                     pAttrBuf,
                     ASN1Type2String(pMyObject->uType),
                     pOIDValue
                  );
+        if(rc < EOK)
+        {
+            ERR_CHK(rc);
+            return FALSE;
+        }
+        *pLength = rc;
     }
 
     return  TRUE;
