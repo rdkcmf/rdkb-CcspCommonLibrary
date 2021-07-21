@@ -916,7 +916,7 @@ int CcspBaseIf_setParameterAttributes_rbus(
         rbusMessage_SetInt32(request, val[i].accessControlBitmask);
         if(isTR069Req)
         {
-            val[i].RequesterID = CCSP_COMPONENT_ID_ACS;
+            val[i].RequesterID = DSLH_MPA_ACCESS_CONTROL_ACS;
         }
         else
             val[i].RequesterID = 0;
@@ -1088,7 +1088,7 @@ int CcspBaseIf_setParameterAttributes(
         ret = dbus_message_iter_append_basic (&struct_iter, DBUS_TYPE_UINT32, &utmp);
         if(isTR069Req)
         {
-            val[i].RequesterID = CCSP_COMPONENT_ID_ACS;
+            val[i].RequesterID = DSLH_MPA_ACCESS_CONTROL_ACS;
         }
         else
             val[i].RequesterID = 0;
