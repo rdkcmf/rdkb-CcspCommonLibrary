@@ -50,30 +50,31 @@ fi
 
 if [ "$MFG_NAME" = "Arris" ]; then
 	if [ "$MODEL_NUM" = "TG4482A" ] ; then
-		/usr/ccsp/psm/bbhm_patch.sh -f /nvram/bbhm_cur_cfg.xml
+		/usr/ccsp/psm/bbhm_patch.sh -f /tmp/bbhm_cur_cfg.xml
 	fi
 fi
 
 # Check if Hotspot Max Num of STA is updated.
 if [ "$IS_BCI" = "yes" ]; then
-	if [ -f /nvram/bbhm_cur_cfg.xml ]; then
+	if [ -f /tmp/bbhm_cur_cfg.xml ]; then
 
-		grep "<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>" /nvram/bbhm_cur_cfg.xml
+		grep "<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>" /tmp/bbhm_cur_cfg.xml
 		if [ "$?" == "1" ];then
-			cp /nvram/bbhm_cur_cfg.xml /tmp/b1
+			cp /tmp/bbhm_cur_cfg.xml /tmp/b1
 			cat /tmp/b1 | sed s/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">0<\/Record>"/"<Record name=\"dmsb.hotspot.max_num_sta_set\" type=\"astr\">1<\/Record>"/ >/tmp/b2
-			cp /tmp/b2 /nvram/bbhm_cur_cfg.xml
+			cp /tmp/b2 /tmp/bbhm_cur_cfg.xml
 			rm /tmp/b1
 			rm /tmp/b2
 
-			grep "<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>" /nvram/bbhm_cur_cfg.xml
+			grep "<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>" /tmp/bbhm_cur_cfg.xml
 			if [  "$?" == "1" ] ; then
-				cp /nvram/bbhm_cur_cfg.xml /tmp/b1
+				cp /tmp/bbhm_cur_cfg.xml /tmp/b1
 				cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.5.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
 				cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">5<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.6.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
 				cat /tmp/b1 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.9.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b2
 				cat /tmp/b2 | sed s/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">30<\/Record>"/"<Record name=\"eRT.com.cisco.spvtg.ccsp.tr181pa.Device.WiFi.AccessPoint.10.BssMaxNumSta\" type=\"astr\">15<\/Record>"/ >/tmp/b1
-				cp /tmp/b1 /nvram/bbhm_cur_cfg.xml
+				cp /tmp/b1 /tmp/bbhm_cur_cfg.xml
+				cp /tmp/bbhm_cur_cfg.xml /nvram/bbhm_bak_cfg.xml
 				rm /tmp/b1
 				rm /tmp/b2
 			fi
