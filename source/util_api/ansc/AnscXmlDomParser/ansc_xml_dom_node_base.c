@@ -78,15 +78,7 @@
 
 #include "ansc_xml_dom_parser_global.h"
 
-#if defined(_ANSC_LINUX) && defined(_ANSC_USER)
-
-    #define  AnscXmlWarning(arg...)                 fprintf(stderr, arg)
-
-#else
-
-    #define  AnscXmlWarning                         AnscTrace
-
-#endif
+#define  AnscXmlWarning(arg...)             fprintf(stderr, arg)
 
 /**********************************************************************
 
