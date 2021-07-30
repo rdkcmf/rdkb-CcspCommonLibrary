@@ -2229,14 +2229,17 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     componentStruct_t **val=NULL;
     *components = 0;
-    int i = 0, ret = 0;
-    char** destinations = NULL;
 
+    RBUS_LOG("%s from %s for the namespace: %s\n", __FUNCTION__, bus_info->component_id, name_space);
+
+#if 0
     /*Handle WebPA and other components that need the component name while doing get/set*/
     if(( _ansc_strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.webpaagent" ) == 0) ||
        ( _ansc_strcmp(bus_info->component_id, "eRT.com.cisco.spvtg.ccsp.pam" ) == 0 )       ||
        ( _ansc_strcmp(bus_info->component_id, "ccsp.cisco.spvtg.ccsp.snmp" ) == 0 ))
+#endif
     {
+        int i = 0;
         char **compName = 0, *pcomp =NULL;
         int num = 0; //only 1 element is passed to get it's component name
 
@@ -2289,9 +2292,12 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         }
     }
 
+#if 0
     RBUS_LOG("%s Namespace: %s\n", __FUNCTION__, name_space);//check if its a wildcard expression
     if(name_space[strlen(name_space)-1] == '.')
     {
+        char** destinations = NULL;
+        int i = 0, ret = 0;
         RBUS_LOG("%s Wildcard expression: %s\n", __FUNCTION__, name_space);
         ret = rbus_discoverWildcardDestinations(name_space, size, &destinations);
 
@@ -2362,6 +2368,7 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
 
     *components = val;
     return CCSP_SUCCESS;
+#endif
 }
 
 int CcspBaseIf_discComponentSupportingNamespace (
