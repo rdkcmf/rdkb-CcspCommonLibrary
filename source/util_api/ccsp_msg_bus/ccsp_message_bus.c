@@ -145,7 +145,7 @@ static int tunnelStatus_signal_rbus(const char * destination, const char * metho
 static int webcfg_signal_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int wifiDbStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
-static int cssp_event_subscribe_override_handler_rbus(char const* object,  char const* eventName, char const* listener, int added, const rbusMessage payload, void* userData);
+static int ccsp_event_subscribe_override_handler_rbus(char const* object,  char const* eventName, char const* listener, int added, const rbusMessage payload, void* userData);
 int rbus_enabled = 0;
 
 // External Interface, defined in ccsp_message_bus.h
@@ -1196,7 +1196,7 @@ CCSP_Message_Bus_Init
             }
             else
             {
-                if((err = rbus_registerSubscribeHandler(component_id, cssp_event_subscribe_override_handler_rbus, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+                if((err = rbus_registerSubscribeHandler(component_id, ccsp_event_subscribe_override_handler_rbus, bus_info)) != RTMESSAGE_BUS_SUCCESS)
                 {
                     rtLog_Error("<%s>: rbus_registerSubscribeHandler() failed with %d.  Rbus value change will not work.", __FUNCTION__, err);
                 }
@@ -2487,20 +2487,10 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         {
             int instanceNumber = 0, result = 0;
             int32_t tmp = 0, sessionId = 0;
-            char *str = 0, *inst_str = 0;
-            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            char *str = 0;
             rbusMessage_GetInt32(request, &sessionId);
             rbusMessage_GetString(request, (const char**)&str); //object name
             result = func->AddTblRow(sessionId, str, &instanceNumber , func->AddTblRow_data);
-            if (result == CCSP_SUCCESS)
-            {
-                inst_str = (char*)bus_info->mallocfunc(strlen(str)+12);
-                sprintf(inst_str, "%s.%d.", str, instanceNumber);
-                if((err = rbus_addElement(bus_info->component_id, inst_str)) != RTMESSAGE_BUS_SUCCESS)
-                {
-                    RBUS_LOG_ERR("rbus_addElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
-                }
-            }
             rbusMessage_Init(response);
             tmp = result;
             rbusMessage_SetInt32(*response, tmp); //result
@@ -2513,17 +2503,9 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int result = 0;
             int32_t tmp = 0, sessionId = 0;
             char * str = 0;
-            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
             rbusMessage_GetInt32(request, &sessionId);
             rbusMessage_GetString(request, (const char**)&str); //obj name
             result = func->DeleteTblRow(sessionId, str , func->DeleteTblRow_data);
-            if (result == CCSP_SUCCESS)
-            {
-                if((err = rbus_removeElement(bus_info->component_id, str)) != RTMESSAGE_BUS_SUCCESS)
-                {
-                    RBUS_LOG_ERR("rbus_removeElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
-                }
-            }
             rbusMessage_Init(response);
             tmp = result;
             rbusMessage_SetInt32(*response, tmp); //result
@@ -2660,7 +2642,7 @@ CCSP_Message_Bus_Register_Path_Priv_rbus
  *  This will check if eventName refers to a parameter (and not an event like CCSP_SYSTEM_READY_SIGNAL)
  *  If its a parameter it will assume value-change is desired and pass the data to Ccsp_RbusValueChange api to handle it
  */
-static int cssp_event_subscribe_override_handler_rbus(
+static int ccsp_event_subscribe_override_handler_rbus(
     char const* object,
     char const* eventName,
     char const* listener,
@@ -2670,8 +2652,10 @@ static int cssp_event_subscribe_override_handler_rbus(
 {
     size_t slen;
     (void)object;
+    int retcode = RTMESSAGE_BUS_SUCCESS;
 
     //determine if eventName is a parameter
+    //CCSP_CR_ERR_UNSUPPORTED_NAMESPACE will also be used to below to filter unsupported parameters as well
     slen = strlen(eventName);
     if(slen < 7 || strncmp(eventName, "Device.", 7) != 0 || eventName[slen-1] == '!')
     {
@@ -2684,14 +2668,27 @@ static int cssp_event_subscribe_override_handler_rbus(
 
     if(added)
     {
-        Ccsp_RbusValueChange_Subscribe(userData, listener, eventName, payload);
+        int rc;
+        rc = Ccsp_RbusValueChange_Subscribe(userData, listener, eventName, payload);
+        if(rc != CCSP_SUCCESS)
+        {
+            /*
+            if Ccsp_RbusValueChange_Subscribe detects the parameter isn't a get type property
+            registered for this component, then return RTMESSAGE_BUS_SUBSCRIBE_NOT_HANDLED so 
+            that rbus-core will look for any additional listeners that might be registered.
+            */
+            if(rc == CCSP_CR_ERR_UNSUPPORTED_NAMESPACE)
+                retcode = RTMESSAGE_BUS_SUBSCRIBE_NOT_HANDLED;
+            else
+                retcode = RTMESSAGE_BUS_ERROR_GENERAL;
+        }
     }
     else
     {
         Ccsp_RbusValueChange_Unsubscribe(userData, listener, eventName, payload);
     }
 
-    return RTMESSAGE_BUS_SUCCESS;
+    return retcode;
 }
 
 int 
