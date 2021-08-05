@@ -214,6 +214,12 @@ fi
 #    cd ..                                                                                                                  
 #fi  
 
+# Enable XCONF Conf config fetch
+if [ -f  /lib/rdk/dcm.service ]; then
+    echo_t "DCM SCRIPT: Calling dcm.service"
+    /bin/sh /lib/rdk/dcm.service &
+fi
+
 #start update CADL 
 if [ -f /usr/bin/check-ca-update.sh ] && [ "$BOX_TYPE" != "XB3" ]; then
     sh /usr/bin/check-ca-update.sh &

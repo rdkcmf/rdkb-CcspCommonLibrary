@@ -190,11 +190,6 @@ syscfg set mgmt_wan_sshaccess 1
 syscfg commit 
 echo_t "PWD is `pwd`"
 
-# Enable XCONF Conf config fetch
-if [ -f  /lib/rdk/dcm.service ]; then
-    echo_t "DCM SCRIPT: Calling dcm.service"
-    /bin/sh /lib/rdk/dcm.service &
-fi
 
 if [ "$MODEL_NUM" = "DPC3939B" ] || [ "$MODEL_NUM" = "DPC3941B" ]; then
 echo_t "Disabling MTA for BWG "
