@@ -26,6 +26,7 @@ After=cosastart.service
 Type=forking
 WorkingDirectory=/usr/ccsp
 ExecStart=/bin/sh -c '/usr/ccsp/cosa_start_rem.sh'
+ExecStop=/bin/sh -c '/usr/ccsp/cosa_start_rem.sh stop'
 RemainAfterExit=yes
 StandardOutput=syslog+console
 

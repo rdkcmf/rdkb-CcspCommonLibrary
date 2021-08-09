@@ -54,6 +54,18 @@ if [ -f /etc/mount-utils/getConfigFile.sh ];then
    . /etc/mount-utils/getConfigFile.sh
 fi
 
+if [ "x"$1 = "xstop" ]; then 
+   # systemd initiates a SIGTERM upon shutdown for services in reverse order
+   # Platforms which still starts services with cosa_start.sh from systemd, 
+   # shutdown sequence has to be explicitly initiated 
+   killall telemetry2_0
+   killall CcspPandMSsp
+   killall CcspCMAgentSsp
+   killall PsmSsp
+   killall CcspCrSsp 
+   exit 0
+fi
+
 if [ "x"$1 = "xkill" ] || [ "x"$2 = "xkill" ]; then
 	killall ccspRecoveryManager
 	sleep 3

@@ -24,6 +24,7 @@ Type=forking
 WorkingDirectory=/usr/ccsp
 ExecStartPre=/bin/sh -c 'sleep 30'
 ExecStart=/bin/sh -c '/usr/ccsp/cosa_start.sh'
+ExecStop=/bin/sh -c '/usr/ccsp/cosa_start.sh stop'
 RemainAfterExit=yes
 StandardOutput=syslog+console
 

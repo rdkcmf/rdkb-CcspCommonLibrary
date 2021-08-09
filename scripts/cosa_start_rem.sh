@@ -56,6 +56,25 @@ fi
 echo_t "Getting value of CMC and CID after PSM Initialization"
 grep -irn "X_COMCAST-COM_CID\|X_COMCAST-COM_CMC" $BBHM_CUR_CFG
 
+if [ "x"$1 = "xstop" ]; then
+
+   # systemd initiates a SIGTERM upon shutdown for services in reverse order
+   # Platforms which still starts services with cosa_start.sh from systemd,
+   # shutdown sequence has to be explicitly initiated
+    killall trigger
+    killall log_agent
+    killall CcspAdvSecuritySsp
+    killall CcspWifiSsp
+    killall Harvester
+    killall CcspLMLite
+    killall CcspEthAgent
+    killall CcspXdnsSsp
+    killall CcspTandDSsp
+    killall CcspMoCA
+    killall CcspMtaAgentSsp
+    exit 0
+fi
+
 if [ -f /tmp/cosa_start_rem_triggered ]; then
 	echo_t "Already cosa_start_rem.sh script was triggered"
 	exit
