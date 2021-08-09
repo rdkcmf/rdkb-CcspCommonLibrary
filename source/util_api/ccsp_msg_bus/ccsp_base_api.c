@@ -1961,6 +1961,7 @@ int CcspBaseIf_registerCapabilities_rbus(
     UNREFERENCED_PARAMETER(dbus_path);
     UNREFERENCED_PARAMETER(subsystem_prefix);
     int i = 0;
+    int failedIndex = 0;
     int ret = CCSP_SUCCESS;
     rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
 
@@ -1969,9 +1970,12 @@ int CcspBaseIf_registerCapabilities_rbus(
         if((err = rbus_addElement(component_name, name_space[i].name_space)) != RTMESSAGE_BUS_SUCCESS)
         {
             RBUS_LOG_ERR("rbus_addElement: %s Err: %d\n", name_space[i].name_space, err);
+            failedIndex = i;
+            break;
         }
     }
 
+    if (err == RTMESSAGE_BUS_SUCCESS)
     {
         rbusMessage request, response;
 
@@ -1985,6 +1989,15 @@ int CcspBaseIf_registerCapabilities_rbus(
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s for %s returns with Err: %d\n", __FUNCTION__, METHOD_REGISTERCAPABILITIES, component_name, ret);
             ret = CCSP_FAILURE;
         }
+    }
+    else
+    {
+        RBUS_LOG_ERR("unregister all the params are we failed to register a param\n");
+        for(i = 0; i < failedIndex; i++)
+        {
+            rbus_removeElement (component_name, name_space[i].name_space);
+        }
+        ret = CCSP_FAILURE;
     }
     return ret;
 }
