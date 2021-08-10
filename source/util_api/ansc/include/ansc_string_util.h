@@ -79,7 +79,10 @@
 
 #include "ansc_memory_complement.h"
 
+#if 0
 #define  ANSC_STRING_FORMAT                         _ansc_sprintf
+#endif
+
 #define  AnscStrStr                                 _ansc_strstr
 #define  AnscStrChr                                 _ansc_strchr
 #define  AnscStrSpn                                 _ansc_strspn
@@ -89,8 +92,9 @@
 #define  AnscString2Double                          _ansc_atof
 #define  AnscInt2String                             _ansc_ultoa
 
+#if 0
 #define  AnscStrEqualNoCase(s1, s2)                 AnscEqualString1(s1, s2, FALSE)
-
+#endif
 
 /*
  *  AnscStrGetCharNum counts the specified character in a string
@@ -132,7 +136,7 @@ AnscDupString
         PUCHAR                      pStr
     );
 
-
+#if 0
 PUCHAR
 AnscDupString2
     (
@@ -162,7 +166,7 @@ AnscStr2Ip4Addr
         PUCHAR                      pStr,
         PUCHAR                      pIp4Addr
     );
-
+#endif
 
 PVOID
 AnscMemUtilRealloc
@@ -172,7 +176,7 @@ AnscMemUtilRealloc
         ULONG                       ulNewSize
     );
 
-
+#if 0
 PUCHAR
 AnscStringUtf16ToUtf8
     (
@@ -347,7 +351,7 @@ AnscMbstoWcs
 
 
 #endif
-
+#endif
 
 #endif
 

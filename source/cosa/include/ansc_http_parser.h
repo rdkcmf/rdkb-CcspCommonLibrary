@@ -239,7 +239,7 @@ AnscHttpGetHeaderCode
         char*                       name
     );
 
-
+#if 0
 PUCHAR
 AnscMemorySearch
     (
@@ -249,7 +249,7 @@ AnscMemorySearch
         ULONG                       ulPatternLen,
         BOOL                        bCaseSensitive
     );
-
+#endif
 
 #endif
 

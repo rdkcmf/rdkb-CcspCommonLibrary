@@ -267,7 +267,7 @@ AnscFromHexToString
     }
 }
 
-
+#if 0
 ULONG
 AnscFromStringToHex
     (
@@ -331,6 +331,7 @@ AnscStringFromAToU
 
     return;
 }
+#endif
 
 
 void
@@ -475,7 +476,7 @@ AnscSizeOfToken3
     return  count;
 }
 
-
+#if 0
 ULONG
 AnscNumberOfCharsInString
     (
@@ -544,6 +545,7 @@ AnscNumberOfTokens
 
     return  count;
 }
+#endif
 
 
 char*
@@ -577,7 +579,7 @@ AnscMoveToNextToken2
     return  string;
 }
 
-
+#if 0
 char*
 AnscMoveToPreviousToken
     (
@@ -785,7 +787,7 @@ AnscConsumeToken
 
     return;
 }
-
+#endif
 
 void
 AnscGetUlongString
@@ -971,6 +973,7 @@ AnscCloneString
 
 #endif
 
+#if 0
 ANSC_HANDLE
 AnscCreateScanner
     (
@@ -1006,7 +1009,7 @@ AnscScanString
     UNREFERENCED_PARAMETER(tbs_string);
     return  NULL;
 }
-
+#endif
 
 BOOL
 AnscIsValidIpString

@@ -117,6 +117,7 @@ UserGetTickInMilliSeconds
     return  (Ticks / TicksInOneSecond) * 1000 + ((Ticks % TicksInOneSecond) * 1000) / TicksInOneSecond;
 }
 
+#if 0
 ULONG
 UserGetTickInMicroSeconds
     (
@@ -128,6 +129,7 @@ UserGetTickInMicroSeconds
 
     return  (Ticks / TicksInOneSecond) * 1000000 + ((Ticks % TicksInOneSecond) * 1000000) / TicksInOneSecond;
 }
+#endif
 
 void
 UserGetTickInMicroSeconds64

@@ -384,7 +384,7 @@ AnscTcGetLength
     return  ulStringLen;
 }
 
-
+#if 0
 BOOL
 AnscTcEqualString
     (
@@ -496,7 +496,7 @@ AnscTcEqualString
 
     return  bStrMatched;
 }
-
+#endif
 
 ANSC_HANDLE
 AnscTcPopToken

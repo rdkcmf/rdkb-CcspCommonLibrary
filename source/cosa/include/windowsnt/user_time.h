@@ -111,8 +111,9 @@ USER_SYSTEM_TIME,  *PUSER_SYSTEM_TIME;
 #define  UserGetTickInMilliSeconds()                GetTickCount()
 #define  UserGetTickInMilliSeconds2                 UserGetTickInMilliSeconds
 #define  UserGetTickInMilliSecondsAbs()             UserGetTickInMilliSeconds()
+#if 0
 #define  UserGetTickInMicroSeconds()                (UserGetTickInMilliSeconds() * 1000)
-
+#endif
 #define  UserGetUtcTime                             UserGetSystemTime
 #define  UserSetUtcTime                             UserSetSystemTime
 

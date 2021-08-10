@@ -115,6 +115,7 @@ KERNEL_SYSTEM_TIME,  *PKERNEL_SYSTEM_TIME;
 
 #define  KernelGetTickInMilliSeconds()              cyg_current_time() * KERNEL_MILLISECONDS_PER_TICK
 
+#if 0
 #define  KernelGetTickInMicroSeconds()              cyg_current_time() * KERNEL_MILLISECONDS_PER_TICK * 1000
 
 /*
@@ -129,7 +130,7 @@ KERNEL_SYSTEM_TIME,  *PKERNEL_SYSTEM_TIME;
  */
 #define  KernelGetTickInMicroSeconds64(pHiWord, pLowWord)       \
             {*pHiWord = 0; *pLowWord = KernelGetTickInMicroSeconds(); }
-
+#endif
 void
 KernelGetSystemTime
     (

@@ -282,6 +282,7 @@ AnscSecondToLocalCalendar
 
 }
 
+#if 0
 ANSC_STATUS
 AnscGetWholeTickInMicroSeconds
     (
@@ -292,7 +293,7 @@ AnscGetWholeTickInMicroSeconds
 
     return  ANSC_STATUS_SUCCESS;
 }
-
+#endif
 
 #ifdef	_ANSC_SIMPLE_TIMEZONE
 

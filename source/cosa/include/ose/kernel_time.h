@@ -113,7 +113,7 @@ KernelGetTickInMillSeconds
  */
 #define  KernelGetTickInMilliSeconds()              (get_ticks() * 4)
 
-
+#if 0
 /*
 ULONG
 KernelGetTickInMicroSeconds
@@ -137,7 +137,7 @@ KernelGetTickInMicroSeconds64
                 *(hi) = 0;                                      \
                 *(lo) = KernelGetTickInMicroSeconds();          \
             }
-
+#endif
 
 BOOL
 KernelGetUniversalTime
