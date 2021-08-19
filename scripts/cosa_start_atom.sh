@@ -131,9 +131,6 @@ rdk_wifi_upgrade_vlan106
 # Upgdate the correct Vlan for Secure SSIDs.
 rdk_wifi_upgrade_secureSSID_vlan
 
-# Config vlan 106 Secure ssid (phrase 2): RDKB-6974
-/lib/rdk/rdk_wifi_configure_lnf_ap.sh
-
 
 #Check for radio swap cases and revert it to right one for Cisco 3941
 if [ "$MODEL_NUM" = "DPC3941" ]; then
