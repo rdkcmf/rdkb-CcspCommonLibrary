@@ -2342,13 +2342,10 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             rbusMessage_Init(response);
             tmp = result;
             rbusMessage_SetInt32(*response, tmp); //result
-            if( tmp == CCSP_SUCCESS)
-            {
-                if(invalidParameterName != NULL)
-                    rbusMessage_SetString(*response, invalidParameterName); //invalid param
-                else
-                    rbusMessage_SetString(*response, ""); //invalid param
-            }
+            if(invalidParameterName != NULL)
+                rbusMessage_SetString(*response, invalidParameterName); //invalid param
+            else
+                rbusMessage_SetString(*response, ""); //invalid param
             bus_info->freefunc(parameterVal);
             bus_info->freefunc(invalidParameterName);
             return DBUS_HANDLER_RESULT_HANDLED;
