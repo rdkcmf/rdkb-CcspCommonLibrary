@@ -89,6 +89,8 @@
 #include "slap_vco_internal_api.h"
 #include "messagebus_interface_helper.h"
 #include "safec_lib_common.h"
+#include <errno.h>
+
 
 extern ULONG    g_lastWriteEntity;
 void* COSAGetMessageBusHandle();
@@ -486,6 +488,7 @@ char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
 char *str1[50] = {0};
 int paramCount=0;
 pthread_mutex_t NotifyMutex;
+sem_t notifySem;
 
 void* Send_Notification_Thread_Func(void* arg)
 {
@@ -499,7 +502,7 @@ void* Send_Notification_Thread_Func(void* arg)
     CcspTraceWarning((" Send_Notification_Thread_Func paramCount %d \n",paramCount));
     printf(" Send_Notification_Thread_Func paramCount %d \n",paramCount);
 	pthread_detach(pthread_self());
-
+    
        for(i=0; i < paramCount ; i++)
        {
           CcspTraceWarning(("<< Send_Notification_Thread_Func i %d >>\n",i));
@@ -542,11 +545,12 @@ void* Send_Notification_Thread_Func(void* arg)
 	      {
 		    AnscFreeMemory(str1[i]);
 		    str1[i] = NULL;
-                
 	      }
        }
     paramCount=0;
     pthread_mutex_unlock(&NotifyMutex);
+    sem_post(&notifySem);
+
     return NULL;
 }
 #endif
@@ -640,7 +644,7 @@ DslhWmpdoMpaSetParameterValues
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
     *piStatus    = 0;
     errno_t rc = -1;
-
+    BOOL waitFlag = FALSE;
     AnscAcquireTsLock(&pMyObject->AccessTsLock);
 
     if ( (ulArraySize == 0) || !pParameterValueArray )
@@ -842,6 +846,8 @@ DslhWmpdoMpaSetParameterValues
             /*pthread_t Send_Notification_Thread;*/
             /*int res;*/
             static int bFirst = TRUE;
+            struct timespec ts;
+            int retSem = 0;
             /*CID: 65857 Dereference after null check*/
             if(pVarEntity && pVarEntity->ParamDescr->NotifyStatus != 3)
             {
@@ -857,7 +863,11 @@ DslhWmpdoMpaSetParameterValues
 			{
 				pthread_mutex_init(&NotifyMutex,0);
 				bFirst = FALSE;
-			}
+                if ( sem_init(&notifySem, 0, 1) != 0 )
+                {
+                    CcspTraceError(("<< %s, Notification syncronization error. sem_init(notifySem) failed. >> \n",__FUNCTION__));
+                }
+            }
 
 		    /*CID: 110898 and 110896 Dereference before null check*/
 		    if(vcSig.oldValue == NULL || vcSig.newValue == NULL)
@@ -866,8 +876,27 @@ DslhWmpdoMpaSetParameterValues
 	              goto  EXIT0;
 	            }
                     /*CID: 68135 Explicit null dereferenced*/
-                    if(vcSig.newValue && strcmp(vcSig.newValue,vcSig.oldValue))
+            if(vcSig.newValue && strcmp(vcSig.newValue,vcSig.oldValue))
+            {
+                if (waitFlag == FALSE)
+                {
+                    if (clock_gettime(CLOCK_REALTIME, &ts) == 0)
                     {
+                        ts.tv_sec += 6;
+                        while ((retSem = sem_timedwait(&notifySem, &ts)) == -1 && errno == EINTR)
+                            continue;       /* Restart if interrupted by handler */
+
+                        if (retSem == -1)
+                        {
+                            CcspTraceError(("<< %s, Notification syncronization error.  sem_timedwait failed %s. >> \n",__FUNCTION__, strerror(errno)));
+                        }
+                    }
+                    else
+                    {
+                        CcspTraceError(("<< %s,Notification syncronization error. Get the time clock_gettime failed. >> \n",__FUNCTION__));
+                    }
+                    waitFlag = TRUE;
+                }
 			pthread_mutex_lock(&NotifyMutex);
 
                        rc = sprintf_s(str,sizeof(str),"%s,%u,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
@@ -896,7 +925,7 @@ DslhWmpdoMpaSetParameterValues
 					pthread_mutex_unlock(&NotifyMutex);
 					break;
 				}
-		    
+
 		               /*sensitive information like keyPassphrase should not print*/
 		               if( _ansc_strstr(str1[j],"KeyPassphrase") == NULL)
 			       {
