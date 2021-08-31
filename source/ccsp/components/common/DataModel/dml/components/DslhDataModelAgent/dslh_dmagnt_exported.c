@@ -1133,7 +1133,7 @@ COSAGetParamValueByPathName
     )
 {
     char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", END_OF_LIST};
-    char cr_id[256] = {0};
+    char cr_id[256];
     char * dst_componentid =  NULL;
     char * dst_pathname    =  NULL;
     char * pSubsystem = COSAGetSubsystemPrefix2();
@@ -1249,7 +1249,7 @@ COSASetParamValueByPathName
     )
 {
     char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", END_OF_LIST};
-    char cr_id[256] = {0};
+    char cr_id[256];
     char * dst_componentid =  NULL;
     char * dst_pathname    =  NULL;
     char * pSubsystem = COSAGetSubsystemPrefix2();
