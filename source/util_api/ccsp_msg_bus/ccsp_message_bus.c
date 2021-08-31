@@ -2280,6 +2280,8 @@ char* writeid_to_string(unsigned int writeid)
         return "writeid_wifi";
     else if(writeid == DSLH_MPA_ACCESS_CONTROL_XMPP)
         return "writeid_xmpp";
+    else if(writeid == DSLH_MPA_ACCESS_CONTROL_WEBCONFIG)
+        return "webconfig";
     else
         return "writeid_cli";
 }
@@ -2308,6 +2310,8 @@ unsigned int string_to_writeid(const char *str)
         return DSLH_MPA_ACCESS_CONTROL_WIFI;
     else if ( _ansc_strcmp(str, "writeid_xmpp") == 0 )
         return DSLH_MPA_ACCESS_CONTROL_XMPP;
+    else if ( _ansc_strcmp(str, "webconfig") == 0 )
+        return DSLH_MPA_ACCESS_CONTROL_WEBCONFIG;
 
     return DSLH_MPA_ACCESS_CONTROL_CLI;
 }
