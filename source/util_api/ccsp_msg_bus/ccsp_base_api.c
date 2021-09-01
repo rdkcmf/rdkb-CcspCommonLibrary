@@ -1945,6 +1945,47 @@ CcspBaseIf_GetNextLevelInstances
     return ret;
 }
 
+/* The Cr component uses the rbus 2.0 api and implements the method Device.CR.RegisterComponent()
+ * which other ccsp component must call to register themselves.  Once all required components
+ * are registered, Cr will set its property Device.CR.SystemReady to true, which will
+ * send a value-change event to all listeners.
+ */
+static int registerComponentWithCr_rbus(const char *component_name)
+{
+    int ret = CCSP_SUCCESS;
+    rbusMessage request, response;
+
+    rbusMessage_Init(&request);
+    /*pack the message the specific way rbus 2.0 requires*/
+    rbusMessage_SetInt32(request, 0);
+    rbusMessage_SetString(request, "Device.CR.RegisterComponent()"); 
+    rbusMessage_SetString(request, NULL);/*object name*/
+    rbusMessage_SetInt32(request, 0);/*object type*/
+    rbusMessage_SetInt32(request, 1);/*num properties*/
+    rbusMessage_SetString(request, "name");/*the name property*/
+    rbusMessage_SetInt32(request, RBUS_STRING);/*the value type*/
+    rbusMessage_SetBytes(request, (uint8_t const*)component_name, strlen(component_name)+1);/*the actual value*/
+    rbusMessage_SetInt32(request, 0);/*object child object count*/
+
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("Device.CR.RegisterComponent()", METHOD_RPC, request, 1000, &response))) == CCSP_Message_Bus_OK)
+    {
+        int returnCode = 0;
+        rbusMessage_GetInt32(response, &returnCode);
+        rbusMessage_Release(response);
+        if(returnCode != 0)
+        {
+            RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s got returnCode Err: %d\n", __FUNCTION__, component_name, returnCode);
+            ret = CCSP_FAILURE;
+        }
+    }
+    else
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s returned with Err: %d\n", __FUNCTION__, component_name, ret);
+        ret = CCSP_FAILURE;
+    }
+    return ret;
+}
+
 int CcspBaseIf_registerCapabilities_rbus(
         void* bus_handle,
         const char* dst_component_id,
@@ -1956,6 +1997,7 @@ int CcspBaseIf_registerCapabilities_rbus(
         int size
         )
 {
+    UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(component_version);
     UNREFERENCED_PARAMETER(dst_component_id);
     UNREFERENCED_PARAMETER(dbus_path);
@@ -1977,18 +2019,7 @@ int CcspBaseIf_registerCapabilities_rbus(
 
     if (err == RTMESSAGE_BUS_SUCCESS)
     {
-        rbusMessage request, response;
-
-        CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
-
-        rbusMessage_Init(&request);
-        rbusMessage_SetString(request, component_name);
-        RBUS_LOG("%s : object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, METHOD_REGISTERCAPABILITIES);
-        if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_REGISTERCAPABILITIES, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
-        {
-            RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s for %s returns with Err: %d\n", __FUNCTION__, METHOD_REGISTERCAPABILITIES, component_name, ret);
-            ret = CCSP_FAILURE;
-        }
+        registerComponentWithCr_rbus(component_name);
     }
     else
     {
@@ -3328,75 +3359,45 @@ void update_component_info(component_info *compInfo)
 }
 #endif
 
+/* The Cr component uses rbus 2.0 api and registers the property "Device.CR.SystemReady" 
+ * which has a boolean value indicating if all required components have registered with Cr or not.
+ */
 int CcspBaseIf_isSystemReady_rbus(
     void* bus_handle,
     const char* dst_component_id,
     dbus_bool *val
     )
 {
-    UNREFERENCED_PARAMETER(dst_component_id);
-    UNREFERENCED_PARAMETER(bus_handle);
-    /*CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;*/
     int ret = CCSP_SUCCESS;
+    char* param = "Device.CR.SystemReady";
+    int size;
+    parameterValStruct_t** value = 0;
 
-    /* The below code maintains a static struture in all the components that
-     * links to Ccsp Common library; this is not a right approach; hence moved
-     * the support to CR itself but with limited capability
-     */
-#if 0
-    static component_info *compInfo = NULL;
     *val = 0;
 
-    // Read the Device Profile file
-    if(compInfo == NULL)
-    {
-        compInfo = (component_info*)bus_info->mallocfunc(sizeof(component_info));
-        compInfo->list = NULL;
-        compInfo->size = 0;
-        update_component_info(compInfo);
-    }
-    // Get list of registered components from rtrouted
-    int numComp = 0;
-    registeredComponent_t **ppComp = NULL;
+    ret = CcspBaseIf_getParameterValues_rbus(
+              bus_handle,
+              dst_component_id,
+              NULL,
+              &param,
+              1,
+              &size,
+              &value );
 
-    CcspBaseIf_getRegisteredComponents_rbus(bus_handle, dst_component_id, &ppComp, &numComp);
-    int compInfoIndex = 0, regCompIndex = 0;
-
-    for(compInfoIndex = 0; compInfoIndex < compInfo->size; compInfoIndex++)
+    if(ret == CCSP_SUCCESS  && size >= 1)
     {
-        for(regCompIndex = 0; regCompIndex < numComp; regCompIndex++)
-        {
-            if(strstr(ppComp[regCompIndex]->componentName, compInfo->list[compInfoIndex]))
-                break; // A match is found from the retrieved list
-        }
-        if(regCompIndex == numComp)
-        {
-            RBUS_LOG("component \"%s\" is not found in registered component list\n", compInfo->list[compInfoIndex]);
-            break; // No matching name found in retrieved list i.e system not ready
-        }
-    }
-    free_registeredComponent_t(bus_handle, numComp, ppComp);
-    if(compInfoIndex == compInfo->size)
-    {
-        RBUS_LOG("Successfully exiting CcspBaseIf_isSystemReady_rbus\n");
-        *val = 1;
-    }
-#else
-    rbusMessage response;
-
-    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.CR", METHOD_ISSYSTEMREADY, NULL, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
-    {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for %s s returns with Err: %d\n", __FUNCTION__, METHOD_ISSYSTEMREADY, ret);
-        ret = CCSP_FAILURE;
+        CcspTraceDebug(("%s %s is %s\n", __FUNCTION__, param, value[0]->parameterValue));
+        if(AnscEqualString(value[0]->parameterValue, "true", FALSE))
+            *val = 1;
+        else
+            *val = 0;
+        free_parameterValStruct_t(bus_handle, size, value);
     }
     else
     {
-        int isReady = 0;
-        rbusMessage_GetInt32(response, &isReady);
-        *val = isReady;
-        rbusMessage_Release(response);
+        CcspTraceError(("%s CcspBaseIf_getParameterValues_rbus %s failed ret=%d\n", __FUNCTION__, param[0], ret));
     }
-#endif
+
     return ret;
 }
 
@@ -4812,6 +4813,31 @@ int CcspBaseIf_SendSignal_rbus(void * bus_handle, char *event)
     return ret;
 }
 
+/* Subscribe to an event from a rbus 2.0 api component
+ * As we migrate components from Ccsp to rbus2, more and will be based on rbus2
+ */
+int subscribeToRbus2Event_rbus
+(
+ void* bus_handle,
+ const char* event_name
+)
+{
+    rbus_error_t err;
+    int provider_err = 0;
+
+    err = rbus_subscribeToEvent(NULL, event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle, &provider_err);
+
+    if(err == RTMESSAGE_BUS_SUCCESS)
+    {
+        RBUS_LOG("%s : rbus_subscribeToEvent success for %s\n", __FUNCTION__, event_name);
+        return CCSP_SUCCESS;
+    }
+    else
+    {
+        RBUS_LOG_ERR("%s : rbus_subscribeToEvent returned err:%d provider_err:%d for %s\n", __FUNCTION__, err, provider_err, event_name);
+        return CCSP_FAILURE;
+    }
+}
 
 int CcspBaseIf_Register_Event_rbus
 (
@@ -4827,12 +4853,16 @@ int CcspBaseIf_Register_Event_rbus
 
     if(strcmp(event_name, "diagCompleteSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.tr069pa";
-    else if(strcmp(event_name, "systemReadySignal") == 0)
-        comp = "eRT.com.cisco.spvtg.ccsp.CR";
+    else if(strcmp(event_name, "systemReadySignal") == 0 || strcmp(event_name, "Device.CR.SystemReady") == 0)
+        /*systemReadySignal now implemented by Cr using rbus 2.0 api as property Device.CR.SystemReady whose value-change event we subscribe to*/
+        return subscribeToRbus2Event_rbus(bus_handle, "Device.CR.SystemReady");
     else if(strcmp(event_name, "systemRebootSignal") == 0)
         comp = "eRT.com.cisco.spvtg.ccsp.rm";
     else if((strcmp(event_name, "currentSessionIDSignal") == 0) || (strcmp(event_name, "deviceProfileChangeSignal") == 0))
-        comp = "eRT.com.cisco.spvtg.ccsp.CR";
+    {
+    	RBUS_LOG("%s currentSessionIDSignal/deviceProfileChangeSignal not supported in rbus mode\n", __FUNCTION__);
+        return CCSP_SUCCESS;
+    }
     else if ((strcmp(event_name, "webconfigSignal") == 0) || (strcmp(event_name, "parameterValueChangeSignal") == 0) || (strcmp(event_name, "reboot") == 0) || (strcmp(event_name, "TunnelStatus")  == 0) || (strcmp(event_name, "WifiDbStatus") == 0))
     {
         RBUS_LOG ("RBUS_EVENT_SUBSCRIBED:: just like method for %s \n", event_name);

@@ -1685,6 +1685,58 @@ CcspBaseIf_evt_callback (DBusConnection  *conn,
     return DBUS_HANDLER_RESULT_HANDLED;
 }
 
+/* Handle a value change event from an rbus 2.0 api component
+ * As we migrate components from Ccsp to rbus2, more and will be based on rbus2
+ */
+int handleValueChangeEvent_rbus(const char * object_name, const char * event_name, rbusMessage message, void * user_data)
+{
+    UNREFERENCED_PARAMETER(object_name);
+    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
+    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
+    char const* msg_event_name;
+    int msg_event_type;
+    char const* msg_obj_name;
+    int msg_obj_type;
+    int msg_num_props;
+    char const* msg_prop1_name;
+    int msg_prop1_type;
+    uint32_t msg_prop1_len;
+    uint8_t const* msg_prop1_data;
+
+    /*get data from the message the specific way rbus 2.0 packs it*/
+    rbusMessage_GetString(message, (char const**) &msg_event_name);
+    rbusMessage_GetInt32(message, (int*) &msg_event_type);
+    rbusMessage_GetString(message, &msg_obj_name);
+    rbusMessage_GetInt32(message, &msg_obj_type);
+    rbusMessage_GetInt32(message, (int*) &msg_num_props);
+    rbusMessage_GetString(message, (char const**) &msg_prop1_name);
+    rbusMessage_GetInt32(message, (int*) &msg_prop1_type);
+    rbusMessage_GetBytes(message, &msg_prop1_data, &msg_prop1_len);
+
+    if(!strcmp(event_name, "Device.CR.SystemReady") && func->systemReadySignal)
+    {
+        /*expect to get a 1 bytes boolean*/
+        if(msg_prop1_type == RBUS_DATATYPE_BOOLEAN && msg_prop1_len == 1)
+        {
+            if(msg_prop1_data[0])
+            {
+                CcspTraceInfo(("System Ready Event Received\n"));
+
+                func->systemReadySignal(func->systemReadySignal_data);
+            }
+            else
+            {
+                CcspTraceInfo(("%s %s unexpected value %d\n", __FUNCTION__, event_name, (int)msg_prop1_data[0]));
+            }
+        }
+        else
+        {
+            CcspTraceError(("%s %s unexpected type %d\n", __FUNCTION__, event_name, msg_prop1_type));
+        }
+    }
+    return RTMESSAGE_BUS_SUCCESS;
+}
+
 int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rbusMessage message, void * user_data)
 {
     UNREFERENCED_PARAMETER(object_name);
@@ -1741,9 +1793,9 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
     {
         func->diagCompleteSignal(func->diagCompleteSignal_data);
     }
-    else if(!strcmp(event_name, "systemReadySignal") && func->systemReadySignal)
+    else if(!strcmp(event_name, "Device.CR.SystemReady") && func->systemReadySignal)
     {
-        func->systemReadySignal(func->systemReadySignal_data);
+        handleValueChangeEvent_rbus(object_name, event_name, message, user_data);
     }
     else if(!strcmp(event_name,"systemRebootSignal") && func->systemRebootSignal)
     {

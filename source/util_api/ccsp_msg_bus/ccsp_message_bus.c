@@ -143,8 +143,6 @@ static DBusWakeupMainFunction wake_mainloop(void *);
 static int tunnelStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int webcfg_signal_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int wifiDbStatus_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
-static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
-static int cr_isSystemReady_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int telemetry_send_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr);
 static int cssp_event_subscribe_override_handler_rbus(char const* object,  char const* eventName, char const* listener, int added, const rbusMessage payload, void* userData);
 int rbus_enabled = 0;
@@ -1105,6 +1103,7 @@ void CCSP_Message_Bus_Init_Rbus_Logger()
                 CcspTraceWarning(("enabling %s rbus logs\n", level));
             }
         }
+        fclose(file);
     }
     
     /* Register with rtLog to use CCSPTRACE_LOGS */
@@ -1220,26 +1219,7 @@ CCSP_Message_Bus_Init
                     rtLog_Error("<%s>: rbus_registerSubscribeHandler() failed with %d.  Rbus value change will not work.", __FUNCTION__, err);
                 }
 
-                if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.CR") == 0)
-                {
-                    if((err = rbus_registerEvent(component_id, CCSP_SYSTEM_READY_SIGNAL, NULL, NULL)) != RTMESSAGE_BUS_SUCCESS)
-                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for system ready \n", __FUNCTION__, err);
-                    if((err = rbus_registerEvent(component_id, CCSP_CURRENT_SESSION_ID_SIGNAL, NULL, NULL )) != RTMESSAGE_BUS_SUCCESS)
-                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for currentSessionIDSignal\n", __FUNCTION__, err);
-                    if((err = rbus_registerEvent(component_id, CCSP_DEVICE_PROFILE_CHANGE_SIGNAL, NULL, NULL )) != RTMESSAGE_BUS_SUCCESS)
-                        RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for deviceProfileChangeSignal)\n", __FUNCTION__, err);
-                    {
-                        rbus_method_table_entry_t table[2] = {
-                                                              {METHOD_REGISTERCAPABILITIES, (void*)bus_info, cr_registerCaps_rbus},
-                                                              {METHOD_ISSYSTEMREADY, (void*)bus_info, cr_isSystemReady_rbus},
-                                                             };
-                        if(( err = rbus_registerMethodTable(component_id, table, 2) != RTMESSAGE_BUS_SUCCESS ))
-                        {
-                            RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
-                        }
-                    }
-                }
-                else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.tr069pa") == 0)
+                if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.tr069pa") == 0)
                 {
                     if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for diagCompleteSignal\n", __FUNCTION__, err);
@@ -2538,43 +2518,6 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         }
     }
     return 0;
-}
-
-static int cr_registerCaps_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
-{
-    UNREFERENCED_PARAMETER(response);
-    (void) destination;
-    (void) method;
-    (void) hdr;
-    int err = CCSP_Message_Bus_OK;
-    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
-    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    if ((func) && (func->registerCaps))
-    {
-        char* pCompName = NULL;
-        rbusMessage_GetString(request, (const char**)&pCompName);
-        func->registerCaps(pCompName, func->registerCaps_data);
-    }
-    return err;
-}
-
-static int cr_isSystemReady_rbus (const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
-{
-    UNREFERENCED_PARAMETER(request);
-    (void) destination;
-    (void) method;
-    (void) hdr;
-    int err = CCSP_Message_Bus_OK;
-    CCSP_MESSAGE_BUS_INFO *bus_info =(CCSP_MESSAGE_BUS_INFO *) user_data;
-    CCSP_Base_Func_CB* func = (CCSP_Base_Func_CB* )bus_info->CcspBaseIf_func;
-    if ((func) && (func->isSystemReady))
-    {
-        int32_t result = 0;
-        result = func->isSystemReady();
-        rbusMessage_Init(response);
-        rbusMessage_SetInt32(*response, result);
-    }
-    return err;
 }
 
 static int webcfg_signal_rbus(const char * destination, const char * method, rbusMessage request, void * user_data, rbusMessage *response, const rtMessageHeader* hdr)
