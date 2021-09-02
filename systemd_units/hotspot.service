@@ -3,7 +3,7 @@ Description=Hotspot service
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'sysevent set hotspot-start'
+ExecStart=/bin/sh -c '/etc/utopia/service.d/service_multinet/handle_gre.sh hotspot-start NULL &'
 RemainAfterExit=Yes
 StandardOutput=syslog+console
 
