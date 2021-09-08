@@ -29,6 +29,7 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStart=/usr/bin/log_agent -subsys $Subsys
+ExecStop=/usr/bin/killall -9 log_agent
 ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting log_agent" >> ${PROCESS_RESTART_LOG}'
 Restart=always
 
