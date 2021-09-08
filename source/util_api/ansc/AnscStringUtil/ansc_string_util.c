@@ -291,6 +291,7 @@ AnscDupString
     }
 }
 
+#if 0
 
 /**********************************************************************
 
@@ -522,7 +523,7 @@ AnscStr2Ip4Addr
         *(PULONG)pIp4Addr   = _ansc_inet_addr((char *)pStr);
     }
 }
-
+#endif
 
 /**********************************************************************
 
@@ -597,7 +598,7 @@ AnscMemUtilRealloc
     return pNewMem;
 }
 
-
+#if 0
 /* 
  * This API converts UTF-16 string to UTF-8 string.
  */
@@ -1289,6 +1290,7 @@ AnscMemorySearch
 
     return  NULL;
 }
+#endif
 
 BOOL
 is_IpAddress

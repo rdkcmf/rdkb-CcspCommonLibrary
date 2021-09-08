@@ -1037,6 +1037,7 @@ AnscFromHexToString
         BOOL                        bLowerCase
     );
 
+#if 0
 ULONG
 AnscFromStringToHex
     (
@@ -1050,6 +1051,7 @@ AnscStringFromAToU
         char*                       string,
         ULONG                       ulSize
     );
+#endif
 
 void
 AnscStringFromLToU
@@ -1091,6 +1093,7 @@ AnscSizeOfToken3
         ULONG                       range
     );
 
+#if 0
 ULONG
 AnscNumberOfCharsInString
     (
@@ -1104,6 +1107,7 @@ AnscNumberOfTokens
         char*                       string,
         char*                       separator
     );
+#endif
 
 char*
 AnscMoveToNextToken
@@ -1119,6 +1123,7 @@ AnscMoveToNextToken2
         char*                       alphabet
     );
 
+#if 0
 char*
 AnscMoveToPreviousToken
     (
@@ -1151,6 +1156,7 @@ AnscConsumeToken
         char*                       string,
         char*                       separator
     );
+#endif
 
 void
 AnscGetUlongString
@@ -1193,7 +1199,7 @@ AnscCloneString
 
 #endif
 
-
+#if 0
 ANSC_HANDLE
 AnscCreateScanner
     (
@@ -1213,6 +1219,7 @@ AnscScanString
         ANSC_HANDLE                 hStringScanner,
         char*                       tbs_string
     );
+#endif
 
 BOOL
 AnscIsValidIpString
@@ -1278,6 +1285,7 @@ AnscTcGetLength
         char*                       separator
     );
 
+#if 0    
 BOOL
 AnscTcEqualString
     (
@@ -1287,6 +1295,7 @@ AnscTcEqualString
         BOOL                        bCaseSensitive,
         BOOL                        bStrict
     );
+#endif
 
 ANSC_HANDLE
 AnscTcPopToken
@@ -1373,12 +1382,13 @@ AnscSecondToLocalCalendar
         ANSC_HANDLE                 hCalendar
     );
 
+#if 0
 ANSC_STATUS
 AnscGetWholeTickInMicroSeconds
     (
         PANSC_UINT64                pWholeTicks
     );
-
+#endif
 
 /***********************************************************
             FUNCTIONS IMPLEMENTED IN ANSC_TIMER.C

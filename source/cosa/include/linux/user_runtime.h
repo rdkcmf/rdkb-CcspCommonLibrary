@@ -136,7 +136,9 @@ _ansc_ultoa
     #define  _ansc_stricmp                          strcasecmp
     #define  _ansc_strcoll                          strcoll
     #define  _ansc_strcspn                          strcspn
+#if 0
     #define  _ansc_strdup                           _strdup
+#endif
     #define  _ansc_strspn                           strspn
     #define  _ansc_strstr                           strstr
     #define  _ansc_strtok                           strtok

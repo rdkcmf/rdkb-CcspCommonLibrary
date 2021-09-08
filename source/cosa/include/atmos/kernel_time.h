@@ -136,6 +136,7 @@ KernelGetTickInMilliSeconds
         VOID
     );
 
+#if 0
 ULONG
 KernelGetTickInMicroSeconds
     (
@@ -148,6 +149,7 @@ KernelGetTickInMicroSeconds64
         ULONG*                      hi_part,
         ULONG*                      lo_part
     );
+#endif
 
 void
 KernelGetSystemTime

@@ -128,6 +128,7 @@ UserGetTickInMilliSeconds
         VOID
     );
 
+#if 0
 ULONG
 UserGetTickInMicroSeconds
     (
@@ -140,6 +141,7 @@ UserGetTickInMicroSeconds64
         ULONG*                      hi_part, 
         ULONG*                      lo_part
     );
+#endif
 
 void
 UserGetSystemTime

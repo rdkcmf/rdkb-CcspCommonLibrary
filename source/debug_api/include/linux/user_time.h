@@ -127,12 +127,15 @@ UserGetTickInMilliSeconds2();
 
 __inline void UserSetDelta();
 
+#if 0
 ULONG
 UserGetTickInMicroSeconds();
 VOID
 UserGetTickInMicroSeconds64(
         ULONG*                      hi_part,
         ULONG*                      lo_part);
+#endif
+
 void
 UserGetNtpTime(time_t*  ltime);
 void

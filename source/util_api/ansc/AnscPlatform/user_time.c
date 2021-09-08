@@ -211,7 +211,7 @@ UserGetTickInMilliSecondsAbs()
 	return ulSecond * 1000 + ulHundredth * 10;
 }
 */
-
+#if 0
 ULONG
 UserGetTickInMicroSeconds
     (
@@ -233,7 +233,7 @@ UserGetTickInMicroSeconds64
     *hi_part = 0;
     *lo_part = UserGetTickInMicroSeconds();
 }
-
+#endif
 void
 UserGetSystemTime(USER_SYSTEM_TIME*  pSystemTime)
 {

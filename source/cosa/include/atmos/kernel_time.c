@@ -104,7 +104,7 @@ KernelGetTickInMilliSeconds
     return  ulValue;
 }
 
-
+#if 0
 ULONG
 KernelGetTickInMicroSeconds
     (
@@ -122,7 +122,7 @@ KernelGetTickInMicroSeconds
 
     return  ulValue;
 }
-
+#endif
 
 static   const ULONG
 g32BitLowMask[32] =

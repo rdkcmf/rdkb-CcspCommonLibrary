@@ -79,7 +79,10 @@
 
 #include "ansc_memory_complement.h"
 
+#if 0
 #define  ANSC_STRING_FORMAT                         _ansc_sprintf
+#endif
+
 #define  AnscStrStr                                 _ansc_strstr
 #define  AnscStrChr                                 _ansc_strchr
 #define  AnscStrSpn                                 _ansc_strspn
@@ -89,7 +92,9 @@
 #define  AnscString2Double                          _ansc_atof
 #define  AnscInt2String                             _ansc_ultoa
 
+#if 0
 #define  AnscStrEqualNoCase(s1, s2)                 AnscEqualString1(s1, s2, FALSE)
+#endif
 
 
 /*
@@ -132,7 +137,7 @@ AnscDupString
         PUCHAR                      pStr
     );
 
-
+#if 0
 PUCHAR
 AnscDupString2
     (
@@ -141,7 +146,7 @@ AnscDupString2
         ULONG                       ulNumPadding
     );
 
-
+ 
 PUCHAR
 AnscDupIp4Addr
     (
@@ -155,14 +160,14 @@ AnscDupMacAddr
         PUCHAR                      pStr
     );
 
-
+ 
 void
 AnscStr2Ip4Addr
     (
         PUCHAR                      pStr,
         PUCHAR                      pIp4Addr
     );
-
+#endif
 
 PVOID
 AnscMemUtilRealloc
@@ -172,7 +177,7 @@ AnscMemUtilRealloc
         ULONG                       ulNewSize
     );
 
-
+#if 0
 PUCHAR
 AnscStringUtf16ToUtf8
     (
@@ -259,6 +264,7 @@ AnscStringUtf8T0Utf16Size
     (
         PUCHAR                      pStr
     );
+#endif
 
 BOOL
 AnscValidStringCheck
@@ -278,6 +284,7 @@ is_Ipv6_address
         PUCHAR                     pString
     );
 
+#if 0    
 #if ( defined(_ANSC_WINDOWSNT) ||  defined(_ANSC_WINDOWS9X) ) && !defined(_ANSC_KERNEL)
 
 static __inline  int
@@ -365,7 +372,7 @@ AnscMbstoWcs
 
 
 #endif
-
+#endif
 
 #endif
 

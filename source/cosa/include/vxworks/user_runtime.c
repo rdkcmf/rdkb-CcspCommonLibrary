@@ -165,7 +165,7 @@ _ansc_ultoa
     return  pBuf;
 }
 
-
+#if 0
 char*
 _ansc_strdup
     (
@@ -183,6 +183,7 @@ _ansc_strdup
 
     return pTemp;
 }
+#endif
 
 /**********************************************************************
 
