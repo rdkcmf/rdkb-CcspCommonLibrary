@@ -3369,7 +3369,7 @@ int CcspBaseIf_isSystemReady_rbus(
     )
 {
     int ret = CCSP_SUCCESS;
-    char* param = "Device.CR.SystemReady";
+    char* parameterNames[1] = {"Device.CR.SystemReady"};
     int size;
     parameterValStruct_t** value = 0;
 
@@ -3379,14 +3379,14 @@ int CcspBaseIf_isSystemReady_rbus(
               bus_handle,
               dst_component_id,
               NULL,
-              &param,
+              parameterNames,
               1,
               &size,
               &value );
 
     if(ret == CCSP_SUCCESS  && size >= 1)
     {
-        CcspTraceDebug(("%s %s is %s\n", __FUNCTION__, param, value[0]->parameterValue));
+        CcspTraceDebug(("%s %s is %s\n", __FUNCTION__, parameterNames[0], value[0]->parameterValue));
         if(AnscEqualString(value[0]->parameterValue, "true", FALSE))
             *val = 1;
         else
@@ -3395,7 +3395,7 @@ int CcspBaseIf_isSystemReady_rbus(
     }
     else
     {
-        CcspTraceError(("%s CcspBaseIf_getParameterValues_rbus %s failed ret=%d\n", __FUNCTION__, param[0], ret));
+        CcspTraceError(("%s CcspBaseIf_getParameterValues_rbus %s failed ret=%d\n", __FUNCTION__, parameterNames[0], ret));
     }
 
     return ret;
@@ -3724,30 +3724,80 @@ int CcspBaseIf_informEndOfSession (
     return ret;
 }
 
+/* For rbus2.0 based component, Health is a parameter you get. */
+int CcspBaseIf_getHealth_rbus2(
+    void* bus_handle,
+    const char* dst_component_id,
+    int *health
+    )
+{
+    int ret = CCSP_SUCCESS;
+    char* parameterNames[1];
+    char param[256];
+    int size;
+    parameterValStruct_t** value = 0;
+
+    *health = 0;
+
+    /*strip any eRT. prefix*/
+    snprintf(param, 256, "%s.Health", dst_component_id + (strncmp(dst_component_id, "eRT.", 4) ? 0 : 4));
+    parameterNames[0] = param;
+
+    ret = CcspBaseIf_getParameterValues_rbus(
+              bus_handle,
+              dst_component_id,
+              NULL,
+              parameterNames,
+              1,
+              &size,
+              &value );
+
+    if(ret == CCSP_SUCCESS  && size >= 1)
+    {
+        CcspTraceDebug(("%s %s is %s\n", __FUNCTION__, param, value[0]->parameterValue));
+        *health = atoi(value[0]->parameterValue);
+        free_parameterValStruct_t(bus_handle, size, value);
+    }
+    else
+    {
+        CcspTraceError(("%s CcspBaseIf_getParameterValues_rbus %s failed ret=%d\n", __FUNCTION__, param, ret));
+    }
+
+    return ret;
+}
+
+
 int CcspBaseIf_getHealth_rbus(
     void* bus_handle,
     const char* dst_component_id,
     char* dbus_path,
     int *health)
 {
-    UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dbus_path);
-    int ret = CCSP_FAILURE;
-    int32_t status = 0;
-    rbusMessage request, response;
 
-    rbusMessage_Init(&request);
-    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id, METHOD_GETHEALTH, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    /*call CcspBaseIf_getHealth_rbus2 for any rbus2.0 based components*/
+    if(strstr(dst_component_id, CCSP_DBUS_INTERFACE_CR))
     {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, ret);
-        return CCSP_FAILURE;
+        return CcspBaseIf_getHealth_rbus2(bus_handle, dst_component_id, health);
     }
+    else
+    {
+        int ret = CCSP_FAILURE;
+        int32_t status = 0;
+        rbusMessage request, response;
 
-    rbusMessage_GetInt32(response, &status);
-    RBUS_LOG("exiting CcspBaseIf_getHealth_rbus with status %d\n", status);
-    *health = (int)status;
+        rbusMessage_Init(&request);
+        if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod(dst_component_id, METHOD_GETHEALTH, request, CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+        {
+            RBUS_LOG_ERR("%s rbus_invokeRemoteMethod: Err: %d\n", __FUNCTION__, ret);
+            return CCSP_FAILURE;
+        }
 
-    rbusMessage_Release(response);
+        rbusMessage_GetInt32(response, &status);
+        RBUS_LOG("exiting CcspBaseIf_getHealth_rbus with status %d\n", status);
+        *health = (int)status;
+        rbusMessage_Release(response);
+    }
     return CCSP_SUCCESS;
 }
 
