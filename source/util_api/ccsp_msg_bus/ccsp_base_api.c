@@ -1437,8 +1437,13 @@ int CcspBaseIf_AddTblRow_rbus(
     UNREFERENCED_PARAMETER(dbus_path);
     int ret = CCSP_FAILURE;
     int32_t tmp = 0;
+    const char ch = '.';
     rbusMessage request, response;
 
+    if(objectName == NULL || instanceNumber == NULL || objectName[strlen(objectName)-1] != ch)
+    {
+        return CCSP_ERR_INVALID_PARAMETER_VALUE;
+    }
     rbusMessage_Init(&request);
     rbusMessage_SetInt32(request, sessionId);
     rbusMessage_SetString(request, objectName);
