@@ -190,9 +190,9 @@ int openssl_load_ca_certificates(int who_calls)
         
         res = SSL_CTX_load_verify_locations(ssl_ctx, pCACertFile, NULL);
 
-        if ( !res )
+        if (res != 1)
         {
-            printf("openssl_load_ca_certificates -- failed to load certificate, error code = %d!", res);
+            printf("openssl_load_ca_certificates -- failed to load certificate\n");
         }
 
         pCACertFile = pSep ? pSep + 1 : NULL;
