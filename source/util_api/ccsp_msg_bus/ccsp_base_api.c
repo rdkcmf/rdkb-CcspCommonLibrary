@@ -5951,35 +5951,6 @@ int CcspBaseIf_SetRemoteParameterValue
 
 }
 
-int readRemoteIP(char *sIP, int size,char *sName)
-{
-        #define DATA_SIZE 1024
-        FILE *fp1;
-        char buf[DATA_SIZE] = {0};
-        char *urlPtr = NULL;
-        int ret=-1;
-        // Grab the ARM or ATOM RPC IP address
-        fp1 = fopen("/etc/device.properties", "r");
-        if (fp1 == NULL) {
-            CcspTraceError(("Error opening properties file! \n"));
-            return -1;
-        }
-        while (fgets(buf, DATA_SIZE, fp1) != NULL) {
-            // Look for ARM_ARPING_IP or ATOM_ARPING_IP
-            if (strstr(buf, sName) != NULL) {
-                buf[strcspn(buf, "\r\n")] = 0; // Strip off any carriage returns
-                // grab URL from string
-                urlPtr = strstr(buf, "=");
-                urlPtr++;
-                strncpy(sIP, urlPtr, size);
-              ret=0;
-              break;
-            }
-        }
-        fclose(fp1);
-        return ret;
-}
-
 int getPartnerId (char *partnerID)
 {
 	char buffer[64];
