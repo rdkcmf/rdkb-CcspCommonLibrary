@@ -953,7 +953,7 @@ AnscAsn1BitStringDecodingData
      */
     if( uValueLength > 20000)
     {
-        AnscTrace("The length of bit string is unreasonable '%d'\n", uValueLength);
+        AnscTrace("The length of bit string is unreasonable '%lu'\n", uValueLength);
 
         pMyObject->uLength = 0;
 
@@ -1462,7 +1462,7 @@ AnscAsn1BitStringReadyToEncode
      */
     if( pMyObject->uUnusedBit  > 7)
     {
-        AnscTrace("Unacceptable unused bit: %d\n", pMyObject->uUnusedBit);
+        AnscTrace("Unacceptable unused bit: %lu\n", pMyObject->uUnusedBit);
 
         return FALSE;
     }

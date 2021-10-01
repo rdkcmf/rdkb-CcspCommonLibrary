@@ -499,7 +499,7 @@ HttpMboSaveNonFileData
     }
 
 #ifdef   _DEBUG /* kang debug */
-    AnscTrace("Non file form data saved %u bytes.\n", ulDataLen);
+    AnscTrace("Non file form data saved %lu bytes.\n", ulDataLen);
     AnscPrintBinaryMessage((PUCHAR)AnscBdoGetBuffer(pBdo) + AnscBdoGetOffset(pBdo), ulDataLen);
 #endif
 

@@ -757,7 +757,7 @@ HttpApoPrvwoNotify
 
     AnscTrace
         (
-            "Event = %d is indicated on client connection of %d.%d.%d.%d / TCP %d\n",
+            "Event = %lu is indicated on client connection of %d.%d.%d.%d / TCP %d\n",
             ulEvent,
             pClientSocket->PeerAddress.Dot[0],
             pClientSocket->PeerAddress.Dot[1],

@@ -204,7 +204,7 @@ AnscFreeTaskRecord
         AnscFreeMemory(pTaskRecord);
     }
     else {
-    	AnscTrace("WARNING - AnscFreeTaskRecord, task record %lu-%p reference count is %d!\n",
+    	AnscTrace("WARNING - AnscFreeTaskRecord, task record %lu-%p reference count is %lu!\n",
     			pTaskRecord->Handle,pTaskRecord, pTaskRecord->RefCount);
     }
 
@@ -244,7 +244,7 @@ AnscTaskRoutine1
     {
         AnscTrace
             (
-                "Task %s is exiting, context = 0x%x!\n",
+                "Task %s is exiting, context = 0x%lx!\n",
                 pTaskRecord->Name,
                 (ULONG)pTaskRecord->hContext
             );
@@ -343,7 +343,7 @@ AnscTaskRoutine2
         {
             AnscTrace
                 (
-                    "Task %s is exiting, context = 0x%x!\n",
+                    "Task %s is exiting, context = 0x%lx!\n",
                     pTaskRecord->Name,
                     (ULONG)pTaskRecord->hContext
                 );

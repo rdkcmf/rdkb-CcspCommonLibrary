@@ -303,7 +303,7 @@ CcspComponentLoadCfg
         
         AnscTraceWarning
             ((
-                "Component Configuration:\n\tID=%s\n\tName=%s\n\tVersion=%u\n\tDbusPath=%s\n\tXmlCfgFile=%s\n",
+                "Component Configuration:\n\tID=%s\n\tName=%s\n\tVersion=%lu\n\tDbusPath=%s\n\tXmlCfgFile=%s\n",
                 pCfg->ComponentId,
                 pCfg->ComponentName,
                 pCfg->Version,
@@ -484,7 +484,7 @@ CcspComponentLoadDmXmlList
             }
             else
             {
-                AnscTraceWarning(("Data model XML file %d = %s\n", ulCount+1, pXmlCfgList->FileList[ulCount]));
+                AnscTraceWarning(("Data model XML file %lu = %s\n", ulCount+1, pXmlCfgList->FileList[ulCount]));
                 ulCount++;
 
                 /* goto next one */

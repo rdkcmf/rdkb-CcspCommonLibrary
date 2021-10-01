@@ -1018,7 +1018,7 @@ AnscAsn1AnyTraceObject
     {
         AnscTrace
             (
-                "%s ::=%s %s (L%d)\n",
+                "%s ::=%s %s (L%lu)\n",
                 pName,
                 pAttrBuffer,
                 ASN1Type2String(pMyObject->uType),

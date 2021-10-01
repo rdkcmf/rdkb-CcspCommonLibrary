@@ -674,11 +674,11 @@ TraceOIDValue
     {
         if( i != 0)
         {
-            AnscTrace(".%u", pArray[ i ]);
+            AnscTrace(".%lu", pArray[ i ]);
         }
         else
         {
-            AnscTrace("%u", pArray[ i ]);
+            AnscTrace("%lu", pArray[ i ]);
         }
     }
 }
@@ -983,7 +983,7 @@ TraceErrorMessage
         {
             AnscTrace
                 (
-                    "status code  '0x%X' = '%s'\n",
+                    "status code  '0x%lX' = '%s'\n",
                     anscStatus,
                     gErrorCodeToStringTable[i].pErrorString
                 );
@@ -1830,7 +1830,7 @@ PKIInitDHKeyParameterQ
     }
     else
     {
-        AnscTrace("The %d byte DH key is not supported yet.\n", length);
+        AnscTrace("The %lu byte DH key is not supported yet.\n", length);
 
         return ANSC_STATUS_FAILURE;
     }

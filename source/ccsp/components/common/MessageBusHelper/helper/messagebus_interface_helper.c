@@ -232,7 +232,7 @@ CcspCcMbi_GetParameterValues
             /*
              * Something serious has screwed up (e.g. we have run out of system memory), abort!
              */
-            AnscTraceError(("CcspCcMbi_GetParameterValues -- Something has screwed up. Failure status returned:0x%X \n",returnStatus));
+            AnscTraceError(("CcspCcMbi_GetParameterValues -- Something has screwed up. Failure status returned:0x%lX \n",returnStatus));
 
             for ( i = 0; i < (ULONG)size; i++ )
             {
@@ -595,7 +595,7 @@ EXIT:
         return CCSP_SUCCESS;
     }
     
-    AnscTrace("Error = %d in 'CcspCcMbi_SetParameterValues'\n", returnStatus);
+    AnscTrace("Error = %lu in 'CcspCcMbi_SetParameterValues'\n", returnStatus);
     
     return returnStatus;
 }

@@ -19,7 +19,7 @@
 [Unit]
 Description=rdkbLogMonitor service
 
-After=logagent.service dbus.service
+After=CcspCrSsp.service dbus.service
 ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]

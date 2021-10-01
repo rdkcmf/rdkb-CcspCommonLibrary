@@ -904,7 +904,7 @@ DslhObjroSetAllParamAttribs
                 continue;
             }
             if(pSetParamAttrib->RequesterID != 0)
-            CcspTraceInfo(("<<< %s pSetParamAttrib->RequesterID %lu >>>\n",__FUNCTION__,pSetParamAttrib->RequesterID));
+            CcspTraceInfo(("<<< %s pSetParamAttrib->RequesterID %u >>>\n",__FUNCTION__,pSetParamAttrib->RequesterID));
 
             pChildVarRecord->RequesterID = pSetParamAttrib->RequesterID;
             if ( pSetParamAttrib->bNotificationChange )
@@ -1348,7 +1348,7 @@ DslhObjroAddChildObject
 
     if( ulObjInsNumber == 0)
     {
-        AnscTrace("ulObjInsNumber == %d \n", ulObjInsNumber);
+        AnscTrace("ulObjInsNumber == %lu \n", ulObjInsNumber);
     }
 
     pChildObjRecord =

@@ -384,7 +384,7 @@ TlsCpoSign
                 );
     }
 
-    AnscTrace("Unsupported sign key type : '%d'\n", key_type);
+    AnscTrace("Unsupported sign key type : '%lu'\n", key_type);
 
     return ANSC_STATUS_FAILURE;
 }
@@ -683,7 +683,7 @@ TlsCpoVerify
                 );
     }
 
-    AnscTrace("Unsupported sign key type : '%d'\n", key_type);
+    AnscTrace("Unsupported sign key type : '%lu'\n", key_type);
 
     return FALSE;
 }

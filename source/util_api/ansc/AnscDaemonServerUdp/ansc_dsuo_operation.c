@@ -204,7 +204,7 @@ AnscDsuoEngage
 #if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     if ( pMyObject->Mode & ANSC_DSUO_MODE_XSOCKET )
     {
-        AnscTrace("AnscDsuoEngage -- the address is 0x%lX:%d, family %d.\n", ((pansc_socket_addr_in)&local_addr2)->sin_addr.s_addr, local_addr2.sin_port, local_addr2.sin_family);
+        AnscTrace("AnscDsuoEngage -- the address is 0x%X:%d, family %d.\n", ((pansc_socket_addr_in)&local_addr2)->sin_addr.s_addr, local_addr2.sin_port, local_addr2.sin_family);
         s_result = _xskt_bind(pMyObject->Socket, (xskt_socket_addr*)&local_addr2, sizeof(local_addr2));
     }
     else

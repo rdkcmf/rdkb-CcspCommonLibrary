@@ -649,7 +649,7 @@ SysRfoAddFolder
 
         AnscReleaseLock(&pMyObject->FolderTableLock);
     }
-    CcspTraceDebug(("%d.\n",returnStatus ));
+    CcspTraceDebug(("%lu.\n",returnStatus ));
     return  (ANSC_HANDLE)pSubFolder;
 }
 
@@ -1239,7 +1239,7 @@ SysRfoAddRecord
 
         AnscReleaseLock(&pMyObject->RecordTableLock);
     }
-    CcspTraceDebug(("%d.\n",returnStatus));
+    CcspTraceDebug(("%lu.\n",returnStatus));
     return  (ANSC_HANDLE)pRepRecord;
 }
 

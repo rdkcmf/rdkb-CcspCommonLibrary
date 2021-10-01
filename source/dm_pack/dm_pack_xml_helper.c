@@ -436,7 +436,7 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
     {
         AnscTrace
             (
-                "Failed to allocate %d memory for text of - '%s'\n",
+                "Failed to allocate %lu memory for text of - '%s'\n",
                 textSize,
                 pNewNode->Name
             );

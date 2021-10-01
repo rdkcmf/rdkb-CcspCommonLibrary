@@ -213,7 +213,7 @@ BspTemplateObjParse
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Start tokenizing, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Start tokenizing, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -222,7 +222,7 @@ BspTemplateObjParse
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Tokenizing done, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Tokenizing done, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -240,7 +240,7 @@ BspTemplateObjParse
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Start compiling, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Start compiling, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -249,7 +249,7 @@ BspTemplateObjParse
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Compilation done, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Compilation done, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -1633,7 +1633,7 @@ BspTemplateObjPrintData
         break;
 
     case BspBranch_eNumber:
-        AnscTrace("%d ", pBrData->Value.n);
+        AnscTrace("%ld ", pBrData->Value.n);
         break;
 
     case BspBranch_eReal:
@@ -1650,7 +1650,7 @@ BspTemplateObjPrintData
         break;
 
     case BspBranch_eVar:
-        AnscTrace("var %d ", pBrData->Value.n);
+        AnscTrace("var %ld ", pBrData->Value.n);
         break;
 
     case BspBranch_eEmpty:
@@ -1666,7 +1666,7 @@ BspTemplateObjPrintData
 
             pData = &pBrData->Value.a;
 
-            AnscTrace("dimension %d ", pData->Count);
+            AnscTrace("dimension %lu ", pData->Count);
 
             for (i = 0; i < pData->Count; i ++)
             {
@@ -1813,7 +1813,7 @@ BspTemplateObjPrintBranch
     {
         if (pMyObject->ulErrLineNo)
         {
-            AnscTrace("Line %d: %s\n", pMyObject->ulErrLineNo, pMyObject->pErrMsg);
+            AnscTrace("Line %lu: %s\n", pMyObject->ulErrLineNo, pMyObject->pErrMsg);
         }
 
         pBr = (PBSP_TEMPLATE_BRANCH_OBJECT)pMyObject->hTree;
@@ -2259,7 +2259,7 @@ BspTemplateObjCompile
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Compiling procedures, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Compiling procedures, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -2268,7 +2268,7 @@ BspTemplateObjCompile
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Procedures compiled, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Procedures compiled, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
     }
@@ -2298,7 +2298,7 @@ BspTemplateObjCompile
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Building syntax tree, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Building syntax tree, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -2308,9 +2308,9 @@ BspTemplateObjCompile
     if ( BspEngIsCallFlowTraced() )
     {
         if ( pMyObject->hTree != (ANSC_HANDLE)NULL )
-        {    AnscTrace("Syntax tree has built, time = %d (ms) ...\n", AnscGetTickInMilliSeconds()); }
+        {    AnscTrace("Syntax tree has built, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds()); }
         else
-        {    AnscTrace("Syntax error detected or procedure has no statement, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());}
+        {    AnscTrace("Syntax error detected or procedure has no statement, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());}
     }
 #endif
 
@@ -2464,7 +2464,7 @@ BspTemplateObjBuildTree
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Parsing statement list, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Parsing statement list, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -2474,7 +2474,7 @@ BspTemplateObjBuildTree
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Statement list created, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Statement list created, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -2486,7 +2486,7 @@ BspTemplateObjBuildTree
     {
         pTemp->Remove((ANSC_HANDLE)pTemp);
 
-        AnscTrace("*** Compilation error: line %d - %s ***.\n", pMyObject->ulErrLineNo, pMyObject->pErrMsg);
+        AnscTrace("*** Compilation error: line %lu - %s ***.\n", pMyObject->ulErrLineNo, pMyObject->pErrMsg);
         AnscTrace("*** Note: an error in a proccedure will make it void! ***\r\n");
 
         return NULL;

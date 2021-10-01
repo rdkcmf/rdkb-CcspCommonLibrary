@@ -401,7 +401,7 @@ AnscPrintBinaryMessage
     ULONG                           i          = 0;
     ULONG                           j          = 0;
 
-    AnscTrace("   ***** binary message size %04d bytes: *****    \n", ulSize);
+    AnscTrace("   ***** binary message size %04lu bytes: *****    \n", ulSize);
 
     for ( i = 0; i < ulSize / 16; i++ )
     {

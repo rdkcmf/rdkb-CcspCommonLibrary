@@ -146,7 +146,7 @@ AnscCryptoPubSSLeayRSAVerify
                     );
     }
 
-    AnscTrace("Unknown RSA hash size '%s'\n", ulSizeOfData);
+    AnscTrace("Unknown RSA hash size '%lu'\n", ulSizeOfData);
 
     return ANSC_STATUS_FAILURE;
 }

@@ -509,7 +509,7 @@ AnscAsn1IntegerEqualsTo
             {
                 AnscTrace
                     (
-                        "Different length in AnscAsn1IntegerEqualsTo() (%d) != (%d).\n",
+                        "Different length in AnscAsn1IntegerEqualsTo() (%lu) != (%lu).\n",
                         pMyObject->uLength, 
                         pNewObject->uLength
                     );
@@ -525,7 +525,7 @@ AnscAsn1IntegerEqualsTo
         {
             AnscTrace
                 (
-                    "Different value in AnscAsn1IntegerEqualsTo() (%d) != (%d).\n",
+                    "Different value in AnscAsn1IntegerEqualsTo() (%lu) != (%lu).\n",
                     pMyObject->lValue, 
                     pNewObject->lValue
                 );
@@ -786,7 +786,7 @@ AnscAsn1IntegerDecodingData
      */
     if( uValueLength > 2000)
     {
-        AnscTrace("The length of integer is unreasonable '%d'\n", uValueLength);
+        AnscTrace("The length of integer is unreasonable '%lu'\n", uValueLength);
 
         pMyObject->uLength = 0;
 
@@ -1334,7 +1334,7 @@ AnscAsn1IntegerTraceObject
         {
            AnscTrace
                (
-                    "%s ::=%s %s (%d)\n", 
+                    "%s ::=%s %s (%lu)\n", 
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
@@ -1345,7 +1345,7 @@ AnscAsn1IntegerTraceObject
         {
            AnscTrace
                (
-                    "%s ::=%s %s (L%d - ",     
+                    "%s ::=%s %s (L%lu - ",     
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),
@@ -1360,7 +1360,7 @@ AnscAsn1IntegerTraceObject
         {
            AnscTrace
                (
-                    "%s ::=%s %s (%d - ",     
+                    "%s ::=%s %s (%lu - ",     
                     pName,
                     pAttrBuffer,
                     ASN1Type2String(pMyObject->uType),

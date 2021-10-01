@@ -299,7 +299,7 @@ AnscDstoEngage
 #ifdef _ANSC_IPV6_COMPATIBLE_
         s_result = _xskt_bind(pMyObject->Socket, pxskt_local_addrinfo->ai_addr, pxskt_local_addrinfo->ai_addrlen);
 #else
-        AnscTrace("AnscDstoEngage -- the address is 0x%lX:%d, familty %d.\n", _ansc_ntohl(local_addr2.sin_addr.s_addr), _ansc_ntohs(local_addr2.sin_port), local_addr2.sin_family);
+        AnscTrace("AnscDstoEngage -- the address is 0x%X:%d, familty %d.\n", _ansc_ntohl(local_addr2.sin_addr.s_addr), _ansc_ntohs(local_addr2.sin_port), local_addr2.sin_family);
         s_result = _xskt_bind(pMyObject->Socket, (xskt_socket_addr*)&local_addr2, sizeof(local_addr2));
 #endif
     }

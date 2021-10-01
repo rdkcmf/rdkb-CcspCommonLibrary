@@ -221,7 +221,7 @@ DslhObjcoTableSynchronize
         {
             CcspTraceDebug(("Before Synchronizing:%s\n", pObjRecord->FullName));
             returnStatus = pDslhTr69If->Methods.MethodWithLastName.Synchronize(pMyObject->hInsContext);
-            CcspTraceDebug(("After Synchronizing:%s:%d\n", pObjRecord->FullName, returnStatus));
+            CcspTraceDebug(("After Synchronizing:%s:%lu\n", pObjRecord->FullName, returnStatus));
 
             return returnStatus;
         }

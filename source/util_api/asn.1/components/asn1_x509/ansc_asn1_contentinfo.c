@@ -1518,7 +1518,7 @@ verifyMessageDigest
     {
         AnscTrace
             (
-                "The length of MD not matched, '%d' is expected, but it's '%d'\n",
+                "The length of MD not matched, '%lu' is expected, but it's '%lu'\n",
                 pStrObj->uLength,
                 hashResult.Length
             );
@@ -1790,7 +1790,7 @@ AnscAsn1SignedDataVerifyMessageDigest
 
         if( pCertificate == NULL)
         {
-            AnscTrace("Failed to find the cerificate for SignerInfo '%d'\n", i);
+            AnscTrace("Failed to find the cerificate for SignerInfo '%lu'\n", i);
 
             if( pUlQuestionIndex != NULL)
             {
@@ -1804,7 +1804,7 @@ AnscAsn1SignedDataVerifyMessageDigest
 
         if(!verifySignerInfo( pEncoding, length, pCertificate, pSignerInfo))
         {
-            AnscTrace("Failed to verify SignerInfo '%d'\n", i);
+            AnscTrace("Failed to verify SignerInfo '%lu'\n", i);
 
             if( pUlQuestionIndex != NULL)
             {

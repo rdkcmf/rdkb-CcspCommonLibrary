@@ -364,7 +364,7 @@ addAttributeValue
 
     if( uAdded >= maxiSize)
     {
-        AnscTrace("Name size is too big: %d >= %d\n", uAdded, maxiSize);
+        AnscTrace("Name size is too big: %lu >= %lu\n", uAdded, maxiSize);
 
         return FALSE;
     }
@@ -381,7 +381,7 @@ addAttributeValue
 
     if( uAdded + uLength + 1 >= maxiSize)
     {
-        AnscTrace("Name size is too big: %d >= %d\n", uAdded + uLength + 1, maxiSize);
+        AnscTrace("Name size is too big: %ld >= %ld\n", uAdded + uLength + 1, maxiSize);
 
         return FALSE;
     }

@@ -614,7 +614,7 @@ AnscAsn1NULLDecodingData
 
     if( uLeftSize != 0)
     {
-        AnscTrace("The length of NULL tag must be 0, not '%d'\n", uLeftSize);
+        AnscTrace("The length of NULL tag must be 0, not '%lu'\n", uLeftSize);
 
         return ANSC_ASN1_UNACCEPTABLE_VALUE_SIZE;
     }

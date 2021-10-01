@@ -404,7 +404,7 @@ EXIT:
 
     if ( returnStatus != ANSC_STATUS_SUCCESS )
     {
-        AnscTraceWarning(("DslhDmagntLoadDataModelXML -- failed, error = %d!\n", returnStatus));
+        AnscTraceWarning(("DslhDmagntLoadDataModelXML -- failed, error = %lu!\n", returnStatus));
     }
     
     if( pRootNode != NULL)

@@ -531,7 +531,7 @@ AnscCryptoHmacSha256Digest
 
     AnscTraceFlow
         ((
-            "%s -- size = %d, buffer = %s, key = %02X.%02X.%02X.%02X.%02X.%02X..., hash length = %d, key length = %d, block size %d, output size %d\n", 
+            "%s -- size = %lu, buffer = %s, key = %02X.%02X.%02X.%02X.%02X.%02X..., hash length = %lu, key length = %lu, block size %d, output size %d\n", 
             __FUNCTION__,
             size,
             (char*)buffer,

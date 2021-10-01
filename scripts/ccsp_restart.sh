@@ -25,14 +25,8 @@ source $UTOPIA_PATH/log_env_var.sh
 exec 3>&1 4>&2 >>$SELFHEALFILE 2>&1
 
 	killall PsmSsp
-        killall self_heal_connectivity_test.sh
-        killall resource_monitor.sh
-
-	if [ -f "/tmp/logagent_initialized" ]
-	then
-		rm -rf /tmp/logagent_initialized
-	fi
-        killall log_agent
+    killall self_heal_connectivity_test.sh
+    killall resource_monitor.sh
 
 	if [ -f "/tmp/pam_initialized" ]
 	then
@@ -268,18 +262,9 @@ ulimit -c unlimited
 	fi
 
 	sleep 2
-	echo "RDKB_SELFHEAL : Resetting process log_agent on atom reset"
 
-        cd /usr/ccsp/logagent
-
-        if [ "x"$Subsys = "x" ];then
-                $BINPATH/log_agent
-        else
-                echo "$BINPATH/log_agent -subsys $Subsys"
-                $BINPATH/log_agent -subsys $Subsys
-        fi
-        echo "Enable RFC feature from ccsp restart"
-        # Enable RFC feature
-        if [ -f  /lib/rdk/rfc.service ]; then
-                /bin/sh /lib/rdk/rfc.service &
-        fi
+    echo "Enable RFC feature from ccsp restart"
+    # Enable RFC feature
+    if [ -f  /lib/rdk/rfc.service ]; then
+            /bin/sh /lib/rdk/rfc.service &
+    fi

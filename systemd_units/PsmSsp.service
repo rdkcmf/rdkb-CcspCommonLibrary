@@ -19,7 +19,7 @@
 [Unit]
 Description=PsmSsp service
 
-After=logagent.service
+After=CcspCrSsp.service
 
 [Service]
 Type=forking

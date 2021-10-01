@@ -727,7 +727,7 @@ AnscTraceMemoryTable
 
             CcspTraceError
                 ((
-                    " *** mem_block = 0x%8X, size = %7d bytes, id = %8d, %s ***\n",
+                    " *** mem_block = 0x%8p, size = %7lu bytes, id = %8lu, %s ***\n",
                     pMemoryAllocItem->MemoryPointer,
                     pMemoryAllocItem->MemorySize,
                     pMemoryAllocItem->AllocId,
@@ -738,7 +738,7 @@ AnscTraceMemoryTable
         }
     }
 
-    CcspTraceError(("=== Total memory blocks not freed %u.\n\n", TotalBlocks));
+    CcspTraceError(("=== Total memory blocks not freed %lu.\n\n", TotalBlocks));
 
     AnscReleaseSpinLock(&g_tRecordDetailSpinLock);
 
@@ -783,7 +783,7 @@ AnscTraceMemoryTableFromBlockId
 
             CcspTraceError
                 ((
-                    " *** mem_block = 0x%8X, size = %7d bytes, id = %8d, %s ***\n",
+                    " *** mem_block = 0x%8p, size = %7lu bytes, id = %8lu, %s ***\n",
                     pMemoryAllocItem->MemoryPointer,
                     pMemoryAllocItem->MemorySize,
                     pMemoryAllocItem->AllocId,
@@ -794,7 +794,7 @@ AnscTraceMemoryTableFromBlockId
         }
     }
 
-    CcspTraceError(("=== Total memory blocks not freed %u.\n\n", TotalBlocks));
+    CcspTraceError(("=== Total memory blocks not freed %lu.\n\n", TotalBlocks));
 
     AnscReleaseSpinLock(&g_tRecordDetailSpinLock);
 
@@ -826,7 +826,7 @@ AnscPrintComponentMemoryTable
 
             CcspTraceError
                 ((
-                    " *** mem_block = 0x%8X, size = %7d bytes, id = %8d, %s ***\n",
+                    " *** mem_block = 0x%8p, size = %7lu bytes, id = %8lu, %s ***\n",
                     pMemoryAllocItem->MemoryPointer,
                     pMemoryAllocItem->MemorySize,
                     pMemoryAllocItem->AllocId,
@@ -906,7 +906,7 @@ void AnscPrintFileLineMemoryTable
 
             CcspTraceError
                 ((
-                    " *** mem_block = 0x%8X, size = %7d bytes, id = %8d, %s ***\n",
+                    " *** mem_block = 0x%8p, size = %7lu bytes, id = %8lu, %s ***\n",
                     pMemoryAllocItem->MemoryPointer,
                     pMemoryAllocItem->MemorySize,
                     pMemoryAllocItem->AllocId,
@@ -1248,7 +1248,7 @@ AnscFreeMemoryRecordDetail
         {
             CcspTraceWarning2
                 (pComponentName, (
-                    "!! memory block 0x%lX has either been freed already or never allocated !!\n",
+                    "!! memory block 0x%p has either been freed already or never allocated !!\n",
                     pMemoryBlock
                 ));
             return;
@@ -1265,7 +1265,7 @@ AnscFreeMemoryRecordDetail
 
                 CcspTraceWarning2
                     (pComponentName, (
-                        "!!Sky is falling down, memory block 0x%lX was written out of boundary in Tail!! owner = %s, size = %lu/%lu!\n",
+                        "!!Sky is falling down, memory block 0x%p was written out of boundary in Tail!! owner = %s, size = %lu/%lu!\n",
                         pMemoryBlock,
                         pMemoryAllocItem->OwnerDesp,
                         ulMemorySize,
@@ -1284,7 +1284,7 @@ AnscFreeMemoryRecordDetail
 
                 CcspTraceWarning2
                     (pComponentName, (
-                        "!!Sky is falling down, memory block 0x%lX was written out of boundary in Head!! owner = %s, size = %lu/%lu, ",
+                        "!!Sky is falling down, memory block 0x%p was written out of boundary in Head!! owner = %s, size = %lu/%lu, ",
                         pMemoryBlock,
                         pMemoryAllocItem->OwnerDesp,
                         ulMemorySize,
@@ -1304,7 +1304,7 @@ AnscFreeMemoryRecordDetail
 
                     CcspTraceWarning2
                         (pComponentName, (
-                            "Found the memory block before this one, memory pointer = 0x%lX, owner = %s. Head/Tail content = 0x%lX 0x%lX/0x%lX 0x%lX.\n",
+                            "Found the memory block before this one, memory pointer = 0x%p, owner = %s. Head/Tail content = 0x%lu 0x%lu/0x%lu 0x%lu.\n",
                             pPrevAllocItem->MemoryPointer,
                             pPrevAllocItem->OwnerDesp,
                             AnscReadUlong(pMemoryArray1),
@@ -1323,13 +1323,13 @@ AnscFreeMemoryRecordDetail
             ULONG                   ulIndex         = 0;
             ULONG                   ulFullMemSize   = sizeof(ULONG) + ANSC_MEMORY_ALLOC_HEAD_SIZE + ulMemorySize + ANSC_MEMORY_ALLOC_TAIL_SIZE;
 
-            CcspTraceWarning2(pComponentName, ("Dump out the content of memory block 0x%lX, size = %lu, full size = %lu:", pMemoryBlock, ulMemorySize, ulFullMemSize));
+            CcspTraceWarning2(pComponentName, ("Dump out the content of memory block 0x%p, size = %lu, full size = %lu:", pMemoryBlock, ulMemorySize, ulFullMemSize));
 
             for ( ulIndex = 0; ulIndex < (ulFullMemSize - (ulFullMemSize % 16)); ulIndex++ )
             {
                 if ( (ulIndex % 16) == 0 )
                 {
-                    CcspTraceWarning(("\n%08lX: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
+                    CcspTraceWarning(("\n%8p: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
                 }
                 else
                 {
@@ -1341,7 +1341,7 @@ AnscFreeMemoryRecordDetail
             {
                 if ( (ulIndex % 16) == 0 )
                 {
-                    CcspTraceWarning(("\n%08lX: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
+                    CcspTraceWarning(("\n%8p: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
                 }
                 else
                 {
@@ -1468,7 +1468,7 @@ void AnscLiveMemoryInspectRecordDetail
             
                         CcspTraceWarning2
                             (pComponentName, (
-                                "!!Sky is falling down, memory block 0x%lX was written out of boundary in Tail!! owner = %s, size = %lu/%lu!\n",
+                                "!!Sky is falling down, memory block 0x%p was written out of boundary in Tail!! owner = %s, size = %lu/%lu!\n",
                                 pMemoryBlock,
                                 pMemoryAllocItem->OwnerDesp,
                                 ulMemorySize,
@@ -1487,7 +1487,7 @@ void AnscLiveMemoryInspectRecordDetail
             
                         CcspTraceWarning2
                             (pComponentName, (
-                                "!!Sky is falling down, memory block 0x%lX was written out of boundary in Head!! owner = %s, size = %lu/%lu, ",
+                                "!!Sky is falling down, memory block 0x%p was written out of boundary in Head!! owner = %s, size = %lu/%lu, ",
                                 pMemoryBlock,
                                 pMemoryAllocItem->OwnerDesp,
                                 ulMemorySize,
@@ -1509,7 +1509,7 @@ void AnscLiveMemoryInspectRecordDetail
             
                             CcspTraceWarning2
                                 (pComponentName, (
-                                    "Found the memory block before this one, memory pointer = 0x%lX, owner = %s. Head/Tail content = 0x%lX 0x%lX/0x%lX 0x%lX.\n",
+                                    "Found the memory block before this one, memory pointer = 0x%p, owner = %s. Head/Tail content = 0x%lu 0x%lu/0x%lu 0x%lu.\n",
                                     pPrevAllocItem->MemoryPointer,
                                     pPrevAllocItem->OwnerDesp,
                                     AnscReadUlong(pMemoryArray1),
@@ -1528,13 +1528,13 @@ void AnscLiveMemoryInspectRecordDetail
                     ULONG                   ulIndex         = 0;
                     ULONG                   ulFullMemSize   = sizeof(ULONG) + ANSC_MEMORY_ALLOC_HEAD_SIZE + ulMemorySize + ANSC_MEMORY_ALLOC_TAIL_SIZE;
             
-                    CcspTraceWarning2(pComponentName, ("Dump out the content of memory block 0x%lX, size = %lu, full size = %lu:", pMemoryBlock, ulMemorySize, ulFullMemSize));
+                    CcspTraceWarning2(pComponentName, ("Dump out the content of memory block 0x%p, size = %lu, full size = %lu:", pMemoryBlock, ulMemorySize, ulFullMemSize));
             
                     for ( ulIndex = 0; ulIndex < (ulFullMemSize - (ulFullMemSize % 16)); ulIndex++ )
                     {
                         if ( (ulIndex % 16) == 0 )
                         {
-                            CcspTraceWarning(("\n%08lX: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
+                            CcspTraceWarning(("\n%8p: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
                         }
                         else
                         {
@@ -1546,7 +1546,7 @@ void AnscLiveMemoryInspectRecordDetail
                     {
                         if ( (ulIndex % 16) == 0 )
                         {
-                            CcspTraceWarning(("\n%08lX: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
+                            CcspTraceWarning(("\n%8p: %02X", pMemoryPointer + ulIndex, pMemoryPointer[ulIndex]));
                         }
                         else
                         {

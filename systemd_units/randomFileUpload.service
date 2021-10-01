@@ -19,7 +19,7 @@
 [Unit]
 Description=Random file upload service
 
-After=logagent.service rdkbLogMonitor.service
+After=CcspCrSsp.service rdkbLogMonitor.service
 ConditionPathExists=/rdklogger/fileUploadRandom.sh
 
 [Service]

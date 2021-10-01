@@ -234,7 +234,7 @@ AnscTagInfoParsingData
 
     if( i >= 4)
     {
-        AnscTrace("Unbelievable! The tag length is more than 4 - '%d'\n", ( i + 1 ));
+        AnscTrace("Unbelievable! The tag length is more than 4 - '%lu'\n", ( i + 1 ));
 
         return ANSC_ASN1_UNEXPECTED_TAG;
     }

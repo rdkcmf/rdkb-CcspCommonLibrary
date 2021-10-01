@@ -130,18 +130,6 @@ else
 	$BINPATH/CcspCrSsp -subsys $Subsys
 fi
 
-if [ -e ./logagent ]; then
-	cd logagent
-
-	if [ "x"$Subsys = "x" ];then
-		$BINPATH/log_agent
-	else
-		echo "$BINPATH/log_agent -subsys $Subsys"
-		$BINPATH/log_agent -subsys $Subsys
-	fi
-	cd ..
-fi
-
 if [ "x"$Subsys = "x" ];then
 	$BINPATH/PsmSsp
 else

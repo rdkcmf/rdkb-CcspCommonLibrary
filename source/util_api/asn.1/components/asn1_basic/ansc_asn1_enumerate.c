@@ -675,7 +675,7 @@ AnscAsn1EnumerateDecodingData
 
     if( uLeftSize > sizeof(ULONG))
     {
-        AnscTrace("The length of ENUMERATE value is '%d', unacceptable.\n", uLeftSize);
+        AnscTrace("The length of ENUMERATE value is '%lu', unacceptable.\n", uLeftSize);
 
         return ANSC_ASN1_UNACCEPTABLE_VALUE_SIZE;
     }
@@ -1117,7 +1117,7 @@ AnscAsn1EnumerateTraceObject
     {
         AnscTrace
             (
-                "%s ::=%s %s (%d)\n",
+                "%s ::=%s %s (%lu)\n",
                 pName,
                 pAttrBuffer,
                 ASN1Type2String(pMyObject->uType),

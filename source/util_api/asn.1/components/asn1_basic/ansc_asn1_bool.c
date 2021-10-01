@@ -622,7 +622,7 @@ AnscAsn1BOOLDecodingData
 
     if( uLeftSize != 1)
     {
-        AnscTrace("The length of BOOL value must be 1 , not '%d\n", uLeftSize);
+        AnscTrace("The length of BOOL value must be 1 , not '%lu\n", uLeftSize);
 
         return ANSC_ASN1_UNACCEPTABLE_VALUE_SIZE;        
     }

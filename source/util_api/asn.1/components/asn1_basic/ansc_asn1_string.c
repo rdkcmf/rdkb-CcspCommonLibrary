@@ -2027,7 +2027,7 @@ GOAHEAD:
      */
     if( uValueLength > 20000)
     {
-        AnscTrace("The length of string is unreasonable '%d'\n", uValueLength);
+        AnscTrace("The length of string is unreasonable '%lu'\n", uValueLength);
 
         pMyObject->uLength = 0;
 
@@ -2658,7 +2658,7 @@ AnscAsn1StringTraceObject
             {
                 AnscTrace
                     (
-                        "%s ::=%s %s (L%d,",
+                        "%s ::=%s %s (L%lu,",
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType),
@@ -2674,7 +2674,7 @@ AnscAsn1StringTraceObject
 
                 AnscTrace
                     (
-                        "%s ::=%s %s (L%d, '%s')\n",
+                        "%s ::=%s %s (L%lu, '%s')\n",
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType),
@@ -2688,7 +2688,7 @@ AnscAsn1StringTraceObject
 
                 AnscTrace
                     (
-                        "%s ::=%s %s (L%d, 0x%s)\n",
+                        "%s ::=%s %s (L%lu, 0x%s)\n",
                         pName,
                         pAttrBuffer,
                         ASN1Type2String(pMyObject->uType),
@@ -2854,7 +2854,7 @@ AnscAsn1StringGetStringValue
      */
     if( pOutput != NULL && pSize != NULL && *pSize < pMyObject->uLength)
     {
-        AnscTrace("The output size is not big enough: %d\n", *pSize);
+        AnscTrace("The output size is not big enough: %lu\n", *pSize);
 
         return ANSC_ASN1_NO_ENOUGH_SIZE;
     }

@@ -156,7 +156,7 @@ TlsHsoClientRecvHelloRequest
     ANSC_STATUS                     returnStatus       = ANSC_STATUS_SUCCESS;
     PTLS_HSO_CLIENT_OBJECT          pMyObject          = (PTLS_HSO_CLIENT_OBJECT       )hThisObject;
     
-    AnscTrace("TlsHsoClient: recv Hello Request message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Hello Request message size = %lu!\n", ulSize);
 
     /*
      * Hello request is a simple notification that the client should begin the negotiation process
@@ -239,7 +239,7 @@ TlsHsoClientRecvServerHello
     BOOL                            bValidServerHello   = (BOOL                         )TRUE;
     ULONG                           i                   = 0;
 
-    AnscTrace("TlsHsoClient: recv Server Hello message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Server Hello message size = %lu!\n", ulSize);
 
     /*
      * The server will send this message in response to a client hello message when it was able to
@@ -554,7 +554,7 @@ TlsHsoClientRecvCertificate
     ULONG                           ulCertCount        = (ULONG                        )0;
     ULONG                           i                  = 0;
 
-    AnscTrace("TlsHsoClient: recv Certificate message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Certificate message size = %lu!\n", ulSize);
 
     /*
      * The server must send a certificate whenever the agreed-upon key exchange method is not an
@@ -1404,7 +1404,7 @@ TlsHsoClientRecvServerKeyExchange
     ULONG                           tbs_data_size      = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
-    AnscTrace("TlsHsoClient: recv Server Key Exchange message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Server Key Exchange message size = %lu!\n", ulSize);
 
     /*
      * This message will be sent immediately after the server certificate message (or the server
@@ -1866,7 +1866,7 @@ TlsHsoClientRecvCertRequest
     ULONG                           i                  = 0;
     ULONG                           j                  = 0;
 
-    AnscTrace("TlsHsoClient: recv Certificate Request message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Certificate Request message size = %lu!\n", ulSize);
 
     /*
      * A non-anonymous server can optionally request a certificate from the client, if appropriate
@@ -2118,7 +2118,7 @@ TlsHsoClientRecvServerHelloDone
     PTLS_HSO_CLIENT_OBJECT          pMyObject          = (PTLS_HSO_CLIENT_OBJECT       )hThisObject;
     PTLS_CBC_INTERFACE              pTlsCbcIf          = (PTLS_CBC_INTERFACE           )pMyObject->hTlsCbcIf;
     
-    AnscTrace("TlsHsoClient: recv Server Hello Done message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Server Hello Done message size = %lu!\n", ulSize);
 
     /*
      * This message means that the server is done sending messages to support the key exchange, and
@@ -2214,7 +2214,7 @@ TlsHsoClientRecvFinished
     ULONG                           i                  = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
-    AnscTrace("TlsHsoClient: recv Finished message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoClient: recv Finished message size = %lu!\n", ulSize);
 
     /*
      * A finished message is always sent immediately after a change cipher spec message to verify

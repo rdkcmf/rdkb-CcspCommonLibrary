@@ -1101,7 +1101,7 @@ void CCSP_Message_Bus_Init_Rbus_Logger()
             if(strcasecmp(name, rtLogLevelToString(level)) == 0)
             {
                 rtLog_SetLevel(level);
-                CcspTraceWarning(("enabling %s rbus logs\n", level));
+                CcspTraceWarning(("enabling %u rbus logs\n", level));
             }
         }
         fclose(file);

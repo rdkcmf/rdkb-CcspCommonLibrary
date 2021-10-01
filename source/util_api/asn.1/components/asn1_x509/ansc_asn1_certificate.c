@@ -1355,7 +1355,7 @@ AnscAsn1CertVerify
 
     if( pBitString->uLength <= 4)
     {
-        AnscTrace("Invalid signature (len = %s)\n", pBitString->uLength);
+        AnscTrace("Invalid signature (len = %lu)\n", pBitString->uLength);
 
         return FALSE;
     }

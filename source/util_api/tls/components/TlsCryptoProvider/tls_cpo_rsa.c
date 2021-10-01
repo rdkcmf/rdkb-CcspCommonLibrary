@@ -325,7 +325,7 @@ TlsCpoGenerateRSAKeys
 
     if( key_bits % 8 != 0)
     {
-        AnscTrace("Invalid bits length '%d'\n", key_bits);
+        AnscTrace("Invalid bits length '%lu'\n", key_bits);
 
         return ANSC_STATUS_FAILURE;
     }

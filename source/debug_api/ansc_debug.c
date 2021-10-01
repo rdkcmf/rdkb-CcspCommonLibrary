@@ -530,3 +530,100 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
         }
     }
 }
+
+const char* CcspTraceGetRdkLogModule(const char* pComponentName)
+{
+    if(!pComponentName)
+        return  "LOG.RDK.Misc";
+    if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pam"))
+        return "LOG.RDK.PAM";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))
+        return  "LOG.RDK.TR69";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.psm"))
+        return  "LOG.RDK.PSM";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.moca"))
+        return  "LOG.RDK.MOCA";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.CR"))
+        return "LOG.RDK.CR";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.mta"))
+        return "LOG.RDK.MTA";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.cm"))
+        return "LOG.RDK.CM";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tdm"))
+        return "LOG.RDK.TDM";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ssd"))
+        return "LOG.RDK.SSD";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fu"))
+        return "LOG.RDK.FU";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wifi"))
+        return "LOG.RDK.WIFI";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.harvester"))
+        return "LOG.RDK.Harvester";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))
+        return  "LOG.RDK.NOTIFY";
+    else if(!strcmp(pComponentName,"LOG.RDK.LM"))
+        return "LOG.RDK.LM";
+    else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))
+        return "LOG.RDK.SNMP";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.hotspot"))
+        return "LOG.RDK.HOTSPOT";
+    else if(!strcmp(pComponentName,"dhcp_snooperd"))
+        return "LOG.RDK.DHCPSNOOP";
+    else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))
+        return  "LOG.RDK.PWRMGR";
+    else if(!strcmp(pComponentName,"LOG.RDK.FSC"))
+        return  "LOG.RDK.FSC";
+    else if(!strcmp(pComponentName,"LOG.RDK.MESH"))
+        return  "LOG.RDK.MESH";
+    else if(!strcmp(pComponentName,"LOG.RDK.BLE"))
+        return  "LOG.RDK.BLE";
+    else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))
+        return  "LOG.RDK.MeshService";
+    else if(!strcmp(pComponentName,"LOG.RDK.CPUPROCANALYZER"))
+        return  "LOG.RDK.CPUPROCANALYZER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ethagent"))
+        return  "LOG.RDK.ETHAGENT";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanagent"))
+        return  "LOG.RDK.WANAGENT";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoipagent"))
+        return  "LOG.RDK.TELCOVOIPAGENT";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.advsec"))
+        return "LOG.RDK.ADVSEC";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telemetry"))
+        return "LOG.RDK.T2";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdns"))
+        return  "LOG.RDK.XDNS";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.dslagent"))
+        return  "LOG.RDK.DSLAGENT";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanagent"))
+        return  "LOG.RDK.VLANAGENT";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xtmagent"))
+        return  "LOG.RDK.XTMAGENT";
+#if defined (FEATURE_RDKB_WAN_MANAGER)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanmanager"))
+        return  "LOG.RDK.WANMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdslmanager"))
+        return  "LOG.RDK.XDSLMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanmanager"))
+        return  "LOG.RDK.VLANMANAGER";
+#ifdef FEATURE_RDKB_GPON_MANAGER
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.gponmanager"))
+        return  "LOG.RDK.GPONMANAGER";
+#endif
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.platformmanager"))
+        return  "LOG.RDK.PLATFORMMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoicemanager"))
+        return  "LOG.RDK.TELCOVOICEMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xtmmanager"))
+        return  "LOG.RDK.XTMMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fwupgrademanager"))
+        return  "LOG.RDK.FWUPGRADEMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pppmanager"))
+        return  "LOG.RDK.PPPMANAGER";
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ledmanager"))
+        return  "LOG.RDK.RDKLEDMANAGER";
+#endif // FEATURE_RDKB_WAN_MANAGER
+    else
+        return  "LOG.RDK.Misc";
+}
+

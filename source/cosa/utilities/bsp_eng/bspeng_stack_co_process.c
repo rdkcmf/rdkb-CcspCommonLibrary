@@ -561,22 +561,22 @@ BspTemplateStackDump
 
     for (i = 0; i < ulCount; i ++)
     {
-        AnscTrace("%4d: ", i);
+        AnscTrace("%4lu: ", i);
 
         pVal = pVars[i];
 
         switch (pVal->Type)
         {
         case BspVar_Number:
-            AnscTrace("[Number]: %d", pVal->Value.num);
+            AnscTrace("[Number]: %ld", pVal->Value.num);
             break;
 
         case BspVar_UNumber:
-            AnscTrace("[Unsigned Number]: %u", pVal->Value.num);
+            AnscTrace("[Unsigned Number]: %ld", pVal->Value.num);
             break;
 
         case BspVar_Real:
-            AnscTrace("[Real]: %.8f", pVal->Value.real);
+            AnscTrace("[Real]: %.8ld", pVal->Value.real);
             break;
 
         case BspVar_String:
@@ -584,17 +584,17 @@ BspTemplateStackDump
             break;
 
         case BspVar_Object:
-            AnscTrace("[Object]: 0x%x", pVal->Value.obj);
+            AnscTrace("[Object]: 0x%p", pVal->Value.obj);
             break;
 
         case BspVar_Ref:
-            AnscTrace("[Variable Ref]: %d", pVal->Value.num);
+            AnscTrace("[Variable Ref]: %ld", pVal->Value.num);
             break;
 
         case BspVar_Array:
             AnscTrace
                 (
-                    "[Array]: max len = %d, len = %d", 
+                    "[Array]: max len = %lu, len = %lu", 
                     pVal->Value.arrayItems.ulSize, 
                     pVal->Value.arrayItems.ulLen
                 );

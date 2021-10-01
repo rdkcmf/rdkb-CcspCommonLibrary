@@ -2753,7 +2753,7 @@ BspTemplateObjDoAssign
             }
             else
             {
-                AnscTrace("No such variable on stack, ulVar = %d!\n", ulVar);
+                AnscTrace("No such variable on stack, ulVar = %lu!\n", ulVar);
             }
 
             if (bDelete)
@@ -4248,7 +4248,7 @@ BspTemplateObjDoObjProperty
 #ifdef   _DEBUG
             if ( BspEngIsCallFlowTraced() )
             {
-                AnscTrace("    ---> Making slap call %s, time = %u (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
+                AnscTrace("    ---> Making slap call %s, time = %lu (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
 
                 if (AnscEqualString(pMethodName, "SetItem", FALSE) || AnscEqualString(pMethodName, "GetItem", FALSE))
                 {
@@ -4280,7 +4280,7 @@ BspTemplateObjDoObjProperty
 #ifdef   _DEBUG
         if ( BspEngIsCallFlowTraced() )
         {
-            AnscTrace("        <--- slap call %s returned, time = %u.\n", pMethodName, AnscGetTickInMilliSeconds());
+            AnscTrace("        <--- slap call %s returned, time = %lu.\n", pMethodName, AnscGetTickInMilliSeconds());
 
             if (status != ANSC_STATUS_SUCCESS)
             {
@@ -5203,7 +5203,7 @@ BspTemplateObjDoInclude
 #ifdef   _DEBUG
             if ( BspEngIsCallFlowTraced() )
             {
-                AnscTrace("BSP page %s loaded, time = %u (ms).\n", pName, AnscGetTickInMilliSeconds());
+                AnscTrace("BSP page %s loaded, time = %lu (ms).\n", pName, AnscGetTickInMilliSeconds());
             }
 #endif
         }
@@ -5664,7 +5664,7 @@ BspTemplateEngDoObjectAccess
 #ifdef   _DEBUG
             if ( BspEngIsCallFlowTraced() )
             {
-                AnscTrace("    ---> Making slap call %s, time = %u (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
+                AnscTrace("    ---> Making slap call %s, time = %lu (ms) ...\n", pMethodName, AnscGetTickInMilliSeconds());
 
                 if (AnscEqualString(pMethodName, "SetItem", FALSE) || AnscEqualString(pMethodName, "GetItem", FALSE))
                 {
@@ -5698,7 +5698,7 @@ BspTemplateEngDoObjectAccess
 #ifdef   _DEBUG
         if ( BspEngIsCallFlowTraced() )
         {
-            AnscTrace("        <--- slap call %s returned, time = %u.\n", pMethodName, AnscGetTickInMilliSeconds());
+            AnscTrace("        <--- slap call %s returned, time = %lu.\n", pMethodName, AnscGetTickInMilliSeconds());
 
             if (status != ANSC_STATUS_SUCCESS)
             {
@@ -6607,7 +6607,7 @@ BspEngGetBeepObjectHandle
 #ifdef   _DEBUG
             if ( BspEngIsCallFlowTraced() )
             {
-                AnscTrace("Slap property '%s' is accessed, time = %u.\n", pNames[j], AnscGetTickInMilliSeconds());
+                AnscTrace("Slap property '%s' is accessed, time = %lu.\n", pNames[j], AnscGetTickInMilliSeconds());
 
                 if (status != ANSC_STATUS_SUCCESS)
                 {

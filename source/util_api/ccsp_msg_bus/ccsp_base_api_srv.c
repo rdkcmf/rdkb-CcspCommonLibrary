@@ -1077,7 +1077,7 @@ CcspBaseIf_base_path_message_func (DBusConnection  *conn,
                 dbus_message_iter_get_basic (&struct_iter, &utmp1);
                 parameterAttribute[i].RequesterID = utmp1;
 		if(parameterAttribute[i].RequesterID != 0)
-                CcspTraceInfo(("Notification (%s) Param %s RequesterID %lu\n", __FUNCTION__,parameterAttribute[i].parameterName,parameterAttribute[i].RequesterID));
+                CcspTraceInfo(("Notification (%s) Param %s RequesterID %u\n", __FUNCTION__,parameterAttribute[i].parameterName,parameterAttribute[i].RequesterID));
             }
 
             dbus_message_iter_next (&array_iter);
@@ -2065,9 +2065,9 @@ CcspBaseIf_Deadlock_Detection_Thread
                 {
                     //This is invalid time difference. Just neglect
                     info->enterTime = currentTime - info->timepassed ;
-                    CcspTraceWarning((" **** info->timepassed %d ******\n",info->timepassed));
-                    CcspTraceWarning((" **** info->enterTime %d ******\n",info->enterTime));
-                    CcspTraceWarning((" **** currentTime %d ******\n",currentTime));
+                    CcspTraceWarning((" **** info->timepassed %lu ******\n",info->timepassed));
+                    CcspTraceWarning((" **** info->enterTime %lu ******\n",info->enterTime));
+                    CcspTraceWarning((" **** currentTime %lu ******\n",currentTime));
                 }
                 else
                 {

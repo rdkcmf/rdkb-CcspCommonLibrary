@@ -941,7 +941,7 @@ DslhWmpdoMpaSetParameterValues
 			       {
 				CcspTraceWarning(("<< %s sending Notification %s >>\n",__FUNCTION__,str1[j]));
 			       }
-		               CcspTraceWarning(("<< %s sending Notification ulArraySize %d >>\n",__FUNCTION__,ulArraySize));
+		               CcspTraceWarning(("<< %s sending Notification ulArraySize %lu >>\n",__FUNCTION__,ulArraySize));
 		               j++;
 			pthread_mutex_unlock(&NotifyMutex);
                     }
@@ -1673,7 +1673,7 @@ DslhWmpdoMpaGetParameterValues
     {
         returnStatus = ANSC_STATUS_BAD_PARAMETER;
 
-        CcspTraceError(("Total parameter count exceeds %d !!\n", uMaxEntry));
+        CcspTraceError(("Total parameter count exceeds %lu !!\n", uMaxEntry));
 
         goto  EXIT3;
     }
@@ -2538,7 +2538,7 @@ DslhWmpdoMpaSetParameterAttributes
         {
             pVarRecord = (PDSLH_VAR_RECORD_OBJECT)phAnyRecordArray[i];
             if(pSetParameterAttribArray[i].RequesterID != 0)
-            CcspTraceInfo(("<<< %s pSetParameterAttribArray[%d].RequesterID %lu >>>\n",__FUNCTION__,i,pSetParameterAttribArray[i].RequesterID));
+            CcspTraceInfo(("<<< %s pSetParameterAttribArray[%lu].RequesterID %u >>>\n",__FUNCTION__,i,pSetParameterAttribArray[i].RequesterID));
 
             pVarRecord->RequesterID = pSetParameterAttribArray[i].RequesterID;
             if ( pSetParameterAttribArray[i].bNotificationChange )

@@ -1041,7 +1041,7 @@ AnscAsn1TimeDecodingData
     {
         AnscTrace
             (
-               "Decoding size of TIME object is '%d', but actually it's %d.\n",
+               "Decoding size of TIME object is '%lu', but actually it's %d.\n",
                uLeftSize,
                counter
             );

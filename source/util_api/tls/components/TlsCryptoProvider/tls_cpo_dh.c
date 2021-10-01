@@ -538,17 +538,17 @@ TlsCpoGenerateDHKeys2
             if( dh_prime->Length > 200)
             {
                 AnscFromHexToString( dh_prime->Octets, pTemp, 200, FALSE);
-                AnscTrace("The DHKey prime is(L%d):\n %s...\n", dh_prime->Length,pTemp);
+                AnscTrace("The DHKey prime is(L%lu):\n %s...\n", dh_prime->Length,pTemp);
             }
             else
             {
                 AnscFromHexToString( dh_prime->Octets, pTemp, dh_prime->Length, FALSE);
-                AnscTrace("The DHKey prime is(L%d):\n %s...\n", dh_prime->Length,pTemp);
+                AnscTrace("The DHKey prime is(L%lu):\n %s...\n", dh_prime->Length,pTemp);
             }
 
             AnscZeroMemory(pTemp, 512);
             AnscFromHexToString( dh_generator->Octets, pTemp, dh_generator->Length, FALSE);
-            AnscTrace("The DHKey generator is(L%d):\n %s...\n", dh_generator->Length,pTemp);
+            AnscTrace("The DHKey generator is(L%lu):\n %s...\n", dh_generator->Length,pTemp);
 
         }
     }

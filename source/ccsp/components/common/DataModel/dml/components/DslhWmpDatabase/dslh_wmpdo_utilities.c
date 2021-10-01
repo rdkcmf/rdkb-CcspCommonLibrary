@@ -403,7 +403,7 @@ DslhWmpdoParseParamDataType
 	                AnscFreeMemory(pFormatValue1);
 	            }
 
-    			AnscTraceVerbose(("'%s' UINT range [%d:%d]\n", pDataTypeName,*pulFormatValue1, *pulFormatValue2));
+    			AnscTraceVerbose(("'%s' UINT range [%lu:%lu]\n", pDataTypeName,*pulFormatValue1, *pulFormatValue2));
 
 	        }
 			else
@@ -419,7 +419,7 @@ DslhWmpdoParseParamDataType
 		                *pulFormatValue2 = (ULONG)_ansc_atoi(pFormatValue1->Name);					
 					}
 						
-        			AnscTraceVerbose(("'%s' UINT range [%d:%d]\n", pDataTypeName,*pulFormatValue1, *pulFormatValue2));
+        			AnscTraceVerbose(("'%s' UINT range [%lu:%lu]\n", pDataTypeName,*pulFormatValue1, *pulFormatValue2));
 	                AnscFreeMemory(pFormatValue1);
 	            }
             }

@@ -241,21 +241,21 @@ TlsCpoAuthenticateCertChain
 
         if( pUserCert == NULL)
         {
-            AnscTrace("Failed to decode cert at '%d' in certchain.\n", i);
+            AnscTrace("Failed to decode cert at '%lu' in certchain.\n", i);
 
             goto EXIT;
         }
        
         if( pUserCert->CheckValidity(pUserCert, TRUE) != ANSC_STATUS_SUCCESS)
         {
-            AnscTrace("The cert '%d' in certchain expired.\n", i);
+            AnscTrace("The cert '%lu' in certchain expired.\n", i);
 
             goto EXIT;     
         }
 
         if( pCACert->VerifyChildCert(pCACert, pUserCert) != ANSC_STATUS_SUCCESS)
         {
-            AnscTrace("Failed to verify cert '%d' in certchain.\n", i);
+            AnscTrace("Failed to verify cert '%lu' in certchain.\n", i);
 
             goto EXIT;
         }
@@ -263,7 +263,7 @@ TlsCpoAuthenticateCertChain
         /* check the path valid or not */
         if( !pCACert->IsPathLengthValid(pCACert, i))
         {
-            AnscTrace("The cert '%d' is invalid, failed in IsPathLengthValid()\n", i);
+            AnscTrace("The cert '%lu' is invalid, failed in IsPathLengthValid()\n", i);
 
             goto EXIT;
         }

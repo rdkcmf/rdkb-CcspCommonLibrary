@@ -2839,7 +2839,7 @@ DslhWmpdoMprGetParamValueUint
     }
     else if ( pParamVariable->Syntax != SLAP_VAR_SYNTAX_TYPE_uint32 )
     {
-        AnscTraceWarning(("DslhWmpdoMprGetParamValueUint -- syntax of stored parameter %s is %d!\n", pParamName, pParamVariable->Syntax)); 
+        AnscTraceWarning(("DslhWmpdoMprGetParamValueUint -- syntax of stored parameter %s is %lu!\n", pParamName, pParamVariable->Syntax)); 
         goto  EXIT1;
     }
     else

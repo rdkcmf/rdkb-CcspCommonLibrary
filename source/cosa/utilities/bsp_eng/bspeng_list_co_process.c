@@ -348,7 +348,7 @@ BspTemplateListAddGroup
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Start compiling page <%s>, time = %d (ms) ...\n", pVirtualName, AnscGetTickInMilliSeconds());
+        AnscTrace("Start compiling page <%s>, time = %lu (ms) ...\n", pVirtualName, AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -421,7 +421,7 @@ BspTemplateListAddGroup
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Reading page into memory, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Reading page into memory, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -463,7 +463,7 @@ BspTemplateListAddGroup
 #ifdef   _DEBUG
     if ( BspEngIsCallFlowTraced() )
     {
-        AnscTrace("Page reading done, time = %d (ms) ...\n", AnscGetTickInMilliSeconds());
+        AnscTrace("Page reading done, time = %lu (ms) ...\n", AnscGetTickInMilliSeconds());
     }
 #endif
 
@@ -499,7 +499,7 @@ BspTemplateListAddGroup
 
                 AnscTrace
                     (
-                        "Template '%s', line %d: %s\n",
+                        "Template '%s', line %lu: %s\n",
                         pTmplName,
                         ulErrLineNo,
                         pErrMsg
@@ -522,7 +522,7 @@ BspTemplateListAddGroup
             {
                 AnscTrace
                     (
-                        "Template '%s', after line %d: conflict with a previous template\n",
+                        "Template '%s', after line %lu: conflict with a previous template\n",
                         pTmplName,
                         ulLineNo
                     );

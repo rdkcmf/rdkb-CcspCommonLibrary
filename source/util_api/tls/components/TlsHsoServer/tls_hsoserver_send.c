@@ -173,7 +173,7 @@ TlsHsoServerSendHelloRequest
     TlsHandshakeSetMsgType((&tlsHandshakeHeader), TLS_HANDSHAKE_TYPE_helloRequest);
     TlsHandshakeSetLength ((&tlsHandshakeHeader), 0                              );
 
-    AnscTrace("TlsHsoServer: send Hello Request message size = %d!\n", TlsHandshakeGetSize((&tlsHandshakeHeader)));
+    AnscTrace("TlsHsoServer: send Hello Request message size = %lu!\n", TlsHandshakeGetSize((&tlsHandshakeHeader)));
 
     if ( TRUE )
     {
@@ -324,7 +324,7 @@ TlsHsoServerSendServerHello
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize               );
     }
 
-    AnscTrace("TlsHsoServer: send Server Hello message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoServer: send Server Hello message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -580,7 +580,7 @@ TlsHsoServerSendCertificate
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize               );
     }
 
-    AnscTrace("TlsHsoServer: send Certificate message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoServer: send Certificate message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1172,7 +1172,7 @@ TlsHsoServerSendServerKeyExchange
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize                     );
     }
 
-    AnscTrace("TlsHsoServer: send Server Key Exchange message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoServer: send Server Key Exchange message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1384,7 +1384,7 @@ TlsHsoServerSendCertRequest
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize                      );
     }
 
-    AnscTrace("TlsHsoServer: send Certificate Request message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoServer: send Certificate Request message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1505,7 +1505,7 @@ TlsHsoServerSendServerHelloDone
     TlsHandshakeSetMsgType((&tlsHandshakeHeader), TLS_HANDSHAKE_TYPE_serverHelloDone);
     TlsHandshakeSetLength ((&tlsHandshakeHeader), 0                                 );
 
-    AnscTrace("TlsHsoServer: send Server Hello Done message size = %d!\n", TlsHandshakeGetSize((&tlsHandshakeHeader)));
+    AnscTrace("TlsHsoServer: send Server Hello Done message size = %lu!\n", TlsHandshakeGetSize((&tlsHandshakeHeader)));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1900,7 +1900,7 @@ TlsHsoServerSendFinished
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize            );
     }
 
-    AnscTrace("TlsHsoServer: send Finished message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoServer: send Finished message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send

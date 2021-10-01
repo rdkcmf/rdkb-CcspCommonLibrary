@@ -252,7 +252,7 @@ TlsHsoClientSendClientHello
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize               );
     }
 
-    AnscTrace("TlsHsoClient: send Client Hello message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoClient: send Client Hello message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -456,7 +456,7 @@ TlsHsoClientSendCertificate
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize               );
     }
 
-    AnscTrace("TlsHsoClient: send Certificate message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoClient: send Certificate message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -958,7 +958,7 @@ TlsHsoClientSendClientKeyExchange
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize                     );
     }
 
-    AnscTrace("TlsHsoClient: send Client Key Exchange message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoClient: send Client Key Exchange message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1446,7 +1446,7 @@ TlsHsoClientSendCertVerify
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize                     );
     }
 
-    AnscTrace("TlsHsoClient: send Certificate Verify message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoClient: send Certificate Verify message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send
@@ -1855,7 +1855,7 @@ TlsHsoClientSendFinished
         TlsHandshakeSetLength (pTlsHsHeader, ulTlsHsBodySize            );
     }
 
-    AnscTrace("TlsHsoClient: send Finished message size = %d!\n", TlsHandshakeGetSize(pTlsHsHeader));
+    AnscTrace("TlsHsoClient: send Finished message size = %lu!\n", TlsHandshakeGetSize(pTlsHsHeader));
 
     returnStatus =
         pTlsRecordKeeper->Send

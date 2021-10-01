@@ -400,7 +400,7 @@ HttpSmpoUtilParseHeader
         AnscTrace("Failed to parse header:\n");
         for (i = 0; i < ulSize; i ++)
         {
-            AnscTrace("%c", ((char *)buffer) + i);
+            AnscTrace("%s", ((char *)buffer) + i);
         }
 
         AnscTrace("\n\n");

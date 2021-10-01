@@ -771,7 +771,7 @@ ALCertVerify
     PALCERT_CONTEXT                 pThisObject = (PALCERT_CONTEXT)hCertContext;
     ANSC_STATUS                     retStatus;
 
-    CERT_TRACE("AL_CERT: ALCertVerify...ulCertPathLength = %d\n",ulCertPathLength);
+    CERT_TRACE("AL_CERT: ALCertVerify...ulCertPathLength = %lu\n",ulCertPathLength);
 
     if( hCertContext == NULL)
     {
@@ -792,7 +792,7 @@ ALCertVerify
 
     if( retStatus != ANSC_STATUS_SUCCESS)
     {
-        CERT_TRACE("AL_CERT: ALCertVerify Failed... 0x%X\n", retStatus);
+        CERT_TRACE("AL_CERT: ALCertVerify Failed... 0x%lX\n", retStatus);
 
         return retStatus;
     }

@@ -303,7 +303,7 @@ DslhObjcoValidate
                 }
 
                 g_currentBsUpdate = pChildVarEntity->bsUpdate;
-                AnscTraceWarning(("DslhObjcoValidate: %s, bsUpdate = %d\n\n", pCallingName, pChildVarEntity->bsUpdate));
+                AnscTraceWarning(("DslhObjcoValidate: %s, bsUpdate = %lu\n\n", pCallingName, pChildVarEntity->bsUpdate));
 
                 snprintf(g_currentParamFullName, sizeof(g_currentParamFullName),"%s%s",pDslhObjRecord->FullName, pParamDescr->Name);
 
@@ -479,7 +479,7 @@ DslhObjcoCommit
 
             CcspTraceWarning(("Before committing:%s\n", pDslhObjRecord->FullName));
             returnStatus = pInterface->Methods.MethodWithLastName.Commit(pMyObject->hInsContext);
-            CcspTraceWarning(("After committing:%s:%d\n", pDslhObjRecord->FullName, returnStatus));
+            CcspTraceWarning(("After committing:%s:%lu\n", pDslhObjRecord->FullName, returnStatus));
         }
     }
 
@@ -1133,7 +1133,7 @@ DslhObjcoGetParamValueByName
         case    SLAP_VAR_SYNTAX_uint32Array :
         case    SLAP_VAR_SYNTAX_handle :
 
-                AnscTraceEntry(("SLAP Variable '%s' is not supported, type = %d.\n", pName, pSlapVariable->Syntax));
+                AnscTraceEntry(("SLAP Variable '%s' is not supported, type = %lu.\n", pName, pSlapVariable->Syntax));
                 break;
     }
 

@@ -779,7 +779,7 @@ HttpSsoDstowoNotify
 
     AnscTrace
         (
-            "Event = %d is indicated on client connection of %d.%d.%d.%d / TCP %d\n",
+            "Event = %lu is indicated on client connection of %d.%d.%d.%d / TCP %d\n",
             ulEvent,
             pWebSocket->PeerAddress.Dot[0],
             pWebSocket->PeerAddress.Dot[1],

@@ -643,7 +643,7 @@ AnscAsn1SequenceGetSizeOfEncoded
 
         if( lChildLen < 0)
         {
-            AnscTrace("The child '%d' is not ready to encode.\n", (i+1));
+            AnscTrace("The child '%lu' is not ready to encode.\n", (i+1));
 
             return -1;
         }
@@ -1088,7 +1088,7 @@ AnscAsn1SequenceDecodingData
 
         if( pChild == NULL)
         {
-            AnscTrace("Failed to get the child - '%d' of SEQUENCE object.\n", i+1 );
+            AnscTrace("Failed to get the child - '%lu' of SEQUENCE object.\n", i+1 );
 
             return ANSC_ASN1_NULL_OBJCET;           
         }
@@ -1172,7 +1172,7 @@ AnscAsn1SequenceDecodingData
             {
                 AnscTrace
                     (
-                        "Invalid length after decode child '%d' of object '%s' -- %d.\n", 
+                        "Invalid length after decode child '%lu' of object '%s' -- %lu.\n", 
                         i+1, 
                         pMyObject->ClassName,
                         actLength
@@ -1187,7 +1187,7 @@ AnscAsn1SequenceDecodingData
             {
                 AnscTrace
                     (
-                        "No enough data to be decoded for child '%d' of object '%s'.\n", 
+                        "No enough data to be decoded for child '%lu' of object '%s'.\n", 
                         i+1,
                         pMyObject->ClassName
                     );
@@ -1206,7 +1206,7 @@ AnscAsn1SequenceDecodingData
     {
         AnscTrace
             (
-                "After decoding all the child objects of '%s', the length is not '0' but '%d'\n", 
+                "After decoding all the child objects of '%s', the length is not '0' but '%lu'\n", 
                 pMyObject->ClassName,
                 actLength
             );

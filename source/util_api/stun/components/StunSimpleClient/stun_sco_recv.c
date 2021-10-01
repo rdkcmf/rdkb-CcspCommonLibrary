@@ -135,7 +135,7 @@ StunScoRecvBindingResponse1
     USHORT                          usMappedPort             = 0;
     BOOL                            bXorMappedAddress        = FALSE;
 
-    AnscTrace("StunScoRecvBindingResponse1 --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingResponse1 --- received response, size = %lu.\n", ulSize);
 
     memset(&MappedIpAddress, 0, sizeof(ANSC_IPV4_ADDRESS));
     pRetryTimerObj->Stop((ANSC_HANDLE)pRetryTimerObj);
@@ -327,7 +327,7 @@ StunScoRecvBindingResponseA
     USHORT                          usMappedPort             = 0;
     BOOL                            bXorMappedAddress        = FALSE;
 
-    AnscTrace("StunScoRecvBindingResponseA --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingResponseA --- received response, size = %lu.\n", ulSize);
 
     memset(&MappedIpAddress, 0, sizeof(ANSC_IPV4_ADDRESS));
 
@@ -451,7 +451,7 @@ StunScoRecvBindingResponseB
 {
     UNREFERENCED_PARAMETER(hThisObject);
     UNREFERENCED_PARAMETER(buffer);
-    AnscTrace("StunScoRecvBindingResponseB --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingResponseB --- received response, size = %lu.\n", ulSize);
 
     /*
      * We shouldn't receive anything on socket B...
@@ -509,7 +509,7 @@ StunScoRecvBindingErrorResponse1
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_ERROR_CODE         pStunAttribErrorCode = (PSTUN_ATTRIB_ERROR_CODE       )NULL;
 
-    AnscTrace("StunScoRecvBindingErrorResponse1 --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingErrorResponse1 --- received response, size = %lu.\n", ulSize);
 
     pRetryTimerObj->Stop((ANSC_HANDLE)pRetryTimerObj);
 
@@ -650,7 +650,7 @@ StunScoRecvBindingErrorResponseA
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_ERROR_CODE         pStunAttribErrorCode = (PSTUN_ATTRIB_ERROR_CODE       )NULL;
 
-    AnscTrace("StunScoRecvBindingErrorResponseA --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingErrorResponseA --- received response, size = %lu.\n", ulSize);
 
     if ( pMyObject->SocketStateA != STUN_SCO_SOCKET_STATE_Requesting )
     {
@@ -739,7 +739,7 @@ StunScoRecvBindingErrorResponseB
     PSTUN_ATTRIBUTE                 pStunAttribute       = (PSTUN_ATTRIBUTE               )NULL;
     PSTUN_ATTRIB_ERROR_CODE         pStunAttribErrorCode = (PSTUN_ATTRIB_ERROR_CODE       )NULL;
 
-    AnscTrace("StunScoRecvBindingErrorResponseB --- received response, size = %u.\n", ulSize);
+    AnscTrace("StunScoRecvBindingErrorResponseB --- received response, size = %lu.\n", ulSize);
 
     if ( pMyObject->SocketStateB != STUN_SCO_SOCKET_STATE_Requesting )
     {

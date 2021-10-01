@@ -1100,7 +1100,7 @@ AnscXmlDomNodeDecode
              */
             if( !AnscXmlIsValidAttributeValue( (PCHAR)pNewAttribute->StringData ))
             {
-                ANSC_XML_TRACE("AnscXmlDomNodeDecode() -- Invalid Attribute value: '%s'\n", pNewAttribute->StringData);
+                ANSC_XML_TRACE("AnscXmlDomNodeDecode() -- Invalid Attribute value: '%p'\n", pNewAttribute->StringData);
                 AnscFreeMemory(pNewNodeName);
                 AnscFreeMemory(pNewAttributeName);
                 AnscFreeMemory( pNewAttribute->StringData );
@@ -1225,7 +1225,7 @@ AnscXmlDomNodeDecode
             AnscFreeMemory(pNewAttributeName);
             ANSC_XML_TRACE
                 (
-                    "Failed to allocate %d memory for text of - '%s'\n",
+                    "Failed to allocate %lu memory for text of - '%s'\n",
                     (ULONG)(pEndOfText-pStartOfText),
                     pNode->Name
                 );

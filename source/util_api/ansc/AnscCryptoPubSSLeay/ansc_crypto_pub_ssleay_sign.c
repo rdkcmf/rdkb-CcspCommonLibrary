@@ -150,7 +150,7 @@ AnscCryptoPubSSLeayRSASign
                  );
     }
 
-    AnscTrace("Unknown RSA hash size '%d' in 'AnscCryptoPubSSLeayRSASign'\n", ulSizeOfData);
+    AnscTrace("Unknown RSA hash size '%lu' in 'AnscCryptoPubSSLeayRSASign'\n", ulSizeOfData);
 
     return ANSC_STATUS_FAILURE;
 }

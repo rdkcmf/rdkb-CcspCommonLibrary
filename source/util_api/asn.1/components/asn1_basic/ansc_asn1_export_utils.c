@@ -747,7 +747,7 @@ AttrListDecodingData
                 {
                     AnscTrace
                         (
-                            "The expected length is %d, but actually it's %d\n",
+                            "The expected length is %lu, but actually it's %lu\n",
                             uleftSize,
                             pTagInfo->ulContentLength
                         );

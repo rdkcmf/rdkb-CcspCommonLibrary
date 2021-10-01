@@ -888,7 +888,7 @@ AnscAsn1OIDDecodingData
          */
         if( uLeftSize > 4000)
         {
-            AnscTrace("The length of oid value is unreasonable '%d'\n", uLeftSize);
+            AnscTrace("The length of oid value is unreasonable '%lu'\n", uLeftSize);
 
             pMyObject->uLength = 0;
 
@@ -938,7 +938,7 @@ AnscAsn1OIDDecodingData
                 /*
                  * I don't think we will ever have OID that big
                  */
-                AnscTrace("The size of the ULONG value in OID is %d, unacceptable.\n", ulNumberOfOctetsInSubOID);
+                AnscTrace("The size of the ULONG value in OID is %lu, unacceptable.\n", ulNumberOfOctetsInSubOID);
                 return  ANSC_ASN1_INVALID_VALUE;
             }
 
@@ -1023,7 +1023,7 @@ AnscAsn1OIDDecodingData
                 {
                     if( pOIDArray[0] >= 120)
                     {
-                        AnscTrace("Invalid OID value, first byte is 0x%X.\n", pOIDArray[0]);
+                        AnscTrace("Invalid OID value, first byte is 0x%lX.\n", pOIDArray[0]);
 
                         return ANSC_ASN1_BAD_OID_VALUE;
                     }
@@ -1312,7 +1312,7 @@ AnscAsn1OIDEncodingData
     {
         AnscTrace
             (
-                "Warning in Encoding OID, the size of encoding is expected to be %d, but it's %d.\n",
+                "Warning in Encoding OID, the size of encoding is expected to be %lu, but it's %d.\n",
                 uSizeOfEncoded,
                 (pCharData - pBackData)
             );
@@ -1678,7 +1678,7 @@ AnscAsn1OIDGetOIDValue
 
         AnscTrace
             (
-                "Required size of OID array is '%d' -- '%d' is not enough.\n", 
+                "Required size of OID array is '%lu' -- '%lu' is not enough.\n", 
                 pMyObject->uLength, 
                 *pSize
             );
@@ -1791,7 +1791,7 @@ AnscAsn1OIDSetOIDValue
 
     if(pOIDArray[0] > 2)
     {
-        AnscTrace("The first oid value is unacceptable - '%d'\n", pOIDArray[0]);
+        AnscTrace("The first oid value is unacceptable - '%lu'\n", pOIDArray[0]);
 
         return ANSC_ASN1_INVALID_VALUE;
     }
@@ -1874,7 +1874,7 @@ AnscAsn1OIDSetStringOIDValue
 
     if( uSize < 1 )
     {
-        AnscTrace("The size of oid value array is unacceptable - '%d'\n", uSize);
+        AnscTrace("The size of oid value array is unacceptable - '%lu'\n", uSize);
 
         return ANSC_ASN1_INVALID_VALUE;
     }
@@ -1900,7 +1900,7 @@ AnscAsn1OIDSetStringOIDValue
 
     if(pOIDArray[0] > 2)
     {
-        AnscTrace("The first oid value is unacceptable - '%d'\n", pOIDArray[0]);
+        AnscTrace("The first oid value is unacceptable - '%lu'\n", pOIDArray[0]);
 
         return ANSC_ASN1_INVALID_VALUE;
     }

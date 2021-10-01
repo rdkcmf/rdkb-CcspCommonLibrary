@@ -273,7 +273,7 @@ HttpWcsoSctowoProcess
     ulSize       = AnscBdoGetBlockSize(pBufferDesp);
 
 #ifdef   _DEBUG
-    AnscTrace("HttpWcsoSctowoProcess - processing buffer %.8x (size = %d)\n", buffer, ulSize);
+    AnscTrace("HttpWcsoSctowoProcess - processing buffer %8p (size = %lu)\n", buffer, ulSize);
 #endif
 
     returnStatus =

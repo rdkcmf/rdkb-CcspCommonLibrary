@@ -587,7 +587,7 @@ HttpSmpoParseMultipart
         pFormElement->Size  = pPart->ulValueLen;
 
 #ifdef   _DEBUG
-        AnscTrace("===> Form name = <%s>, value = <%s>.\n", pFormElement->Name, pFormElement->Value);
+        AnscTrace("===> Form name = <%s>, value = <%p>.\n", pFormElement->Name, pFormElement->Value);
 #endif
 
         AnscFreeMemory(pPart);

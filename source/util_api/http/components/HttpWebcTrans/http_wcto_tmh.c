@@ -148,7 +148,7 @@ HttpWctoTmhNotify
     {
     AnscTrace
         (
-            "HttpWctoTmhNotify - ulEvent = %d, pBufferDesp = NULL.\n", 
+            "HttpWctoTmhNotify - ulEvent = %lu, pBufferDesp = NULL.\n", 
             ulEvent
         );
     }
@@ -156,9 +156,8 @@ HttpWctoTmhNotify
     {
     AnscTrace
         (
-            "HttpWctoTmhNotify - ulEvent = %d, pBufferDesp = 0x%.8x, buf = 0x%.8x, size = %d, offset = %d, block size = %d, RefCount = %d\n", 
+            "HttpWctoTmhNotify - ulEvent = %lu, buf = 0x%8p, size = %lu, offset = %lu, block size = %lu, RefCount = %lu\n", 
             ulEvent, 
-            pBufferDesp,
             pBufferDesp->Buffer,
             pBufferDesp->BufferSize,
             pBufferDesp->Offset,

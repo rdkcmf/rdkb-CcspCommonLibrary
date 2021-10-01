@@ -274,8 +274,7 @@ extern volatile BOOL BLE_RDKLogEnable;
 #define EXTRACT_ARGS(msg ...) msg
 
 #define  CcspTraceExec(pComponentName, level, msg)  \
-            CcspTraceLogAPI(__FILE__, pComponentName, level, EXTRACT_ARGS msg);
-
+    RDK_LOG(level,CcspTraceGetRdkLogModule(pComponentName),EXTRACT_ARGS msg);
 
 #else 
 #if defined(FEATURE_SUPPORT_SYSLOG)
@@ -419,6 +418,7 @@ AnscSetTraceLevel
     );
 
 void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char *format, ...);
+const char* CcspTraceGetRdkLogModule(const char* pComponentName);
 
 #ifdef  __cplusplus
 }

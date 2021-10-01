@@ -247,7 +247,7 @@ TERMINATED:
 #endif
 
 #ifdef   _DEBUG
-    AnscTrace("BSP page %s has been cooked, time = %d (ms) ...\n", page_path, AnscGetTickInMilliSeconds());
+    AnscTrace("BSP page %s has been cooked, time = %lu (ms) ...\n", page_path, AnscGetTickInMilliSeconds());
 #endif
 
     return (ANSC_HANDLE)pCookedPage;
@@ -389,13 +389,13 @@ BreeSpoExecutePage
         else
         {
 #ifdef   _DEBUG
-            AnscTrace("Start running BSP page <%s>, time = %d (ms) ...\n", pTmpl->pName, AnscGetTickInMilliSeconds());
+            AnscTrace("Start running BSP page <%s>, time = %lu (ms) ...\n", pTmpl->pName, AnscGetTickInMilliSeconds());
 #endif
 
             pTmpl->Run((ANSC_HANDLE)pTmpl, hThisObject, (ANSC_HANDLE)NULL, (ANSC_HANDLE)NULL, NULL);
 
 #ifdef   _DEBUG
-            AnscTrace("BSP page <%s> has been executed, time = %d (ms).\n", pTmpl->pName, AnscGetTickInMilliSeconds());
+            AnscTrace("BSP page <%s> has been executed, time = %lu (ms).\n", pTmpl->pName, AnscGetTickInMilliSeconds());
 #endif
         }
 

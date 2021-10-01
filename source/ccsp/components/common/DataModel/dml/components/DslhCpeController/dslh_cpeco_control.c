@@ -1194,7 +1194,7 @@ DslhCpecoRegisterDataModelInternal
     /* load DSLH parameter tree */
     returnStatus = pMyObject->InitDataModel((ANSC_HANDLE)pMyObject);
 
-    AnscTrace("Status of InitDataModel = %d\n", returnStatus);
+    AnscTrace("Status of InitDataModel = %lu\n", returnStatus);
 
     if (TRUE)
     {
@@ -1341,13 +1341,13 @@ DslhCpecoRegisterDataModelInternal
 
             if ( ( CCSP_SUCCESS != returnStatus ) && ( CCSP_CR_ERR_NAMESPACE_OVERLAP != returnStatus ) )
              {
-                AnscTraceWarning(("!!! %s registerCapabilities failed with code %d! Waiting for %d seconds to retry...!!! \n", pComponentName, returnStatus, uWait));
+                AnscTraceWarning(("!!! %s registerCapabilities failed with code %lu! Waiting for %lu seconds to retry...!!! \n", pComponentName, returnStatus, uWait));
                 AnscSleep(uWait * 1000);
                 uWait *=2;
             }
             else
             {
-                AnscTrace("!!! %s registerCapabilities %d items returns %d !!!\n", pComponentName, uCount, returnStatus);
+                AnscTrace("!!! %s registerCapabilities %lu items returns %lu !!!\n", pComponentName, uCount, returnStatus);
                 break;
             }
         } while ( TRUE );

@@ -625,7 +625,7 @@ AnscAsn1SetGetSizeOfEncoded
 
         if( lChildLen < 0)
         {
-            AnscTrace("The child '%d' is not ready to encode.\n", (i+1));
+            AnscTrace("The child '%lu' is not ready to encode.\n", (i+1));
 
             return -1;
         }
@@ -958,7 +958,7 @@ AnscAsn1SetDecodingData
         {
             AnscTrace
                 (
-                    "Invalid length after decode child '%d' of object '%s'\n", 
+                    "Invalid length after decode child '%lu' of object '%s'\n", 
                     i+1,
                     pMyObject->ClassName
                 );
@@ -974,7 +974,7 @@ AnscAsn1SetDecodingData
     {
         AnscTrace
             (
-                "After decoding all the child objects of '%s', the length is not 0 but '%d'\n", 
+                "After decoding all the child objects of '%s', the length is not 0 but '%lu'\n", 
                 pMyObject->ClassName,
                 actLength
             );
@@ -993,7 +993,7 @@ AnscAsn1SetDecodingData
         {
             if( !pChild->bCanBeOptional)
             {
-                AnscTrace("The child '%d' of SET object cannot be optional.\n", (i+1));
+                AnscTrace("The child '%lu' of SET object cannot be optional.\n", (i+1));
 
                 return ANSC_STATUS_FAILURE;
             }

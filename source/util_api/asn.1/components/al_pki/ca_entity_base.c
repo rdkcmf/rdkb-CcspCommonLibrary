@@ -572,7 +572,7 @@ CAEntityVerifyChild
     /* check the path valid or not */
     if( !pCert->IsPathLengthValid(pCert, pathIndex))
     {
-        AnscTrace("The cert path '%d' is invalid.\n", pathIndex);
+        AnscTrace("The cert path '%lu' is invalid.\n", pathIndex);
         return ANSC_STATUS_FAILURE;
     }
 

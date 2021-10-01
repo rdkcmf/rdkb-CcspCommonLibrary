@@ -168,7 +168,7 @@ TlsHsoServerRecvClientHello
     BOOL                            bValidClientHello   = (BOOL                         )TRUE;
     ULONG                           i                   = 0;
 
-    AnscTrace("TlsHsoServer: recv Client Hello message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoServer: recv Client Hello message size = %lu!\n", ulSize);
 
     /*
      * When a client first connects to a server it is required to send the client hello as its
@@ -504,7 +504,7 @@ TlsHsoServerRecvCertificate
     ULONG                           ulCertCount        = (ULONG                        )0;
     ULONG                           i                  = 0;
 
-    AnscTrace("TlsHsoServer: recv Certificate message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoServer: recv Certificate message size = %lu!\n", ulSize);
 
     /*
      * This is the first message the client can send after receiving a server hello done message.
@@ -1003,7 +1003,7 @@ TlsHsoServerRecvClientKeyExchange
     PVOID                           pTlsDHPublic       = (PVOID                        )NULL;
     ULONG                           ulDHPublicSize     = (ULONG                        )0;
 
-    AnscTrace("TlsHsoServer: recv Client Key Exchange message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoServer: recv Client Key Exchange message size = %lu!\n", ulSize);
 
     /*
      * This message is always sent by the client. It will immediately follow the client certificate
@@ -1566,7 +1566,7 @@ TlsHsoServerRecvCertVerify
     ULONG                           tbs_data_size      = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
-    AnscTrace("TlsHsoServer: recv Certificate Verify message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoServer: recv Certificate Verify message size = %lu!\n", ulSize);
 
     /*
      * This message is used to provide explicit verification of a client certificate. This message
@@ -2051,7 +2051,7 @@ TlsHsoServerRecvFinished
     ULONG                           i                  = (ULONG                        )0;
     UCHAR                           tbs_data[36];
 
-    AnscTrace("TlsHsoServer: recv Finished message size = %d!\n", ulSize);
+    AnscTrace("TlsHsoServer: recv Finished message size = %lu!\n", ulSize);
 
     /*
      * A finished message is always sent immediately after a change cipher spec message to verify

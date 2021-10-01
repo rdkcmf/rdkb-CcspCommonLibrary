@@ -6421,7 +6421,7 @@ AnscHttpBuildHeader
         	AnscTrace("AnscHttpBuildHeader - build header failed!\n");
             for (i = 0; i < ulSize; i ++)
             {
-                AnscTrace("    %c", ((char *)buffer) + i);
+                AnscTrace("    %s", ((char *)buffer) + i);
             }
 
             AnscTrace("\n\n");
@@ -8993,7 +8993,7 @@ HttpSmpoUtilParseRelPath
                  */
                 if (pUri->PathLevel >= HTTP_MAX_PATH_LEVEL_NUMBER)
                 {
-                    AnscTrace("%s - pUri->PathLevel %d exceeds HTTP_MAX_PATH_LEVEL_NUMBER!\n", __FUNCTION__, pUri->PathLevel);
+                    AnscTrace("%s - pUri->PathLevel %lu exceeds HTTP_MAX_PATH_LEVEL_NUMBER!\n", __FUNCTION__, pUri->PathLevel);
                     break;
                 }
                 pUri->PathArray[pUri->PathLevel][0] = '/';
@@ -10121,7 +10121,7 @@ AnscHttpParseHeader
         AnscTrace("AnscHttpParseHeader - Failed to parse header:\n");
         for (i = 0; i < ulSize; i ++)
         {
-            AnscTrace("%c", ((char *)buffer) + i);
+            AnscTrace("%s", ((char *)buffer) + i);
         }
 
         AnscTrace("\n\n");
