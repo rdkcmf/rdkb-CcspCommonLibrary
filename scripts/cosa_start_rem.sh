@@ -39,6 +39,10 @@ if [ -f /etc/mount-utils/getConfigFile.sh ];then
    . /etc/mount-utils/getConfigFile.sh
 fi
 
+if [ -f $RDK_PATH/sub_utils.sh ]; then
+   . $RDK_PATH/sub_utils.sh
+fi
+
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
 if [ "x$BOX_TYPE" = "xXB3" ]; then
@@ -72,7 +76,8 @@ else
 fi
 
 if [ -f "/etc/AKER_ENABLE" ]; then
-    echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5" > /tmp/aker_cmd.cmd
+    MAC_ADDR=`echo $(getMacAddressWithoutColon)`
+    echo "/usr/bin/aker -p $PARODUS_URL -c $AKER_URL -w parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5 -i mac:$MAC_ADDR" > /tmp/aker_cmd.cmd
     aker_cmd=`cat /tmp/aker_cmd.cmd`
     $aker_cmd &
     echo_t "aker process should have been started"
