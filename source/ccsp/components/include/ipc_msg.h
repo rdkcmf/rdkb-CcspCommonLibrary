@@ -45,6 +45,7 @@ typedef enum _PPP_STATES
     PPP_IPCP_FAILED,
     PPP_IPV6CP_COMPLETED,
     PPP_IPV6CP_FAILED,
+    PPP_LCP_AUTH_COMPLETED,
     PPP_MAX_STATE
 }PPP_STATES;
 
@@ -72,6 +73,14 @@ typedef struct _ipc_ppp_ipv6cp_msg_t
 
 }ipc_ppp_ipv6cp_msg_t;
 
+typedef struct _ipc_ppp_lcp_msg
+{
+    int exitStatus;
+    char authproto[BUFLEN_32];
+    char vendormsg[BUFLEN_256];
+    char acname[BUFLEN_32];
+}ipc_ppp_lcp_msg;
+
 typedef struct _ipc_ppp_event_msg_t
 {
     pid_t pid;
@@ -79,6 +88,7 @@ typedef struct _ipc_ppp_event_msg_t
     PPP_STATES pppState; //lcp state
     union
     {
+        ipc_ppp_lcp_msg pppLcpMsg;
         ipc_ppp_ipcp_msg_t pppIpcpMsg; //ncp state
         ipc_ppp_ipv6cp_msg_t pppIpv6cpMsg; // ncp v6 state
     }event;
