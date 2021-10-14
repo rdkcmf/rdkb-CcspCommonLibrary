@@ -387,12 +387,12 @@ SSL * openssl_connect (int fd, hostNames *hosts)
           if(cert_res != X509_V_OK)
           {
              AnscTraceError(("openssl_connect - get peer certificate verification result is NOT OK. ACS %s \n", X509_verify_cert_error_string (cert_res))); 
-             X509_free(cert);
           }
           else
           {
              AnscTraceInfo(("openssl_connect - get peer certificate result is OK.\n"));
           }
+          X509_free(cert);
        }
     }
   }
