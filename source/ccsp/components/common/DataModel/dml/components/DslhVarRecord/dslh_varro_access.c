@@ -377,6 +377,7 @@ DslhVarroTstValue
 {
     PDSLH_VAR_RECORD_OBJECT         pMyObject               = (PDSLH_VAR_RECORD_OBJECT    )hThisObject;
     PDSLH_VAR_ENTITY_OBJECT         pVarEntity              = (PDSLH_VAR_ENTITY_OBJECT    )pMyObject->hDslhVarEntity;
+    PDSLH_CWMP_PARAM_DESCR          pParamDescr             = (PDSLH_CWMP_PARAM_DESCR     )pVarEntity->ParamDescr;
     PDSLH_OBJ_RECORD_OBJECT         pObjRecord              = (PDSLH_OBJ_RECORD_OBJECT    )pMyObject->hDslhObjRecord;
     PDSLH_OBJ_ENTITY_OBJECT         pObjEntity              = (PDSLH_OBJ_ENTITY_OBJECT    )pObjRecord->hDslhObjEntity;
     PDSLH_OBJ_CONTROLLER_OBJECT     pObjController          = (PDSLH_OBJ_CONTROLLER_OBJECT)pObjRecord->hDslhObjController;
@@ -459,6 +460,21 @@ DslhVarroTstValue
                      */
                     if ( pNewValue->Variant.varString &&
                          (AnscSizeOfString(pNewValue->Variant.varString) > pVarEntity->FormatValue1) )
+                    {
+                        return  FALSE;
+                    }
+                }
+
+                if( ( pVarEntity->DataType == DSLH_CWMP_DATA_TYPE_string ) && 
+                    ( NULL != pParamDescr->PreventCharecters ) &&
+                    ( 0 < AnscSizeOfString(pParamDescr->PreventCharecters) ) )
+                {
+
+                    /*
+                     * To restrict certain charecters during set. For ex: <>'%`
+                     */
+                    if ( pNewValue->Variant.varString &&
+                         ( FALSE == AnscIsThisValidInputString(pNewValue->Variant.varString, pParamDescr->PreventCharecters, AnscSizeOfString(pNewValue->Variant.varString))) )
                     {
                         return  FALSE;
                     }

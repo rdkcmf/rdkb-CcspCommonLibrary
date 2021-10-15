@@ -2252,6 +2252,17 @@ DslhDmagntParseParamInfo
         }
     }
 
+    /* Get Charecters to Restrict String */
+    pChildNode = (PANSC_XML_DOM_NODE_OBJECT)
+        pParamNode->GetChildByName(pParamNode, COSA_XML_NODE_param_CharsToRestrict);
+
+    AnscZeroMemory(buffer, 1024);
+    uLength = 1023;
+    if( ( pChildNode != NULL ) && ( ANSC_STATUS_SUCCESS == pChildNode->GetDataString(pChildNode, NULL, buffer, &uLength)) && (buffer[0] != '\0') && (0 < AnscSizeOfString(buffer)) )
+    {
+        pParamDesp->PreventCharecters = AnscCloneString(buffer); 
+    }
+
     return ANSC_STATUS_SUCCESS;
 }
 

@@ -201,7 +201,7 @@ _DSLH_CWMP_PARAM_DESCR
     ULONG                           CallEntry_GetValue;     /* function entry for retrieving the parameter value   */
     ULONG                           CallEntry_TstValue;     /* function entry for examining the parameter value    */
     ULONG                           CallEntry_SetValue;     /* function entry for configuring the parameter value  */
-
+    char*                           PreventCharecters;      /* this is avoid input charecters for that string ex: <>': */
 
 
 }
@@ -228,6 +228,13 @@ DSLH_CWMP_PARAM_DESCR,  *PDSLH_CWMP_PARAM_DESCR;
                 AnscFreeMemory(param_descr->Syntax);                                        \
                                                                                             \
                 param_descr->Syntax = NULL;                                                 \
+            }                                                                               \
+                                                                                            \
+            if ( param_descr->PreventCharecters )                                           \
+            {                                                                               \
+                AnscFreeMemory(param_descr->PreventCharecters);                             \
+                                                                                            \
+                param_descr->PreventCharecters = NULL;                                      \
             }                                                                               \
          }
 

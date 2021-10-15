@@ -172,6 +172,7 @@
 #define  COSA_XML_NODE_param_writable             "writable"
 #define  COSA_XML_NODE_param_monitor              "monitor"
 #define  COSA_XML_NODE_param_func_GetValue        "func_GetValue"
+#define  COSA_XML_NODE_param_CharsToRestrict      "restrictedChars"
 
 /* COSA IrepFolder Name */
 #define COSA_IREP_FOLDER_NAME                     "COSALibrary"

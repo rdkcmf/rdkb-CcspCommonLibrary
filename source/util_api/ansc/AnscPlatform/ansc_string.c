@@ -1409,3 +1409,31 @@ AnscMacToLower
         dest[i++] = '\0';
     }
 }
+
+BOOL
+AnscIsThisValidInputString
+    (
+        char*                       string,
+        char*                       restrictChars,
+        ULONG                       range
+    )
+{
+    ULONG   count = 0;
+
+    /*
+     * Caller is responsible for making sure that string begins with valid non-stop char.
+     */
+    for ( count = 0; count < range; count++ )
+    {
+        if ( !AnscCharInString(restrictChars, *string) )
+        {
+            string++;
+        }
+        else
+        {
+            return  FALSE;
+        }
+    }
+
+    return  TRUE;
+}
