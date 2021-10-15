@@ -160,6 +160,10 @@ volatile unsigned int PPPMANAGER_RDKLogLevel = 4;
 volatile BOOL LEDMANAGER_RDKLogEnable = TRUE;
 volatile unsigned int LEDMANAGER_RDKLogLevel = 4;
 #endif //FEATURE_RDKB_WAN_MANAGER
+#if defined (FEATURE_RDKB_NFC_MANAGER)
+volatile BOOL NFCMANAGER_RDKLogEnable = TRUE;
+volatile unsigned int NFCMANAGER_RDKLogLevel = 4;
+#endif // FEATURE_RDKB_NFC_MANAGER
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -504,6 +508,14 @@ void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char
             LogEnable = LEDMANAGER_RDKLogEnable;
         }
 #endif // FEATURE_RDKB_WAN_MANAGER
+#if defined(FEATURE_RDKB_NFC_MANAGER)
+        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.nfcmanager"))
+        {
+            ComponentName= "LOG.RDK.RDKNFCMANAGER";
+            LogLevel = NFCMANAGER_RDKLogLevel;
+            LogEnable = NFCMANAGER_RDKLogEnable;
+        }
+#endif // FEATURE_RDKB_NFC_MANAGER
         else
         {
             ComponentName = "LOG.RDK.Misc";
@@ -623,6 +635,10 @@ const char* CcspTraceGetRdkLogModule(const char* pComponentName)
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ledmanager"))
         return  "LOG.RDK.RDKLEDMANAGER";
 #endif // FEATURE_RDKB_WAN_MANAGER
+#if defined(FEATURE_RDKB_NFC_MANAGER)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.nfcmanager"))
+        return "LOG.RDK.RDKNFCMANAGER";
+#endif //FEATURE_RDKB_NFC_MANAGER
     else
         return  "LOG.RDK.Misc";
 }

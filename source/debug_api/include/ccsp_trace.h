@@ -128,6 +128,9 @@ extern volatile unsigned int FWUPGRADEMGR_RDKLogLevel;
 extern volatile unsigned int XTMMANAGER_RDKLogLevel;
 extern volatile unsigned int LEDMANAGER_RDKLogLevel;
 #endif //FEATURE_RDKB_WAN_MANAGER
+#ifdef FEATURE_RDKB_NFC_MANAGER
+extern volatile unsigned int NFCMANAGER_RDKLogLevel;
+#endif
 /* Mesh Wifi log levels */
 extern volatile unsigned int MESH_RDKLogLevel;
 extern volatile BOOL MESH_RDKLogEnable;
@@ -172,6 +175,9 @@ extern volatile BOOL FWUPGRADEMGR_RDKLogEnable;
 extern volatile BOOL PPPMANAGER_RDKLogEnable;
 extern volatile BOOL LEDMANAGER_RDKLogEnable;
 #endif //FEATURE_RDKB_WAN_MANAGER
+#if defined(FEATURE_RDKB_NFC_MANAGER)
+extern volatile BOOL NFCMANAGER_RDKLogEnable;
+#endif //FEATURE_RDKB_NFC_MANAGER
 
 extern volatile unsigned int BLE_RDKLogLevel;
 extern volatile BOOL BLE_RDKLogEnable;
