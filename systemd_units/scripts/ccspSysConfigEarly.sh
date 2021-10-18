@@ -50,7 +50,11 @@ fi
 
 if [ "$MFG_NAME" = "Arris" ]; then
 	if [ "$MODEL_NUM" = "TG4482A" ] ; then
-		/usr/ccsp/psm/bbhm_patch.sh -f /tmp/bbhm_cur_cfg.xml
+		if [ -f /usr/ccsp/psm/bbhm_patch.sh ]; then
+			/usr/ccsp/psm/bbhm_patch.sh -f /tmp/bbhm_cur_cfg.xml
+		else
+			echo "bbhm_patch.sh script not found"
+		fi
 	fi
 fi
 
