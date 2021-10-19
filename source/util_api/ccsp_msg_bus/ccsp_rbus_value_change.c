@@ -39,7 +39,7 @@
 #include "ccsp_trace.h"
 #include <rtmessage/rtVector.h>
 #include <rtmessage/rtLog.h>
-#include <rbus.h>
+#include <rbus/rbus.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory.h>

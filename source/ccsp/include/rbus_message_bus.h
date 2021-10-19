@@ -46,9 +46,9 @@
 #include <rbus-core/rbus_core.h>
 #include <rbus-core/rbus_session_mgr.h>
 #include <rtmessage/rtLog.h>
-#include <rbus_filter.h>
-#include <rbus.h>
-#include <rbus_value.h>
+#include <rbus/rbus_filter.h>
+#include <rbus/rbus.h>
+#include <rbus/rbus_value.h>
 
 #define RBUS_RETURN_CODE_SUCCESS 0
 #define RBUS_RETURN_CODE_FAILURE 1
