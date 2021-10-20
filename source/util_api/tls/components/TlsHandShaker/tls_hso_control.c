@@ -475,12 +475,21 @@ TlsHsoCalKeys30
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
+#ifdef _64BIT_ARCH_SUPPORT_
+    ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
+    ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
+    ANSC_CRYPTO_KEY*                pCipherKeyC        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherKey : &pRecordStateW->CipherKey;
+    ANSC_CRYPTO_KEY*                pCipherKeyS        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherKey : &pRecordStateR->CipherKey;
+    ANSC_CRYPTO_IV*                 pCipherIV_C        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherIV  : &pRecordStateW->CipherIV;
+    ANSC_CRYPTO_IV*                 pCipherIV_S        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherIV  : &pRecordStateR->CipherIV;
+#else
     ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
     ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
     ANSC_CRYPTO_KEY*                pCipherKeyC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherKey : &pRecordStateW->CipherKey;
     ANSC_CRYPTO_KEY*                pCipherKeyS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherKey : &pRecordStateR->CipherKey;
     ANSC_CRYPTO_IV*                 pCipherIV_C        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherIV  : &pRecordStateW->CipherIV;
     ANSC_CRYPTO_IV*                 pCipherIV_S        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherIV  : &pRecordStateR->CipherIV;
+#endif
     PUCHAR                          pKeyBlock          = (PUCHAR                     )NULL;
     ULONG                           write_key_length   = 0;
     ULONG                           key_block_offset   = 0;
@@ -836,12 +845,21 @@ TlsHsoCalKeys31
     PTLS_RECORD_STATE               pRecordStateR      = (PTLS_RECORD_STATE          )&pMyObject->RecordStateR;
     PTLS_MEC_INTERFACE              pTlsMecIf          = (PTLS_MEC_INTERFACE         )pMyObject->hTlsMecIf;
     PTLS_CRYPTO_PROVIDER_OBJECT     pTlsCryptoProvider = (PTLS_CRYPTO_PROVIDER_OBJECT)pTlsMecIf->GetTlsCryptoProvider(pTlsMecIf->hOwnerContext);
+#ifdef _64BIT_ARCH_SUPPORT_
+    ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
+    ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
+    ANSC_CRYPTO_KEY*                pCipherKeyC        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherKey : &pRecordStateW->CipherKey;
+    ANSC_CRYPTO_KEY*                pCipherKeyS        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherKey : &pRecordStateR->CipherKey;
+    ANSC_CRYPTO_IV*                 pCipherIV_C        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherIV  : &pRecordStateW->CipherIV;
+    ANSC_CRYPTO_IV*                 pCipherIV_S        = (ANSC_CRYPTO_KEY*           )(ULONG)(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherIV  : &pRecordStateR->CipherIV;
+#else
     ANSC_CRYPTO_KEY*                pMacSecretC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->MacSecret : &pRecordStateW->MacSecret;
     ANSC_CRYPTO_KEY*                pMacSecretS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->MacSecret : &pRecordStateR->MacSecret;
     ANSC_CRYPTO_KEY*                pCipherKeyC        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherKey : &pRecordStateW->CipherKey;
     ANSC_CRYPTO_KEY*                pCipherKeyS        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherKey : &pRecordStateR->CipherKey;
     ANSC_CRYPTO_IV*                 pCipherIV_C        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateR->CipherIV  : &pRecordStateW->CipherIV;
     ANSC_CRYPTO_IV*                 pCipherIV_S        = (ANSC_CRYPTO_KEY*           )(pSecurityParams->ConnectionEnd == TLS_CONNECTION_END_server)? &pRecordStateW->CipherIV  : &pRecordStateR->CipherIV;
+#endif
     PUCHAR                          pKeyBlock          = (PUCHAR                     )NULL;
     ULONG                           write_key_length   = 0;
     ULONG                           key_block_offset   = 0;

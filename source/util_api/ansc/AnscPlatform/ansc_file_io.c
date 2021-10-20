@@ -258,7 +258,12 @@ AnscReadFile
 
     if ( pFileInfo->bZlibCompressed )
     {
+#ifdef _64BIT_ARCH_SUPPORT_
+	ULONG uHandle = pFileInfo->Handle;
+	iReturnsize  = _ansc_get_file_size((VOID*)uHandle);
+#else
 	iReturnsize  = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+#endif
 	if ( iReturnsize < 0 )
 	{
 		return ANSC_STATUS_FAILURE;
@@ -510,9 +515,14 @@ AnscGetFileSize
     }
     else if ( pFileInfo->bZlibCompressed )
     {
-        int                         iReadSize            = (int                )0;
+        int iReadSize = (int)0;
 
+#ifdef _64BIT_ARCH_SUPPORT_
+	ULONG uHandle = pFileInfo->Handle;
+	iReturnSize = _ansc_get_file_size((VOID*)uHandle);
+#else
 	iReturnSize = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+#endif
 	if ( iReturnSize < 0 )
 	{
 		return 0;
@@ -566,7 +576,12 @@ AnscGetFileSize
     else
     {
 	/*CID: 59651 Improper use of negative value*/
+#ifdef _64BIT_ARCH_SUPPORT_
+        ULONG uHandle = pFileInfo->Handle;
+        iReturnSize = _ansc_get_file_size((VOID*)uHandle);
+#else
         iReturnSize = _ansc_get_file_size((VOID*)pFileInfo->Handle);
+#endif
         if(iReturnSize < 0)
 	{
 		return	0;

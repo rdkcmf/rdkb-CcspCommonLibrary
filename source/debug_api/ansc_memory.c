@@ -996,8 +996,13 @@ AnscTraceMemoryTable2
             sprintf
                 (
                     pTraceMessage,
+#ifdef _64BIT_ARCH_SUPPORT_
+                    " *** mem_block = %p, size = %9d bytes, id = %6d, %s ***",
+                    pMemoryAllocItem->MemoryPointer,
+#else
                     " *** mem_block = 0x%8X, size = %9d bytes, id = %6d, %s ***",
                     (UINT)pMemoryAllocItem->MemoryPointer,
+#endif
                     (int)pMemoryAllocItem->MemorySize,
                     (int)pMemoryAllocItem->AllocId,
                     pMemoryAllocItem->OwnerDesp
@@ -1496,7 +1501,11 @@ void AnscLiveMemoryInspectRecordDetail
             
                         pPrevAllocItem = AnscGetPrevMemoryAllocItem(pMemoryBlock);
 
+#ifdef _64BIT_ARCH_SUPPORT_
+                        printf("found %p\n",pPrevAllocItem);
+#else
                         printf("found %x\n",(UINT)pPrevAllocItem);
+#endif
                         
                         if ( !pPrevAllocItem )
                         {

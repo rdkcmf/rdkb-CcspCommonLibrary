@@ -6196,7 +6196,11 @@ BspTemplateEngGetSlapObjectString
 
             if (pString)
             {
-                rc = sprintf_s(pString, ulSize, "%.08X", (UINT)pSlapVar->Variant.varHandle);
+#ifdef _64BIT_ARCH_SUPPORT_
+                rc = sprintf_s(pString, ulSize, "%.08X", (UINT)(ULONG)pSlapVar->Variant.varHandle);
+#else
+		rc = sprintf_s(pString, ulSize, "%.08X", (UINT)pSlapVar->Variant.varHandle);
+#endif		
                 if(rc < EOK)
                 {
                     ERR_CHK(rc);
@@ -6415,7 +6419,11 @@ BspTemplateEngGetSlapObjectString
                                 pString + AnscSizeOfString(pString),
                                 ulSize+1,
                                 (i == 0)? "%.08X" : ".%.08X",
+#ifdef _64BIT_ARCH_SUPPORT_
+                                (UINT)(ULONG)pArray->Array.arrayHandle[i]
+#else
                                 (UINT)pArray->Array.arrayHandle[i]
+#endif
                             );
                         if(rc < EOK)
                         {

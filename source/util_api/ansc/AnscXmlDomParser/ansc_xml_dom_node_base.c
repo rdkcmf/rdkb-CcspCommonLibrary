@@ -255,9 +255,17 @@ AnscXmlDomNodeRemove
         {
             AnscXmlWarning
                 (
+#ifdef _64BIT_ARCH_SUPPORT_
+                    "The child node queue of XML node '%s' is corrupted.cookie1= %p\n",
+#else
                     "The child node queue of XML node '%s' is corrupted.cookie1= 0x%.8X\n",
+#endif
                     (char *)pXmlNode->ChildNodeQueueLock,
+#ifdef _64BIT_ARCH_SUPPORT_
+                    (void*)pNameAttr->StringData
+#else
                     (unsigned int)pNameAttr->StringData
+#endif
                 );
         }
 
@@ -272,17 +280,30 @@ AnscXmlDomNodeRemove
         {
             AnscXmlWarning
                 (
+#ifdef _64BIT_ARCH_SUPPORT_
+                    "The child node queue of XML node is corrupted. cookie2= %p\n",
+                    (void*)pXmlNode->AttributesListLock
+#else
                     "The child node queue of XML node is corrupted. cookie2= 0x%.8X\n",
                     (unsigned int)pXmlNode->AttributesListLock
+#endif
                 );
         }
         else
         {
             AnscXmlWarning
                 (
+#ifdef _64BIT_ARCH_SUPPORT_
+                    "The child node queue of XML node '%s' is corrupted.cookie2= %p\n",
+#else
                     "The child node queue of XML node '%s' is corrupted.cookie2= 0x%.8X\n",
+#endif
                     (char *)pXmlNode->AttributesListLock,
+#ifdef _64BIT_ARCH_SUPPORT_
+                    (void*)pNameAttr->StringData
+#else
                     (unsigned int)pNameAttr->StringData
+#endif
                 );
         }
 

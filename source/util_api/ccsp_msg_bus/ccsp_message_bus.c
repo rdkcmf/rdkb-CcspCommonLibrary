@@ -2051,9 +2051,17 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             union UNION64 u;
             rbusMessage_GetInt32(msg, &u.i32[0]);
             rbusMessage_GetInt32(msg, &u.i32[1]);
+#ifdef _64BIT_ARCH_SUPPORT_
+            n = snprintf(pTmp, 0, "%ld", u.i64) + 1;
+#else
             n = snprintf(pTmp, 0, "%lld", u.i64) + 1;
+#endif
             *pStringValue = bus_info->mallocfunc(n);
+#ifdef _64BIT_ARCH_SUPPORT_
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%ld", u.i64);
+#else
             rc = sprintf_s(*pStringValue, (unsigned int)n, "%lld", u.i64);
+#endif	    
             if(rc < EOK)
             {
                 ERR_CHK(rc);
@@ -2071,9 +2079,17 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             union UNION64 u;
             rbusMessage_GetInt32(msg, &u.i32[0]);
             rbusMessage_GetInt32(msg, &u.i32[1]);
+#ifdef _64BIT_ARCH_SUPPORT_
+            n = snprintf(pTmp, 0, "%lu", u.u64) + 1;
+#else
             n = snprintf(pTmp, 0, "%llu", u.u64) + 1;
+#endif
             *pStringValue = bus_info->mallocfunc(n);
+#ifdef _64BIT_ARCH_SUPPORT_
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lu", u.u64);
+#else	
             rc = sprintf_s(*pStringValue, (unsigned int)n, "%llu", u.u64);
+#endif	    
             if(rc < EOK)
             {
                 ERR_CHK(rc);

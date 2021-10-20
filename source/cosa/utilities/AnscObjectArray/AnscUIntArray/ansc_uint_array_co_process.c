@@ -275,7 +275,11 @@ AnscUIntArrayGetAt
 
         pStorage    = (PUINT)pUIntArray->hStorage;
 
+#ifdef _64BIT_ARCH_SUPPORT_
+        return (ANSC_OBJECT_ARRAY_DATA)(ULONG)pStorage[ulIndex];
+#else
         return (ANSC_OBJECT_ARRAY_DATA)pStorage[ulIndex];
+#endif
     }
 
     return (ANSC_OBJECT_ARRAY_DATA)NULL;
@@ -331,7 +335,11 @@ AnscUIntArraySetAt
         PUINT                       pStorage;
 
         pStorage            = (PUINT)pUIntArray->hStorage;
+#ifdef _64BIT_ARCH_SUPPORT_
+        pStorage[ulIndex]   = (ULONG)Data;
+#else
         pStorage[ulIndex]   = (UINT)Data;
+#endif
     }
 }
 
@@ -412,7 +420,11 @@ AnscUIntArrayInsertAt
 
         for (i = 0; i < ulCount; i ++)
         {
+#ifdef _64BIT_ARCH_SUPPORT_
+            pStorage[i + ulIndex]   = (ULONG)Data;
+#else
             pStorage[i + ulIndex]   = (UINT)Data;
+#endif
         }
     }
 }
@@ -527,7 +539,11 @@ AnscUIntArrayAdd
             PUINT                   pStorage;
 
             pStorage = (PUINT)pUIntArray->hStorage;
+#ifdef _64BIT_ARCH_SUPPORT_
+            pStorage[pUIntArray->ulItemCount ++] = (ULONG)Data;
+#else
             pStorage[pUIntArray->ulItemCount ++] = (UINT)Data;
+#endif
 
             return pUIntArray->ulItemCount;
         }
@@ -660,7 +676,11 @@ AnscUIntArrayFind
     LONG                            Count       = pUIntArray->ulItemCount;
     LONG                            i;
     PUINT                           pStorage    = (PUINT)pUIntArray->hStorage;
+#ifdef _64BIT_ARCH_SUPPORT_
+    UINT                            uSample     = (ULONG)Data;
+#else
     UINT                            uSample     = (UINT)Data;
+#endif
 
     for (i = 0; i < Count; i ++)
     {

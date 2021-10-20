@@ -414,9 +414,14 @@ user_delete_file(char *filename)
 inline int
 user_get_file_size(PVOID h)
 {
-	int 							length = 0;
+	int length = 0;
+#ifdef _64BIT_ARCH_SUPPORT_
+	length = lseek((int)(ULONG)h, 0, SEEK_END);
+	lseek((int)(ULONG)h, 0, SEEK_SET);
+#else
 	length = lseek((int)h, 0, SEEK_END);
 	lseek((int)h, 0, SEEK_SET);
+#endif
 	return length;
 }
 
