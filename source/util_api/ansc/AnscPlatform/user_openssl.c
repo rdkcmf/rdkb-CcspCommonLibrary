@@ -72,7 +72,7 @@ void initialize_openssl_lib()
     SSLeay_add_ssl_algorithms ();
 }
 
-
+#if 0
 static void locking_callback(int mode, int type, const char *file, int line)
 {
         UNREFERENCED_PARAMETER(file);
@@ -89,6 +89,7 @@ static unsigned long id_callback(void)
 {
 	return (unsigned long)pthread_self();
 }
+#endif
 
 static void openssl_thread_setup(void)
 {
@@ -102,8 +103,10 @@ static void openssl_thread_setup(void)
                 pthread_mutex_init(&locks[i], NULL);
         }
 
+#if 0 //These callbacks are no longer needed as per openssl crypto.h
         CRYPTO_set_id_callback(id_callback);
         CRYPTO_set_locking_callback(locking_callback);
+#endif
 }
 
 #if 0

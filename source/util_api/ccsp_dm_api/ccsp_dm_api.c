@@ -61,6 +61,7 @@
 #endif
 #include "ansc_string_util.h"
 #include "ccsp_dm_api.h"
+#include "safec_lib_common.h"
 
 #define CDM_DEF_CR              "com.cisco.spvtg.ccsp.CR"
 #define CDM_DEF_SUBSYS          "eRT."
@@ -802,6 +803,7 @@ DmErr_t Cdm_Init(const void *busHdl, const char *subSys, const char *cnfFil,
                 const char *crId, const char *compId)
 {
     DmErr_t err;
+    errno_t rc = -1;
 
     memset(&cdm, 0, sizeof(cdm));
 
@@ -810,9 +812,15 @@ DmErr_t Cdm_Init(const void *busHdl, const char *subSys, const char *cnfFil,
 
     snprintf(cdm.subSys, sizeof(cdm.subSys), "%s", subSys ? subSys : CDM_DEF_SUBSYS);
     snprintf(cdm.cnfFil, sizeof(cdm.cnfFil), "%s", cnfFil ? cnfFil : CDM_DEF_CONF);
-    snprintf(cdm.crId, sizeof(cdm.crId), "%s%s", cdm.subSys, crId ? crId : CDM_DEF_CR);
-    snprintf(cdm.compId, sizeof(cdm.compId), "%s%s", cdm.subSys, compId ? compId : CDM_DEF_COMPID);
-
+    rc = sprintf_s(cdm.crId, sizeof(cdm.crId), "%s%s", cdm.subSys, crId ? crId : CDM_DEF_CR);
+    if(rc < EOK) {
+        ERR_CHK(rc);
+    }
+    rc = sprintf_s(cdm.compId, sizeof(cdm.compId), "%s%s", cdm.subSys, compId ? compId : CDM_DEF_COMPID);
+    if(rc < EOK) {
+        ERR_CHK(rc);
+    }
+  
     cdm.subSys[0] = '\0'; /* baseif/ccmbi do not need subsys */
 
     if (cdm.busHdl == NULL) {

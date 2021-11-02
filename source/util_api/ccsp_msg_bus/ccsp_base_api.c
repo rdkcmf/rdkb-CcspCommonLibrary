@@ -1129,7 +1129,10 @@ int CcspBaseIf_setParameterAttributes(
             rc = strcpy_s(true_false, sizeof(true_false), ((val[i].notification) ? "true" : "false"));
             ERR_CHK(rc);
 
-            snprintf(notification_parameter,sizeof(notification_parameter),"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+            rc = sprintf_s(notification_parameter,sizeof(notification_parameter),"%s,%s,%s",val[i].parameterName,PA_name, true_false);
+            if(rc < EOK) {
+                ERR_CHK(rc);
+            }
             p_notification_parameter[notification_count] = (char *) bus_info->mallocfunc(strlen(notification_parameter)+1);
             rc = strcpy_s(p_notification_parameter[notification_count] , (strlen(notification_parameter)+1), notification_parameter);
             ERR_CHK(rc);

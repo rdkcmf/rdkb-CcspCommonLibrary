@@ -318,7 +318,8 @@ TlsCpoInitialize
      * the compiler will do it for you, such is not the case with C.
      */
     AnscCoInitialize((ANSC_HANDLE)pMyObject);
-
+    void* pTlsCpoGetExportable                    = TlsCpoGetExportable;
+    void* pTlsCpoGetStrongSecurity                = TlsCpoGetStrongSecurity;
     /*
      * Although we have initialized some of the member fields in the "create" member function, we
      * repeat the work here for completeness. While this simulation approach is pretty stupid from
@@ -346,8 +347,8 @@ TlsCpoInitialize
     pMyObject->GetCipherBlockSize         = TlsCpoGetCipherBlockSize;
     pMyObject->GetMacAlgorithm            = TlsCpoGetMacAlgorithm;
     pMyObject->GetMacHashSize             = TlsCpoGetMacHashSize;
-    pMyObject->GetExportable              = (PFN_TLSCPO_GET_BOOL)TlsCpoGetExportable;
-    pMyObject->GetStrongSecurity          = (PFN_TLSCPO_GET_BOOL)TlsCpoGetStrongSecurity;
+    pMyObject->GetExportable              = (PFN_TLSCPO_GET_BOOL)pTlsCpoGetExportable;
+    pMyObject->GetStrongSecurity          = (PFN_TLSCPO_GET_BOOL)pTlsCpoGetStrongSecurity;
 
     pMyObject->AuthenticateCertChain      = TlsCpoAuthenticateCertChain;
 

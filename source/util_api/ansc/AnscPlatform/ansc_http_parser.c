@@ -78,6 +78,7 @@
 
 #include "ansc_platform.h"
 #include "http_definitions.h"
+#include "safec_lib_common.h"
 
 static SLIST_HEADER                    HeaderXList[HTTP_SMPO_HEADER_TABLE_SIZE];
 static BOOL                            headerInitialized               = FALSE;
@@ -4884,14 +4885,16 @@ HttpSmpoUtilBuildSetCookie
             PUCHAR                  pWkDay;
             PUCHAR                  pMonth;
             PANSC_UNIVERSAL_TIME    pTime;
+            errno_t                 rc = -1;
 
             pTime   = &pCookieContent->Expires;
             pWkDay  = HttpSmpoUtilGetWeekDayName(pTime->DayOfWeek);
             pMonth  = HttpSmpoUtilGetMonthName(pTime->Month);
 
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     (char *)expires,
+                    sizeof(expires),
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -4901,6 +4904,9 @@ HttpSmpoUtilBuildSetCookie
                     pTime->Minute,
                     pTime->Second
                 );
+            if( rc < EOK ){
+                ERR_CHK(rc);
+            }
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5530,14 +5536,16 @@ HttpSmpoUtilBuildSetCookie2
             PUCHAR                  pWkDay;
             PUCHAR                  pMonth;
             PANSC_UNIVERSAL_TIME    pTime;
+            errno_t                 rc = -1;
 
             pTime   = &pCookieContent->Expires;
             pWkDay  = HttpSmpoUtilGetWeekDayName(pTime->DayOfWeek);
             pMonth  = HttpSmpoUtilGetMonthName(pTime->Month);
 
-            _ansc_sprintf
+            rc = sprintf_s
                 (
                     (char *)expires,
+                    sizeof(expires),
                     "; expires=%s, %.2d-%s-%.4d %.2d:%.2d:%.2d GMT",
                     pWkDay,
                     pTime->DayOfMonth,
@@ -5547,6 +5555,9 @@ HttpSmpoUtilBuildSetCookie2
                     pTime->Minute,
                     pTime->Second
                 );
+            if( rc < EOK ){
+                ERR_CHK(rc);
+            }
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5767,6 +5778,7 @@ HttpSmpoUtilBuildRequestUri
         if (bAppendPort)
         {
             UCHAR                   portNum[8];
+            errno_t                 rc = -1;
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
@@ -5779,7 +5791,10 @@ HttpSmpoUtilBuildRequestUri
             if (!bCopySucc)
                 return FALSE;
 
-            _ansc_sprintf((char *)portNum, "%d", pUri->HostPort);
+            rc = sprintf_s((char *)portNum, sizeof(portNum), "%d", pUri->HostPort);
+            if( rc < EOK ){
+                ERR_CHK(rc);
+            }
 
             bCopySucc   = HttpSmpoUtilCopyString
                              (
