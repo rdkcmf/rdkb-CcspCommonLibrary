@@ -6036,10 +6036,12 @@ BspTemplateEngOutputNumber
     char                            buf[32];
     errno_t                         rc              = -1;
 
-    if (bSigned)
+    if (bSigned) {
         rc = sprintf_s(buf, sizeof(buf), "%d", (int)ulVal);
-    else
+    }
+    else {
         rc = sprintf_s(buf, sizeof(buf), "%u", (UINT)ulVal);
+    }
 
     if(rc < EOK)
     {
