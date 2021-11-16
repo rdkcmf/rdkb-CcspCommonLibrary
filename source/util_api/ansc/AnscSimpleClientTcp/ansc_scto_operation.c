@@ -126,6 +126,7 @@ AnscSctoEngage
     xskt_addrinfo*                  pxskt_client_addrinfo = NULL;
     USHORT                          usPort                = 0;
     char                            port[6] = {0};
+    errno_t rc = -1;
 #endif
 
     if ( pMyObject->bActive )
