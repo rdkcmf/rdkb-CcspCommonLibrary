@@ -1204,6 +1204,10 @@ CCSP_Message_Bus_Init
                 err != RTMESSAGE_BUS_ERROR_INVALID_STATE/*connection already opened. which is allowed*/)
         {
             CcspTraceError(("<%s>: rbus_openBrokerConnection fails for component_id=%s with %d\n", __FUNCTION__,component_id,err));
+            fclose(fp);
+            bus_info->freefunc(bus_info);
+            *bus_handle = NULL;
+            return -1;
         }
         else
         {
