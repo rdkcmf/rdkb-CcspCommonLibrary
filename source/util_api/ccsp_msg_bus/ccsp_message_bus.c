@@ -1508,6 +1508,19 @@ CCSP_Message_Bus_Exit
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     struct timespec timeout = { 0, 0 };
 
+    if(rbus_enabled)
+    {
+        rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+
+        err = rbus_closeBrokerConnection();
+        if(RTMESSAGE_BUS_SUCCESS != err)
+            CcspTraceError(("<%s>: rbus_closeBrokerConnection fails with %d\n", __FUNCTION__,err));
+        bus_info->freefunc(bus_info);
+        bus_info = NULL;
+
+        return;
+    }
+
     /* First set run to 0 so processing thread will exit */
     pthread_mutex_lock(&bus_info->info_mutex);
     bus_info->run = 0;
