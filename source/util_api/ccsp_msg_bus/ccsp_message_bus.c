@@ -992,9 +992,10 @@ CCSP_Message_Bus_Process_Thread
 
 	/*CID: 64258 Unchecked return value*/
         ret = pthread_cond_timedwait(&bus_info->msg_threshold_cv, &bus_info->msg_mutex, &timeout);
-	if( ret != 0 )
+	/* timeouts are normal here, only log real errors */
+	if ((ret != 0) && (ret != ETIMEDOUT))
 	{
-	     CcspTraceDebug(("<%s>: pthread_cond_timedwait ERROR!!!\n", __FUNCTION__));
+	     CcspTraceDebug(("<%s>: pthread_cond_timedwait ERROR %d!!!\n", __FUNCTION__, ret));
 	}
 
         // now the processing, after either received a signal or timed out
