@@ -1287,8 +1287,9 @@ DslhObjcoGetBulkParamValue
             {
                 AnscTraceWarning(("Failed to get parameter value of '%s'.\n", pParamArray[i]));
 
-                return returnStatus;
-            }
+                /* BulkGet should not stop even if the parameter value fetch fails */
+	        continue;
+	    }
         }
     }
 
