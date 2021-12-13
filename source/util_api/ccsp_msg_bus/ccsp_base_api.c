@@ -69,6 +69,16 @@
 #define CCSP_CR_ETHWAN_DEVICE_PROFILE_XML_FILE "/usr/ccsp/cr-ethwan-deviceprofile.xml"
 #endif
 
+extern void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
+extern void rbusValue_appendToMessage(char const* name, rbusValue_t value, rbusMessage msg);
+extern void rbusProperty_initFromMessage(rbusProperty_t* property, rbusMessage msg);
+extern void rbusPropertyList_initFromMessage(rbusProperty_t* prop, rbusMessage msg);
+extern void rbusPropertyList_appendToMessage(rbusProperty_t prop, rbusMessage msg);
+extern void rbusObject_initFromMessage(rbusObject_t* obj, rbusMessage msg);
+extern void rbusObject_appendToMessage(rbusObject_t obj, rbusMessage msg);
+extern void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);
+extern void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
+
 typedef struct _component_info {
     char **list;
     int size;
@@ -642,7 +652,7 @@ int CcspBaseIf_getParameterValues_rbus(
 
                 /* Get Type */
                 rbusMessage_GetInt32(response, &type);
-                if (type < RBUS_DATATYPE_BOOLEAN)
+                if (type < RBUS_BOOLEAN)
                 {
                     /* Update the Type */
                     val[i]->type = type;
@@ -661,7 +671,7 @@ int CcspBaseIf_getParameterValues_rbus(
                 }
                 else
                 {
-                    ccsp_handle_rbus_component_reply (bus_info, response, (rbusNewDataType_t) type, &val[i]->type, &val[i]->parameterValue);
+                    ccsp_handle_rbus_component_reply (bus_info, response, (rbusValueType_t) type, &val[i]->type, &val[i]->parameterValue);
                 }
 
                 RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
@@ -6006,19 +6016,19 @@ int Rbus_to_CCSP_error_mapper (int Rbus_error_code)
     int CCSP_error_code = CCSP_Message_Bus_ERROR;
     switch (Rbus_error_code)
     {
-        case  0  : CCSP_error_code = CCSP_Message_Bus_OK; break;               // RTMESSAGE_BUS_SUCCESS
-        case  1  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_GENERAL
-        case  2  : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;  // RTMESSAGE_BUS_ERROR_INVALID_PARAM
-        case  3  : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RTMESSAGE_BUS_ERROR_INSUFFICIENT_MEMORY
-        case  4  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_INVALID_STATE
-        case  5  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RTMESSAGE_BUS_ERROR_REMOTE_END_DECLINED_TO_RESPOND
-        case  6  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RTMESSAGE_BUS_ERROR_REMOTE_END_FAILED_TO_RESPOND
-        case  7  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RTMESSAGE_BUS_ERROR_REMOTE_TIMED_OUT
-        case  8  : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;     // RTMESSAGE_BUS_ERROR_MALFORMED_RESPONSE
-        case  9  : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RTMESSAGE_BUS_ERROR_UNSUPPORTED_METHOD
-        case  10 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT
-        case  11 : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RTMESSAGE_BUS_ERROR_OUT_OF_RESOURCES
-        case  12 : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RTMESSAGE_BUS_ERROR_DESTINATION_UNREACHABLE
+        case  RTMESSAGE_BUS_SUCCESS                                 : CCSP_error_code = CCSP_Message_Bus_OK; break;
+        case  RTMESSAGE_BUS_ERROR_GENERAL                           : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RTMESSAGE_BUS_ERROR_INVALID_PARAM                     : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;
+        case  RTMESSAGE_BUS_ERROR_INSUFFICIENT_MEMORY               : CCSP_error_code = CCSP_Message_Bus_OOM; break;
+        case  RTMESSAGE_BUS_ERROR_INVALID_STATE                     : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RTMESSAGE_BUS_ERROR_REMOTE_END_DECLINED_TO_RESPOND    : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RTMESSAGE_BUS_ERROR_REMOTE_END_FAILED_TO_RESPOND      : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RTMESSAGE_BUS_ERROR_REMOTE_TIMED_OUT                  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RTMESSAGE_BUS_ERROR_MALFORMED_RESPONSE                : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;
+        case  RTMESSAGE_BUS_ERROR_UNSUPPORTED_METHOD                : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT                 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RTMESSAGE_BUS_ERROR_OUT_OF_RESOURCES                  : CCSP_error_code = CCSP_Message_Bus_OOM; break;
+        case  RTMESSAGE_BUS_ERROR_DESTINATION_UNREACHABLE           : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;
     }
     return CCSP_error_code;
 }
@@ -6028,29 +6038,30 @@ int Rbus2_to_CCSP_error_mapper (int Rbus_error_code)
     int CCSP_error_code = CCSP_Message_Bus_ERROR;
     switch (Rbus_error_code)
     {
-        case  0  : CCSP_error_code = CCSP_Message_Bus_OK; break;               // RBUS_ERROR_SUCCESS
-        case  1  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_BUS_ERROR
-        case  2  : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;  // RBUS_ERROR_INVALID_INPUT
-        case  3  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_NOT_INITIALIZED
-        case  4  : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RBUS_ERROR_OUT_OF_RESOURCES
-        case  5  : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RBUS_ERROR_DESTINATION_NOT_FOUND
-        case  6  : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RBUS_ERROR_DESTINATION_NOT_REACHABLE
-        case  7  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RBUS_ERROR_DESTINATION_RESPONSE_FAILURE
-        case  8  : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;     // RBUS_ERROR_INVALID_RESPONSE_FROM_DESTINATION
-        case  9  : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_OPERATION
-        case  10 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_EVENT
-        case  11 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_HANDLE
-        case  12 : CCSP_error_code = CCSP_CR_ERR_SESSION_IN_PROGRESS; break;   // RBUS_ERROR_SESSION_ALREADY_EXIST
-        case  13 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_COMPONENT_NAME_DUPLICATE
-        case  14 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_NAME_DUPLICATE
-        case  15 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_NAME_MISSING
-        case  16 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_COMPONENT_DOES_NOT_EXIST
-        case  17 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_DOES_NOT_EXIST
-        case  18 : CCSP_error_code = CCSP_ERR_REQUEST_REJECTED; break;         // RBUS_ERROR_ACCESS_NOT_ALLOWED
-        case  19 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_INVALID_CONTEXT
-        case  20 : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RBUS_ERROR_TIMEOUT
-        case  21 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ASYNC_RESPONSE
-        case  22 : CCSP_error_code = CCSP_ERR_METHOD_NOT_SUPPORTED; break;     // RBUS_ERROR_INVALID_METHOD
+        case  RBUS_ERROR_SUCCESS                            : CCSP_error_code = CCSP_Message_Bus_OK; break;
+        case  RBUS_ERROR_BUS_ERROR                          : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_INVALID_INPUT                      : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;
+        case  RBUS_ERROR_NOT_INITIALIZED                    : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_OUT_OF_RESOURCES                   : CCSP_error_code = CCSP_Message_Bus_OOM; break;
+        case  RBUS_ERROR_DESTINATION_NOT_FOUND              : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;
+        case  RBUS_ERROR_DESTINATION_NOT_REACHABLE          : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;
+        case  RBUS_ERROR_DESTINATION_RESPONSE_FAILURE       : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RBUS_ERROR_INVALID_RESPONSE_FROM_DESTINATION  : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;
+        case  RBUS_ERROR_INVALID_OPERATION                  : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RBUS_ERROR_INVALID_EVENT                      : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RBUS_ERROR_INVALID_HANDLE                     : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RBUS_ERROR_SESSION_ALREADY_EXIST              : CCSP_error_code = CCSP_CR_ERR_SESSION_IN_PROGRESS; break;
+        case  RBUS_ERROR_COMPONENT_NAME_DUPLICATE           : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_ELEMENT_NAME_DUPLICATE             : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_ELEMENT_NAME_MISSING               : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_COMPONENT_DOES_NOT_EXIST           : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_ELEMENT_DOES_NOT_EXIST             : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_ACCESS_NOT_ALLOWED                 : CCSP_error_code = CCSP_ERR_REQUEST_REJECTED; break;
+        case  RBUS_ERROR_INVALID_CONTEXT                    : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_TIMEOUT                            : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RBUS_ERROR_ASYNC_RESPONSE                     : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUS_ERROR_INVALID_METHOD                     : CCSP_error_code = CCSP_ERR_METHOD_NOT_SUPPORTED; break;
+        case  RBUS_ERROR_NOSUBSCRIBERS                      : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
     }
     return CCSP_error_code;
 }

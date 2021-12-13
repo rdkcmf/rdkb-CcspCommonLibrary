@@ -1716,7 +1716,7 @@ int handleValueChangeEvent_rbus(const char * object_name, const char * event_nam
     if(!strcmp(event_name, "Device.CR.SystemReady") && func->systemReadySignal)
     {
         /*expect to get a 1 bytes boolean*/
-        if(msg_prop1_type == RBUS_DATATYPE_BOOLEAN && msg_prop1_len == 1)
+        if(msg_prop1_type == RBUS_BOOLEAN && msg_prop1_len == 1)
         {
             if(msg_prop1_data[0])
             {

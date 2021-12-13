@@ -61,6 +61,9 @@ const int NANOSEC_PER_MILLISEC = 1000000;
 // #define _DEBUG_LOCAL_
 #endif
 
+extern void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
+extern void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
+
 /* Use a 20 second timeout waiting for message replies */
 #define CCSP_MESSAGE_BUS_REPLY_TIMEOUT_SECONDS 20
 
@@ -2002,10 +2005,11 @@ CCSP_Message_Bus_Register_Path_Priv
     return ret;
 }
 
-void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, enum dataType_e *pType, char** pStringValue)
+void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusValueType_t typeVal, enum dataType_e *pType, char** pStringValue)
 {
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     int32_t ival = 0;
+    int64_t i64 = 0;
     double fval = 0;
     const void *pValue = NULL;
     int length = 0;
@@ -2015,8 +2019,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
 
     switch(typeVal)
     {
-        case RBUS_DATATYPE_INT16:
-        case RBUS_DATATYPE_INT32:
+        case RBUS_INT16:
+        case RBUS_INT32:
             rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%d", ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2028,8 +2032,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_int;
             break;
 
-        case RBUS_DATATYPE_UINT16:
-        case RBUS_DATATYPE_UINT32:
+        case RBUS_UINT16:
+        case RBUS_UINT32:
             rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%u", (uint32_t)ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2041,26 +2045,19 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_unsignedInt;
             break;
 
-        case RBUS_DATATYPE_INT64:
+        case RBUS_INT64:
         {
-            union UNION64
-            {
-                int32_t i32[2];
-                int64_t i64;
-            };
-            union UNION64 u;
-            rbusMessage_GetInt32(msg, &u.i32[0]);
-            rbusMessage_GetInt32(msg, &u.i32[1]);
+            rbusMessage_GetInt64(msg, &i64);
 #ifdef _64BIT_ARCH_SUPPORT_
-            n = snprintf(pTmp, 0, "%ld", u.i64) + 1;
+            n = snprintf(pTmp, 0, "%ld", i64) + 1;
 #else
-            n = snprintf(pTmp, 0, "%lld", u.i64) + 1;
+            n = snprintf(pTmp, 0, "%lld", i64) + 1;
 #endif
             *pStringValue = bus_info->mallocfunc(n);
 #ifdef _64BIT_ARCH_SUPPORT_
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%ld", u.i64);
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%ld", i64);
 #else
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lld", u.i64);
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lld", i64);
 #endif	    
             if(rc < EOK)
             {
@@ -2069,26 +2066,19 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_long;
             break;
         }
-        case RBUS_DATATYPE_UINT64:
+        case RBUS_UINT64:
         {
-            union UNION64
-            {
-                int32_t i32[2];
-                uint64_t u64;
-            };
-            union UNION64 u;
-            rbusMessage_GetInt32(msg, &u.i32[0]);
-            rbusMessage_GetInt32(msg, &u.i32[1]);
+            rbusMessage_GetInt64(msg, &i64);
 #ifdef _64BIT_ARCH_SUPPORT_
-            n = snprintf(pTmp, 0, "%lu", u.u64) + 1;
+            n = snprintf(pTmp, 0, "%lu", (uint64_t)i64) + 1;
 #else
-            n = snprintf(pTmp, 0, "%llu", u.u64) + 1;
+            n = snprintf(pTmp, 0, "%llu", (uint64_t)i64) + 1;
 #endif
             *pStringValue = bus_info->mallocfunc(n);
 #ifdef _64BIT_ARCH_SUPPORT_
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lu", u.u64);
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lu", (uint64_t)i64);
 #else	
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%llu", u.u64);
+            rc = sprintf_s(*pStringValue, (unsigned int)n, "%llu", (uint64_t)i64);
 #endif	    
             if(rc < EOK)
             {
@@ -2097,7 +2087,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_unsignedLong;
             break;
         }
-        case RBUS_DATATYPE_SINGLE:
+        case RBUS_SINGLE:
             rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2108,7 +2098,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             }
             *pType = ccsp_float;
             break;
-        case RBUS_DATATYPE_DOUBLE:
+        case RBUS_DOUBLE:
             rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2119,7 +2109,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             }
             *pType = ccsp_double;
             break;
-        case RBUS_DATATYPE_DATETIME:
+        case RBUS_DATETIME:
         {
             rbusDateTime_t rbus_time = {{0},{0}};
             char tmpBuff[40] = {0};
@@ -2164,7 +2154,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_dateTime;
         }
             break;
-        case RBUS_DATATYPE_BOOLEAN:
+        case RBUS_BOOLEAN:
         {
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             unsigned char boolValue = *(unsigned char*)pValue;
@@ -2178,8 +2168,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_boolean;
             break;
         }
-        case RBUS_DATATYPE_CHAR:
-        case RBUS_DATATYPE_INT8:
+        case RBUS_CHAR:
+        case RBUS_INT8:
         {
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             signed char tmpValue = *(signed char*)pValue;
@@ -2193,8 +2183,8 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_int;
             break;
         }
-        case RBUS_DATATYPE_UINT8:
-        case RBUS_DATATYPE_BYTE:
+        case RBUS_UINT8:
+        case RBUS_BYTE:
         {
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             unsigned char tmpValue = *(unsigned char*)pValue;
@@ -2208,7 +2198,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             *pType = ccsp_unsignedInt;
             break;
         }
-        case RBUS_DATATYPE_STRING:
+        case RBUS_STRING:
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             n = length + 1;
             *pStringValue = bus_info->mallocfunc(n);
@@ -2216,7 +2206,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             ERR_CHK(rc);
             *pType = ccsp_string;
             break;
-        case RBUS_DATATYPE_BYTES:
+        case RBUS_BYTES:
         {
             int k = 0;
             unsigned char* pVar = NULL;
@@ -2239,9 +2229,9 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNe
             }
             break;
         }
-        case RBUS_DATATYPE_PROPERTY:
-        case RBUS_DATATYPE_OBJECT:
-        case RBUS_DATATYPE_NONE:
+        case RBUS_PROPERTY:
+        case RBUS_OBJECT:
+        case RBUS_NONE:
         default:
             *pStringValue = bus_info->mallocfunc(10);
             rc = strcpy_s (*pStringValue, 10, "");
@@ -2413,7 +2403,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 parameterVal[i].parameterName = NULL;
                 rbusMessage_GetString(request, (const char**)&parameterVal[i].parameterName);
                 rbusMessage_GetInt32(request, &dataType);
-                if (dataType < RBUS_DATATYPE_BOOLEAN)
+                if (dataType < RBUS_BOOLEAN)
                 {
                     parameterVal[i].type = dataType;
                     parameterVal[i].parameterValue = NULL;
@@ -2421,7 +2411,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
                 }
                 else
                 {
-                    ccsp_handle_rbus_component_reply (bus_info, request, (rbusNewDataType_t) dataType, &parameterVal[i].type, &parameterVal[i].parameterValue);
+                    ccsp_handle_rbus_component_reply (bus_info, request, (rbusValueType_t) dataType, &parameterVal[i].type, &parameterVal[i].parameterValue);
                 }
             }
             const char *str = NULL;

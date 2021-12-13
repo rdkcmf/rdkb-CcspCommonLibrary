@@ -47,46 +47,16 @@
 #include <rbus-core/rbus_session_mgr.h>
 #include <rtmessage/rtLog.h>
 #include <rbus_filter.h>
-
-void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
-void rbusValue_appendToMessage(char const* name, rbusValue_t value, rbusMessage msg);
-void rbusProperty_initFromMessage(rbusProperty_t* property, rbusMessage msg);
-void rbusPropertyList_initFromMessage(rbusProperty_t* prop, rbusMessage msg);
-void rbusPropertyList_appendToMessage(rbusProperty_t prop, rbusMessage msg);
-void rbusObject_initFromMessage(rbusObject_t* obj, rbusMessage msg);
-void rbusObject_appendToMessage(rbusObject_t obj, rbusMessage msg);
-void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);
-void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
+#include <rbus.h>
+#include <rbus_value.h>
 
 #define RBUS_RETURN_CODE_SUCCESS 0
 #define RBUS_RETURN_CODE_FAILURE 1
 
-typedef enum _rbus_data_type_t {
-    RBUS_DATATYPE_BOOLEAN  = 0x500,  /** stdbool true or false */
-    RBUS_DATATYPE_CHAR,              /** char of size 1 byte*/
-    RBUS_DATATYPE_BYTE,              /** unsigned char */
-    RBUS_DATATYPE_INT8,              /** 8 bit int */
-    RBUS_DATATYPE_UINT8,             /** 8 bit unsigned int */
-    RBUS_DATATYPE_INT16,             /** 16 bit int */
-    RBUS_DATATYPE_UINT16,            /** 16 bit unsigned int */
-    RBUS_DATATYPE_INT32,             /** 32 bit int */
-    RBUS_DATATYPE_UINT32,            /** 32 bit unsigned int */
-    RBUS_DATATYPE_INT64,             /** 64 bit int */
-    RBUS_DATATYPE_UINT64,            /** 64 bit unsigned int */
-    RBUS_DATATYPE_SINGLE,            /** 32 bit float */
-    RBUS_DATATYPE_DOUBLE,            /** 64 bit float */
-    RBUS_DATATYPE_DATETIME,          /** rbusDateTime_t structure for Date/Time */
-    RBUS_DATATYPE_STRING,            /** null terminated C style string */
-    RBUS_DATATYPE_BYTES,             /** byte array */
-    RBUS_DATATYPE_PROPERTY,          /**< property instance */
-    RBUS_DATATYPE_OBJECT,            /** object instance */
-    RBUS_DATATYPE_NONE
-} rbusNewDataType_t;
-
 typedef enum dataType_e* pdataType_e;
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name,  const char * event_name, rbusMessage message, void * user_data);
-void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusNewDataType_t typeVal, pdataType_e pType, char** pStringValue);
+void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusValueType_t typeVal, pdataType_e pType, char** pStringValue);
 unsigned int get_writeid(const char *str);
 char* writeid_to_string(unsigned int writeid);
 unsigned int string_to_writeid(const char *str);
