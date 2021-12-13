@@ -36,7 +36,9 @@
 
 #include "ansc_platform.h"
 #include "ansc_string_util.h"
-
+#include <arpa/inet.h>
+#include <string.h>
+#include <ctype.h>
 
 /**********************************************************************
 
@@ -388,6 +390,124 @@ is_Ipv6_address
         return TRUE;
     else
         return FALSE;
+}
+
+BOOL is_ValidPort(PUCHAR pString)
+{
+     int port=0,i=0;
+     while(pString[i]!='\0')
+     {
+         if(!(isdigit(pString[i])))
+             return FALSE;
+         i++;
+     }
+     port = atoi((const char *)pString);
+     if ((port <= 0) || (port > 65535))
+         return FALSE;
+  return TRUE;
+}
+BOOL is_ValidHost(PUCHAR pString)
+{
+      int i = 0,count = 0,alpha = 0,len = 0;
+      char* tok;
+      char *host = strdup((const char*)pString);
+      if(!host)
+          return FALSE;  
+      while(host[i]!='\0')
+      {
+          if(isalpha(host[i]))
+              alpha = 1;
+          i++;
+      }
+      len = strlen(host);
+      if(len==0 || len>253 || host[len-1]=='-' || alpha == 0)
+          return FALSE;
+      else
+      {
+          i = 0;
+          tok = strtok(host,":");
+          while(tok!=NULL)
+          {
+              if(count==0)
+              {   
+                  while(tok[i]!='\0')
+                  {
+                       if((isalnum(tok[i])) || (tok[i] == '.') || (tok[i] == '-') || (tok[i] == '_'))
+                           i++;
+                       else
+                           return FALSE;   
+                  }
+              }
+              else if(count==1)
+              {
+                  if(!(is_ValidPort((PUCHAR)tok)))
+                      return FALSE;
+              }
+              else
+                  return FALSE;
+             tok = strtok(NULL,":");
+             if(tok!=NULL)
+                 count++;
+          }
+      }
+    free(host);
+    return TRUE;
+}
+
+BOOL is_ValidIpAddressv4_port(PUCHAR pString)
+{  
+    char *hostdup;
+    BOOL result = FALSE;
+    hostdup = strdup((const char*)pString);
+    if(!hostdup)
+        return FALSE;  
+    char* str = strtok(hostdup,":");
+    char* tok = strtok(NULL,":");
+    if(tok){
+        if((is_IpAddress((PUCHAR)str)) && is_ValidPort((PUCHAR)tok))
+            result = TRUE;  
+    }
+    else{
+        if(is_IpAddress((PUCHAR)str))
+            result = TRUE;
+    }
+  free(hostdup);
+  return result;
+}
+
+BOOL is_ValidIpAddressv6_port(PUCHAR pString)
+{
+    BOOL ret = FALSE;
+    if((!pString) || pString[0]!='[' || ((!(isalnum(pString[1]))) && (pString[1]!=':')))
+        return FALSE;
+    char *hostcpy = strdup((const char*)pString);
+    char *hostdup = strdup((const char*)pString);
+    char* ipv6 = strtok(hostcpy,"]");
+    ipv6 = strtok(ipv6,"[");
+    char *port_ptr = strchr(hostdup,']');
+    if(port_ptr[1])
+    {
+        if((port_ptr[1]==':') && (isdigit(port_ptr[2])))
+        {
+            port_ptr = strtok(port_ptr,":");
+            port_ptr = strtok(NULL,":");
+        }
+        else
+            return FALSE;
+    }
+    if(is_Ipv6_address((PUCHAR)ipv6))
+    {
+        if(port_ptr[1])
+        {
+            if(is_ValidPort((PUCHAR)port_ptr))
+                ret = TRUE;
+        }
+        else
+            ret = TRUE;
+    }
+    free(hostcpy);
+    free(hostdup);
+  return ret;
 }
 
 BOOL
