@@ -26,9 +26,9 @@ Environment="PROCESS_RESTART_LOG=/rdklogs/logs/systemd_processRestart.log"
 Environment="LOG4C_RCPATH=/etc"
 Environment="Subsys=eRT."
 WorkingDirectory=/usr/rdk/rdkledmanager/
-ExecStart=/usr/bin/rdkledmanager -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkLedManager" >> ${PROCESS_RESTART_LOG}'
-Restart=always
+#ExecStart=/usr/bin/rdkledmanager -subsys $Subsys
+#ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkLedManager" >> ${PROCESS_RESTART_LOG}'
+#Restart=always
 
 StandardOutput=syslog+console
 

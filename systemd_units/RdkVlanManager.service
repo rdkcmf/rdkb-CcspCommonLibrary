@@ -27,9 +27,9 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/rdk/vlanmanager
-ExecStart=/usr/bin/VlanManager -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting VlanManager" >> ${PROCESS_RESTART_LOG}'
-Restart=always
+#ExecStart=/usr/bin/VlanManager -subsys $Subsys
+#ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting VlanManager" >> ${PROCESS_RESTART_LOG}'
+#Restart=always
 
 StandardOutput=syslog+console
 

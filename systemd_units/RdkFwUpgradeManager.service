@@ -17,17 +17,17 @@
 # limitations under the License.
 ##########################################################################
 [Unit]
-Description=Firmware Upgrade Manager service
+Description=Rdk Firmware Upgrade Manager service
 After=RdkWanManager.service
 
 [Service]
 Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
-WorkingDirectory=/usr/rdk/fwupgrademanager
-ExecStart=/usr/bin/fwupgrademanager -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkFwUpgradeManager"'
-Restart=always
+WorkingDirectory=/usr/bin/fwupgrademanager
+#ExecStart=/usr/bin/bin/fwupgrademanager -subsys $Subsys
+#ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkFwUpgradeManager" >> ${PROCESS_RESTART_LOG}'
+#Restart=always
 
 StandardOutput=syslog+console
 

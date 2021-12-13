@@ -27,9 +27,9 @@ WorkingDirectory=/usr/ccsp/ethagent
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
-ExecStart=/usr/bin/CcspEthAgent -subsys $Subsys
-ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspEthAgent" >> ${PROCESS_RESTART_LOG}'
-Restart=always
+#ExecStart=/usr/bin/CcspEthAgent -subsys $Subsys
+#ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspEthAgent" >> ${PROCESS_RESTART_LOG}'
+#Restart=always
 
 StandardOutput=syslog+console
 

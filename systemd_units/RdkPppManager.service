@@ -24,10 +24,11 @@ After=RdkWanManager.service
 Type=forking
 Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
+EnvironmentFile=/etc/device.properties
 WorkingDirectory=/usr/rdk/pppmanager
-ExecStart=/usr/bin/pppmanager -subsys $Subsys
-ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkPPPManager" >> ${PROCESS_RESTART_LOG}'
-Restart=always
+#ExecStart=/usr/bin/pppmanager -subsys $Subsys
+#ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkPPPManager" >> ${PROCESS_RESTART_LOG}'
+#Restart=always
 
 StandardOutput=syslog+console
 
