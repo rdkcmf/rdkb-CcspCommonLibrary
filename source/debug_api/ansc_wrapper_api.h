@@ -383,13 +383,6 @@ AnscGetMemorySize2
     );
 
 void*
-AncResizeMemory2
-    (
-        PVOID                       pMemoryBlock,
-        ULONG                       ulMemorySize
-    );
-
-void*
 AnscAllocateMemory3
     (
         ULONG                       ulMemorySize
@@ -412,13 +405,6 @@ ULONG
 AnscGetMemorySize3
     (
         PVOID                       pMemoryBlock
-    );
-
-void*
-AncResizeMemory3
-    (
-        PVOID                       pMemoryBlock,
-        ULONG                       ulMemorySize
     );
 
 void*
@@ -448,15 +434,6 @@ ULONG
 AnscGetMemorySize4
     (
         PVOID                       pMemoryBlock
-    );
-
-void*
-AncResizeMemory4
-    (
-        PVOID                       pMemoryBlock,
-        ULONG                       ulMemorySize,
-        char*                       pFileName,
-        ULONG                       LineNumber
     );
 
 void*
@@ -492,16 +469,6 @@ AnscGetMemorySize5
     );
 
 void*
-AncResizeMemory5
-    (
-        char*                       pComponentName,
-        PVOID                       pMemoryBlock,
-        ULONG                       ulMemorySize,
-        char*                       pFileName,
-        ULONG                       LineNumber
-    );
-
-void*
 AnscAllocateMemory6
     (
         ULONG                       ulMemorySize
@@ -524,13 +491,6 @@ ULONG
 AnscGetMemorySize6
     (
         PVOID                       pMemoryBlock
-    );
-
-void*
-AncResizeMemory6
-    (
-        PVOID                       pMemoryBlock,
-        ULONG                       ulMemorySize
     );
 
 void

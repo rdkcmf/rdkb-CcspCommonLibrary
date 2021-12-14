@@ -109,13 +109,6 @@ KernelGetMemorySize
         PVOID                       pMemoryBlock
     );
 
-PVOID
-KernelResizeMemory
-    (
-        PVOID                       pMemory,
-        ULONG                       ulMemorySize
-    );
-
 /*
  *  prototype
  *

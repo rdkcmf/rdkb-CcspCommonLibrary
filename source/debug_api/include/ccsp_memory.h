@@ -99,9 +99,6 @@ extern    char *                  pComponentName;
 #define AnscFreeMemory(pMemory) \
     AnscFreeMemoryOrig(pMemory)
 
-#define AnscResizeMemory(pMemory, size) \
-    realloc((pMemory), (size))
-
 #elif defined ANSC_MEMORY_USE_COUNTSIZE
 
 #define AnscAllocateMemory(size) \
@@ -113,9 +110,6 @@ extern    char *                  pComponentName;
 #define AnscFreeMemory(pMemory) \
             AnscFreeMemoryCountSize(pComponentName, pMemory)
 
-#define AnscResizeMemory(pMemory, size) \
-            AncResizeMemoryCountSize(pComponentName, pMemory, size)
-
 #else 
 
 #define AnscAllocateMemory(size) \
@@ -126,9 +120,6 @@ extern    char *                  pComponentName;
 
 #define AnscFreeMemory(pMemory) \
             AnscFreeMemoryRecordDetail(pComponentName, pMemory )
-
-#define AnscResizeMemory(pMemory, size) \
-            AncResizeMemoryRecordDetail(pComponentName, pMemory, size, __FILE__, __LINE__ )
 
 #endif
 
@@ -181,13 +172,6 @@ AnscFreeMemoryCountSize
     PVOID  pMemoryBlock
 );
 
-PVOID AnscResizeMemoryCountSize
-(
-    char*  pComponentName,
-    PVOID  pMemory,
-    ULONG  ulMemorySize
-);
-
 LONG AnscGetComponentMemorySize                                                                 
 (               
     char*  pComponentName
@@ -235,15 +219,6 @@ AnscFreeMemoryRecordDetail
 (
     char*  pComponentName,
     PVOID  pMemoryBlock
-);
-
-PVOID AnscResizeMemoryRecordDetail
-(
-    char*  pComponentName,
-    PVOID  pMemory,
-    ULONG  ulMemorySize,
-    char*  pFileName,
-    ULONG  LineNumber
 );
 
 void AnscPrintComponentMemoryTable

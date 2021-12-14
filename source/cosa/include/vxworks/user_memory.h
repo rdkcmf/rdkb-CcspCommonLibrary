@@ -261,14 +261,6 @@ RealUserGetMemorySize
 
 #endif
 
-PVOID
-UserResizeMemory
-    (
-        PVOID                       pMem,
-        ULONG                       ulSize
-    );
-
-
 /*
  *  prototype
  *

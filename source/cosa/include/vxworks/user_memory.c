@@ -48,7 +48,6 @@
         This wrapper file implements the platform dependent routines.
 
         *   UserAllocateMemory
-        *   UserResizeMemory
 
     ---------------------------------------------------------------
 
@@ -1080,19 +1079,3 @@ UserAllocateMemory
 
 
 #endif   /*_USER_USE_MEMORY_TRACKING_*/
-
-
-PVOID
-UserResizeMemory
-    (
-        PVOID                       pMem,
-        ULONG                       ulSize
-    )
-{
-    /*DH  DEBUG*/
-    /*UserTrace("UserResizeMemory ...\n");*/
-
-    UserFreeMemory(pMem);
-
-    return  UserAllocateMemory(ulSize);
-}

@@ -260,14 +260,6 @@ RealKernelGetMemorySize
 
 #endif
 
-PVOID
-KernelResizeMemory
-    (
-        PVOID                       pMem,
-        ULONG                       ulSize
-    );
-
-
 /*
  *  prototype
  *

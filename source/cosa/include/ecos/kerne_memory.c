@@ -48,7 +48,6 @@
         This wrapper file implements the platform dependent routines.
 
         *   KernelAllocateMemory
-        *   KernelResizeMemory
 
     ---------------------------------------------------------------
 
@@ -1080,19 +1079,3 @@ KernelAllocateMemory
 
 
 #endif   /*_KERNEL_USE_MEMORY_TRACKING_*/
-
-
-PVOID
-KernelResizeMemory
-    (
-        PVOID                       pMem,
-        ULONG                       ulSize
-    )
-{
-    /*DH  DEBUG*/
-    /*KernelTrace("KernelResizeMemory ...\n");*/
-
-    KernelFreeMemory(pMem);
-
-    return  KernelAllocateMemory(ulSize);
-}

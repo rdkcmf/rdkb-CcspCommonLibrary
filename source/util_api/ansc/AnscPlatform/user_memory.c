@@ -79,12 +79,3 @@ UserEqualMemory(PVOID  pMemory1, PVOID  pMemory2, ULONG  ulMemorySize)
 {
     return  (memcmp(pMemory1, pMemory2, ulMemorySize) == 0);
 }
-
-PVOID
-UserResizeMemory(PVOID  pMemory, ULONG  ulMemorySize)
-{
-	AnscFreeMemory(pMemory);
-	pMemory = UserAllocateMemory(ulMemorySize);
-	return pMemory;
-}
-

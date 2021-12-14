@@ -148,7 +148,6 @@
         #define  AnscAllocateMemory                 AnscAllocMemory
         #define  AnscFreeMemory                     AnscFlushMemory
         #define  AnscGetMemorySize                  KernelGetMemorySize
-        #define  AnscResizeMemory                   KernelResizeMemory
 
     #endif
 
@@ -158,7 +157,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory2
         #define  AnscFreeMemory                     AnscFreeMemory2
         #define  AnscGetMemorySize                  AnscGetMemorySize2
-        #define  AnscResizeMemory                   AnscResizeMemory2
 
     #endif
 
@@ -168,7 +166,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory3
         #define  AnscFreeMemory                     AnscFreeMemory3
         #define  AnscGetMemorySize                  AnscGetMemorySize3
-        #define  AnscResizeMemory                   AnscResizeMemory3
 
     #endif
 
@@ -178,7 +175,6 @@
         #define  AnscAllocateMemory(s)              AnscAllocateMemory4(s, __FILE__, __LINE__)
         #define  AnscFreeMemory                     AnscFreeMemory4
         #define  AnscGetMemorySize                  AnscGetMemorySize4
-        #define  AnscResizeMemory(p, s)             AnscResizeMemory4(p, s, __FILE__, __LINE__)
 
     #endif
 
@@ -188,7 +184,6 @@
         #define  AnscAllocateMemory(s)              AnscAllocateMemory5(s, __FILE__, __LINE__)
         #define  AnscFreeMemory                     AnscFreeMemory5
         #define  AnscGetMemorySize                  AnscGetMemorySize5
-        #define  AnscResizeMemory(p, s)             AnscResizeMemory5(p, s, __FILE__, __LINE__)
 
     #endif
 
@@ -198,7 +193,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory6
         #define  AnscFreeMemory                     AnscFreeMemory6
         #define  AnscGetMemorySize                  AnscGetMemorySize6
-        #define  AnscResizeMemory                   AnscResizeMemory6
 
     #endif
 
@@ -268,7 +262,6 @@
         #define  AnscAllocateMemory                 AnscAllocMemory
         #define  AnscFreeMemory                     AnscFlushMemory
         #define  AnscGetMemorySize                  UserGetMemorySize
-        #define  AnscResizeMemory                   UserResizeMemory
 
     #endif
 
@@ -278,7 +271,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory2
         #define  AnscFreeMemory                     AnscFreeMemory2
         #define  AnscGetMemorySize                  AnscGetMemorySize2
-        #define  AnscResizeMemory                   AnscResizeMemory2
 
     #endif
 
@@ -288,7 +280,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory3
         #define  AnscFreeMemory                     AnscFreeMemory3
         #define  AnscGetMemorySize                  AnscGetMemorySize3
-        #define  AnscResizeMemory                   AnscResizeMemory3
 
     #endif
 
@@ -298,7 +289,6 @@
         #define  AnscAllocateMemory(s)              AnscAllocateMemory4(s, __FILE__, __LINE__)
         #define  AnscFreeMemory                     AnscFreeMemory4
         #define  AnscGetMemorySize                  AnscGetMemorySize4
-        #define  AnscResizeMemory(p, s)             AnscResizeMemory4(p, s, __FILE__, __LINE__)
 
     #endif
 
@@ -308,7 +298,6 @@
         #define  AnscAllocateMemory(s)              AnscAllocateMemory5(s, __FILE__, __LINE__)
         #define  AnscFreeMemory                     AnscFreeMemory5
         #define  AnscGetMemorySize                  AnscGetMemorySize5
-        #define  AnscResizeMemory(p, s)             AnscResizeMemory5(p, s, __FILE__, __LINE__)
 
     #endif
 
@@ -318,7 +307,6 @@
         #define  AnscAllocateMemory                 AnscAllocateMemory6
         #define  AnscFreeMemory                     AnscFreeMemory6
         #define  AnscGetMemorySize                  AnscGetMemorySize6
-        #define  AnscResizeMemory                   AnscResizeMemory6
 
     #endif
 

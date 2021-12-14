@@ -105,9 +105,6 @@ UserZeroMemory(PVOID  pMemory, ULONG  ulMemorySize);
 BOOLEAN
 UserEqualMemory(PVOID  pMemory1, PVOID  pMemory2, ULONG  ulMemorySize);
 
-PVOID
-UserResizeMemory(PVOID  pMemory, ULONG  ulMemorySize);
-
 
 /***********************************************************
                MEMORY POOL BASED OPERATIONS

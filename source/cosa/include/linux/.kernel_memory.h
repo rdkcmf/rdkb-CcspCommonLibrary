@@ -132,14 +132,6 @@ KernelEqualMemory(PVOID  pMemory1, PVOID  pMemory2, ULONG  ulMemorySize)
     return  (memcmp(pMemory1, pMemory2, ulMemorySize) == 0);
 }
 
-__static_inline PVOID
-KernelResizeMemory(PVOID  pMemory, ULONG  ulMemorySize)
-{
-	kfree(pMemory);
-	pMemory = KernelAllocateMemory(ulMemorySize);
-	return pMemory;
-}
-
 #define KernelGetMemorySize(p)           0
 #define KernelReAllocMemory(p,s)         0
 #define KernelGetFreeMemory()            0xFFFFFFFF

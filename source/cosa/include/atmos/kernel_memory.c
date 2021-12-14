@@ -51,7 +51,6 @@
         *   KernelReAllocMemory
         *   KernelFreeMemory
         *   KernelGetMemorySize
-        *   KernelResizeMemory
 
     ---------------------------------------------------------------
 
@@ -278,27 +277,6 @@ KernelGetMemorySize
     return  pMemoryHeader->size;
 }
 
-
-PVOID
-KernelResizeMemory
-    (
-        PVOID                       pMem,
-        ULONG                       ulSize
-    )
-{
-    BITS                            critLevel;
-    PVOID                           pNewMem     = NULL;
-
-    critLevel = atmos_startcritical();
-
-    KernelFreeMemory(pMem);
-
-    pNewMem = KernelAllocateMemory(ulSize);
-
-    atmos_endcritical(critLevel);
-
-    return  pNewMem;
-}
 
 PVOID
 KernelGetMemoryInfo
