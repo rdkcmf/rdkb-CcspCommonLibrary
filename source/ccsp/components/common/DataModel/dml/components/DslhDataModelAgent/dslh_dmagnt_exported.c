@@ -1146,7 +1146,6 @@ COSAGetParamValueByPathName
     int not_complete=0,same_component=0;
     int i, size1, size2, len;
     int ret = 0;
-    errno_t rc = -1;
 
     componentStruct_t ** ppComponents = NULL;
     parameterValStruct_t **parameterVal = NULL;
@@ -1157,12 +1156,8 @@ COSAGetParamValueByPathName
     /*CCSP_Message_Bus_Init("ccsp.sbclient", CCSP_MSG_BUS_CFG, &bus_handle, Ansc_AllocateMemory_Callback, Ansc_FreeMemory_Callback);*/
     /*CCSP_Msg_SleepInMilliSeconds(1000);*/
     /*CCSP_Message_Bus_Register_Path(bus_handle, msg_path, path_message_func, 0);*/
-
-    rc = sprintf_s(cr_id, sizeof(cr_id), "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
-    if(rc < EOK)
-    {
-        ERR_CHK(rc);
-    }
+	 /* Ticket RDKB-39090 purpose */
+     _ansc_sprintf(cr_id, "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
 
     for(i=0; FALSE == AnscEqualString(pSubSysPrefixList[i], END_OF_LIST, TRUE);i++)
     {
@@ -1217,9 +1212,8 @@ COSAGetParamValueByPathName
             *parameterValueLength = len;
 
         }
-
-        rc = STRCPY_S_NOCLOBBER(val->parameterValue, (*parameterValueLength + 1), parameterVal[0]->parameterValue);
-        ERR_CHK(rc);
+        /* Ticket RDKB-39090 purpose */
+        strcpy(val->parameterValue, parameterVal[0]->parameterValue);
 
         *parameterValueLength = len;
     }
