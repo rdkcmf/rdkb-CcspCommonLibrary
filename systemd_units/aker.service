@@ -19,6 +19,8 @@
 [Unit]
 Description=Aker Service
 
+After=CcspPandMSsp.service
+
 [Service]
 Type=simple
 Environment="LOG4C_RCPATH=/etc"
