@@ -307,9 +307,9 @@ extern volatile BOOL BLE_RDKLogEnable;
                 char*   pTempChar = (char*)malloc(4096);                                     \
                 if ( pTempChar )                                                             \
                 {                                                                            \
-					char	sfn[32];														 \
+					char	sfn[256];														 \
                     CcspTraceBase msg;                                                       \
-					CcspTraceShortenFileName(sfn, 32, __FILE__);							 \
+					CcspTraceShortenFileName(sfn, 256, __FILE__);							 \
                     openlog(NULL, LOG_PID, LOG_USER);                                        \
                     syslog(LOG_USER|level, "%s:%d %s %s", sfn, __LINE__, pComponentName, pTempChar);	 \
                     closelog();                                                              \
