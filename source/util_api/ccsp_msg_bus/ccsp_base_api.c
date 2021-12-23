@@ -355,6 +355,10 @@ int CcspBaseIf_setParameterValues_rbus(
             *invalidParameterName = 0;
         ret = CCSP_SUCCESS;
     }
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
+    }
     rbusMessage_Release(response);
     return ret;
 }
@@ -663,6 +667,10 @@ int CcspBaseIf_getParameterValues_rbus(
                 RBUS_LOG("Param [%d] Name = %s, Type = %d, Value = %s\n", i,val[i]->parameterName, val[i]->type, val[i]->parameterValue);
             }
         }
+    }
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
     }
 
     rbusMessage_Release(response);
@@ -1289,6 +1297,10 @@ int CcspBaseIf_getParameterAttributes_rbus(
             }
         }
     }
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
+    }
 
     rbusMessage_Release(response);
     *parameterAttributeval = val;
@@ -1508,6 +1520,10 @@ int CcspBaseIf_AddTblRow_rbus(
     /* If the component that owns the table is rbus-2.0 component, the return code will be different. */
     if (RBUS_RETURN_CODE_SUCCESS == ret)
         ret = CCSP_SUCCESS;
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
+    }
 
     return ret;
 }
@@ -1593,6 +1609,10 @@ int CcspBaseIf_DeleteTblRow_rbus(
     /* If the component that owns the table is rbus-2.0 component, the return code will be different. */
     if (RBUS_RETURN_CODE_SUCCESS == ret)
         ret = CCSP_SUCCESS;
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
+    }
 
     return ret;
 }
@@ -1719,6 +1739,10 @@ int CcspBaseIf_getParameterNames_rbus(
                         i, val[i]->parameterName, type);
             }
         }
+    }
+    else if(ret < CCSP_SUCCESS)
+    {
+        ret = Rbus2_to_CCSP_error_mapper(ret);
     }
     *parameter = val;
     rbusMessage_Release(response);
@@ -2028,6 +2052,7 @@ static int registerComponentWithCr_rbus(const char *component_name)
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s got returnCode Err: %d\n", __FUNCTION__, component_name, returnCode);
             ret = CCSP_FAILURE;
         }
+        rbusMessage_Release(response);
     }
     else
     {
@@ -3553,6 +3578,7 @@ int CcspBaseIf_requestSessionID_rbus (
                 if(RT_OK == rbusMessage_GetInt32(response, sessionID))
                 {
                     RBUS_LOG("Got new session id %d\n", *sessionID);
+                    rbusMessage_Release(response);
                     return CCSP_SUCCESS;
                 }
                 else
@@ -3564,7 +3590,7 @@ int CcspBaseIf_requestSessionID_rbus (
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
-
+    rbusMessage_Release(response);
     return CCSP_FAILURE;
 }
 
@@ -3656,6 +3682,7 @@ int CcspBaseIf_getCurrentSessionID_rbus (
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
+    rbusMessage_Release(response);
 
     return result;
 }
@@ -3751,6 +3778,7 @@ int CcspBaseIf_informEndOfSession_rbus (
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
+    rbusMessage_Release(response);
 
     return ret;
 }
@@ -4622,10 +4650,7 @@ void* CcspBaseIf_SendTelemetryDataSignal_rbus(void* telemetry_data)
   {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for telemetry data:%s returns with Err: %d\n", __FUNCTION__,Telemetry_data, ret);
   }
-  else
-  {
-    rbusMessage_Release(response);
-  }
+  rbusMessage_Release(response);
   return NULL;
 }
 
@@ -4837,10 +4862,7 @@ int CcspBaseIf_TunnelStatusSignal_rbus (
         RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for TunnelStatus failed & returns with Err: %d\n", __FUNCTION__, ret);
         ret = CCSP_FAILURE;
     }
-    else
-    {
-        rbusMessage_Release(response);
-    }
+    rbusMessage_Release(response);
     return ret;
 }
 
@@ -4861,10 +4883,7 @@ int CcspBaseIf_WifiDbStatusSignal_rbus (
         RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for WifiDbStatus failed & returns with Err: %d\n", __FUNCTION__, ret);
         ret = CCSP_FAILURE;
     }
-    else
-    {
-        rbusMessage_Release(response);
-    }
+    rbusMessage_Release(response);
     return ret;
 }
 
@@ -6000,6 +6019,38 @@ int Rbus_to_CCSP_error_mapper (int Rbus_error_code)
         case  10 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT
         case  11 : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RTMESSAGE_BUS_ERROR_OUT_OF_RESOURCES
         case  12 : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RTMESSAGE_BUS_ERROR_DESTINATION_UNREACHABLE
+    }
+    return CCSP_error_code;
+}
+
+int Rbus2_to_CCSP_error_mapper (int Rbus_error_code)
+{
+    int CCSP_error_code = CCSP_Message_Bus_ERROR;
+    switch (Rbus_error_code)
+    {
+        case  0  : CCSP_error_code = CCSP_Message_Bus_OK; break;               // RBUS_ERROR_SUCCESS
+        case  1  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_BUS_ERROR
+        case  2  : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;  // RBUS_ERROR_INVALID_INPUT
+        case  3  : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_NOT_INITIALIZED
+        case  4  : CCSP_error_code = CCSP_Message_Bus_OOM; break;              // RBUS_ERROR_OUT_OF_RESOURCES
+        case  5  : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RBUS_ERROR_DESTINATION_NOT_FOUND
+        case  6  : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;   // RBUS_ERROR_DESTINATION_NOT_REACHABLE
+        case  7  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RBUS_ERROR_DESTINATION_RESPONSE_FAILURE
+        case  8  : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;     // RBUS_ERROR_INVALID_RESPONSE_FROM_DESTINATION
+        case  9  : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_OPERATION
+        case  10 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_EVENT
+        case  11 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;      // RBUS_ERROR_INVALID_HANDLE
+        case  12 : CCSP_error_code = CCSP_CR_ERR_SESSION_IN_PROGRESS; break;   // RBUS_ERROR_SESSION_ALREADY_EXIST
+        case  13 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_COMPONENT_NAME_DUPLICATE
+        case  14 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_NAME_DUPLICATE
+        case  15 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_NAME_MISSING
+        case  16 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_COMPONENT_DOES_NOT_EXIST
+        case  17 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ELEMENT_DOES_NOT_EXIST
+        case  18 : CCSP_error_code = CCSP_ERR_REQUEST_REJECTED; break;         // RBUS_ERROR_ACCESS_NOT_ALLOWED
+        case  19 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_INVALID_CONTEXT
+        case  20 : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;          // RBUS_ERROR_TIMEOUT
+        case  21 : CCSP_error_code = CCSP_Message_Bus_ERROR; break;            // RBUS_ERROR_ASYNC_RESPONSE
+        case  22 : CCSP_error_code = CCSP_ERR_METHOD_NOT_SUPPORTED; break;     // RBUS_ERROR_INVALID_METHOD
     }
     return CCSP_error_code;
 }

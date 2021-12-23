@@ -1347,4 +1347,5 @@ void PsmFreeRecords(void *bus_handle,
         int nrec);
 
 int Rbus_to_CCSP_error_mapper(int error_code);
+int Rbus2_to_CCSP_error_mapper(int error_code);
 #endif /* CCSP_BASE_API_H */
