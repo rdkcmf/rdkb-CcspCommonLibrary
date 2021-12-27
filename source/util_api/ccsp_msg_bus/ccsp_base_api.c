@@ -2062,7 +2062,6 @@ static int registerComponentWithCr_rbus(const char *component_name)
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s got returnCode Err: %d\n", __FUNCTION__, component_name, returnCode);
             ret = CCSP_FAILURE;
         }
-        rbusMessage_Release(response);
     }
     else
     {
