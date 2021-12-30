@@ -90,97 +90,7 @@ extern "C" {
 extern  INT  g_iTraceLevel;
 extern char *g_TraceLevelStr[8];
 extern char * pComponentName;
-extern volatile unsigned int RDKLogLevel;
-extern volatile BOOL RDKLogEnable;
-extern volatile unsigned int LM_RDKLogLevel;
-extern volatile unsigned int SNMP_RDKLogLevel;
-extern volatile unsigned int TR69_RDKLogLevel;
-extern volatile unsigned int PAM_RDKLogLevel;
-extern volatile unsigned int PSM_RDKLogLevel;
-extern volatile unsigned int MOCA_RDKLogLevel;
-extern volatile unsigned int MTA_RDKLogLevel;
-extern volatile unsigned int CM_RDKLogLevel;
-extern volatile unsigned int WiFi_RDKLogLevel;
-extern volatile unsigned int CR_RDKLogLevel;
-extern volatile unsigned int Harvester_RDKLogLevel; /*Added for RDKB-4343*/
-extern volatile unsigned int NOTIFY_RDKLogLevel; 
-extern volatile unsigned int PWRMGR_RDKLogLevel;
-extern volatile unsigned int FSC_RDKLogLevel;
-extern volatile unsigned int ETHAGENT_RDKLogLevel;
-extern volatile unsigned int WANAGENT_RDKLogLevel;
-extern volatile unsigned int TELCOVOIPAGENT_RDKLogLevel;
-extern volatile unsigned int CPUPROCANALYZER_RDKLogLevel;
-extern volatile unsigned int XDNS_RDKLogLevel;
-extern volatile unsigned int DSLAGENT_RDKLogLevel;
-extern volatile unsigned int VLANAGENT_RDKLogLevel;
-extern volatile unsigned int XTMAGENT_RDKLogLevel;
-#if defined (FEATURE_RDKB_WAN_MANAGER)
-extern volatile unsigned int WANMANAGER_RDKLogLevel;
-extern volatile unsigned int XDSLManager_RDKLogLevel;
-extern volatile unsigned int VLANMANAGER_RDKLogLevel;
-extern volatile unsigned int PLATFORMMGR_RDKLogLevel;
-#ifdef FEATURE_RDKB_GPON_MANAGER
-extern volatile unsigned int GPONMANAGER_RDKLogLevel;
-#endif
-extern volatile unsigned int PPPMANAGER_RDKLogLevel;
-extern volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel;
-extern volatile unsigned int FWUPGRADEMGR_RDKLogLevel;
-extern volatile unsigned int XTMMANAGER_RDKLogLevel;
-extern volatile unsigned int LEDMANAGER_RDKLogLevel;
-#endif //FEATURE_RDKB_WAN_MANAGER
-#ifdef FEATURE_RDKB_NFC_MANAGER
-extern volatile unsigned int NFCMANAGER_RDKLogLevel;
-#endif
-/* Mesh Wifi log levels */
-extern volatile unsigned int MESH_RDKLogLevel;
-extern volatile BOOL MESH_RDKLogEnable;
 
-/* Mesh Service log levels */
-extern volatile unsigned int MeshService_RDKLogLevel;
-extern volatile BOOL MeshService_RDKLogEnable;
-
-extern volatile BOOL LM_RDKLogEnable;
-extern volatile BOOL SNMP_RDKLogEnable;
-extern volatile BOOL TR69_RDKLogEnable;
-extern volatile BOOL PAM_RDKLogEnable;
-extern volatile BOOL PSM_RDKLogEnable;
-extern volatile BOOL MOCA_RDKLogEnable;
-extern volatile BOOL MTA_RDKLogEnable;
-extern volatile BOOL CM_RDKLogEnable;
-extern volatile BOOL WiFi_RDKLogEnable;
-extern volatile BOOL CR_RDKLogEnable;
-extern volatile BOOL Harvester_RDKLogEnable; /*Added for RDKB-4343*/
-extern volatile BOOL NOTIFY_RDKLogEnable;
-extern volatile BOOL PWRMGR_RDKLogEnable;
-extern volatile BOOL FSC_RDKLogEnable;
-extern volatile BOOL ETHAGENT_RDKLogEnable;
-extern volatile BOOL WANAGENT_RDKLogEnable;
-extern volatile BOOL TELCOVOIPAGENT_RDKLogEnable;
-extern volatile BOOL CPUPROCANALYZER_RDKLogEnable;
-extern volatile BOOL XDNS_RDKLogEnable;
-extern volatile BOOL DSLAGENT_RDKLogEnable;
-extern volatile BOOL VLANAGENT_RDKLogEnable;
-extern volatile BOOL XTMAGENT_RDKLogEnable;
-#if defined (FEATURE_RDKB_WAN_MANAGER)
-extern volatile BOOL WANMANAGER_RDKLogEnable;
-extern volatile BOOL XDSLManager_RDKLogEnable;
-extern volatile BOOL VLANMANAGER_RDKLogEnable;
-extern volatile BOOL PLATFORMMGR_RDKLogEnable;
-#ifdef FEATURE_RDKB_GPON_MANAGER
-extern volatile BOOL GPONMANAGER_RDKLogEnable;
-#endif
-extern volatile BOOL TELCOVOICEMANAGER_RDKLogEnable;
-extern volatile BOOL XTMMANAGER_RDKLogEnable;
-extern volatile BOOL FWUPGRADEMGR_RDKLogEnable;
-extern volatile BOOL PPPMANAGER_RDKLogEnable;
-extern volatile BOOL LEDMANAGER_RDKLogEnable;
-#endif //FEATURE_RDKB_WAN_MANAGER
-#if defined(FEATURE_RDKB_NFC_MANAGER)
-extern volatile BOOL NFCMANAGER_RDKLogEnable;
-#endif //FEATURE_RDKB_NFC_MANAGER
-
-extern volatile unsigned int BLE_RDKLogLevel;
-extern volatile BOOL BLE_RDKLogEnable;
 /*
  *  Whether a debug trace is output depends on the following factors:
  *      1) the trace level passed in the trace statement is higher (smaller value)
@@ -425,6 +335,7 @@ AnscSetTraceLevel
 
 void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char *format, ...);
 const char* CcspTraceGetRdkLogModule(const char* pComponentName);
+void Ccsplog3(char *pComponentName, char* LogMsg);
 
 #ifdef  __cplusplus
 }

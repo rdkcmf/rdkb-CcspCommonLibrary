@@ -74,96 +74,43 @@
 #include "user_time.h"
 #include "ansc_time.h"
 #include "ansc_debug.h"
-#include <stdarg.h>
-volatile BOOL RDKLogEnable = TRUE;
-volatile unsigned int RDKLogLevel = 4;
-volatile BOOL LM_RDKLogEnable = TRUE;
-volatile unsigned int LM_RDKLogLevel = 4;
-volatile BOOL SNMP_RDKLogEnable = TRUE;
-volatile unsigned int SNMP_RDKLogLevel = 4;
-volatile BOOL TR69_RDKLogEnable = TRUE;
-volatile unsigned int TR69_RDKLogLevel = 4;
-volatile BOOL PAM_RDKLogEnable = TRUE;
-volatile unsigned int PAM_RDKLogLevel = 4;
-volatile BOOL PSM_RDKLogEnable = TRUE;
-volatile unsigned int PSM_RDKLogLevel = 4;
-volatile BOOL MOCA_RDKLogEnable = TRUE;
-volatile unsigned int MOCA_RDKLogLevel = 4;
-volatile BOOL MTA_RDKLogEnable = TRUE;
-volatile unsigned int MTA_RDKLogLevel = 4;
-volatile BOOL CM_RDKLogEnable = TRUE;
-volatile unsigned int CM_RDKLogLevel = 4;
-volatile BOOL WiFi_RDKLogEnable = TRUE;
-volatile unsigned int WiFi_RDKLogLevel = 4;
-volatile BOOL CR_RDKLogEnable = TRUE;
-volatile unsigned int CR_RDKLogLevel = 4;
-/*Added for RDKB-4343*/
-volatile BOOL Harvester_RDKLogEnable = TRUE;
-volatile unsigned int Harvester_RDKLogLevel = 4;
-volatile unsigned int NOTIFY_RDKLogLevel = 4;
-volatile BOOL NOTIFY_RDKLogEnable = TRUE;
-volatile BOOL PWRMGR_RDKLogEnable = TRUE;
-volatile unsigned int PWRMGR_RDKLogLevel = 4;
-volatile BOOL FSC_RDKLogEnable = TRUE;
-volatile unsigned int FSC_RDKLogLevel = 4;
-volatile BOOL MESH_RDKLogEnable = TRUE;
-volatile unsigned int MESH_RDKLogLevel = 4;
-volatile BOOL MeshService_RDKLogEnable = TRUE;
-volatile unsigned int MeshService_RDKLogLevel = 5;
 
-volatile BOOL CPUPROCANALYZER_RDKLogEnable = TRUE;
-volatile unsigned int CPUPROCANALYZER_RDKLogLevel = 4;
-volatile BOOL ETHAGENT_RDKLogEnable = TRUE;
-volatile unsigned int ETHAGENT_RDKLogLevel = 4;
-volatile BOOL BLE_RDKLogEnable = TRUE;
-volatile unsigned int BLE_RDKLogLevel = 4;
-volatile BOOL WANAGENT_RDKLogEnable = TRUE;
-volatile unsigned int WANAGENT_RDKLogLevel = 4;
-volatile BOOL TELCOVOIPAGENT_RDKLogEnable = TRUE;
-volatile unsigned int TELCOVOIPAGENT_RDKLogLevel = 4;
+/*Structure defined to get the log level type from the given Log Names */
+#define NUM_LOGLEVEL_TYPES (sizeof(loglevel_type_table)/sizeof(loglevel_type_table[0]))
 
-volatile BOOL ADVSEC_RDKLogEnable = TRUE;
-volatile unsigned int ADVSEC_RDKLogLevel = 4;
-volatile BOOL XDNS_RDKLogEnable = TRUE;
-volatile unsigned int XDNS_RDKLogLevel = 4;
-volatile BOOL DSLAGENT_RDKLogEnable = TRUE;
-volatile unsigned int DSLAGENT_RDKLogLevel = 4;
-volatile BOOL VLANAGENT_RDKLogEnable = TRUE;
-volatile unsigned int VLANAGENT_RDKLogLevel = 4;
-volatile BOOL XTMAGENT_RDKLogEnable = TRUE;
-volatile unsigned int XTMAGENT_RDKLogLevel = 4;
+typedef struct loglevel_pair {
+  char     *name;
+  int      level;
+} LOGLEVEL_PAIR;
 
-volatile BOOL T2_RDKLogEnable = TRUE;
-volatile unsigned int T2_RDKLogLevel = 4;
+LOGLEVEL_PAIR loglevel_type_table[] = {
+  { "RDK_LOG_ERROR",  RDK_LOG_ERROR },
+  { "RDK_LOG_WARN",   RDK_LOG_WARN   },
+  { "RDK_LOG_NOTICE", RDK_LOG_NOTICE },
+  { "RDK_LOG_INFO",   RDK_LOG_INFO },
+  { "RDK_LOG_DEBUG",  RDK_LOG_DEBUG },
+  { "RDK_LOG_FATAL",  RDK_LOG_FATAL }
+};
 
-#if defined (FEATURE_RDKB_WAN_MANAGER)
-volatile BOOL WANMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int WANMANAGER_RDKLogLevel = 4;
-volatile BOOL XDSLManager_RDKLogEnable = TRUE;
-volatile unsigned int XDSLManager_RDKLogLevel = 4;
-volatile BOOL XTMMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int XTMMANAGER_RDKLogLevel = 4;
-volatile BOOL VLANMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int VLANMANAGER_RDKLogLevel = 4;
-volatile BOOL PLATFORMMGR_RDKLogEnable = TRUE;
-volatile unsigned int PLATFORMMGR_RDKLogLevel = 4;
-volatile BOOL FWUPGRADEMGR_RDKLogEnable = TRUE;
-volatile unsigned int FWUPGRADEMGR_RDKLogLevel = 4;
-#ifdef FEATURE_RDKB_GPON_MANAGER
-volatile BOOL GPONMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int GPONMANAGER_RDKLogLevel = 4;
-#endif
-volatile BOOL TELCOVOICEMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int TELCOVOICEMANAGER_RDKLogLevel = 4;
-volatile BOOL PPPMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int PPPMANAGER_RDKLogLevel = 4;
-volatile BOOL LEDMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int LEDMANAGER_RDKLogLevel = 4;
-#endif //FEATURE_RDKB_WAN_MANAGER
-#if defined (FEATURE_RDKB_NFC_MANAGER)
-volatile BOOL NFCMANAGER_RDKLogEnable = TRUE;
-volatile unsigned int NFCMANAGER_RDKLogLevel = 4;
-#endif // FEATURE_RDKB_NFC_MANAGER
+int loglevel_type_from_name(char *name, int *type_ptr)
+{
+  int rc = -1;
+  unsigned int i = 0;
+  if((name == NULL) || (type_ptr == NULL))
+     return 0;
+
+  for (i = 0 ; i < NUM_LOGLEVEL_TYPES ; ++i)
+  {
+      rc = strncmp(name, loglevel_type_table[i].name, strlen(name));
+      if(rc == 0)
+      {
+        *type_ptr = loglevel_type_table[i].level;
+        break;
+      }
+  }
+  return rc;
+}
+
 /**********************************************************************
                     VARIABLES FOR TRACE LEVEL
 **********************************************************************/
@@ -234,313 +181,22 @@ AnscSetTraceLevel
     AnscSetTraceLevel_ansc(traceLevel);    
 }
 
-void CcspTraceLogAPI(char *fileName, char *pComponentName, int level, const char *format, ...)
+void Ccsplog3(char *pComponentName, char* LogMsg)
 {
-    char *ComponentName;
-    volatile unsigned int LogLevel;
-    volatile BOOLEAN LogEnable;
+    char* LogLevel = NULL;
+    int level = 0;
 
-    if(RDKLogEnable == TRUE && pComponentName)
+    LogLevel = strtok_r(LogMsg, ",", &LogMsg);
+    if (!loglevel_type_from_name(LogLevel, &level))
     {
-        if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pam"))
-        {
-            ComponentName="LOG.RDK.PAM";
-            LogLevel = PAM_RDKLogLevel;
-            LogEnable = PAM_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))
-        {
-            ComponentName = "LOG.RDK.TR69";
-            LogLevel = TR69_RDKLogLevel;
-            LogEnable = TR69_RDKLogEnable;
-            /*printf("-- LogLevel = %d\n LogEnable = %d\n",LogLevel,LogEnable);*/
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.psm"))
-        {
-            ComponentName= "LOG.RDK.PSM";
-            LogLevel = PSM_RDKLogLevel;
-            LogEnable = PSM_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.moca"))
-        {
-            ComponentName= "LOG.RDK.MOCA";
-            LogLevel = MOCA_RDKLogLevel;
-            LogEnable = MOCA_RDKLogEnable;
-            /*printf("-- MOCA LogLevel = %d\n LogEnable = %d\n",LogLevel,LogEnable);*/
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.CR"))
-        {
-            ComponentName="LOG.RDK.CR";
-            LogLevel = CR_RDKLogLevel;
-            LogEnable = CR_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.mta"))
-        {
-            ComponentName="LOG.RDK.MTA";
-            LogLevel = MTA_RDKLogLevel;
-            LogEnable = MTA_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.cm"))
-        {
-            ComponentName="LOG.RDK.CM";
-            LogLevel = CM_RDKLogLevel;
-            LogEnable = CM_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tdm"))
-        {
-            ComponentName="LOG.RDK.TDM";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ssd"))
-        {
-            ComponentName="LOG.RDK.SSD";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fu"))
-        {
-            ComponentName="LOG.RDK.FU";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wifi"))
-        {
-            ComponentName="LOG.RDK.WIFI";
-            LogLevel = WiFi_RDKLogLevel;
-            LogEnable = WiFi_RDKLogEnable;
-        }
-        /*Added for rdkb-4237*/
-        /* else if(!strcmp(pComponentName,"mdc"))
-        {
-            MDCLOG
-        } */
-        /*Added for RDKB-4343*/
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.harvester"))
-        {
-            ComponentName="LOG.RDK.Harvester";
-            LogLevel = Harvester_RDKLogLevel;
-            LogEnable = Harvester_RDKLogEnable;
-        }
-        /*Changes end here*/
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.notifycomponent"))
-        {
-            ComponentName= "LOG.RDK.NOTIFY";
-            LogLevel = NOTIFY_RDKLogLevel;
-            LogEnable = NOTIFY_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.LM"))
-        {
-            ComponentName="LOG.RDK.LM";
-            LogLevel = LM_RDKLogLevel;
-            LogEnable = LM_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"CCSP_SNMNP_Plugin"))
-        {
-            ComponentName="LOG.RDK.SNMP";
-            LogLevel = SNMP_RDKLogLevel;
-            LogEnable = SNMP_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.hotspot"))
-        {
-            ComponentName = "LOG.RDK.HOTSPOT";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"dhcp_snooperd"))
-        {
-            ComponentName = "LOG.RDK.DHCPSNOOP";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.PWRMGR"))
-        {
-            ComponentName= "LOG.RDK.PWRMGR";
-            LogLevel = PWRMGR_RDKLogLevel;
-            LogEnable = PWRMGR_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.FSC"))
-        {
-            ComponentName= "LOG.RDK.FSC";
-            LogLevel = FSC_RDKLogLevel;
-            LogEnable = FSC_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.MESH"))
-        {
-            ComponentName= "LOG.RDK.MESH";
-            LogLevel = MESH_RDKLogLevel;
-            LogEnable = MESH_RDKLogEnable;
-        }
-       else if(!strcmp(pComponentName,"LOG.RDK.BLE"))
-        {
-            ComponentName= "LOG.RDK.BLE";
-            LogLevel = BLE_RDKLogLevel;
-            LogEnable = BLE_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.MeshService"))
-        {
-            ComponentName= "LOG.RDK.MeshService";
-            LogLevel = MeshService_RDKLogLevel;
-            LogEnable = MeshService_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"LOG.RDK.CPUPROCANALYZER"))
-        {
-            ComponentName= "LOG.RDK.CPUPROCANALYZER";
-            LogLevel = CPUPROCANALYZER_RDKLogLevel;
-            LogEnable = CPUPROCANALYZER_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ethagent"))
-        {
-            ComponentName= "LOG.RDK.ETHAGENT";
-            LogLevel = ETHAGENT_RDKLogLevel;
-            LogEnable = ETHAGENT_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanagent"))
-        {
-            ComponentName= "LOG.RDK.WANAGENT";
-            LogLevel = WANAGENT_RDKLogLevel;
-            LogEnable = WANAGENT_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoipagent"))
-        {
-            ComponentName= "LOG.RDK.TELCOVOIPAGENT";
-            LogLevel = TELCOVOIPAGENT_RDKLogLevel;
-            LogEnable = TELCOVOIPAGENT_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.advsec"))
-        {
-            ComponentName="LOG.RDK.ADVSEC";
-            LogLevel = ADVSEC_RDKLogLevel;
-            LogEnable = ADVSEC_RDKLogEnable;
-        } 
-
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telemetry"))
-        {
-            ComponentName="LOG.RDK.T2";
-            LogLevel = T2_RDKLogLevel;
-            LogEnable = T2_RDKLogEnable;
-        }  
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdns"))
-        {
-            ComponentName= "LOG.RDK.XDNS";
-            LogLevel = XDNS_RDKLogLevel;
-            LogEnable = XDNS_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.dslagent"))
-        {
-            ComponentName= "LOG.RDK.DSLAGENT";
-            LogLevel = DSLAGENT_RDKLogLevel;
-            LogEnable = DSLAGENT_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanagent"))
-        {
-            ComponentName= "LOG.RDK.VLANAGENT";
-            LogLevel = VLANAGENT_RDKLogLevel;
-            LogEnable = VLANAGENT_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xtmagent"))
-        {
-            ComponentName= "LOG.RDK.XTMAGENT";
-            LogLevel = XTMAGENT_RDKLogLevel;
-            LogEnable = XTMAGENT_RDKLogEnable;
-        }
-#if defined (FEATURE_RDKB_WAN_MANAGER)
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.wanmanager"))
-        {
-            ComponentName= "LOG.RDK.WANMANAGER";
-            LogLevel = WANMANAGER_RDKLogLevel;
-            LogEnable = WANMANAGER_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdslmanager"))
-        {
-            ComponentName= "LOG.RDK.XDSLMANAGER";
-            LogLevel = XDSLManager_RDKLogLevel;
-            LogEnable = XDSLManager_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.vlanmanager"))
-        {
-            ComponentName= "LOG.RDK.VLANMANAGER";
-            LogLevel = VLANMANAGER_RDKLogLevel;
-            LogEnable = VLANMANAGER_RDKLogEnable;
-        }
-#ifdef FEATURE_RDKB_GPON_MANAGER
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.gponmanager"))
-        {
-            ComponentName= "LOG.RDK.GPONMANAGER";
-            LogLevel = GPONMANAGER_RDKLogLevel;
-            LogEnable = GPONMANAGER_RDKLogEnable;
-        }
-#endif
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.platformmanager"))
-        {
-            ComponentName= "LOG.RDK.PLATFORMMANAGER";
-            LogLevel = PLATFORMMGR_RDKLogLevel;
-            LogEnable = PLATFORMMGR_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telcovoicemanager"))
-        {
-            ComponentName= "LOG.RDK.TELCOVOICEMANAGER";
-            LogLevel = TELCOVOICEMANAGER_RDKLogLevel;
-            LogEnable = TELCOVOICEMANAGER_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xtmmanager"))
-        {
-            ComponentName= "LOG.RDK.XTMMANAGER";
-            LogLevel = XTMMANAGER_RDKLogLevel;
-            LogEnable = XTMMANAGER_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.fwupgrademanager"))
-        {
-            ComponentName= "LOG.RDK.FWUPGRADEMANAGER";
-            LogLevel = FWUPGRADEMGR_RDKLogLevel;
-            LogEnable = FWUPGRADEMGR_RDKLogEnable;
-        }
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.pppmanager"))
-        {
-            ComponentName= "LOG.RDK.PPPMANAGER";
-            LogLevel = PPPMANAGER_RDKLogLevel;
-            LogEnable = PPPMANAGER_RDKLogEnable;
-        }	
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.ledmanager"))
-        {
-            ComponentName= "LOG.RDK.RDKLEDMANAGER";
-            LogLevel = LEDMANAGER_RDKLogLevel;
-            LogEnable = LEDMANAGER_RDKLogEnable;
-        }
-#endif // FEATURE_RDKB_WAN_MANAGER
-#if defined(FEATURE_RDKB_NFC_MANAGER)
-        else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.nfcmanager"))
-        {
-            ComponentName= "LOG.RDK.RDKNFCMANAGER";
-            LogLevel = NFCMANAGER_RDKLogLevel;
-            LogEnable = NFCMANAGER_RDKLogEnable;
-        }
-#endif // FEATURE_RDKB_NFC_MANAGER
-        else
-        {
-            ComponentName = "LOG.RDK.Misc";
-            LogLevel = RDKLogLevel;
-            LogEnable = RDKLogEnable;
-        }
-        /*if( level<=RDKLogLevel)*/
-        if(((unsigned int)level<=LogLevel)&&(LogEnable == TRUE))
-        {
-            /*  if ( level <= g_iTraceLevel)                */
-            if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.tr069pa"))
-            {
-                /*printf("-- level = %d\n LogLevel = %d\n LogEnable = %d\n",level,LogLevel,LogEnable);*/
-            }
-            {
-                char    sfn[32];
-                va_list args;
-
-                CcspTraceShortenFileName(sfn, 32, fileName);
-                va_start(args, format);
-                RDK_LOG1(level, ComponentName, format, args);
-                va_end(args);
-            }
-        }
+        printf("\ntype name found - %d\n",level);
     }
+    else
+    {
+        printf("unrecognized type name");
+        level = RDK_LOG_INFO;
+    }
+    CcspTraceExec(pComponentName, level, (LogMsg));
 }
 
 const char* CcspTraceGetRdkLogModule(const char* pComponentName)
