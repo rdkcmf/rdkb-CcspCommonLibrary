@@ -2038,9 +2038,9 @@ CcspBaseIf_GetNextLevelInstances
  * are registered, Cr will set its property Device.CR.SystemReady to true, which will
  * send a value-change event to all listeners.
  */
-static int registerComponentWithCr_rbus(const char *component_name)
+static rbus_error_t registerComponentWithCr_rbus(const char *component_name)
 {
-    int ret = CCSP_SUCCESS;
+    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
     rbusMessage request, response;
 
     rbusMessage_Init(&request);
@@ -2055,7 +2055,7 @@ static int registerComponentWithCr_rbus(const char *component_name)
     rbusMessage_SetBytes(request, (uint8_t const*)component_name, strlen(component_name)+1);/*the actual value*/
     rbusMessage_SetInt32(request, 0);/*object child object count*/
 
-    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("Device.CR.RegisterComponent()", METHOD_RPC, request, 1000, &response))) == CCSP_Message_Bus_OK)
+    if((err = rbus_invokeRemoteMethod("Device.CR.RegisterComponent()", METHOD_RPC, request, 1000, &response)) == RTMESSAGE_BUS_SUCCESS)
     {
         int returnCode = 0;
         rbusMessage_GetInt32(response, &returnCode);
@@ -2063,15 +2063,14 @@ static int registerComponentWithCr_rbus(const char *component_name)
         if(returnCode != 0)
         {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s got returnCode Err: %d\n", __FUNCTION__, component_name, returnCode);
-            ret = CCSP_FAILURE;
+            err = RTMESSAGE_BUS_ERROR_GENERAL;
         }
     }
     else
     {
-        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s returned with Err: %d\n", __FUNCTION__, component_name, ret);
-        ret = CCSP_FAILURE;
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s returned with Err: %d\n", __FUNCTION__, component_name, err);
     }
-    return ret;
+    return err;
 }
 
 int CcspBaseIf_registerCapabilities_rbus(
@@ -2105,16 +2104,24 @@ int CcspBaseIf_registerCapabilities_rbus(
         }
     }
 
-    if (err == RTMESSAGE_BUS_SUCCESS)
+    if (RTMESSAGE_BUS_SUCCESS == err)
     {
-        registerComponentWithCr_rbus(component_name);
+        if((err = registerComponentWithCr_rbus(component_name)) != RTMESSAGE_BUS_SUCCESS)
+        {
+            /* Remove all elements when registration with CR has failed */
+            failedIndex = size;
+        }
     }
-    else
+
+    if (RTMESSAGE_BUS_SUCCESS != err)
     {
         RBUS_LOG_ERR("unregister all the params are we failed to register a param\n");
         for(i = 0; i < failedIndex; i++)
         {
-            rbus_removeElement (component_name, name_space[i].name_space);
+            if((err = rbus_removeElement(component_name, name_space[i].name_space)) != RTMESSAGE_BUS_SUCCESS)
+            {
+                RBUS_LOG_ERR("rbus_removeElement: %s Err: %d\n", name_space[i].name_space, err);
+            }
         }
         ret = CCSP_FAILURE;
     }
