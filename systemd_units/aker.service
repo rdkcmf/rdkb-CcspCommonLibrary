@@ -26,6 +26,7 @@ Type=simple
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/include.properties
 EnvironmentFile=/etc/device.properties
+ExecStartPre=/bin/sh -c 'count=0; while true; do var=`sysevent get ntpd-status`; if [ "$var" == "started" ]; then break; fi; sleep 5; count=`expr $count + 1`; if [ "$count" == 17 ]; then echo "Max wait 85s"; break; fi; done'
 ExecStartPre=/bin/sh -c '${RDK_PATH}/sub_utils.sh'
 ExecStartPre=/bin/systemctl import-environment MAC_ADDR
 ExecStart=/usr/bin/aker -p ${PARODUS_URL} -c ${AKER_URL} -w /usr/bin/parcon -d /nvram/pcs.bin -f /nvram/pcs.bin.md5 -i mac:${MAC_ADDR} &
