@@ -21,6 +21,7 @@
 #define __CCSP_RBUS_VALUE_CHANGE_H
 
 #include <stdint.h>
+#include <rbus-core/rbus_message.h>
 
 typedef struct _rbusFilter* rbusFilter_t;
 
@@ -32,15 +33,13 @@ int Ccsp_RbusValueChange_Subscribe(
     void* handle, 
     const char* listener, 
     const char* parameter, 
-    rbusFilter_t filter,
-    int32_t interval,
-    int32_t duration);
+    rbusMessage payload);
 
 int Ccsp_RbusValueChange_Unsubscribe(
     void* handle,
     const char* listener, 
     const char* parameter, 
-    rbusFilter_t filter);
+    rbusMessage payload);
 
 int Ccsp_RbusValueChange_Close(
     void* handle);

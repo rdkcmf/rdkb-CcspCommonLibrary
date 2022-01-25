@@ -69,16 +69,6 @@
 #define CCSP_CR_ETHWAN_DEVICE_PROFILE_XML_FILE "/usr/ccsp/cr-ethwan-deviceprofile.xml"
 #endif
 
-extern void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
-extern void rbusValue_appendToMessage(char const* name, rbusValue_t value, rbusMessage msg);
-extern void rbusProperty_initFromMessage(rbusProperty_t* property, rbusMessage msg);
-extern void rbusPropertyList_initFromMessage(rbusProperty_t* prop, rbusMessage msg);
-extern void rbusPropertyList_appendToMessage(rbusProperty_t prop, rbusMessage msg);
-extern void rbusObject_initFromMessage(rbusObject_t* obj, rbusMessage msg);
-extern void rbusObject_appendToMessage(rbusObject_t obj, rbusMessage msg);
-extern void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);
-extern void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
-
 typedef struct _component_info {
     char **list;
     int size;
@@ -5029,8 +5019,20 @@ int subscribeToRbus2Event_rbus
 {
     rbus_error_t err;
     int provider_err = 0;
+    rbusMessage payload = NULL;
 
-    err = rbus_subscribeToEvent(NULL, event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle, &provider_err);
+    rbusMessage_Init(&payload);
+    rbusMessage_SetInt32(payload, -1);
+    rbusMessage_SetInt32(payload, 0);
+    rbusMessage_SetInt32(payload, 0);
+    rbusMessage_SetInt32(payload, 0);
+
+    err = rbus_subscribeToEvent(NULL, event_name, CcspBaseIf_evt_callback_rbus, payload, bus_handle, &provider_err);
+
+    if(payload)
+    {
+        rbusMessage_Release(payload);
+    }
 
     if(err == RTMESSAGE_BUS_SUCCESS)
     {

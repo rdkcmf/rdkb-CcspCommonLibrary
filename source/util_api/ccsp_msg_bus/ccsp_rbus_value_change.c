@@ -50,6 +50,8 @@
 #define VC_LOCK() {int rc = pthread_mutex_lock(&vcmutex); (void)rc;}
 #define VC_UNLOCK() {pthread_mutex_unlock(&vcmutex);}
 
+extern void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
+
 static int              vcinit      = 0;
 static int              vcrunning   = 0;
 static int              vcperiod    = 1;//seconds
@@ -62,6 +64,7 @@ typedef struct ValueChangeRecord
     void* handle;
     char* listener; 
     char* parameter; 
+    int32_t componentId;
     rbusFilter_t filter;
     int32_t interval;
     int32_t duration;
@@ -102,7 +105,7 @@ static void vcParams_Free(void* p)
     free(rec);
 }
 
-static ValueChangeRecord* vcParams_Find(void* handle, const char* listener, const char* parameter, rbusFilter_t filter)
+static ValueChangeRecord* vcParams_Find(void* handle, const char* listener, const char* parameter, int32_t componentId, rbusFilter_t filter)
 {
     size_t i;
 
@@ -116,6 +119,7 @@ static ValueChangeRecord* vcParams_Find(void* handle, const char* listener, cons
             rec->handle == handle &&
             strcmp(rec->listener, listener) == 0 &&
             strcmp(rec->parameter, parameter) == 0 &&
+            rec->componentId == componentId &&
             rbusFilter_Compare(rec->filter, filter) == 0)
         {
             return rec;
@@ -215,6 +219,9 @@ static int rbusValueChange_getFilterResult(ValueChangeRecord* rec, parameterValS
         return -1;
     }
 }
+
+void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);/*from librbus.so*/
+
 static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValStruct_t* val, int filterResult)
 {
     rbusMessage msg;
@@ -244,8 +251,18 @@ static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValSt
         rbusMessage_SetString(msg, filterResult == 0 ? "0" : "1");
     }
     rbusMessage_SetInt32(msg, 0);/*object child object count*/
+    if(rec->filter)
+    {
+        rbusMessage_SetInt32(msg, 1);
+        rbusFilter_AppendToMessage(rec->filter, msg);
+    }
+    else
+    {
+        rbusMessage_SetInt32(msg, 0);
+    }
+    rbusMessage_SetInt32(msg, rec->componentId);
 
-    CcspTraceInfo(("%s: publising event %s to listener %s", __FUNCTION__, rec->parameter, rec->listener));
+    CcspTraceInfo(("%s: publising event %s to listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
 
     err = rbus_publishSubscriberEvent(
         ((CCSP_MESSAGE_BUS_INFO*)rec->handle)->component_id,  
@@ -341,15 +358,41 @@ static void* rbusValueChange_pollingThreadFunc(void *userData)
     return NULL;
 }
 
+static void Ccsp_RbusValueChange_ReadPayload(
+    rbusMessage payload,
+    int32_t* componentId,
+    int32_t* interval,
+    int32_t* duration,
+    rbusFilter_t* filter)
+{
+    *componentId = 0;
+    *interval = 0;
+    *duration = 0;
+    *filter = NULL;
+
+    if(payload)
+    {
+        int hasFilter;
+        rbusMessage_GetInt32(payload, componentId);
+        rbusMessage_GetInt32(payload, interval);
+        rbusMessage_GetInt32(payload, duration);
+        rbusMessage_GetInt32(payload, &hasFilter);
+        if(hasFilter)
+            rbusFilter_InitFromMessage(filter, payload);
+    }
+}
+
 int Ccsp_RbusValueChange_Subscribe(
     void* handle, 
     const char* listener, 
-    const char* parameter, 
-    rbusFilter_t filter,
-    int32_t interval,
-    int32_t duration)
+    const char* parameter,
+    rbusMessage payload)
 {
     ValueChangeRecord* rec;
+    int32_t componentId = 0;
+    int32_t interval = 0;
+    int32_t duration = 0;
+    rbusFilter_t filter = NULL;
 
     CcspTraceWarning(("%s: %s", __FUNCTION__, parameter));
 
@@ -367,11 +410,13 @@ int Ccsp_RbusValueChange_Subscribe(
         return CCSP_FAILURE;
     }
 
+    Ccsp_RbusValueChange_ReadPayload(payload, &componentId, &interval, &duration, &filter);
+
     /* only add the property if its not already in the list */
 
     VC_LOCK();
 
-    rec = vcParams_Find(handle, listener, parameter, filter);
+    rec = vcParams_Find(handle, listener, parameter, componentId, filter);
 
     VC_UNLOCK();
 
@@ -383,6 +428,7 @@ int Ccsp_RbusValueChange_Subscribe(
         rec->handle = handle;
         rec->listener = strdup(listener);
         rec->parameter = strdup(parameter);
+        rec->componentId = componentId;
         rec->filter = filter;
         rec->interval = interval;
         rec->duration = duration;
@@ -390,13 +436,14 @@ int Ccsp_RbusValueChange_Subscribe(
         if(rec->filter)
             rbusFilter_Retain(rec->filter);
 
-        //SET VALUE
         val = rbusValueChange_GetParameterValue(rec);
         if(val)
         {
             rec->value = strdup(val[0]->parameterValue);
             free_parameterValStruct_t(rec->handle, 1, val);
         }
+
+        CcspTraceInfo(("%s: %s new subscriber from listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
 
         VC_LOCK();
         rtVector_PushBack(vcparams, rec);
@@ -408,6 +455,16 @@ int Ccsp_RbusValueChange_Subscribe(
         }
         VC_UNLOCK();
     }
+    else
+    {
+        CcspTraceInfo(("%s: ignoring duplicate subscribe for %s from listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
+    }
+
+    if(filter)
+    {
+        rbusFilter_Release(filter);
+    }
+
     return CCSP_SUCCESS;
 }
 
@@ -415,9 +472,13 @@ int Ccsp_RbusValueChange_Unsubscribe(
     void* handle,
     const char* listener, 
     const char* parameter, 
-    rbusFilter_t filter)
+    rbusMessage payload)
 {
     ValueChangeRecord* rec;
+    int32_t componentId = 0;
+    int32_t interval = 0;
+    int32_t duration = 0;
+    rbusFilter_t filter = NULL;
 
     (void)(handle);
 
@@ -428,11 +489,18 @@ int Ccsp_RbusValueChange_Unsubscribe(
         return CCSP_FAILURE;
     }
 
+    Ccsp_RbusValueChange_ReadPayload(payload, &componentId, &interval, &duration, &filter);
+
     VC_LOCK();
 
-    rec = vcParams_Find(handle, listener, parameter, filter);
+    rec = vcParams_Find(handle, listener, parameter, componentId, filter);
 
     VC_UNLOCK();
+
+    if(filter)
+    {
+        rbusFilter_Release(filter);
+    }
 
     if(rec)
     {

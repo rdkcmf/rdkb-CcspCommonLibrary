@@ -61,9 +61,6 @@ const int NANOSEC_PER_MILLISEC = 1000000;
 // #define _DEBUG_LOCAL_
 #endif
 
-extern void rbusValue_initFromMessage(rbusValue_t* value, rbusMessage msg);
-extern void rbusFilter_InitFromMessage(rbusFilter_t* filter, rbusMessage msg);
-
 /* Use a 20 second timeout waiting for message replies */
 #define CCSP_MESSAGE_BUS_REPLY_TIMEOUT_SECONDS 20
 
@@ -2671,9 +2668,6 @@ static int cssp_event_subscribe_override_handler_rbus(
     const rbusMessage payload,
     void* userData)
 {
-    int32_t interval = 0;
-    int32_t duration = 0;
-    rbusFilter_t filter = NULL;
     size_t slen;
     (void)object;
 
@@ -2688,32 +2682,13 @@ static int cssp_event_subscribe_override_handler_rbus(
 
     CcspTraceWarning(("%s: %s\n", __FUNCTION__, eventName));
 
-    //check for rbus filter
-    if(payload)
-    {
-        int hasFilter;
-        rbusMessage_GetInt32(payload, &interval);
-        rbusMessage_GetInt32(payload, &duration);
-        rbusMessage_GetInt32(payload, &hasFilter);
-        if(hasFilter)
-        {
-            rbusFilter_InitFromMessage(&filter, payload);
-            rbusFilter_fwrite(filter, stdout, NULL);
-        }
-    }
-
     if(added)
     {
-        Ccsp_RbusValueChange_Subscribe(userData, listener, eventName, filter, interval, duration);
+        Ccsp_RbusValueChange_Subscribe(userData, listener, eventName, payload);
     }
     else
     {
-        Ccsp_RbusValueChange_Unsubscribe(userData, listener, eventName, filter);
-    }
-
-    if(filter)
-    {
-        rbusFilter_Release(filter);
+        Ccsp_RbusValueChange_Unsubscribe(userData, listener, eventName, payload);
     }
 
     return RTMESSAGE_BUS_SUCCESS;
