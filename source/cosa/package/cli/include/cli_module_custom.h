@@ -90,15 +90,7 @@
 #define  CLI_SHELL_TERMIAL_GREETING                 "CLI Subsystem"
 #define  CLI_SHELL_LOGOUT_MESSAGE                   "\r\nLogged out.\r\n\r\n"
 
-#ifdef _ANSC_LINUX
     #define  CLI_SCP_PAGE_ROOT_PATH                 "./config/bmc2/"
-#else
-    #ifdef   _USE_PRECOMPILED_SCP_PAGES
-        #define  CLI_SCP_PAGE_ROOT_PATH             "c:/temp/dslg-test/bmc2-files-precomp/"
-    #else
-        #define  CLI_SCP_PAGE_ROOT_PATH             "c:/temp/dslg-test/bmc2-files/"
-    #endif
-#endif
 
 #define  CLI_CMDLIST_FILE_NAME                      "cmdlist.txt"
 

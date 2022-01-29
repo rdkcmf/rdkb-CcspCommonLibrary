@@ -160,10 +160,6 @@
 
     #endif
 
-    #if defined(_ANSC_WINDOWSNT) && ! defined(_ANSC_WIN32_USE_MUTEX_AS_SPINLOCK_)
-        #undef  AnscAcquireSpinLockWrapper
-        #define AnscAcquireSpinLockWrapper(pLock)   UserAcquireSpinLock(pLock, __FILE__, __LINE__)
-    #endif /* defined(_ANSC_WINDOWSNT) && ! defined(_ANSC_WIN32_USE_MUTEX_AS_SPINLOCK_) */
 
 #endif
 

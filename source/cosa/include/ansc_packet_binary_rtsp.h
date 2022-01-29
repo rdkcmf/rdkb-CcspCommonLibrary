@@ -82,11 +82,7 @@
 #endif
 
 #ifndef  _ANSC_INLINE_
-    #if  defined(_MSC_VER)
-        #define  _ANSC_INLINE_                      __inline
-    #else
-        #define  _ANSC_INLINE_                      __inline__
-    #endif
+#define  _ANSC_INLINE_                              __inline__
 #endif
 
 

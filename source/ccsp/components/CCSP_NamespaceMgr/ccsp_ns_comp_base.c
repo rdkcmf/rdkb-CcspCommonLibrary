@@ -83,9 +83,7 @@
 
 #include "ccsp_namespace_mgr.h"
 
-#ifndef _ANSC_WINDOWSNT
 #include "ccsp_memory.h"
-#endif
 
 /**********************************************************************
 

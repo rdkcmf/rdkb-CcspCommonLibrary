@@ -540,42 +540,6 @@ AnscGetStringUlongHex
     return  total_value;
 }
 
-#ifdef _ANSC_WINDOWSNT
-char*
-AnscCloneString2
-    (
-        char*                       src_string,
-        char*                       pFileName,
-        ULONG                       ulLineNumber
-    )
-{
-    char*                           dst_string = NULL;
-	ULONG							len		   = 0;
-
-    if ( !src_string )
-    {
-        return  NULL;
-    }
-    else
-    {
-		len = AnscSizeOfString(src_string);
-
-        dst_string = (char*)AnscAllocateMemory5(AnscSizeOfString(src_string) + 1, pFileName, ulLineNumber);
-
-        if ( !dst_string )
-        {
-            return  NULL;
-        }
-        else
-        {
-            AnscCopyString(dst_string, src_string);
-        }
-    }
-
-    return  dst_string;
-}
-
-#else
 
 char *AnscCloneString (char *src_string)
 {
@@ -591,7 +555,6 @@ char *AnscCloneString (char *src_string)
     return memcpy (dst_string, src_string, len + 1);
 }
 
-#endif
 
 BOOL
 AnscIsValidIpString

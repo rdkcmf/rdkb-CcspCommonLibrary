@@ -86,7 +86,6 @@
 	#include "lzsc.h"
 #endif
 
-#if defined (_ANSC_LINUX)
 
 	#ifdef _ANSC_DES_USED_
 	#include "openssl/des.h"
@@ -124,17 +123,5 @@
 		#include "openssl/aes.h"
 	#endif
 
-#else /* on other platforms, we will use legacy crypto APIs */
-	#include "des.h"
-	#include "md2.h"
-	#include "md4.h"
-	#include "md5.h"
-	#include "sha.h"
-	#include "idea.h"
-	#include "blowfish.h"
-	#include "rc4.h"
-	#include "rc2.h"
-	#include "aes.h"
-#endif
 
 #endif

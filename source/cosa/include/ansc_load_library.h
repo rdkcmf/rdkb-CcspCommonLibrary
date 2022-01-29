@@ -72,17 +72,7 @@
 #ifndef  _ANSC_LOAD_LIBRARY_H
 #define  _ANSC_LOAD_LIBRARY_H
 
-#if (defined _ANSC_WINDOWSNT) || ( defined _ANSC_WINDOWS9X)
 
-#define  AnscLoadLibrary                            LoadLibrary
-#define  AnscFreeLibrary                            FreeLibrary
-#define  AnscGetProcAddress                         GetProcAddress
-#define  DLL_INSTANCE                               HINSTANCE
-#define  ANSC_CALLBACK                              CALLBACK
-
-#endif  /* _ANSC_WINDOWSNT | _ANSC_WINDOWS9X */
-
-#if defined(_ANSC_LINUX)
 
 #include <dlfcn.h>
 #define  AnscLoadLibrary(f)                         dlopen(f,RTLD_NOW)
@@ -91,6 +81,5 @@
 #define  DLL_INSTANCE                               PVOID
 #define  ANSC_CALLBACK
 
-#endif  /* _ANSC_LINUX */
 
 #endif /* _ANSC_LOAD_LIBRARY_H */

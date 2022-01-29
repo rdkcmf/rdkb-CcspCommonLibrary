@@ -35,10 +35,8 @@
 
 #include "user_base.h"
 #include "user_socket.h"
-#ifdef _ANSC_LINUX
 #include <sys/ioctl.h>
 #include <linux/if.h>
-#endif
 #include "safec_lib_common.h"
 
 
@@ -163,7 +161,6 @@ _ansc_get_ipv4_addr
         int            p_addr_len
     )
 {
-#ifdef _ANSC_LINUX
 
     struct ifreq            ifr;
     int                     fd = 0;
@@ -198,11 +195,6 @@ _ansc_get_ipv4_addr
     }
     
     return 0;
-#else
-
-    return -1;
-
-#endif
 }
 
 
@@ -214,7 +206,6 @@ _ansc_get_hw_addr
         int            p_addr_len
     )
 {
-#ifdef _ANSC_LINUX
 
     struct ifreq            ifr;
     int                     fd = 0, j, k;
@@ -252,10 +243,5 @@ _ansc_get_hw_addr
     }
 
     return 0;
-#else
-
-    return -1;
-
-#endif
 }
 

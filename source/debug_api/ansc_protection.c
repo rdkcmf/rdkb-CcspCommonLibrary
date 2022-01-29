@@ -237,9 +237,7 @@ AnscReleaseSpinLock1
         int                         iLineNo
     )
 {
-#ifndef _ANSC_WINDOWSNT
     BOOLEAN                         bMax = FALSE;
-#endif
 
     if ( gbAnscSpinLockProfiling )
     {
@@ -248,12 +246,7 @@ AnscReleaseSpinLock1
         if ( pSpinLock->CurrElapsedTime > pSpinLock->LongestTime )
         {
             pSpinLock->LongestTime  = pSpinLock->CurrElapsedTime;
-#ifdef _ANSC_WINDOWSNT
-            _ansc_strncpy(pSpinLock->MaxHoldName, GetFileName(pFileName), sizeof(pSpinLock->MaxHoldName));
-            pSpinLock->MaxHoldName[sizeof(pSpinLock->MaxHoldName)-1] = '\0';
-#else       
             bMax = TRUE;
-#endif /* _ANSC_WINDOWSNT */
             pSpinLock->MaxHoldLine  = iLineNo;
         }
 
@@ -267,13 +260,11 @@ AnscReleaseSpinLock1
 
     AnscReleaseSpinLockWrapper(&pSpinLock->SpinLock);
 
-#ifndef _ANSC_WINDOWSNT
     if ( gbAnscSpinLockProfiling && bMax )
     {
         _ansc_strncpy(pSpinLock->MaxHoldName, GetFileName(pFileName), sizeof(pSpinLock->MaxHoldName));
         pSpinLock->MaxHoldName[sizeof(pSpinLock->MaxHoldName)-1] = '\0';
     }
-#endif /* _ANSC_WINDOWSNT */
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -576,67 +567,4 @@ AnscPulseSimEvent
 }
 
 #endif
-#if defined(_ANSC_WINDOWSNT) && ! defined(_ANSC_WIN32_USE_MUTEX_AS_SPINLOCK_)
-
-BOOLEAN
-UserInitializeSpinLock
-    (
-        PUSER_SPINLOCK              pLock
-    )
-{
-    pLock->lLock = 0;
-    return TRUE;
-}
-
-void
-UserFreeSpinLock
-    (
-        PUSER_SPINLOCK              pLock
-    )
-{
-    if( pLock->lLock != 0 )
-    {
-        CcspTraceError(("Freeing spin lock while it is being held!!!\n"));
-        __asm int 3;
-    }
-}
-
-void
-UserAcquireSpinLock
-    (
-        PUSER_SPINLOCK              pLock, 
-        const char *                file, 
-        int                         lineno
-    )
-{
-    unsigned int                    i;
-    
-    for( i = 0; ; i ++ )
-    {
-        if( 1 == InterlockedIncrement(&pLock->lLock) )
-        {
-            return;
-        }
-
-        InterlockedDecrement(&pLock->lLock);
-
-        Sleep(0);
-
-        if( i == 10000 )
-        {
-            CcspTraceWarning(("Spin lock is being held tooooooo long [%s]--<%d>.\n", file, lineno));
-        }
-    }
-}
-
-void
-UserReleaseSpinLock
-    (
-        PUSER_SPINLOCK              pLock
-    )
-{
-    InterlockedDecrement(&pLock->lLock);
-}
-
-#endif /* defined(_ANSC_WINDOWSNT) && ! defined(_ANSC_WIN32_USE_MUTEX_AS_SPINLOCK_) */
 

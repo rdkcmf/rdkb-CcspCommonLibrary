@@ -77,21 +77,12 @@
 #include "ansc_crypto_pub.h"
 
 /* our crypto under opensource is only used by windows simulation */
-#ifdef _ANSC_WINDOWSNT
-#include "../../opensource/crypto/crypto.h"
-#include "../../opensource/crypto/bn.h"
-#include "../../opensource/crypto/dh.h"
-#include "../../opensource/crypto/objects.h"
-#include "../../opensource/crypto/rsa.h"
-#include "../../opensource/crypto/dsa.h"
-#else 
 /* need to set include path to the Linux ssl header */
 #include "openssl/crypto.h"
 #include "openssl/bn.h"
 #include "openssl/dh.h"
 #include "openssl/objects.h"
 #include "openssl/rsa.h"
-#endif
 
 #include "ansc_crypto_pub_ssleay_interface.h"
 #include "ansc_crypto_pub_ssleay_internal_api.h"

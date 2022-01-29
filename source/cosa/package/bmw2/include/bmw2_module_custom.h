@@ -77,9 +77,7 @@
  * instead of original script files.
  */
 
-#ifdef   _ANSC_LINUX
 #define   _USE_PRECOMPILED_BSP_PAGES
-#endif
 
 #endif
 

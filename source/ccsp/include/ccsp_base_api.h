@@ -67,9 +67,7 @@
 Notes:
 */
 //if you don't want use SLAP_VARIABLE which require extra headers, remove this
-#ifndef WIN32             /*because current cosa 2.0 slap_definitions.h can't compile in windows*/
 #define PSM_SLAP_VAR
-#endif
 
 #define CCSP_DBUS_PSM    "com.cisco.spvtg.ccsp.psm"
 

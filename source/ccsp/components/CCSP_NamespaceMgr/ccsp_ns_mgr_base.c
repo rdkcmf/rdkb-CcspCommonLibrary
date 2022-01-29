@@ -88,9 +88,7 @@
 
 #include "ccsp_namespace_mgr.h"
 
-#ifndef _ANSC_WINDOWSNT
 #include "ccsp_memory.h"
-#endif
 #include "safec_lib_common.h"
 
 /**********************************************************************

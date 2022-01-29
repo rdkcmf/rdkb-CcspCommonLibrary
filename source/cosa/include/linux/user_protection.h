@@ -80,7 +80,6 @@
 /***********************************************************
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
 ***********************************************************/
-#ifdef _ANSC_LINUX
 #if 0
 BOOLEAN
 UserInitializeLock(PUSER_LOCK  pLock);
@@ -150,6 +149,5 @@ VOID
 UserFreeSemEvent(PSEM_EVENT *pEvent);
 
 
-#endif
 #endif
 

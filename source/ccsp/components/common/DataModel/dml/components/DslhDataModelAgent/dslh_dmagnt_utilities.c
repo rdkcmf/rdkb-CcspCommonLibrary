@@ -389,11 +389,7 @@ DslhDmagntParseSourceInfo
              {
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
-                #ifdef _ANSC_WINDOWSNT            
-                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".dll");
-                #elif defined(_ANSC_LINUX)
                     rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".so");
-                #endif
                     if(rc != EOK)
                     {
                        ERR_CHK(rc);
@@ -421,10 +417,8 @@ DslhDmagntParseSourceInfo
                         printf("****ERROR LOADING DM LIB %s\n",pPluginInfo->SourceName);
                         errstr = dlerror();
                         printf("CAUSE =%s\n",errstr);
-                    #ifdef _ANSC_LINUX
                         AnscTraceWarning(("cause:%s\n",  errstr ));
                         printf("CAUSE =%s\n",errstr);
-                    #endif
 
                         pPluginInfo->uLoadStatus = COSA_STATUS_ERROR_LOAD_LIBRARY;
 
@@ -693,11 +687,7 @@ DslhDmagntParseSourceName
              {
                  if (_ansc_strlen(buffer) + 5 < sizeof(buffer))
                  {
-#ifdef _ANSC_WINDOWSNT            
-                    rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".dll");
-#elif defined(_ANSC_LINUX)
                     rc = strcpy_s(buffer+_ansc_strlen(buffer), (sizeof(buffer) - _ansc_strlen(buffer)), ".so");
-#endif
                     if(rc != EOK)
                     {
                         ERR_CHK(rc);

@@ -78,11 +78,7 @@
  *  _ANSC_MALLOC_METHOD5:   memory tracking, plus overwritting detection
  *  _ANSC_MALLOC_METHOD6:   memory tracking, plus memory pooling
  */
-#ifdef   _ANSC_WINDOWSNT
-    #define  _ANSC_MALLOC_METHOD5
-#else
     #define  _ANSC_MALLOC_METHOD1
-#endif
 
 
  /***************************************************************

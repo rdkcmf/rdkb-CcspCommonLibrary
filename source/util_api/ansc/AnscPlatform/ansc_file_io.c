@@ -825,11 +825,7 @@ AnscOpenGzipFile
     ANSC_STATUS                     returnStatus = ANSC_STATUS_SUCCESS;
     PANSC_FILE_INFO                 pFileInfo    = NULL;
     int                             iFileHandle  = -1;
-#ifdef  _ANSC_LINUX
     char*                           iFileFlags   = NULL;
-#else
-    int                             iFileFlags   = 0;
-#endif
     int                             iFilePmode   = 0;
     errno_t                         rc           = -1;
 

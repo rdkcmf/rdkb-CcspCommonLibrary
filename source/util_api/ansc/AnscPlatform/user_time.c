@@ -123,7 +123,6 @@ void UserSetDelta();
 /***********************************************************
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
 ***********************************************************/
-#ifdef  _ANSC_LINUX
 
 VOID
 UserSleepInMilliSeconds(ULONG milliSecond)
@@ -398,5 +397,4 @@ UserGetUtcSeconds( void )
     return timeNow;
 }
 
-#endif
 

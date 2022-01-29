@@ -112,13 +112,8 @@
 #define  SCLI_SYSTEM_SHELL_TITLE                    "<sh> "
 #define  SCLI_SYSTEM_SHELL_EXIT_PROMPT              "Enter 'exit' to go back to CLI"
 
-#ifdef   _ANSC_LINUX
 #define  SCLI_LOCAL_SHELL_CMD                       "/bin/sh"
 #define  SCLI_LOCAL_TEMP_FILE_TEMPLATE              "/tmp/sh_cout_%u"
-#elif defined(_ANSC_WINDOWSNT)
-#define  SCLI_LOCAL_SHELL_CMD                       "command"
-#define  SCLI_LOCAL_TEMP_FILE_TEMPLATE              "c:/temp/sh_cout_%u"
-#endif
 
 #define  SCLI_SHELL_TEXTBOX_LEFT                    "["
 #define  SCLI_SHELL_TEXTBOX_RIGHT                   "]"

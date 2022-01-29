@@ -756,11 +756,9 @@ AnscAsn1OIDDecodingData
     ULONG                           counter,ulOctetsLeft,ulNumberOfOctetsInSubOID;
     PULONG                          pOIDArray;
 
-#ifndef _ANSC_WINDOWSNT
 
     PUCHAR                          pTmpBuffer;
 
-#endif
 
     /*
      * pointer to the start of unexamined raw encoding data
@@ -972,16 +970,6 @@ AnscAsn1OIDDecodingData
                   /* since reallocate memory is not supported in some platforms such as
                    * LINUX, we have to allocate new memory and copy it over */
 
-#ifdef _ANSC_WINDOWSNT
-
-                    pMyObject->pAdvOID = 
-                        AnscReAllocMemory
-                        (
-                            pMyObject->pAdvOID,
-                            sizeof(ULONG) * (counter + MAXIMUM_OID_DEPTH)
-                        );
-
-#else
                   pTmpBuffer = (UCHAR*)pMyObject->pAdvOID;
 
                   pMyObject->pAdvOID = 
@@ -999,7 +987,6 @@ AnscAsn1OIDDecodingData
 
                   AnscFreeMemory(pTmpBuffer);
 
-#endif
                 }
             }
 

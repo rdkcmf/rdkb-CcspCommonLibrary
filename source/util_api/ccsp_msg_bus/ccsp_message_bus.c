@@ -49,13 +49,8 @@
 #include "ccsp_rbus_value_change.h"
 #include "safec_lib_common.h"
 
-#ifndef WIN32 
 #include <sys/time.h>
 #include <time.h>
-#else
-#include <sys/timeb.h>
-const int NANOSEC_PER_MILLISEC = 1000000;
-#endif
 
 #ifdef _DEBUG
 // #define _DEBUG_LOCAL_
@@ -174,7 +169,6 @@ static void NewTimeout
     long nsecs
 )
 {
-#if !defined(WIN32)
     /* Non-WIN32 implementation */
 #if !defined(CLOCK_MONOTONIC)
     struct timeval now;
@@ -188,14 +182,6 @@ static void NewTimeout
     timeout->tv_nsec += nsecs;
 #endif 
 
-#else
-    /* WIN32 implementation */
-    struct _timeb currSysTime;
-
-    _ftime(&currSysTime);
-    timeout->tv_sec = currSysTime.time + secs;
-    timeout->tv_nsec = (NANOSEC_PER_MILLISEC * currSysTime.millitm) + nsecs;
-#endif
 
     /* Take care of rollover */
     if (timeout->tv_nsec > 1000000000)
@@ -1032,14 +1018,10 @@ CCSP_Msg_SleepInMilliSeconds
     int milliSecond
 )
 {
-#ifndef WIN32 
     struct timeval tm;
     tm.tv_sec = milliSecond/1000;
     tm.tv_usec = (milliSecond%1000)*1000;
     select(0, NULL, NULL, NULL, &tm);
-#else
-    _dbus_sleep_milliseconds(milliSecond);
-#endif
 }
 
 int

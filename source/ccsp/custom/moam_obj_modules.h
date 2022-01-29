@@ -93,7 +93,7 @@
 
 #endif
 
-#if defined(_ANSC_KERNEL) || defined(_ANSC_WINDOWSNT)
+#if defined(_ANSC_KERNEL)
 
     /* These files are not required for SNMPAgent only */
     #include "moam_varmap_ianaif.h"
@@ -152,7 +152,7 @@
 
 #endif
 
-#if defined(_ANSC_KERNEL) || defined(_ANSC_WINDOWSNT)
+#if defined(_ANSC_KERNEL)
 
     /* These files are not required for SNMPAgent only */
 

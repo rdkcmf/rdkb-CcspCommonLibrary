@@ -479,24 +479,9 @@ ANSC_SOCKET_ADDRESS,  *PANSC_SOCKET_ADDRESS;
                 );                                                                          \
          }
 
-#ifdef  _ANSC_WINDOWSNT
-#define AnscStartupSocketWrapper(hOwnerContext)                                             \
-        do                                                                                  \
-		{                                                                                   \
-			WORD                        version = 0x202;                                    \
-			WSADATA                     wsaData;                                            \
-																					        \
-			WSAStartup(version, &wsaData);                                                  \
-        } while (0)
-#else
 #define AnscStartupSocketWrapper(hOwnerContext)
-#endif
 
-#ifdef  _ANSC_WINDOWSNT
-#define AnscCleanupSocketWrapper(hOwnerContext)     WSACleanup()
-#else
 #define AnscCleanupSocketWrapper(hOwnerContext)
-#endif
 
 
 /***********************************************************

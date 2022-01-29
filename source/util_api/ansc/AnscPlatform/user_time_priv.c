@@ -70,7 +70,6 @@
 #include "user_base.h"
 #include "user_time.h"
 
-#ifdef  _ANSC_LINUX
 
 extern __inline void UserSetDelta();
 
@@ -428,5 +427,4 @@ UserSetLocalTime(USER_SYSTEM_TIME*  pSystemTime)
     system("/sbin/hwclock --systohc --utc");
 }
 
-#endif
 

@@ -257,7 +257,6 @@ AnscScuoEngage
         {
             _xskt_en_reuseaddr(((XSKT_SOCKET)pMyObject->Socket));
 
-            #ifdef  _ANSC_LINUX
 
             if ( _xskt_bind((XSKT_SOCKET)pMyObject->Socket, (xskt_socket_addr*)&xskt_any_addr, sizeof(xskt_any_addr)) != 0 )
             {
@@ -266,16 +265,6 @@ AnscScuoEngage
                 goto  EXIT2;
             }
 
-            #else
-
-            if ( _xskt_bind((XSKT_SOCKET)pMyObject->Socket, (xskt_socket_addr*)&xskt_client_addr, sizeof(xskt_client_addr)) != 0 )
-            {
-                returnStatus = ANSC_STATUS_FAILURE;
-
-                goto  EXIT2;
-            }
-
-            #endif
         }
         else
         {
@@ -293,7 +282,6 @@ AnscScuoEngage
         {
             _ansc_en_reuseaddr(pMyObject->Socket);
 
-            #ifdef  _ANSC_LINUX
 
             if ( _ansc_bind(pMyObject->Socket, (ansc_socket_addr*)&ansc_any_addr, sizeof(ansc_any_addr)) != 0 )
             {
@@ -302,16 +290,6 @@ AnscScuoEngage
                 goto  EXIT2;
             }
 
-            #else
-
-            if ( _ansc_bind(pMyObject->Socket, (ansc_socket_addr*)&ansc_client_addr, sizeof(ansc_client_addr)) != 0 )
-            {
-                returnStatus = ANSC_STATUS_FAILURE;
-
-                goto  EXIT2;
-            }
-
-            #endif
         }
         else
         {

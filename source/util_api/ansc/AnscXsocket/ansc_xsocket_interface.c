@@ -107,14 +107,6 @@ AnscStartupXsocketWrapper
     )
 {
     UNREFERENCED_PARAMETER(hOwnerContext);
-    #ifdef  _ANSC_WINDOWSNT
-
-        WORD                        version = 0x202;
-        WSADATA                     wsaData;
-
-        WSAStartup(version, &wsaData);
-
-    #endif
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -151,11 +143,6 @@ AnscCleanupXsocketWrapper
     )
 {
     UNREFERENCED_PARAMETER(hOwnerContext);
-    #ifdef  _ANSC_WINDOWSNT
-
-        WSACleanup();
-
-    #endif
 
     return  ANSC_STATUS_SUCCESS;
 }

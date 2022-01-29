@@ -71,7 +71,6 @@
         04/03/02    adapted to linux user by Ying Lou
 
 **********************************************************************/
-#ifdef _ANSC_LINUX
 
 #define _XOPEN_SOURCE 600
 #include "user_base.h"
@@ -515,5 +514,4 @@ UserFreeSemEvent(PSEM_EVENT *pEvent)
     return;
 }
 
-#endif
 

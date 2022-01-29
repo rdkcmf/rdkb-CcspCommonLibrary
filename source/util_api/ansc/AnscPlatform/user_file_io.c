@@ -350,7 +350,7 @@ user_get_file_stat
         }
     }
 
-    return  (!ret);  /* In WindowsNT, it is return ret == 0 */
+    return  (!ret);
 }
 
 

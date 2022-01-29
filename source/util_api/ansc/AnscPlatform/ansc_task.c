@@ -538,9 +538,7 @@ AnscSpawnTask3Trace
     }
     else
     {
-#ifdef _ANSC_LINUX
         pthread_detach((pthread_t)taskHandle);
-#endif
     }
 }
 
@@ -634,9 +632,7 @@ AnscInitializeTpm
         }
         else
         {
-#ifdef _ANSC_LINUX
             pthread_detach((pthread_t)handle);
-#endif
         }
     }
 
@@ -683,9 +679,7 @@ AnscInitializeTpj
     }
     else
     {
-#ifdef _ANSC_LINUX
     pthread_detach((pthread_t)handle);
-#endif
     }
 
     return  ANSC_STATUS_SUCCESS;

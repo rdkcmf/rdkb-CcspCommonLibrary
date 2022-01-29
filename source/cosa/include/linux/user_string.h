@@ -85,7 +85,6 @@
 /***********************************************************
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
 ***********************************************************/
-#ifdef _ANSC_LINUX
 
 #define  UserSizeOfString(s)                        (ULONG)(strlen(s))
 #define  UserCatString                              strcat
@@ -119,7 +118,6 @@ UserCopyString(char*  destination, char*  source)
 
 #define  UserCharInString(s, c)                     (BOOLEAN)(!(!(strchr(s, c))))
 
-#endif
 
 #endif
 

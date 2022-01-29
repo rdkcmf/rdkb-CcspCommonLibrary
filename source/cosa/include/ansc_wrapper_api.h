@@ -1110,19 +1110,6 @@ AnscGetStringUlongHex
         char*                       ulong_str_hex
     );
 
-#ifdef _ANSC_WINDOWSNT
-
-char*
-AnscCloneString2
-    (
-        char*                       src_string,
-        char*                       pFileName,
-        ULONG                       ulLineNumber
-    );
-
-#define AnscCloneString(s)          AnscCloneString2(s, __FILE__, __LINE__)
-
-#else
 
 char*
 AnscCloneString
@@ -1130,7 +1117,6 @@ AnscCloneString
         char*                       src_string
     );
 
-#endif
 
 BOOL
 AnscIsValidIpString

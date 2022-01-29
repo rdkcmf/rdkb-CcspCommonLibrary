@@ -105,7 +105,6 @@ USER_SYSTEM_TIME,  *PUSER_SYSTEM_TIME;
 /***********************************************************
        BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
 ***********************************************************/
-#ifdef  _ANSC_LINUX
 
 VOID
 UserSleepInMilliSeconds(ULONG milliSecond);
@@ -144,6 +143,5 @@ UserGetTzOffset(void);
 unsigned long
 UserGetUtcSeconds( void );
 
-#endif
 #endif
 

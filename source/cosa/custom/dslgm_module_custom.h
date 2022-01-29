@@ -124,7 +124,7 @@
 
 #define  _DSLG_IGMP_
 
-#if  ( defined(_ANSC_LINUX) && defined(BUILD_WEB) ) || defined(_ANSC_WINDOWSNT)
+#if  ( defined(_ANSC_LINUX) && defined(BUILD_WEB) )
 #define  _BBHM_WEB_GUI_REQUIRED
 #endif
 
@@ -141,7 +141,6 @@
                     OS/PLATFORM SPECIFIC DEFINITIONS
 **********************************************************************/
 
-#ifdef   _ANSC_LINUX
     #define  DSLG_DEF_XML_CONFIG_FILE_PATH_S        ""
     /*
      *  Region code is injected into default configuration file name
@@ -169,32 +168,9 @@
     #define  DSLG_CUR_CTLV_CONFIG_FILE_NAME         "/config/dslg_cur_cfg.bps.gz"
     #define  DSLG_BAK_CTLV_CONFIG_FILE_NAME         "/config/dslg_bak_cfg.bps.gz"
     #define  DSLG_TMP_CTLV_CONFIG_FILE_NAME         "/var/tmp/dslg_tmp_cfg.bps.gz"
-#else
-    #define  DSLG_DEF_XML_CONFIG_FILE_PATH_S        "c:/temp/dslg-test/"
-    #define  DSLG_DEF_XML_CONFIG_FILE_NAME_S        "dslg_def_cfg.xml"
-    #define  DSLG_CUR_XML_CONFIG_FILE_NAME_S        "dslg_cur_cfg.xml"
-    #define  DSLG_BAK_XML_CONFIG_FILE_NAME_S        "dslg_bak_cfg.xml"
-    #define  DSLG_TMP_XML_CONFIG_FILE_NAME_S        "dslg_tmp_cfg.xml"
-
-    #define  DSLG_DEF_XML_CONFIG_FILE_PATH_T        "c:/temp/dslg-test/"
-    #define  DSLG_DEF_XML_CONFIG_FILE_NAME_T        "tr069_def_cfg.xml"
-    #define  DSLG_CUR_XML_CONFIG_FILE_NAME_T        "tr069_cur_cfg.xml"
-    #define  DSLG_BAK_XML_CONFIG_FILE_NAME_T        "tr069_bak_cfg.xml"
-    #define  DSLG_TMP_XML_CONFIG_FILE_NAME_T        "tr069_tmp_cfg.xml"
-
-    #define  DSLG_DEF_CTLV_CONFIG_FILE_PATH         "c:/temp/dslg-test/"
-    #define  DSLG_DEF_CTLV_CONFIG_FILE_NAME         "dslg_def_cfg.bps.gz"
-    #define  DSLG_CUR_CTLV_CONFIG_FILE_NAME         "dslg_cur_cfg.bps.gz"
-    #define  DSLG_BAK_CTLV_CONFIG_FILE_NAME         "dslg_bak_cfg.bps.gz"
-    #define  DSLG_TMP_CTLV_CONFIG_FILE_NAME         "dslg_tmp_cfg.bps.gz"
-#endif
 
 
-#ifdef   _ANSC_LINUX
     #define  DSLG_DEVICE_LOG_FILE_NAME              "/var/dslg/local_log.log"
-#else
-    #define  DSLG_DEVICE_LOG_FILE_NAME              "c:/temp/dslg-test/local_log.log"
-#endif
 
 
 /**********************************************************************
@@ -208,27 +184,17 @@
 
 #define  DSLM_CONFIG_FILE_NAME                      "dslm_cfg.txt"
 
-#ifdef   _ANSC_LINUX
     #define  DSLM_TEMP_FIRMWARE_IMAGE               "/var/dslg_tmpfw.bin"
-#else
-    #define  DSLM_TEMP_FIRMWARE_IMAGE               "c:/temp/dslg-test/tmpfirmware.bin"
-#endif
 
-#ifdef   _ANSC_LINUX
     #define  DSLM_VOICE_STATUS_FILE                 "/tmp/stop_voice"
     #define  DSLM_VOICE_WAIT_DELAY                  30
     #define  DSLM_VOICE_RESET_DELAY                 10
-#endif
 
 /*
  *  DSLM Web Server
  */
 #define  DSLM_WEBS_PORT_UM							8081
 #define  DSLM_WEBS_PORT_DM							80
-
-#define  DSLM_WEBS_ROOT_PATH_CPE_WINDOWS            "c:/temp/dslg-test/bmw2-files/"
-#define  DSLM_WEBS_ROOT_PATH_UM_WINDOWS             "c:/temp/dslg-test/bmw2-files/"
-#define  DSLM_WEBS_ROOT_PATH_DM_WINDOWS             "c:/temp/dslg-test/bmw2-files/"
 
 #define  DSLM_WEBS_ROOT_PATH_CPE_LINUX              "/config/bmw2/"
 #define  DSLM_WEBS_ROOT_PATH_UM_LINUX               "/config/bmw2/"
@@ -237,35 +203,20 @@
 /*
  *  Manufacture Data
  */
-#ifdef   _ANSC_LINUX
     #define  DSLG_MFD_FILE_SN                       "/var/mfd_sn"
-#else
-    #define  DSLG_MFD_FILE_SN                       "c:/temp/dslg-test/mfd_sn"
-#endif
 
 /*
  *  region options
  */
-#ifdef   _ANSC_LINUX
     #define  DSLG_MFD_FILE_REGION                   "/var/mfd_region"
     #define  DSLG_MFD_FILE_LANGUAGE                 "/var/mfd_language"
-#else
-    #define  DSLG_MFD_FILE_REGION                   "c:/temp/dslg-test/mfd_region"
-    #define  DSLG_MFD_FILE_LANGUAGE                 "c:/temp/dslg-test/mfd_language"
-#endif
 
 /*
  *  certificates
  */
-#ifdef   _ANSC_LINUX
     #define  DSLM_TR069_SSL_ROOT_CA_CERT_FILE       "/config/rootca.cer"
     #define  DSLM_TR069_SSL_CLIENT_CERT_FILE        "/var/mfd_client.cer"
     #define  DSLM_TR069_SSL_CLIENT_PRIV_KEY_FILE    "/var/mfd_client.pk"
-#else
-    #define  DSLM_TR069_SSL_ROOT_CA_CERT_FILE       "c:/temp/dslg-test/rootca.cer"
-    #define  DSLM_TR069_SSL_CLIENT_CERT_FILE        "c:/temp/dslg-test/mfd_client.cer"
-    #define  DSLM_TR069_SSL_CLIENT_PRIV_KEY_FILE    "c:/temp/dslg-test/mfd_client.pk"
-#endif
 
 
 #endif

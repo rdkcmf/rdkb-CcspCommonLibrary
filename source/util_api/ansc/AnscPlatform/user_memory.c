@@ -37,7 +37,6 @@
 #include "user_base.h"
 #include "user_memory.h"
 
-#ifdef  _ANSC_LINUX
 
 PVOID
 UserAllocateMemory(ULONG  ulMemorySize)
@@ -89,5 +88,3 @@ UserResizeMemory(PVOID  pMemory, ULONG  ulMemorySize)
 	return pMemory;
 }
 
-
-#endif

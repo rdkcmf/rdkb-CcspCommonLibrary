@@ -68,15 +68,6 @@
 /**********************************************************************
                       GLOBAL DEVICE DEFINITIONS
 **********************************************************************/
-#ifdef   _ANSC_WINDOWSNT
-
-#define  PSM_DEF_XML_CONFIG_FILE_PATH          "C:/temp/bbhm-test/"
-#define  PSM_DEF_XML_CONFIG_FILE_NAME          "bbhm_def_cfg.xml"
-#define  PSM_CUR_XML_CONFIG_FILE_NAME          "bbhm_cur_cfg.xml"
-#define  PSM_BAK_XML_CONFIG_FILE_NAME          "bbhm_bak_cfg.xml"
-#define  PSM_TMP_XML_CONFIG_FILE_NAME          "bbhm_tmp_cfg.xml"
-
-#else
 
   #ifdef _PSM_FILE_COMPRESSION_ENABLE
 
@@ -98,7 +89,6 @@
  
   #endif
 
-#endif
 
 #define  CCSP_MSG_BUS_CFG 					   "/tmp/ccsp_msg.cfg"
 #define  DM_ROOTNAME                           "Device."
