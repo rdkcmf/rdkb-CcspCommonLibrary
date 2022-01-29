@@ -80,7 +80,7 @@
  */
 
 /* Please include the following 3 lines when actually using pre-compiled scp pages
-#if defined(_ANSC_LINUX) && !defined(_DEBUG)
+#if !defined(_DEBUG)
 #define   _USE_PRECOMPILED_SCP_PAGES
 #endif
 */

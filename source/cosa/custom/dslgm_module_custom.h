@@ -124,7 +124,7 @@
 
 #define  _DSLG_IGMP_
 
-#if  ( defined(_ANSC_LINUX) && defined(BUILD_WEB) )
+#if defined(BUILD_WEB)
 #define  _BBHM_WEB_GUI_REQUIRED
 #endif
 
