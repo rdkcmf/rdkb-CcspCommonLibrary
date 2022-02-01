@@ -299,6 +299,10 @@ const char* CcspTraceGetRdkLogModule(const char* pComponentName)
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.cellularmanager"))
         return "LOG.RDK.CELLULARMANAGER";
 #endif //FEATURE_RDKB_CELLULAR_MANAGER
+#if defined (FEATURE_RDKB_INTER_DEVICE_MANAGER)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.interdevicemanager"))
+	return "LOG.RDK.INTERDEVICEMANAGER";
+#endif //FEATURE_RDKB_INTER_DEVICE_MANAGER
     else
         return  "LOG.RDK.Misc";
 }
