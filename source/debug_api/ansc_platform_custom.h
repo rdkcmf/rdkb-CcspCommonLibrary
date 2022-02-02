@@ -88,11 +88,6 @@
 /*
  *  Indicates whether ANSC should maintain the time zone info
  */
-#ifdef   _ANSC_VXWORKS
-
-    #define  _ANSC_SIMPLE_TIMEZONE
-
-#endif
 
 /***************************************************************
             Generic Conditional Compilation Flags
