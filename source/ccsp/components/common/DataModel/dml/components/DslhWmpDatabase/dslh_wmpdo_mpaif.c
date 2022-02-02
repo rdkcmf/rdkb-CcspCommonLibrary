@@ -95,6 +95,7 @@
 extern ULONG    g_lastWriteEntity;
 void* COSAGetMessageBusHandle();
 char* COSAGetSubsystemPrefix2();
+BOOL g_isBusy = FALSE;
 
 /**********************************************************************
 
@@ -498,7 +499,6 @@ char bus[256] = "/com/cisco/spvtg/ccsp/notifycomponent";
 char *str1[50] = {0};
 int paramCount=0;
 pthread_mutex_t NotifyMutex;
-sem_t notifySem;
 
 void* Send_Notification_Thread_Func(void* arg)
 {
@@ -557,9 +557,11 @@ void* Send_Notification_Thread_Func(void* arg)
 		    str1[i] = NULL;
 	      }
        }
+    CcspTraceWarning(("<< %s, now g_isBusy  is not anymore busy, we have notify>>\n",__FUNCTION__));
+    g_isBusy = FALSE;
+
     paramCount=0;
     pthread_mutex_unlock(&NotifyMutex);
-    sem_post(&notifySem);
 
     return NULL;
 }
@@ -654,7 +656,6 @@ DslhWmpdoMpaSetParameterValues
     bFromSnmp    = (writeID == DSLH_MPA_ACCESS_CONTROL_SNMP);
     *piStatus    = 0;
     errno_t rc = -1;
-    BOOL waitFlag = FALSE;
     AnscAcquireTsLock(&pMyObject->AccessTsLock);
 
     if ( (ulArraySize == 0) || !pParameterValueArray )
@@ -810,8 +811,8 @@ DslhWmpdoMpaSetParameterValues
 
             break;
         }
-        /* Access bit mask check */
-        if ( TRUE )
+        /* Access bit mask check */       
+	if ( TRUE )
         {
             if ( 
                    ( writeID != 0xFFFFFFFF    ) &&
@@ -856,8 +857,7 @@ DslhWmpdoMpaSetParameterValues
             /*pthread_t Send_Notification_Thread;*/
             /*int res;*/
             static int bFirst = TRUE;
-            struct timespec ts;
-            int retSem = 0;
+            int count = 15;
             /*CID: 65857 Dereference after null check*/
             if(pVarEntity && pVarEntity->ParamDescr->NotifyStatus != 3)
             {
@@ -870,60 +870,42 @@ DslhWmpdoMpaSetParameterValues
                     vcSig.writeID = pVarRecord->ReqSenderID;
                     vcSig.type = dataType;
 		    if (bFirst)
-			{
-				pthread_mutex_init(&NotifyMutex,0);
-				bFirst = FALSE;
-                if ( sem_init(&notifySem, 0, 1) != 0 )
-                {
-                    CcspTraceError(("<< %s, Notification syncronization error. sem_init(notifySem) failed. >> \n",__FUNCTION__));
-                }
-            }
-
-		    /*CID: 110898 and 110896 Dereference before null check*/
+		    {
+			pthread_mutex_init(&NotifyMutex,0);
+			bFirst = FALSE;
+		    }
+                     /*CID: 110898 and 110896 Dereference before null check*/
 		    if(vcSig.oldValue == NULL || vcSig.newValue == NULL)
 	            {
-                      CcspTraceWarning(("<< %s Old or  New value is NULL>>\n", __FUNCTION__));
-	              goto  EXIT0;
+                    	CcspTraceWarning(("<< %s Old or  New value is NULL>>\n", __FUNCTION__));
+	            	goto  EXIT0;
 	            }
-                    /*CID: 68135 Explicit null dereferenced*/
-            if(vcSig.newValue && strcmp(vcSig.newValue,vcSig.oldValue))
-            {
-                if (waitFlag == FALSE)
-                {
-                    if (clock_gettime(CLOCK_REALTIME, &ts) == 0)
+		    if(strcmp(vcSig.newValue,vcSig.oldValue))
                     {
-                        ts.tv_sec += 6;
-                        while ((retSem = sem_timedwait(&notifySem, &ts)) == -1 && errno == EINTR)
-                            continue;       /* Restart if interrupted by handler */
-
-                        if (retSem == -1)
-                        {
-                            CcspTraceError(("<< %s, Notification syncronization error.  sem_timedwait failed %s. >> \n",__FUNCTION__, strerror(errno)));
-                        }
-                    }
-                    else
-                    {
-                        CcspTraceError(("<< %s,Notification syncronization error. Get the time clock_gettime failed. >> \n",__FUNCTION__));
-                    }
-                    waitFlag = TRUE;
-                }
+                    	while (g_isBusy && count > 0)
+                    	{
+                        	CcspTraceWarning(("<< %s, It's g_isBusy busy try again in 250ms>>\n",__FUNCTION__));
+                        	usleep(250000);
+                        	count --;
+                    	}
 			pthread_mutex_lock(&NotifyMutex);
-
+		
                        rc = sprintf_s(str,sizeof(str),"%s,%u,%s,%s,%d",vcSig.parameterName,vcSig.writeID,vcSig.newValue!=NULL ? (strlen(vcSig.newValue)>0 ? vcSig.newValue : "NULL") : "NULL",vcSig.oldValue!=NULL ? (strlen(vcSig.oldValue)>0 ? vcSig.oldValue : "NULL") : "NULL",vcSig.type);
                        if(rc < EOK)
                        {
-                         ERR_CHK(rc);
-                         bFaultEncountered = TRUE;
-                         *ppInvalidParameterName = AnscCloneString(pParameterValueArray[i].Name);
-                         returnStatus = CCSP_ERR_INVALID_PARAMETER_VALUE;
-                         pthread_mutex_unlock(&NotifyMutex);
-                         break;
+                         	ERR_CHK(rc);
+                         	bFaultEncountered = TRUE;
+                         	*ppInvalidParameterName = AnscCloneString(pParameterValueArray[i].Name);
+                         	returnStatus = CCSP_ERR_INVALID_PARAMETER_VALUE;
+                         	pthread_mutex_unlock(&NotifyMutex);
+                         	break;
                        }
-		               /*sensitive information like keyPassphrase should not print*/
-			       if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
-		               {
-		                 CcspTraceWarning(("<< %s sending Notification str %s >>\n",__FUNCTION__,str));
-		               }
+		       /*sensitive information like keyPassphrase should not print*/
+		       if((str != NULL) && (_ansc_strstr(str,"KeyPassphrase") == NULL))
+		       {
+		             CcspTraceWarning(("<< %s sending Notification str %s >>\n",__FUNCTION__,str));
+		       }
+                       g_isBusy = TRUE;
 
 				str1[j] = strdup(str);
 				if (! str1[j])
@@ -935,7 +917,6 @@ DslhWmpdoMpaSetParameterValues
 					pthread_mutex_unlock(&NotifyMutex);
 					break;
 				}
-
 		               /*sensitive information like keyPassphrase should not print*/
 		               if( _ansc_strstr(str1[j],"KeyPassphrase") == NULL)
 			       {
