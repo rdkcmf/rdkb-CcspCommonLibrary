@@ -23,7 +23,7 @@ After=CcspPandMSsp.service
 Type=oneshot
 ExecStartPre=/bin/sh -c 'sleep 2'
 ExecStart=/bin/sh -c '/lib/rdk/dcm.service &'
-ExecStop=/usr/bin/killall telemetry2_0
+ExecStop=/bin/killall telemetry2_0
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
