@@ -1090,31 +1090,6 @@ ccsp_rbus_logHandler
     return;
 }
 
-void CCSP_Message_Bus_Init_Rbus_Logger()
-{
-    FILE* file = fopen("/nvram/rbus_log_level", "r");
-
-    if(file)
-    {
-        int len, ret;
-        char name[10];
-        ret = fscanf(file, "%6s %n", name, &len);
-        if(ret == 1)
-        {
-            rtLogLevel level = rtLogLevelFromString(name);
-            if(strcasecmp(name, rtLogLevelToString(level)) == 0)
-            {
-                rtLog_SetLevel(level);
-                CcspTraceWarning(("enabling %u rbus logs\n", level));
-            }
-        }
-        fclose(file);
-    }
-    
-    /* Register with rtLog to use CCSPTRACE_LOGS */
-    rtLogSetLogHandler(ccsp_rbus_logHandler);
-}
-
 int 
 CCSP_Message_Bus_Init
 (
@@ -1201,7 +1176,8 @@ CCSP_Message_Bus_Init
         rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
         CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
 
-        CCSP_Message_Bus_Init_Rbus_Logger();
+        /* Register with rtLog to use CCSPTRACE_LOGS */
+        rtLogSetLogHandler(ccsp_rbus_logHandler);
 
         err = rbus_openBrokerConnection(component_id);
         if( err != RTMESSAGE_BUS_SUCCESS &&
