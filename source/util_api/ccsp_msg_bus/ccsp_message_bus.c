@@ -2005,7 +2005,6 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
     int length = 0;
     char *pTmp = NULL;
     int n = 0;
-    errno_t rc = -1;
 
     switch(typeVal)
     {
@@ -2014,11 +2013,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%d", ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%d", ival);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%d", ival);
             *pType = ccsp_int;
             break;
 
@@ -2027,11 +2022,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetInt32(msg, &ival);
             n = snprintf(pTmp, 0, "%u", (uint32_t)ival) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%u", (uint32_t)ival);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%u", (uint32_t)ival);
             *pType = ccsp_unsignedInt;
             break;
 
@@ -2045,14 +2036,10 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
 #endif
             *pStringValue = bus_info->mallocfunc(n);
 #ifdef _64BIT_ARCH_SUPPORT_
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%ld", i64);
+            snprintf(*pStringValue, (unsigned int)n, "%ld", i64);
 #else
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lld", i64);
+            snprintf(*pStringValue, (unsigned int)n, "%lld", i64);
 #endif	    
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
             *pType = ccsp_long;
             break;
         }
@@ -2066,14 +2053,10 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
 #endif
             *pStringValue = bus_info->mallocfunc(n);
 #ifdef _64BIT_ARCH_SUPPORT_
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%lu", (uint64_t)i64);
+            snprintf(*pStringValue, (unsigned int)n, "%lu", (uint64_t)i64);
 #else	
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%llu", (uint64_t)i64);
+            snprintf(*pStringValue, (unsigned int)n, "%llu", (uint64_t)i64);
 #endif	    
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
             *pType = ccsp_unsignedLong;
             break;
         }
@@ -2081,22 +2064,14 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%f", fval);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%f", fval);
             *pType = ccsp_float;
             break;
         case RBUS_DOUBLE:
             rbusMessage_GetDouble(msg, &fval);
             n = snprintf(pTmp, 0, "%f", fval) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%f", fval);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%f", fval);
             *pType = ccsp_double;
             break;
         case RBUS_DATETIME:
@@ -2106,7 +2081,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t*)&length);
             memcpy(&rbus_time,pValue,sizeof(rbusDateTime_t));
             if(0 == rbus_time.m_time.tm_year) {
-                rc = sprintf_s(tmpBuff, sizeof(tmpBuff), "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year,
+                snprintf(tmpBuff, sizeof(tmpBuff), "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year,
                                                                     rbus_time.m_time.tm_mon,
                                                                     rbus_time.m_time.tm_mday,
                                                                     rbus_time.m_time.tm_hour,
@@ -2116,30 +2091,22 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
                 /* tm_mon represents month from 0 to 11. So increment tm_mon by 1.
                    tm_year represents years since 1900. So add 1900 to tm_year.
                  */
-                rc = sprintf_s(tmpBuff, sizeof(tmpBuff), "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year+1900,
+                snprintf(tmpBuff, sizeof(tmpBuff), "%04d-%02d-%02dT%02d:%02d:%02d", rbus_time.m_time.tm_year+1900,
                                                                     rbus_time.m_time.tm_mon+1,
                                                                     rbus_time.m_time.tm_mday,
                                                                     rbus_time.m_time.tm_hour,
                                                                     rbus_time.m_time.tm_min,
                                                                     rbus_time.m_time.tm_sec);
             }
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
             n = snprintf(pTmp, 0, "0000-00-00T00:00:00+00:00") + 1;
             *pStringValue = bus_info->mallocfunc(n);
             if( rbus_time.m_tz.m_tzhour || rbus_time.m_tz.m_tzmin )
             {
-                rc = sprintf_s(*pStringValue, (unsigned int)n, "%s%c%02d:%02d", tmpBuff, (0 == rbus_time.m_tz.m_isWest) ? '+':'-', rbus_time.m_tz.m_tzhour, rbus_time.m_tz.m_tzmin);
+                snprintf(*pStringValue, (unsigned int)n, "%s%c%02d:%02d", tmpBuff, (0 == rbus_time.m_tz.m_isWest) ? '+':'-', rbus_time.m_tz.m_tzhour, rbus_time.m_tz.m_tzmin);
             }
             else
             {
-                rc = sprintf_s(*pStringValue, (unsigned int)n, "%sZ", tmpBuff);
-            }
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
+                snprintf(*pStringValue, (unsigned int)n, "%sZ", tmpBuff);
             }
             *pType = ccsp_dateTime;
         }
@@ -2150,11 +2117,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             unsigned char boolValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "false") + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%s", boolValue ? "true" : "false");
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%s", boolValue ? "true" : "false");
             *pType = ccsp_boolean;
             break;
         }
@@ -2165,11 +2128,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             signed char tmpValue = *(signed char*)pValue;
             n = snprintf(pTmp, 0, "%d", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%d", tmpValue);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%d", tmpValue);
             *pType = ccsp_int;
             break;
         }
@@ -2180,11 +2139,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             unsigned char tmpValue = *(unsigned char*)pValue;
             n = snprintf(pTmp, 0, "%u", tmpValue) + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = sprintf_s(*pStringValue, (unsigned int)n, "%u", tmpValue);
-            if(rc < EOK)
-            {
-                ERR_CHK(rc);
-            }
+            snprintf(*pStringValue, (unsigned int)n, "%u", tmpValue);
             *pType = ccsp_unsignedInt;
             break;
         }
@@ -2192,8 +2147,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             n = length + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            rc = strcpy_s (*pStringValue, (unsigned int)n, pValue);
-            ERR_CHK(rc);
+            snprintf(*pStringValue, (unsigned int)n, pValue);
             *pType = ccsp_string;
             break;
         case RBUS_BYTES:
@@ -2211,11 +2165,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             for (k = 0; k < length; k++)
             {
                 tmp = pVar[k];
-                rc = sprintf_s (&pStrVar[k * 2], (unsigned int)n, "%02X", tmp);
-                if(rc < EOK)
-                {
-                    ERR_CHK(rc);
-                }
+                snprintf (&pStrVar[k * 2], (unsigned int)n, "%02X", tmp);
             }
             break;
         }
@@ -2224,8 +2174,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
         case RBUS_NONE:
         default:
             *pStringValue = bus_info->mallocfunc(10);
-            rc = strcpy_s (*pStringValue, 10, "");
-            ERR_CHK(rc);
+            strncpy(*pStringValue, "", 10);
             *pType = ccsp_none;
             break;
     }
