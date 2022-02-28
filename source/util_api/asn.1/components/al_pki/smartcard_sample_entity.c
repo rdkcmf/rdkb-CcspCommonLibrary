@@ -386,7 +386,6 @@ AnscPKICreateSampleSmartCardEntity
         goto EXIT;
     }
 
-    AnscZeroMemory( pThisObject->hKeyPairHandle, sizeof(ANSC_CRYPTO_PUB_KEY_GEN_PARAMS));
     pGenParams = (PANSC_CRYPTO_PUB_KEY_GEN_PARAMS)pThisObject->hKeyPairHandle;
 
     if( pThisObject->KeyType == PKI_RSA_KEY)

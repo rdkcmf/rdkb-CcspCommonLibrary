@@ -341,9 +341,6 @@ HttpScoEnrollObjects
     if ( !pHfpIf )
     {
         pHfpIf = (PHTTP_HFP_INTERFACE)AnscAllocateMemory(sizeof(HTTP_HFP_INTERFACE));
-#ifdef _CCSP_CWMP_TCP_CONNREQ_HANDLER
-        AnscZeroMemory(pHfpIf, sizeof(HTTP_HFP_INTERFACE));
-#endif
 
         if ( !pHfpIf )
         {

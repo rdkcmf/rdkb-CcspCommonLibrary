@@ -260,8 +260,6 @@ CcspCcMbi_GetParameterValues
             goto EXIT2;
         }
 
-        AnscZeroMemory(ppReturnVal, ulArraySize * sizeof(parameterValStruct_t *));
-
         for ( i = 0; i < ulArraySize; i++ )
         {
             ppReturnVal[i] = AnscAllocateMemory(sizeof(parameterValStruct_t));
@@ -303,8 +301,6 @@ CcspCcMbi_GetParameterValues
 
                 goto EXIT2;
             }
-
-            AnscZeroMemory(ppReturnVal[i], sizeof(parameterValStruct_t));
 
             ppReturnVal[i]->parameterName = AnscCloneString(pParamValueArray[i].Name);
 
@@ -876,8 +872,6 @@ CcspCcMbi_GetParameterAttributes
             goto EXIT2;
         }
 
-        AnscZeroMemory(ppReturnVal, ulArraySize * sizeof(parameterAttributeStruct_t *));
-
         for ( i = 0; i < ulArraySize; i++ )
         {
             ppReturnVal[i] = AnscAllocateMemory(sizeof(parameterAttributeStruct_t));
@@ -912,8 +906,6 @@ CcspCcMbi_GetParameterAttributes
                 }
                 goto EXIT2;
             }
-
-            AnscZeroMemory(ppReturnVal[i], sizeof(parameterAttributeStruct_t));
 
             ppReturnVal[i]->parameterName        = AnscCloneString(pParamAttribArray[i].Name);
             ppReturnVal[i]->notification         = (pParamAttribArray[i].Notification == DSLH_CWMP_NOTIFICATION_off) ? FALSE : TRUE;
@@ -1172,7 +1164,6 @@ CcspCcMbi_GetParameterNames
         goto EXIT1;
     }
 
-    AnscZeroMemory(ppReturnVal, ulArraySize * sizeof(parameterInfoStruct_t *));
 
     for ( i = 0; i < ulArraySize; i++ )
     {
@@ -1186,8 +1177,6 @@ CcspCcMbi_GetParameterNames
 
             goto EXIT1;
         }
-
-        AnscZeroMemory(ppReturnVal[i], sizeof(parameterInfoStruct_t));
 
         ppReturnVal[i]->parameterName = AnscCloneString(pParamInfoArray[i].Name);
         ppReturnVal[i]->writable      = pParamInfoArray[i].bWritable;

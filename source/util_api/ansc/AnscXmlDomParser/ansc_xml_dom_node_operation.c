@@ -804,8 +804,6 @@ AnscXmlDomNodeDecode
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pNewNodeName, MAXIMUM_NODE_NAME);
-
     pNodesOfNode += AnscSizeOfString(XML_TAG_BEGIN);
 
     pNodesOfNode  = AnscXmlGotoFirstCharExcept
@@ -924,8 +922,6 @@ AnscXmlDomNodeDecode
 
             return ANSC_STATUS_RESOURCES;
         }
-
-        AnscZeroMemory(pNewAttributeName, MAXIMUM_ATTRIBUTE_NAME);
 
         /*
          *  loop only when the first char is not null && != '>' && != '/';
@@ -1066,7 +1062,6 @@ AnscXmlDomNodeDecode
                 return ANSC_STATUS_XML_RESOURCES;
             }
 
-            AnscZeroMemory(pNewAttribute, sizeof(ANSC_XML_ATTRIBUTE));
             pNewAttribute->hParentNode   = (ANSC_HANDLE)pNode;
             pNewAttribute->hXMLContext   = pNode->hXMLContext;
 
@@ -1077,7 +1072,6 @@ AnscXmlDomNodeDecode
             {
                 pNewAttribute->DataSize      = (ULONG)(pEndOfAttrValue - pStartOfAttrValue);
                 pNewAttribute->StringData    = AnscAllocateMemory( pNewAttribute->DataSize + 1);
-                AnscZeroMemory(pNewAttribute->StringData,pNewAttribute->DataSize + 1);
 
                 if( !pNewAttribute->StringData)
                 {
@@ -1217,8 +1211,6 @@ AnscXmlDomNodeDecode
     {
         pNode->DataSize     = (LONG)(pEndOfText - pStartOfText);
         pNode->StringData   = AnscAllocateMemory(pNode->DataSize + 1);
-        AnscZeroMemory((PVOID)pNode->StringData, pNode->DataSize + 1);
-
         if ( !pNode->StringData )
         {
             AnscFreeMemory(pNewNodeName);

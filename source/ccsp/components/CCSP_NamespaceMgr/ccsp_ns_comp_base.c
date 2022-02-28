@@ -126,10 +126,6 @@ CcspCreateNamespaceComponent
 
     pThisObject->pContainerName                     = pContainerName;
 
-    AnscZeroMemory(pThisObject->pCompName, CCSP_MAXI_COMPONENT_NAME_LENGTH);
-    AnscZeroMemory(pThisObject->pDbusPath, CCSP_MAXI_DBUS_PATH_LENGTH);
-    AnscZeroMemory(pThisObject->pPrefix,   CCSP_MAXI_SUBSYSTEM_PREFIX);
-
     AnscQueueInitializeHeader(&pThisObject->ParamspaceQueue);
 
     pThisObject->UnregisterNamespace                = CcspNsCompUnregisterNamespace;

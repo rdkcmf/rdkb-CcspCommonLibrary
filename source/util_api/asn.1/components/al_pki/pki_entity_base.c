@@ -274,7 +274,6 @@ AnscCreatePKIEntity
         return NULL;
     }
 
-    AnscZeroMemory( pThisObject->hKeyParam, sizeof(ANSC_CRYPTO_PUB_KEY_GEN_PARAMS));
     pGenParams = (PANSC_CRYPTO_PUB_KEY_GEN_PARAMS)pThisObject->hKeyParam;
 
     if( pCertAttr->KeyType == PKI_RSA_KEY)

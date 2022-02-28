@@ -135,24 +135,17 @@ AnscAsn1SetCreate
      */
     if( (ULONG)hContainerContext > 0)
     {
-        if((pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext)))
-        {
-            AnscZeroMemory( pMyObject, (ULONG)hContainerContext);
-        }
+        pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory((ULONG)hContainerContext);
     }
     else
     {
-        if((pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET))))
-        {
-            AnscZeroMemory( pMyObject, sizeof(ANSC_ASN1_SET));
-        }
+        pMyObject = (PANSC_ASN1_SET)AnscAllocateMemory(sizeof(ANSC_ASN1_SET));
     }
 
     if ( !pMyObject )
     {
         return  (ANSC_HANDLE)NULL;
     }
-
 
     /*
      *  reset the SAttrList;

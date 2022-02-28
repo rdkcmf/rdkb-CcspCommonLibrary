@@ -46,7 +46,6 @@ UserAllocateMemory(ULONG  ulMemorySize)
     {
         return  p;
     }
-    memset(p, 0, ulMemorySize);
 /*    printf("Alloc: %x\n", p); */
     return p;
 }

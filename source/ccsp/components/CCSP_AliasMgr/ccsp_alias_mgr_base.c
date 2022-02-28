@@ -109,8 +109,6 @@ static BOOL QueuePush(PQUEUE_HEADER pQueueHeader, char* Value)
         return FALSE;
     }
 
-    AnscZeroMemory( pListEntry, sizeof(CCSP_STRING_SINGLE_LINK_LIST_ENTRY) );
-
     pListEntry->Value = Value;
 
     AnscQueuePushEntry(pQueueHeader, &pListEntry->Linkage);
@@ -232,8 +230,6 @@ static BOOL StringSListPushEntry(PSLIST_HEADER pList, char* value)
         return FALSE;
     }
 
-    AnscZeroMemory( pListEntry, sizeof(CCSP_STRING_SINGLE_LINK_LIST_ENTRY) );
-
     pListEntry->Value = value;
 
     AnscSListPushEntry(pList, &pListEntry->Linkage);
@@ -354,7 +350,6 @@ CcspAliasMgrEnsureTree
         else
         {
             /* this root node is a virtual node - without node name */
-            AnscZeroMemory( *ppTree, sizeof(CCSP_ALIAS_MNGR_ALIAS_ENTRY) );
             ((PCCSP_ALIAS_MNGR_ALIAS_ENTRY) *ppTree)->PartialName = TRUE;
             return TRUE;
         }
@@ -585,10 +580,6 @@ CcspAliasMgrFindMakeNode
                 CcspTraceError(("TR-069 alias mapper - failed to allocate child node %s\n", Name));
 
                 break;
-            }
-            else
-            {
-                AnscZeroMemory( pChildNode, sizeof(CCSP_ALIAS_MNGR_ALIAS_ENTRY) );
             }
 
             pChildNode->Name        = AnscCloneString(pNodeName);
@@ -1334,9 +1325,6 @@ ANSC_HANDLE
 CcspAliasMgrInitialize()
 {
     PCCSP_ALIAS_MNGR_OBJECT am = AnscAllocateMemory( sizeof(CCSP_ALIAS_MNGR_OBJECT) );
-
-    AnscZeroMemory( am, sizeof(CCSP_ALIAS_MNGR_OBJECT) );
-
     return am;
 }
 

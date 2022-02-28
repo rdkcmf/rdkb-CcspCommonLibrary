@@ -609,8 +609,6 @@ PKIParsingAltName
     /*
      * Initialize the common variables and functions for a container object.
      */
-    AnscZeroMemory( pThisObject, sizeof(PKI_ALTNAME_PARSER));
-
     pThisObject->uTotalBlock        = 0;
     pThisObject->Parsing            = PKIParsingAltName;
     pThisObject->Remove             = PKIAltNameFree;

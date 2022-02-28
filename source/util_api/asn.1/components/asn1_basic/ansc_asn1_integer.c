@@ -1681,8 +1681,6 @@ AnscAsn1IntegerSetStringValue
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pMyObject->pValueBuffer, pMyObject->uLength);
-
     if( pMyObject->uLength > length)
     {
         AnscCopyMemory((PUCHAR)(pMyObject->pValueBuffer + 1), pData, length);
@@ -1768,7 +1766,6 @@ AnscAsn1IntegerSetUnsignedStringValue
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pMyObject->pValueBuffer, pMyObject->uLength);
     AnscCopyMemory
         (
             (PUCHAR)(pMyObject->pValueBuffer + pMyObject->uLength - length), 

@@ -313,8 +313,6 @@ AnscXmlFromASCIIToBinary
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pBinaryData, ulDataSize);
-
     for ( i = 0; i < ulDataSize * 2; i++ )
     {
         tempChar = ((PCHAR)pCharData)[i];
@@ -530,8 +528,6 @@ AnscXmlFromBinaryToASCII
     {
         return ANSC_STATUS_RESOURCES;
     }
-
-    AnscZeroMemory(pASCIIData, ulDataSize);
 
     for ( i = 0; i < ulDataSize / 2; i++ )
     {
@@ -1037,8 +1033,6 @@ AnscXmlFillContentOfNode
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pNewNodeName, MAXIMUM_NODE_NAME);
-
     pNodesOfNode += AnscSizeOfString(XML_TAG_BEGIN);
 
     pNodesOfNode  = AnscXmlGotoFirstCharExcept
@@ -1159,8 +1153,6 @@ AnscXmlFillContentOfNode
         {
             return ANSC_STATUS_RESOURCES;
         }
-
-        AnscZeroMemory(pNewAttributeName, MAXIMUM_ATTRIBUTE_NAME);
 
         /*
          *  loop only when the first char is not null && != '>' && != '/';
@@ -1301,7 +1293,6 @@ AnscXmlFillContentOfNode
                 return ANSC_STATUS_XML_RESOURCES;
             }
 
-            AnscZeroMemory(pNewAttribute, sizeof(ANSC_XML_ATTRIBUTE));
             pNewAttribute->hParentNode   = (ANSC_HANDLE)pNode;
             pNewAttribute->hXMLContext   = pNode->hXMLContext;
 
@@ -1320,8 +1311,6 @@ AnscXmlFillContentOfNode
 
                     return ANSC_STATUS_XML_RESOURCES;
                 }
-
-                AnscZeroMemory(pNewAttribute->StringData,pNewAttribute->DataSize + 1);
                 AnscCopyMemory( pNewAttribute->StringData, pStartOfAttrValue, (ULONG)(pEndOfAttrValue - pStartOfAttrValue));
             }
             else
@@ -1471,7 +1460,6 @@ AnscXmlFillContentOfNode
             return ANSC_STATUS_XML_RESOURCES;
         }
 
-        AnscZeroMemory((PVOID)pNode->StringData, pNode->DataSize + 1);
         AnscCopyMemory( pNode->StringData, pStartOfText, (ULONG)(pEndOfText - pStartOfText));
     }
 

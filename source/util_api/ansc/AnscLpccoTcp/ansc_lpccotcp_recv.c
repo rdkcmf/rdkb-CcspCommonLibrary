@@ -257,7 +257,6 @@ AnscLpccoTcpRecvHello
         return  ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(party_name, ANSC_OBJECT_NAME_SIZE);
     AnscCopyMemory(party_name, ImcpHelloGetPartyName(pImcpHelloMessage), AnscGetMin2(ulPartyNameSize, ANSC_OBJECT_NAME_SIZE));
 /*
 #ifdef   _DEBUG
@@ -382,7 +381,6 @@ AnscLpccoTcpRecvAck
         return  ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(party_name, ANSC_OBJECT_NAME_SIZE);
     AnscCopyMemory(party_name, ImcpAckGetPartyName(pImcpAckMessage), AnscGetMin2(ulPartyNameSize, ANSC_OBJECT_NAME_SIZE));
 /*
 #ifdef   _DEBUG
@@ -501,7 +499,6 @@ AnscLpccoTcpRecvRequest
     {
         case    IMCP_REQUEST_TYPE_QUERY_PARTY :
 
-                AnscZeroMemory(party_name, ANSC_OBJECT_NAME_SIZE);
                 AnscCopyMemory(party_name, ImcpRequestGetReqData(pImcpRequestMessage), AnscGetMin2(ulInputSize, ANSC_OBJECT_NAME_SIZE));
 
                 pPartyAddr =
@@ -782,7 +779,6 @@ AnscLpccoTcpRecvBye
         return  ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(party_name, ANSC_OBJECT_NAME_SIZE);
     AnscCopyMemory(party_name, ImcpByeGetPartyName(pImcpByeMessage), AnscGetMin2(ulPartyNameSize, ANSC_OBJECT_NAME_SIZE));
 /*
 #ifdef   _DEBUG

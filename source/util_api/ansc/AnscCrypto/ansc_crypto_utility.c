@@ -697,7 +697,6 @@ AnscCryptoMitDesStrToKey
         goto EXIT1;
     }
 
-    AnscZeroMemory(pNewString, ulNewStringLeng);
     pCurrStrHead = pNewString;
     
     AnscCopyMemory
@@ -1768,8 +1767,6 @@ AnscCryptoDes3StringToKey
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pNewString, ulNewStringLeng);
-    
     AnscCopyMemory
         (
             (PVOID)pNewString,

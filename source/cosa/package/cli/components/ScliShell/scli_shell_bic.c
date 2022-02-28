@@ -1726,8 +1726,6 @@ ScliShoRunBicAutoCompletion
                 goto EXIT;
             }
 
-            AnscZeroMemory(pReqArgM, sizeof(BOOL) * ulReqArgMLen);
-
             for ( i = 0; i < ulReqArgMLen; i ++ )
             {
                 ScliShoInitArgMatchResult(&pReqArgM[i]);
@@ -1743,8 +1741,6 @@ ScliShoRunBicAutoCompletion
             {
                 goto EXIT;
             }
-
-            AnscZeroMemory(pOptArgM, sizeof(BOOL) * ulOptArgMLen);
 
             for ( i = 0; i < ulOptArgMLen; i ++ )
             {
@@ -2378,8 +2374,6 @@ ScliShoRunBicHelp
                     goto EXIT;
                 }
 
-                AnscZeroMemory(pReqArgM, sizeof(BOOL) * ulReqArgMLen);
-
                 for ( i = 0; i < ulReqArgMLen; i ++ )
                 {
                     ScliShoInitArgMatchResult(&pReqArgM[i]);
@@ -2395,8 +2389,6 @@ ScliShoRunBicHelp
                 {
                     goto EXIT;
                 }
-
-                AnscZeroMemory(pOptArgM, sizeof(BOOL) * ulOptArgMLen);
 
                 for ( i = 0; i < ulOptArgMLen; i ++ )
                 {

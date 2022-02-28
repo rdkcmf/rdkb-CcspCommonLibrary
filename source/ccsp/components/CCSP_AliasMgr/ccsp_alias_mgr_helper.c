@@ -180,8 +180,6 @@ CcspAliasMgrLoadMappingFile
 
             if ( pFileContent )
             {
-                AnscZeroMemory(pFileContent, contentSize + 1);
-
 		/*CID: 154671 Ignoring number of bytes read*/
                 int valread = read((int)fileHandle, pFileContent, contentSize);
 		pFileContent[valread] = '\0';

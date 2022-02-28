@@ -167,8 +167,6 @@ DslhDmagntCreatePluginInfo
         return pInfo;
     }
 
-    AnscZeroMemory(pInfo, sizeof(PLUGIN_INFORMATION));
-
     pInfo->Version = 1;
 
     return pInfo;
@@ -813,8 +811,6 @@ DslhDmagntRegisterDataModelObject
         return ANSC_STATUS_RESOURCES;
     }
      
-    AnscZeroMemory(pObjDesp, sizeof(DSLH_CWMP_OBJECT_DESCR));
-
     returnStatus = 
         DslhDmagntParseObjectInfo(hThisObject, hObjectNode, pParentObjName, pPluginInfo, pObjDesp);
 
@@ -1936,8 +1932,6 @@ DslhDmagntParseParamArray
     {
         return NULL;
     }
-
-    AnscZeroMemory(pParamDescrArray, sizeof(ANSC_HANDLE) * (uCount + 1));
 
     /* get the first one */
     pChildNode = pListNode->GetHeadChild(pListNode);

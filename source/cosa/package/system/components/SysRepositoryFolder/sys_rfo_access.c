@@ -145,8 +145,10 @@ SysRfoQueryAbsPath
             return  NULL;
         }
     }
-
-    AnscZeroMemory(pFolderPath, ANSC_MAX_STRING_SIZE);
+    else
+    {
+        AnscZeroMemory(pFolderPath, ANSC_MAX_STRING_SIZE);
+    }
 
     if ( pParentFolder )
     {

@@ -143,8 +143,6 @@ AnscAsn1SequenceCreate
         return  (ANSC_HANDLE)NULL;
     }
 
-    AnscZeroMemory( pMyObject, sizeof(ANSC_ASN1_SEQUENCE));
-
     /*
      *  reset the SAttrList;
      */

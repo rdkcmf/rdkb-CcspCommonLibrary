@@ -863,8 +863,6 @@ PKCS12UtilityGetDerivedKey
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscZeroMemory(pAAA, cycle * u);
-
     for( i = 0; i < cycle ; i ++)
     {       
         /* Hash (D || I) r times */

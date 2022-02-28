@@ -2856,8 +2856,6 @@ ScliShoValidateCmdArgs
                 goto EXIT;
             }
 
-            AnscZeroMemory(pReqArgM, sizeof(BOOL) * ulReqArgMLen);
-
             for ( i = 0; i < ulReqArgMLen; i ++ )
             {
                 ScliShoInitArgMatchResult(&pReqArgM[i]);
@@ -2873,8 +2871,6 @@ ScliShoValidateCmdArgs
             {
                 goto EXIT;
             }
-
-            AnscZeroMemory(pOptArgM, sizeof(BOOL) * ulOptArgMLen);
 
             for ( i = 0; i < ulOptArgMLen; i ++ )
             {

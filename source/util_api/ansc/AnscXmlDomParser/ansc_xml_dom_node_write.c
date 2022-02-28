@@ -197,8 +197,6 @@ AnscXmlDomNodeSetAttrString
             return  ANSC_STATUS_XML_RESOURCES;
         }
 
-        AnscZeroMemory(pAttribute, sizeof(ANSC_XML_ATTRIBUTE));
-
         AnscQueuePushEntry(&pXmlNode->AttributesList, &pAttribute->Linkage);
     }
     else
@@ -317,8 +315,6 @@ AnscXmlDomNodeSetAttrUlong
             return  ANSC_STATUS_XML_RESOURCES;
         }
 
-        AnscZeroMemory(pAttribute, sizeof(ANSC_XML_ATTRIBUTE));
-
         AnscQueuePushEntry(&pXmlNode->AttributesList, &pAttribute->Linkage);
     }
     else
@@ -347,8 +343,6 @@ AnscXmlDomNodeSetAttrUlong
     }
     else
     {
-        AnscZeroMemory(pAttribute->StringData, pAttribute->DataSize + 1);
-
         AnscCopyMemory( (PVOID)pAttribute->StringData, pValue, AnscSizeOfString(pValue));
         AnscCopyString(pAttribute->Name, name);
     }
@@ -458,8 +452,6 @@ AnscXmlDomNodeSetAttrBoolean
             return  ANSC_STATUS_XML_RESOURCES;
         }
 
-        AnscZeroMemory(pAttribute, sizeof(ANSC_XML_ATTRIBUTE));
-
         AnscQueuePushEntry(&pXmlNode->AttributesList, &pAttribute->Linkage);
     }
     else
@@ -484,7 +476,6 @@ AnscXmlDomNodeSetAttrBoolean
 
         if( pAttribute->StringData != NULL)
         {
-            AnscZeroMemory(pAttribute->StringData, AnscSizeOfString((LPSTR)STR_TRUE) + 1);
             AnscCopyString((PCHAR)pAttribute->StringData, (LPSTR)STR_TRUE);
 
             pAttribute->DataSize      = AnscSizeOfString((LPSTR)STR_TRUE);
@@ -500,7 +491,6 @@ AnscXmlDomNodeSetAttrBoolean
 
         if( pAttribute->StringData != NULL)
         {
-            AnscZeroMemory(pAttribute->StringData, AnscSizeOfString((LPSTR)STR_FALSE) + 1);
             AnscCopyString((PCHAR)pAttribute->StringData, (LPSTR)STR_FALSE);
 
             pAttribute->DataSize      =    AnscSizeOfString((LPSTR)STR_FALSE);
@@ -628,8 +618,6 @@ AnscXmlDomNodeSetAttrBinary
             return  ANSC_STATUS_XML_RESOURCES;
         }
 
-        AnscZeroMemory(pAttribute, sizeof(ANSC_XML_ATTRIBUTE));
-
         AnscQueuePushEntry(&pXmlNode->AttributesList, &pAttribute->Linkage);
     }
     else
@@ -657,8 +645,6 @@ AnscXmlDomNodeSetAttrBinary
 
         return  ANSC_STATUS_XML_RESOURCES;
     }
-
-    AnscZeroMemory(pAttribute->StringData, ulSize * 2 + 1);
 
     AnscCopyMemory(pAttribute->StringData, sTarget, ulSize);
 
@@ -833,7 +819,6 @@ AnscXmlDomNodeSetDataUlong
 
     if( pXmlNode->StringData != NULL)
     {
-        AnscZeroMemory(pXmlNode->StringData, pXmlNode->DataSize + 16);
         AnscCopyMemory((PVOID)pXmlNode->StringData, pValue, AnscSizeOfString(pValue));
     }
     else
@@ -910,7 +895,6 @@ AnscXmlDomNodeSetDataBoolean
         if( pXmlNode->StringData != NULL)
         {
             pXmlNode->DataSize      = AnscSizeOfString((LPSTR)STR_TRUE);
-            AnscZeroMemory(pXmlNode->StringData, pXmlNode->DataSize + 16);
             AnscCopyString((PCHAR)pXmlNode->StringData, (LPSTR)STR_TRUE);
         }
         else
@@ -925,7 +909,6 @@ AnscXmlDomNodeSetDataBoolean
         if( pXmlNode->StringData != NULL)
         {
             pXmlNode->DataSize      = AnscSizeOfString((LPSTR)STR_FALSE);
-            AnscZeroMemory(pXmlNode->StringData, pXmlNode->DataSize + 16);
             AnscCopyString((PCHAR)pXmlNode->StringData, (LPSTR)STR_FALSE);
         }
         else
@@ -1014,8 +997,6 @@ AnscXmlDomNodeSetDataBinary
 
         return  ANSC_STATUS_XML_RESOURCES;
     }
-
-    AnscZeroMemory(pXmlNode->StringData, ulSize * 2 + 16);
 
     length = ulSize;
     AnscCopyMemory(pXmlNode->StringData, sTarget, ulSize);

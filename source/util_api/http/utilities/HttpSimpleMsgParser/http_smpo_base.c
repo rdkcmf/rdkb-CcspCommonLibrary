@@ -332,7 +332,6 @@ HttpSmpoInitialize
 
     pMyObject->hHfpIf                      = NULL;
     pHfpIf = (PHTTP_HFP_INTERFACE)AnscAllocateMemory(sizeof(HTTP_HFP_INTERFACE));
-    AnscZeroMemory(pHfpIf, sizeof(HTTP_HFP_INTERFACE));
 
     if (pHfpIf)
     {

@@ -148,8 +148,6 @@ PKICreateCertAttribute
         return  (ANSC_HANDLE)NULL;
     }
 
-    AnscZeroMemory( pMyObject, sizeof(ALCERTIFICATE_ATTRIBUTE));
-
     pMyObject->SignAlgor            = RSA_MD5_SIGNATURE;
     pMyObject->KeyType              = PKI_RSA_KEY;
     pMyObject->KeyLength            = 128;                      /* default key length */

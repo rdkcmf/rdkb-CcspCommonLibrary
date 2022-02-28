@@ -139,8 +139,6 @@ static DmParamVal_t *CloneParamVal(const DmParamVal_t *orig)
     if (new == NULL)
         return NULL;
 
-    AnscZeroMemory(new, sizeof(DmParamVal_t)); /*RDKB-6129, initializing */
-
     new->type = orig->type;
     new->len = orig->len;
 
@@ -540,7 +538,6 @@ static DmErr_t LoadCompPathList(const char *paths[], int cnt,
     compList = (void *)AnscAllocateMemory(compListSize * sizeof(struct CdmComp));
     if (compList == NULL)
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
-    memset(compList, 0, compListSize * sizeof(struct CdmComp));
 
     /* for each path we got */
     for (i = 0; i < cnt; i++) {
@@ -653,7 +650,6 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
     compList = (void *)AnscAllocateMemory(cnt * sizeof(struct CdmComp));
     if (compList == NULL)
         return CCSP_ERR_MEMORY_ALLOC_FAIL;
-    memset(compList, 0, cnt * sizeof(struct CdmComp));
 
     /* for each DmParam_t{} we got */
     for (i = 0; i < cnt; i++) {
@@ -711,7 +707,6 @@ static DmErr_t LoadCompParamList(const DmParam_t params[], int cnt,
             comp->paramVals = (void *)AnscAllocateMemory(sizeof(parameterValStruct_t));
             if (comp->paramVals == NULL)
                 goto nomem;
-            memset(comp->paramVals, 0, sizeof(parameterValStruct_t));
 
             paramVal = &comp->paramVals[0];
             comp->paramCnt = 1;

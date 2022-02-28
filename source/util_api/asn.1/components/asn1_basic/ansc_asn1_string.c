@@ -1358,7 +1358,6 @@ AnscAsn1StringCopyTo
             return FALSE;
         }
 
-        AnscZeroMemory( pNewObject->pStringBuffer, pMyObject->uLength + 1);
         AnscCopyMemory
             ( 
                 pNewObject->pStringBuffer, 
@@ -1723,8 +1722,6 @@ decodingConstructedString
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pMyObject->pStringBuffer, actualLength + 1);
-
     pMyObject->bIsDynamic   = TRUE;
     pBackBuffer             = pEncodingUnit;
 
@@ -2048,8 +2045,6 @@ GOAHEAD:
         {
             return ANSC_STATUS_RESOURCES;
         }
-
-        AnscZeroMemory(pMyObject->pStringBuffer, pMyObject->uLength + 1);
 
         pMyObject->bIsDynamic   = TRUE;
         AnscCopyMemory( pMyObject->pStringBuffer, pEncodingUnit, pMyObject->uLength);
@@ -2783,8 +2778,6 @@ AnscAsn1StringSetStringValue
 
             return ANSC_STATUS_RESOURCES;
         }
-
-        AnscZeroMemory(pMyObject->pStringBuffer, pMyObject->uLength + 1);
 
         pMyObject->bIsDynamic       = TRUE;
         AnscCopyMemory( pMyObject->pStringBuffer, pData, pMyObject->uLength);

@@ -1000,7 +1000,6 @@ AnscXmlDomNodeCopy
             return (ANSC_HANDLE)NULL;
         }
 
-        AnscZeroMemory(pNewAttribute, sizeof(ANSC_XML_ATTRIBUTE));
         pNewAttribute->hParentNode   = (ANSC_HANDLE)pCopy;
         pNewAttribute->hXMLContext   = pCopy->hXMLContext;
         pNewAttribute->DataSize      = pFirst->DataSize;
@@ -1008,8 +1007,6 @@ AnscXmlDomNodeCopy
 
         if( pNewAttribute->StringData != NULL)
         {
-            AnscZeroMemory(pNewAttribute->StringData,pFirst->DataSize + 1);
-
             /* copy the attribute name and value */
             rc = strcpy_s(pNewAttribute->Name, sizeof(pNewAttribute->Name), pFirst->Name);
             ERR_CHK(rc);
@@ -1041,7 +1038,6 @@ AnscXmlDomNodeCopy
 
         if( pCopy->StringData != NULL)
         {
-            AnscZeroMemory(pCopy->StringData, pOld->DataSize + 1);
             AnscCopyMemory(pCopy->StringData, pOld->StringData, pOld->DataSize);
         }
         else

@@ -472,8 +472,6 @@ encryptAuthSafe
         return ANSC_STATUS_RESOURCES;
     }
 
-    AnscZeroMemory(pEncoding, length);
-    
     pBack = pEncoding;
 
     status = 
@@ -526,7 +524,6 @@ encryptAuthSafe
         goto EXIT;
     }
 
-    AnscZeroMemory(pEncrypt, uLength);
     pPKCS12Util->PKCS12Encrypt
         (
             pPKCS12Util,
@@ -1631,7 +1628,6 @@ decryptPrivateKeyInfo
         return pKeyInfo;
     }
 
-    AnscZeroMemory(pDecrypt, uLength);
     pPKCS12Util->PKCS12Decrypt
         (
             pPKCS12Util,
@@ -1842,7 +1838,6 @@ decryptEncryptedContentInfo
         return ANSC_STATUS_FAILURE;
     }
 
-    AnscZeroMemory(pDecrypt, uLength);
     pPKCS12Util->PKCS12Decrypt
         (
             pPKCS12Util,

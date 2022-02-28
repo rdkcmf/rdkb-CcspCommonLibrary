@@ -333,7 +333,6 @@ AnscBase64Decode
     /* allocate big enough memory to avoid memory reallocation */
     ulEncodedSize   = AnscSizeOfString((const char*)pEncode);
     pDecode         = (PUCHAR)AnscAllocateMemory(ulEncodedSize);
-    AnscZeroMemory(pDecode, ulEncodedSize);
 
     if( AnscBase64DecodeLine(pBuf, pDecode, &ulEncodedSize) == NULL)
     {

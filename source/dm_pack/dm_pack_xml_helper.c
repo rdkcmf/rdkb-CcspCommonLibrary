@@ -522,7 +522,6 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
       return ANSC_STATUS_XML_RESOURCES;
   }
 
-  AnscZeroMemory(pNewAttribute, sizeof(ANSC_XML_ATTRIBUTE));
   pNewAttribute->hParentNode   = (ANSC_HANDLE)pNode;
   pNewAttribute->hXMLContext   = pNode->hXMLContext;
 
@@ -537,7 +536,6 @@ ANSC_STATUS DMPackCreateAttribute(PANSC_XML_DOM_NODE_OBJECT pNode, const char* p
       AnscTrace("Failed to allocate attribute value for - '%s'\n", pNode->Name);
       return ANSC_STATUS_XML_RESOURCES;
   }
-  AnscZeroMemory(pNewAttribute->StringData, pNewAttribute->DataSize + 1);
   AnscCopyMemory(pNewAttribute->StringData, (PVOID)pNewAttributeData, pNewAttribute->DataSize);
 
   AnscQueuePushEntry(&pNode->AttributesList, &pNewAttribute->Linkage);

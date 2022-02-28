@@ -119,8 +119,6 @@ AnscXmlDomNodeCreate
         return  (ANSC_HANDLE)NULL;
     }
 
-    AnscZeroMemory(pXmlNode, sizeof(ANSC_XML_DOM_NODE_OBJECT) + 4);
-
     pXmlNode->hOwnerContext   = hOwnerContext;
     pXmlNode->hParentNode     = (ANSC_HANDLE)NULL;
 

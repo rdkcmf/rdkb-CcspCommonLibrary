@@ -740,8 +740,6 @@ Bmc2ComdoParseHelpSyntax
         return  NULL;
     }
 
-    AnscZeroMemory(pCmdArgs, sizeof(BMC2_CMD_ARGUMENT) * ulArgCount);
-
     for ( i = 0; i < ulArgCount; i ++ )
     {
         pArgSyntax = pArgs[i];
@@ -1231,7 +1229,6 @@ Bmc2ComdoParseArgHelpItems
         return  NULL;
     }
 
-    AnscZeroMemory(pArgHelp, sizeof(BMC2_CMD_ARG_HELP) * ulItems);
     ulTotalHelpCount = ulItems;
 
     ulItems = 0;
@@ -1412,7 +1409,6 @@ Bmc2ComdoParseStringArgValueRange
     {
         goto EXIT2;
     }
-    AnscZeroMemory(pStrArray, sizeof(char*) * ulItemCount);
     pArgVrange->pStringArray = pStrArray;
 
     pCur = pValue;
@@ -1992,7 +1988,6 @@ Bmc2ComdoParseDepArg
         goto EXIT;
     }
     pCmdDepArg->ulArgBranchCount = ulBrCount;
-    AnscZeroMemory(pCmdDepArg->pArgBranches, sizeof(BMC2_CMD_DEP_ARG_BRANCH) * ulBrCount);
 
     pCur        = pArgSyntax;
     ulBrCount   = 0;
