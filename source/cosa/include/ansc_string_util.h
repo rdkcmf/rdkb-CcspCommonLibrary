@@ -158,5 +158,6 @@ BOOL is_ValidHost(PUCHAR pString);
 BOOL is_ValidPort(PUCHAR pString);
 BOOL is_ValidIpAddressv4_port(PUCHAR pString);
 BOOL is_ValidIpAddressv6_port(PUCHAR pString);
+BOOL is_PrivateIp(PUCHAR pString);
 #endif
 
