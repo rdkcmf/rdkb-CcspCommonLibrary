@@ -216,9 +216,6 @@ AnscTimerScheduleTask
                  * cannot understand it completely at the first look, it's OK, doesn't mean you're
                  * stupid or have a lower IQ.
                  */
-               #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-                AnscAcquireLock(&g_SyncLock);
-                #endif
 
                 AnscReleaseLock(&pTimerDescriptor->AccessLock);
                 AnscReleaseLock(&g_TimerQueueLock            );
@@ -232,9 +229,6 @@ AnscTimerScheduleTask
                  */
                 pTimerDescriptor->Invoke(pTimerDescriptor->hInvokeContext);
 
-               #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-                AnscReleaseLock(&g_SyncLock);
-                #endif
             }
 
             AnscAcquireLock(&g_TimerQueueLock);
@@ -351,10 +345,6 @@ AnscCancelTimer
 
     if ( bWaitForInvoke )
     {
-        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-        AnscAcquireLock(&g_SyncLock);
-        AnscReleaseLock(&g_SyncLock);
-        #endif
     }
 
     return  ANSC_STATUS_SUCCESS;

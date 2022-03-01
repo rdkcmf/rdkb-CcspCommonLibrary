@@ -81,15 +81,6 @@
  * According to the current platform definition, we route the definition to the corresponding
  * header files.
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  ANSC_ENABLE_PDO_POOLING                KERNEL_ENABLE_PDO_POOLING
-    #define  ANSC_ENABLE_BDO_POOLING                KERNEL_ENABLE_BDO_POOLING
-
-    #define  ANSC_MAX_PDO_POOL_SIZE                 KERNEL_MAX_PDO_POOL_SIZE
-    #define  ANSC_MAX_BDO_POOL_SIZE                 KERNEL_MAX_BDO_POOL_SIZE
-
-#else
 
     #define  ANSC_ENABLE_PDO_POOLING                USER_ENABLE_PDO_POOLING
     #define  ANSC_ENABLE_BDO_POOLING                USER_ENABLE_BDO_POOLING
@@ -97,7 +88,6 @@
     #define  ANSC_MAX_PDO_POOL_SIZE                 USER_MAX_PDO_POOL_SIZE
     #define  ANSC_MAX_BDO_POOL_SIZE                 USER_MAX_BDO_POOL_SIZE
 
-#endif
 
 /*
  * The Internet Protocol is designed for use in interconnected systems of packet-switched computer

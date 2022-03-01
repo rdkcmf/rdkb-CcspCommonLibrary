@@ -194,15 +194,6 @@ ANSC_PROFILING_COUNTER_NAME, *PANSC_PROFILING_COUNTER_NAME;
     /*
      *  All operations related to Processor Cycle Counter are processor/platform specific
      */
-    #ifdef   _ANSC_KERNEL
-
-        #define  AnscProfilingPccFactor                 KernelProfilingPccFactor
-
-        #define  AnscProfilingStartPcc()                KernelProfilingStartPcc()
-        #define  AnscProfilingStopPcc()                 KernelProfilingStopPcc()
-        #define  AnscProfilingReadPcc()                 KernelProfilingReadPcc()
-
-    #else
 
         #define  AnscProfilingPccFactor                 UserProfilingPccFactor
 
@@ -210,7 +201,6 @@ ANSC_PROFILING_COUNTER_NAME, *PANSC_PROFILING_COUNTER_NAME;
         #define  AnscProfilingStopPcc()                 UserProfilingStopPcc()
         #define  AnscProfilingReadPcc()                 UserProfilingReadPcc()
 
-    #endif
 
     extern   ANSC_PROFILING_CONTEXT     gAnscProfilingContext;
 

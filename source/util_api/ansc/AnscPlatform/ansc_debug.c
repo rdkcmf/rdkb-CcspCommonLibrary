@@ -253,11 +253,7 @@ AnscTrace1
             va_end(val);
         }
 
-        #ifdef   _ANSC_KERNEL
-            KernelTrace(pTempChar);
-        #else
             UserTrace  (pTempChar);
-        #endif
 
         AnscFreeMemory(pTempChar);
     }
@@ -312,11 +308,7 @@ AnscTrace2
             va_end(val);
         }
 
-        #ifdef   _ANSC_KERNEL
-            KernelTrace(pTempChar);
-        #else
             UserTrace  (pTempChar);
-        #endif
 
         AnscFreeMemory(pTempChar);
     }
@@ -377,11 +369,7 @@ AnscTrace3
             va_end(val);
         }
 
-        #ifdef   _ANSC_KERNEL
-            KernelTrace(pTempChar);
-        #else
             UserTrace  (pTempChar);
-        #endif
 
         AnscFreeMemory(pTempChar);
     }

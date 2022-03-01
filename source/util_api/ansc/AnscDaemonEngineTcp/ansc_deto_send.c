@@ -141,7 +141,6 @@ AnscDetoSendTask
             pSocket = (PANSC_DAEMON_SOCKET_TCP_OBJECT)pPacket->hSocket;
         }
 
-	#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
         AnscAcquireLock(&pMyObject->SendSocketSetLock);
         bSendable = (pServer->Mode & ANSC_DSTO_MODE_XSOCKET)? XSKT_SOCKET_FD_ISSET(pSocket->Socket, pSendSet2) : ANSC_SOCKET_FD_ISSET(pSocket->Socket, pSendSet1);
         AnscReleaseLock(&pMyObject->SendSocketSetLock);
@@ -160,7 +159,6 @@ AnscDetoSendTask
 
             continue;
         }
-	#endif
 
 #ifdef _ANSC_USE_OPENSSL_
         if (TRUE)

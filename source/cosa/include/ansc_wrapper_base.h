@@ -112,21 +112,6 @@
  * necessary system wrappers. Following is the list of header files must be included for Linux.
  */
 
-    #ifdef   _ANSC_KERNEL
-
-        #include "linux/kernel_base.h"
-        #include "linux/kernel_runtime.h"
-        #include "linux/kernel_protection.h"
-        #include "linux/kernel_memory.h"
-        #include "linux/kernel_string.h"
-        #include "linux/kernel_debug.h"
-        #include "linux/kernel_time.h"
-        #include "linux/kernel_socket.h"
-        #include "linux/kernel_task.h"
-        #include "linux/kernel_file_io.h"
-        #include "linux/kernel_packet.h"
-
-    #else
 
         #include "linux/user_base.h"
         #include "linux/user_runtime.h"
@@ -140,7 +125,6 @@
         #include "linux/user_file_io.h"
         #include "linux/user_packet.h"
 
-    #endif
 
 
 /***********************************************************
@@ -177,25 +161,6 @@
  * We define the basic status type as an unsigned integer. In the future, we may be able to encapsulate
  * the status in an object too.
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  _ANSC_STATIC_                          _KERNEL_STATIC_
-    #define  _ANSC_INLINE_                          _KERNEL_INLINE_
-
-    typedef  ULONG                  ANSC_STATUS,     *PANSC_STATUS;
-    typedef  PVOID                  ANSC_HANDLE,     *PANSC_HANDLE;
-    typedef  KERNEL_LOCK            ANSC_LOCK,       *PANSC_LOCK;
-    typedef  KERNEL_SPINLOCK        _ANSC_SPINLOCK_DEF;
-    typedef  KERNEL_SEMAPHORE       ANSC_SEMAPHORE,  *PANSC_SEMAPHORE;
-
-    #ifdef  _ANSC_SIMULATE_EVENT_
-        typedef  ANSC_HANDLE        ANSC_EVENT,      *PANSC_EVENT;
-    #else
-        typedef  KERNEL_EVENT       ANSC_EVENT,      *PANSC_EVENT;
-    #endif
-
-    typedef  KERNEL_MEMORY_CACHE    ANSC_MEMORY_CACHE, *PANSC_MEMORY_CACHE;
-#else
 
     #define  _ANSC_STATIC_                          _USER_STATIC_
     #define  _ANSC_INLINE_                          _USER_INLINE_
@@ -213,7 +178,6 @@
     #endif
 
     typedef  USER_MEMORY_CACHE      ANSC_MEMORY_CACHE, *PANSC_MEMORY_CACHE;
-#endif
 
 
 #ifdef   _ANSC_SPINLOCK_PROFILING_

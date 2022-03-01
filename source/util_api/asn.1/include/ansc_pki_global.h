@@ -92,9 +92,7 @@
 
 #include "pki_utility_api.h"
 
-#ifndef _ANSC_KERNEL
 #include "smartcard_sample_interface.h"
-#endif
 
 #endif  /*_ASN1_PKI_GLOBAL_H*/
 

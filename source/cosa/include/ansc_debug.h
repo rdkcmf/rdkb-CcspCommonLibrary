@@ -243,32 +243,12 @@ extern   ANSC_TRACE_ID_CFG                          gTraceIdArray[];
 /*
  *  assert facility
  */
-#ifdef   _ANSC_KERNEL
-    #define  AnscAssert                             KernelAssert
-#else
     #define  AnscAssert                             UserAssert
-#endif
 
 /*
  * According to the current platform definition, we route the definition to the corresponding
  * header files.
  */
-#ifdef   _ANSC_KERNEL
-
-    #ifdef  ANSC_DEBUG_ENABLED
-        #ifdef  _ANSC_TRACE_F_
-            #define  AnscTraceWrapper               AnscTraceF
-        #else
-            #define  AnscTraceWrapper               KernelTrace
-        #endif
-    #else
-        #define  AnscTraceWrapper                   0 &&
-    #endif
-
-    #define  ANSC_TRACE_PLATFORM_MEMORY             KERNEL_TRACE_PLATFORM_MEMORY
-    #define  ANSC_TRACE_PLATFORM_TASK               KERNEL_TRACE_PLATFORM_TASK
-
-#else
 
     #ifdef  ANSC_DEBUG_ENABLED
         #ifdef  _ANSC_TRACE_F_
@@ -283,7 +263,6 @@ extern   ANSC_TRACE_ID_CFG                          gTraceIdArray[];
     #define  ANSC_TRACE_PLATFORM_MEMORY             USER_TRACE_PLATFORM_MEMORY
     #define  ANSC_TRACE_PLATFORM_TASK               USER_TRACE_PLATFORM_TASK
 
-#endif
 
 
 /***********************************************************

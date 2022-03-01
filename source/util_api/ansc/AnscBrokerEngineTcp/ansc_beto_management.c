@@ -671,7 +671,6 @@ AnscBetoEnableRecv
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-#if 1 /*!defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)*/
     AnscAcquireLock(&pMyObject->RecvSocketSetLock);
 
     if ( pServer->Mode & ANSC_BSTO_MODE_XSOCKET )
@@ -710,7 +709,6 @@ AnscBetoEnableRecv
     }
 
     AnscReleaseLock(&pMyObject->RecvSocketSetLock);
-#endif
 
     return  ANSC_STATUS_SUCCESS;
 }
@@ -768,7 +766,6 @@ AnscBetoEnableSend
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-#if 1 //!defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     AnscAcquireLock(&pMyObject->SendSocketSetLock);
 
     if ( pServer->Mode & ANSC_BSTO_MODE_XSOCKET )
@@ -807,7 +804,6 @@ AnscBetoEnableSend
     }
 
     AnscReleaseLock(&pMyObject->SendSocketSetLock);
-#endif
 
     return  ANSC_STATUS_SUCCESS;
 }

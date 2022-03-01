@@ -70,7 +70,6 @@
 
 #include "ansc_pki_local.h"
 
-#ifndef _ANSC_KERNEL
 /***********************************************************************
  *
  *  static functions for SampleSmartcardEntity
@@ -428,5 +427,4 @@ EXIT:
     return (ANSC_HANDLE)NULL;
 }
 
-#endif
 

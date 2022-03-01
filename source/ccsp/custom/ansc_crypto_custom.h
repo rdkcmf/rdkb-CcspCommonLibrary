@@ -66,22 +66,5 @@
 #define  _ANSC_CRYPTO_CUSTOM_H_
 
 
-#ifdef   _ANSC_KERNEL
-
-    /*
-     *  Conditional compilation flags in AnscCrypto
-     */
-    #define  _ANSC_USE_EXT_CRYPTO_
-    #define  _NO_ANSC_ZLIB_
-
-    #define  _ANSC_CRYPTO_NO_RC4_
-    #define  _ANSC_CRYPTO_NO_RC2_
-    #define  _ANSC_CRYPTO_NO_UUID
-
-#else
-
-#endif
-
-
 #endif
 

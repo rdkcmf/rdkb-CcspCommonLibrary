@@ -482,7 +482,6 @@ AnscDeleteFile
 }
 
 
-#ifndef _ANSC_KERNEL
 ANSC_STATUS
 AnscRenameFile
     (
@@ -497,7 +496,6 @@ AnscRenameFile
 
     return  ANSC_STATUS_FAILURE;
 }
-#endif
 
 
 ULONG
@@ -679,7 +677,6 @@ AnscGetFileExt2
     return  pTempChar;
 }
 
-#ifndef _ANSC_KERNEL
 ANSC_HANDLE
 AnscGetFileProperty
     (
@@ -703,7 +700,6 @@ AnscGetFileProperty
 
     return  (ANSC_HANDLE)NULL;
 }
-#endif
 
 
 ANSC_STATUS
@@ -749,7 +745,6 @@ AnscGetMimeType
     return  ANSC_STATUS_CANT_FIND;
 }
 
-#ifndef _ANSC_KERNEL
 ANSC_STATUS
 AnscCreateDirectory
     (
@@ -790,7 +785,6 @@ AnscMoveFile
 {
     return ( _ansc_move_file(src_file, dst_file) ? ANSC_STATUS_SUCCESS : ANSC_STATUS_FAILURE );
 }
-#endif
 
 
 #ifdef  _ANSC_FILE_GZIP_

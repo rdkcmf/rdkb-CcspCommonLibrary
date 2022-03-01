@@ -88,17 +88,6 @@
  * According to the current platform definition, we route the definition to the corresponding
  * header files.
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  AnscSizeOfString                       KernelSizeOfString
-    #define  AnscCopyString                         KernelCopyString
-    /*#define  AnscEqualString1                       KernelEqualString1*/
-    /*#define  AnscEqualString2                       KernelEqualString2*/
-    #define  AnscEqualString                        AnscEqualString1
-    #define  AnscCatString                          KernelCatString
-    #define  AnscCharInString                       KernelCharInString
-
-#else
 
     #define  AnscSizeOfString                       UserSizeOfString
     #define  AnscCopyString                         UserCopyString
@@ -108,7 +97,6 @@
     #define  AnscCatString                          UserCatString
     #define  AnscCharInString                       UserCharInString
 
-#endif
 
 
 /***********************************************************

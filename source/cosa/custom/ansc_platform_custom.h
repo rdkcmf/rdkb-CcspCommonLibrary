@@ -93,13 +93,6 @@
             Generic Conditional Compilation Flags
 ***************************************************************/
 
-#ifdef   _ANSC_KERNEL
-
-#else    /*_ANSC_USER*/
-
-#endif
-
-
 /*#define _ANSC_TRACE_PACKET_*/
 
 /***************************************************************

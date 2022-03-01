@@ -107,27 +107,22 @@ AnscDetoRecvTask
 {
     PANSC_DAEMON_ENGINE_TCP_OBJECT  pMyObject     = (PANSC_DAEMON_ENGINE_TCP_OBJECT)hThisObject;
     PANSC_DAEMON_SERVER_TCP_OBJECT  pServer       = (PANSC_DAEMON_SERVER_TCP_OBJECT)pMyObject->hDaemonServer;
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     ansc_fd_set*                    pRecvSet1     = (ansc_fd_set*                  )pMyObject->RecvSocketSet;
     xskt_fd_set*                    pRecvSet2     = (xskt_fd_set*                  )pMyObject->RecvSocketSet;
-#endif
     PANSC_DAEMON_SOCKET_TCP_OBJECT  pSocket       = NULL;
     ULONG                           ulLastCleanAt = AnscGetTickInSecondsAbs();
     ANSC_SOCKET                     s_socket      = ANSC_SOCKET_INVALID_SOCKET;
     int                             s_result      = 0;
     int                             i             = 0;
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     ansc_fd_set*                    read_fd_set1  = NULL;
     xskt_fd_set*                    read_fd_set2  = NULL;
     ansc_fd_set*                    excp_fd_set1  = NULL;
     xskt_fd_set*                    excp_fd_set2  = NULL;
     ansc_timeval                    timeval1;
     xskt_timeval                    timeval2;
-#endif
 
     AnscTrace("AnscDetoRecvTask is activated ...!\n");
 
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     read_fd_set1 = (ansc_fd_set*)AnscAllocateMemory(sizeof(ansc_fd_set));
     read_fd_set2 = (xskt_fd_set*)AnscAllocateMemory(sizeof(xskt_fd_set));
     excp_fd_set1 = (ansc_fd_set*)AnscAllocateMemory(sizeof(ansc_fd_set));
@@ -137,7 +132,6 @@ AnscDetoRecvTask
     {
         goto  EXIT1;
     }
-#endif
 
     /*
      * As a scalable server implemention, we shall accept as many incoming client connections as
@@ -155,11 +149,7 @@ AnscDetoRecvTask
          * periodically invoke the cleaning routine. The default interval is 10 seconds, and the
          * idle timeout value is 90 seconds.
          */
-	#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
         if ( pMyObject->bCleaningDemanded )
-	#else
-		if ( FALSE ) /*if ( pMyObject->bCleaningDemanded )*/
-	#endif
         {
             pMyObject->Clean((ANSC_HANDLE)pMyObject);
 
@@ -179,29 +169,6 @@ AnscDetoRecvTask
          * nonblocking status polling is the best we can get. As a matter of fact, the current unix
          * and linux actually still don't support asynchronous notification on any socket operation.
          */
-    #if defined(_ANSC_KERNEL) && defined(_ANSC_LINUX)
-        if ( !pMyObject->CurSocketCount)
-        {
-            if ( pServer->Mode & ANSC_DSTO_MODE_EVENT_SYNC )
-            {
-                AnscWaitEvent (&pMyObject->NewSocketEvent, ANSC_DETO_WAIT_EVENT_INTERVAL);
-                AnscResetEvent(&pMyObject->NewSocketEvent);
-
-                if (!pMyObject->CurSocketCount)
-                {
-                    AnscTaskRelinquish();
-
-                    continue;
-                }
-            }
-            else
-            {
-                AnscSleep(ANSC_DETO_TASK_BREAK_INTERVAL);
-
-                continue;
-            }
-        }
-    #else
         if ( pServer->Mode & ANSC_DSTO_MODE_XSOCKET )
         {
             AnscAcquireLock(&pMyObject->RecvSocketSetLock);
@@ -302,7 +269,6 @@ AnscDetoRecvTask
         {
             break;
         }
-	#endif
 
         /*
          * If there're multiple sockets are receiving data, we loop through the returned fd_set
@@ -311,65 +277,6 @@ AnscDetoRecvTask
          * We have to first retrieve the peer's IP address from the socket, and use it to find
          * the associated socket object.
          */
-	#if defined(_ANSC_KERNEL) && defined(_ANSC_LINUX)
-        if (TRUE)
-        {
-            int                             i; 
-            PSINGLE_LINK_ENTRY              pSLinkEntry;
-
-            for ( i = 0; i < ANSC_DETO_SOCKET_TABLE_SIZE ; i++)
-            {
-                if (!AnscSListQueryDepth(&pMyObject->SocketTable[i]))
-                {
-                    continue;
-                }
-
-                AnscAcquireLock(&pMyObject->SocketTableLock);
-
-                pSLinkEntry = AnscSListGetFirstEntry(&pMyObject->SocketTable[i]);
-
-                AnscReleaseLock(&pMyObject->SocketTableLock);
-
-                while ( pSLinkEntry )
-                {
-                    pSocket     = ACCESS_ANSC_DAEMON_SOCKET_TCP_OBJECT(pSLinkEntry);
-                    pSLinkEntry = AnscSListGetNextEntry(pSLinkEntry);
-
-					if ( pSocket->bTlsEnabled )
-					{
-                        pMyObject->bBusy = TRUE;
-
-                            pMyObject->Recv2
-                                (
-                                    (ANSC_HANDLE)pMyObject,
-                                    (ANSC_HANDLE)pSocket
-                                );
-
-                        pMyObject->bBusy = FALSE;
-					}
-                    else
-                    {
-                        pMyObject->bBusy = TRUE;
-
-							pMyObject->Recv
-								(
-									(ANSC_HANDLE)pMyObject,
-									(ANSC_HANDLE)pSocket
-								);
-
-                        pMyObject->bBusy = FALSE;
-                    }
-                }
-
-                if ( !pMyObject->bStarted )
-                {
-                    break;
-                }
-            }
-
-            AnscSleep(10);
-        }
-	#else
         for ( i = 0; i < s_result; i++ )
         {
             if ( pServer->Mode & ANSC_DSTO_MODE_XSOCKET )
@@ -554,7 +461,6 @@ AnscDetoRecvTask
                 break;
             }
         }
-	#endif
     }
 
 
@@ -566,7 +472,6 @@ EXIT1:
 
     AnscSetEvent(&pMyObject->RecvEvent);
 
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     if ( read_fd_set1 )
     {
         AnscFreeMemory(read_fd_set1);
@@ -586,7 +491,6 @@ EXIT1:
     {
         AnscFreeMemory(excp_fd_set2);
     }
-#endif
 
     return  ANSC_STATUS_SUCCESS;
 }

@@ -85,46 +85,6 @@
  * According to the current platform definition, we route the definition to the corresponding
  * header files.
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  AnscGetTickInSeconds                   KernelGetTickInSeconds
-    #define  AnscGetTickInSecondsAbs                KernelGetTickInSecondsAbs   /* linux specific */
-    #define  AnscGetTickInMilliSeconds              KernelGetTickInMilliSeconds
-    #define  AnscGetTickInMilliSecondsAbs           KernelGetTickInMilliSecondsAbs
-    #define  AnscSleep                              KernelSleepInMilliSeconds
-    #define  AnscGetUtcTime                         KernelGetUtcTime
-    #define  AnscSetUtcTime                         KernelSetUtcTime
-    #define  AnscGetSystemTime                      KernelGetSystemTime
-    #define  AnscSetSystemTime                      KernelSetSystemTime
-    #define  AnscGetLocalTime                       KernelGetLocalTime
-    #define  AnscSetLocalTime                       KernelSetLocalTime
-
-	#ifdef	_ANSC_SIMPLE_TIMEZONE
-
-		#define	 AnscSetTimeZone					AnscSetSimpleTimeZone
-		#define  AnscGetTimeZoneOffset				AnscGetSimpleTimeZoneOffset
-		#define	 AnscEnumTimeZones					AnscEnumSimpleTimeZones
-
-	#else
-
-		#define  AnscSetTimeZone                    KernelSetTzString           /* linux specific */
-		#define  AnscGetTimeZoneOffset              KernelGetTzOffset           /* linux specific */
-
-	#endif
-
-	#define  AnscGetUtcSeconds                      KernelGetUtcSeconds         /* linux specific */
-
-    #define  ANSC_TIME_SOURCE_SYS                   KERNEL_TIME_SOURCE_SYS
-    #define  ANSC_TIME_SOURCE_NTP                   KERNEL_TIME_SOURCE_NTP
-
-
-    /*
-     * Following data structure is used by objects to require time/date information from either the
-     * underlying operationg system, or from the utility objects.
-     */
-    typedef  struct  _KERNEL_SYSTEM_TIME  ANSC_UNIVERSAL_TIME,  *PANSC_UNIVERSAL_TIME;
-
-#else
 
     #define  AnscGetTickInSeconds                   UserGetTickInSeconds2
     #define  AnscGetTickInSecondsAbs                UserGetTickInSecondsAbs     /* linux specific */
@@ -164,7 +124,6 @@
      */
     typedef  struct  _USER_SYSTEM_TIME  ANSC_UNIVERSAL_TIME,  *PANSC_UNIVERSAL_TIME;
 
-#endif
 
 /*
  * There're some differences between our definitions of the calendar and the one defined by NTP

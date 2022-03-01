@@ -106,67 +106,6 @@
 #define  ANSC_FILE_EXT_ARRAY_SIZE                   17
 
 
-#ifdef   _ANSC_KERNEL
-
-    #define  ANSC_FILE_SEEK_SET                     KERNEL_FILE_SEEK_SET
-    #define  ANSC_FILE_SEEK_CUR                     KERNEL_FILE_SEEK_CUR
-    #define  ANSC_FILE_SEEK_END                     KERNEL_FILE_SEEK_END
-
-    #define  ANSC_FILE_O_APPEND                     KERNEL_FILE_O_APPEND
-    #define  ANSC_FILE_O_BINARY                     KERNEL_FILE_O_BINARY
-    #define  ANSC_FILE_O_CREATE                     KERNEL_FILE_O_CREATE
-    #define  ANSC_FILE_O_SHORT_LIVED                KERNEL_FILE_O_SHORT_LIVED
-    #define  ANSC_FILE_O_TEMPORARY                  KERNEL_FILE_O_TEMPORARY
-    #define  ANSC_FILE_O_EXCL                       KERNEL_FILE_O_EXCL
-    #define  ANSC_FILE_O_RANDOM                     KERNEL_FILE_O_RANDOM
-    #define  ANSC_FILE_O_RDONLY                     KERNEL_FILE_O_RDONLY
-    #define  ANSC_FILE_O_RDWR                       KERNEL_FILE_O_RDWR
-    #define  ANSC_FILE_O_SEQUENTIAL                 KERNEL_FILE_O_SEQUENTIAL
-    #define  ANSC_FILE_O_TEXT                       KERNEL_FILE_O_TEXT
-    #define  ANSC_FILE_O_TRUNC                      KERNEL_FILE_O_TRUNC
-    #define  ANSC_FILE_O_WRONLY                     KERNEL_FILE_O_WRONLY
-
-    #define  ANSC_GZIP_FILE_O_RDONLY                KERNEL_GZIP_FILE_O_RDONLY
-    #define  ANSC_GZIP_FILE_O_WRONLY                KERNEL_GZIP_FILE_O_WRONLY
-
-    #define  ANSC_FILE_S_IREAD                      KERNEL_FILE_S_IREAD
-    #define  ANSC_FILE_S_IWRITE                     KERNEL_FILE_S_IWRITE
-
-    #define  ANSC_FILE_PATH_SEP                     KERNEL_FILE_PATH_SEP
-
-    #define  _ansc_open_file                        kernel_open_file
-    #define  _ansc_close_file                       kernel_close_file
-    #define  _ansc_read_file                        kernel_read_file
-    #define  _ansc_write_file                       kernel_write_file
-    #define  _ansc_seek_file                        kernel_seek_file
-    #define  _ansc_copy_file                        kernel_copy_file
-    #define  _ansc_delete_file                      kernel_delete_file
-    /*#define  _ansc_rename_file                      kernel_rename_file*/
-    #define  _ansc_get_file_size                    kernel_get_file_size
-    /*#define  _ansc_get_file_stat                    kernel_get_file_stat*/
-    #define  _ansc_is_directory                     kernel_is_directory
-
-
-    /*#define  _ansc_create_directory                 kernel_create_directory*/
-    /*#define  _ansc_delete_directory                 kernel_delete_directory*/
-    /*#define  _ansc_copy_directory                   kernel_copy_directory*/
-    /*#define  _ansc_move_file                        kernel_move_file*/
-
-    #ifdef  _ANSC_FILE_GZIP_
-    #define  _ansc_open_gzip_file                   kernel_open_gzip_file
-    #define  _ansc_close_gzip_file                  kernel_close_gzip_file
-    #define  _ansc_read_gzip_file                   kernel_read_gzip_file
-    #define  _ansc_write_gzip_file                  kernel_write_gzip_file
-    #define  _ansc_seek_gzip_file                   kernel_seek_gzip_file
-    #endif
-
-    #ifdef  _ANSC_FILE_SEARCH_
-    #define  _ansc_find_first_file                  kernel_find_first_file
-    #define  _ansc_find_next_file                   kernel_find_next_file
-    #define  _ansc_find_close                       kernel_find_close
-    #endif
-
-#else
 
     #define  ANSC_FILE_SEEK_SET                     USER_FILE_SEEK_SET
     #define  ANSC_FILE_SEEK_CUR                     USER_FILE_SEEK_CUR
@@ -226,7 +165,6 @@
     #define  _ansc_find_close                       user_find_close
     #endif
 
-#endif
 
 /*
  * Instead of passing back and forth the OS-specific file handle directly, we use following data
@@ -281,7 +219,6 @@ ANSC_FILE_PROPERTY,  *PANSC_FILE_PROPERTY;
  * file. In order to describe the requested entity, server needs to construct a "Content-Type" HTTP
  * header field along with the file content.
  */
-#ifndef   _ANSC_KERNEL
 int
 user_rename_file(char* old_file_name, char* new_file_name);
 int
@@ -320,6 +257,5 @@ user_find_next_file
         char*                       pb_directory,
         char*                       next_file_name
     );
-#endif
 #endif
 #endif

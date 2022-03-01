@@ -2379,40 +2379,11 @@ AnscBdoBreakAtTrace
 
 #ifdef _ANSC_TRACE_PACKET_
 
-#if defined(_ANSC_LINUX) && defined(_ANSC_KERNEL)
-extern
-ANSC_STATUS
-GnpsEdoLinuxBdoFreeMe
-    (
-        ANSC_HANDLE                 hThisObject,
-        ANSC_HANDLE                 hBufferDesp
-    );
-/*
-extern
-ANSC_STATUS
-ssp_DslgCmdFreeBdoBuf
-    (
-        ANSC_HANDLE                 hThisObject,
-        ANSC_HANDLE                 hBufferDesp
-    );
-extern
-ANSC_STATUS
-DslgProfilingEdoEouFreeMe
-    (
-        ANSC_HANDLE                 hThisObject,
-        ANSC_HANDLE                 hBufferDesp
-    );
-*/
-#define ssp_DslgCmdFreeBdoBuf       2
-#define DslgProfilingEdoEouFreeMe   3
-
-#else /* ! defined(_ANSC_LINUX) || ! defined(_ANSC_KERNEL) */
 
 #define GnpsEdoLinuxBdoFreeMe       1
 #define ssp_DslgCmdFreeBdoBuf       2
 #define DslgProfilingEdoEouFreeMe   3
 
-#endif /* defined(_ANSC_LINUX) && defined(_ANSC_KERNEL) */
 
 
 void

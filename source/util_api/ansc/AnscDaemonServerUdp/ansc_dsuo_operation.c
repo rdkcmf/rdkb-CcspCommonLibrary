@@ -201,7 +201,6 @@ AnscDsuoEngage
     }
     }
 
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     if ( pMyObject->Mode & ANSC_DSUO_MODE_XSOCKET )
     {
         AnscTrace("AnscDsuoEngage -- the address is 0x%X:%d, family %d.\n", ((pansc_socket_addr_in)&local_addr2)->sin_addr.s_addr, local_addr2.sin_port, local_addr2.sin_family);
@@ -211,40 +210,6 @@ AnscDsuoEngage
     {
         s_result = _ansc_bind(pMyObject->Socket, (ansc_socket_addr*)&local_addr, sizeof(local_addr));
     }
-#else
-	if ( pMyObject->Mode & ANSC_DSUO_MODE_XSOCKET )
-    {
-        while ( _xskt_bind(pMyObject->Socket, (ansc_socket_addr*)&local_addr2, sizeof(local_addr2)) != 0 )
-        {
-            AnscTrace
-				(
-					"AnscDsuoEngage -- failure to bind try again !socket %d family %d port %d address %X \n",
-					pMyObject->Socket,
-					local_addr2.sin_family,
-                    local_addr2.sin_port,
-					((pansc_socket_addr_in)&local_addr2)->sin_addr.s_addr
-				);
-    
-            AnscSleep(10);
-        }
-    }
-    else
-    {
-        while ( _ansc_bind(pMyObject->Socket, (ansc_socket_addr*)&local_addr, sizeof(local_addr)) != 0 )
-        {
-            AnscTrace
-				(
-					"AnscDsuoEngage -- failure to bind try again !socket %d family %d port %d address %X \n",
-					pMyObject->Socket,
-					local_addr.sin_family,
-                    local_addr.sin_port,
-					local_addr.sin_addr.s_addr
-				);
-    
-            AnscSleep(10);
-        }
-    }
-#endif
 
     if ( s_result != 0 )
     {

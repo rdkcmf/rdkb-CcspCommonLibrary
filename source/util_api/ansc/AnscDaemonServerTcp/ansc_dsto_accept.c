@@ -121,12 +121,10 @@ AnscDstoAcceptTask
     XSKT_SOCKET                     tmpSocket2    = -1;
     int                             s_result      = 0;
     int                             s_error       = 0;
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     ansc_fd_set                     read_fd_set1;
     ansc_timeval                    timeval1;
     xskt_fd_set                     read_fd_set2;
     xskt_timeval                    timeval2;
-#endif
 #ifdef _ANSC_IPV6_COMPATIBLE_
     struct sockaddr_storage         client_sockaddr1;
     struct sockaddr_storage         client_sockaddr2;
@@ -202,7 +200,6 @@ AnscDstoAcceptTask
          * nonblocking status polling is the best we can get. As a matter of fact, the current unix
          * and linux actually still don't support asynchronous notification on any socket operation.
          */
-	#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
         if ( pMyObject->Mode & ANSC_DSTO_MODE_XSOCKET )
         {
             XSKT_SOCKET_FD_ZERO(&read_fd_set2);
@@ -248,7 +245,6 @@ AnscDstoAcceptTask
                 continue;
             }
         }
-	#endif
 
         /*
          * According to de facto standards of bsd compatible socket api, if the socket is currently

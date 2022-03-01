@@ -234,9 +234,6 @@ AnscTsoScheduleTask
                  * cannot understand it completely at the first look, it's OK, doesn't mean you're
                  * stupid or have a lower IQ.
                  */
-        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-                AnscAcquireTsLock(&pMyObject->SyncTsLock);
-                #endif
 
                 pTimerDescriptor->ReleaseAccess((ANSC_HANDLE)pTimerDescriptor);
                 AnscReleaseSpinLock(&pMyObject->TdoQueueSpinLock);
@@ -250,9 +247,6 @@ AnscTsoScheduleTask
                  */
                 returnStatus = pTimerDescriptor->Invoke((ANSC_HANDLE)pTimerDescriptor);
 
-        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-                AnscReleaseTsLock(&pMyObject->SyncTsLock);
-                #endif
             }
 
             AnscAcquireSpinLock(&pMyObject->TdoQueueSpinLock);

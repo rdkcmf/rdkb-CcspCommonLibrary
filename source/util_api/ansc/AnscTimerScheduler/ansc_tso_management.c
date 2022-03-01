@@ -227,10 +227,6 @@ AnscTsoCancelTimer
 
     if ( bWaitForInvoke && !(pTimerDescriptor->TimerMode & ANSC_TIMER_MODE_asyncStop) )
     {
-        #if (!defined  _ANSC_NON_PREEMPTIVE_) && (defined  _ANSC_KERNEL)
-        AnscAcquireTsLock(&pMyObject->SyncTsLock);
-        AnscReleaseTsLock(&pMyObject->SyncTsLock);
-        #endif
     }
 
     return  ANSC_STATUS_SUCCESS;

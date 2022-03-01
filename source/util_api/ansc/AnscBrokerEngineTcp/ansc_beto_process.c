@@ -143,9 +143,6 @@ AnscBetoRecv
         recv_size = _ansc_recv(pSocket->Socket, recv_buffer, ulBufferSize, 0);
     }
 
-#ifdef _ANSC_KERNEL
-    //printk("@@ ansc_recv returned %d.\n", recv_size);
-#endif
     
 
     if ( ((recv_size == XSKT_SOCKET_ERROR) &&  (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)) ||
@@ -182,11 +179,7 @@ AnscBetoRecv
         return  ANSC_STATUS_SUCCESS;
     }
     
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     if ( recv_size == 0 )
-#else
-    if ( KernelSockGetState(pSocket->Socket) == TCP_CLOSE_WAIT )
-#endif
     {
         /*
          * It seems a good idea to prevent any further sending and receiving on this socket after
@@ -216,7 +209,7 @@ AnscBetoRecv
 
         return  ANSC_STATUS_SUCCESS;
     }
-/*#if defined(_ANSC_KERNEL) && defined(_ANSC_LINUX)*/
+
     if ( recv_size <= 0 )
     {
         /*
@@ -226,7 +219,6 @@ AnscBetoRecv
 
         return ANSC_STATUS_SUCCESS;
     }
-/*#endif*/
 
     pSocket->RecvBytesCount += (ULONG)recv_size;
     pSocket->LastRecvAt      = AnscGetTickInSeconds();
@@ -246,9 +238,6 @@ AnscBetoRecv
                 recv_buffer,
                 (ULONG)recv_size
             );
-#ifdef _ANSC_KERNEL
-    //printk("@@ pSocket->Recv returned %d.\n", returnStatus);
-#endif    
     ulServingT2  = AnscGetTickInMilliSeconds();
 
     pMyObject->AvgServingTime = (pMyObject->AvgServingTime == 0)? (ulServingT2 - ulServingT1) : 
@@ -326,11 +315,9 @@ AnscBetoSend
         return  ANSC_STATUS_UNAPPLICABLE;
     }
 
-#if 1 /*!defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)*/
     AnscAcquireLock(&pMyObject->SendSocketSetLock);
     bSendable = (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)? XSKT_SOCKET_FD_ISSET(pSocket->Socket, pSendSet2) : ANSC_SOCKET_FD_ISSET(pSocket->Socket, pSendSet1);
     AnscReleaseLock(&pMyObject->SendSocketSetLock);
-#endif
 
     if ( !bSendable )
     {

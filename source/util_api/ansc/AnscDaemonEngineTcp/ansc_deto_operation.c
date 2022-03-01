@@ -474,10 +474,8 @@ AnscDetoSnapshot
     pSnapshotForm->MaxClientCount = pMyObject->MaxSocketCount;
     pSnapshotForm->OffClientCount = pMyObject->CurSocketCount;
     pSnapshotForm->CurClientCount = ulClientCount;
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     pSnapshotForm->CurRecvSetSize = (ULONG)pRecvSet->fd_count;
     pSnapshotForm->CurSendSetSize = (ULONG)pSendSet->fd_count;
-#endif
     pSnapshotForm->AvgServingTime = pMyObject->AvgServingTime;
     pSnapshotForm->TtcCount       = pMyObject->TtcCount;
     pSnapshotForm->MtcCount       = pMyObject->MtcCount;

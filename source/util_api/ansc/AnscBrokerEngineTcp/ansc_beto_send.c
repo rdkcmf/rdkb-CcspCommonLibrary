@@ -141,7 +141,6 @@ AnscBetoSendTask
             pSocket = (PANSC_BROKER_SOCKET_TCP_OBJECT)pPacket->hSocket;
         }
 
-	#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
         AnscAcquireLock(&pMyObject->SendSocketSetLock);
         bSendable = (pServer->Mode & ANSC_BSTO_MODE_XSOCKET)? XSKT_SOCKET_FD_ISSET(pSocket->Socket, pSendSet2) : ANSC_SOCKET_FD_ISSET(pSocket->Socket, pSendSet1);
         AnscReleaseLock(&pMyObject->SendSocketSetLock);
@@ -160,7 +159,6 @@ AnscBetoSendTask
 
             continue;
         }
-	#endif
 
         if ( pServer->Mode & ANSC_BSTO_MODE_XSOCKET )
         {

@@ -84,45 +84,6 @@
  * According to the current platform definition, we route the definition to the corresponding
  * header files.
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  AnscInitializeLock                     KernelInitializeLock
-    #define  AnscFreeLock                           KernelFreeLock
-    #define  AnscAcquireLock                        KernelAcquireLock
-    #define  AnscReleaseLock                        KernelReleaseLock
-
-    #define  AnscInitializeSpinLockWrapper          KernelInitializeSpinLock
-    #define  AnscFreeSpinLockWrapper                KernelFreeSpinLock
-    #define  AnscAcquireSpinLockWrapper             KernelAcquireSpinLock
-    #define  AnscReleaseSpinLockWrapper             KernelReleaseSpinLock
-
-    #define  AnscInitializeSemaphore                KernelInitializeSemaphore
-    #define  AnscFreeSemaphore                      KernelFreeSemaphore
-    #define  AnscAcquireSemaphore                   KernelAcquireSemaphore
-    #define  AnscAcquireSemaphore2                  KernelAcquireSemaphore2
-    #define  AnscReleaseSemaphore                   KernelReleaseSemaphore
-
-    #ifdef  _ANSC_SIMULATE_EVENT_
-
-        #define  AnscInitializeEvent                AnscInitializeSimEvent
-        #define  AnscFreeEvent                      AnscFreeSimEvent
-        #define  AnscSetEvent                       AnscSetSimEvent
-        #define  AnscResetEvent                     AnscResetSimEvent
-        #define  AnscWaitEvent                      AnscWaitSimEvent
-        #define  AnscPulseEvent                     AnscPulseSimEvent
-
-    #else
-
-        #define  AnscInitializeEvent                KernelInitializeEvent
-        #define  AnscFreeEvent                      KernelFreeEvent
-        #define  AnscSetEvent                       KernelSetEvent
-        #define  AnscResetEvent                     KernelResetEvent
-        #define  AnscWaitEvent                      KernelWaitEvent
-        #define  AnscPulseEvent                     KernelPulseEvent
-
-    #endif
-
-#else
 
     #define  AnscInitializeLock                     UserInitializeLock
     #define  AnscFreeLock                           UserFreeLock
@@ -161,7 +122,6 @@
     #endif
 
 
-#endif
 
 #ifdef   _ANSC_SPINLOCK_PROFILING_
 

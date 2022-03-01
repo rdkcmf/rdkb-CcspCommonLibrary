@@ -103,33 +103,6 @@
 #define  AnscTaskRelinquish()                       AnscSleep(0)
 
 
-#ifdef   _ANSC_KERNEL
-
-    #define  AnscGetProcessId                       KernelGetProcessId
-    #define  AnscGetCurTaskHandle                   KernelGetCurTaskHandle
-    #define  AnscCreateTask                         KernelCreateTask
-    #define  AnscDeleteTask                         KernelDeleteTask
-    #define  AnscEnterTask                          KernelEnterTask
-    #define  AnscLeaveTask                          KernelLeaveTask
-    #define  AnscKillTask                           KernelKillTask
-
-    #define  AnscActiveTaskRoutine                  KernelTaskRoutine
-    #define  AnscPoolableTaskRoutine                KernelPoolableTaskRoutine
-    #define  AnscJanitorTaskRoutine                 KernelJanitorTaskRoutine
-    #define  ANSC_DEFAULT_TASK_STACK_SIZE           KERNEL_DEFAULT_TASK_STACK_SIZE
-    #define  ANSC_DEFAULT_TASK_PRIORITY             KERNEL_DEFAULT_TASK_PRIORITY
-    #define  ANSC_USE_TASK_POOL_MANAGER             KERNEL_USE_TASK_POOL_MANAGER
-    #define  ANSC_USE_TASK_POOL_JANITOR             KERNEL_USE_TASK_POOL_JANITOR
-    #define  ANSC_CUR_TASK_POOL_TYPE                KERNEL_TASK_POOL_TYPE
-    #define  ANSC_MAX_TASK_POOL_SIZE                KERNEL_MAX_TASK_POOL_SIZE
-
-    #define  ANSC_TASK_PRIORITY_HIGHEST             KERNEL_TASK_PRIORITY_HIGHEST
-    #define  ANSC_TASK_PRIORITY_HIGH                KERNEL_TASK_PRIORITY_HIGH
-    #define  ANSC_TASK_PRIORITY_NORMAL              KERNEL_TASK_PRIORITY_NORMAL
-    #define  ANSC_TASK_PRIORITY_LOW                 KERNEL_TASK_PRIORITY_LOW
-    #define  ANSC_TASK_PRIORITY_LOWEST              KERNEL_TASK_PRIORITY_LOWEST
-
-#else
 
     #define  AnscGetProcessId                       UserGetProcessId
     #define  AnscGetCurTaskHandle                   UserGetCurTaskHandle
@@ -155,7 +128,6 @@
     #define  ANSC_TASK_PRIORITY_LOW                 USER_TASK_PRIORITY_LOW
     #define  ANSC_TASK_PRIORITY_LOWEST              USER_TASK_PRIORITY_LOWEST
 
-#endif
 
 
 /***********************************************************

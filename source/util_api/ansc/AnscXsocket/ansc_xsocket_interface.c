@@ -186,7 +186,6 @@ AnscCleanupXsocketWrapper
  *  Some definitions in BSS conflicts with Linux socket definitions,
  *  thus, xsocket cannot be compiled together with _ANSC_SOCKET_LIBRARY in Linux
  */
-#if      !defined(_ANSC_LINUX) || !defined(_ANSC_KERNEL) || !defined(_ANSC_SOCKET_LIBRARY_)
 
 ANSC_HANDLE
 AnscCreateXsocket
@@ -200,4 +199,3 @@ AnscCreateXsocket
     return  AnscXsocketCreate(hContainerContext, hOwnerContext, hAnscReserved);
 }
 
-#endif

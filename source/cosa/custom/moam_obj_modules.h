@@ -76,8 +76,6 @@
 #include "moam_definitions.h"
 #include "sys_definitions.h"
 
-#ifndef  _ANSC_KERNEL
-
     #include "moam_varmap_smiv2.h"
     #include "moam_varmap_tc.h"
     #include "moam_varmap_framework.h"
@@ -90,28 +88,6 @@
     #include "moam_varmap_vacm.h"
     #include "moam_varmap_snmp2.h"
     #include "moam_varmap_usmdh.h"
-
-#endif
-
-#if defined(_ANSC_KERNEL)
-
-    /* These files are not required for SNMPAgent only */
-    #include "moam_varmap_ianaif.h"
-    #include "moam_varmap_if.h"
-    #include "moam_varmap_ip.h"
-
-    #ifdef   _ANSC_IP4S_UDP_
-        #include "moam_varmap_udp.h"
-    #endif
-
-    #ifdef   _ANSC_IP4S_TCP_
-        #include "moam_varmap_tcp.h"
-    #endif
-
-    #include "moam_varmap_inetaddr.h"
-    #include "moam_varmap_ipforward.h"
-
-#endif
 
 #if 0
     #include "moam_varmap_docsif.h"
@@ -135,7 +111,6 @@
  * object. When system initializes, a MIB Object Tree will be constructed based on the information
  * provided by the Object Descriptors.
  */
-#ifndef  _ANSC_KERNEL
 
     #define  MOAM_OBJ_MODULE_SMIV2
     #define  MOAM_OBJ_MODULE_TC
@@ -149,29 +124,6 @@
     #define  MOAM_OBJ_MODULE_COMMUNITY
     #define  MOAM_OBJ_MODULE_VACM
     #define  MOAM_OBJ_MODULE_USMDH
-
-#endif
-
-#if defined(_ANSC_KERNEL)
-
-    /* These files are not required for SNMPAgent only */
-
-    #define  MOAM_OBJ_MODULE_IANAIF
-    #define  MOAM_OBJ_MODULE_IF
-    #define  MOAM_OBJ_MODULE_IP
-
-    #ifdef   _ANSC_IP4S_TCP_
-        #define  MOAM_OBJ_MODULE_TCP
-    #endif
-
-    #ifdef   _ANSC_IP4S_UDP_
-        #define  MOAM_OBJ_MODULE_UDP
-    #endif
-
-    #define  MOAM_OBJ_MODULE_INETADDR
-    #define  MOAM_OBJ_MODULE_IPFORWARD
-
-#endif
 
 #if 0
     #define  MOAM_OBJ_MODULE_DOCSIF

@@ -199,11 +199,7 @@ AnscDetoRecv
 
         return  ANSC_STATUS_SUCCESS;
     }
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     else if ( s_result == 0 )
-#else
-    else if ( KernelSockGetState(pSocket->Socket) == TCP_CLOSE_WAIT )
-#endif
     {
         /*
          * It seems a good idea to prevent any further sending and receiving on this socket after
@@ -233,12 +229,6 @@ AnscDetoRecv
 
         return  ANSC_STATUS_SUCCESS;
     }
-#if defined(_ANSC_KERNEL) && defined(_ANSC_LINUX)
-    else if ( s_result <= 0 )
-    {
-        return ANSC_STATUS_SUCCESS;
-    }
-#endif
     else
     {
         recv_size = s_result;
@@ -446,7 +436,6 @@ AnscDetoRecv2
 
         return  ANSC_STATUS_SUCCESS;
     }
-#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
     else if ( s_result == 0 )
     {
         AnscFreeBdo(pBufferDesp);
@@ -483,13 +472,6 @@ AnscDetoRecv2
 
         return  ANSC_STATUS_SUCCESS;
     }
-#else
-	else if ( s_result <=0 )
-    {
-        AnscFreeBdo(pBufferDesp);
-        return  ANSC_STATUS_SUCCESS;
-    }
-#endif
     else
     {
         recv_size = s_result;
@@ -698,11 +680,9 @@ AnscDetoSend2
     }
     else
     {
-	#if !defined(_ANSC_KERNEL) || !defined(_ANSC_LINUX)
         AnscAcquireLock(&pMyObject->SendSocketSetLock);
         bSendable = (pServer->Mode & ANSC_DSTO_MODE_XSOCKET)? XSKT_SOCKET_FD_ISSET(pSocket->Socket, pSendSet2) : ANSC_SOCKET_FD_ISSET(pSocket->Socket, pSendSet1);
         AnscReleaseLock(&pMyObject->SendSocketSetLock);
-	#endif
 
         if ( !bSendable )
         {

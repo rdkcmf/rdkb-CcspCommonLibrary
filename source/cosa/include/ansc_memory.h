@@ -86,122 +86,6 @@
 /*
  * according to the current platform definition, we route the definition to the corresponding header files
  */
-#ifdef   _ANSC_KERNEL
-
-    #define  AnscGetFreeMemory                      KernelGetFreeMemory
-
-    #if defined(_ANSC_ENABLE_PROFILING_)
-
-        _ANSC_STATIC_ _ANSC_INLINE_ PVOID
-        AnscAllocMemory(ULONG   size)
-        {
-            PVOID                   pMem;
-            AnscProfilingStartCounter(ANSC_PROFILING_COUNTER_anscAllocMemory);
-            pMem = KernelAllocateMemory(size);
-            AnscProfilingStopCounter (ANSC_PROFILING_COUNTER_anscAllocMemory);
-            return  pMem;
-        }
-
-        #define  AnscFlushMemory(p)                                                         \
-                    {                                                                       \
-                        AnscProfilingStartCounter(ANSC_PROFILING_COUNTER_anscFlushMemory);  \
-                        KernelFreeMemory(p);                                                \
-                        AnscProfilingStopCounter (ANSC_PROFILING_COUNTER_anscFlushMemory);  \
-                    }
-
-        #define  AnscCopyMemory(pDst, pSrc, size)                                           \
-                    {                                                                       \
-                        AnscProfilingStartCounter(ANSC_PROFILING_COUNTER_anscCopyMemory);   \
-                        KernelCopyMemory(pDst, pSrc, size);                                 \
-                        AnscProfilingStopCounter (ANSC_PROFILING_COUNTER_anscCopyMemory);   \
-                    }
-
-        #define  AnscZeroMemory(p, size)                                                    \
-                    {                                                                       \
-                        AnscProfilingStartCounter(ANSC_PROFILING_COUNTER_anscZeroMemory);   \
-                        KernelZeroMemory(p, size);                                          \
-                        AnscProfilingStopCounter (ANSC_PROFILING_COUNTER_anscZeroMemory);   \
-                    }
-
-        _ANSC_STATIC_ _ANSC_INLINE_ int
-        AnscEqualMemory(PVOID p1, PVOID p2, ULONG ulSize)
-        {
-            int                         iReturnValue;
-            AnscProfilingStartCounter(ANSC_PROFILING_COUNTER_anscEqualMemory);
-            iReturnValue = KernelEqualMemory(p1, p2, ulSize);
-            AnscProfilingStopCounter (ANSC_PROFILING_COUNTER_anscEqualMemory);
-            return  iReturnValue;
-        }
-
-    #else
-        #define  AnscAllocMemory                        KernelAllocateMemory
-        #define  AnscFlushMemory                        KernelFreeMemory
-
-        #define  AnscCopyMemory                         KernelCopyMemory
-        #define  AnscZeroMemory                         KernelZeroMemory
-        #define  AnscEqualMemory                        KernelEqualMemory
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD1
-
-        #define  AnscReAllocMemory                  KernelReAllocMemory
-        #define  AnscAllocateMemory                 AnscAllocMemory
-        #define  AnscFreeMemory                     AnscFlushMemory
-        #define  AnscGetMemorySize                  KernelGetMemorySize
-
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD2
-
-        #define  AnscReAllocMemory                  AnscReAllocateMemory2
-        #define  AnscAllocateMemory                 AnscAllocateMemory2
-        #define  AnscFreeMemory                     AnscFreeMemory2
-        #define  AnscGetMemorySize                  AnscGetMemorySize2
-
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD3
-
-        #define  AnscReAllocMemory                  AnscReAllocateMemory3
-        #define  AnscAllocateMemory                 AnscAllocateMemory3
-        #define  AnscFreeMemory                     AnscFreeMemory3
-        #define  AnscGetMemorySize                  AnscGetMemorySize3
-
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD4
-
-        #define  AnscReAllocMemory(p, s)            AnscReAllocateMemory4(p, s, __FILE__, __LINE__)
-        #define  AnscAllocateMemory(s)              AnscAllocateMemory4(s, __FILE__, __LINE__)
-        #define  AnscFreeMemory                     AnscFreeMemory4
-        #define  AnscGetMemorySize                  AnscGetMemorySize4
-
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD5
-
-        #define  AnscReAllocMemory(p, s)            AnscReAllocateMemory5(p, s, __FILE__, __LINE__)
-        #define  AnscAllocateMemory(s)              AnscAllocateMemory5(s, __FILE__, __LINE__)
-        #define  AnscFreeMemory                     AnscFreeMemory5
-        #define  AnscGetMemorySize                  AnscGetMemorySize5
-
-    #endif
-
-    #ifdef  _ANSC_MALLOC_METHOD6
-
-        #define  AnscReAllocMemory                  AnscReAllocateMemory6
-        #define  AnscAllocateMemory                 AnscAllocateMemory6
-        #define  AnscFreeMemory                     AnscFreeMemory6
-        #define  AnscGetMemorySize                  AnscGetMemorySize6
-
-    #endif
-
-    #define  AnscMemoryCacheInit                    KernelMemoryCacheInit
-    #define  AnscMemoryCacheAlloc                   KernelMemoryCacheAlloc
-    #define  AnscMemoryCacheFree                    KernelMemoryCacheFree
-    #define  AnscMemoryCacheUninit                  KernelMemoryCacheUninit
-
-#else
 
     #define  AnscGetFreeMemory                      UserGetFreeMemory
 
@@ -315,7 +199,6 @@
     #define  AnscMemoryCacheFree                    UserMemoryCacheFree
     #define  AnscMemoryCacheUninit                  UserMemoryCacheUninit
 
-#endif
 
 #define  ANSC_MEMORY_TRACE_byMarker                 0x00000001
 #define  ANSC_MEMORY_TRACE_byOwner                  0x00000002
