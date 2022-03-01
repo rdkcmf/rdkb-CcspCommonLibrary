@@ -1679,8 +1679,7 @@ int CcspBaseIf_getParameterNames_rbus(
     )
 {
     UNREFERENCED_PARAMETER(dbus_path);
-    int32_t btmp = 0, type = 0;
-    btmp = (int32_t)nextLevel;
+    int32_t elemType = 0, accessFlags = 0;
     int i = 0, param_len = 0, ret = CCSP_FAILURE;
     rbusMessage request, response;
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
@@ -1698,7 +1697,8 @@ int CcspBaseIf_getParameterNames_rbus(
     rbusMessage_Init(&request);
     param_len = strlen(parameterName);
     rbusMessage_SetString(request, parameterName);
-    rbusMessage_SetInt32(request, btmp);
+    rbusMessage_SetInt32(request, (int32_t)(nextLevel ? -1 : RBUS_MAX_NAME_DEPTH));
+    rbusMessage_SetInt32(request, 0);/*not row names*/
 
     const char *object_name = parameterName;
     if(dst_component_id)
@@ -1717,8 +1717,9 @@ int CcspBaseIf_getParameterNames_rbus(
     }
 
     rbusMessage_GetInt32(response, &ret);
-    if( ret == CCSP_SUCCESS )
+    if(ret == CCSP_SUCCESS || ret == RBUS_RETURN_CODE_SUCCESS)
     {
+        ret = CCSP_SUCCESS;
         rbusMessage_GetInt32(response, size);
         if(*size)
         {
@@ -1729,17 +1730,17 @@ int CcspBaseIf_getParameterNames_rbus(
             for(i = 0; i < *size; i++)
             {
                 val[i] = bus_info->mallocfunc(sizeof(parameterInfoStruct_t));
-		/*CID: 110482 Wrong sizeof argument*/
+                /*CID: 110482 Wrong sizeof argument*/
                 memset(val[i], 0, sizeof(parameterInfoStruct_t));
                 tmpbuf = NULL;
                 rbusMessage_GetString(response, &tmpbuf);
                 val[i]->parameterName = bus_info->mallocfunc(strlen(tmpbuf)+1);
                 rc = strcpy_s(val[i]->parameterName, (strlen(tmpbuf)+1), tmpbuf);
                 ERR_CHK(rc);
-                rbusMessage_GetInt32(response, &type);
-                val[i]->writable = type;
-                RBUS_LOG("Param [%d] Name = %s, Type = %d\n",
-                        i, val[i]->parameterName, type);
+                rbusMessage_GetInt32(response, &elemType);
+                rbusMessage_GetInt32(response, &accessFlags);
+                val[i]->writable = elemType == RBUS_ELEMENT_TYPE_TABLE ? accessFlags & RBUS_ACCESS_ADDROW : accessFlags & RBUS_ACCESS_SET;
+                RBUS_LOG("Param [%d] Name = %s, Writable = %d\n", i, val[i]->parameterName, val[i]->writable);                
             }
         }
     }

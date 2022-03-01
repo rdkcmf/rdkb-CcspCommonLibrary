@@ -2443,24 +2443,102 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
         else if(!strncmp(method, METHOD_GETPARAMETERNAMES, MAX_METHOD_NAME_LENGTH) && func->getParameterNames)
         {
             int i = 0,size = 0;
-            int32_t btmp = 0 ,result = 0, tmp = 0;
+            int32_t requestedDepth, rowNamesOnly = 0, result = 0, tmp = 0;
             char * parameterName = 0;
             parameterInfoStruct_t **val = 0;
             rbusMessage_GetString(request, (const char**)&parameterName);
-            rbusMessage_GetInt32(request, &btmp); //next level
-            result = func->getParameterNames(parameterName,btmp, &size, &val, func->getParameterNames_data );
+            rbusMessage_GetInt32(request, &requestedDepth); 
+            rbusMessage_GetInt32(request, &rowNamesOnly);
             rbusMessage_Init(response);
+            result = func->getParameterNames(parameterName, requestedDepth == -1, &size, &val, func->getParameterNames_data );
             tmp = result;
             rbusMessage_SetInt32(*response, tmp); //result
             if( tmp == CCSP_SUCCESS)
             {
-                rbusMessage_SetInt32(*response, size);
+                int actualCount = 0;
+                char buf[CCSP_BASE_PARAM_LENGTH];
+                int inst_num;
+                int type;
+                                
+                if(rowNamesOnly)
+                {
+                    for(i = 0; i < size; i++)
+                    {
+                        type = CcspBaseIf_getObjType(parameterName, val[i]->parameterName, &inst_num, buf);
+                        if(type == CCSP_BASE_INSTANCE)
+                            actualCount++;
+                    }
+                }
+                else
+                {
+                    actualCount = size;
+                }
+
+                rbusMessage_SetInt32(*response, actualCount);
+
                 for(i = 0; i < size; i++)
                 {
-                    rbusMessage_SetString(*response, val[i]->parameterName);
-                    btmp = val[i]->writable;
-                    rbusMessage_SetInt32(*response, btmp);
-                    RBUS_LOG("%s Param [%d] Name=%s, Writable=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable);
+                    
+                    type = CcspBaseIf_getObjType(parameterName, val[i]->parameterName, &inst_num, buf);
+
+                    RBUS_LOG("%s Param [%d] Name=%s, Writable=%d, Type=%d\n", __FUNCTION__, i, val[i]->parameterName, val[i]->writable, type);
+
+                    if(rowNamesOnly)
+                    {
+                        if(type != CCSP_BASE_INSTANCE)
+                            continue;
+                        rbusMessage_SetInt32(*response, (int32_t)inst_num); /*instancen number*/    
+                        rbusMessage_SetString(*response, ""); /*alias -- which is unsupported in ccsp*/    
+                    }
+                    else
+                    {
+                        rbusElementType_t elemType = 0;
+                        rbusAccess_t accessFlags = 0;
+
+                        /* determine element type */
+                        if(type == CCSP_BASE_PARAM)
+                        {
+                            elemType = RBUS_ELEMENT_TYPE_PROPERTY;
+                        }
+                        else if(type == CCSP_BASE_INSTANCE)
+                        {
+                            elemType = 0; /*object*/
+                        }
+                        else if(type == CCSP_BASE_OBJECT)
+                        {
+                            /*there's no way to know completely if its a table or a plain object
+                              the writable flag can be true for some table types but not all 
+                              so the following might set static and dynamic tables (which are both read-only tables) to type object*/
+                            if(val[i]->writable)
+                                elemType = RBUS_ELEMENT_TYPE_TABLE;
+                            else
+                                elemType = 0;/*object*/
+                        }
+
+                        /* determine access flags */
+                        accessFlags = RBUS_ACCESS_GET; /*can read everything */
+
+                        if(elemType == RBUS_ELEMENT_TYPE_PROPERTY)
+                        {
+                            accessFlags |=  RBUS_ACCESS_SUBSCRIBE;  /*can subscribe to value-change events*/
+                            if(val[i]->writable)
+                                accessFlags |= RBUS_ACCESS_SET;
+                        }
+                        else if(elemType == RBUS_ELEMENT_TYPE_TABLE)
+                        {
+                            if(val[i]->writable)
+                                accessFlags |= RBUS_ACCESS_ADDROW | RBUS_ACCESS_REMOVEROW;
+                        }
+                        else /*objects or rows*/
+                        {   
+                            if(val[i]->writable)
+                                accessFlags |= RBUS_ACCESS_SET;
+                        }
+
+                        rbusMessage_SetString(*response, val[i]->parameterName);
+                        rbusMessage_SetInt32(*response, (int32_t)elemType);
+                        rbusMessage_SetInt32(*response, (int32_t)accessFlags);
+                    }
                 }
             }
             free_parameterInfoStruct_t(bus_info, size, val);
