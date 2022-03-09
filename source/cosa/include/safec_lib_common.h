@@ -36,7 +36,7 @@
 /*
  * SAFECLIB Error Handling Logging APIs
  */
-#define RDK_SAFECLIB_ERR(rc)  printf("safeclib error at rc - %d %s %s:%d", rc,  __FILE__, __FUNCTION__, __LINE__)
+#define RDK_SAFECLIB_ERR(rc)  printf("safeclib error at rc - %d %s %s:%d", (int)rc,  __FILE__, __FUNCTION__, __LINE__)
 
 #define ERR_CHK(rc)                                             \
     if(rc !=EOK) {                                              \

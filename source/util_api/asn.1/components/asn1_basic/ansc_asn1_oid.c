@@ -1312,9 +1312,9 @@ AnscAsn1OIDEncodingData
     {
         AnscTrace
             (
-                "Warning in Encoding OID, the size of encoding is expected to be %lu, but it's %d.\n",
+                "Warning in Encoding OID, the size of encoding is expected to be %lu, but it's %ld.\n",
                 uSizeOfEncoded,
-                (pCharData - pBackData)
+                (long int)(pCharData - pBackData)
             );
     }
 
