@@ -2144,7 +2144,7 @@ void ccsp_handle_rbus_component_reply (void* bus_handle, rbusMessage msg, rbusVa
             rbusMessage_GetBytes(msg, (uint8_t const**)&pValue, (uint32_t *)&length);
             n = length + 1;
             *pStringValue = bus_info->mallocfunc(n);
-            snprintf(*pStringValue, (unsigned int)n, pValue);
+            snprintf(*pStringValue, (unsigned int)n, "%s", (char*)pValue);
             *pType = ccsp_string;
             break;
         case RBUS_BYTES:
