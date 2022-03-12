@@ -36,7 +36,7 @@
 
 /**********************************************************************
 
-    module:	ansc_string.h
+    module: ansc_string.h
 
         For Advanced Networking Service Container (ANSC),
         BroadWay Service Delivery System
@@ -74,29 +74,63 @@
 
 **********************************************************************/
 
-
 #ifndef  _ANSC_STRING_
 #define  _ANSC_STRING_
 
-#include "user_string.h"
+#include <string.h>
 
-/***********************************************************
-            FUNCTION AND MACRO PROTOTYPE ROUTING
-***********************************************************/
+static inline size_t AnscSizeOfString (const char *s)
+{
+    return strlen(s);
+}
 
-/*
- * According to the current platform definition, we route the definition to the corresponding
- * header files.
- */
+static inline void AnscCopyString (char *d, const char *s)
+{
+    if (!s)
+        *d = 0;
+    else
+        strcpy (d,s);
+}
 
-    #define  AnscSizeOfString                       UserSizeOfString
-    #define  AnscCopyString                         UserCopyString
-    #define  AnscEqualString1                       UserEqualString1
-    #define  AnscEqualString2                       UserEqualString2
-    #define  AnscEqualString                        UserEqualString1
-    #define  AnscCatString                          UserCatString
-    #define  AnscCharInString                       UserCharInString
+static inline BOOL AnscEqualString1 (char *s1, char *s2, BOOL bCaseSensitive)
+{
+    if ((s1 == NULL) && (s2 == NULL))
+        return TRUE;
 
+    if ((s1 == NULL) || (s2 == NULL))
+        return FALSE;
+
+    if (bCaseSensitive)
+        return (strcmp (s1, s2) == 0) ? TRUE : FALSE;
+
+    return (strcasecmp (s1, s2) == 0) ? TRUE : FALSE;
+}
+
+#define AnscEqualString AnscEqualString1
+
+static inline BOOL AnscEqualString2 (char *s1, char *s2, size_t len, BOOL bCaseSensitive)
+{
+    if ((s1 == NULL) && (s2 == NULL))
+        return TRUE;
+
+    if ((s1 == NULL) || (s2 == NULL))
+        return FALSE;
+
+    if (bCaseSensitive)
+        return (strncmp (s1, s2, len) == 0) ? TRUE : FALSE;
+
+    return (strncasecmp (s1, s2, len) == 0) ? TRUE : FALSE;
+}
+
+static inline char *AnscCatString (char *dest, const char *src)
+{
+    return strcat (dest, src);
+}
+
+static inline int AnscCharInString (const char *s, int c)
+{
+    return (strchr(s, c)) ? 1 : 0;
+}
 
 
 /***********************************************************
@@ -123,36 +157,5 @@
 #define  AnscIsDigit(single_char)                   ( (single_char >= '0') && (single_char <= '9') )
 #define  AnscIsAlphaOrDigit(single_char)            ( AnscIsAlpha(single_char) || AnscIsDigit(single_char) )
 #define  AnscIsHexAlphaOrDigit(single_char)         ( AnscIsHexAlpha(single_char) || AnscIsDigit(single_char) )
-
-#define  AnscIsCr(single_char)                      ( (UCHAR)single_char == ANSC_CARRIAGE_RETURN )
-#define  AnscIsLf(single_char)                      ( (UCHAR)single_char == ANSC_LINE_FEED       )
-#define  AnscIsHt(single_char)                      ( (UCHAR)single_char == ANSC_HORIZONTAL_TAB  )
-#define  AnscIsSp(single_char)                      ( (UCHAR)single_char == ANSC_SPACE           )
-#define  AnscIsDq(single_char)                      ( (UCHAR)single_char == ANSC_DOUBLE_QUOTE    )
-#define  AnscIsCl(single_char)                      ( (UCHAR)single_char == ANSC_COLON           )
-
-#define  AnscIsLws(single_char)                     ( AnscIsHt(single_char) || AnscIsSp(single_char) )
-
-#define  AnscIsEol(char_pointer)                                                            \
-         ( AnscIsLf(*char_pointer) || (AnscIsCr(*char_pointer) && AnscIsLf(*(char_pointer + 1))) )
-
-#define  AnscIsDigitString(tbe_string, b_result)                                            \
-         {                                                                                  \
-            int ii;                                                                         \
-            int ll = strlen(tbe_string);                                                    \
-                                                                                            \
-            b_result = TRUE;                                                                \
-                                                                                            \
-            for ( ii = 0; ii < ll; ii++ )                                                   \
-            {                                                                               \
-                if ( !AnscIsDigit(tbe_string[ii]) )                                         \
-                {                                                                           \
-                    b_result = FALSE;                                                       \
-                                                                                            \
-                    break;                                                                  \
-                }                                                                           \
-            }                                                                               \
-         }
-
 
 #endif
