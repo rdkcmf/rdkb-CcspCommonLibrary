@@ -382,6 +382,7 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
 {
   PANSC_XML_DOM_NODE_OBJECT pNewNode = NULL;
   ANSC_HANDLE hOwnerContext = NULL;
+  size_t len;
 
   if(pNode)
     hOwnerContext = pNode->hOwnerContext;
@@ -390,14 +391,7 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
 
   if ( !pNewNode )
   {
-    if(pNode)
-    {
-      AnscTrace("Failed to allocate child Node for  - %s\n", pNode->Name);
-    }
-    else
-    {
-      AnscTrace("Failed to allocate child Node for  - root node\n");
-    }
+    AnscTrace("Failed to allocate child Node for - %s\n", pNode ? pNode->Name : "root node");
     return NULL;
   }
 
@@ -409,7 +403,19 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
     pNewNode->hXMLContext   = pNode->hXMLContext;
   }
 
-  AnscCopyString( pNewNode->Name, (char*)pName);
+  len = strlen(pName);
+
+#if 0
+  /* Sanity check - enable for debug builds only */
+  if (len >= sizeof(pNewNode->Name))
+  {
+    AnscTrace("DMPackCreateNode invalid name - %s\n", pName);
+    AnscFreeMemory(pNewNode);
+    return NULL;
+  }
+#endif
+
+  memcpy(pNewNode->Name, pName, len + 1);
 
   if(pText)
   {
@@ -420,17 +426,18 @@ PANSC_XML_DOM_NODE_OBJECT DMPackCreateNode(PANSC_XML_DOM_NODE_OBJECT pNode, cons
     }
     else
     {
-#if 1
+#if 0
       /* Sanity check - enable for debug builds only */
       if (textSize != strlen(pText))
       {
         printf("DMPackCreateNode bad length pName=%s pText=%s textSize=%lu\n", pName, pText, textSize);
+        textSize = strlen(pText);
       }
 #endif
     }
 
     pNewNode->DataSize     = textSize;
-    pNewNode->StringData   = AnscAllocateMemory(pNewNode->DataSize + 1);
+    pNewNode->StringData   = AnscAllocateMemoryNoInit(textSize + 1);
 
     if ( !pNewNode->StringData )
     {
