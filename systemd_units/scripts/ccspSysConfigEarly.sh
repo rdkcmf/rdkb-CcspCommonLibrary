@@ -18,12 +18,23 @@
 # limitations under the License.
 #######################################################################################
 #These were commands from cosa_start.sh that were run early during initialization
-
 source /etc/device.properties
+
+if [ "$MODEL_NUM" = "CGA4332COM" ]; then
+    BINPATH="/usr/bin"
+    BBHM_CUR_CFG="/tmp/bbhm_cur_cfg.xml"
+    SYS_DB_FILE="/opt/secure/data/syscfg.db"
+fi
 
 export LOG4C_RCPATH=/etc
 
 cp /usr/ccsp/ccsp_msg.cfg /tmp
+
+if [ "$MODEL_NUM" = "CGA4332COM" ]; then
+    if [ -f /etc/mount-utils/getConfigFile.sh ];then
+       . /etc/mount-utils/getConfigFile.sh
+    fi
+fi
 
 if [ "$BOX_TYPE" = "HUB4" ]; then
     #Disable core dump generation
@@ -98,5 +109,3 @@ if [ -f "$PWD/core_compr" ]; then
 fi
 
 touch /tmp/cp_subsys_ert
-
-

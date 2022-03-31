@@ -29,7 +29,7 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStartPre=/bin/sh -c '(/usr/ccsp/utopiaInitCheck.sh)'
-ExecStartPre=/bin/sh -c '(/usr/ccsp/log_psm.db.sh)'
+ExecStartPre=-/bin/sh -c '(/usr/ccsp/log_psm.db.sh)'
 ExecStart=/usr/bin/PsmSsp -subsys $Subsys
 ExecStartPost=/bin/sh -c '(/etc/migration_to_psm.sh)'
 ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting PsmSsp" >> ${PROCESS_RESTART_LOG}'

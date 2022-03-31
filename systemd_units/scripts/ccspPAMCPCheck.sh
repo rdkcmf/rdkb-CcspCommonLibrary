@@ -20,6 +20,8 @@
 # During Some Cases Like Factory Reset P&M is coming up before Utopia is Fully Initialized
 
 # This function will check if captive portal needs to be enabled or not.
+source /etc/device.properties
+
 checkCaptivePortal()
 {
 
@@ -83,7 +85,9 @@ fi
 
 }
 
-checkCaptivePortal
+if [ "$IS_BCI" != "yes" ]; then
+	checkCaptivePortal
+fi
 # moved the code from ccspSysConfigLate.sh
 echo "Enabling ssh by default"
 syscfg set mgmt_wan_sshaccess 1
