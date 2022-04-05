@@ -238,7 +238,8 @@ AnscTaskRoutine1
             );
 
 
-    pTaskRecord->Routine(pTaskRecord->hContext);
+    if (pTaskRecord->Routine)
+            pTaskRecord->Routine(pTaskRecord->hContext);
 
     if ( g_bTraceEnabled )
     {
