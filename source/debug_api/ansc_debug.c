@@ -295,6 +295,10 @@ const char* CcspTraceGetRdkLogModule(const char* pComponentName)
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.nfcmanager"))
         return "LOG.RDK.RDKNFCMANAGER";
 #endif //FEATURE_RDKB_NFC_MANAGER
+#if defined(FEATURE_RDKB_CELLULAR_MANAGER)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.cellularmanager"))
+        return "LOG.RDK.CELLULARMANAGER";
+#endif //FEATURE_RDKB_CELLULAR_MANAGER
     else
         return  "LOG.RDK.Misc";
 }
