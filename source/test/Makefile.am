@@ -18,8 +18,7 @@
 ##########################################################################
 
 
-AM_CFLAGS = -D_ANSC_LINUX
-AM_CFLAGS += -D_ANSC_USER
+AM_CFLAGS =
 
 AM_CPPFLAGS = -Wall -g -Werror
 AM_CXXFLAGS = -std=c++11

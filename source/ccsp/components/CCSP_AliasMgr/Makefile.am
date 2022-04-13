@@ -13,11 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ##########################################################################
-AM_CPPLAGS = -D_ANSC_LINUX -D_ANSC_USER -D_ANSC_LITTLE_ENDIAN_
+AM_CPPLAGS =
 AM_CFLAGS = -Wall
 
 noinst_LTLIBRARIES = libCcspCommonLibrary_CCSP_AliasMgr.la
+
 ACLOCAL_AMFLAGS = -I m4
+
 libCcspCommonLibrary_CCSP_AliasMgr_la_SOURCES = \
  ccsp_alias_mgr_base.c \
  ccsp_alias_mgr_helper.c
@@ -53,4 +55,3 @@ libCcspCommonLibrary_CCSP_AliasMgr_la_CPPFLAGS = \
  -I$(top_srcdir)/source/util_api/http/include \
  -I$(top_srcdir)/source/util_api/http/utilities/include \
  -I$(top_srcdir)/source/util_api/asn.1/include
-
