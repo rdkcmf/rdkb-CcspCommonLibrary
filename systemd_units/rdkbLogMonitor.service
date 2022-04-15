@@ -24,6 +24,7 @@ ConditionPathExists=/rdklogger/rdkbLogMonitor.sh
 
 [Service]
 Type=oneshot
+ExecStartPre=/bin/sh -c '(/usr/ccsp/utopiaInitCheck.sh)'
 ExecStart=/bin/sh -c '/rdklogger/rdkbLogMonitor.sh &'
 ExecStop=/bin/sh -c 'echo "==> sync logs to nvram before reboot" >>/rdklogs/logs/Consolelog.txt.0'
 ExecStop=/bin/sh -c 'source /rdklogger/logfiles.sh;syncLogs_nvram2'
