@@ -134,6 +134,8 @@ typedef struct _ipc_dhcpv4_data_t
     uint32_t downstreamCurrRate;       /** Downstream rate */
     char dhcpServerId[BUFLEN_64];      /** Dhcp server id */
     char dhcpState[BUFLEN_64];         /** Dhcp state. */
+    bool mtuAssigned;                  /** Have we been assigned MTU size ? */ 
+    uint32_t mtuSize;                  /** MTU Size, if mtuAssigned==TRUE */
 } ipc_dhcpv4_data_t;
 
 typedef struct _ipc_dhcpv6_data_t
