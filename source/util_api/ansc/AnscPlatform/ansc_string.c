@@ -91,138 +91,57 @@
 
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "ansc_global.h"
 #include "safec_lib_common.h"
 
+#if ! defined (AnscEqualString1)
 
-BOOL
-AnscEqualString1
-    (
-        char*                       pString1,
-        char*                       pString2,
-        BOOL                        bCaseSensitive
-    )
+BOOL AnscEqualString1 (char *pString1, char *pString2, BOOL bCaseSensitive)
 {
-    ULONG                           ulStringSize1 = pString1? AnscSizeOfString(pString1) : 0;
-    ULONG                           ulStringSize2 = pString2? AnscSizeOfString(pString2) : 0;
-    ULONG                           i             = 0;
-
-    if ( !pString1 && !pString2 )
+    if (!pString1 && !pString2)
     {
-        return  TRUE;
-    }
-    else if ( !pString1 || !pString2 )
-    {
-        return  FALSE;
-    }
-    else if ( ulStringSize1 != ulStringSize2 )
-    {
-        return  FALSE;
+        return TRUE;
     }
 
-    for ( i = 0; i < (ULONG)ulStringSize1; i++ )
+    if (!pString1 || !pString2)
     {
-        if ( pString1[i] != pString2[i] )
-        {
-            if ( bCaseSensitive )
-            {
-                return  FALSE;
-            }
-
-            if ( pString1[i] >= 'a' && pString1[i] <= 'z' )
-            {
-                if ( pString2[i] < 'A' || pString2[i] > 'Z' )
-                {
-                    return  FALSE;
-                }
-                else if ( (pString1[i] - 'a') != (pString2[i] - 'A') )
-                {
-                    return  FALSE;
-                }
-            }
-            else if ( pString1[i] >= 'A' && pString1[i] <= 'Z' )
-            {
-                if ( pString2[i] < 'a' || pString2[i] > 'z' )
-                {
-                    return  FALSE;
-                }
-                else if ( (pString1[i] - 'A') != (pString2[i] - 'a') )
-                {
-                    return  FALSE;
-                }
-            }
-            else
-            {
-                return  FALSE;
-            }
-        }
+        return FALSE;
     }
 
-    return  TRUE;
+    if (bCaseSensitive)
+    {
+        return (strcmp (pString1, pString2) == 0) ? TRUE : FALSE;
+    }
+
+    return (strcasecmp (pString1, pString2) == 0) ? TRUE : FALSE;
 }
 
+#endif
 
-BOOL
-AnscEqualString2
-    (
-        char*                       pString1,
-        char*                       pString2,
-        ULONG                       length,
-        BOOL                        bCaseSensitive
-    )
+#if ! defined (AnscEqualString2)
+
+BOOL AnscEqualString2 (char *pString1, char *pString2, ULONG length, BOOL bCaseSensitive)
 {
-    ULONG                           i = 0;
-
-    if ( !pString1 && !pString2 )
+    if (!pString1 && !pString2)
     {
-        return  TRUE;
-    }
-    else if ( !pString1 || !pString2 )
-    {
-        return  FALSE;
+        return TRUE;
     }
 
-    for ( i = 0; i < length; i++ )
+    if (!pString1 || !pString2)
     {
-        if ( pString1[i] != pString2[i] )
-        {
-            if ( bCaseSensitive )
-            {
-                return  FALSE;
-            }
-
-            if ( pString1[i] >= 'a' && pString1[i] <= 'z' )
-            {
-                if ( pString2[i] < 'A' || pString2[i] > 'Z' )
-                {
-                    return  FALSE;
-                }
-                else if ( (pString1[i] - 'a') != (pString2[i] - 'A') )
-                {
-                    return  FALSE;
-                }
-            }
-            else if ( pString1[i] >= 'A' && pString1[i] <= 'Z' )
-            {
-                if ( pString2[i] < 'a' || pString2[i] > 'z' )
-                {
-                    return  FALSE;
-                }
-                else if ( (pString1[i] - 'A') != (pString2[i] - 'a') )
-                {
-                    return  FALSE;
-                }
-            }
-            else
-            {
-                return  FALSE;
-            }
-        }
+        return FALSE;
     }
 
-    return  TRUE;
+    if (bCaseSensitive)
+    {
+        return (strncmp (pString1, pString2, length) == 0) ? TRUE : FALSE;
+    }
+
+    return (strncasecmp (pString1, pString2, length) == 0) ? TRUE : FALSE;
 }
 
+#endif
 
 void
 AnscFromHexToString
