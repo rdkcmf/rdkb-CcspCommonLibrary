@@ -19,7 +19,7 @@
 [Unit]
 Description=CcspLMLite service
 
-After=CcspPandMSsp.service CcspEthAgent.service CcspMoca.service
+After=CcspPandMSsp.service CcspEthAgent.service
 
 [Service]
 Type=forking

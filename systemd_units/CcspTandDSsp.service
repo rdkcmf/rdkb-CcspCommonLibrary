@@ -19,7 +19,7 @@
 [Unit]
 Description=CcspTandDSsp service
 
-After=CcspPandMSsp.service CcspMoca.service
+After=CcspPandMSsp.service
 
 [Service]
 Type=forking
