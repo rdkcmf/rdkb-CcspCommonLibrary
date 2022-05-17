@@ -259,6 +259,10 @@ const char* CcspTraceGetRdkLogModule(const char* pComponentName)
         return "LOG.RDK.ADVSEC";
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.telemetry"))
         return "LOG.RDK.T2";
+#ifdef FEATURE_RDKB_DHCP_MANAGER
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.dhcpmgr"))
+        return "LOG.RDK.DHCPMGR";
+#endif
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.xdns"))
         return  "LOG.RDK.XDNS";
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.dslagent"))
