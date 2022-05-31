@@ -94,8 +94,6 @@
 #include "ccsp_base_api.h"
 #include "safec_lib_common.h"
 
-#define	 END_OF_LIST					"END_OF_LIST"
-
 extern  PDSLH_DATAMODEL_AGENT_OBJECT         g_DslhDataModelAgent;
 
 /*static const char* msg_path = "/com/cisco/spvtg/ccsp/EVENT" ;
@@ -1138,7 +1136,7 @@ COSAGetParamValueByPathName
         ULONG                       *parameterValueLength
     )
 {
-    char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", END_OF_LIST};
+    char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", NULL};
     char cr_id[256];
     char * dst_componentid =  NULL;
     char * dst_pathname    =  NULL;
@@ -1159,7 +1157,7 @@ COSAGetParamValueByPathName
 	 /* Ticket RDKB-39090 purpose */
      _ansc_sprintf(cr_id, "%s%s", pSubsystem, CCSP_DBUS_INTERFACE_CR);
 
-    for(i=0; FALSE == ( strcmp(pSubSysPrefixList[i], END_OF_LIST) == 0 );i++)
+    for (i = 0; pSubSysPrefixList[i] != NULL; i++)
     {
         ret = CcspBaseIf_discComponentSupportingNamespace 
             (
@@ -1261,7 +1259,7 @@ COSASetParamValueByPathName
         parameterValStruct_t       *val
     )
 {
-    char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", END_OF_LIST};
+    char *pSubSysPrefixList[] = {"eRT.", "eMG.", "", NULL};
     char cr_id[256];
     char * dst_componentid =  NULL;
     char * dst_pathname    =  NULL;
@@ -1288,7 +1286,7 @@ COSASetParamValueByPathName
        ERR_CHK(rc);
     }
 
-    for(i=0; FALSE == ( strcmp(pSubSysPrefixList[i], END_OF_LIST) == 0 );i++)
+    for (i = 0; pSubSysPrefixList[i] != NULL; i++)
     {
         ret = CcspBaseIf_discComponentSupportingNamespace 
             (
