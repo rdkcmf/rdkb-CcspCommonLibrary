@@ -2366,6 +2366,11 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
     componentStruct_t **val=NULL;
     *components = 0;
 
+    if (bus_info == NULL)
+    {
+        return CCSP_FAILURE;
+    }
+
     RBUS_LOG("%s from %s for the namespace: %s\n", __FUNCTION__, bus_info->component_id, name_space);
 
 #if 0
