@@ -531,28 +531,43 @@ BOOL is_ValidIpAddressv6_port(PUCHAR pString)
   return ret;
 }
 
-BOOL
-AnscValidStringCheck
-    (
-        PUCHAR                      pString
-    )
+/*
+   Return FALSE if pString is NULL, an empty string or contains any character from invalid_chars
+*/
+BOOL AnscValidStringCheck2 (char *pString, char *invalid_chars)
 {
-    int i =0;
-    
-    /* check if pstring doesn't hold NULL or whitespaces */
-    if((pString == NULL) || (*pString=='\0'))
+    int i;
+    int len;
+
+    if ((pString == NULL) || (*pString == '\0'))
     {
         return FALSE;
     }
-    while(pString[i] != '\0')
+
+    len = strlen(invalid_chars);
+
+    while (*pString != '\0')
     {
-        if ((pString[i] == ' ') || (pString[i] == '<') || (pString[i] == '>') || (pString[i] == '&') || (pString[i] == '\'') || (pString[i] == '\"') || (pString[i] == '|'))
+        for (i = 0; i < len; i++)
         {
-            return FALSE;
+            if (*pString == invalid_chars[i])
+            {
+                return FALSE;
+            }
         }
-        i++;
+
+        pString++;
     }
+
     return TRUE;
+}
+
+/*
+   Return FALSE if pString is NULL, an empty string or contains <space> or any of <>&|'"
+*/
+BOOL AnscValidStringCheck (char *pString)
+{
+    return AnscValidStringCheck2 (pString, " <>&|'\"");
 }
 
 BOOL

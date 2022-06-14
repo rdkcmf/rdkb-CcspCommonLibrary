@@ -140,7 +140,14 @@ AnscMemUtilRealloc
 BOOL
 AnscValidStringCheck
     (
-        PUCHAR                     pString
+        char                      *pString
+    );
+
+BOOL
+AnscValidStringCheck2
+    (
+        char                      *pString,
+        char                      *invalid_chars
     );
 
 BOOL
