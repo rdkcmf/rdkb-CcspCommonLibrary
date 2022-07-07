@@ -28,9 +28,9 @@
 /* Macro is defined for non clobbering of the safec secure string API strcpy_s & memcpy_s function*/
 /* strcpy_s overwrites the old value and nulls the dest when encounters an error*/
 #ifndef STRCPY_S_NOCLOBBER
- #define STRCPY_S_NOCLOBBER(dst,dmax,src)   ((src != NULL) ? (strlen(src) < dmax ?  strcpy_s(dst,dmax,src) : ESNOSPC):ESNULLP)
+ #define STRCPY_S_NOCLOBBER(dst,dmax,src)   (((src) != NULL) ? (strlen(src) < dmax ?  strcpy_s(dst,dmax,src) : ESNOSPC):ESNULLP)
 #endif
-#define MEMCPY_S_NOCLOBBER(dst,dmax,src,len)   ((src != NULL) ? (len <= dmax ?  memcpy_s(dst,dmax,src,len) : ESNOSPC):ESNULLP)
+#define MEMCPY_S_NOCLOBBER(dst,dmax,src,len)   (((src) != NULL) ? (len <= dmax ?  memcpy_s(dst,dmax,src,len) : ESNOSPC):ESNULLP)
 #endif
 
 /*
@@ -51,31 +51,31 @@ typedef int errno_t;
 #define ESLEMAX          403       /* length exceeds RSIZE_MAX    */
 #define ESNOSPC          406       /* not enough space for dest     */
 
-#define strcpy_s(dst,max,src) (src != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
- if((src != NULL) && (max > strlen(src))) strcpy(dst,src);
+#define strcpy_s(dst,max,src) ((src) != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
+ if(((src) != NULL) && (max > strlen(src))) strcpy(dst,src);
 
-#define strncpy_s(dst,max,src,len) (src != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
- if((src != NULL) && (len <= max)) strncpy(dst,src,len);
+#define strncpy_s(dst,max,src,len) ((src) != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
+ if(((src) != NULL) && (len <= max)) strncpy(dst,src,len);
 
 #define memset_s(dst,max_1,c,max) EOK; \
  memset(dst,c,max);
 
-#define strcat_s(dst,max,src) (src != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
- if((src != NULL) && (max > strlen(src))) strcat(dst,src);
+#define strcat_s(dst,max,src) ((src) != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
+ if(((src) != NULL) && (max > strlen(src))) strcat(dst,src);
 
-#define strncat_s(dst,max,src,len) (src != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
- if((src != NULL) && (len <= max)) strncat(dst,src,len);
+#define strncat_s(dst,max,src,len) ((src) != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
+ if(((src) != NULL) && (len <= max)) strncat(dst,src,len);
 
-#define memcpy_s(dst,max,src,len)  (src != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
- if((src != NULL) && (len <= max)) memcpy(dst,src,len);
+#define memcpy_s(dst,max,src,len)  ((src) != NULL)?((len <= max)?EOK:ESLEMAX):ESNULLP; \
+ if(((src) != NULL) && (len <= max)) memcpy(dst,src,len);
 
 #ifndef STRCPY_S_NOCLOBBER
- #define STRCPY_S_NOCLOBBER(dst,max,src) (src != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
-  if((src != NULL) && (strlen(src) < max)) strcpy(dst, src);
+ #define STRCPY_S_NOCLOBBER(dst,max,src) ((src) != NULL)?((max > strlen(src))?EOK:ESLEMAX):ESNULLP; \
+  if(((src) != NULL) && (strlen(src) < max)) strcpy(dst, src);
 #endif
 
-#define MEMCPY_S_NOCLOBBER(dst,max,src,len) (src != NULL) ? ((len <= max)?EOK:ESLEMAX):ESNULLP; \
-  if((src != NULL) && (len <= max)) memcpy(dst, src, len);
+#define MEMCPY_S_NOCLOBBER(dst,max,src,len) ((src) != NULL) ? ((len <= max)?EOK:ESLEMAX):ESNULLP; \
+  if(((src) != NULL) && (len <= max)) memcpy(dst, src, len);
 
 #define sscanf_s( buffer, fmt, ...)  EOK; \
   sscanf( buffer, fmt, ##__VA_ARGS__ );
