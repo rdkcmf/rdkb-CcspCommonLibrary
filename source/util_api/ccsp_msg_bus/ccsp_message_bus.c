@@ -1031,7 +1031,9 @@ void
 )
 {
     if (0 == rbus_enabled)
-        rbus_enabled = (access("/nvram/rbus_support", F_OK) == 0);
+    {
+        rbus_enabled = (RBUS_ENABLED == rbus_checkStatus()) ? 1 : 0;
+    }
 
     CcspTraceWarning(("%s is enabled\n", rbus_enabled ? "RBus" : "DBus"));
     return rbus_enabled;

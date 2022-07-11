@@ -21,35 +21,33 @@
 source /etc/device.properties
 
 #set rbus crash only in rbus mode
-if [ -e /nvram/rbus_support ]; then
-    check_rbus=`systemctl status rbus.service | cut -d$'\n' -f7 | cut -d "," -f2 | cut -d ")" -f1 | cut -d '=' -f2`
-    echo "`date`: RBus IPC Process status is $check_rbus"
-    if [ "$check_rbus" != "TERM" ]; then
+check_rbus=`systemctl status rbus.service | cut -d$'\n' -f7 | cut -d "," -f2 | cut -d ")" -f1 | cut -d '=' -f2`
+echo "`date`: RBus IPC Process status is $check_rbus"
+if [ "$check_rbus" != "TERM" ]; then
 
-       echo "`date`: RBus crash handler is in Sleep/Idle for few sec to give time for the crashuploader"
-       sleep 50
+    echo "`date`: RBus crash handler is in Sleep/Idle for few sec to give time for the crashuploader"
+    sleep 50
 
-       if [ "$BOX_TYPE" = "XB3" ];then
-          echo "`date`: RBus crash handler updating reboot reason for XB3"
-          rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync"
-          rpcclient $ARM_ARPING_IP "sh /rdklogger/backupLogs.sh false Rbus_crash"
-          echo "REBOOTING THE SYSTEM....."
-          rpcclient $ARM_ARPING_IP "reboot"
-       else
-          echo "`date`: RBus crash handler updating reboot reason for NON-XB3"
-
-          syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash
-          syscfg set X_RDKCENTRAL-COM_LastRebootCounter "1"
-          syscfg commit
-          sync
-
-          echo "`date`: RBus IPC Process Crashed Rebooting" >> ${PROCESS_RESTART_LOG}
-          source /rdklogger/logfiles.sh;syncLogs_nvram2
-          echo "REBOOTING THE SYSTEM....."
-          reboot
-       fi
-
+    if [ "$BOX_TYPE" = "XB3" ];then
+       echo "`date`: RBus crash handler updating reboot reason for XB3"
+       rpcclient $ARM_ARPING_IP "syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash && syscfg set X_RDKCENTRAL-COM_LastRebootCounter 1 && syscfg commit && sync"
+       rpcclient $ARM_ARPING_IP "sh /rdklogger/backupLogs.sh false Rbus_crash"
+       echo "REBOOTING THE SYSTEM....."
+       rpcclient $ARM_ARPING_IP "reboot"
     else
-      echo "`date`: RBus IPC Process stopped"
+       echo "`date`: RBus crash handler updating reboot reason for NON-XB3"
+
+       syscfg set X_RDKCENTRAL-COM_LastRebootReason Rbus_crash
+       syscfg set X_RDKCENTRAL-COM_LastRebootCounter "1"
+       syscfg commit
+       sync
+
+       echo "`date`: RBus IPC Process Crashed Rebooting" >> ${PROCESS_RESTART_LOG}
+       source /rdklogger/logfiles.sh;syncLogs_nvram2
+       echo "REBOOTING THE SYSTEM....."
+       reboot
     fi
+
+else
+    echo "`date`: RBus IPC Process stopped"
 fi
