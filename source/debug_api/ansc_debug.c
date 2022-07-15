@@ -307,6 +307,14 @@ const char* CcspTraceGetRdkLogModule(const char* pComponentName)
     else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.interdevicemanager"))
 	return "LOG.RDK.INTERDEVICEMANAGER";
 #endif //FEATURE_RDKB_INTER_DEVICE_MANAGER
+#if defined (FEATURE_RDKB_THERMAL_MANAGER)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.thermalmanager"))
+        return "LOG.RDK.RDKTHERMALMANAGER";
+#endif //FEATURE_RDKB_THERMAL_MANAGER
+#if defined(GATEWAY_FAILOVER_SUPPORTED)
+    else if(!strcmp(pComponentName,"com.cisco.spvtg.ccsp.gatewaymanager"))
+        return "LOG.RDK.GATEWAYMANAGER";
+#endif
     else
         return  "LOG.RDK.Misc";
 }
