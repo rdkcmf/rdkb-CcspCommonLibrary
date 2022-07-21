@@ -31,7 +31,7 @@ ExecStartPre=/bin/touch /tmp/OS_WANMANAGER_ENABLED
 ExecStartPre=/bin/sh -c '(/usr/ccsp/utopiaInitCheck.sh)'
 ExecStart=/usr/rdk/wanmanager/wanmanager -subsys $Subsys
 ExecStop=/bin/sh -c 'echo "`date`: Stopping/Restarting RdkWanManager" >> ${PROCESS_RESTART_LOG}'
-Restart=no
+Restart=always
 
 StandardOutput=syslog+console
 
