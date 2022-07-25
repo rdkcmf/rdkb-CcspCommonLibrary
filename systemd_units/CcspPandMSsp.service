@@ -29,6 +29,7 @@ Environment="Subsys=eRT."
 Environment="LOG4C_RCPATH=/etc"
 EnvironmentFile=/etc/device.properties
 ExecStartPre=-/bin/sh -c 'rm -rf /tmp/pam_initialized'
+ExecStartPre=/bin/sh -c '(/usr/ccsp/pam/GwProvCheck.sh)'
 ExecStart=/usr/bin/CcspPandMSsp -subsys $Subsys
 ExecStopPost=/bin/sh -c 'echo "`date`: Stopping/Restarting CcspPandMSsp" >> ${PROCESS_RESTART_LOG}'
 ExecStartPost=/bin/sh -c '(/usr/ccsp/ccspPAMCPCheck.sh)'
