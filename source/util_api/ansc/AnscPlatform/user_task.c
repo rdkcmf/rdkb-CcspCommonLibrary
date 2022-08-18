@@ -34,7 +34,9 @@
 **********************************************************************/
 
 #include "ansc_platform.h"
-ULONG  gTaskNum = 0;
+
+static ULONG gTaskNum = 0;
+
 void *
 UserCreateTask
     (
