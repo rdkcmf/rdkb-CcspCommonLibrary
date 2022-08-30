@@ -45,6 +45,13 @@ else
 SYS_DB_FILE="/opt/secure/data/syscfg.db"
 fi
 
+#upstreamed cosa_start_wifi_telemetry.patch as part of RDKB-41493
+if [ "$MODEL_NUM" = "CGA4131COM" ]; then
+	CRONPATH="/var/spool/cron/crontabs/"
+	CRONFILE=$CRONPATH"root"
+	CRONFILE_BK="/tmp/cron_tab.txt"
+fi
+
 ulimit -c unlimited
 if [ "$BUILD_TYPE" != "prod" ]; then
       echo /tmp/%t_core.prog_%e.signal_%s > /proc/sys/kernel/core_pattern
@@ -160,6 +167,21 @@ then
 	fi
 fi
 
+#upstreamed cosa_start.patch as part of RDKB-41493
+if [ "$MODEL_NUM" = "CGA4131COM" ]; then
+	wait_count="0"
+	while [ "$wait_count" -lt "60" ]
+	do
+		sleep 1
+		if [ -e "/tmp/cr_initialized" ]; then
+			echo "cosa_start: CR initialized ..."
+			break
+		fi
+		((wait_count++))
+		echo "cosa_start: checking CR is up ... $wait_count"
+	done
+fi
+
 echo_t "Getting value of CMC and CID before PSM Initialization"
 grep -irn "X_COMCAST-COM_CID\|X_COMCAST-COM_CMC" $BBHM_CUR_CFG
 
@@ -170,7 +192,22 @@ else
 	$BINPATH/PsmSsp -subsys $Subsys
 fi
 
-sleep 5
+#upstreamed cosa_start.patch as part of RDKB-41493
+if [ "$MODEL_NUM" = "CGA4131COM" ]; then
+	wait_count="0"
+	while [ "$wait_count" -lt "60" ]
+	do
+		sleep 1
+		if [ -e "/tmp/psm_initialized" ]; then
+			echo "cosa_start: PSM initialized ..."
+			break
+		fi
+		((wait_count++))
+		echo "cosa_start: checking PSM is up ... $wait_count"
+	done
+else	
+	sleep 5
+fi
 
 if [ -e ./notify-comp ]; then
         cd notify-comp
@@ -205,6 +242,21 @@ if [ -e ./pam ]; then
 		$BINPATH/CcspPandMSsp -subsys $Subsys
 	fi
 	cd ..
+fi
+
+#upstreamed cosa_start.patch as part of RDKB-41493
+if [ "$MODEL_NUM" = "CGA4131COM" ]; then
+	wait_count="0"
+	while [ "$wait_count" -lt "60" ]
+	do
+		sleep 1
+		if [ -e "/tmp/pam_initialized" ]; then
+			echo "cosa_start: PAM initialized ..."
+			break
+		fi
+		((wait_count++))
+		echo "cosa_start: checking PAM is up ... $wait_count"
+	done
 fi
 
 # Enable XCONF Conf config fetch
@@ -248,4 +300,45 @@ fi
 if [ $MODEL_NUM == "DPC3941B" ] || [ $MODEL_NUM == "DPC3939B" ] || [ "$MODEL_NUM" = "CGA4131COM" ] || [ "$MODEL_NUM" = "CGA4332COM" ]; then
 echo "Coping server-notify.sh into /var/lib/dibbler"
 sh /lib/rdk/dibbler-server-init.sh
+fi
+
+#upstreamed cosa_start_wifi_telemetry.patch as part of RDKB-41493
+if [ "$MODEL_NUM" = "CGA4131COM" ]; then
+	echo "Start monitoring system statistics"
+	CRON_PID=`pidof crond`
+	if [ "$CRON_PID" = "" ]
+	then
+	    if [ -f $CRONFILE ]
+	    then
+		grep -nr "/usr/ccsp/wifi/radiohealth.sh" $CRONFILE
+		if [ $? -ne 0 ]; then
+		    echo "*/15 * * * *  /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE
+		fi
+		grep -nr "/usr/ccsp/wifi/aphealth_log.sh" $CRONFILE
+		if [ $? -ne 0 ]; then
+		    echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+		fi
+	    else
+		if [ ! -d $CRONPATH ]
+		then
+		    mkdir $CRONPATH
+		fi
+		touch $CRONFILE
+		echo "*/15 * * * *  /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE
+		echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE
+	    fi
+	    crond -c $CRONPATH -l 9
+	else
+	    crontab -l -c $CRONPATH > $CRONFILE_BK
+	    grep -nr "/usr/ccsp/wifi/radiohealth.sh" $CRONFILE_BK
+	    if [ $? -ne 0 ]; then
+		echo "*/15 * * * *  /usr/ccsp/wifi/radiohealth.sh" >> $CRONFILE_BK
+	    fi
+	    grep -nr "/usr/ccsp/wifi/aphealth_log.sh" $CRONFILE_BK
+	    if [ $? -ne 0 ]; then
+		echo "1 * * * *  /usr/ccsp/wifi/aphealth_log.sh" >> $CRONFILE_BK
+	    fi
+	    crontab $CRONFILE_BK -c $CRONPATH
+	    rm -rf $CRONFILE_BK
+	fi
 fi
