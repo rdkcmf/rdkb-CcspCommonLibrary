@@ -4828,8 +4828,8 @@ int CcspBaseIf_SendSignal_WithData_rbus(
     char *eventName,
     char* eventData
 )
-{   
-    CcspTraceInfo(("%s --in\n", __FUNCTION__));
+{
+    CcspTraceInfo(("%s --in %s %s\n", __FUNCTION__, eventName, eventData));
 
     rbusEvent_t event;
     rbusObject_t data;
@@ -4851,9 +4851,35 @@ int CcspBaseIf_SendSignal_WithData_rbus(
 
     rbusValue_Release(value);
     CcspTraceInfo(("%s --out\n", __FUNCTION__));
+    return Rbus2_to_CCSP_error_mapper(ret);
 }
 
 #endif
+
+int CcspBaseIf_TunnelStatus_Tr181_Signal_rbus (
+    void* bus_handle,
+    char* TunnelStatus
+)
+{
+    UNREFERENCED_PARAMETER(bus_handle);
+    int ret = CCSP_FAILURE;
+    rbusMessage request, response;
+
+    rbusMessage_Init(&request);
+    rbusMessage_SetString(request,TunnelStatus);
+    RBUS_LOG("%s : rbus_publishEvent :: event_name : %s :: \n", __FUNCTION__,
+                                                "Device.X_COMCAST-COM_GRE.Tunnel.1.TunnelStatus");
+    if((ret = Rbus_to_CCSP_error_mapper(rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.wifi",
+                                     "Device.X_COMCAST-COM_GRE.Tunnel.1.TunnelStatus", request,
+                                      CcspBaseIf_timeout_rbus, &response))) != CCSP_Message_Bus_OK)
+    {
+        RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for TunnelStatus failed & returns with Err: %d\n",
+                                                                                __FUNCTION__, ret);
+        ret = CCSP_FAILURE;
+    }
+    rbusMessage_Release(response);
+    return ret;
+}
 
 int CcspBaseIf_TunnelStatusSignal_rbus (
     void* bus_handle,
@@ -4915,6 +4941,10 @@ int CcspBaseIf_SendSignal_WithData(
         else if(strcmp(event, "WifiDbStatus") == 0)
         {
             return CcspBaseIf_WifiDbStatusSignal_rbus(bus_handle,data);
+        }
+        else if(strcmp(event, "Device.X_COMCAST-COM_GRE.Tunnel.1.TunnelStatus") == 0)
+        {
+            return CcspBaseIf_TunnelStatus_Tr181_Signal_rbus(bus_handle,data);
         }
         else
         {
