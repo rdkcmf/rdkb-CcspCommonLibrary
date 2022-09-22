@@ -27,6 +27,3 @@ ExecStartPre=/bin/sh -c 'sleep 300'
 RemainAfterExit=yes
 
 StandardOutput=syslog+console
-
-[Install]
-WantedBy=wan-initialized.target

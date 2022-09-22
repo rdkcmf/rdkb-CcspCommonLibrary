@@ -36,7 +36,7 @@ if [ "$MODEL_NUM" = "CGA4332COM" ]; then
     fi
 fi
 
-if [ "$BOX_TYPE" = "HUB4" ]; then
+if [ "$BOX_TYPE" = "HUB4" ] || [ "$BOX_TYPE" = "XB6" -a "$MANUFACTURE" = "Technicolor" ] || [ "$BOX_TYPE" = "SR300" ] || [ "$BOX_TYPE" = "SR213" ]; then
     #Disable core dump generation
     ulimit -c 0
 else
@@ -44,7 +44,7 @@ else
 fi
 
 if [ "$BUILD_TYPE" != "prod" ]; then
-    if [ "$BOX_TYPE" = "HUB4" ]; then
+    if [ "$BOX_TYPE" = "HUB4" ] || [ "$BOX_TYPE" = "SR300" ] || [ "$BOX_TYPE" = "SR213" ]; then
         #Disable core dump generation
         echo /dev/null/ > /proc/sys/kernel/core_pattern
     else
