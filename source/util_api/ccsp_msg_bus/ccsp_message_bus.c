@@ -2742,7 +2742,7 @@ static int cssp_event_subscribe_override_handler_rbus(
         return RTMESSAGE_BUS_SUBSCRIBE_NOT_HANDLED;
     }
 
-    CcspTraceWarning(("%s: %s\n", __FUNCTION__, eventName));
+    CcspTraceDebug(("%s: %s\n", __FUNCTION__, eventName));
 
     if(added)
     {

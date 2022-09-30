@@ -73,7 +73,7 @@ typedef struct ValueChangeRecord
 
 static void rbusValueChange_Init()
 {
-    CcspTraceWarning(("%s", __FUNCTION__));
+    CcspTraceDebug(("%s\n", __FUNCTION__));
 
     if(vcinit)
         return;
@@ -87,7 +87,7 @@ static void rbusValueChange_Init()
     pthread_mutexattr_settype(&attrib, PTHREAD_MUTEX_ERRORCHECK);
     if(0 != pthread_mutex_init(&vcmutex, &attrib))
     {
-        CcspTraceError(("%s: failed to initialize mutex", __FUNCTION__));
+        CcspTraceError(("%s: failed to initialize mutex\n", __FUNCTION__));
     }
 }
 
@@ -109,7 +109,7 @@ static ValueChangeRecord* vcParams_Find(void* handle, const char* listener, cons
 {
     size_t i;
 
-    CcspTraceInfo(("%s %s %s filter=%p\n", __FUNCTION__, listener, parameter, filter));
+    CcspTraceDebug(("%s %s %s filter=%p\n", __FUNCTION__, listener, parameter, filter));
 
     for(i=0; i < rtVector_Size(vcparams); ++i)
     {
@@ -145,20 +145,20 @@ static parameterValStruct_t** rbusValueChange_GetParameterValue(ValueChangeRecor
     {
         if(num_values == 1)
         {
-            CcspTraceInfo(("%s %s success %s", __FUNCTION__, rec->parameter, values[0]->parameterValue));
+            CcspTraceDebug(("%s %s success %s\n", __FUNCTION__, rec->parameter, values[0]->parameterValue));
 
             return values;
         }
         else
         {
-            CcspTraceWarning(("%s %s unexpected num_vals %d", __FUNCTION__, rec->parameter, num_values));
+            CcspTraceWarning(("%s %s unexpected num_vals %d\n", __FUNCTION__, rec->parameter, num_values));
         }
 
         free_parameterValStruct_t(rec->handle, num_values, values);
     }
     else
     {
-        CcspTraceError(("%s %s failed %d", __FUNCTION__, rec->parameter, rc));
+        CcspTraceError(("%s %s failed %d\n", __FUNCTION__, rec->parameter, rc));
     }
     return NULL;
 }
@@ -207,7 +207,7 @@ static int rbusValueChange_getFilterResult(ValueChangeRecord* rec, parameterValS
 
     if(newResult != oldResult)
     {
-        CcspTraceInfo(("%s: filter triggered=%d for %s", __FUNCTION__, newResult, rec->parameter));
+        CcspTraceDebug(("%s: filter triggered=%d for %s\n", __FUNCTION__, newResult, rec->parameter));
 
         if(newResult)
             return 1;
@@ -262,7 +262,7 @@ static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValSt
     }
     rbusMessage_SetInt32(msg, rec->componentId);
 
-    CcspTraceInfo(("%s: publising event %s to listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
+    CcspTraceDebug(("%s: publising event %s to listener %s componentId %d\n", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
 
     err = rbus_publishSubscriberEvent(
         ((CCSP_MESSAGE_BUS_INFO*)rec->handle)->component_id,  
@@ -274,7 +274,7 @@ static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValSt
 
     if(err != RTMESSAGE_BUS_SUCCESS)
     {
-        CcspTraceError(("%s rbus_publishSubscriberEvent failed error %d", __FUNCTION__, err));
+        CcspTraceError(("%s rbus_publishSubscriberEvent failed error %d\n", __FUNCTION__, err));
     }
 }
 
@@ -282,7 +282,7 @@ static void* rbusValueChange_pollingThreadFunc(void *userData)
 {
 
     (void)(userData);
-    CcspTraceWarning(("%s: start", __FUNCTION__));
+    CcspTraceWarning(("%s: start\n", __FUNCTION__));
 
     while(vcrunning)
     {
@@ -315,7 +315,7 @@ static void* rbusValueChange_pollingThreadFunc(void *userData)
                     int filterResult = -1;
                     bool publish = true;
 
-                    CcspTraceInfo(("%s: value change detected for %s\n", __FUNCTION__, rec->parameter));
+                    CcspTraceDebug (("%s: value change detected for %s\n", __FUNCTION__, rec->parameter));
 
                     /*check filter -- if there's a filter, we only publish if filter is triggered*/
                     if(rec->filter)
@@ -324,7 +324,7 @@ static void* rbusValueChange_pollingThreadFunc(void *userData)
 
                         if(filterResult == -1)/*-1 means the filter was not triggered, so don't publish*/
                         {
-                            CcspTraceInfo(("%s: no publish\n", __FUNCTION__));
+                            CcspTraceDebug(("%s: no publish\n", __FUNCTION__));
                             publish = false;
                         }
                     }
@@ -341,20 +341,20 @@ static void* rbusValueChange_pollingThreadFunc(void *userData)
                 }
                 else
                 {
-                    CcspTraceInfo(("%s: value change not detected for %s", __FUNCTION__, rec->parameter));
+                    CcspTraceDebug (("%s: value change not detected for %s\n", __FUNCTION__, rec->parameter));
                 }
      
                 free_parameterValStruct_t(rec->handle, 1, val);
             }
             else
             {
-                CcspTraceWarning(("%s getParameterValues failed", __FUNCTION__));
+                CcspTraceWarning(("%s getParameterValues failed\n", __FUNCTION__));
             }
         }
 
         VC_UNLOCK();//############ UNLOCK ############
     }
-    CcspTraceWarning(("%s: stop", __FUNCTION__));
+    CcspTraceWarning(("%s: stop\n", __FUNCTION__));
     return NULL;
 }
 
@@ -394,7 +394,7 @@ int Ccsp_RbusValueChange_Subscribe(
     int32_t duration = 0;
     rbusFilter_t filter = NULL;
 
-    CcspTraceWarning(("%s: %s", __FUNCTION__, parameter));
+    CcspTraceDebug(("%s: %s\n", __FUNCTION__, parameter));
 
     if(!vcinit)
     {
@@ -406,7 +406,7 @@ int Ccsp_RbusValueChange_Subscribe(
        ((CCSP_MESSAGE_BUS_INFO*)handle)->CcspBaseIf_func == NULL || 
        ((CCSP_Base_Func_CB* )(((CCSP_MESSAGE_BUS_INFO*)handle)->CcspBaseIf_func))->getParameterValues == NULL)
     {
-        CcspTraceError(("%s NULL bus info", __FUNCTION__));
+        CcspTraceError(("%s NULL bus info\n", __FUNCTION__));
         return CCSP_FAILURE;
     }
 
@@ -443,7 +443,7 @@ int Ccsp_RbusValueChange_Subscribe(
             free_parameterValStruct_t(rec->handle, 1, val);
         }
 
-        CcspTraceInfo(("%s: %s new subscriber from listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
+        CcspTraceDebug(("%s: %s new subscriber from listener %s componentId %d\n", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
 
         VC_LOCK();
         rtVector_PushBack(vcparams, rec);
@@ -457,7 +457,7 @@ int Ccsp_RbusValueChange_Subscribe(
     }
     else
     {
-        CcspTraceInfo(("%s: ignoring duplicate subscribe for %s from listener %s componentId %d", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
+        CcspTraceDebug(("%s: ignoring duplicate subscribe for %s from listener %s componentId %d\n", __FUNCTION__, rec->parameter, rec->listener, rec->componentId));
     }
 
     if(filter)
@@ -482,7 +482,7 @@ int Ccsp_RbusValueChange_Unsubscribe(
 
     (void)(handle);
 
-    CcspTraceWarning(("%s: %s", __FUNCTION__, parameter));
+    CcspTraceDebug(("%s: %s\n", __FUNCTION__, parameter));
 
     if(!vcinit)
     {
@@ -528,14 +528,14 @@ int Ccsp_RbusValueChange_Unsubscribe(
     }
     else
     {
-        CcspTraceWarning(("%s: value change param not found: %s", __FUNCTION__, parameter));
+        CcspTraceWarning(("%s: value change param not found: %s\n", __FUNCTION__, parameter));
         return CCSP_FAILURE;
     }
 }
 
 int rbusValueChange_Close(void* handle)
 {
-    CcspTraceWarning(("%s", __FUNCTION__));
+    CcspTraceDebug(("%s\n", __FUNCTION__));
 
     if(!vcinit)
     {
