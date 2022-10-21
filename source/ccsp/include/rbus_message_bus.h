@@ -43,9 +43,7 @@
 **********************************************************************/
 #ifndef CCSP_RBUS_INTERNAL_H
 #define CCSP_RBUS_INTERNAL_H
-#include <rbus-core/rbus_core.h>
-#include <rbus-core/rbus_session_mgr.h>
-#include <rtmessage/rtLog.h>
+#include <rbus/rbuscore.h>
 #include <rbus/rbus_filter.h>
 #include <rbus/rbus.h>
 #include <rbus/rbus_value.h>

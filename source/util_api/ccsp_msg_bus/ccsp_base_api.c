@@ -2029,9 +2029,9 @@ CcspBaseIf_GetNextLevelInstances
  * are registered, Cr will set its property Device.CR.SystemReady to true, which will
  * send a value-change event to all listeners.
  */
-static rbus_error_t registerComponentWithCr_rbus(const char *component_name)
+static rbusCoreError_t registerComponentWithCr_rbus(const char *component_name)
 {
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
     rbusMessage request, response;
 
     rbusMessage_Init(&request);
@@ -2046,7 +2046,7 @@ static rbus_error_t registerComponentWithCr_rbus(const char *component_name)
     rbusMessage_SetBytes(request, (uint8_t const*)component_name, strlen(component_name)+1);/*the actual value*/
     rbusMessage_SetInt32(request, 0);/*object child object count*/
 
-    if((err = rbus_invokeRemoteMethod("Device.CR.RegisterComponent()", METHOD_RPC, request, 1000, &response)) == RTMESSAGE_BUS_SUCCESS)
+    if((err = rbus_invokeRemoteMethod("Device.CR.RegisterComponent()", METHOD_RPC, request, 1000, &response)) == RBUSCORE_SUCCESS)
     {
         int returnCode = 0;
         rbusMessage_GetInt32(response, &returnCode);
@@ -2054,7 +2054,7 @@ static rbus_error_t registerComponentWithCr_rbus(const char *component_name)
         if(returnCode != 0)
         {
             RBUS_LOG_ERR("%s rbus_invokeRemoteMethod for Device.CR.RegisterComponent() for %s got returnCode Err: %d\n", __FUNCTION__, component_name, returnCode);
-            err = RTMESSAGE_BUS_ERROR_GENERAL;
+            err = RBUSCORE_ERROR_GENERAL;
         }
     }
     else
@@ -2083,11 +2083,11 @@ int CcspBaseIf_registerCapabilities_rbus(
     int i = 0;
     int failedIndex = 0;
     int ret = CCSP_SUCCESS;
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
 
     for(i = 0; i < size; i++)
     {
-        if((err = rbus_addElement(component_name, name_space[i].name_space)) != RTMESSAGE_BUS_SUCCESS)
+        if((err = rbus_addElement(component_name, name_space[i].name_space)) != RBUSCORE_SUCCESS)
         {
             RBUS_LOG_ERR("rbus_addElement: %s Err: %d\n", name_space[i].name_space, err);
             failedIndex = i;
@@ -2095,21 +2095,21 @@ int CcspBaseIf_registerCapabilities_rbus(
         }
     }
 
-    if (RTMESSAGE_BUS_SUCCESS == err)
+    if (RBUSCORE_SUCCESS == err)
     {
-        if((err = registerComponentWithCr_rbus(component_name)) != RTMESSAGE_BUS_SUCCESS)
+        if((err = registerComponentWithCr_rbus(component_name)) != RBUSCORE_SUCCESS)
         {
             /* Remove all elements when registration with CR has failed */
             failedIndex = size;
         }
     }
 
-    if (RTMESSAGE_BUS_SUCCESS != err)
+    if (RBUSCORE_SUCCESS != err)
     {
         RBUS_LOG_ERR("unregister all the params are we failed to register a param\n");
         for(i = 0; i < failedIndex; i++)
         {
-            if((err = rbus_removeElement(component_name, name_space[i].name_space)) != RTMESSAGE_BUS_SUCCESS)
+            if((err = rbus_removeElement(component_name, name_space[i].name_space)) != RBUSCORE_SUCCESS)
             {
                 RBUS_LOG_ERR("rbus_removeElement: %s Err: %d\n", name_space[i].name_space, err);
             }
@@ -2216,7 +2216,7 @@ int CcspBaseIf_unregisterNamespace_rbus (
     UNREFERENCED_PARAMETER(dst_component_id);
     RBUS_LOG("%s calling rbus_removeElement for %s with component %s\n", __FUNCTION__, name_space, component_name);
 
-    if(RTMESSAGE_BUS_SUCCESS != rbus_removeElement(component_name, name_space))
+    if(RBUSCORE_SUCCESS != rbus_removeElement(component_name, name_space))
     {
         RBUS_LOG("%s rbus_removeElement fails\n", __FUNCTION__);
         return CCSP_FAILURE;
@@ -2388,7 +2388,7 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         *size = 0;
         errno_t rc = -1;
 
-        if(RTMESSAGE_BUS_SUCCESS == rbus_discoverElementObjects(name_space, &num, &compName))
+        if(RBUSCORE_SUCCESS == rbus_discoverElementObjects(name_space, &num, &compName))
         {
             /*CID: 126470 Dereference before null check*/
 	    if(*compName == NULL)
@@ -2451,7 +2451,7 @@ int CcspBaseIf_discComponentSupportingNamespace_rbus (
         RBUS_LOG("%s Wildcard expression: %s\n", __FUNCTION__, name_space);
         ret = rbus_discoverWildcardDestinations(name_space, size, &destinations);
 
-        if(ret == RTMESSAGE_BUS_SUCCESS)
+        if(ret == RBUSCORE_SUCCESS)
         {
             int sizeSave = *size;
             if(*size == 0)
@@ -2853,7 +2853,7 @@ int CcspBaseIf_discNamespaceSupportedByComponent_rbus (
     RBUS_LOG("calling %s for %s \n", __FUNCTION__, component_name);
     ret = rbus_discoverObjectElements(component_name, &num_elements, &elements);
 
-    if(ret == RTMESSAGE_BUS_SUCCESS)
+    if(ret == RBUSCORE_SUCCESS)
     {
         int i;
         RBUS_LOG("%s returns num_elements as %d\n", __FUNCTION__, num_elements);
@@ -3030,7 +3030,7 @@ int CcspBaseIf_getRegisteredComponents_rbus(
 
     int ret = rbus_discoverRegisteredComponents(&num_components, &component_names);
 
-    if(ret == RTMESSAGE_BUS_SUCCESS)
+    if(ret == RBUSCORE_SUCCESS)
     {
         int i;
         RBUS_LOG("%s returns size as %d\n", __FUNCTION__, num_components);
@@ -3574,38 +3574,19 @@ int CcspBaseIf_requestSessionID_rbus (
     int priority,
     int *sessionID)
 {
-    UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dst_component_id);
     UNREFERENCED_PARAMETER(priority);
-    rbusMessage response;
-    int result = 0;
-
-    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_REQUEST_SESSION_ID, NULL, CcspBaseIf_timeout_rbus, &response)))
+    rbusError_t rc = RBUS_ERROR_SUCCESS;
+    rc = rbus_createSession(bus_handle, (uint32_t *)sessionID);
+    if(rc == RBUS_ERROR_SUCCESS)
     {
-        if(RT_OK == rbusMessage_GetInt32(response, &result))
-        {
-            if(RTMESSAGE_BUS_SUCCESS != result)
-            {
-                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
-            }
-            else
-            {
-                if(RT_OK == rbusMessage_GetInt32(response, sessionID))
-                {
-                    RBUS_LOG("Got new session id %d\n", *sessionID);
-                    rbusMessage_Release(response);
-                    return CCSP_SUCCESS;
-                }
-                else
-                    RBUS_LOG_ERR("Malformed response from session manager.\n");
-            }
-        }
+       RBUS_LOG("Got new session id %d\n", *sessionID);
+       return CCSP_SUCCESS;
     }
     else
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
-    rbusMessage_Release(response);
     return CCSP_FAILURE;
 }
 
@@ -3670,36 +3651,20 @@ int CcspBaseIf_getCurrentSessionID_rbus (
     int *sessionID
     )
 {
-    UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dst_component_id);
     UNREFERENCED_PARAMETER(priority);
-    rbusMessage response;
-    int result = 0;
-
-    if(RTMESSAGE_BUS_SUCCESS == (result = rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_GET_CURRENT_SESSION_ID, NULL, CcspBaseIf_timeout_rbus, &response)))
+    rbusError_t result = RBUS_ERROR_SUCCESS;
+    result = rbus_getCurrentSession(bus_handle, (uint32_t *)sessionID);
+    if(result == RBUS_ERROR_SUCCESS)
     {
-        if(RT_OK == rbusMessage_GetInt32(response, &result))
-        {
-            if(RTMESSAGE_BUS_SUCCESS != result)
-            {
-                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
-            }
-            else
-            {
-                if(RT_OK == rbusMessage_GetInt32(response, sessionID))
-                    RBUS_LOG("Got new session id %d\n", *sessionID);
-                else
-                    RBUS_LOG_ERR("Malformed response from session manager.\n");
-            }
-        }
+       RBUS_LOG("Got new session id %d\n", *sessionID);
+       return CCSP_SUCCESS;
     }
     else
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
-    rbusMessage_Release(response);
-
-    return result;
+    return CCSP_FAILURE;
 }
 
 int CcspBaseIf_getCurrentSessionID (
@@ -3765,37 +3730,19 @@ int CcspBaseIf_informEndOfSession_rbus (
     int sessionID
     )
 {
-    UNREFERENCED_PARAMETER(bus_handle);
     UNREFERENCED_PARAMETER(dst_component_id);
-    rbusMessage out, response;
-    int result = 0;
-    int ret = CCSP_FAILURE;
-
-    rbusMessage_Init(&out);
-    rbusMessage_SetInt32(out, sessionID);
-
-    if(RTMESSAGE_BUS_SUCCESS == rbus_invokeRemoteMethod(RBUS_SMGR_DESTINATION_NAME, RBUS_SMGR_METHOD_END_SESSION, out, CcspBaseIf_timeout_rbus, &response))
+    rbusError_t result = RBUS_ERROR_SUCCESS;
+    result = rbus_closeSession(bus_handle, sessionID);
+    if(result == RBUS_ERROR_SUCCESS)
     {
-        if(RT_OK == rbusMessage_GetInt32(response, &result))
-        {
-            if(RTMESSAGE_BUS_SUCCESS != result)
-            {
-                RBUS_LOG_ERR("Session manager reports internal error %d.\n", result);
-            }
-            else
-            {
-                RBUS_LOG("Successfully ended session %d.\n", sessionID);
-                ret = CCSP_SUCCESS;
-            }
-        }
+       RBUS_LOG("Successfully ended session %d.\n", sessionID);
+       return CCSP_SUCCESS;
     }
     else
     {
         RBUS_LOG_ERR("RPC with session manager failed.\n");
     }
-    rbusMessage_Release(response);
-
-    return ret;
+    return CCSP_FAILURE;
 }
 
 int CcspBaseIf_informEndOfSession (
@@ -4303,7 +4250,7 @@ int CcspBaseIf_SendparameterValueChangeSignal_rbus (
 {
     int32_t utmp = 0, tmp = 0;
     int i = 0;
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
     rbusMessage request;
     rbusMessage response;
 
@@ -4324,7 +4271,7 @@ int CcspBaseIf_SendparameterValueChangeSignal_rbus (
 
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     err = rbus_invokeRemoteMethod("eRT.com.cisco.spvtg.ccsp.tr069pa", "parameterValueChangeSignal", request, CcspBaseIf_timeout_rbus, &response);
-    if(err != RTMESSAGE_BUS_SUCCESS)
+    if(err != RBUSCORE_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d for bus_info->component_id =%s\n", __FUNCTION__, err,bus_info->component_id);
         return CCSP_FAILURE;
@@ -4505,7 +4452,7 @@ int CcspBaseIf_SenddeviceProfileChangeSignal_rbus (
 )
 {
     int ret = CCSP_SUCCESS;
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
 
     rbusMessage request;
     rbusMessage_Init(&request);
@@ -4516,7 +4463,7 @@ int CcspBaseIf_SenddeviceProfileChangeSignal_rbus (
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, "deviceProfileChangeSignal");
     err = rbus_publishEvent(bus_info->component_id,"deviceProfileChangeSignal",request);
-    if (err != RTMESSAGE_BUS_SUCCESS)
+    if (err != RBUSCORE_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
         ret = CCSP_FAILURE;
@@ -4584,7 +4531,7 @@ int CcspBaseIf_SendcurrentSessionIDSignal_rbus (
     )
 {
     int ret = CCSP_SUCCESS;
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
 
     rbusMessage request;
     rbusMessage_Init(&request);
@@ -4595,7 +4542,7 @@ int CcspBaseIf_SendcurrentSessionIDSignal_rbus (
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     err = rbus_publishEvent( bus_info->component_id, "currentSessionIDSignal", request);
 
-    if (err != RTMESSAGE_BUS_SUCCESS)
+    if (err != RBUSCORE_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
         ret = CCSP_FAILURE;
@@ -5027,7 +4974,7 @@ int CcspBaseIf_SendsystemKeepaliveSignal(void * bus_handle)
 
 int CcspBaseIf_SendSignal_rbus(void * bus_handle, char *event)
 {
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
     int ret = CCSP_SUCCESS;
     rbusMessage out;
     rbusMessage_Init(&out);
@@ -5035,7 +4982,7 @@ int CcspBaseIf_SendSignal_rbus(void * bus_handle, char *event)
     CCSP_MESSAGE_BUS_INFO *bus_info = (CCSP_MESSAGE_BUS_INFO *)bus_handle;
     RBUS_LOG("%s : rbus_publishEvent object_name: %s  :: event_name : %s :: \n", __FUNCTION__, bus_info->component_id, event);
     err = rbus_publishEvent(bus_info->component_id, event, out);
-    if (err != RTMESSAGE_BUS_SUCCESS)
+    if (err != RBUSCORE_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_publishEvent returns Err: %d\n", __FUNCTION__, err);
         ret = CCSP_FAILURE;
@@ -5053,7 +5000,7 @@ int subscribeToRbus2Event_rbus
  const char* event_name
 )
 {
-    rbus_error_t err;
+    rbusCoreError_t err;
     int provider_err = 0;
     rbusMessage payload = NULL;
 
@@ -5070,7 +5017,7 @@ int subscribeToRbus2Event_rbus
         rbusMessage_Release(payload);
     }
 
-    if(err == RTMESSAGE_BUS_SUCCESS)
+    if(err == RBUSCORE_SUCCESS)
     {
         RBUS_LOG("%s : rbus_subscribeToEvent success for %s\n", __FUNCTION__, event_name);
         return CCSP_SUCCESS;
@@ -5091,7 +5038,7 @@ int CcspBaseIf_Register_Event_rbus
 {
     UNREFERENCED_PARAMETER(sender);
     CcspTraceInfo(("%s : rbus_registerEvent called for event: %s\n", __FUNCTION__, event_name));
-    rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+    rbusCoreError_t err = RBUSCORE_SUCCESS;
     char * comp = NULL;
 
     if(strcmp(event_name, "diagCompleteSignal") == 0)
@@ -5119,7 +5066,7 @@ int CcspBaseIf_Register_Event_rbus
 
     err = rbus_subscribeToEvent(comp , event_name, CcspBaseIf_evt_callback_rbus, NULL, bus_handle, NULL);
 
-    if (err != RTMESSAGE_BUS_SUCCESS)
+    if (err != RBUSCORE_SUCCESS)
     {
         RBUS_LOG_ERR("%s : rbus_subscribeToEvent returns Err: %d : Event %s\n", __FUNCTION__, err, event_name);
         return CCSP_FAILURE;
@@ -5879,7 +5826,7 @@ int CcspBaseIf_UnRegister_Event_rbus(
         return CCSP_SUCCESS;
     }
 
-    if(RTMESSAGE_BUS_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name, NULL))
+    if(RBUSCORE_SUCCESS != rbus_unsubscribeFromEvent(sender, event_name, NULL))
     {
         RBUS_LOG_ERR("rbus_unsubscribeFromEvent::CcspBaseIf_UnRegister_Event_rbus returns error for sender %s for event_name %s \n", sender, event_name);
         return CCSP_FAILURE;
@@ -6034,19 +5981,19 @@ int Rbus_to_CCSP_error_mapper (int Rbus_error_code)
     int CCSP_error_code = CCSP_Message_Bus_ERROR;
     switch (Rbus_error_code)
     {
-        case  RTMESSAGE_BUS_SUCCESS                                 : CCSP_error_code = CCSP_Message_Bus_OK; break;
-        case  RTMESSAGE_BUS_ERROR_GENERAL                           : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
-        case  RTMESSAGE_BUS_ERROR_INVALID_PARAM                     : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;
-        case  RTMESSAGE_BUS_ERROR_INSUFFICIENT_MEMORY               : CCSP_error_code = CCSP_Message_Bus_OOM; break;
-        case  RTMESSAGE_BUS_ERROR_INVALID_STATE                     : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
-        case  RTMESSAGE_BUS_ERROR_REMOTE_END_DECLINED_TO_RESPOND    : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
-        case  RTMESSAGE_BUS_ERROR_REMOTE_END_FAILED_TO_RESPOND      : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
-        case  RTMESSAGE_BUS_ERROR_REMOTE_TIMED_OUT                  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
-        case  RTMESSAGE_BUS_ERROR_MALFORMED_RESPONSE                : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;
-        case  RTMESSAGE_BUS_ERROR_UNSUPPORTED_METHOD                : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
-        case  RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT                 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
-        case  RTMESSAGE_BUS_ERROR_OUT_OF_RESOURCES                  : CCSP_error_code = CCSP_Message_Bus_OOM; break;
-        case  RTMESSAGE_BUS_ERROR_DESTINATION_UNREACHABLE           : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;
+        case  RBUSCORE_SUCCESS                                 : CCSP_error_code = CCSP_Message_Bus_OK; break;
+        case  RBUSCORE_ERROR_GENERAL                           : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUSCORE_ERROR_INVALID_PARAM                     : CCSP_error_code = CCSP_ERR_INVALID_PARAMETER_VALUE; break;
+        case  RBUSCORE_ERROR_INSUFFICIENT_MEMORY               : CCSP_error_code = CCSP_Message_Bus_OOM; break;
+        case  RBUSCORE_ERROR_INVALID_STATE                     : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUSCORE_ERROR_REMOTE_END_DECLINED_TO_RESPOND    : CCSP_error_code = CCSP_Message_Bus_ERROR; break;
+        case  RBUSCORE_ERROR_REMOTE_END_FAILED_TO_RESPOND      : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RBUSCORE_ERROR_REMOTE_TIMED_OUT                  : CCSP_error_code = CCSP_MESSAGE_BUS_TIMEOUT; break;
+        case  RBUSCORE_ERROR_MALFORMED_RESPONSE                : CCSP_error_code = CCSP_ERR_UNSUPPORTED_PROTOCOL; break;
+        case  RBUSCORE_ERROR_UNSUPPORTED_METHOD                : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RBUSCORE_ERROR_UNSUPPORTED_EVENT                 : CCSP_error_code = CCSP_MESSAGE_BUS_NOT_SUPPORT; break;
+        case  RBUSCORE_ERROR_OUT_OF_RESOURCES                  : CCSP_error_code = CCSP_Message_Bus_OOM; break;
+        case  RBUSCORE_ERROR_DESTINATION_UNREACHABLE           : CCSP_error_code = CCSP_MESSAGE_BUS_CANNOT_CONNECT; break;
     }
     return CCSP_error_code;
 }

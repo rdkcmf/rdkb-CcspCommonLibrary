@@ -21,7 +21,7 @@
 #define __CCSP_RBUS_VALUE_CHANGE_H
 
 #include <stdint.h>
-#include <rbus-core/rbus_message.h>
+#include <rbus/rbuscore_message.h>
 
 typedef struct _rbusFilter* rbusFilter_t;
 

@@ -63,7 +63,7 @@ libccsp_common_la_CPPFLAGS = \
 	-I$(top_srcdir)/util_api/http/utilities/include \
 	-I$(top_srcdir)/util_api/asn.1/include
 
-libccsp_common_la_LDFLAGS = -shared -fPIC -lssl -lcrypto -lrbus -lrbus-core
+libccsp_common_la_LDFLAGS = -shared -fPIC -lssl -lcrypto -lrbus
 libccsp_common_la_SOURCES =
 libccsp_common_la_DEPENDENCIES = \
 	cosa/utilities/AnscObjectArray/AnscByteArray/libCcspCommonLibrary_AnscByteArray.la \
