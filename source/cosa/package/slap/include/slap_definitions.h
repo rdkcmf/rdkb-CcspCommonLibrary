@@ -639,6 +639,7 @@ SLAP_VARIABLE,  *PSLAP_VARIABLE;
             }                                                                               \
          }
 
+/* CID 163291 fix */
 #define  SlapInitVariable(tbi_var)                                                          \
          {                                                                                  \
             PSLAP_VARIABLE tmp = (PSLAP_VARIABLE)tbi_var;                                              \
@@ -647,6 +648,7 @@ SLAP_VARIABLE,  *PSLAP_VARIABLE;
             tmp->UsageType         = 0;                                                 \
             tmp->Syntax            = SLAP_VAR_SYNTAX_other;                             \
             tmp->Variant.varUint32 = 0;                                                 \
+	    tmp->ReqSenderID       = 0;                                                 \
          }
 
 #define  SlapCloneVariable(src_var, dst_var)                                                \

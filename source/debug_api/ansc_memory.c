@@ -1016,7 +1016,7 @@ AnscAllocateMemoryRecordDetail
     ULONG                           ulCurAllocId   = g_ulAllocIdentifier ++;
     char*                           pFileNameChar  = pFileName;
     ULONG                           i              = 0;
-    char                            owner_desp[128];
+    char                            owner_desp[128] = {'\0'}; /* CID 282068 fix */
                 /*CcspTraceError
                 ((
                     " AnscAllocateMemoryRecordDetail 1 \n"

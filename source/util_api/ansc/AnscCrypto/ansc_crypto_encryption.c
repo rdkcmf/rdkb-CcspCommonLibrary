@@ -1589,6 +1589,13 @@ AnscCryptoAesEncrypt
         return 0;
     }
 
+    /* CID 163116 fix */
+    for(int cnt = 0; cnt < (4 *(AES_MAXNR + 1)); cnt++)
+    {
+        aesKey.rd_key[cnt] = 0;
+    }
+    aesKey.rounds = 0;
+
     ret = AES_set_encrypt_key((const unsigned char *)key->Value, key->Length * 8, &aesKey);
 
     if ( ret != 0 )

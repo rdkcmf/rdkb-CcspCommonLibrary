@@ -82,6 +82,8 @@ AnscCryptoPubBigNum2Integer
         return;
 
     anInt.Length = 4;
+    /* CID 162853 fix */
+    anInt.Data.ulData = 0;
     AnscCryptoPubBigEndianInteger2Integer(pInteger, &anInt);
 }
 
