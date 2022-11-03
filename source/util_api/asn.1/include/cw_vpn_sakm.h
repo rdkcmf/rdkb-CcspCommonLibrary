@@ -309,7 +309,8 @@ AUTHENTICATION_ALGORITHM,  *PAUTHENTICATION_ALGORITHM;
 #define  MAXIMUM_COMMON_NAME_SIZE                   32
 #define  MAXIMUM_ISSUER_NAME_SIZE                   64
 #define  MAXIMUM_SUBJECT_NAME_SIZE                  32
-#define  MAXIMUM_SUBJECT_ALTNAME_SIZE               64
+/* CID 277614 fix */
+#define  MAXIMUM_SUBJECT_ALTNAME_SIZE               256
 #define  MAXIMUM_SUBJECT_ALTNAME_IP_SIZE            16
 
 

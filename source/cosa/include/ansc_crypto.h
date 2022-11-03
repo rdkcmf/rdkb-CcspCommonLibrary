@@ -83,7 +83,8 @@
  * define some maximum sizes allowed during encryption/decryption/compression/hmac operations
  */
 #define  ANSC_MAX_REPLAY_WINDOW_SIZE                4
-#define  ANSC_MAX_KEY_LENGTH                        64
+/* CID 277388, 277392, 277440, 277487, 277615 fix */
+#define  ANSC_MAX_KEY_LENGTH                        257
 #define  ANSC_MAX_IV_LENGTH                         16
 #define  ANSC_MAX_KEY_NUMBER                        5
 #define  ANSC_MAX_HASH_RESULT                       32

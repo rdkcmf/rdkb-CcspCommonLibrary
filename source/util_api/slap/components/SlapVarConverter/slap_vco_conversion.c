@@ -205,8 +205,11 @@ SlapVcoConvertVariable
                     }
                     else if ( tpl_var->Syntax == SLAP_VAR_SYNTAX_int )
                     {
+			/* CID 71834 fix */
+			SLAP_INT varIntTemp     = 0;
                         tbc_var->Syntax         = tpl_var->Syntax;
-                        tbc_var->Variant.varInt = (SLAP_INT)tbc_var->Variant.varUint32;
+                        varIntTemp              = (SLAP_INT)tbc_var->Variant.varUint32;
+			tbc_var->Variant.varInt = varIntTemp;
                     }
                     else if ( tpl_var->Syntax == SLAP_VAR_SYNTAX_string )
                     {

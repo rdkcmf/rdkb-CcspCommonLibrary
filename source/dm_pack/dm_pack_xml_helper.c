@@ -301,7 +301,7 @@ void DMPackCreateParamEx(PANSC_XML_DOM_NODE_OBJECT P, char* name, int typeId, ch
   if(notify == 0)
     DMPackCreateNode(P1,"notify","off",3);
   else if(notify == 1)
-    DMPackCreateNode(P1,"notify","on",3);
+    DMPackCreateNode(P1,"notify","on",2); /* CID 280129 fix */
 }
 void DMPackCreateParamTSWN(PANSC_XML_DOM_NODE_OBJECT P,char* name,char* T,char* S,int W,int N)
 {

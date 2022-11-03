@@ -351,6 +351,8 @@ AnscTcFree
 
     AnscDelTokenChain((ANSC_HANDLE)pTokenChain);
     AnscFreeMemory   (pTokenChain);
+    /* CID 154673 fix */
+    (pTokenChain) = NULL;
 
     return;
 }

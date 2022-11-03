@@ -1212,33 +1212,69 @@ CcspAliasMgrFindAliases
             result = AnscAllocateMemory(CCSP_Alias_Mgr_Name_Length + 1);
 
             pListResult = (PSLIST_HEADER) AnscAllocateMemory( sizeof (SLIST_HEADER) );
-            AnscInitializeSList(pListResult);
-
-            pLink = AnscSListGetFirstEntry(pAliasList);
-
-            while (pLink)
+            if(pListResult == NULL)
             {
-                pListEntry = ACCESS_STRING_SINGLE_LIST_ENTRY(pLink);
+                CcspTraceError(("Result list entry allocation failed \n"));
+            }
+            else
+            {
+                AnscInitializeSList(pListResult);
 
-                if (pListEntry->Value == NULL)
-                {
-                    CcspTraceWarning(("Found empty alias in the list for %s\n", Name));
-                }
-                else
-                {
-                    AnscZeroMemory(result, CCSP_Alias_Mgr_Name_Length + 1);
+                pLink = AnscSListGetFirstEntry(pAliasList);
 
-                    if ( CcspAliasMgrReplaceInstanceIds(pListEntry->Value, result, &InsIdQueue) )
+                while (pLink)
+                {
+                    pListEntry = ACCESS_STRING_SINGLE_LIST_ENTRY(pLink);
+
+                    if (pListEntry->Value == NULL)
                     {
-                        if ( AnscSizeOfString(remaining) > 0 )
+                        CcspTraceWarning(("Found empty alias in the list for %s\n", Name));
+                    }
+                    else
+                    {
+                        AnscZeroMemory(result, CCSP_Alias_Mgr_Name_Length + 1);
+
+                        if ( CcspAliasMgrReplaceInstanceIds(pListEntry->Value, result, &InsIdQueue) )
                         {
-                            if ( (AnscSizeOfString(result) + AnscSizeOfString(remaining)) <= CCSP_Alias_Mgr_Name_Length)
+                            if ( AnscSizeOfString(remaining) > 0 )
                             {
-                                AnscCatString(result, remaining);
+                                if ( (AnscSizeOfString(result) + AnscSizeOfString(remaining)) <= CCSP_Alias_Mgr_Name_Length)
+                                {
+                                    AnscCatString(result, remaining);
+                                }
+                                else
+                                {
+                                    CcspTraceError(("Remaining name is too long, result =  %s, remaining = %s\n", result, remaining));
+
+                                    StringSListRemoveAll(pListResult);
+                                    AnscFreeMemory(pListResult);
+
+                                    pListResult = NULL;
+
+                                    break;
+                                }
                             }
-                            else
+
+                            if ( isPartialName )
                             {
-                                CcspTraceError(("Remaining name is too long, result =  %s, remaining = %s\n", result, remaining));
+                                AnscCatString(result, ".");
+                            }
+
+                            pResListEntry = (PCCSP_STRING_SINGLE_LINK_LIST_ENTRY) AnscAllocateMemory( sizeof(CCSP_STRING_SINGLE_LINK_LIST_ENTRY) );
+
+                            if (pResListEntry)
+                            {
+                                pResListEntry->Value = AnscAllocateMemory(AnscSizeOfString(result) + 1);
+                            }
+
+                            if (!pResListEntry || !pResListEntry->Value)
+                            {
+                                CcspTraceError(("Result list entry allocation failed for %s\n", Name));
+
+                                if (pResListEntry)
+                                {
+                                    AnscFreeMemory(pResListEntry);
+                                }
 
                                 StringSListRemoveAll(pListResult);
                                 AnscFreeMemory(pListResult);
@@ -1247,50 +1283,21 @@ CcspAliasMgrFindAliases
 
                                 break;
                             }
-                        }
 
-                        if ( isPartialName )
+
+                            rc = strcpy_s(pResListEntry->Value, (AnscSizeOfString(result) + 1), result);
+                            ERR_CHK(rc);
+
+                            AnscSListPushEntry(pListResult, &pResListEntry->Linkage);
+                        }
+                        else
                         {
-                            AnscCatString(result, ".");
+                            CcspTraceError(("Replacing instance numbers failed while looking up alias for %s\n", Name));
                         }
-
-                        pResListEntry = (PCCSP_STRING_SINGLE_LINK_LIST_ENTRY) AnscAllocateMemory( sizeof(CCSP_STRING_SINGLE_LINK_LIST_ENTRY) );
-
-                        if (pResListEntry)
-                        {
-                            pResListEntry->Value = AnscAllocateMemory(AnscSizeOfString(result) + 1);
-                        }
-
-                        if (!pResListEntry || !pResListEntry->Value)
-                        {
-                            CcspTraceError(("Result list entry allocation failed for %s\n", Name));
-
-                            if (pResListEntry)
-                            {
-                                AnscFreeMemory(pResListEntry);
-                            }
-
-                            StringSListRemoveAll(pListResult);
-                            AnscFreeMemory(pListResult);
-
-                            pListResult = NULL;
-
-                            break;
-                        }
-
-
-                        rc = strcpy_s(pResListEntry->Value, (AnscSizeOfString(result) + 1), result);
-                        ERR_CHK(rc);
-
-                        AnscSListPushEntry(pListResult, &pResListEntry->Linkage);
                     }
-                    else
-                    {
-                        CcspTraceError(("Replacing instance numbers failed while looking up alias for %s\n", Name));
-                    }
+
+                    pLink = AnscSListGetNextEntry(pLink);
                 }
-
-                pLink = AnscSListGetNextEntry(pLink);
             }
         }
     }

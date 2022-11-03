@@ -310,7 +310,8 @@ WebGsoInitialize
     pMyObject->bActive          = FALSE;
     pMyObject->bLocked          = FALSE;
 
-    AnscZeroMemory(&pMyObject->AuthSessInfo, 0);
+    /* CID 277590 fix */
+    AnscZeroMemory(&pMyObject->AuthSessInfo, sizeof(WEB_AUTH_SESSION_INFO));
 
     pMyObject->hLsmContext      = (ANSC_HANDLE)NULL;
     pMyObject->LsmMaxAge        = WEB_DEF_LSM_COOKIE_MAX_AGE;
