@@ -29,11 +29,7 @@ source /etc/utopia/service.d/log_capture_path.sh
 BBHM_CUR_CFG="/tmp/bbhm_cur_cfg.xml"
 BINPATH="/usr/bin"
 UTOPIA_PATH=/etc/utopia/service.d
-if [ "x$BOX_TYPE" = "xXB3" ]; then
-cd /fss/gw/usr/ccsp/
-else
 cd /usr/ccsp/
-fi
 
 if [ -f /etc/mount-utils/getConfigFile.sh ];then
    . /etc/mount-utils/getConfigFile.sh
@@ -45,13 +41,6 @@ fi
 
 export LD_LIBRARY_PATH=$PWD:.:$PWD/../../lib:$PWD/../../.:/lib:/usr/lib:$LD_LIBRARY_PATH
 export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/var/run/dbus/system_bus_socket
-if [ "x$BOX_TYPE" = "xXB3" ]; then
-export LOG4C_RCPATH=/fss/gw/rdklogger
-elif [ "x$BOX_TYPE" = "xTCCBR" ]; then
-export LOG4C_RCPATH=/rdklogger
-else
-export LOG4C_RCPATH=/etc
-fi
 
 echo_t "Getting value of CMC and CID after PSM Initialization"
 grep -irn "X_COMCAST-COM_CID\|X_COMCAST-COM_CMC" $BBHM_CUR_CFG
