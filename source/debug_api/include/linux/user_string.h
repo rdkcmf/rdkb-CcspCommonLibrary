@@ -72,67 +72,9 @@
 
 **********************************************************************/
 
-
 #ifndef  _USER_STRING_
 #define  _USER_STRING_
 
-
-/***********************************************************
-        DEFINITION OF BASIC DATA TYPE AND STRUCTURES
-***********************************************************/
-
-
-/***********************************************************
-       BASIC OPERATIONS BY MACROS AND INLINE FUNCTIONS
-***********************************************************/
-
-#define  UserSizeOfString(s)                        (ULONG)(strlen(s))
-#define  UserCatString                              strcat
-
-static inline BOOL UserEqualString1 (char *s1, char *s2, BOOL bCaseSensitive)
-{
-    if ((s1 == NULL) && (s2 == NULL))
-        return TRUE;
-
-    if ((s1 == NULL) || (s2 == NULL))
-        return FALSE;
-
-    if (bCaseSensitive)
-        return (strcmp (s1, s2) == 0) ? TRUE : FALSE;
-
-    return (strcasecmp (s1, s2) == 0) ? TRUE : FALSE;
-}
-
-static inline BOOL UserEqualString2 (char *s1, char *s2, ULONG len, BOOL bCaseSensitive)
-{
-    if ((s1 == NULL) && (s2 == NULL))
-        return TRUE;
-
-    if ((s1 == NULL) || (s2 == NULL))
-        return FALSE;
-
-    if (bCaseSensitive)
-        return (strncmp (s1, s2, len) == 0) ? TRUE : FALSE;
-
-    return (strncasecmp (s1, s2, len) == 0) ? TRUE : FALSE;
-}
-
-/*__static_inline  void */
-static inline  void
-UserCopyString(char*  destination, char*  source)
-{
-	if ( !source )
-    {
-		destination[0] = 0;
-    }
-	else
-    {
-        strcpy(destination, source);
-    }
-}
-
-#define  UserCharInString(s, c)                     (BOOLEAN)(!(!(strchr(s, c))))
-
+#include <string.h>
 
 #endif
-

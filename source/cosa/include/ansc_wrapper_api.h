@@ -1011,23 +1011,6 @@ AnscGetPackingNumber
            FUNCTIONS IMPLEMENTED IN ANSC_STRING.C
 ***********************************************************/
 
-BOOL
-AnscEqualString1
-    (
-        char*                       pString1,
-        char*                       pString2,
-        BOOL                        bCaseSensitive
-    );
-
-BOOL
-AnscEqualString2
-    (
-        char*                       pString1,
-        char*                       pString2,
-        ULONG                       length,
-        BOOL                        bCaseSensitive
-    );
-
 void
 AnscFromHexToString
     (
