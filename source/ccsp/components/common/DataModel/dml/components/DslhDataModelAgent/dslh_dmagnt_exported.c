@@ -670,7 +670,7 @@ COSASetParamValueUlong
     prototype:
 
         ANSC_STATUS
-        COSAGetParamValueString
+        COSASetParamValueString
             (
                 char*                       pParamName,
                 char*                       pParamValue
