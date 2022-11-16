@@ -421,7 +421,11 @@ BOOL is_ValidHost(PUCHAR pString)
       }
       len = strlen(host);
       if(len==0 || len>253 || host[len-1]=='-' || alpha == 0)
+      {
+	  /* CID 252352 fix */
+	  free(host);
           return FALSE;
+      }
       else
       {
           i = 0;
@@ -435,16 +439,28 @@ BOOL is_ValidHost(PUCHAR pString)
                        if((isalnum(tok[i])) || (tok[i] == '.') || (tok[i] == '-') || (tok[i] == '_'))
                            i++;
                        else
+		       {
+		           /* CID 252352 fix */
+			   free(host);
                            return FALSE;   
+		       }
                   }
               }
               else if(count==1)
               {
                   if(!(is_ValidPort((PUCHAR)tok)))
-                      return FALSE;
+		  {
+		      /* CID 252352 fix */
+		      free(host);
+		      return FALSE;
+		  }
               }
               else
-                  return FALSE;
+	      {
+                  /* CID 252352 fix */
+                  free(host);
+		  return FALSE;
+	      }
              tok = strtok(NULL,":");
              if(tok!=NULL)
                  count++;
@@ -493,7 +509,12 @@ BOOL is_ValidIpAddressv6_port(PUCHAR pString)
             port_ptr = strtok(NULL,":");
         }
         else
+	{
+	    /* CID 252351, 252353 fix */
+	    free(hostcpy);
+	    free(hostdup);
             return FALSE;
+	}
     }
     if(is_Ipv6_address((PUCHAR)ipv6))
     {

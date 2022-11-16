@@ -1341,6 +1341,15 @@ BspTemplateListCacheTemplates
     if (!pEntry)
         return ANSC_STATUS_RESOURCES;
 
+    /* CID 59237 fix */
+    pEntry->pName = (PUCHAR)strdup((char *)pTemplateName);
+
+    if (pEntry->pName == NULL)
+    {
+	AnscFreeMemory(pEntry);
+        return ANSC_STATUS_RESOURCES;
+    }
+
     ulCount = pList->GetSize((ANSC_HANDLE)pList);
     pTemplates  = (PBSP_TEMPLATE_OBJECT *)AnscAllocateMemory(sizeof(PBSP_TEMPLATE_OBJECT) * ulCount);
 
@@ -1364,11 +1373,6 @@ BspTemplateListCacheTemplates
             pTemplates[i]   = pTemplate;
         }
     }
-
-    pEntry->pName = (PUCHAR)strdup((char *)pTemplateName);
-
-    if (pEntry->pName == NULL)
-        return ANSC_STATUS_RESOURCES;  
 
     pCmif->AddTemplate(pCmif->hOwnerContext, (ANSC_HANDLE)pEntry);
 
