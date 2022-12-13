@@ -38,7 +38,6 @@
 #include "ccsp_message_bus.h"
 #include "ccsp_trace.h"
 #include <rtmessage/rtVector.h>
-#include <rtmessage/rtLog.h>
 #include <rbus/rbus.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -225,7 +224,7 @@ void rbusFilter_AppendToMessage(rbusFilter_t filter, rbusMessage msg);/*from lib
 static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValStruct_t* val, int filterResult)
 {
     rbusMessage msg;
-    rbus_error_t err;
+    rbusCoreError_t err;
 
     /*construct a message just like rbus would construct it*/
     rbusMessage_Init(&msg);
@@ -272,7 +271,7 @@ static void rbusValueChange_handlePublish(ValueChangeRecord* rec, parameterValSt
 
     rbusMessage_Release(msg);
 
-    if(err != RTMESSAGE_BUS_SUCCESS)
+    if(err != RBUSCORE_SUCCESS)
     {
         CcspTraceError(("%s rbus_publishSubscriberEvent failed error %d\n", __FUNCTION__, err));
     }

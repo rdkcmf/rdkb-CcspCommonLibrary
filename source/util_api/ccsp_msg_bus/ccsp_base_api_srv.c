@@ -1735,7 +1735,7 @@ int handleValueChangeEvent_rbus(const char * object_name, const char * event_nam
             CcspTraceError(("%s %s unexpected type %d\n", __FUNCTION__, event_name, msg_prop1_type));
         }
     }
-    return RTMESSAGE_BUS_SUCCESS;
+    return RBUSCORE_SUCCESS;
 }
 
 int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_name, rbusMessage message, void * user_data)
@@ -1805,10 +1805,10 @@ int CcspBaseIf_evt_callback_rbus(const char * object_name, const char * event_na
     else
     {
         CcspTraceError(("%s %s event not handled\n",__FUNCTION__, event_name));
-        return RTMESSAGE_BUS_ERROR_UNSUPPORTED_EVENT;
+        return RBUSCORE_ERROR_UNSUPPORTED_EVENT;
     }
 
-    return RTMESSAGE_BUS_SUCCESS;
+    return RBUSCORE_SUCCESS;
 }
 
 void  CcspBaseIf_Set_Default_Event_Callback

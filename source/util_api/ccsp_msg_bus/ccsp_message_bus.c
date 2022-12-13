@@ -1042,7 +1042,7 @@ void
 void
 ccsp_rbus_logHandler
 (
-    rtLogLevel level,
+    rbusLogLevel level,
     const char* file,
     int line,
     int threadId,
@@ -1052,19 +1052,19 @@ ccsp_rbus_logHandler
     UNREFERENCED_PARAMETER(threadId);
     switch (level)
     {
-        case RT_LOG_FATAL:
+        case RBUS_LOG_FATAL:
             CcspTraceCritical(("%s:%d %s\n", file, line, message));
             break;
-        case RT_LOG_ERROR:
+        case RBUS_LOG_ERROR:
             CcspTraceError(("%s:%d %s\n", file, line, message));
             break;
-        case RT_LOG_WARN:
+        case RBUS_LOG_WARN:
             CcspTraceWarning(("%s:%d %s\n", file, line, message));
             break;
-        case RT_LOG_INFO:
+        case RBUS_LOG_INFO:
             CcspTraceInfo(("%s:%d %s\n", file, line, message));
             break;
-        case RT_LOG_DEBUG:
+        case RBUS_LOG_DEBUG:
             CcspTraceDebug(("%s:%d %s\n", file, line, message));
             break;
     }
@@ -1154,15 +1154,15 @@ CCSP_Message_Bus_Init
     RBUS_LOG("%s is enabled\n", rbus_enabled ? "RBus" : "DBus");  
     if(rbus_enabled)
     {
-        rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+        rbusCoreError_t err = RBUSCORE_SUCCESS;
         CCSP_Message_Bus_Register_Path_Priv_rbus(bus_info, thread_path_message_func_rbus, bus_info);
 
-        /* Register with rtLog to use CCSPTRACE_LOGS */
-        rtLogSetLogHandler(ccsp_rbus_logHandler);
+        /* Register with rbusLog to use CCSPTRACE_LOGS */
+        rbus_registerLogHandler(ccsp_rbus_logHandler);
 
         err = rbus_openBrokerConnection(component_id);
-        if( err != RTMESSAGE_BUS_SUCCESS &&
-                err != RTMESSAGE_BUS_ERROR_INVALID_STATE/*connection already opened. which is allowed*/)
+        if( err != RBUSCORE_SUCCESS &&
+                err != RBUSCORE_ERROR_INVALID_STATE/*connection already opened. which is allowed*/)
         {
             CcspTraceError(("<%s>: rbus_openBrokerConnection fails for component_id=%s with %d\n", __FUNCTION__,component_id,err));
             fclose(fp);
@@ -1174,25 +1174,25 @@ CCSP_Message_Bus_Init
         {
             CcspTraceInfo(("connection opened for %s\n",component_id));
 
-            if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+            if((err = rbus_registerObj(component_id, (rbus_callback_t) bus_info->rbus_callback, bus_info)) != RBUSCORE_SUCCESS)
             {
                 CcspTraceError(("<%s>: rbus_registerObj fails for %s\n", __FUNCTION__, component_id));
             }
             else
             {
-                if((err = rbus_registerSubscribeHandler(component_id, cssp_event_subscribe_override_handler_rbus, bus_info)) != RTMESSAGE_BUS_SUCCESS)
+                if((err = rbus_registerSubscribeHandler(component_id, cssp_event_subscribe_override_handler_rbus, bus_info)) != RBUSCORE_SUCCESS)
                 {
-                    rtLog_Error("<%s>: rbus_registerSubscribeHandler() failed with %d.  Rbus value change will not work.", __FUNCTION__, err);
+                    RBUS_LOG_ERR("<%s>: rbus_registerSubscribeHandler() failed with %d.  Rbus value change will not work.", __FUNCTION__, err);
                 }
 
                 if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.tr069pa") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id,CCSP_DIAG_COMPLETE_SIGNAL,NULL,NULL)) != RBUSCORE_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for diagCompleteSignal\n", __FUNCTION__, err);
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.rm") == 0)
                 {
-                    if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RTMESSAGE_BUS_SUCCESS)
+                    if((err = rbus_registerEvent(component_id,CCSP_SYSTEM_REBOOT_SIGNAL,NULL,NULL)) != RBUSCORE_SUCCESS)
                         RBUS_LOG_ERR("%s : rbus_registerEvent returns Err: %d for systemRebootSignal", __FUNCTION__, err);
                 }
                 else if(strcmp(component_id,"eRT.com.cisco.spvtg.ccsp.webpaagent") == 0)
@@ -1200,7 +1200,7 @@ CCSP_Message_Bus_Init
                     rbus_method_table_entry_t table[1] = {
                                                             {"webconfigSignal", (void*)bus_info, webcfg_signal_rbus},
                                                          };
-                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS ))
+                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RBUSCORE_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -1211,7 +1211,7 @@ CCSP_Message_Bus_Init
                                                             {"TunnelStatus", (void*)bus_info, tunnelStatus_signal_rbus},
                                                             {"WifiDbStatus", (void*)bus_info, wifiDbStatus_signal_rbus},
                                                          };
-                    if(( err = rbus_registerMethodTable(component_id, table, 2) != RTMESSAGE_BUS_SUCCESS ))
+                    if(( err = rbus_registerMethodTable(component_id, table, 2) != RBUSCORE_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -1221,7 +1221,7 @@ CCSP_Message_Bus_Init
                      rbus_method_table_entry_t table[1] = {
                                 {CCSP_TELEMETRY_DATA_SIGNAL, (void*)bus_info, telemetry_send_signal_rbus}, 
                                         };
-                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RTMESSAGE_BUS_SUCCESS ))
+                    if(( err = rbus_registerMethodTable(component_id, table, 1) != RBUSCORE_SUCCESS ))
                     {
                         RBUS_LOG_ERR("%s : rbus_registerMethodTable returns Err: %d",  __FUNCTION__, err);
                     }
@@ -1467,10 +1467,10 @@ CCSP_Message_Bus_Exit
 
     if(rbus_enabled)
     {
-        rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+        rbusCoreError_t err = RBUSCORE_SUCCESS;
 
         err = rbus_closeBrokerConnection();
-        if(RTMESSAGE_BUS_SUCCESS != err)
+        if(RBUSCORE_SUCCESS != err)
             CcspTraceError(("<%s>: rbus_closeBrokerConnection fails with %d\n", __FUNCTION__,err));
         bus_info->freefunc(bus_info);
         bus_info = NULL;
@@ -2550,7 +2550,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int instanceNumber = 0, result = 0;
             int32_t tmp = 0, sessionId = 0;
             char *str = 0, *inst_str = 0;
-            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            rbusCoreError_t err = RBUSCORE_SUCCESS;
             rbusMessage_GetInt32(request, &sessionId);
             rbusMessage_GetString(request, (const char**)&str); //object name
             result = func->AddTblRow(sessionId, str, &instanceNumber , func->AddTblRow_data);
@@ -2558,7 +2558,7 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             {
                 inst_str = (char*)bus_info->mallocfunc(strlen(str)+12);
                 sprintf(inst_str, "%s.%d.", str, instanceNumber);
-                if((err = rbus_addElement(bus_info->component_id, inst_str)) != RTMESSAGE_BUS_SUCCESS)
+                if((err = rbus_addElement(bus_info->component_id, inst_str)) != RBUSCORE_SUCCESS)
                 {
                     RBUS_LOG_ERR("rbus_addElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
                 }
@@ -2575,13 +2575,13 @@ static int thread_path_message_func_rbus(const char * destination, const char * 
             int result = 0;
             int32_t tmp = 0, sessionId = 0;
             char * str = 0;
-            rbus_error_t err = RTMESSAGE_BUS_SUCCESS;
+            rbusCoreError_t err = RBUSCORE_SUCCESS;
             rbusMessage_GetInt32(request, &sessionId);
             rbusMessage_GetString(request, (const char**)&str); //obj name
             result = func->DeleteTblRow(sessionId, str , func->DeleteTblRow_data);
             if (result == CCSP_SUCCESS)
             {
-                if((err = rbus_removeElement(bus_info->component_id, str)) != RTMESSAGE_BUS_SUCCESS)
+                if((err = rbus_removeElement(bus_info->component_id, str)) != RBUSCORE_SUCCESS)
                 {
                     RBUS_LOG_ERR("rbus_removeElement: Component: %s Obj: %s Err: %d\n", bus_info->component_id, str, err);
                 }
@@ -2739,7 +2739,7 @@ static int cssp_event_subscribe_override_handler_rbus(
     {
         //not a parameter so return special error so rbus_core will search its registered event list for actual events like CCSP_SYSTEM_READY_SIGNAL
         CcspTraceWarning(("%s: ignored %s\n", __FUNCTION__, eventName));
-        return RTMESSAGE_BUS_SUBSCRIBE_NOT_HANDLED;
+        return RBUSCORE_ERROR_SUBSCRIBE_NOT_HANDLED;
     }
 
     CcspTraceDebug(("%s: %s\n", __FUNCTION__, eventName));
@@ -2753,7 +2753,7 @@ static int cssp_event_subscribe_override_handler_rbus(
         Ccsp_RbusValueChange_Unsubscribe(userData, listener, eventName, payload);
     }
 
-    return RTMESSAGE_BUS_SUCCESS;
+    return RBUSCORE_SUCCESS;
 }
 
 int 
